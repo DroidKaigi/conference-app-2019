@@ -1,0 +1,39 @@
+import dependencies.Dep
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation project(":session:action")
+    implementation project(":session:data")
+
+    implementation Dep.Kotlin.Stdlib.jdk
+    implementation Dep.Android.appCompat
+    testImplementation Dep.junit
+    androidTestImplementation Dep.Android.testRunner
+
+}
+repositories {
+    mavenCentral()
+}

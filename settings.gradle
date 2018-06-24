@@ -1,0 +1,7 @@
+include ':frontend'
+include ':session:ui',
+        ':session:store',
+        ':session:action',
+        ':session:actioncreator',
+        ':session:data',
+        ':session:model'

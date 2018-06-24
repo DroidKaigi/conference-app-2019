@@ -1,0 +1,13 @@
+import dependencies.Dep
+
+apply plugin: 'kotlin'
+
+dependencies {
+    implementation Dep.Kotlin.Stdlib.jdk
+
+    testImplementation Dep.junit
+
+}
+repositories {
+    mavenCentral()
+}
