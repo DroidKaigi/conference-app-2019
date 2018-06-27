@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.droidkaigi.confsched2019.R
+import io.github.droidkaigi.confsched2019.session.actioncreator.SessionActionCreator
+import io.github.droidkaigi.confsched2019.session.store.SessionViewStore
 
 class AllSessionsFragment : Fragment() {
 
@@ -13,7 +15,7 @@ class AllSessionsFragment : Fragment() {
         fun newInstance() = AllSessionsFragment()
     }
 
-//    private lateinit var viewStore: SessionViewStore
+    private lateinit var viewStore: SessionViewStore
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -22,6 +24,7 @@ class AllSessionsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        SessionActionCreator().reload()
 //        viewStore = ViewModelProviders.of(this).get(SessionViewStore::class.java)
     }
 
