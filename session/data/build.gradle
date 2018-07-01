@@ -2,6 +2,7 @@ import dependencies.Dep
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlinx-serialization'
 
 android {
     compileSdkVersion 28
@@ -28,8 +29,19 @@ android {
 dependencies {
     implementation project(":session:model")
     implementation Dep.Kotlin.Stdlib.jdk
-
+    implementation Dep.Kotlin.serialization
+    implementation Dep.Retrofit.adapterKotlinCoroutines
+    implementation Dep.Retrofit.converterKotlinxSerialization
+    implementation Dep.threetenabp
 }
+
 repositories {
     mavenCentral()
 }
+
+kotlin {
+    experimental{
+        coroutines 'enable'
+    }
+}
+

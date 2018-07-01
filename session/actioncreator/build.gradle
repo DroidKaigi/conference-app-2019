@@ -1,4 +1,5 @@
 import dependencies.Dep
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
@@ -29,11 +30,19 @@ dependencies {
     implementation project(":session:data")
 
     implementation Dep.Kotlin.Stdlib.jdk
+    implementation Dep.Kotlin.coroutines
     implementation Dep.Android.appCompat
     testImplementation Dep.junit
     androidTestImplementation Dep.Android.testRunner
 
 }
+
 repositories {
     mavenCentral()
+}
+
+kotlin {
+    experimental{
+        coroutines 'enable'
+    }
 }

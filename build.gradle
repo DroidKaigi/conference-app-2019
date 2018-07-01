@@ -5,10 +5,12 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven { url "https://kotlin.bintray.com/kotlinx" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-beta01'
+        classpath 'com.android.tools.build:gradle:3.2.0-beta02'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlinx:kotlinx-gradle-serialization-plugin:0.5.1"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -19,6 +21,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url "https://kotlin.bintray.com/kotlinx" }
     }
 }
 
