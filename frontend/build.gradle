@@ -30,6 +30,7 @@ dependencies {
     implementation Dep.threetenabp
     implementation Dep.Android.appCompat
     implementation Dep.Android.constraint
+    implementation Dep.Stetho.stetho
     testImplementation Dep.junit
     androidTestImplementation Dep.Android.testRunner
     androidTestImplementation Dep.Android.espressoCore

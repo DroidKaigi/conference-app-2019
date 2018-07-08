@@ -2,6 +2,7 @@ import dependencies.Dep
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlinx-serialization'
 
 android {
@@ -27,11 +28,12 @@ android {
 }
 
 dependencies {
-    implementation project(":session:model")
+    api project(":session:model")
     implementation Dep.Kotlin.Stdlib.jdk
     implementation Dep.Kotlin.serialization
-    implementation Dep.Retrofit.adapterKotlinCoroutines
-    implementation Dep.Retrofit.converterKotlinxSerialization
+    implementation Dep.Arch.roomRuntime
+    implementation Dep.Arch.lifecycleLiveData
+    kapt Dep.Arch.roomCompiler
     implementation Dep.threetenabp
 }
 

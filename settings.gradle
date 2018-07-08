@@ -3,5 +3,6 @@ include ':session:ui',
         ':session:store',
         ':session:action',
         ':session:actioncreator',
-        ':session:data',
+        ':session:data:api',
+        ':session:data:db',
         ':session:model'

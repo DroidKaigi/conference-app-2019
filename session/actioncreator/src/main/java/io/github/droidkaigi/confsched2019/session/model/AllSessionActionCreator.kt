@@ -1,4 +1,4 @@
-package io.github.droidkaigi.confsched2019.session.actioncreator
+package io.github.droidkaigi.confsched2019.session.model
 
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
