@@ -26,10 +26,16 @@ dependencies {
     implementation project(":session:ui")
 
     implementation Dep.Kotlin.Stdlib.jdk
+    implementation Dep.Kotlin.coroutines
     implementation Dep.threetenabp
     implementation Dep.Android.appCompat
     implementation Dep.Android.constraint
     testImplementation Dep.junit
     androidTestImplementation Dep.Android.testRunner
     androidTestImplementation Dep.Android.espressoCore
+}
+kotlin {
+    experimental{
+        coroutines 'enable'
+    }
 }

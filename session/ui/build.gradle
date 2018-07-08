@@ -28,9 +28,10 @@ android {
 
 dependencies {
     implementation project(":session:store")
-    implementation project(":session:actioncreator")
+    api project(":session:actioncreator")
 
     implementation Dep.Kotlin.Stdlib.jdk
+    implementation Dep.Kotlin.coroutines
     implementation Dep.Android.appCompat
     testImplementation Dep.junit
     androidTestImplementation Dep.Android.testRunner
@@ -38,4 +39,9 @@ dependencies {
 }
 repositories {
     mavenCentral()
+}
+kotlin {
+    experimental{
+        coroutines 'enable'
+    }
 }

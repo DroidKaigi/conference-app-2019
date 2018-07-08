@@ -1,14 +1,12 @@
-package io.github.droidkaigi.confsched2019.session.data
+package io.github.droidkaigi.confsched2019.session.data.api
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.stringBased
-import io.github.droidkaigi.confsched2019.session.data.response.InstantSerializer
+import io.github.droidkaigi.confsched2019.session.data.api.response.InstantSerializer
 //import io.github.droidkaigi.confsched2019.session.actioncreator.response.InstantSerializer
-import io.github.droidkaigi.confsched2019.session.data.response.Response
-import io.github.droidkaigi.confsched2019.session.data.response.Session
+import io.github.droidkaigi.confsched2019.session.data.api.response.Response
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.serialization.*
-import kotlinx.serialization.internal.PrimitiveDesc
 import kotlinx.serialization.json.JSON
 import okhttp3.MediaType
 import okhttp3.OkHttpClient

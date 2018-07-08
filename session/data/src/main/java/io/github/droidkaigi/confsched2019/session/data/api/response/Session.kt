@@ -1,4 +1,4 @@
-package io.github.droidkaigi.confsched2019.session.data.response
+package io.github.droidkaigi.confsched2019.session.data.api.response
 
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.PrimitiveDesc

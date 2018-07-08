@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.droidkaigi.confsched2019.R
-import io.github.droidkaigi.confsched2019.session.actioncreator.SessionActionCreator
 import io.github.droidkaigi.confsched2019.session.store.SessionStore
 
 class AllSessionsFragment : Fragment() {
@@ -24,7 +23,7 @@ class AllSessionsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        SessionActionCreator().reload()
+
 //        viewStore = ViewModelProviders.of(this).get(SessionViewStore::class.java)
     }
 
