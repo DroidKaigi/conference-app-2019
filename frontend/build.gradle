@@ -2,6 +2,7 @@ import dependencies.Dep
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
@@ -31,6 +32,10 @@ dependencies {
     implementation Dep.Android.appCompat
     implementation Dep.Android.constraint
     implementation Dep.Stetho.stetho
+    implementation Dep.Dagger.core
+    implementation Dep.Dagger.androidSupport
+    kapt Dep.Dagger.compiler
+    kapt Dep.Dagger.androidProcessor
     testImplementation Dep.junit
     androidTestImplementation Dep.Android.testRunner
     androidTestImplementation Dep.Android.espressoCore
