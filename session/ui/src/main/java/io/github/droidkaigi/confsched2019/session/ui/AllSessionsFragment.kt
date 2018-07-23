@@ -1,10 +1,10 @@
 package io.github.droidkaigi.confsched2019.session.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import io.github.droidkaigi.confsched2019.R
 import io.github.droidkaigi.confsched2019.session.store.SessionStore
 

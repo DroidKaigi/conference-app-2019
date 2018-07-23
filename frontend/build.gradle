@@ -25,6 +25,9 @@ android {
 
 dependencies {
     implementation project(":session:ui")
+    implementation project(':session:data:db-room')
+    implementation project(':session:data:api-retrofit')
+    implementation project(":dispatcher")
 
     implementation Dep.Kotlin.Stdlib.jdk
     implementation Dep.Kotlin.coroutines
@@ -40,6 +43,7 @@ dependencies {
     androidTestImplementation Dep.Android.testRunner
     androidTestImplementation Dep.Android.espressoCore
 }
+
 kotlin {
     experimental{
         coroutines 'enable'

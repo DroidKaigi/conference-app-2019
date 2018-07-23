@@ -1,26 +1,27 @@
 package io.github.droidkaigi.confsched2019.session.model
 
+import org.threeten.bp.Instant
 import java.util.*
 
 sealed class Session(
         open val id: String,
 //        open val dayNumber: Int,
-        open val startTime: Date,
-        open val endTime: Date
+        open val startTime: Instant,
+        open val endTime: Instant
 ) {
     data class SpeechSession(
             override val id: String,
 //            override val dayNumber: Int,
-            override val startTime: Date,
-            override val endTime: Date,
+            override val startTime: Instant,
+            override val endTime: Instant,
             val title: String,
-            val desc: String,
+            val desc: String
 //            val room: Room,
-            val format: String,
-            val language: String,
+//            val format: String,
+//            val language: String,
 //            val topic: Topic,
 //            val level: Level,
-            val isFavorited: Boolean
+//            val isFavorited: Boolean
 //            val speakers: List<Speaker>,
 //            val message: SessionMessage?
     ) : Session(id, /*dayNumber, */startTime, endTime)
@@ -28,15 +29,15 @@ sealed class Session(
     data class SpecialSession(
             override val id: String,
 //            override val dayNumber: Int,
-            override val startTime: Date,
-            override val endTime: Date,
+            override val startTime: Instant,
+            override val endTime: Instant,
             val title: Int
 //            val room: Room?
     ) : Session(id, /*dayNumber,*/ startTime, endTime)
 
     val isFinished: Boolean
-        get() = System.currentTimeMillis() > endTime.time
+        get() = System.currentTimeMillis() > endTime.toEpochMilli()
 
     val isOnGoing: Boolean
-        get() = System.currentTimeMillis() in startTime.time..endTime.time
+        get() = System.currentTimeMillis() in startTime.toEpochMilli()..endTime.toEpochMilli()
 }

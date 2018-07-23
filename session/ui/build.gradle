@@ -3,7 +3,6 @@ import dependencies.Dep
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-
 android {
     compileSdkVersion 28
 
@@ -36,9 +35,6 @@ dependencies {
     testImplementation Dep.junit
     androidTestImplementation Dep.Android.testRunner
     androidTestImplementation Dep.Android.espressoCore
-}
-repositories {
-    mavenCentral()
 }
 kotlin {
     experimental{

@@ -4,10 +4,7 @@ apply plugin: 'kotlin'
 
 dependencies {
     implementation Dep.Kotlin.Stdlib.jdk
+    implementation Dep.threetenabp
 
     testImplementation Dep.junit
-
-}
-repositories {
-    mavenCentral()
 }

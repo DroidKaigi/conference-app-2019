@@ -1,13 +1,13 @@
 package io.github.droidkaigi.confsched2019.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import dagger.android.support.DaggerAppCompatActivity
 import io.github.droidkaigi.confsched2019.R
 import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

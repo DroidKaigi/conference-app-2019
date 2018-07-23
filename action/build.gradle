@@ -1,0 +1,12 @@
+import dependencies.Dep
+
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+    api project(":session:model")
+
+    implementation Dep.Kotlin.Stdlib.jdk
+
+}

@@ -1,14 +1,16 @@
 package io.github.droidkaigi.confsched2019
 
-import android.app.Application
 import com.facebook.stetho.Stetho
 import com.jakewharton.threetenabp.AndroidThreeTen
-import dagger.android.HasActivityInjector
+import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
 import io.github.droidkaigi.confsched2019.session.model.SessionActionCreator
 import kotlinx.coroutines.experimental.launch
+import javax.inject.Inject
 
-class App : Application(),HasActivityInjector {
-    private lateinit var appComponent: AppComponent
+class App : DaggerApplication() {
+    @Inject
+    lateinit var sessionActionCreator: SessionActionCreator
 
     override fun onCreate() {
         super.onCreate()
@@ -16,10 +18,10 @@ class App : Application(),HasActivityInjector {
         Stetho.initializeWithDefaults(this);
 
         launch {
-            SessionActionCreator().load(applicationContext)
+            sessionActionCreator.load()
         }
-        appComponent = createAppComponent()
     }
-
-    override fun activityInjector() = appComponent.activityInjector
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        return createAppComponent()
+    }
 }

@@ -1,8 +1,10 @@
-include ':frontend'
-include ':session:ui',
+include ':frontend', ':dispatcher',
+        ':session:ui',
         ':session:store',
-        ':session:action',
+        ':action',
         ':session:actioncreator',
         ':session:data:api',
+        ':session:data:api-retrofit',
         ':session:data:db',
+        ':session:data:db-room',
         ':session:model'

@@ -1,0 +1,23 @@
+import dependencies.Dep
+
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+    api project(":action")
+    implementation Dep.Kotlin.Stdlib.jdk
+    api Dep.Kotlin.coroutines
+    implementation Dep.Dagger.core
+    implementation Dep.Dagger.androidSupport
+    kapt Dep.Dagger.compiler
+    kapt Dep.Dagger.androidProcessor
+
+    testImplementation Dep.junit
+}
+
+kotlin {
+    experimental{
+        coroutines 'enable'
+    }
+}

@@ -1,42 +1,17 @@
 import dependencies.Dep
 
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlinx-serialization'
-
-android {
-    compileSdkVersion 28
-
-    defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
-}
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-kapt'
 
 dependencies {
     api project(":session:model")
+
     implementation Dep.Kotlin.Stdlib.jdk
     implementation Dep.Kotlin.serialization
     implementation Dep.Retrofit.adapterKotlinCoroutines
-    implementation Dep.Retrofit.converterKotlinxSerialization
-    implementation Dep.threetenabp
-}
 
-repositories {
-    mavenCentral()
+    implementation Dep.threetenabp
 }
 
 kotlin {

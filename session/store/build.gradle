@@ -2,6 +2,7 @@ import dependencies.Dep
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
@@ -26,14 +27,22 @@ android {
 }
 
 dependencies {
-    implementation project(":session:action")
+    implementation project(":dispatcher")
 
     implementation Dep.Kotlin.Stdlib.jdk
+    api Dep.Arch.lifecycleLiveData
     api Dep.Arch.lifecycleExtensions
+    implementation Dep.Kotlin.androidCoroutines
+    implementation Dep.Dagger.core
+    implementation Dep.Dagger.androidSupport
+    kapt Dep.Dagger.compiler
+    kapt Dep.Dagger.androidProcessor
 
     testImplementation Dep.junit
-    androidTestImplementation Dep.Android.testRunner
 }
-repositories {
-    mavenCentral()
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
 }
+

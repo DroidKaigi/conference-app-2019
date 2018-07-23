@@ -1,9 +1,9 @@
 package io.github.droidkaigi.confsched2019.session.data.db
 
-import androidx.lifecycle.LiveData
-import io.github.droidkaigi.confsched2019.session.data.db.entity.SessionEntity
+import io.github.droidkaigi.confsched2019.session.model.Session
+import kotlinx.coroutines.experimental.channels.ReceiveChannel
 
 interface SessionDatabase {
-    fun getAllSessions(): LiveData<List<SessionEntity>>
-    fun save(sessions: List<SessionEntity>)
+    fun getAllSessions(): ReceiveChannel<List<Session>>
+    fun save(sessions: List<Session.SpeechSession>)
 }

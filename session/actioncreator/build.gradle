@@ -2,6 +2,7 @@ import dependencies.Dep
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
@@ -26,20 +27,21 @@ android {
 }
 
 dependencies {
-    implementation project(":session:action")
     implementation project(":session:data:api")
     implementation project(":session:data:db")
+    implementation project(":dispatcher")
 
     implementation Dep.Kotlin.Stdlib.jdk
     implementation Dep.Kotlin.coroutines
     implementation Dep.Android.appCompat
+    implementation Dep.Stetho.stetho
+    implementation Dep.Dagger.core
+    implementation Dep.Dagger.androidSupport
+    kapt Dep.Dagger.compiler
+    kapt Dep.Dagger.androidProcessor
     testImplementation Dep.junit
     androidTestImplementation Dep.Android.testRunner
     implementation Dep.threetenabp
-}
-
-repositories {
-    mavenCentral()
 }
 
 kotlin {

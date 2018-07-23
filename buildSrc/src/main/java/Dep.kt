@@ -16,6 +16,7 @@ object Dep {
 
         val plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
         val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.23.3"
+        val androidCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.23.3"
         val serialization =  "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.5.1"
     }
 
@@ -29,7 +30,6 @@ object Dep {
     object Dagger {
         val core = "com.google.dagger:dagger:${Versions.dagger}"
         val compiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
-        val android = "com.google.dagger:dagger-android:${Versions.dagger}"
         val androidSupport = "com.google.dagger:dagger-android-support:${Versions.dagger}"
         val androidProcessor = "com.google.dagger:dagger-android-processor:${Versions.dagger}"
     }

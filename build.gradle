@@ -1,14 +1,14 @@
 apply from: file('dependencyGraph.gradle')
 
 buildscript {
-    ext.kotlin_version = '1.2.50'
+    ext.kotlin_version = '1.2.51'
     repositories {
         google()
         jcenter()
         maven { url "https://kotlin.bintray.com/kotlinx" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-beta02'
+        classpath 'com.android.tools.build:gradle:3.2.0-beta04'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlinx:kotlinx-gradle-serialization-plugin:0.5.1"
 
