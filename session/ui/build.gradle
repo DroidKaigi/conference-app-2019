@@ -31,7 +31,13 @@ dependencies {
 
     implementation Dep.Kotlin.Stdlib.jdk
     implementation Dep.Kotlin.coroutines
+
     implementation Dep.Android.appCompat
+
+    implementation Dep.Kotlin.androidCoroutines
+    implementation Dep.Dagger.core
+    implementation Dep.Dagger.androidSupport
+
     testImplementation Dep.junit
     androidTestImplementation Dep.Android.testRunner
     androidTestImplementation Dep.Android.espressoCore

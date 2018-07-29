@@ -25,6 +25,7 @@ android {
 
 dependencies {
     implementation project(":session:ui")
+    implementation project(':session:store')
     implementation project(':session:data:db-room')
     implementation project(':session:data:api-retrofit')
     implementation project(":dispatcher")

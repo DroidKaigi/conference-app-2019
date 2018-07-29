@@ -4,17 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import dagger.android.support.DaggerFragment
 import io.github.droidkaigi.confsched2019.R
+import io.github.droidkaigi.confsched2019.session.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.store.SessionStore
+import javax.inject.Inject
 
-class AllSessionsFragment : Fragment() {
+class AllSessionsFragment : DaggerFragment() {
 
     companion object {
         fun newInstance() = AllSessionsFragment()
     }
 
-    private lateinit var sessionStore: SessionStore
+    @Inject
+    lateinit var sessionStore: SessionStore
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val allSessionsStore: AllSessionsStore by lazy {
+        ViewModelProviders.of(this, viewModelFactory).get(AllSessionsStore::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -23,8 +33,6 @@ class AllSessionsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-//        viewStore = ViewModelProviders.of(this).get(SessionViewStore::class.java)
+        println(allSessionsStore)
     }
-
 }

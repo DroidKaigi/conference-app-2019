@@ -1,4 +1,4 @@
-package io.github.droidkaigi.confsched2019
+package io.github.droidkaigi.confsched2019.di
 
 import android.app.Application
 import dagger.Module

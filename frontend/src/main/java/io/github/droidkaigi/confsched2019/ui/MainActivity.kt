@@ -1,6 +1,8 @@
 package io.github.droidkaigi.confsched2019.ui
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.android.support.DaggerAppCompatActivity
@@ -20,8 +22,18 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 }
 
+
 @Module
-abstract class MainActivityModule {
+interface MainActivityModule {
+    @Binds
+    fun providesAppCompatActivity(mainActivity: MainActivity): AppCompatActivity
+
     @ContributesAndroidInjector
-    abstract fun contributeMainActivity(): MainActivity
+    fun contributeAllSessionsFragment(): AllSessionsFragment
+
+    @Module
+    abstract class MainActivityBuilder {
+        @ContributesAndroidInjector(modules = [MainActivityModule::class])
+        abstract fun contributeMainActivity(): MainActivity
+    }
 }
