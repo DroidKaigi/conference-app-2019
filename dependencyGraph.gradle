@@ -1,4 +1,4 @@
-// https://github.com/JakeWharton/SdkSearch/blob/cf85f774e9b2453cde095298d8204f6bda15b1ca/gradle/projectDependencyGraph.gradle
+// from: https://github.com/JakeWharton/SdkSearch/blob/cf85f774e9b2453cde095298d8204f6bda15b1ca/gradle/projectDependencyGraph.gradle
 task projectDependencyGraph {
     doLast {
         def dot = new File(rootProject.buildDir, 'project.dot')
