@@ -2,6 +2,7 @@ import dependencies.Dep
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
@@ -22,28 +23,36 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
     implementation project(":session:store")
     api project(":session:actioncreator")
+    implementation project(":session:model")
 
     implementation Dep.Kotlin.Stdlib.jdk
     implementation Dep.Kotlin.coroutines
+    implementation Dep.Kotlin.androidCoroutines
 
     implementation Dep.Android.appCompat
+    implementation Dep.Android.constraint
+    implementation Dep.Android.recyclerView
 
-    implementation Dep.Kotlin.androidCoroutines
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport
+
+    implementation Dep.Groupie.groupie
+    implementation Dep.Groupie.databinding
 
     testImplementation Dep.junit
     androidTestImplementation Dep.Android.testRunner
     androidTestImplementation Dep.Android.espressoCore
 }
 kotlin {
-    experimental{
+    experimental {
         coroutines 'enable'
     }
 }

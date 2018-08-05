@@ -17,7 +17,7 @@ object Dep {
         val plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
         val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.23.3"
         val androidCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.23.3"
-        val serialization =  "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.5.1"
+        val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.5.1"
     }
 
     object Arch {
@@ -37,6 +37,7 @@ object Dep {
     object Android {
         val gradlePlugin = "com.android.tools.build:gradle:3.2.0-beta01"
         val appCompat = "androidx.appcompat:appcompat:1.0.0-beta01"
+        val recyclerView = "androidx.recyclerview:recyclerview:1.0.0-beta01"
         val constraint = "androidx.constraintlayout:constraintlayout:1.1.2"
         val testRunner = "androidx.test:runner:1.1.0-alpha3"
         val espressoCore = "androidx.test.espresso:espresso-core:3.1.0-alpha3"
@@ -49,9 +50,16 @@ object Dep {
     }
 
     val threetenabp = "com.jakewharton.threetenabp:threetenabp:1.0.5"
+
     object Stetho {
         val stetho = "com.facebook.stetho:stetho:${Versions.stetho}"
     }
 
+    object Groupie {
+        val groupie = "com.xwray:groupie:2.1.0"
+        val databinding = "com.xwray:groupie-databinding:2.1.0"
+    }
+
     val junit = "junit:junit:4.12"
+    val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC1"
 }
