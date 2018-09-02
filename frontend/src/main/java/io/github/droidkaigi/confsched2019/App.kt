@@ -22,6 +22,7 @@ class App : DaggerApplication() {
             sessionActionCreator.load()
         }
     }
+
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
         return createAppComponent()
     }

@@ -43,9 +43,11 @@ object InstantSerializer : KSerializer<Instant> {
     fun parseDateString(dateString: String): Instant =
             LocalDateTime.parse(dateString, FORMATTER).atJST().toInstant()
 }
+
 fun Instant.atJST(): ZonedDateTime {
     return atZone(ZoneId.of("JST", ZoneId.SHORT_IDS))
 }
+
 fun LocalDateTime.atJST(): ZonedDateTime {
     return atZone(ZoneId.of("JST", ZoneId.SHORT_IDS))
 }

@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class RetrofitSessionApi @Inject constructor(
         retrofit: Retrofit
-) :SessionApi{
+) : SessionApi {
     val service = retrofit.create(SessionsApi::class.java)
 
     interface SessionsApi {
@@ -22,15 +22,16 @@ class RetrofitSessionApi @Inject constructor(
         return service
                 .getSessions()
                 .await()
-                .let { it.sessions.map {
-                    apiSession->
-                    Session.SpeechSession(
-                            id = apiSession.id,
-                            desc = apiSession.description,
-                            startTime = apiSession.startsAt,
-                            endTime = apiSession.endsAt,
-                            title = apiSession.title
-                    )
-                } }
+                .let {
+                    it.sessions.map { apiSession ->
+                        Session.SpeechSession(
+                                id = apiSession.id,
+                                desc = apiSession.description,
+                                startTime = apiSession.startsAt,
+                                endTime = apiSession.endsAt,
+                                title = apiSession.title
+                        )
+                    }
+                }
     }
 }

@@ -1,7 +1,6 @@
 package io.github.droidkaigi.confsched2019.session.model
 
 import org.threeten.bp.Instant
-import java.util.*
 
 sealed class Session(
         open val id: String,

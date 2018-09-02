@@ -10,7 +10,7 @@ import javax.inject.Inject
 class SessionActionCreator @Inject constructor(
         val dispatcher: Dispatcher,
         val sessionDatabase: SessionDatabase,
-        val sessionApi:SessionApi
+        val sessionApi: SessionApi
 ) {
 
     suspend fun load() = launch(CommonPool) {

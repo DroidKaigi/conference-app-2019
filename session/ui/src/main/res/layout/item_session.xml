@@ -4,19 +4,19 @@
     <data>
 
         <variable
-            name="session"
-            type="io.github.droidkaigi.confsched2019.session.model.Session.SpeechSession" />
+                name="session"
+                type="io.github.droidkaigi.confsched2019.session.model.Session.SpeechSession"/>
     </data>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
         <TextView
-            android:text="@{session.title}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+                android:text="@{session.title}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
     </LinearLayout>
 </layout>

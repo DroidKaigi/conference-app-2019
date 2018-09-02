@@ -1,4 +1,5 @@
 package io.github.droidkaigi.confsched2019.session.data.db
+
 import androidx.room.TypeConverter
 import org.threeten.bp.Instant
 
