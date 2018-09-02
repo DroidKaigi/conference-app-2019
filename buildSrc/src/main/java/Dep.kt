@@ -27,6 +27,10 @@ object Dep {
         val roomRuntime = "androidx.room:room-runtime:${Versions.aac}"
     }
 
+    object Firebase {
+        val core = "com.google.firebase:firebase-core:16.0.1"
+    }
+
     object Dagger {
         val core = "com.google.dagger:dagger:${Versions.dagger}"
         val compiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"

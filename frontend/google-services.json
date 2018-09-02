@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "672817688677",
+    "firebase_url": "https://droidkaigi-2019-debug.firebaseio.com",
+    "project_id": "droidkaigi-2019-debug",
+    "storage_bucket": "droidkaigi-2019-debug.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672817688677:android:8058f5a13c12ac59",
+        "android_client_info": {
+          "package_name": "io.github.droidkaigi.confsched2019.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "672817688677-u6399ui3q1cup0nq1dbjrr47jdgrpbf0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.github.droidkaigi.confsched2019.debug",
+            "certificate_hash": "e378c1eb4106bd9e52e2361f058966307e91c57a"
+          }
+        },
+        {
+          "client_id": "672817688677-nj9bv4d37p20t9jsi7a6rd6i39qlc950.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBf4dEvg7LZmC_nIZVU28Y8QfyJIMwA1Yk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "672817688677-nj9bv4d37p20t9jsi7a6rd6i39qlc950.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

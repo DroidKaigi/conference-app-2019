@@ -20,6 +20,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            applicationIdSuffix "debug"
+        }
     }
     dataBinding {
         enabled = true
@@ -39,6 +42,7 @@ dependencies {
     implementation Dep.Android.appCompat
     implementation Dep.Android.constraint
     implementation Dep.Stetho.stetho
+    implementation Dep.Firebase.core
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport
     kapt Dep.Dagger.compiler
@@ -53,3 +57,5 @@ kotlin {
         coroutines 'enable'
     }
 }
+
+apply plugin: 'com.google.gms.google-services'
