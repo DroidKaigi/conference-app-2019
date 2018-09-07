@@ -13,18 +13,14 @@ import com.xwray.groupie.databinding.ViewHolder
 import dagger.android.support.DaggerFragment
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentAllSessionsBinding
-import io.github.droidkaigi.confsched2019.session.model.AllSessionActionCreator
 import io.github.droidkaigi.confsched2019.session.model.Session
-import io.github.droidkaigi.confsched2019.session.store.AllSessionsStore
-import io.github.droidkaigi.confsched2019.session.store.SessionStore
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
-import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.android.UI
+import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionStore
 import javax.inject.Inject
 
 class AllSessionsFragment : DaggerFragment() {
-    val job = Job()
-
     companion object {
         fun newInstance() = AllSessionsFragment()
     }
@@ -59,11 +55,10 @@ class AllSessionsFragment : DaggerFragment() {
                     .map { SessionItem(it) }
             groupAdapter.update(list)
         })
-        allSessionActionCreator.listen(job + UI)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        job.cancel()
+    override fun onResume() {
+        super.onResume()
+        allSessionActionCreator.refresh()
     }
 }

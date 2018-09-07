@@ -14,14 +14,14 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        // For Android Studio Gradle sync
+        applicationIdSuffix ".debug"
     }
     buildTypes {
         release {
+            applicationIdSuffix ""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            applicationIdSuffix "debug"
         }
     }
     dataBinding {
@@ -31,22 +31,30 @@ android {
 
 dependencies {
     implementation project(":session:ui")
-    implementation project(':session:store')
-    implementation project(':session:data:db-room')
-    implementation project(':session:data:api-retrofit')
+    implementation project(':user:ui')
+    implementation project(':data:db-room')
+    implementation project(':data:api-retrofit')
     implementation project(":dispatcher")
 
     implementation Dep.Kotlin.Stdlib.jdk
     implementation Dep.Kotlin.coroutines
+
     implementation Dep.threetenabp
+
     implementation Dep.Android.appCompat
     implementation Dep.Android.constraint
+
     implementation Dep.Stetho.stetho
+
     implementation Dep.Firebase.core
+    implementation Dep.Firebase.auth
+    implementation Dep.PlayServices.auth
+
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport
     kapt Dep.Dagger.compiler
     kapt Dep.Dagger.androidProcessor
+
     testImplementation Dep.junit
     androidTestImplementation Dep.Android.testRunner
     androidTestImplementation Dep.Android.espressoCore

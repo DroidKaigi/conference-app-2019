@@ -3,8 +3,8 @@ package io.github.droidkaigi.confsched2019.di
 import android.app.Application
 import dagger.Module
 import dagger.Provides
-import io.github.droidkaigi.confsched2019.session.data.db.DbComponent
-import io.github.droidkaigi.confsched2019.session.data.db.SessionDatabase
+import io.github.droidkaigi.confsched2019.data.db.DbComponent
+import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import kotlinx.coroutines.experimental.CommonPool
 import javax.inject.Singleton
 

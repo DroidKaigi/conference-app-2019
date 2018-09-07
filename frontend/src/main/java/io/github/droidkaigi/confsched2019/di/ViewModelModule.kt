@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import io.github.droidkaigi.confsched2019.session.store.AllSessionsStore
+import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 
 @Module
 interface ViewModelModule {

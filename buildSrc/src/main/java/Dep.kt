@@ -1,6 +1,7 @@
 package dependencies
 
 private object Versions {
+    val firebase = "16.0.3"
     val retrofit = "2.4.0"
     val kotlin = "1.2.50"
     val stetho = "1.5.0"
@@ -28,7 +29,12 @@ object Dep {
     }
 
     object Firebase {
-        val core = "com.google.firebase:firebase-core:16.0.1"
+        val core = "com.google.firebase:firebase-core:${Versions.firebase}"
+        val auth = "com.google.firebase:firebase-auth:${Versions.firebase}"
+    }
+
+    object PlayServices {
+        val auth = "com.google.android.gms:play-services-auth:15.0.1"
     }
 
     object Dagger {

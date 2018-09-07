@@ -5,7 +5,7 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import io.github.droidkaigi.confsched2019.di.createAppComponent
-import io.github.droidkaigi.confsched2019.session.model.SessionActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionActionCreator
 import kotlinx.coroutines.experimental.launch
 import javax.inject.Inject
 

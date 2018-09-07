@@ -27,8 +27,8 @@ android {
 }
 
 dependencies {
-    implementation project(":session:data:api")
-    implementation project(":session:data:db")
+    implementation project(":data:api")
+    implementation project(":data:db")
     implementation project(":dispatcher")
 
     implementation Dep.Kotlin.Stdlib.jdk

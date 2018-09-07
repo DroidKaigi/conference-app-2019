@@ -28,6 +28,7 @@ android {
 
 dependencies {
     implementation project(":dispatcher")
+    implementation project(":ext:android")
 
     implementation Dep.Kotlin.Stdlib.jdk
     api Dep.Arch.lifecycleLiveData

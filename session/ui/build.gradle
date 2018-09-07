@@ -29,9 +29,11 @@ android {
 }
 
 dependencies {
-    implementation project(":session:store")
-    api project(":session:actioncreator")
     implementation project(":session:model")
+    implementation project(":data:db")
+    implementation project(":data:api")
+    implementation project(":ext:android")
+    implementation project(":dispatcher")
 
     implementation Dep.Kotlin.Stdlib.jdk
     implementation Dep.Kotlin.coroutines
@@ -40,6 +42,8 @@ dependencies {
     implementation Dep.Android.appCompat
     implementation Dep.Android.constraint
     implementation Dep.Android.recyclerView
+
+    implementation Dep.Arch.lifecycleExtensions
 
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport
