@@ -6,7 +6,6 @@ import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import io.github.droidkaigi.confsched2019.di.createAppComponent
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionActionCreator
-import kotlinx.coroutines.experimental.launch
 import javax.inject.Inject
 
 class App : DaggerApplication() {
@@ -18,9 +17,7 @@ class App : DaggerApplication() {
         AndroidThreeTen.init(this)
         Stetho.initializeWithDefaults(this);
 
-        launch {
-            sessionActionCreator.load()
-        }
+        sessionActionCreator.load()
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {

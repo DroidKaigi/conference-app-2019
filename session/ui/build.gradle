@@ -31,13 +31,14 @@ android {
 dependencies {
     implementation project(":session:model")
     implementation project(":data:db")
+    implementation project(":data:repository")
     implementation project(":data:api")
     implementation project(":ext:android")
     implementation project(":dispatcher")
 
     implementation Dep.Kotlin.Stdlib.jdk
     implementation Dep.Kotlin.coroutines
-    implementation Dep.Kotlin.androidCoroutines
+    implementation Dep.Kotlin.androidCoroutinesDispatcher
 
     implementation Dep.Android.appCompat
     implementation Dep.Android.constraint

@@ -7,6 +7,7 @@ private object Versions {
     val stetho = "1.5.0"
     val aac = "2.0.0-beta01"
     val dagger = "2.16"
+    val coroutines = "0.26.0"
 }
 
 object Dep {
@@ -16,8 +17,9 @@ object Dep {
         }
 
         val plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
-        val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.23.3"
-        val androidCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.23.3"
+        val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
+        val androidCoroutinesDispatcher = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+        val androidCoroutines = "net.devrieze:android-coroutines:0.7.0"
         val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.5.1"
     }
 

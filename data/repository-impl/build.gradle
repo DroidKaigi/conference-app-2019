@@ -2,19 +2,18 @@ import dependencies.Dep
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
 
-
-
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
 
@@ -28,14 +27,21 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api project(":data:repository")
+    api project(":data:db")
+    api project(":session:model")
 
-    implementation Dep.Kotlin.coroutines
     implementation Dep.Kotlin.Stdlib.jdk
+    implementation Dep.Kotlin.serialization
     implementation Dep.Kotlin.coroutines
-    implementation Dep.Kotlin.androidCoroutinesDispatcher
+    implementation Dep.Arch.lifecycleLiveData
+    kapt Dep.Arch.roomCompiler
+    implementation Dep.threetenabp
 
-    api Dep.Arch.lifecycleLiveData
+    implementation Dep.Dagger.core
+    implementation Dep.Dagger.androidSupport
+    kapt Dep.Dagger.compiler
+    kapt Dep.Dagger.androidProcessor
 }
 
 kotlin {
@@ -43,4 +49,3 @@ kotlin {
         coroutines 'enable'
     }
 }
-

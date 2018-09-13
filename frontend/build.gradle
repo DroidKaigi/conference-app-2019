@@ -33,6 +33,7 @@ dependencies {
     implementation project(":session:ui")
     implementation project(':user:ui')
     implementation project(':data:db-room')
+    implementation project(':data:repository-impl')
     implementation project(':data:api-retrofit')
     implementation project(":dispatcher")
 

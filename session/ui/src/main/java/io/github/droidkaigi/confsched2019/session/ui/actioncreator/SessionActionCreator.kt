@@ -13,7 +13,7 @@ class SessionActionCreator @Inject constructor(
         val sessionApi: SessionApi
 ) {
 
-    suspend fun load() = launch(CommonPool) {
+    fun load() = launch(CommonPool) {
         try {
             val sessions = sessionApi.getSessions()
             sessionDatabase.save(sessions)

@@ -33,7 +33,7 @@ dependencies {
     implementation Dep.Kotlin.Stdlib.jdk
     api Dep.Arch.lifecycleLiveData
     api Dep.Arch.lifecycleExtensions
-    implementation Dep.Kotlin.androidCoroutines
+    implementation Dep.Kotlin.androidCoroutinesDispatcher
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport
     kapt Dep.Dagger.compiler

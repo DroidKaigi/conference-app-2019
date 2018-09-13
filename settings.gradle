@@ -8,4 +8,6 @@ include ':frontend',
         ':data:api-retrofit',
         ':data:db',
         ':data:db-room',
+        ':data:repository',
+        ':data:repository-impl',
         ':ext:android'
