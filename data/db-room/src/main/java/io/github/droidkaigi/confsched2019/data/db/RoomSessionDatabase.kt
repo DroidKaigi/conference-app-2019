@@ -3,13 +3,13 @@ package io.github.droidkaigi.confsched2019.data.db
 import androidx.lifecycle.*
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionDao
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionEntity
+import io.github.droidkaigi.confsched2019.data.db.entity.SessionEntityImpl
 import io.github.droidkaigi.confsched2019.session.model.Session
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.channels.LinkedListChannel
 import kotlinx.coroutines.experimental.channels.ReceiveChannel
 import kotlinx.coroutines.experimental.channels.map
 import kotlinx.coroutines.experimental.withContext
-import org.threeten.bp.Instant
 import javax.inject.Inject
 
 class RoomSessionDatabase @Inject constructor(
@@ -19,32 +19,19 @@ class RoomSessionDatabase @Inject constructor(
 //        private val sessionSpeakerJoinDao: SessionSpeakerJoinDao,
 //        private val sessionFeedbackDao: SessionFeedbackDao
 ) : SessionDatabase {
-    override fun sessionsChannel(): ReceiveChannel<List<Session>> = sessionDao.sessionsLiveData().observeChannel().map {
-        it.orEmpty().map { sessionEntity ->
-            sessionEntity.mapSession()
-        }
+    override fun sessionsChannel(): ReceiveChannel<List<SessionEntity>> = sessionDao.sessionsLiveData().observeChannel().map {
+        it.orEmpty()
     }
 
-    override suspend fun sessions(): List<Session> {
+    override suspend fun sessions(): List<SessionEntity> {
         return withContext(CommonPool) {
-            sessionDao.sessions().map { it.mapSession() }
+            sessionDao.sessions()
         }
     }
-
-    fun SessionEntity.mapSession(): Session.SpeechSession {
-        return Session.SpeechSession(
-                id,
-                Instant.ofEpochMilli(stime),
-                Instant.ofEpochMilli(etime),
-                title,
-                desc
-        )
-    }
-
 
     override fun save(sessions: List<Session.SpeechSession>) {
         sessionDao.clearAndInsert(sessions.map { session ->
-            SessionEntity(
+            SessionEntityImpl(
                     id = session.id,
                     title = session.title,
                     desc = session.desc,

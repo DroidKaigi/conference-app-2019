@@ -27,16 +27,12 @@ android {
 }
 
 dependencies {
-    api project(":data:repository")
-    implementation project(":data:db")
-    implementation project(":data:firestore")
+    api project(":data:firestore")
     api project(":session:model")
 
     implementation Dep.Kotlin.Stdlib.jdk
-    implementation Dep.Kotlin.serialization
     implementation Dep.Kotlin.coroutines
     implementation Dep.Arch.lifecycleLiveData
-    kapt Dep.Arch.roomCompiler
     implementation Dep.threetenabp
 
     implementation Dep.Dagger.core

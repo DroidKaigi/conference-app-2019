@@ -1,0 +1,19 @@
+import dependencies.Dep
+
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+dependencies {
+    api project(":session:model")
+
+    implementation Dep.Kotlin.Stdlib.jdk
+    api Dep.Kotlin.coroutines
+
+    testImplementation Dep.junit
+}
+
+kotlin {
+    experimental {
+        coroutines 'enable'
+    }
+}

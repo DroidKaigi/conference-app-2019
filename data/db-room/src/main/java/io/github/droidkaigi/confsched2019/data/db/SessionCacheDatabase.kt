@@ -4,11 +4,11 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionDao
-import io.github.droidkaigi.confsched2019.data.db.entity.SessionEntity
+import io.github.droidkaigi.confsched2019.data.db.entity.SessionEntityImpl
 
 @Database(
         entities = [
-            (SessionEntity::class)
+            (SessionEntityImpl::class)
         ],
         version = 1
 )

@@ -10,4 +10,6 @@ include ':frontend',
         ':data:db-room',
         ':data:repository',
         ':data:repository-impl',
+        ':data:firestore',
+        ':data:firestore-impl',
         ':ext:android'

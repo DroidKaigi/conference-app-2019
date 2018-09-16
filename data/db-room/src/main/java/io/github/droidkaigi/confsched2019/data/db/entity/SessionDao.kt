@@ -7,19 +7,19 @@ import androidx.room.*
 abstract class SessionDao {
 
     @Query("SELECT * FROM session")
-    abstract fun sessionsLiveData(): LiveData<List<SessionEntity>>
+    abstract fun sessionsLiveData(): LiveData<List<SessionEntityImpl>>
 
     @Query("SELECT * FROM session")
-    abstract fun sessions(): List<SessionEntity>
+    abstract fun sessions(): List<SessionEntityImpl>
 
     @Query("DELETE FROM session")
     abstract fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insert(sessions: List<SessionEntity>)
+    abstract fun insert(sessions: List<SessionEntityImpl>)
 
     @Transaction
-    open fun clearAndInsert(newSessions: List<SessionEntity>) {
+    open fun clearAndInsert(newSessions: List<SessionEntityImpl>) {
         deleteAll()
         insert(newSessions)
     }

@@ -2,33 +2,27 @@ package io.github.droidkaigi.confsched2019.data.repository
 
 import dagger.BindsInstance
 import dagger.Component
-import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.firestore.FireStore
 import javax.inject.Singleton
 import kotlin.coroutines.experimental.CoroutineContext
 
 @Singleton
 @Component(modules = [
-    RepositoryModule::class
+    FireStoreModule::class
 ])
-interface RepositoryComponent {
-    fun sessionRepository(): SessionRepository
+interface FireStoreComponent {
+    fun fireStore(): FireStore
 
     @Component.Builder
     interface Builder {
-        @BindsInstance
-        fun database(database: SessionDatabase): Builder
-
-        @BindsInstance
-        fun fireStore(fireStore: FireStore): Builder
 
         @BindsInstance
         fun coroutineContext(coroutineContext: CoroutineContext): Builder
 
-        fun build(): RepositoryComponent
+        fun build(): FireStoreComponent
     }
 
     companion object {
-        fun builder(): Builder = DaggerRepositoryComponent.builder()
+        fun builder(): Builder = DaggerFireStoreComponent.builder()
     }
 }
