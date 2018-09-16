@@ -1,7 +1,7 @@
 package io.github.droidkaigi.confsched2019.data.api
 
-import io.github.droidkaigi.confsched2019.session.model.Session
+import io.github.droidkaigi.confsched2019.data.api.response.Response
 
 interface SessionApi {
-    suspend fun getSessions(): List<Session.SpeechSession>
+    suspend fun getSessions(): Response
 }

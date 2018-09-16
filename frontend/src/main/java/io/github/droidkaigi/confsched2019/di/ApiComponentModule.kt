@@ -5,7 +5,8 @@ import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.data.api.ApiComponent
 import io.github.droidkaigi.confsched2019.data.api.SessionApi
-import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.IO
 import javax.inject.Singleton
 
 @Module
@@ -13,10 +14,10 @@ object ApiComponentModule {
     @JvmStatic
     @Provides
     @Singleton
-    fun provideItemStore(application: Application): SessionApi {
+    fun provideApi(application: Application): SessionApi {
         return ApiComponent.builder()
                 .context(application)
-                .coroutineContext(CommonPool)
+                .coroutineContext(Dispatchers.IO)
                 .build()
                 .sessionApi()
     }

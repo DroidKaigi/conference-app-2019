@@ -5,5 +5,5 @@ import io.github.droidkaigi.confsched2019.session.model.Session
 interface SessionRepository {
     suspend fun sessions(): List<Session>
 
-    fun save(sessions: List<Session.SpeechSession>)
+    suspend fun refresh()
 }

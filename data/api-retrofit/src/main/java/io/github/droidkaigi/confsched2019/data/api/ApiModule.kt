@@ -5,12 +5,10 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.stringBased
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import io.github.droidkaigi.confsched2019.data.api.response.InstantSerializer
 import kotlinx.serialization.SerialContext
 import kotlinx.serialization.json.JSON
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
-import org.threeten.bp.Instant
 import retrofit2.Retrofit
 
 @Module(includes = [ApiModule.Providers::class])
@@ -26,8 +24,9 @@ internal abstract class ApiModule {
         fun retrofit(): Retrofit {
             val json = JSON(
                     nonstrict = true,
-                    context = SerialContext().apply
-                    { registerSerializer(Instant::class, InstantSerializer) })
+                    context = SerialContext()
+//                            .apply { registerSerializer(Instant::class, InstantSerializer) }
+            )
             return Retrofit.Builder()
                     .baseUrl("https://sessionize.com/api/v2/xtj7shk8/view/")
                     .callFactory(OkHttpClient.Builder()
