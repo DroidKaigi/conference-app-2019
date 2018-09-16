@@ -7,5 +7,5 @@ import kotlinx.coroutines.experimental.channels.ReceiveChannel
 interface SessionDatabase {
     fun sessionsChannel(): ReceiveChannel<List<SessionEntity>>
     suspend fun sessions(): List<SessionEntity>
-    fun save(apiResponse: Response)
+    suspend fun save(apiResponse: Response)
 }

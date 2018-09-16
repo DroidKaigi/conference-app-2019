@@ -1,5 +1,6 @@
 package io.github.droidkaigi.confsched2019.data.db.entity
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -9,11 +10,11 @@ data class SessionEntityImpl(
         override var title: String,
         override var desc: String,
         override var stime: Long,
-        override var etime: Long
-//        var sessionFormat: String,
-//        var language: String
-//        @Embedded var level: LevelEntity,
-//        @Embedded var topic: TopicEntity,
-//        @Embedded var room: RoomEntity,
-//        @Embedded val message: MessageEntity?
+        override var etime: Long,
+        override var sessionFormat: String,
+        override var language: String,
+        @Embedded override val level: LevelEntityImpl,
+        @Embedded override val topic: TopicEntityImpl,
+        @Embedded override val room: RoomEntityImpl,
+        @Embedded override val message: MessageEntityImpl?
 ) : SessionEntity

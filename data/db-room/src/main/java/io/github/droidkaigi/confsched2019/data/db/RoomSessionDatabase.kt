@@ -2,54 +2,49 @@ package io.github.droidkaigi.confsched2019.data.db
 
 import androidx.lifecycle.*
 import io.github.droidkaigi.confsched2019.data.api.response.Response
-import io.github.droidkaigi.confsched2019.data.db.entity.SessionDao
+import io.github.droidkaigi.confsched2019.data.db.dao.SessionDao
+import io.github.droidkaigi.confsched2019.data.db.dao.SessionSpeakerJoinDao
+import io.github.droidkaigi.confsched2019.data.db.dao.SpeakerDao
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionEntity
-import io.github.droidkaigi.confsched2019.data.db.entity.SessionEntityImpl
-import kotlinx.coroutines.experimental.CommonPool
+import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionEntities
+import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionSpeakerJoinEntities
+import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSpeakerEntities
+import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.IO
 import kotlinx.coroutines.experimental.channels.LinkedListChannel
 import kotlinx.coroutines.experimental.channels.ReceiveChannel
 import kotlinx.coroutines.experimental.channels.map
 import kotlinx.coroutines.experimental.withContext
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.ZoneId
-import org.threeten.bp.ZonedDateTime
-import org.threeten.bp.format.DateTimeFormatter
 import javax.inject.Inject
 
 class RoomSessionDatabase @Inject constructor(
-        private val databaseSession: SessionCacheDatabase,
-        private val sessionDao: SessionDao
-//        private val speakerDao: SpeakerDao,
-//        private val sessionSpeakerJoinDao: SessionSpeakerJoinDao,
-//        private val sessionFeedbackDao: SessionFeedbackDao
+        private val sessionDatabase: SessionCacheDatabase,
+        private val sessionDao: SessionDao,
+        private val speakerDao: SpeakerDao,
+        private val sessionSpeakerJoinDao: SessionSpeakerJoinDao
 ) : SessionDatabase {
     override fun sessionsChannel(): ReceiveChannel<List<SessionEntity>> = sessionDao.sessionsLiveData().observeChannel().map {
         it.orEmpty()
     }
 
     override suspend fun sessions(): List<SessionEntity> {
-        return withContext(CommonPool) {
+        return withContext(Dispatchers.IO) {
             sessionDao.sessions()
         }
     }
 
-    private val FORMATTER: DateTimeFormatter =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
 
-    private fun LocalDateTime.atJST(): ZonedDateTime {
-        return atZone(ZoneId.of("JST", ZoneId.SHORT_IDS))
-    }
-
-    override fun save(apiResponse: Response) {
-        sessionDao.clearAndInsert(apiResponse.sessions.map { session ->
-            SessionEntityImpl(
-                    id = session.id,
-                    title = session.title,
-                    desc = session.description,
-                    stime = LocalDateTime.parse(session.startsAt, FORMATTER).atJST().toInstant().toEpochMilli(),
-                    etime = LocalDateTime.parse(session.endsAt, FORMATTER).atJST().toInstant().toEpochMilli()
-            )
-        })
+    override suspend fun save(apiResponse: Response) {
+        withContext(Dispatchers.IO) {
+            // FIXME: SQLiteDatabaseLockedException
+//            sessionDatabase.runInTransaction {
+            speakerDao.clearAndInsert(apiResponse.speakers.orEmpty().toSpeakerEntities())
+            val sessions = apiResponse.sessions
+            val sessionEntities = sessions.toSessionEntities(apiResponse.categories.orEmpty(), apiResponse.rooms.orEmpty())
+            sessionDao.clearAndInsert(sessionEntities)
+            sessionSpeakerJoinDao.insert(sessions.toSessionSpeakerJoinEntities())
+//            }
+        }
     }
 
 }

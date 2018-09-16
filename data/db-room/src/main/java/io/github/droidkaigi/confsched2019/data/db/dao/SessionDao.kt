@@ -1,11 +1,14 @@
-package io.github.droidkaigi.confsched2019.data.db.entity
+package io.github.droidkaigi.confsched2019.data.db.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import io.github.droidkaigi.confsched2019.data.db.entity.SessionEntityImpl
 
 @Dao
 abstract class SessionDao {
-
     @Query("SELECT * FROM session")
     abstract fun sessionsLiveData(): LiveData<List<SessionEntityImpl>>
 
@@ -18,7 +21,6 @@ abstract class SessionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insert(sessions: List<SessionEntityImpl>)
 
-    @Transaction
     open fun clearAndInsert(newSessions: List<SessionEntityImpl>) {
         deleteAll()
         insert(newSessions)
