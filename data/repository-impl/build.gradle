@@ -28,6 +28,7 @@ android {
 
 dependencies {
     api project(":data:repository")
+    implementation project(":data:api")
     implementation project(":data:db")
     implementation project(":data:firestore")
     api project(":session:model")

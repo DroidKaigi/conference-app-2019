@@ -27,8 +27,6 @@ android {
 }
 
 dependencies {
-    implementation project(":data:api")
-    implementation project(":data:db")
     implementation project(":ext:android")
     implementation project(":dispatcher")
 
