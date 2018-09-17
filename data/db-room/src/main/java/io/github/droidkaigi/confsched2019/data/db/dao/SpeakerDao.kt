@@ -5,9 +5,8 @@ import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntityImpl
 
 @Dao
 abstract class SpeakerDao {
-//    @CheckResult
-//    @Query("SELECT * FROM speaker")
-//    abstract fun getAllSpeaker(): Flowable<List<SpeakerEntity>>
+    @Query("SELECT * FROM speaker")
+    abstract fun getAllSpeaker(): List<SpeakerEntityImpl>
 
     @Query("DELETE FROM speaker")
     abstract fun deleteAll()

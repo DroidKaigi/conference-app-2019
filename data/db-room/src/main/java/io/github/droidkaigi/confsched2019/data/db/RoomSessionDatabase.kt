@@ -6,6 +6,8 @@ import io.github.droidkaigi.confsched2019.data.db.dao.SessionDao
 import io.github.droidkaigi.confsched2019.data.db.dao.SessionSpeakerJoinDao
 import io.github.droidkaigi.confsched2019.data.db.dao.SpeakerDao
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionEntity
+import io.github.droidkaigi.confsched2019.data.db.entity.SessionWithSpeakers
+import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntity
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionEntities
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionSpeakerJoinEntities
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSpeakerEntities
@@ -27,12 +29,9 @@ class RoomSessionDatabase @Inject constructor(
         it.orEmpty()
     }
 
-    override suspend fun sessions(): List<SessionEntity> {
-        return withContext(Dispatchers.IO) {
-            sessionDao.sessions()
-        }
-    }
+    override suspend fun sessions(): List<SessionWithSpeakers> = sessionSpeakerJoinDao.getAllSessions()
 
+    override suspend fun allSpeaker(): List<SpeakerEntity> = speakerDao.getAllSpeaker()
 
     override suspend fun save(apiResponse: Response) {
         withContext(Dispatchers.IO) {

@@ -52,7 +52,7 @@ class AllSessionsFragment : DaggerFragment() {
         allSessionsStore.sessionsLiveData.observe(this, Observer {
             val list = it.orEmpty()
                     .filterIsInstance<Session.SpeechSession>()
-                    .map { SessionItem(it) }
+                    .map { session -> SessionItem(session) }
             groupAdapter.update(list)
         })
     }
