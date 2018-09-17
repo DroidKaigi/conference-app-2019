@@ -39,6 +39,11 @@ class DataSessionRepository @Inject constructor(
         speakerSessions//  + specialSessions
     }
 
+    override suspend fun toggleFavorite(session: Session.SpeechSession) {
+        fireStore.toggleFavorite(session.id)
+    }
+
+    // TODO: separaete mapper
     fun SessionWithSpeakers.toSession(
             speakerEntities: List<SpeakerEntity>,
             favList: List<Int>?,

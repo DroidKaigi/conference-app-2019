@@ -56,6 +56,7 @@ class AllSessionsFragment : DaggerFragment() {
                         SessionItem(
                                 session = session,
                                 onFavoriteClickListener = { session ->
+                                    allSessionActionCreator.toggleFavorite(session)
                                 }
                         )
                     }
@@ -65,6 +66,6 @@ class AllSessionsFragment : DaggerFragment() {
 
     override fun onResume() {
         super.onResume()
-        allSessionActionCreator.refresh()
+        allSessionActionCreator.load()
     }
 }

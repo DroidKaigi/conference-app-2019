@@ -6,4 +6,5 @@ interface SessionRepository {
     suspend fun sessions(): List<Session>
 
     suspend fun refresh()
+    suspend fun toggleFavorite(session: Session.SpeechSession)
 }
