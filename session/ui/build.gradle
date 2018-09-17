@@ -29,6 +29,7 @@ android {
 }
 
 dependencies {
+    implementation project(":uicomponent")
     implementation project(":session:model")
     implementation project(":data:repository")
     implementation project(":ext:android")

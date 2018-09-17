@@ -8,6 +8,7 @@ import dagger.android.ContributesAndroidInjector
 import dagger.android.support.DaggerAppCompatActivity
 import io.github.droidkaigi.confsched2019.R
 import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment
+import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragmentModule
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
 import io.github.droidkaigi.confsched2019.user.store.UserStore
 import javax.inject.Inject
@@ -40,7 +41,7 @@ interface MainActivityModule {
     @Binds
     fun providesAppCompatActivity(mainActivity: MainActivity): AppCompatActivity
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [AllSessionsFragmentModule::class])
     fun contributeAllSessionsFragment(): AllSessionsFragment
 
     @Module

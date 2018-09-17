@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
+import dagger.Binds
+import dagger.Module
 import dagger.android.support.DaggerFragment
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentAllSessionsBinding
@@ -38,9 +41,12 @@ class AllSessionsFragment : DaggerFragment() {
         ViewModelProviders.of(this, viewModelFactory).get(AllSessionsStore::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate<FragmentAllSessionsBinding>(inflater, R.layout.fragment_all_sessions, container, false)
+    override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_all_sessions, container, false)
         return binding.root
     }
 
@@ -55,8 +61,8 @@ class AllSessionsFragment : DaggerFragment() {
                     .map { session ->
                         SessionItem(
                                 session = session,
-                                onFavoriteClickListener = { session ->
-                                    allSessionActionCreator.toggleFavorite(session)
+                                onFavoriteClickListener = { clickedSession ->
+                                    allSessionActionCreator.toggleFavorite(clickedSession)
                                 }
                         )
                     }
@@ -67,5 +73,13 @@ class AllSessionsFragment : DaggerFragment() {
     override fun onResume() {
         super.onResume()
         allSessionActionCreator.load()
+    }
+}
+
+@Module
+interface AllSessionsFragmentModule {
+    @Binds
+    fun providesLifecycle(allSessionsFragment: AllSessionsFragment): LifecycleOwner {
+        return allSessionsFragment.viewLifecycleOwner
     }
 }
