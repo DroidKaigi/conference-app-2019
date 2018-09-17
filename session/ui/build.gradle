@@ -41,6 +41,10 @@ dependencies {
     implementation Dep.Android.appCompat
     implementation Dep.Android.constraint
     implementation Dep.Android.recyclerView
+    api Dep.Android.emoji
+    implementation Dep.Android.design
+
+    implementation Dep.threetenabp
 
     implementation Dep.Arch.lifecycleExtensions
 

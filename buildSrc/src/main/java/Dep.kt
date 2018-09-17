@@ -52,7 +52,9 @@ object Dep {
         val recyclerView = "androidx.recyclerview:recyclerview:1.0.0-beta01"
         val constraint = "androidx.constraintlayout:constraintlayout:1.1.2"
         val testRunner = "androidx.test:runner:1.1.0-alpha3"
+        val emoji = "androidx.emoji:emoji-appcompat:1.0.0-alpha1"
         val espressoCore = "androidx.test.espresso:espresso-core:3.1.0-alpha3"
+        val design = "com.google.android.material:material:1.0.0-alpha1"
     }
 
     object Retrofit {
