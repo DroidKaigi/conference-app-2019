@@ -65,6 +65,13 @@ object Dep {
 
     val threetenabp = "com.jakewharton.threetenabp:threetenabp:1.0.5"
 
+    object LeakCanary {
+        val leakCanary = "com.squareup.leakcanary:leakcanary-android:1.6.1"
+        val leakCanaryNoOp = "com.squareup.leakcanary:leakcanary-android-no-op:1.6.1"
+        // Optional, if you use support library fragments:
+        val leakCanaryFragment = "com.squareup.leakcanary:leakcanary-support-fragment:1.6.1"
+    }
+
     object Stetho {
         val stetho = "com.facebook.stetho:stetho:${Versions.stetho}"
     }

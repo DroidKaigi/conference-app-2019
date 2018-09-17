@@ -48,6 +48,10 @@ dependencies {
 
     implementation Dep.Stetho.stetho
 
+    releaseImplementation Dep.LeakCanary.leakCanary
+    debugImplementation Dep.LeakCanary.leakCanary
+    debugImplementation Dep.LeakCanary.leakCanaryFragment
+
     implementation Dep.Firebase.core
     implementation Dep.Firebase.auth
     implementation Dep.PlayServices.auth

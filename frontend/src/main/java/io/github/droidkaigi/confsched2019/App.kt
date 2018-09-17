@@ -5,6 +5,7 @@ import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
 import com.facebook.stetho.Stetho
 import com.jakewharton.threetenabp.AndroidThreeTen
+import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import io.github.droidkaigi.confsched2019.di.createAppComponent
@@ -21,8 +22,18 @@ class App : DaggerApplication() {
         Stetho.initializeWithDefaults(this);
 
         setupEmojiCompat()
+        setupLeakCanary()
 
         sessionActionCreator.load()
+    }
+
+    private fun setupLeakCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
     }
 
     fun setupEmojiCompat() {
