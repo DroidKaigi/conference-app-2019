@@ -29,7 +29,7 @@ android {
 dependencies {
     api project(":data:firestore")
     api project(":ext:android")
-    api project(":session:model")
+    api project(":model")
 
     implementation Dep.Kotlin.Stdlib.jdk
     implementation Dep.Kotlin.coroutines

@@ -4,7 +4,7 @@ apply plugin: 'java-library'
 apply plugin: 'kotlin'
 
 dependencies {
-    api project(":session:model")
+    api project(":model")
     api project(":data:api")
 
     implementation Dep.Kotlin.Stdlib.jdk

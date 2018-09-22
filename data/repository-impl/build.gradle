@@ -31,7 +31,7 @@ dependencies {
     implementation project(":data:api")
     implementation project(":data:db")
     implementation project(":data:firestore")
-    api project(":session:model")
+    api project(":model")
 
     implementation Dep.Kotlin.Stdlib.jdk
     implementation Dep.Kotlin.serialization

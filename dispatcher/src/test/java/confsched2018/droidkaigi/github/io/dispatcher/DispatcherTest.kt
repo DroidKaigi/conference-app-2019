@@ -1,8 +1,8 @@
 package confsched2018.droidkaigi.github.io.dispatcher
 
 import com.nhaarman.mockitokotlin2.mock
-import io.github.droidkaigi.confsched2019.session.model.Action
-import io.github.droidkaigi.confsched2019.session.model.Session
+import io.github.droidkaigi.confsched2019.model.Action
+import io.github.droidkaigi.confsched2019.model.Session
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.channels.map
 import kotlinx.coroutines.experimental.channels.take

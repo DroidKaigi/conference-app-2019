@@ -1,6 +1,6 @@
 package confsched2018.droidkaigi.github.io.dispatcher
 
-import io.github.droidkaigi.confsched2019.session.model.Action
+import io.github.droidkaigi.confsched2019.model.Action
 import kotlinx.coroutines.experimental.GlobalScope
 import kotlinx.coroutines.experimental.channels.ArrayBroadcastChannel
 import kotlinx.coroutines.experimental.channels.ReceiveChannel

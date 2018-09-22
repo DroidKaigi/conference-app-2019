@@ -5,7 +5,7 @@ import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionWithSpeakers
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntity
 import io.github.droidkaigi.confsched2019.data.firestore.FireStore
-import io.github.droidkaigi.confsched2019.session.model.*
+import io.github.droidkaigi.confsched2019.model.*
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.awaitAll
 import kotlinx.coroutines.experimental.coroutineScope

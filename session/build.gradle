@@ -1,25 +1,24 @@
 import dependencies.Dep
 
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
+
     defaultConfig {
-        applicationId "io.github.droidkaigi.confsched2019"
         minSdkVersion 21
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        multiDexEnabled true
-        // For Android Studio Gradle sync
-        applicationIdSuffix ".debug"
+
     }
+
     buildTypes {
         release {
-            applicationIdSuffix ""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -30,47 +29,38 @@ android {
 }
 
 dependencies {
-    implementation project(":session")
     implementation project(":uicomponent")
-    implementation project(':user')
-    implementation project(':data:db-room')
-    implementation project(':data:repository-impl')
-    implementation project(':data:firestore-impl')
-    implementation project(':data:api-retrofit')
+    implementation project(":model")
+    implementation project(":data:repository")
+    implementation project(":ext:android")
     implementation project(":dispatcher")
 
     implementation Dep.Kotlin.Stdlib.jdk
     implementation Dep.Kotlin.coroutines
-
-    implementation Dep.threetenabp
+    implementation Dep.Kotlin.androidCoroutinesDispatcher
 
     implementation Dep.Android.appCompat
     implementation Dep.Android.constraint
+    implementation Dep.Android.recyclerView
+    api Dep.Android.emoji
+    implementation Dep.Android.design
 
-    implementation Dep.Stetho.stetho
+    implementation Dep.threetenabp
 
-    releaseImplementation Dep.LeakCanary.leakCanary
-    debugImplementation Dep.LeakCanary.leakCanary
-    debugImplementation Dep.LeakCanary.leakCanaryFragment
-
-    implementation Dep.Firebase.core
-    implementation Dep.Firebase.auth
-    implementation Dep.PlayServices.auth
+    implementation Dep.Arch.lifecycleExtensions
 
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport
-    kapt Dep.Dagger.compiler
-    kapt Dep.Dagger.androidProcessor
+
+    implementation Dep.Groupie.groupie
+    implementation Dep.Groupie.databinding
 
     testImplementation Dep.junit
     androidTestImplementation Dep.Android.testRunner
     androidTestImplementation Dep.Android.espressoCore
 }
-
 kotlin {
     experimental {
         coroutines 'enable'
     }
 }
-
-apply plugin: 'com.google.gms.google-services'
