@@ -32,6 +32,7 @@ object Dep {
 
     object Firebase {
         val core = "com.google.firebase:firebase-core:${Versions.firebase}"
+        val fireStore = "com.google.firebase:firebase-firestore:17.0.1"
         val auth = "com.google.firebase:firebase-auth:${Versions.firebase}"
     }
 

@@ -19,13 +19,14 @@ class DataSessionRepository @Inject constructor(
         val sessionDatabase: SessionDatabase,
         val fireStore: FireStore
 ) : SessionRepository {
-    override suspend fun sessions(): List<Session> = coroutineScope {
-        val fabSessionIdsAsync = async { fireStore.getFavoriteSessionIds() }
+    override suspend fun sessions(withFavorite: Boolean): List<Session> = coroutineScope {
+        val fabSessionIdsAsync = async { if (withFavorite) fireStore.getFavoriteSessionIds() else listOf() }
         val sessionsAsync = async { sessionDatabase.sessions() }
         val allSpeakersAsync = async { sessionDatabase.allSpeaker() }
 
         awaitAll(fabSessionIdsAsync, sessionsAsync, allSpeakersAsync)
         val sessionEntities = sessionsAsync.await()
+        if (sessionEntities.isEmpty()) return@coroutineScope listOf<Session>()
         val speakerEntities = allSpeakersAsync.await()
         val fabSessionIds = fabSessionIdsAsync.await()
         val firstDay = Instant.ofEpochMilli(sessionEntities.first().session.stime).atZone(ZoneId.of("JST", ZoneId.SHORT_IDS)).toLocalDate()

@@ -52,6 +52,10 @@ class AllSessionsFragment : DaggerFragment() {
 
     private val groupAdapter = GroupAdapter<ViewHolder<*>>()
 
+    private val onFavoriteClickListener = { clickedSession: Session.SpeechSession ->
+        allSessionActionCreator.toggleFavorite(clickedSession)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.allSessionsRecycler.adapter = groupAdapter
@@ -61,9 +65,7 @@ class AllSessionsFragment : DaggerFragment() {
                     .map { session ->
                         SessionItem(
                                 session = session,
-                                onFavoriteClickListener = { clickedSession ->
-                                    allSessionActionCreator.toggleFavorite(clickedSession)
-                                }
+                                onFavoriteClickListener = onFavoriteClickListener
                         )
                     }
             groupAdapter.update(list)

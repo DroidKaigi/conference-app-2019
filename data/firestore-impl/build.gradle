@@ -28,10 +28,13 @@ android {
 
 dependencies {
     api project(":data:firestore")
+    api project(":ext:android")
     api project(":session:model")
 
     implementation Dep.Kotlin.Stdlib.jdk
     implementation Dep.Kotlin.coroutines
+    implementation Dep.Firebase.auth
+    implementation Dep.Firebase.fireStore
     implementation Dep.Arch.lifecycleLiveData
     implementation Dep.threetenabp
 

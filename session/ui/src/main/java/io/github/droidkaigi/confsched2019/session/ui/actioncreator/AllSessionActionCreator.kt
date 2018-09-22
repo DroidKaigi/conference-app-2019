@@ -17,15 +17,16 @@ class AllSessionActionCreator @Inject constructor(
 ) : CoroutineScope by lifecycleOwner.toCoroutineScope() {
     fun load() {
         launch {
-            val sessions = sessionRepository.sessions()
-            dispatcher.send(Action.AllSessionLoaded(sessions))
+            // Firstore is very slow. So I load it without favorite first.
+            dispatcher.send(Action.AllSessionLoaded(sessionRepository.sessions(withFavorite = false)))
+            dispatcher.send(Action.AllSessionLoaded(sessionRepository.sessions(withFavorite = true)))
         }
     }
 
     fun toggleFavorite(session: Session.SpeechSession) {
         launch {
             sessionRepository.toggleFavorite(session)
-            val sessions = sessionRepository.sessions()
+            val sessions = sessionRepository.sessions(withFavorite = true)
             dispatcher.send(Action.AllSessionLoaded(sessions))
         }
     }

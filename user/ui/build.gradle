@@ -36,6 +36,7 @@ dependencies {
 
     implementation Dep.Kotlin.Stdlib.jdk
     implementation Dep.Kotlin.coroutines
+    implementation Dep.Kotlin.androidCoroutinesDispatcher
     implementation Dep.Kotlin.androidCoroutines
     implementation Dep.Android.appCompat
     implementation Dep.Stetho.stetho

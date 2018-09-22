@@ -35,6 +35,7 @@ dependencies {
     implementation Dep.Kotlin.coroutines
     implementation Dep.Kotlin.androidCoroutinesDispatcher
 
+    api Dep.PlayServices.auth
     api Dep.Arch.lifecycleLiveData
 }
 
