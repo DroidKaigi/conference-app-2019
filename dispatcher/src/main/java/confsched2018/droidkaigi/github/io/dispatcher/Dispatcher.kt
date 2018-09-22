@@ -15,7 +15,7 @@ class Dispatcher @Inject constructor() {
     private val _actions = ArrayBroadcastChannel<Action>(100)
     val events: ReceiveChannel<Action> get() = _actions.openSubscription()
 
-    inline fun <reified T : Action> subscrive(): ReceiveChannel<T> {
+    inline fun <reified T : Action> subscribe(): ReceiveChannel<T> {
         return events.filter { it is T }.map { it as T }
     }
 

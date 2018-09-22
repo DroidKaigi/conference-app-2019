@@ -23,7 +23,7 @@ class DispatcherTest {
 
         runBlocking {
             val allSessionLoaded = async {
-                dispatcher.subscrive<Action.AllSessionLoaded>().receive()
+                dispatcher.subscribe<Action.AllSessionLoaded>().receive()
             }
             val job = launch {
                 dispatcher.send(Action.AllSessionLoaded(sessions))
@@ -41,10 +41,10 @@ class DispatcherTest {
 
         runBlocking {
             val allSessionLoaded1 = async {
-                dispatcher.subscrive<Action.AllSessionLoaded>().receive()
+                dispatcher.subscribe<Action.AllSessionLoaded>().receive()
             }
             val allSessionLoaded2 = async {
-                dispatcher.subscrive<Action.AllSessionLoaded>().receive()
+                dispatcher.subscribe<Action.AllSessionLoaded>().receive()
             }
             val job = launch {
                 dispatcher.send(Action.AllSessionLoaded(sessions))
@@ -64,7 +64,7 @@ class DispatcherTest {
 
         runBlocking {
             val allSessionLoaded1 = async {
-                dispatcher.subscrive<Action.AllSessionLoaded>().take(2).toList()
+                dispatcher.subscribe<Action.AllSessionLoaded>().take(2).toList()
             }
             launch {
                 dispatcher.send(Action.AllSessionLoaded(sessions1))
@@ -85,10 +85,10 @@ class DispatcherTest {
 
         runBlocking {
             val allSessionLoaded1 = async {
-                dispatcher.subscrive<Action.AllSessionLoaded>().map { println("map1:" + it);it }.take(2).toList()
+                dispatcher.subscribe<Action.AllSessionLoaded>().map { println("map1:" + it);it }.take(2).toList()
             }
             val allSessionLoaded2 = async {
-                dispatcher.subscrive<Action.AllSessionLoaded>().map { println("map2:" + it);it }.take(2).toList()
+                dispatcher.subscribe<Action.AllSessionLoaded>().map { println("map2:" + it);it }.take(2).toList()
             }
             launch {
                 dispatcher.send(Action.AllSessionLoaded(sessions1))

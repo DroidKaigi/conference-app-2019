@@ -12,7 +12,7 @@ import javax.inject.Inject
 class AllSessionsStore @Inject constructor(
         dispatcher: Dispatcher
 ) : ViewModel() {
-    val sessionsLiveData: LiveData<List<Session>> = dispatcher.subscrive<Action.AllSessionLoaded>()
+    val sessionsLiveData: LiveData<List<Session>> = dispatcher.subscribe<Action.AllSessionLoaded>()
             .map { it.sessions }
             .toLiveData()
 }
