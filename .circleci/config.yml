@@ -1,17 +1,19 @@
 cache_version_keys: &cache_version_keys
   CACHE_VERSION_OF_PROJECT_DEPS: v1
+  CACHE_VERSION_OF_DANGER_CACHE: v1
 
 cache_keys:
   gradle_cache:
     primary: &primary_key_of_gradle_cache gradle-cache-{{ checksum "~/CACHE_VERSION_OF_PROJECT_DEPS" }}}-{{ checksum "~/project_hash.txt" }}
     keys: &all_keys_of_gradle_cache
       - *primary_key_of_gradle_cache
-      - gradle-cache-{{ checksum "~/CACHE_VERSION_OF_PROJECT_DEPS" }}}-
+      - gradle-cache-{{ checksum "~/CACHE_VERSION_OF_PROJECT_DEPS" }}-
       - gradle-cache-
   danger_cache:
-    primary: &primary_key_of_danger_cache danger-cache-{{ checksum "~/danger_cache" }}
+    primary: &primary_key_of_danger_cache danger-cache-{{ checksum "~/CACHE_VERSION_OF_DANGER_CACHE" }}-{{ checksum "~/danger_cache" }}
     keys: &all_keys_of_danger_cache
       - *primary_key_of_danger_cache
+      - danger-cache-{{ checksum "~/CACHE_VERSION_OF_DANGER_CACHE" }}-
       - danger-cache-
 
 docker_env:
@@ -32,7 +34,10 @@ shared_build_steps:
   - run: &init_bash
       name: Source the bash source
       command: |
+        echo "export REPOSITORY_ROOT=$(git rev-parse --show-toplevel)" >> $BASH_ENV
         echo "source $CIRCLE_WORKING_DIRECTORY/scripts/bash.source" >> $BASH_ENV
+        source $BASH_ENV
+        init_ci_stuff
   - run: &download_dpg
       name: Download a binary file of dpg
       command: |
@@ -48,8 +53,7 @@ jobs:
       - checkout
       - run: *init_bash
       - restore_cache: &restore_gradle_cache
-          keys:
-            <<: *all_keys_of_gradle_cache
+          keys: *all_keys_of_gradle_cache
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
@@ -73,8 +77,7 @@ jobs:
             apk_path=$(find frontend/build/outputs/apk -name "*.apk" | head -1)
             dpg procedure app-manage on-feature-branch --app "$apk_path" --android
       - restore_cache: &restore_danger_cache
-          keys:
-            <<: *all_keys_of_danger_cache
+          keys: *all_keys_of_danger_cache
       - run: &bundle_install_for_danger
           name: Bundle install for Danger
           command: |
