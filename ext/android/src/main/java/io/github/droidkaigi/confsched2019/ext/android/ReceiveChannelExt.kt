@@ -1,33 +1,29 @@
 package io.github.droidkaigi.confsched2019.ext.android
 
 import android.util.Log
+import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.Job
+import kotlinx.coroutines.experimental.*
 import kotlinx.coroutines.experimental.android.Main
 import kotlinx.coroutines.experimental.channels.ReceiveChannel
-import kotlinx.coroutines.experimental.channels.consume
-import kotlinx.coroutines.experimental.launch
-import kotlin.coroutines.experimental.CoroutineContext
 
-fun <T> ReceiveChannel<T>.toLiveData(defaultValue: T? = null): LiveData<T> = object : LiveData<T>(), CoroutineScope {
+@MainThread
+fun <T> ReceiveChannel<T>.toLiveData(defaultValue: T? = null):
+        LiveData<T> = object : LiveData<T>(),
+        CoroutineScope by GlobalScope {
     lateinit var job: Job
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
+    init {
+        if (defaultValue != null) {
+            value = defaultValue
+        }
+    }
 
     override fun onActive() {
         super.onActive()
-        job = Job()
-        launch {
-            if (defaultValue != null) {
-                value = defaultValue
-            }
-            consume {
-                for (element in this) {
-                    Log.d("ReceiveChannel", "postValue" + element)
-                    value = element
-                }
+        job = launch(Dispatchers.Main) {
+            for (element in this@toLiveData) {
+                Log.d("ReceiveChannel", "postValue:" + element)
+                postValue(element)
             }
         }
     }

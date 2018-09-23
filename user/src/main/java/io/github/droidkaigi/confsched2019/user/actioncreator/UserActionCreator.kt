@@ -53,10 +53,10 @@ class UserActionCreator @Inject constructor(
                 val activityResult = activity.activityResult(googleSignInClient.signInIntent)
                 when (activityResult) {
                     is Error -> {
-                        onError(activityResult.e)
+                        throw activityResult.e
                     }
                     is Cancelled -> {
-                        onError()
+                        throw RuntimeException()
                     }
                     is Ok -> {
                         val resultIntent = activityResult.data as Intent
@@ -65,7 +65,12 @@ class UserActionCreator @Inject constructor(
                     }
                 }
             } catch (e: Exception) {
-                onError(e)
+                try {
+                    firebaseAuth.signInAnonymously().await()
+                    dispatcher.send(Action.UserRegistered)
+                }catch (e:Exception){
+                    onError(e)
+                }
             }
         }
     }

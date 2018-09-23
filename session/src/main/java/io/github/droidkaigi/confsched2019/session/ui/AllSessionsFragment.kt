@@ -22,7 +22,7 @@ import io.github.droidkaigi.confsched2019.session.databinding.FragmentAllSession
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
-import io.github.droidkaigi.confsched2019.session.ui.store.SessionStore
+import io.github.droidkaigi.confsched2019.user.store.UserStore
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import javax.inject.Inject
 
@@ -31,12 +31,8 @@ class AllSessionsFragment : DaggerFragment() {
         fun newInstance() = AllSessionsFragment()
     }
 
-    @Inject
-    lateinit var sessionStore: SessionStore
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    @Inject
-    lateinit var allSessionActionCreator: AllSessionActionCreator
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject lateinit var allSessionActionCreator: AllSessionActionCreator
 
     lateinit var binding: FragmentAllSessionsBinding
 
@@ -45,11 +41,12 @@ class AllSessionsFragment : DaggerFragment() {
     private val allSessionsStore: AllSessionsStore by lazy {
         ViewModelProviders.of(this, viewModelFactory).get(AllSessionsStore::class.java)
     }
+    @Inject lateinit var userStore: UserStore
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_all_sessions, container, false)
         return binding.root
@@ -64,27 +61,25 @@ class AllSessionsFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.allSessionsRecycler.adapter = groupAdapter
-        progressTimeLatch = ProgressTimeLatch { showProgress->
+        progressTimeLatch = ProgressTimeLatch { showProgress ->
             binding.progressBar.isVisible = showProgress
+        }
+        userStore.logined.changed(this) {
+            allSessionActionCreator.load()
         }
         allSessionsStore.sessionsLiveData.changed(this) { sessions ->
             val items = sessions.filterIsInstance<Session.SpeechSession>()
-                    .map { session ->
-                        SessionItem(
-                                session = session,
-                                onFavoriteClickListener = onFavoriteClickListener
-                        )
-                    }
+                .map { session ->
+                    SessionItem(
+                        session = session,
+                        onFavoriteClickListener = onFavoriteClickListener
+                    )
+                }
             groupAdapter.update(items)
         }
         allSessionsStore.loadingStateLiveData.changed(this) {
             progressTimeLatch.loading = it == LoadingState.LOADING
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        allSessionActionCreator.load()
     }
 }
 

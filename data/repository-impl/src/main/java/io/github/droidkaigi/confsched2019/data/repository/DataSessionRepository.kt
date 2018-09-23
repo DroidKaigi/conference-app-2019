@@ -20,9 +20,9 @@ class DataSessionRepository @Inject constructor(
         val fireStore: FireStore
 ) : SessionRepository {
     override suspend fun sessions(withFavorite: Boolean): List<Session> = coroutineScope {
-        val fabSessionIdsAsync = async { if (withFavorite) fireStore.getFavoriteSessionIds() else listOf() }
         val sessionsAsync = async { sessionDatabase.sessions() }
         val allSpeakersAsync = async { sessionDatabase.allSpeaker() }
+        val fabSessionIdsAsync = async { if (withFavorite) fireStore.getFavoriteSessionIds() else listOf() }
 
         awaitAll(fabSessionIdsAsync, sessionsAsync, allSpeakersAsync)
         val sessionEntities = sessionsAsync.await()
