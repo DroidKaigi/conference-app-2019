@@ -1,119 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
->
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
 
     <data>
+
         <import type="android.view.View"/>
+
         <variable
-                name="session"
-                type="io.github.droidkaigi.confsched2019.model.Session.SpeechSession"
-        />
+            name="session"
+            type="io.github.droidkaigi.confsched2019.model.Session.SpeechSession"
+            />
+
         <variable
-                name="isShowDayNumber"
-                type="boolean"
-        />
+            name="isShowDayNumber"
+            type="boolean"
+            />
+
         <variable
-                name="searchQuery"
-                type="String"
-        />
+            name="searchQuery"
+            type="String"
+            />
+
         <variable
-                name="simplify"
-                type="boolean"
-        />
+            name="simplify"
+            type="boolean"
+            />
     </data>
 
     <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:targetApi="lollipop"
-    >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:targetApi="lollipop"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-        >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
             <TextView
-                    android:id="@+id/room"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:maxLines="3"
-                    app:layout_constraintStart_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="@{session.room.name}"
-                    tools:text=" / Room A"
-            />
+                android:id="@+id/room"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@{session.room.name}"
+                tools:text=" / Room A"
+                />
 
             <androidx.emoji.widget.EmojiTextView
-                    android:id="@+id/title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="10dp"
-                    android:text="@{session.title}"
-                    android:textAlignment="viewStart"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_goneMarginTop="12dp"
-                    tools:text="テストセッション"
-            />
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:text="@{session.title}"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_goneMarginTop="12dp"
+                tools:text="テストセッション"
+                />
 
             <androidx.emoji.widget.EmojiTextView
-                    android:id="@+id/description"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginTop="12dp"
-                    android:ellipsize="end"
-                    android:includeFontPadding="false"
-                    android:maxLines="3"
-                    android:paddingBottom="2dp"
-                    android:text="@{session.desc}"
-                    android:textAlignment="viewStart"
-                    android:visibility="@{simplify ? View.GONE : View.VISIBLE}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/title"
-                    app:layout_constraintTop_toBottomOf="@id/title"
-                    tools:text="Material is the metaphor A material metaphor is the unifying theory of a rationalized space and a system of motion. The material is grounded in tactile reality, inspired by the study of paper and ink, yet technologically advanced and open to imagination and magic."
-            />
+                android:id="@+id/description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="12dp"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:maxLines="3"
+                android:paddingBottom="2dp"
+                android:text="@{session.desc}"
+                android:textAlignment="viewStart"
+                android:visibility="@{simplify ? View.GONE : View.VISIBLE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/title"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                tools:text="Material is the metaphor A material metaphor is the unifying theory of a rationalized space and a system of motion. The material is grounded in tactile reality, inspired by the study of paper and ink, yet technologically advanced and open to imagination and magic."
+                />
 
             <androidx.emoji.widget.EmojiTextView
-                    android:id="@+id/message"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginTop="14dp"
-                    android:ellipsize="end"
-                    android:includeFontPadding="false"
-                    android:maxLines="3"
-                    android:paddingBottom="2dp"
-                    android:textAlignment="viewStart"
-                    android:visibility="@{session.message == null ? View.GONE : View.VISIBLE}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/title"
-                    app:layout_constraintTop_toBottomOf="@id/description"
-            />
+                android:id="@+id/message"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="14dp"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:maxLines="3"
+                android:paddingBottom="2dp"
+                android:textAlignment="viewStart"
+                android:visibility="@{session.message == null ? View.GONE : View.VISIBLE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/title"
+                app:layout_constraintTop_toBottomOf="@id/description"
+                />
 
             <ImageView
-                    android:id="@+id/favorite"
-                    android:layout_marginEnd="8dp"
-                    android:background="@{session.isFavorited ? @android:color/white : @android:color/black}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_height="40dp"
-                    android:layout_width="40dp"
-            />
+                android:id="@+id/favorite"
+                android:layout_marginEnd="8dp"
+                android:background="@{session.isFavorited ? @android:color/white : @android:color/black}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="40dp"
+                android:layout_width="40dp"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>
