@@ -23,19 +23,19 @@ internal abstract class ApiModule {
         @Provides
         fun retrofit(): Retrofit {
             val json = JSON(
-                    nonstrict = true,
-                    context = SerialContext()
+                nonstrict = true,
+                context = SerialContext()
 //                            .apply { registerSerializer(Instant::class, InstantSerializer) }
             )
             return Retrofit.Builder()
-                    .baseUrl("https://sessionize.com/api/v2/xtj7shk8/view/")
-                    .callFactory(OkHttpClient.Builder()
-                            .build())
-                    .addCallAdapterFactory(CoroutineCallAdapterFactory())
-                    .addConverterFactory(stringBased(MediaType.parse("application/json") as MediaType,
-                            json::parse,
-                            json::stringify))
-                    .build()
+                .baseUrl("https://sessionize.com/api/v2/xtj7shk8/view/")
+                .callFactory(OkHttpClient.Builder()
+                    .build())
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
+                .addConverterFactory(stringBased(MediaType.parse("application/json") as MediaType,
+                    json::parse,
+                    json::stringify))
+                .build()
         }
     }
 }

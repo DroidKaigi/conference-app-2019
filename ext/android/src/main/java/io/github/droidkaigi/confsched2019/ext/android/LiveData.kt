@@ -11,5 +11,5 @@ inline fun <T : Any> LiveData<T>.changed(
     owner: LifecycleOwner,
     crossinline onChanged: (T) -> Unit
 ): Removable<T> {
-  return nonNull().distinct().observe(owner, onChanged)
+    return nonNull().distinct().observe(owner, onChanged)
 }

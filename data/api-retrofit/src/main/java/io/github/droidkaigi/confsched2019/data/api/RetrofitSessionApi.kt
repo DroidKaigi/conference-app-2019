@@ -7,12 +7,10 @@ import retrofit2.Retrofit
 import retrofit2.http.GET
 import javax.inject.Inject
 
-
 class RetrofitSessionApi @Inject constructor(
-        retrofit: Retrofit
+    retrofit: Retrofit
 ) : SessionApi {
     val service = retrofit.create(SessionsApi::class.java)
-
 
     interface SessionsApi {
         @GET("all")
@@ -21,7 +19,7 @@ class RetrofitSessionApi @Inject constructor(
 
     override suspend fun getSessions(): Response {
         return service
-                .getSessions()
-                .await()
+            .getSessions()
+            .await()
     }
 }

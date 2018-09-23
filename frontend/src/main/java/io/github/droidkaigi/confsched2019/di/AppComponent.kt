@@ -33,5 +33,5 @@ interface AppComponent : AndroidInjector<App> {
 }
 
 fun Application.createAppComponent() = DaggerAppComponent.builder()
-        .application(this)
-        .build()
+    .application(this)
+    .build()

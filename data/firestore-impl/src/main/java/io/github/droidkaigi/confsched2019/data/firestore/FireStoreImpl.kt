@@ -15,7 +15,7 @@ class FireStoreImpl @Inject constructor() : FireStore {
     override suspend fun getFavoriteSessionIds(): List<Int> {
         val favoritesRef = getFavoritesRef()
         val snapshot = favoritesRef
-                .get().await()
+            .get().await()
         if (snapshot.isEmpty) {
             favoritesRef.add(mapOf("initialized" to true)).await()
         }
@@ -29,12 +29,12 @@ class FireStoreImpl @Inject constructor() : FireStore {
         val newFavorite = !nowFavorite
         if (document.exists()) {
             document.reference
-                    .delete()
-                    .await()
+                .delete()
+                .await()
         } else {
             document.reference
-                    .set(mapOf("favorite" to newFavorite))
-                    .await()
+                .set(mapOf("favorite" to newFavorite))
+                .await()
         }
     }
 
@@ -42,8 +42,7 @@ class FireStoreImpl @Inject constructor() : FireStore {
         val firebaseAuth = FirebaseAuth.getInstance()
         val firebaseUserId = firebaseAuth.currentUser?.uid ?: throw RuntimeException("RuntimeException")
         return FirebaseFirestore
-                .getInstance()
-                .collection("users/${firebaseUserId}/favorites")
+            .getInstance()
+            .collection("users/${firebaseUserId}/favorites")
     }
-
 }

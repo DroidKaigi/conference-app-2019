@@ -16,7 +16,7 @@ abstract class SessionSpeakerJoinDao {
     @CheckResult
     @Query("SELECT * FROM session")
     abstract fun getAllSessions():
-            List<SessionWithSpeakersImpl>
+        List<SessionWithSpeakersImpl>
 
     @Insert
     abstract fun insert(sessionSpeakerJoin: List<SessionSpeakerJoinEntityImpl>)

@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SessionMessageResponseImpl(
-        override val ja: String?,
-        override val en: String?
+    override val ja: String?,
+    override val en: String?
 ) : SessionMessageResponse

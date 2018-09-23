@@ -11,12 +11,12 @@ import kotlinx.coroutines.experimental.channels.map
 import javax.inject.Inject
 
 class AllSessionsStore @Inject constructor(
-        dispatcher: Dispatcher
+    dispatcher: Dispatcher
 ) : ViewModel() {
     val sessionsLiveData: LiveData<List<Session>> = dispatcher.subscribe<Action.AllSessionLoaded>()
-            .map { it.sessions }
-            .toLiveData(listOf())
-  val loadingStateLiveData: LiveData<LoadingState> = dispatcher.subscribe<Action.AllSessionLoadingStateChanged>()
-            .map { it.loadingState }
-            .toLiveData(LoadingState.LOADING)
+        .map { it.sessions }
+        .toLiveData(listOf())
+    val loadingStateLiveData: LiveData<LoadingState> = dispatcher.subscribe<Action.AllSessionLoadingStateChanged>()
+        .map { it.loadingState }
+        .toLiveData(LoadingState.LOADING)
 }

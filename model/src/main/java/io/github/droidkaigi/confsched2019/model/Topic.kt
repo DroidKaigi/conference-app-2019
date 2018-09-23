@@ -1,12 +1,12 @@
 package io.github.droidkaigi.confsched2019.model
 
 data class Topic(
-        val id: Int,
-        val name: String
+    val id: Int,
+    val name: String
 ) {
 
     fun getNameByLang(lang: Lang): String = name
-            .split(" / ")
-            .getOrElse(lang.ordinal, { name })
-            .trim()
+        .split(" / ")
+        .getOrElse(lang.ordinal, { name })
+        .trim()
 }

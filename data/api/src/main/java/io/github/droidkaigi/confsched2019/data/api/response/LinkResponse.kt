@@ -4,5 +4,4 @@ interface LinkResponse {
     val linkType: String?
     val title: String?
     val url: String?
-
 }

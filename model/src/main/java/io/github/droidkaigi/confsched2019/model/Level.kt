@@ -1,17 +1,17 @@
 package io.github.droidkaigi.confsched2019.model
 
 sealed class Level(
-        val id: Int,
-        open val name: String
+    val id: Int,
+    open val name: String
 ) {
     data class Beginner(override val name: String) : Level(BEGINNER, name)
     data class IntermediateOrExpert(override val name: String) : Level(INTERMEDIATE_OR_EXPERT, name)
     data class Niche(override val name: String) : Level(NICHE, name)
 
     fun getNameByLang(lang: Lang): String = name
-            .split(" / ")
-            .getOrElse(lang.ordinal, { name })
-            .trim()
+        .split(" / ")
+        .getOrElse(lang.ordinal, { name })
+        .trim()
 
     companion object {
         const val BEGINNER = 3540

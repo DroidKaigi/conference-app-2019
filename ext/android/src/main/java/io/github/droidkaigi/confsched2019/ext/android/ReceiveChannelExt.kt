@@ -9,9 +9,10 @@ import kotlinx.coroutines.experimental.channels.ReceiveChannel
 
 @MainThread
 fun <T> ReceiveChannel<T>.toLiveData(defaultValue: T? = null):
-        LiveData<T> = object : LiveData<T>(),
-        CoroutineScope by GlobalScope {
+    LiveData<T> = object : LiveData<T>(),
+    CoroutineScope by GlobalScope {
     lateinit var job: Job
+
     init {
         if (defaultValue != null) {
             value = defaultValue

@@ -16,9 +16,9 @@ object ApiComponentModule {
     @Singleton
     fun provideApi(application: Application): SessionApi {
         return ApiComponent.builder()
-                .context(application)
-                .coroutineContext(Dispatchers.IO)
-                .build()
-                .sessionApi()
+            .context(application)
+            .coroutineContext(Dispatchers.IO)
+            .build()
+            .sessionApi()
     }
 }

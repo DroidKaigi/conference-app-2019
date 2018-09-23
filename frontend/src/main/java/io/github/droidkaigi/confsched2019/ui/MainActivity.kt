@@ -13,7 +13,6 @@ import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
 import io.github.droidkaigi.confsched2019.user.store.UserStore
 import javax.inject.Inject
 
-
 class MainActivity : DaggerAppCompatActivity() {
     @Inject
     lateinit var userActionCreator: UserActionCreator
@@ -25,8 +24,8 @@ class MainActivity : DaggerAppCompatActivity() {
         setContentView(R.layout.main_activity)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, AllSessionsFragment.newInstance())
-                    .commitNow()
+                .replace(R.id.container, AllSessionsFragment.newInstance())
+                .commitNow()
         }
     }
 

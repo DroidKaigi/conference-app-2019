@@ -22,18 +22,17 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class UserActionCreator @Inject constructor(
-        val activity: AppCompatActivity,
-        val dispatcher: Dispatcher,
-        @Named("defaultFirebaseWebClientId")
-        val defaultFirebaseWebClientId: Int
+    val activity: AppCompatActivity,
+    val dispatcher: Dispatcher,
+    @Named("defaultFirebaseWebClientId")
+    val defaultFirebaseWebClientId: Int
 ) : CoroutineScope by activity.toCoroutineScope(Dispatchers.Main) {
     val googleSignInClient: GoogleSignInClient by lazy {
         GoogleSignIn.getClient(activity, GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(activity.getString(defaultFirebaseWebClientId))
-                .requestEmail()
-                .build())
+            .requestIdToken(activity.getString(defaultFirebaseWebClientId))
+            .requestEmail()
+            .build())
     }
-
 
     val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
@@ -68,7 +67,7 @@ class UserActionCreator @Inject constructor(
                 try {
                     firebaseAuth.signInAnonymously().await()
                     dispatcher.send(Action.UserRegistered)
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     onError(e)
                 }
             }

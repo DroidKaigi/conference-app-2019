@@ -12,9 +12,9 @@ import kotlinx.coroutines.experimental.launch
 import javax.inject.Inject
 
 class AllSessionActionCreator @Inject constructor(
-        val dispatcher: Dispatcher,
-        val sessionRepository: SessionRepository,
-        val lifecycleOwner: LifecycleOwner
+    val dispatcher: Dispatcher,
+    val sessionRepository: SessionRepository,
+    val lifecycleOwner: LifecycleOwner
 ) : CoroutineScope by lifecycleOwner.toCoroutineScope() {
     fun load() {
         launch {

@@ -20,10 +20,10 @@ import kotlinx.coroutines.experimental.withContext
 import javax.inject.Inject
 
 class RoomSessionDatabase @Inject constructor(
-        private val sessionDatabase: SessionCacheDatabase,
-        private val sessionDao: SessionDao,
-        private val speakerDao: SpeakerDao,
-        private val sessionSpeakerJoinDao: SessionSpeakerJoinDao
+    private val sessionDatabase: SessionCacheDatabase,
+    private val sessionDao: SessionDao,
+    private val speakerDao: SpeakerDao,
+    private val sessionSpeakerJoinDao: SessionSpeakerJoinDao
 ) : SessionDatabase {
     override fun sessionsChannel(): ReceiveChannel<List<SessionEntity>> = sessionDao.sessionsLiveData().observeChannel().map {
         it.orEmpty()
@@ -39,13 +39,13 @@ class RoomSessionDatabase @Inject constructor(
 //            sessionDatabase.runInTransaction {
             speakerDao.clearAndInsert(apiResponse.speakers.orEmpty().toSpeakerEntities())
             val sessions = apiResponse.sessions
-            val sessionEntities = sessions.toSessionEntities(apiResponse.categories.orEmpty(), apiResponse.rooms.orEmpty())
+            val sessionEntities = sessions.toSessionEntities(apiResponse.categories.orEmpty(),
+                apiResponse.rooms.orEmpty())
             sessionDao.clearAndInsert(sessionEntities)
             sessionSpeakerJoinDao.insert(sessions.toSessionSpeakerJoinEntities())
 //            }
         }
     }
-
 }
 
 // from: https://github.com/dmytrodanylyk/coroutines-arch/blob/master/library/src/main/java/com/kotlin/arch/LiveDataChannel.kt
@@ -60,7 +60,6 @@ class LiveDataChannel<T>(private val liveData: LiveData<T>)
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy() = close()
-
 }
 
 fun <T> LiveData<T>.observeChannel(lifecycleOwner: LifecycleOwner): LiveDataChannel<T> {

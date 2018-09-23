@@ -19,8 +19,6 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(AllSessionsStore::class)
     fun bindAllSessionsStore(
-            allSessionsStore: AllSessionsStore
+        allSessionsStore: AllSessionsStore
     ): ViewModel
-
-
 }

@@ -9,5 +9,4 @@ interface SpeakerEntity {
     var companyUrl: String?
     var blogUrl: String?
     var githubUrl: String?
-
 }

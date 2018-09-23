@@ -11,8 +11,8 @@ import kotlinx.coroutines.experimental.Job
 import kotlin.coroutines.experimental.CoroutineContext
 
 private class LifecycleCoroutineScope(
-        lifecycleOwner: LifecycleOwner,
-        private val coroutineDispatcher: CoroutineDispatcher
+    lifecycleOwner: LifecycleOwner,
+    private val coroutineDispatcher: CoroutineDispatcher
 ) : CoroutineScope, LifecycleObserver {
     private val job: Job
     override val coroutineContext: CoroutineContext get() = coroutineDispatcher + job

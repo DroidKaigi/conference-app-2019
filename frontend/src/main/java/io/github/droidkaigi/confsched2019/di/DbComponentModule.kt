@@ -15,10 +15,10 @@ object DbComponentModule {
     @Singleton
     fun provideItemStore(application: Application): SessionDatabase {
         return DbComponent.builder()
-                .context(application)
-                .coroutineContext(CommonPool)
-                .filename("droidkaigi.db")
-                .build()
-                .sessionDatabase()
+            .context(application)
+            .coroutineContext(CommonPool)
+            .filename("droidkaigi.db")
+            .build()
+            .sessionDatabase()
     }
 }

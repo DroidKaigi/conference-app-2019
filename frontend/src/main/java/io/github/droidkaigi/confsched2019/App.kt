@@ -36,19 +36,19 @@ class App : DaggerApplication() {
 
     fun setupEmojiCompat() {
         val fontRequest = FontRequest(
-                "com.google.android.gms.fonts",
-                "com.google.android.gms",
-                "Noto Color Emoji Compat",
-                R.array.com_google_android_gms_fonts_certs)
+            "com.google.android.gms.fonts",
+            "com.google.android.gms",
+            "Noto Color Emoji Compat",
+            R.array.com_google_android_gms_fonts_certs)
         val config = FontRequestEmojiCompatConfig(applicationContext, fontRequest)
-                .setReplaceAll(true)
-                .registerInitCallback(object : EmojiCompat.InitCallback() {
-                    override fun onInitialized() {
-                    }
+            .setReplaceAll(true)
+            .registerInitCallback(object : EmojiCompat.InitCallback() {
+                override fun onInitialized() {
+                }
 
-                    override fun onFailed(throwable: Throwable?) {
-                    }
-                })
+                override fun onFailed(throwable: Throwable?) {
+                }
+            })
         EmojiCompat.init(config)
     }
 

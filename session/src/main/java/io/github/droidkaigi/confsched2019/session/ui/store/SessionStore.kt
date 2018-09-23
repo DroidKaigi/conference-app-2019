@@ -11,6 +11,6 @@ import javax.inject.Singleton
 
 @Singleton
 class SessionStore @Inject constructor(
-        private val dispatcher: Dispatcher
+    private val dispatcher: Dispatcher
 ) {
 }

@@ -12,12 +12,12 @@ import io.github.droidkaigi.confsched2019.data.db.entity.SessionSpeakerJoinEntit
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntityImpl
 
 @Database(
-        entities = [
-            (SessionEntityImpl::class),
-            (SpeakerEntityImpl::class),
-            (SessionSpeakerJoinEntityImpl::class)
-        ],
-        version = 1
+    entities = [
+        (SessionEntityImpl::class),
+        (SpeakerEntityImpl::class),
+        (SessionSpeakerJoinEntityImpl::class)
+    ],
+    version = 1
 )
 @TypeConverters(Converters::class)
 abstract class SessionCacheDatabase : RoomDatabase() {

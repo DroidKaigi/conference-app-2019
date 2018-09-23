@@ -6,14 +6,14 @@ import io.github.droidkaigi.confsched2019.session.databinding.ItemSessionBinding
 import io.github.droidkaigi.confsched2019.model.Session
 
 data class SessionItem(
-        val session: Session.SpeechSession,
-        private val onFavoriteClickListener: (Session.SpeechSession) -> Unit,
-        private val isShowDayNumber: Boolean = false,
-        private val searchQuery: String = "",
-        private val simplify: Boolean = false,
-        private val userIdInDetail: String? = null
+    val session: Session.SpeechSession,
+    private val onFavoriteClickListener: (Session.SpeechSession) -> Unit,
+    private val isShowDayNumber: Boolean = false,
+    private val searchQuery: String = "",
+    private val simplify: Boolean = false,
+    private val userIdInDetail: String? = null
 ) : BindableItem<ItemSessionBinding>(
-        session.id.toLong()
+    session.id.toLong()
 ) {
 
     override fun bind(viewBinding: ItemSessionBinding, position: Int) {

@@ -4,8 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CategoryResponseImpl(
-        override val id: Int?,
-        override val sort: Int?,
-        override val title: String?,
-        override val items: List<CategoryItemResponseImpl?>?
+    override val id: Int?,
+    override val sort: Int?,
+    override val title: String?,
+    override val items: List<CategoryItemResponseImpl?>?
 ) : CategoryResponse

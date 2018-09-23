@@ -16,16 +16,16 @@ object RepositoryComponentModule {
     @Provides
     @Singleton
     fun provideRepository(
-            api: SessionApi,
-            database: SessionDatabase,
-            fireStore: FireStore
+        api: SessionApi,
+        database: SessionDatabase,
+        fireStore: FireStore
     ): SessionRepository {
         return RepositoryComponent.builder()
-                .api(api)
-                .database(database)
-                .fireStore(fireStore)
-                .coroutineContext(Dispatchers.Default)
-                .build()
-                .sessionRepository()
+            .api(api)
+            .database(database)
+            .fireStore(fireStore)
+            .coroutineContext(Dispatchers.Default)
+            .build()
+            .sessionRepository()
     }
 }
