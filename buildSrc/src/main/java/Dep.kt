@@ -1,13 +1,12 @@
 package dependencies
 
 private object Versions {
-    val firebase = "16.0.3"
     val retrofit = "2.4.0"
     val kotlin = "1.2.50"
     val stetho = "1.5.0"
     val aac = "2.0.0-rc01"
     val dagger = "2.16"
-    val coroutines = "0.26.0"
+    val coroutines = "0.26.1"
 }
 
 object Dep {
@@ -20,7 +19,7 @@ object Dep {
         val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
         val androidCoroutinesDispatcher = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
         val androidCoroutines = "net.devrieze:android-coroutines:0.7.0"
-        val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.5.1"
+        val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.6.2"
     }
 
     object Arch {
@@ -31,9 +30,9 @@ object Dep {
     }
 
     object Firebase {
-        val core = "com.google.firebase:firebase-core:${Versions.firebase}"
+        val core = "com.google.firebase:firebase-core:16.0.3"
         val fireStore = "com.google.firebase:firebase-firestore:17.0.1"
-        val auth = "com.google.firebase:firebase-auth:${Versions.firebase}"
+        val auth = "com.google.firebase:firebase-auth:16.0.3"
     }
 
     object PlayServices {
@@ -48,9 +47,9 @@ object Dep {
     }
 
     object Android {
-        val gradlePlugin = "com.android.tools.build:gradle:3.2.0-beta01"
-        val appCompat = "androidx.appcompat:appcompat:1.0.0-beta01"
-        val recyclerView = "androidx.recyclerview:recyclerview:1.0.0-beta01"
+        val gradlePlugin = "com.android.tools.build:gradle:3.2.0-rc03"
+        val appCompat = "androidx.appcompat:appcompat:1.0.0"
+        val recyclerView = "androidx.recyclerview:recyclerview:1.0.0"
         val constraint = "androidx.constraintlayout:constraintlayout:1.1.2"
         val testRunner = "androidx.test:runner:1.1.0-alpha3"
         val emoji = "androidx.emoji:emoji-appcompat:1.0.0-alpha1"
