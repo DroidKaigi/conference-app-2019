@@ -48,6 +48,7 @@ dependencies {
     implementation Dep.threetenabp
 
     implementation Dep.Arch.lifecycleExtensions
+    implementation Dep.AndroidKtx.core
 
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport

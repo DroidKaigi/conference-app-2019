@@ -73,7 +73,7 @@ class UserActionCreator @Inject constructor(
     private suspend fun onSignIn(account: GoogleSignInAccount) {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         val result = firebaseAuth.signInWithCredential(credential).await()
-        val user = result.user
+//        val user = result.user
         dispatcher.send(Action.UserRegistered)
     }
 

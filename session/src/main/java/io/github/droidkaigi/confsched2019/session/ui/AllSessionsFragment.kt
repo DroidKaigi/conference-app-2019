@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.xwray.groupie.GroupAdapter
@@ -14,13 +14,16 @@ import com.xwray.groupie.databinding.ViewHolder
 import dagger.Binds
 import dagger.Module
 import dagger.android.support.DaggerFragment
+import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.model.LoadingState
+import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentAllSessionsBinding
-import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionStore
+import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import javax.inject.Inject
 
 class AllSessionsFragment : DaggerFragment() {
@@ -36,6 +39,8 @@ class AllSessionsFragment : DaggerFragment() {
     lateinit var allSessionActionCreator: AllSessionActionCreator
 
     lateinit var binding: FragmentAllSessionsBinding
+
+    private lateinit var progressTimeLatch: ProgressTimeLatch
 
     private val allSessionsStore: AllSessionsStore by lazy {
         ViewModelProviders.of(this, viewModelFactory).get(AllSessionsStore::class.java)
@@ -59,17 +64,22 @@ class AllSessionsFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.allSessionsRecycler.adapter = groupAdapter
-        allSessionsStore.sessionsLiveData.observe(this, Observer {
-            val list = it.orEmpty()
-                    .filterIsInstance<Session.SpeechSession>()
+        progressTimeLatch = ProgressTimeLatch { showProgress->
+            binding.progressBar.isVisible = showProgress
+        }
+        allSessionsStore.sessionsLiveData.changed(this) { sessions ->
+            val items = sessions.filterIsInstance<Session.SpeechSession>()
                     .map { session ->
                         SessionItem(
                                 session = session,
                                 onFavoriteClickListener = onFavoriteClickListener
                         )
                     }
-            groupAdapter.update(list)
-        })
+            groupAdapter.update(items)
+        }
+        allSessionsStore.loadingStateLiveData.changed(this) {
+            progressTimeLatch.loading = it == LoadingState.LOADING
+        }
     }
 
     override fun onResume() {

@@ -4,6 +4,7 @@ import com.android.build.gradle.LibraryPlugin
 apply from: file('dependencyGraph.gradle')
 
 buildscript {
+    ext.kotlin_version = '1.2.70'
     ext.kotlin_version = '1.2.51'
     repositories {
         google()
@@ -11,7 +12,7 @@ buildscript {
         maven { url "https://kotlin.bintray.com/kotlinx" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-rc02'
+        classpath 'com.android.tools.build:gradle:3.2.0-rc03'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlinx:kotlinx-gradle-serialization-plugin:0.5.1"
         classpath 'com.google.gms:google-services:4.0.1'

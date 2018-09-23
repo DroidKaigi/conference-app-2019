@@ -11,7 +11,7 @@ import kotlinx.coroutines.experimental.channels.consume
 import kotlinx.coroutines.experimental.launch
 import kotlin.coroutines.experimental.CoroutineContext
 
-fun <T> ReceiveChannel<T>.toLiveData(): LiveData<T> = object : LiveData<T>(), CoroutineScope {
+fun <T> ReceiveChannel<T>.toLiveData(defaultValue: T? = null): LiveData<T> = object : LiveData<T>(), CoroutineScope {
     lateinit var job: Job
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
@@ -20,10 +20,13 @@ fun <T> ReceiveChannel<T>.toLiveData(): LiveData<T> = object : LiveData<T>(), Co
         super.onActive()
         job = Job()
         launch {
+            if (defaultValue != null) {
+                value = defaultValue
+            }
             consume {
                 for (element in this) {
                     Log.d("ReceiveChannel", "postValue" + element)
-                    postValue(element)
+                    value = element
                 }
             }
         }

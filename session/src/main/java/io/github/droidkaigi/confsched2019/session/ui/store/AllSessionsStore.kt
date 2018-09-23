@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import confsched2018.droidkaigi.github.io.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.toLiveData
 import io.github.droidkaigi.confsched2019.model.Action
+import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.Session
 import kotlinx.coroutines.experimental.channels.map
 import javax.inject.Inject
@@ -14,5 +15,8 @@ class AllSessionsStore @Inject constructor(
 ) : ViewModel() {
     val sessionsLiveData: LiveData<List<Session>> = dispatcher.subscribe<Action.AllSessionLoaded>()
             .map { it.sessions }
-            .toLiveData()
+            .toLiveData(listOf())
+  val loadingStateLiveData: LiveData<LoadingState> = dispatcher.subscribe<Action.AllSessionLoadingStateChanged>()
+            .map { it.loadingState }
+            .toLiveData(LoadingState.LOADING)
 }

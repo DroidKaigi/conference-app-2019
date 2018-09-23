@@ -1,11 +1,10 @@
 import dependencies.Dep
 
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 28
-
-
 
     defaultConfig {
         minSdkVersion 21
@@ -28,4 +27,8 @@ android {
 
 dependencies {
     implementation Dep.Android.design
+    implementation Dep.Kotlin.Stdlib.jdk
+}
+repositories {
+    mavenCentral()
 }

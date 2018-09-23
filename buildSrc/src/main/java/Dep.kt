@@ -5,7 +5,7 @@ private object Versions {
     val retrofit = "2.4.0"
     val kotlin = "1.2.50"
     val stetho = "1.5.0"
-    val aac = "2.0.0-beta01"
+    val aac = "2.0.0-rc01"
     val dagger = "2.16"
     val coroutines = "0.26.0"
 }
@@ -64,7 +64,13 @@ object Dep {
         val converterKotlinxSerialization = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.0.1"
     }
 
+    object AndroidKtx {
+        val core = "androidx.core:core-ktx:1.0.0-alpha1"
+    }
+
     val threetenabp = "com.jakewharton.threetenabp:threetenabp:1.0.5"
+
+    val liveDataKtx = "com.shopify:livedata-ktx:2.0.1"
 
     object LeakCanary {
         val leakCanary = "com.squareup.leakcanary:leakcanary-android:1.6.1"
