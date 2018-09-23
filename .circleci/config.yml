@@ -122,7 +122,10 @@ jobs:
             if [[ "$DPG_DISTRIBUTION_NAME" != "release" ]]; then
               dpg procedure app-manage on-deploy-branch --android --app-id io.github.droidkaigi.confsched2019.debug
             fi
-
+  placeholder:
+    <<: *go_defaults
+    steps:
+      - run: echo Hello
 workflows_filter:
   only_production_ready: &only_production_ready
     filters:
@@ -145,4 +148,4 @@ workflows:
               only: /master/
   production_ready:
     jobs:
-      - upload_translation: *only_production_ready
+      - placeholder: *only_production_ready
