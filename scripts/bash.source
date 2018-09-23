@@ -1,0 +1,9 @@
+REPOSITORY_ROOT="$(git rev-parse --show-toplevel)"
+
+export PATH="${REPOSITORY_ROOT}/scripts:$PATH"
+
+# Only on CircleCI
+
+if [[ "${CIRCLECI:-false}" == "true" ]]; then
+  source "${REPOSITORY_ROOT}/.circleci/scripts/bash.ci.source"
+fi

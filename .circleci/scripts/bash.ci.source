@@ -1,0 +1,40 @@
+# THIS FILE IS ONLY FOR CI
+
+##
+#
+# Required environment variables:
+#
+##
+
+### FUNCTIONS
+
+REPOSITORY_ROOT="$(git rev-parse --show-toplevel)"
+
+if [[ -n "${DEBUG_OUTPUT_DIR:-}" ]]; then
+  OUTPUT_DIR="$DEBUG_OUTPUT_DIR"
+else
+  OUTPUT_DIR="$HOME"
+fi
+
+##
+# create cache version files on CI
+# @param none
+##
+create_version_cache_files() {
+  local -r prefix_of_cache_version_key="CACHE_VERSION_OF_"
+  local env_var= var_name=
+
+  while read env_var; do
+    var_name="$(echo $env_var | awk -F= '$0=$1')"
+    echo "$env_var" | sed "s/$var_name=//" > "${OUTPUT_DIR}/${var_name}"
+  done < <(env | grep "$prefix_of_cache_version_key")
+}
+
+create_danger_cache_key() {
+  md5sum "${REPOSITORY_ROOT}/scripts/danger/Gemfile.lock" > "${OUTPUT_DIR}/danger_cache"
+}
+
+### FUNCTIONS: END
+
+mkhash > "${OUTPUT_DIR}/project_hash.txt"
+create_version_cache_files

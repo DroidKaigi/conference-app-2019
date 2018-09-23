@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -eux
+
+for_buildSrc() {
+  local path=
+  while read path; do
+    md5sum $path
+  done < <(find buildSrc -type f | sort)
+}
+
+for_gradle_files() {
+  local path=
+  while read path; do
+    md5sum $path
+  done < <(find . -name "build.gradle" | sort)
+}
+
+for_gradle_kts_files() {
+  local path=
+  while read path; do
+    md5sum $path
+  done < <(find . -name "build.gradle.kts" | sort)
+}
+
+# go to the root of this project
+cd "$(git rev-parse --show-toplevel)"
+
+for_buildSrc
+for_gradle_files
+for_gradle_kts_files

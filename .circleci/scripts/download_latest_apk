@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# Download an apk from the latest artifact of the production branch
+# @param $1 a path to save the apk
+
+set -o pipefail
+set -eu
+
+PRODUCTION_BRANCH="release"
+CIRCLECI_API_URL="https://circleci.com/api/v1.1/project/github/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}"
+
+latest_build_num() {
+  curl -u "$CIRCLECI_TOKEN:" "${CIRCLECI_API_URL}?branch=${PRODUCTION_BRANCH}&filter=completed" | \
+      ruby -rjson -e 'puts JSON.parse(STDIN.read).find { |j| j["build_parameters"]["CIRCLE_JOB"] == "build" }["build_num"]'
+}
+
+artifacts() {
+  local -r build_num="$1"
+  curl -u "$CIRCLECI_TOKEN:" "${CIRCLECI_API_URL}/${build_num}/artifacts"
+}
+
+grep_apk_url() {
+    cat - | ruby -rjson -e 'puts JSON.parse(STDIN.read).map { |j| j["url"] }.join("\n")' | grep "apk" | head -1 # find first
+}
+
+download_latest_apk() {
+  local -r save_to="$1"
+  local apk_url=$(artifacts $(latest_build_num) | grep_apk_url)
+
+  curl -o "${save_to}" "${apk_url}?circle-token=${CIRCLECI_TOKEN}"
+}
+
+download_latest_apk "$1"
