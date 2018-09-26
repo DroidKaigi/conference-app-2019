@@ -27,6 +27,14 @@ android {
     dataBinding {
         enabled = true
     }
+    lintOptions {
+        lintConfig file("${project.projectDir}/lint.xml")
+        xmlReport System.getenv("CI") == "true"
+        htmlReport System.getenv("CI") != "true"
+
+        xmlOutput file("lint-results.xml")
+        htmlOutput file("lint-results.html")
+    }
 }
 
 dependencies {
