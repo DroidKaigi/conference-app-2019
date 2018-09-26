@@ -41,7 +41,7 @@ shared_build_steps:
   - run: &download_dpg
       name: Download a binary file of dpg
       command: |
-        cd "$CIRCLE_WORKING_DIRECTORY/scripts"
+        cd $(eval echo $CIRCLE_WORKING_DIRECTORY)/scripts
         curl -sL "https://raw.githubusercontent.com/jmatsu/dpg/master/install.bash" | bash
         dpg -v
 
@@ -67,7 +67,7 @@ jobs:
       - run:
           name: Assemble apk
           command: |
-            ./gradlew assembleDebug --offline
+            ./gradlew assembleDebug # --offline # build with online-mode for now
       - store_artifacts:
           path: frontend/build/outputs/apk
       - run: *download_dpg
