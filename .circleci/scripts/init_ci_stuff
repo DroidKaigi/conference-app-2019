@@ -1,3 +1,8 @@
+#!/usr/bin/env bash
+
+set -o pipefail
+set -eu
+
 # THIS FILE IS ONLY FOR CI
 
 ##
@@ -69,3 +74,4 @@ pushd "$REPOSITORY_ROOT"
 
 mkhash > "${OUTPUT_DIR}/project_hash.txt"
 create_version_cache_files
+create_danger_cache_key
