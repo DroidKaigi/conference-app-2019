@@ -14,7 +14,7 @@ export MERGED_JUNIT_RESULT_FILE="$PWD/merged_junit.xml"
 dirs="$(find ./*/build/test-results -type d -name "*UnitTest"|xargs)"
 
 if [[ -n "$dirs" ]]; then
-  merge_junit_files -i "$dirs" -o "$PWD/merged_junit.xml"
+  merge_junit_files -i "$dirs" -o "$MERGED_JUNIT_RESULT_FILE"
 fi
 
 bundle exec danger --dangerfile="$danger_path/Dangerfile.assertions" --danger_id='assertions' --remove-previous-comments
