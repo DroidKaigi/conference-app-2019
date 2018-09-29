@@ -28,7 +28,6 @@ android {
         enabled = true
     }
     lintOptions {
-        lintConfig file("${project.projectDir}/lint.xml")
         xmlReport System.getenv("CI") == "true"
         htmlReport System.getenv("CI") != "true"
 
