@@ -8,7 +8,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import confsched2018.droidkaigi.github.io.dispatcher.Dispatcher
+import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.await
 import io.github.droidkaigi.confsched2019.ext.android.toCoroutineScope
 import io.github.droidkaigi.confsched2019.model.Action

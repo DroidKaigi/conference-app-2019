@@ -1,8 +1,8 @@
 package io.github.droidkaigi.confsched2019.session.ui.actioncreator
 
 import androidx.lifecycle.LifecycleOwner
-import confsched2018.droidkaigi.github.io.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.data.repository.SessionRepository
+import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.toCoroutineScope
 import io.github.droidkaigi.confsched2019.model.Action
 import io.github.droidkaigi.confsched2019.model.LoadingState

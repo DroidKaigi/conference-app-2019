@@ -2,19 +2,16 @@ package dependencies
 
 private object Versions {
     val retrofit = "2.4.0"
-    val kotlin = "1.2.50"
+    val kotlin = "1.2.71"
     val stetho = "1.5.0"
-    val aac = "2.0.0-rc01"
+    val aac = "2.0.0"
     val dagger = "2.16"
     val coroutines = "0.26.1"
 }
 
 object Dep {
     object Kotlin {
-        object Stdlib {
-            val jdk = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
-        }
-
+        val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
         val plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
         val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
         val androidCoroutinesDispatcher = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
@@ -47,14 +44,14 @@ object Dep {
     }
 
     object Android {
-        val gradlePlugin = "com.android.tools.build:gradle:3.2.0-rc03"
+        val gradlePlugin = "com.android.tools.build:gradle:3.2.0"
         val appCompat = "androidx.appcompat:appcompat:1.0.0"
         val recyclerView = "androidx.recyclerview:recyclerview:1.0.0"
         val constraint = "androidx.constraintlayout:constraintlayout:1.1.2"
         val testRunner = "androidx.test:runner:1.1.0-alpha3"
-        val emoji = "androidx.emoji:emoji-appcompat:1.0.0-alpha1"
+        val emoji = "androidx.emoji:emoji-appcompat:1.0.0"
         val espressoCore = "androidx.test.espresso:espresso-core:3.1.0-alpha3"
-        val design = "com.google.android.material:material:1.0.0-alpha1"
+        val design = "com.google.android.material:material:1.0.0"
     }
 
     object Retrofit {

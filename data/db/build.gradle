@@ -7,7 +7,7 @@ dependencies {
     api project(":model")
     api project(":data:api")
 
-    implementation Dep.Kotlin.Stdlib.jdk
+    implementation Dep.Kotlin.stdlib
     api Dep.Kotlin.coroutines
 
     testImplementation Dep.junit

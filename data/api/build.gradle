@@ -7,7 +7,7 @@ apply plugin: 'kotlin-kapt'
 dependencies {
     api project(":model")
 
-    implementation Dep.Kotlin.Stdlib.jdk
+    implementation Dep.Kotlin.stdlib
     implementation Dep.Kotlin.serialization
     implementation Dep.Retrofit.adapterKotlinCoroutines
 

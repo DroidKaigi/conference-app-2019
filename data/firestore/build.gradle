@@ -6,7 +6,7 @@ apply plugin: 'kotlin'
 dependencies {
     api project(":model")
 
-    implementation Dep.Kotlin.Stdlib.jdk
+    implementation Dep.Kotlin.stdlib
     api Dep.Kotlin.coroutines
 
     testImplementation Dep.junit

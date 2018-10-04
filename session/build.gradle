@@ -9,9 +9,6 @@ android {
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -36,7 +33,7 @@ dependencies {
     implementation project(":ext:android")
     implementation project(":dispatcher")
 
-    implementation Dep.Kotlin.Stdlib.jdk
+    implementation Dep.Kotlin.stdlib
     implementation Dep.Kotlin.coroutines
     implementation Dep.Kotlin.androidCoroutinesDispatcher
 
@@ -48,7 +45,7 @@ dependencies {
 
     implementation Dep.threetenabp
 
-    implementation Dep.Arch.lifecycleExtensions
+    api Dep.Arch.lifecycleExtensions
     implementation Dep.AndroidKtx.core
 
     implementation Dep.Dagger.core

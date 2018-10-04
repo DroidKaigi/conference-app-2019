@@ -10,9 +10,6 @@ android {
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -30,7 +27,7 @@ android {
 dependencies {
     api project(":data:api")
 
-    implementation Dep.Kotlin.Stdlib.jdk
+    implementation Dep.Kotlin.stdlib
     implementation Dep.Kotlin.serialization
     implementation Dep.Retrofit.adapterKotlinCoroutines
     implementation Dep.Retrofit.converterKotlinxSerialization

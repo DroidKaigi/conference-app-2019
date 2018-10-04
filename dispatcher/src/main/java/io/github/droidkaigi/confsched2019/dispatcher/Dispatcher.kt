@@ -1,4 +1,4 @@
-package confsched2018.droidkaigi.github.io.dispatcher
+package io.github.droidkaigi.confsched2019.dispatcher
 
 import io.github.droidkaigi.confsched2019.model.Action
 import kotlinx.coroutines.experimental.GlobalScope

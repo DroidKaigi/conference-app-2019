@@ -13,6 +13,7 @@ class FireStoreImpl @Inject constructor() : FireStore {
     class FavoritesCache(val expiredInstant: Instant = Instant.now().plus(1, ChronoUnit.HOURS))
 
     override suspend fun getFavoriteSessionIds(): List<Int> {
+        if (FirebaseAuth.getInstance().currentUser?.uid == null) return listOf()
         val favoritesRef = getFavoritesRef()
         val snapshot = favoritesRef
             .get().await()

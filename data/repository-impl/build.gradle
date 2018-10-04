@@ -9,9 +9,6 @@ android {
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -33,7 +30,7 @@ dependencies {
     implementation project(":data:firestore")
     api project(":model")
 
-    implementation Dep.Kotlin.Stdlib.jdk
+    implementation Dep.Kotlin.stdlib
     implementation Dep.Kotlin.serialization
     implementation Dep.Kotlin.coroutines
     implementation Dep.Arch.lifecycleLiveData

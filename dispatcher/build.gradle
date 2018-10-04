@@ -6,7 +6,7 @@ apply plugin: 'kotlin-kapt'
 
 dependencies {
     api project(":action")
-    implementation Dep.Kotlin.Stdlib.jdk
+    implementation Dep.Kotlin.stdlib
     api Dep.Kotlin.coroutines
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport

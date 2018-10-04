@@ -1,9 +1,10 @@
 import dependencies.Dep
 
+apply plugin: 'java-library'
 apply plugin: 'kotlin'
 
 dependencies {
-    implementation Dep.Kotlin.Stdlib.jdk
+    implementation Dep.Kotlin.stdlib
     implementation Dep.threetenabp
 
     testImplementation Dep.junit
