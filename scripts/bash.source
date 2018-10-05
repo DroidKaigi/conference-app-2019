@@ -1,0 +1,2 @@
+export PATH="${REPOSITORY_ROOT}/scripts:$PATH"
+export PATH="${REPOSITORY_ROOT}/.circleci/scripts:$PATH"

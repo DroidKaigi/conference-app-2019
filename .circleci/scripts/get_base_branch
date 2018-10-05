@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Call PR GitHub API and parse it to get the base branch
+
+set -o pipefail
+set -eu
+
+CIRCLECI_API_URL="https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls/$(basename $CIRCLE_PULL_REQUEST)"
+curl -H "Authorization: token $GITHUB_TOKEN" "$CIRCLECI_API_URL" | jq '.base.ref'

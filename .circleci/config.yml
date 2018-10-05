@@ -1,0 +1,154 @@
+cache_version_keys: &cache_version_keys
+  CACHE_VERSION_OF_PROJECT_DEPS: v1
+  CACHE_VERSION_OF_DANGER_CACHE: v1
+
+cache_keys:
+  gradle_cache:
+    primary: &primary_key_of_gradle_cache gradle-cache-{{ checksum "~/CACHE_VERSION_OF_PROJECT_DEPS" }}}-{{ checksum "~/project_hash.txt" }}
+    keys: &all_keys_of_gradle_cache
+      - *primary_key_of_gradle_cache
+      - gradle-cache-{{ checksum "~/CACHE_VERSION_OF_PROJECT_DEPS" }}-
+      - gradle-cache-
+  danger_cache:
+    primary: &primary_key_of_danger_cache danger-cache-{{ checksum "~/CACHE_VERSION_OF_DANGER_CACHE" }}-{{ checksum "~/danger_cache" }}
+    keys: &all_keys_of_danger_cache
+      - *primary_key_of_danger_cache
+      - danger-cache-{{ checksum "~/CACHE_VERSION_OF_DANGER_CACHE" }}-
+      - danger-cache-
+
+docker_env:
+  android_defaults: &android_defaults
+    working_directory: ~/conference-app-2019
+    docker:
+      - image: circleci/android:api-28-alpha
+    environment:
+      <<: *cache_version_keys
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx3072m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError" -Dorg.gradle.daemon=false'
+
+  go_defaults: &go_defaults
+    working_directory: ~/conference-app-2019
+    docker:
+      - image: jmatsu/dpg:v0.3.0
+
+shared_build_steps:
+  - run: &init_bash
+      name: Source the bash source
+      command: |
+        echo "export REPOSITORY_ROOT=$(git rev-parse --show-toplevel)" >> $BASH_ENV
+        echo "source $CIRCLE_WORKING_DIRECTORY/scripts/bash.source" >> $BASH_ENV
+        source $BASH_ENV
+        init_ci_stuff
+  - run: &download_dpg
+      name: Download a binary file of dpg
+      command: |
+        cd $(eval echo $CIRCLE_WORKING_DIRECTORY)/scripts
+        curl -sL "https://raw.githubusercontent.com/jmatsu/dpg/master/install.bash" | bash
+        dpg -v
+
+version: 2
+jobs:
+  assemble_apk:
+    <<: *android_defaults
+    steps:
+      - checkout
+      - run: *init_bash
+      - restore_cache: &restore_gradle_cache
+          keys: *all_keys_of_gradle_cache
+      - run:
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
+      - save_cache: &save_gradle_cache
+          paths:
+            - ~/.android
+            - ~/.gradle
+            - .gradle
+            - ~/.m2
+          key: *primary_key_of_gradle_cache
+      - run:
+          name: Assemble apk
+          command: |
+            ./gradlew assembleDebug # --offline # build with online-mode for now
+      - store_artifacts:
+          path: frontend/build/outputs/apk
+      - run: *download_dpg
+      - run:
+          name: Upload an apk and create a distribution by app-manage procedure.
+          command: |
+            apk_path=$(find frontend/build/outputs/apk -name "*.apk" | head -1)
+            dpg procedure app-manage on-feature-branch --app "$apk_path" --android
+      - restore_cache: &restore_danger_cache
+          keys: *all_keys_of_danger_cache
+      - run: &bundle_install_for_danger
+          name: Bundle install for Danger
+          command: |
+            cd scripts/danger
+            bundle check || bundle install --clean
+      - save_cache: &save_danger_cache
+          paths:
+            - ./scripts/danger/vendor/bundle
+          key: *primary_key_of_danger_cache
+      - run:
+          name: Compare apks with the latest production apk
+          command: |
+            if download_latest_apk "$PWD/latest.apk"; then
+              # find first
+              export BUILT_APK_FILE_PATH="$PWD/$(find frontend/build/outputs/apk -name "*.apk" | head -1)"
+              export OLD_BUILT_APK_FILE_PATH="$PWD/latest.apk"
+
+              if [[ -f "$BUILT_APK_FILE_PATH" ]] && [[ -f "$OLD_BUILT_APK_FILE_PATH" ]]; then
+                danger_compare_apks
+              else
+                echo "Cannot find apks" 1>&2
+              fi
+            fi
+  vital_check:
+    <<: *android_defaults
+    steps:
+      - checkout
+      - run: *init_bash
+      - restore_cache: *restore_gradle_cache
+      - run: ./gradlew lintDebug
+      - restore_cache: *restore_danger_cache
+      - run: *bundle_install_for_danger
+      - run: danger_assertions
+      - save_cache: *save_danger_cache
+
+  destroy_distribution:
+    <<: *go_defaults
+    steps:
+      - checkout
+      - run:
+          name: Destroy the associated distribution by app-manage procedure.
+          command: |
+            source <(dpg procedure app-manage expose)
+
+            if [[ "$DPG_DISTRIBUTION_NAME" != "release" ]]; then
+              dpg procedure app-manage on-deploy-branch --android --app-id io.github.droidkaigi.confsched2019.debug
+            fi
+  placeholder:
+    <<: *go_defaults
+    steps:
+      - run: echo Hello
+workflows_filter:
+  only_production_ready: &only_production_ready
+    filters:
+      branches:
+        only: /release/
+  except_production_ready: &except_production_ready
+    filters:
+      branches:
+        ignore: /release/
+
+workflows:
+  version: 2
+  staging_or_feature:
+    jobs:
+      - assemble_apk: *except_production_ready
+      - vital_check: *except_production_ready
+      - destroy_distribution:
+          filters:
+            branches:
+              only: /master/
+  production_ready:
+    jobs:
+      - placeholder: *only_production_ready

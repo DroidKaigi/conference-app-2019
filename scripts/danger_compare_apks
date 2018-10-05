@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -eu
+
+cd $(git rev-parse --show-toplevel)
+
+danger_path="$PWD/scripts/danger"
+
+export BUNDLE_PATH="$danger_path/vendor/bundle"
+export BUNDLE_GEMFILE="$danger_path/Gemfile"
+
+bundle exec danger --dangerfile="$danger_path/Dangerfile.compare_apks" --danger_id='compare-apks' --remove-previous-comments

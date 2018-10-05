@@ -1,0 +1,4 @@
+require 'pry'
+
+apkstats.apk_filepath=ENV.fetch('BUILT_APK_FILE_PATH')
+apkstats.compare_with(ENV.fetch('OLD_BUILT_APK_FILE_PATH'), do_report: true)

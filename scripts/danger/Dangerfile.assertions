@@ -1,0 +1,38 @@
+require 'pry'
+
+# Android Lint
+begin
+  # Skip gradle lint task
+  # It means we need to run lint tasks before running Danger
+  android_lint.skip_gradle_task = true
+
+  # Check modified/new files only
+  android_lint.filtering = true
+
+  # Default: Warning
+  # android_lint.severity = "Error"
+
+  # Report lint warnings
+  Dir.glob("**/lint-results*.xml").each do |xml|
+    android_lint.report_file = xml
+    android_lint.lint(inline_mode: true)
+  end
+end
+
+# JUnit
+begin
+  if File.exists?(ENV.fetch('MERGED_JUNIT_RESULT_FILE'))
+    # junit report
+    junit.parse ENV.fetch('MERGED_JUNIT_RESULT_FILE')
+    fail("Failed tests found") unless junit.failures.empty?
+  else
+    fail("Test results not found")
+  end
+end
+
+# LGTM
+begin
+  if status_report[:errors].length.zero? && status_report[:warnings].length.zero?
+    markdown("ALL GREEN :100:")
+  end
+end

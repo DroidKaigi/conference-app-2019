@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+set -o pipefail
+set -eu
+
+# THIS FILE IS ONLY FOR CI
+
+##
+#
+# Required environment variables:
+#
+##
+
+## Init
+
+if [[ -n "${DEBUG_OUTPUT_DIR:-}" ]]; then
+  OUTPUT_DIR="$DEBUG_OUTPUT_DIR"
+else
+  OUTPUT_DIR="$HOME"
+fi
+
+### FUNCTIONS
+
+mkhash() {
+  for_buildSrc() {
+    local path=
+    while read path; do
+      md5sum $path
+    done < <(find buildSrc -type f | sort)
+  }
+
+  for_gradle_files() {
+    local path=
+    while read path; do
+      md5sum $path
+    done < <(find . -name "build.gradle" | sort)
+  }
+
+  for_gradle_kts_files() {
+    local path=
+    while read path; do
+      md5sum $path
+    done < <(find . -name "build.gradle.kts" | sort)
+  }
+
+  for_buildSrc
+  for_gradle_files
+  for_gradle_kts_files
+}
+
+##
+# create cache version files on CI
+# @param none
+##
+create_version_cache_files() {
+  local -r prefix_of_cache_version_key="CACHE_VERSION_OF_"
+  local env_var= var_name=
+
+  while read env_var; do
+    var_name="$(echo $env_var | awk -F= '$0=$1')"
+    echo "$env_var" | sed "s/$var_name=//" > "${OUTPUT_DIR}/${var_name}"
+
+    echo "${OUTPUT_DIR}/${var_name}" 1>&2
+  done < <(env | grep "$prefix_of_cache_version_key")
+}
+
+create_danger_cache_key() {
+  md5sum "${REPOSITORY_ROOT}/scripts/danger/Gemfile.lock" > "${OUTPUT_DIR}/danger_cache"
+}
+
+### FUNCTIONS: END
+
+pushd "$REPOSITORY_ROOT"
+
+mkhash > "${OUTPUT_DIR}/project_hash.txt"
+create_version_cache_files
+create_danger_cache_key

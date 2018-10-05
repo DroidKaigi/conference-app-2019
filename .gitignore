@@ -6,6 +6,13 @@
 /.idea/modules.xml
 /.idea/workspace.xml
 .DS_Store
-/build
+lint-results.*
+build/
 /captures
 .externalNativeBuild
+
+*.apk
+*.aab
+*.apks
+
+**/vendor/bundle/
