@@ -46,7 +46,7 @@ dependencies {
     implementation project(':data:api-retrofit')
     implementation project(":dispatcher")
 
-    implementation Dep.Kotlin.stdlib
+    implementation Dep.Kotlin.stdlibJvm
     implementation Dep.Kotlin.coroutines
 
     implementation Dep.threetenabp

@@ -27,7 +27,7 @@ android {
 dependencies {
     api project(":data:db")
 
-    implementation Dep.Kotlin.stdlib
+    implementation Dep.Kotlin.stdlibJvm
     implementation Dep.Kotlin.serialization
     implementation Dep.Kotlin.coroutines
     implementation Dep.Arch.roomRuntime

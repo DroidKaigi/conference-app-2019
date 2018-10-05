@@ -2,7 +2,7 @@ package dependencies
 
 private object Versions {
     val retrofit = "2.4.0"
-    val kotlin = "1.2.71"
+    val kotlin = "1.3.0-rc-145"
     val stetho = "1.5.0"
     val aac = "2.0.0"
     val dagger = "2.16"
@@ -11,12 +11,13 @@ private object Versions {
 
 object Dep {
     object Kotlin {
-        val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
+        val stdlibCommon = "org.jetbrains.kotlin:kotlin-stdlib-common:${Versions.kotlin}"
+        val stdlibJvm = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
         val plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
         val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
         val androidCoroutinesDispatcher = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
         val androidCoroutines = "net.devrieze:android-coroutines:0.7.0"
-        val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.6.2"
+        val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.8.1-rc13"
     }
 
     object Arch {
@@ -57,11 +58,15 @@ object Dep {
     object Retrofit {
         val client = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
         val adapterKotlinCoroutines = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:1.0.0"
-        val converterKotlinxSerialization = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.0.1"
+        val converterKotlinxSerialization = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.1.0"
     }
 
     object AndroidKtx {
         val core = "androidx.core:core-ktx:1.0.0-alpha1"
+    }
+
+    object OkHttp{
+        val client = "com.squareup.okhttp3:okhttp:3.11.0"
     }
 
     val threetenabp = "com.jakewharton.threetenabp:threetenabp:1.0.5"

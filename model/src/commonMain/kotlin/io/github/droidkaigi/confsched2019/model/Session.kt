@@ -1,18 +1,18 @@
 package io.github.droidkaigi.confsched2019.model
 
-import org.threeten.bp.Instant
+import com.soywiz.klock.DateTime
 
 sealed class Session(
     open val id: String,
     open val dayNumber: Int,
-    open val startTime: Instant,
-    open val endTime: Instant
+    open val startTime: DateTime,
+    open val endTime: DateTime
 ) {
     data class SpeechSession(
         override val id: String,
         override val dayNumber: Int,
-        override val startTime: Instant,
-        override val endTime: Instant,
+        override val startTime: DateTime,
+        override val endTime: DateTime,
         val title: String,
         val desc: String,
         val room: Room,
@@ -28,15 +28,15 @@ sealed class Session(
     data class SpecialSession(
         override val id: String,
         override val dayNumber: Int,
-        override val startTime: Instant,
-        override val endTime: Instant,
+        override val startTime: DateTime,
+        override val endTime: DateTime,
         val title: Int,
         val room: Room?
     ) : Session(id, dayNumber, startTime, endTime)
 
     val isFinished: Boolean
-        get() = System.currentTimeMillis() > endTime.toEpochMilli()
+        get() =  DateTime.now().unix > endTime.unix
 
     val isOnGoing: Boolean
-        get() = System.currentTimeMillis() in startTime.toEpochMilli()..endTime.toEpochMilli()
+        get() = DateTime.now().unix in startTime.unix..endTime.unix
 }

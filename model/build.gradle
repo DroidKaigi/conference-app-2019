@@ -1,11 +1,21 @@
 import dependencies.Dep
 
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
-
-dependencies {
-    implementation Dep.Kotlin.stdlib
-    implementation Dep.threetenabp
-
-    testImplementation Dep.junit
+apply plugin: 'kotlin-multiplatform'
+kotlin {
+    targets {
+        fromPreset(presets.jvm, 'jvm')
+    }
+    sourceSets {
+        commonMain.dependencies {
+            api "com.soywiz:klock-common:0.2.0"
+            api Dep.Kotlin.stdlibCommon
+        }
+        jvmMain.dependencies {
+            api "com.soywiz:klock:0.2.0"
+            api Dep.Kotlin.stdlibJvm
+        }
+    }
+}
+configurations {
+    compileClasspath
 }

@@ -30,7 +30,7 @@ dependencies {
     implementation project(":data:firestore")
     api project(":model")
 
-    implementation Dep.Kotlin.stdlib
+    implementation Dep.Kotlin.stdlibJvm
     implementation Dep.Kotlin.serialization
     implementation Dep.Kotlin.coroutines
     implementation Dep.Arch.lifecycleLiveData

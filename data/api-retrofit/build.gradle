@@ -5,6 +5,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlinx-serialization'
 apply plugin: 'kotlin-kapt'
 
+
 android {
     compileSdkVersion 28
 
@@ -27,10 +28,11 @@ android {
 dependencies {
     api project(":data:api")
 
-    implementation Dep.Kotlin.stdlib
+    implementation Dep.Kotlin.stdlibJvm
     implementation Dep.Kotlin.serialization
     implementation Dep.Retrofit.adapterKotlinCoroutines
     implementation Dep.Retrofit.converterKotlinxSerialization
+    implementation Dep.OkHttp.client
     implementation Dep.Stetho.stetho
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport

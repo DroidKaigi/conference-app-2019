@@ -24,7 +24,7 @@ android {
 
 dependencies {
     implementation Dep.Android.design
-    implementation Dep.Kotlin.stdlib
+    implementation Dep.Kotlin.stdlibJvm
 }
 repositories {
     mavenCentral()

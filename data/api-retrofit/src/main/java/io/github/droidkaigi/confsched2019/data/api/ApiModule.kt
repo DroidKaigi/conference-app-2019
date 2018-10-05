@@ -5,7 +5,6 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.stringBased
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import kotlinx.serialization.SerialContext
 import kotlinx.serialization.json.JSON
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
@@ -18,23 +17,17 @@ internal abstract class ApiModule {
 
     @Module
     internal object Providers {
-
         @JvmStatic
         @Provides
         fun retrofit(): Retrofit {
-            val json = JSON(
-                nonstrict = true,
-                context = SerialContext()
-//                            .apply { registerSerializer(Instant::class, InstantSerializer) }
-            )
+            val contentType = MediaType.get("application/json; charset=utf-8")
+            val json = JSON.nonstrict
             return Retrofit.Builder()
                 .baseUrl("https://sessionize.com/api/v2/xtj7shk8/view/")
                 .callFactory(OkHttpClient.Builder()
                     .build())
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
-                .addConverterFactory(stringBased(MediaType.parse("application/json") as MediaType,
-                    json::parse,
-                    json::stringify))
+                .addConverterFactory(stringBased(contentType, json::parse, json::stringify))
                 .build()
         }
     }

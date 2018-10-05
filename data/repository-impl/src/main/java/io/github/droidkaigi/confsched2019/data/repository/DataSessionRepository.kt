@@ -34,7 +34,7 @@ class DataSessionRepository @Inject constructor(
         val speakerSessions = sessionEntities
             .map { it.toSession(speakerEntities, fabSessionIds, firstDay) }
             .sortedWith(compareBy(
-                { it.startTime.epochSecond },
+                { it.startTime.unix },
                 { it.room.id }
             ))
 
@@ -64,8 +64,8 @@ class DataSessionRepository @Inject constructor(
             dayNumber = org.threeten.bp.Period.between(
                 firstDay, Instant.ofEpochMilli(sessionEntity.stime).atZone(
                 ZoneId.of("JST", ZoneId.SHORT_IDS)).toLocalDate()).days + 1,
-            startTime = Instant.ofEpochMilli(sessionEntity.stime),
-            endTime = Instant.ofEpochMilli(sessionEntity.etime),
+            startTime = com.soywiz.klock.DateTime.fromUnix(sessionEntity.stime),
+            endTime = com.soywiz.klock.DateTime.fromUnix(sessionEntity.etime),
             title = sessionEntity.title,
             desc = sessionEntity.desc,
             room = Room(sessionEntity.room.id, sessionEntity.room.name),

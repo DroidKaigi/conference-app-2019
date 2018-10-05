@@ -30,7 +30,7 @@ dependencies {
     implementation Dep.Firebase.auth
     implementation Dep.PlayServices.auth
 
-    implementation Dep.Kotlin.stdlib
+    implementation Dep.Kotlin.stdlibJvm
     implementation Dep.Kotlin.coroutines
     implementation Dep.Kotlin.androidCoroutinesDispatcher
     implementation Dep.Kotlin.androidCoroutines

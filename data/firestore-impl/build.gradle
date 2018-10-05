@@ -28,7 +28,7 @@ dependencies {
     api project(":ext:android")
     api project(":model")
 
-    implementation Dep.Kotlin.stdlib
+    implementation Dep.Kotlin.stdlibJvm
     implementation Dep.Kotlin.coroutines
     implementation Dep.Firebase.auth
     implementation Dep.Firebase.fireStore

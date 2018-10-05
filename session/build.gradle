@@ -33,7 +33,7 @@ dependencies {
     implementation project(":ext:android")
     implementation project(":dispatcher")
 
-    implementation Dep.Kotlin.stdlib
+    implementation Dep.Kotlin.stdlibJvm
     implementation Dep.Kotlin.coroutines
     implementation Dep.Kotlin.androidCoroutinesDispatcher
 
