@@ -2,7 +2,7 @@
 
 ## Multi Module Project
 Green: Android Module  
-Red: Kotlin Module
+Red: Kotlin Module  
 Gray: Common Module
 
 Dashed line: implementation  
