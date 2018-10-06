@@ -7,11 +7,11 @@ kotlin {
     }
     sourceSets {
         commonMain.dependencies {
-            api "com.soywiz:klock-common:0.2.0"
+            api Dep.Klock.common
             api Dep.Kotlin.stdlibCommon
         }
         jvmMain.dependencies {
-            api "com.soywiz:klock:0.2.0"
+            api Dep.Klock.jvm
             api Dep.Kotlin.stdlibJvm
         }
     }

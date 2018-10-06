@@ -39,6 +39,8 @@ dependencies {
     kapt Dep.Dagger.compiler
     kapt Dep.Dagger.androidProcessor
     implementation Dep.threetenabp
+
+    testImplementation Dep.junit
 }
 
 kotlin {

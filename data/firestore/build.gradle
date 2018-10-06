@@ -1,19 +1,31 @@
 import dependencies.Dep
 
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
+apply plugin: 'kotlin-multiplatform'
 
-dependencies {
-    api project(":model")
-
-    implementation Dep.Kotlin.stdlibJvm
-    api Dep.Kotlin.coroutines
-
-    testImplementation Dep.junit
+kotlin {
+    targets {
+        fromPreset(presets.jvm, 'jvm')
+    }
+    sourceSets {
+        commonMain.dependencies {
+            api Dep.Kotlin.stdlibCommon
+            api project(":model")
+            api Dep.Kotlin.coroutines
+        }
+        jvmMain.dependencies {
+            api Dep.Kotlin.stdlibJvm
+            api project(":model")
+            api Dep.Kotlin.coroutines
+        }
+    }
 }
 
 kotlin {
     experimental {
         coroutines 'enable'
     }
+}
+
+configurations {
+    compileClasspath
 }

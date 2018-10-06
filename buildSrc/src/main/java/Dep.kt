@@ -65,7 +65,7 @@ object Dep {
         val core = "androidx.core:core-ktx:1.0.0-alpha1"
     }
 
-    object OkHttp{
+    object OkHttp {
         val client = "com.squareup.okhttp3:okhttp:3.11.0"
     }
 
@@ -87,6 +87,11 @@ object Dep {
     object Groupie {
         val groupie = "com.xwray:groupie:2.1.0"
         val databinding = "com.xwray:groupie-databinding:2.1.0"
+    }
+
+    object Klock {
+        val common = "com.soywiz:klock-common:0.2.0"
+        val jvm = "com.soywiz:klock:0.2.0"
     }
 
     val junit = "junit:junit:4.12"
