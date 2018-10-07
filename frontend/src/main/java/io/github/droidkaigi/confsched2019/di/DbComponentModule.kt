@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.data.db.DbComponent
 import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
-import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.CommonPool
 import javax.inject.Singleton
 
 @Module

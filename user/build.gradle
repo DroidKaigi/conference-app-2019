@@ -45,8 +45,3 @@ dependencies {
     implementation Dep.threetenabp
 }
 
-kotlin {
-    experimental {
-        coroutines 'enable'
-    }
-}

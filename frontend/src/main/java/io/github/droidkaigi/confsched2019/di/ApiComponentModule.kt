@@ -5,8 +5,8 @@ import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.data.api.ApiComponent
 import io.github.droidkaigi.confsched2019.data.api.SessionApi
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.IO
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import javax.inject.Singleton
 
 @Module

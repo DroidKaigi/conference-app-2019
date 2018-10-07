@@ -58,8 +58,3 @@ dependencies {
     androidTestImplementation Dep.Android.testRunner
     androidTestImplementation Dep.Android.espressoCore
 }
-kotlin {
-    experimental {
-        coroutines 'enable'
-    }
-}

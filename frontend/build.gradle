@@ -74,10 +74,5 @@ dependencies {
     androidTestImplementation Dep.Android.espressoCore
 }
 
-kotlin {
-    experimental {
-        coroutines 'enable'
-    }
-}
 
 apply plugin: 'com.google.gms.google-services'

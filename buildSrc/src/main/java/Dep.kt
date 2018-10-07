@@ -6,7 +6,7 @@ private object Versions {
     val stetho = "1.5.0"
     val aac = "2.0.0"
     val dagger = "2.16"
-    val coroutines = "0.26.1"
+    val coroutines = "0.26.1-eap13"
 }
 
 object Dep {
@@ -57,7 +57,7 @@ object Dep {
 
     object Retrofit {
         val client = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
-        val adapterKotlinCoroutines = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:1.0.0"
+        val adapterKotlinCoroutines = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
         val converterKotlinxSerialization = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.1.0"
     }
 

@@ -1,6 +1,6 @@
 package io.github.droidkaigi.confsched2019.data.api
 
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.stringBased
 import dagger.Binds
 import dagger.Module

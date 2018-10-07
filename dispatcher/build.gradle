@@ -17,8 +17,3 @@ dependencies {
     testImplementation Dep.mockitoKotlin
 }
 
-kotlin {
-    experimental {
-        coroutines 'enable'
-    }
-}

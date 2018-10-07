@@ -41,8 +41,3 @@ dependencies {
     kapt Dep.Dagger.androidProcessor
 }
 
-kotlin {
-    experimental {
-        coroutines 'enable'
-    }
-}

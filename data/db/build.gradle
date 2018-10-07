@@ -22,11 +22,6 @@ kotlin {
     }
 }
 
-kotlin {
-    experimental {
-        coroutines 'enable'
-    }
-}
 
 configurations {
     compileClasspath

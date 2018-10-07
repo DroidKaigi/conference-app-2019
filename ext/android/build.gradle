@@ -37,9 +37,4 @@ dependencies {
     api Dep.liveDataKtx
 }
 
-kotlin {
-    experimental {
-        coroutines 'enable'
-    }
-}
 

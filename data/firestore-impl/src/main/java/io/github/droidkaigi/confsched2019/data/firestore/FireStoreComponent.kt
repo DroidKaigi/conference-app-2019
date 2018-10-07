@@ -4,7 +4,7 @@ import dagger.BindsInstance
 import dagger.Component
 import io.github.droidkaigi.confsched2019.data.firestore.FireStore
 import javax.inject.Singleton
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlin.coroutines.CoroutineContext
 
 @Singleton
 @Component(modules = [

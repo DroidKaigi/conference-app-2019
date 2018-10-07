@@ -7,7 +7,7 @@ import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.firestore.FireStore
 import io.github.droidkaigi.confsched2019.data.repository.RepositoryComponent
 import io.github.droidkaigi.confsched2019.data.repository.SessionRepository
-import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 @Module

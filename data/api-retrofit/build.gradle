@@ -43,9 +43,4 @@ dependencies {
     testImplementation Dep.junit
 }
 
-kotlin {
-    experimental {
-        coroutines 'enable'
-    }
-}
 

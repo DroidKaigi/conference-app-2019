@@ -12,10 +12,10 @@ import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.await
 import io.github.droidkaigi.confsched2019.ext.android.toCoroutineScope
 import io.github.droidkaigi.confsched2019.model.Action
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.android.Main
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.android.Main
+import kotlinx.coroutines.launch
 import nl.adaptivity.android.coroutines.Maybe.*
 import nl.adaptivity.android.coroutines.activityResult
 import javax.inject.Inject

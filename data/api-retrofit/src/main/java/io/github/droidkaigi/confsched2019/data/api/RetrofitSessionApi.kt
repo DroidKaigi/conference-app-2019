@@ -2,7 +2,7 @@ package io.github.droidkaigi.confsched2019.data.api
 
 import io.github.droidkaigi.confsched2019.data.api.response.Response
 import io.github.droidkaigi.confsched2019.data.api.response.ResponseImpl
-import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.Deferred
 import retrofit2.Retrofit
 import retrofit2.http.GET
 import javax.inject.Inject
