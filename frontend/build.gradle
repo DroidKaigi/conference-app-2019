@@ -49,7 +49,7 @@ dependencies {
     implementation Dep.Kotlin.stdlibJvm
     implementation Dep.Kotlin.coroutines
 
-    implementation Dep.threetenabp
+    implementation Dep.Firebase.fireStore
 
     implementation Dep.Android.appCompat
     implementation Dep.Android.constraint

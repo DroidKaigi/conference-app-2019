@@ -1,11 +1,9 @@
 package io.github.droidkaigi.confsched2019.data.db.entity.mapper
 
+import com.soywiz.klock.DateTime
+import com.soywiz.klock.SimplerDateFormat
 import io.github.droidkaigi.confsched2019.data.api.response.*
 import io.github.droidkaigi.confsched2019.data.db.entity.*
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.ZoneId
-import org.threeten.bp.ZonedDateTime
-import org.threeten.bp.format.DateTimeFormatter
 
 fun List<SessionResponse>?.toSessionSpeakerJoinEntities(): List<SessionSpeakerJoinEntityImpl> {
     val sessionSpeakerJoinEntity: MutableList<SessionSpeakerJoinEntityImpl> = arrayListOf()
@@ -26,12 +24,8 @@ fun List<SessionResponse>.toSessionEntities(
         it.toSessionEntityImpl(categories, rooms)
     }
 
-private val FORMATTER: DateTimeFormatter =
-    DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
-
-private fun LocalDateTime.atJST(): ZonedDateTime {
-    return atZone(ZoneId.of("JST", ZoneId.SHORT_IDS))
-}
+private val FORMATTER: SimplerDateFormat =
+    SimplerDateFormat("yyyy-MM-dd'T'HH:mm:ssxxx")
 
 fun SessionResponse.toSessionEntityImpl(categories: List<CategoryResponse>,
     rooms: List<RoomResponse>): SessionEntityImpl {
@@ -43,8 +37,8 @@ fun SessionResponse.toSessionEntityImpl(categories: List<CategoryResponse>,
         id = id,
         title = title,
         desc = description,
-        stime = LocalDateTime.parse(startsAt, FORMATTER).atJST().toInstant().toEpochMilli(),
-        etime = LocalDateTime.parse(startsAt, FORMATTER).atJST().toInstant().toEpochMilli(),
+        stime = FORMATTER.parse(startsAt),
+        etime = FORMATTER.parse(endsAt),
         sessionFormat = sessionFormat.name!!,
         language = language.name!!,
         message = message?.let {

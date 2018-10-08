@@ -3,14 +3,30 @@ package io.github.droidkaigi.confsched2019.data.firestore
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
 import io.github.droidkaigi.confsched2019.ext.android.await
-import org.threeten.bp.Instant
-import org.threeten.bp.temporal.ChronoUnit
+import kotlinx.coroutines.channels.Channel
 import javax.inject.Inject
 
 // waiting https://github.com/Kotlin/kotlinx.coroutines/pull/523
 class FireStoreImpl @Inject constructor() : FireStore {
-    class FavoritesCache(val expiredInstant: Instant = Instant.now().plus(1, ChronoUnit.HOURS))
+
+    override suspend fun getFavoriteSessionChannel(): Channel<List<Int>> {
+        val favoritesRef = getFavoritesRef()
+        val snapshot = favoritesRef
+            .get().await()
+        if (snapshot.isEmpty) {
+            favoritesRef.add(mapOf("initialized" to true)).await()
+        }
+        val channel = Channel<List<Int>>()
+        favoritesRef.whereEqualTo("favorite", true)
+            .addSnapshotListener { favoriteSnapshot: QuerySnapshot?, firebaseFirestoreException: FirebaseFirestoreException? ->
+                favoriteSnapshot ?: return@addSnapshotListener
+                channel.offer(favoriteSnapshot.mapNotNull { it.id.toIntOrNull() })
+            }
+        return channel
+    }
 
     override suspend fun getFavoriteSessionIds(): List<Int> {
         if (FirebaseAuth.getInstance().currentUser?.uid == null) return listOf()

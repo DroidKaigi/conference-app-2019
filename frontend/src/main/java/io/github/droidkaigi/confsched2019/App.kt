@@ -4,13 +4,16 @@ import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
 import com.facebook.stetho.Stetho
-import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import io.github.droidkaigi.confsched2019.di.createAppComponent
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionActionCreator
 import javax.inject.Inject
+import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.google.firebase.firestore.FirebaseFirestore
+
+
 
 class App : DaggerApplication() {
     @Inject
@@ -18,13 +21,22 @@ class App : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        AndroidThreeTen.init(this)
         Stetho.initializeWithDefaults(this);
 
         setupEmojiCompat()
         setupLeakCanary()
+        setupFirestore()
 
         sessionActionCreator.load()
+    }
+
+    private fun setupFirestore() {
+        val firestore = FirebaseFirestore.getInstance()
+        val settings = FirebaseFirestoreSettings.Builder()
+            .setTimestampsInSnapshotsEnabled(true)
+            .setPersistenceEnabled(true)
+            .build()
+        firestore.setFirestoreSettings(settings)
     }
 
     private fun setupLeakCanary() {

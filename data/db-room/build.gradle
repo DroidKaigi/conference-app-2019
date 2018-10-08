@@ -33,7 +33,6 @@ dependencies {
     implementation Dep.Arch.roomRuntime
     api Dep.Arch.lifecycleLiveData
     kapt Dep.Arch.roomCompiler
-    implementation Dep.threetenabp
 
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport

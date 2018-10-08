@@ -33,7 +33,6 @@ dependencies {
     implementation Dep.Firebase.auth
     implementation Dep.Firebase.fireStore
     api Dep.Arch.lifecycleLiveData
-    implementation Dep.threetenabp
 
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport

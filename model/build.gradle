@@ -6,16 +6,36 @@ kotlin {
         fromPreset(presets.jvm, 'jvm')
     }
     sourceSets {
-        commonMain.dependencies {
-            api Dep.Klock.common
-            api Dep.Kotlin.stdlibCommon
+        commonMain {
+            languageSettings {
+                languageVersion = '1.3'
+                apiVersion = '1.3'
+                progressiveMode = true
+            }
+            dependencies {
+                api Dep.Klock.common
+                api Dep.Kotlin.stdlibCommon
+
+            }
         }
         jvmMain.dependencies {
             api Dep.Klock.jvm
             api Dep.Kotlin.stdlibJvm
+        }
+        commonTest.dependencies {
+            implementation Dep.Kotlin.commonModuleTest
+            implementation Dep.Kotlin.commonModuleTestAnnotations
+        }
+        jvmTest{
+            dependencies {
+                implementation Dep.Kotlin.jvmModuleTest
+                implementation Dep.Kotlin.jvmModuleTestJunit
+            }
+            dependsOn jvmMain
         }
     }
 }
 configurations {
     compileClasspath
 }
+

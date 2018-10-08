@@ -18,6 +18,10 @@ object Dep {
         val androidCoroutinesDispatcher = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
         val androidCoroutines = "net.devrieze:android-coroutines:0.7.0"
         val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.8.1-rc13"
+        val jvmModuleTest = "org.jetbrains.kotlin:kotlin-test"
+        val jvmModuleTestJunit = "org.jetbrains.kotlin:kotlin-test-junit"
+        val commonModuleTest = "org.jetbrains.kotlin:kotlin-test-common"
+        val commonModuleTestAnnotations = "org.jetbrains.kotlin:kotlin-test-annotations-common"
     }
 
     object Arch {
@@ -69,8 +73,6 @@ object Dep {
         val client = "com.squareup.okhttp3:okhttp:3.11.0"
     }
 
-    val threetenabp = "com.jakewharton.threetenabp:threetenabp:1.0.5"
-
     val liveDataKtx = "com.shopify:livedata-ktx:2.0.1"
 
     object LeakCanary {
@@ -90,8 +92,8 @@ object Dep {
     }
 
     object Klock {
-        val common = "com.soywiz:klock-common:0.2.0"
-        val jvm = "com.soywiz:klock:0.2.0"
+        val common = "com.soywiz:klock-common:0.5.0"
+        val jvm = "com.soywiz:klock:0.5.0"
     }
 
     val junit = "junit:junit:4.12"

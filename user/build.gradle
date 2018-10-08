@@ -42,6 +42,5 @@ dependencies {
     kapt Dep.Dagger.androidProcessor
     testImplementation Dep.junit
     androidTestImplementation Dep.Android.testRunner
-    implementation Dep.threetenabp
 }
 

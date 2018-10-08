@@ -43,7 +43,6 @@ dependencies {
     api Dep.Android.emoji
     implementation Dep.Android.design
 
-    implementation Dep.threetenabp
 
     api Dep.Arch.lifecycleExtensions
     implementation Dep.AndroidKtx.core

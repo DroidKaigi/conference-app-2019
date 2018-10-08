@@ -38,7 +38,6 @@ dependencies {
     implementation Dep.Dagger.androidSupport
     kapt Dep.Dagger.compiler
     kapt Dep.Dagger.androidProcessor
-    implementation Dep.threetenabp
 
     testImplementation Dep.junit
 }

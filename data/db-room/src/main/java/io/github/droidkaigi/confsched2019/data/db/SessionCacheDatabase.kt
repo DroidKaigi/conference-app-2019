@@ -19,7 +19,6 @@ import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntityImpl
     ],
     version = 1
 )
-@TypeConverters(Converters::class)
 abstract class SessionCacheDatabase : RoomDatabase() {
     abstract fun sessionDao(): SessionDao
     abstract fun speakerDao(): SpeakerDao
