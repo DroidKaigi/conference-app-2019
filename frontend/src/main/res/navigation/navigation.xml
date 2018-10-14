@@ -6,13 +6,26 @@
 
     <fragment
             android:id="@+id/session"
+            android:label="@string/session_label"
             android:name="io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment"
             tools:layout="@layout/fragment_all_sessions">
-        <!--android:label="@string/home"-->
-
-        <!--<action-->
-                <!--android:id="@+id/action_launcher_home_to_settings_activity"-->
-                <!--app:destination="@id/settings_activity"/>-->
-
+    </fragment>
+    <fragment
+            android:id="@+id/announce"
+            android:label="@string/announce_label"
+            android:name="io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment"
+            tools:layout="@layout/fragment_all_sessions">
+    </fragment>
+    <fragment
+            android:id="@+id/map"
+            android:label="@string/map_label"
+            android:name="io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment"
+            tools:layout="@layout/fragment_all_sessions">
+    </fragment>
+    <fragment
+            android:id="@+id/other"
+            android:label="@string/other_label"
+            android:name="io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment"
+            tools:layout="@layout/fragment_all_sessions">
     </fragment>
 </navigation>
