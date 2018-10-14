@@ -1,6 +1,6 @@
-import dependencies.Dep
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.LibraryPlugin
+import dependencies.Dep
 
 apply from: file('dependencyGraph.gradle')
 
@@ -31,6 +31,7 @@ allprojects {
         maven { url "https://kotlin.bintray.com/kotlinx" }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
         maven { url "http://kotlin.bintray.com/kotlin-dev" }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
     }
     plugins.whenPluginAdded {
         if (it instanceof LibraryPlugin) {
