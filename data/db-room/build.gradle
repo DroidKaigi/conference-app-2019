@@ -29,8 +29,10 @@ dependencies {
 
     implementation Dep.Kotlin.stdlibJvm
     implementation Dep.Kotlin.serialization
-    implementation Dep.Kotlin.coroutines
-    implementation Dep.Arch.roomRuntime
+    api Dep.Kotlin.coroutines
+    api Dep.Kotlin.coroutinesRx2
+    api Dep.Arch.roomRuntime
+    implementation Dep.Arch.roomRxJava
     api Dep.Arch.lifecycleLiveData
     kapt Dep.Arch.roomCompiler
 

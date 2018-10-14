@@ -7,6 +7,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionSpeakerJoinEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionWithSpeakersImpl
+import io.reactivex.Flowable
 import org.intellij.lang.annotations.Language
 
 @Dao
@@ -17,6 +18,13 @@ abstract class SessionSpeakerJoinDao {
     @Query("SELECT * FROM session")
     abstract fun getAllSessions():
         List<SessionWithSpeakersImpl>
+
+    @Language("RoomSql")
+    @Transaction
+    @CheckResult
+    @Query("SELECT * FROM session")
+    abstract fun getAllSessionsLiveData(): Flowable<List<SessionWithSpeakersImpl>>
+
 
     @Insert
     abstract fun insert(sessionSpeakerJoin: List<SessionSpeakerJoinEntityImpl>)

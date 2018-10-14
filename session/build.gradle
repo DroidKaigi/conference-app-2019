@@ -34,7 +34,7 @@ dependencies {
     implementation project(":dispatcher")
 
     implementation Dep.Kotlin.stdlibJvm
-    implementation Dep.Kotlin.coroutines
+    api Dep.Kotlin.coroutines
     implementation Dep.Kotlin.androidCoroutinesDispatcher
 
     implementation Dep.Android.appCompat

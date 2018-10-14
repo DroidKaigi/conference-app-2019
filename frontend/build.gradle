@@ -41,6 +41,7 @@ android {
 
 dependencies {
     implementation project(":session")
+    implementation project(":action")
     implementation project(":uicomponent")
     implementation project(':user')
     implementation project(':data:db-room')
@@ -50,7 +51,7 @@ dependencies {
     implementation project(":dispatcher")
 
     implementation Dep.Kotlin.stdlibJvm
-    implementation Dep.Kotlin.coroutines
+    api Dep.Kotlin.coroutines
 
     implementation Dep.Firebase.fireStore
 

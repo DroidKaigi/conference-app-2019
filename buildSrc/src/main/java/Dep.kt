@@ -6,7 +6,7 @@ private object Versions {
     val stetho = "1.5.0"
     val aac = "2.0.0"
     val dagger = "2.16"
-    val coroutines = "0.26.1-eap13"
+    val coroutines = "0.30.2-eap13"
     val navigation = "1.0.0-alpha06"
 }
 
@@ -18,6 +18,8 @@ object Dep {
         val stdlibJvm = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
         val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
         val androidCoroutinesDispatcher = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+        val coroutinesRx2 = "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:${Versions.coroutines}"
+        val coroutinesReactive = "org.jetbrains.kotlinx:kotlinx-coroutines-reactive:${Versions.coroutines}"
         val androidCoroutines = "net.devrieze:android-coroutines:0.7.0"
         val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.8.1-rc13"
         val jvmModuleTest = "org.jetbrains.kotlin:kotlin-test"
@@ -26,11 +28,15 @@ object Dep {
         val commonModuleTestAnnotations = "org.jetbrains.kotlin:kotlin-test-annotations-common"
     }
 
+    object RxJava {
+    }
+
     object Arch {
         val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.aac}"
         val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata:${Versions.aac}"
         val roomCompiler = "androidx.room:room-compiler:${Versions.aac}"
         val roomRuntime = "androidx.room:room-runtime:${Versions.aac}"
+        val roomRxJava =  "androidx.room:room-rxjava2:${Versions.aac}"
         object Navigation{
             val runtime = "android.arch.navigation:navigation-runtime:${Versions.navigation}"
             val runtimeKtx = "android.arch.navigation:navigation-runtime-ktx:${Versions.navigation}"

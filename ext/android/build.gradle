@@ -27,9 +27,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation Dep.Kotlin.coroutines
+    api Dep.Kotlin.coroutines
     implementation Dep.Kotlin.stdlibJvm
-    implementation Dep.Kotlin.coroutines
+    api Dep.Kotlin.coroutines
     implementation Dep.Kotlin.androidCoroutinesDispatcher
 
     api Dep.PlayServices.auth

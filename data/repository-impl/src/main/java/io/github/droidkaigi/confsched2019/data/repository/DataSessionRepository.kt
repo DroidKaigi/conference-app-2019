@@ -7,9 +7,12 @@ import io.github.droidkaigi.confsched2019.data.db.entity.SessionWithSpeakers
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntity
 import io.github.droidkaigi.confsched2019.data.firestore.FireStore
 import io.github.droidkaigi.confsched2019.model.*
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
+import io.reactivex.Observable
+import io.reactivex.functions.BiFunction
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.rx2.asObservable
+import kotlinx.coroutines.rx2.openSubscription
 import javax.inject.Inject
 
 class DataSessionRepository @Inject constructor(
@@ -28,22 +31,48 @@ class DataSessionRepository @Inject constructor(
         val speakerEntities = allSpeakersAsync.await()
         val fabSessionIds = fabSessionIdsAsync.await()
         val firstDay = DateTime(sessionEntities.first().session.stime)
-        sessionEntities.forEachIndexed { index, session->
-            if (index < 10)
-            println("entity starttime:"+session.session.stime+":"+session.session.title)
-        }
         val speakerSessions = sessionEntities
             .map { it.toSession(speakerEntities, fabSessionIds, firstDay) }
             .sortedWith(compareBy(
                 { it.startTime.unix },
                 { it.room.id }
             ))
-        speakerSessions.forEachIndexed { index, session->
-            if (index < 10)
-            println("starttime:"+session.startTime.unix+":"+session.title)
-        }
-
         speakerSessions//  + specialSessions
+    }
+
+    override suspend fun sessionChannel(): ReceiveChannel<List<Session>> = coroutineScope {
+        try {
+            val allSpeakerDeferred = async { sessionDatabase.allSpeaker() }
+            val fabSessionIdsObservable: Observable<List<Int>> = fireStore.getFavoriteSessionChannel()
+                .asObservable(Dispatchers.Default)
+//            .doOnNext { println("sessionChannel:fabSessionIdsObservable" + it) }
+            val sessionsObservable: Observable<List<SessionWithSpeakers>> = sessionDatabase.sessionsChannel()
+                .asObservable(Dispatchers.Default)
+//            .doOnNext { println("sessionChannel:sessionsObservable" + it) }
+
+            val speakerEntities = allSpeakerDeferred.await()
+            val observable: Observable<List<Session>> = Observable
+                .combineLatest(
+                    fabSessionIdsObservable,
+                    sessionsObservable,
+                    BiFunction<List<Int>, List<SessionWithSpeakers>, List<Session>> { fabSessionIds: List<Int>, sessionEntities: List<SessionWithSpeakers> ->
+                        val firstDay = DateTime(sessionEntities.first().session.stime)
+                        val speakerSessions = sessionEntities
+                            .map { it.toSession(speakerEntities, fabSessionIds, firstDay) }
+                            .sortedWith(compareBy(
+                                { it.startTime.unix },
+                                { it.room.id }
+                            ))
+                        speakerSessions//  + specialSessions
+                    }
+                )
+            val receiveChannel: ReceiveChannel<List<Session>> = observable
+                .openSubscription()
+            return@coroutineScope receiveChannel
+        }catch (e:Exception){
+            e.printStackTrace()
+            throw e
+        }
     }
 
     override suspend fun toggleFavorite(session: Session.SpeechSession) {

@@ -6,26 +6,30 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 import io.github.droidkaigi.confsched2019.ext.android.await
+import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.ReceiveChannel
 import javax.inject.Inject
 
 // waiting https://github.com/Kotlin/kotlinx.coroutines/pull/523
 class FireStoreImpl @Inject constructor() : FireStore {
 
-    override suspend fun getFavoriteSessionChannel(): Channel<List<Int>> {
+    override suspend fun getFavoriteSessionChannel(): ReceiveChannel<List<Int>> {
         val favoritesRef = getFavoritesRef()
         val snapshot = favoritesRef
             .get().await()
         if (snapshot.isEmpty) {
             favoritesRef.add(mapOf("initialized" to true)).await()
         }
-        val channel = Channel<List<Int>>()
+        val channel = BroadcastChannel<List<Int>>(Channel.CONFLATED)
         favoritesRef.whereEqualTo("favorite", true)
             .addSnapshotListener { favoriteSnapshot: QuerySnapshot?, firebaseFirestoreException: FirebaseFirestoreException? ->
                 favoriteSnapshot ?: return@addSnapshotListener
-                channel.offer(favoriteSnapshot.mapNotNull { it.id.toIntOrNull() })
+                val element = favoriteSnapshot.mapNotNull { it.id.toIntOrNull() }
+                println("getFavoriteSessionChannel:offer:"+element)
+                channel.offer(element)
             }
-        return channel
+        return channel.openSubscription()
     }
 
     override suspend fun getFavoriteSessionIds(): List<Int> {

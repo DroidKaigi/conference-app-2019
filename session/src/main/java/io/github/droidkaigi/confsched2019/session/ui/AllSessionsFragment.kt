@@ -19,10 +19,10 @@ import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentAllSessionsBinding
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
-import io.github.droidkaigi.confsched2019.user.store.UserStore
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionStore
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import javax.inject.Inject
 
@@ -32,17 +32,17 @@ class AllSessionsFragment : DaggerFragment() {
     }
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-    @Inject lateinit var allSessionActionCreator: AllSessionActionCreator
+    @Inject lateinit var sessionActionCreator: SessionActionCreator
 
     lateinit var binding: FragmentAllSessionsBinding
 
     private lateinit var progressTimeLatch: ProgressTimeLatch
 
+    @Inject lateinit var sessionStore: SessionStore
+
     private val allSessionsStore: AllSessionsStore by lazy {
         ViewModelProviders.of(this, viewModelFactory).get(AllSessionsStore::class.java)
     }
-    @Inject lateinit var userStore: UserStore
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,7 +55,7 @@ class AllSessionsFragment : DaggerFragment() {
     private val groupAdapter = GroupAdapter<ViewHolder<*>>()
 
     private val onFavoriteClickListener = { clickedSession: Session.SpeechSession ->
-        allSessionActionCreator.toggleFavorite(clickedSession)
+        sessionActionCreator.toggleFavorite(clickedSession)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -63,11 +63,11 @@ class AllSessionsFragment : DaggerFragment() {
         binding.allSessionsRecycler.adapter = groupAdapter
         progressTimeLatch = ProgressTimeLatch { showProgress ->
             binding.progressBar.isVisible = showProgress
+        }.apply {
+            loading = true
         }
-        userStore.logined.changed(this) {
-            allSessionActionCreator.load()
-        }
-        allSessionsStore.sessionsLiveData.changed(this) { sessions ->
+
+        sessionStore.sessions.changed(this) { sessions ->
             val items = sessions.filterIsInstance<Session.SpeechSession>()
                 .map { session ->
                     SessionItem(
@@ -77,7 +77,7 @@ class AllSessionsFragment : DaggerFragment() {
                 }
             groupAdapter.update(items)
         }
-        allSessionsStore.loadingStateLiveData.changed(this) {
+        sessionStore.loadingState.changed(this) {
             progressTimeLatch.loading = it == LoadingState.LOADING
         }
     }

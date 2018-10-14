@@ -5,20 +5,22 @@ import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
 import com.facebook.stetho.Stetho
 import com.google.firebase.FirebaseApp
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import io.github.droidkaigi.confsched2019.di.createAppComponent
+import io.github.droidkaigi.confsched2019.ext.android.changedForever
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionActionCreator
+import io.github.droidkaigi.confsched2019.user.store.UserStore
 import javax.inject.Inject
-import com.google.firebase.firestore.FirebaseFirestoreSettings
-import com.google.firebase.firestore.FirebaseFirestore
-
 
 
 class App : DaggerApplication() {
-    @Inject
-    lateinit var sessionActionCreator: SessionActionCreator
+    @Inject lateinit var sessionActionCreator: SessionActionCreator
+    @Inject lateinit var userStore: UserStore
+
 
     override fun onCreate() {
         super.onCreate()
@@ -28,7 +30,9 @@ class App : DaggerApplication() {
         setupLeakCanary()
         setupFirestore()
 
-        sessionActionCreator.load()
+        userStore.logined.changedForever {
+            sessionActionCreator.load()
+        }
     }
 
     private fun setupFirestore() {

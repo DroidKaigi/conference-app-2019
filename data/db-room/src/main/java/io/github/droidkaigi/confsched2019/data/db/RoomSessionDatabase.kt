@@ -7,6 +7,7 @@ import io.github.droidkaigi.confsched2019.data.db.dao.SessionSpeakerJoinDao
 import io.github.droidkaigi.confsched2019.data.db.dao.SpeakerDao
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionEntity
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionWithSpeakers
+import io.github.droidkaigi.confsched2019.data.db.entity.SessionWithSpeakersImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntity
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionEntities
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionSpeakerJoinEntities
@@ -16,6 +17,7 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.channels.LinkedListChannel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.map
+import kotlinx.coroutines.reactive.openSubscription
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -25,9 +27,7 @@ class RoomSessionDatabase @Inject constructor(
     private val speakerDao: SpeakerDao,
     private val sessionSpeakerJoinDao: SessionSpeakerJoinDao
 ) : SessionDatabase {
-    override fun sessionsChannel(): ReceiveChannel<List<SessionEntity>> = sessionDao.sessionsLiveData().observeChannel().map {
-        it.orEmpty()
-    }
+    override fun sessionsChannel(): ReceiveChannel<List<SessionWithSpeakers>> = sessionSpeakerJoinDao.getAllSessionsLiveData().openSubscription()
 
     override suspend fun sessions(): List<SessionWithSpeakers> = sessionSpeakerJoinDao.getAllSessions()
 
