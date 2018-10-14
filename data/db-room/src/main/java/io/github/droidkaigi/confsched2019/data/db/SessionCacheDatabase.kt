@@ -2,7 +2,6 @@ package io.github.droidkaigi.confsched2019.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import io.github.droidkaigi.confsched2019.data.db.dao.SessionDao
 import io.github.droidkaigi.confsched2019.data.db.dao.SessionSpeakerJoinDao

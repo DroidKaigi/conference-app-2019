@@ -11,6 +11,5 @@ internal abstract class FireStoreModule {
     abstract fun fireStore(impl: FireStoreImpl): FireStore
 
     @Module
-    internal object Providers {
-    }
+    internal object Providers
 }

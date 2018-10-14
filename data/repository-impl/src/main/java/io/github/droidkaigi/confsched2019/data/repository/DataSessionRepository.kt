@@ -9,8 +9,11 @@ import io.github.droidkaigi.confsched2019.data.firestore.FireStore
 import io.github.droidkaigi.confsched2019.model.*
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.rx2.asObservable
 import kotlinx.coroutines.rx2.openSubscription
 import javax.inject.Inject
@@ -69,7 +72,7 @@ class DataSessionRepository @Inject constructor(
             val receiveChannel: ReceiveChannel<List<Session>> = observable
                 .openSubscription()
             return@coroutineScope receiveChannel
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
             throw e
         }

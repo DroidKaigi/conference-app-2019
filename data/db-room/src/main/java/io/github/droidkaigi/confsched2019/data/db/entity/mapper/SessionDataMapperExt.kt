@@ -1,6 +1,5 @@
 package io.github.droidkaigi.confsched2019.data.db.entity.mapper
 
-import com.soywiz.klock.DateTime
 import com.soywiz.klock.SimplerDateFormat
 import io.github.droidkaigi.confsched2019.data.api.response.*
 import io.github.droidkaigi.confsched2019.data.db.entity.*
@@ -27,8 +26,10 @@ fun List<SessionResponse>.toSessionEntities(
 private val FORMATTER: SimplerDateFormat =
     SimplerDateFormat("yyyy-MM-dd'T'HH:mm:ssxxx")
 
-fun SessionResponse.toSessionEntityImpl(categories: List<CategoryResponse>,
-    rooms: List<RoomResponse>): SessionEntityImpl {
+fun SessionResponse.toSessionEntityImpl(
+    categories: List<CategoryResponse>,
+    rooms: List<RoomResponse>
+): SessionEntityImpl {
     val sessionFormat = categories.category(0, categoryItems[0])
     val language = categories.category(1, categoryItems[1])
     val topic = categories.category(2, categoryItems[2])

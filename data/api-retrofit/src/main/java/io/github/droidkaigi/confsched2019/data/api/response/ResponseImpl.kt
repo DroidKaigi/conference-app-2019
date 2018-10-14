@@ -9,4 +9,3 @@ data class ResponseImpl(
     override val speakers: List<SpeakerResponseImpl>?,
     override val categories: List<CategoryResponseImpl>?
 ) : Response
-

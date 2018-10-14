@@ -9,6 +9,5 @@ internal abstract class RepositoryModule {
     abstract fun sessionDatabase(impl: DataSessionRepository): SessionRepository
 
     @Module
-    internal object Providers {
-    }
+    internal object Providers
 }

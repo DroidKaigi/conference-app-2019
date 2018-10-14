@@ -17,4 +17,3 @@ class AllSessionActionCreator @Inject constructor(
     val lifecycleOwner: LifecycleOwner
 ) : CoroutineScope by lifecycleOwner.toCoroutineScope() {
 }
-

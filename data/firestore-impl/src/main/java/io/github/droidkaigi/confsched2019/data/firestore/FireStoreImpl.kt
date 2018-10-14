@@ -64,6 +64,6 @@ class FireStoreImpl @Inject constructor() : FireStore {
         val firebaseUserId = firebaseAuth.currentUser?.uid ?: throw RuntimeException("RuntimeException")
         return FirebaseFirestore
             .getInstance()
-            .collection("users/${firebaseUserId}/favorites")
+            .collection("users/$firebaseUserId/favorites")
     }
 }
