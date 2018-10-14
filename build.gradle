@@ -1,6 +1,7 @@
+import dependencies.Dep
+import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.LibraryPlugin
-import dependencies.Dep
 
 apply from: file('dependencyGraph.gradle')
 
@@ -39,6 +40,82 @@ allprojects {
                 // TODO replace with https://issuetracker.google.com/issues/72050365 once released.
                 it.generateBuildConfig.enabled = false
             }
+        }
+
+        if (it instanceof AppPlugin || it instanceof LibraryPlugin) {
+            project.with {
+                configurations {
+                    ktlint
+                }
+
+                dependencies {
+                    ktlint "com.github.shyiko:ktlint:0.28.0"
+                }
+
+                task ktlint(type: JavaExec, group: "Custom verification") {
+                    description = 'Check Kotlin code style.'
+                    args "--android", "--reporter=html,artifact=me.cassiano:ktlint-html-reporter:0.2.0,output=${buildDir}/ktlint/checkstyle.html", "--reporter=checkstyle,output=${buildDir}/ktlint/checkstyle.xml", 'src/main/**/*.kt', 'src/debug/**/*.kt', 'src/release/**/*.kt'
+                    // https://github.com/shyiko/ktlint/blob/5fe8d0e203275a1a3337dc9777b50ec2a34a58df/ktlint/src/main/kotlin/com/github/shyiko/ktlint/Main.kt
+                    main = 'com.github.shyiko.ktlint.Main'
+                    classpath = configurations.ktlint
+                }
+            }
+        }
+    }
+}
+
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenLocal()
+    }
+
+    plugins.matching { plugin ->
+        'com.android.build.gradle.AppPlugin' == plugin.class.name || 'com.android.build.gradle.LibraryPlugin' == plugin.class.name
+    }.whenPluginAdded {
+        project.with {
+            apply plugin: 'checkstyle'
+
+            configurations {
+                ktlint
+            }
+
+            dependencies {
+                ktlint "com.github.shyiko:ktlint:0.28.0"
+            }
+
+            task checkstyle(type: Checkstyle, group: "Custom verification") {
+                configFile file("${rootDir}/checkstyle.xml")
+                source 'src'
+                include '**/*.java'
+                exclude '**/Base64.java'
+                exclude 'src/test/**/*.java'
+                exclude 'src/androidTest/**/*.java'
+                reports {
+                    xml {
+                        destination "${buildDir}/checkstyle/checkstyle.xml"
+                    }
+                }
+                classpath = files()
+            }
+
+            task ktlint(type: JavaExec, group: "Custom verification") {
+                description = 'Check Kotlin code style.'
+                args "--android", "--reporter=html,artifact=me.cassiano:ktlint-html-reporter:0.2.0,output=${buildDir}/ktlint/checkstyle.html", "--reporter=checkstyle,output=${buildDir}/ktlint/checkstyle.xml", 'src/main/**/*.kt', 'src/debug/**/*.kt', 'src/release/**/*.kt'
+                // https://github.com/shyiko/ktlint/blob/5fe8d0e203275a1a3337dc9777b50ec2a34a58df/ktlint/src/main/kotlin/com/github/shyiko/ktlint/Main.kt
+                main = 'com.github.shyiko.ktlint.Main'
+                classpath = configurations.ktlint
+            }
+        }
+    }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).matching {
+        it.name.contains("Test")
+    }.all {
+        kotlinOptions {
+            jvmTarget = "1.8"
         }
     }
 }
