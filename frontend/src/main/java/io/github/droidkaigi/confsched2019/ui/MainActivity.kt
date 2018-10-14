@@ -2,6 +2,9 @@ package io.github.droidkaigi.confsched2019.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -23,9 +26,11 @@ class MainActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, AllSessionsFragment.newInstance())
-                .commitNow()
+            val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment
+            findViewById<BottomNavigationView>(R.id.bottom_nav_view)?.let { bottomNavView ->
+                NavigationUI.setupWithNavController(bottomNavView, navHostFragment.navController)
+            }
+
         }
     }
 

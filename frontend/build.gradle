@@ -3,6 +3,7 @@ import dependencies.Dep
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs'
 
 android {
     compileSdkVersion 28
@@ -53,6 +54,10 @@ dependencies {
 
     implementation Dep.Android.appCompat
     implementation Dep.Android.constraint
+
+    implementation Dep.Arch.Navigation.runtime
+    implementation Dep.Arch.Navigation.fragment
+    implementation Dep.Arch.Navigation.ui
 
     implementation Dep.Stetho.stetho
 

@@ -23,7 +23,7 @@ android {
 }
 
 dependencies {
-    implementation Dep.Android.design
+    api Dep.Android.design
     implementation Dep.Kotlin.stdlibJvm
 }
 repositories {

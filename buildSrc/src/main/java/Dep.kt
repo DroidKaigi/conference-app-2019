@@ -7,13 +7,15 @@ private object Versions {
     val aac = "2.0.0"
     val dagger = "2.16"
     val coroutines = "0.26.1-eap13"
+    val navigation = "1.0.0-alpha06"
 }
 
 object Dep {
     object Kotlin {
+        val plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+        val serializationPlugin = "org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}"
         val stdlibCommon = "org.jetbrains.kotlin:kotlin-stdlib-common:${Versions.kotlin}"
         val stdlibJvm = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
-        val plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
         val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
         val androidCoroutinesDispatcher = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
         val androidCoroutines = "net.devrieze:android-coroutines:0.7.0"
@@ -29,6 +31,15 @@ object Dep {
         val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata:${Versions.aac}"
         val roomCompiler = "androidx.room:room-compiler:${Versions.aac}"
         val roomRuntime = "androidx.room:room-runtime:${Versions.aac}"
+        object Navigation{
+            val runtime = "android.arch.navigation:navigation-runtime:${Versions.navigation}"
+            val runtimeKtx = "android.arch.navigation:navigation-runtime-ktx:${Versions.navigation}"
+            val fragment = "android.arch.navigation:navigation-fragment:${Versions.navigation}"
+            val ui = "android.arch.navigation:navigation-ui:${Versions.navigation}"
+            val fragmentKtx = "android.arch.navigation:navigation-fragment-ktx:${Versions.navigation}"
+            val safeArgsPlugin = "android.arch.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
+            val testingKtx = "android.arch.navigation:navigation-testing-ktx:${Versions.navigation}"
+        }
     }
 
     object Firebase {
@@ -38,6 +49,7 @@ object Dep {
     }
 
     object PlayServices {
+        val plugin = "com.google.gms:google-services:4.0.1"
         val auth = "com.google.android.gms:play-services-auth:15.0.1"
     }
 
