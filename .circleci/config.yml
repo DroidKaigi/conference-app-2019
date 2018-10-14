@@ -83,6 +83,7 @@ jobs:
           command: |
             cd scripts/danger
             bundle check || bundle install --clean
+          when: always
       - save_cache: &save_danger_cache
           paths:
             - ./scripts/danger/vendor/bundle
@@ -111,7 +112,10 @@ jobs:
       - run: ./gradlew ktlint --continue
       - restore_cache: *restore_danger_cache
       - run: *bundle_install_for_danger
-      - run: danger_assertions
+      - run:
+          name: Report lint results else
+          command: danger_assertions
+          when: always
       - save_cache: *save_danger_cache
 
   destroy_distribution:
