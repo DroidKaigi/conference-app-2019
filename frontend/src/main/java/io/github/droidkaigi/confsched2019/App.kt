@@ -4,6 +4,7 @@ import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
 import com.facebook.stetho.Stetho
+import com.google.firebase.FirebaseApp
 import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
@@ -31,6 +32,7 @@ class App : DaggerApplication() {
     }
 
     private fun setupFirestore() {
+        FirebaseApp.initializeApp(this)
         val firestore = FirebaseFirestore.getInstance()
         val settings = FirebaseFirestoreSettings.Builder()
             .setTimestampsInSnapshotsEnabled(true)
