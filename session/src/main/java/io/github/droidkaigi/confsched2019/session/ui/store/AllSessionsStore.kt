@@ -6,6 +6,4 @@ import javax.inject.Inject
 
 class AllSessionsStore @Inject constructor(
     dispatcher: Dispatcher
-) : ViewModel() {
-
-}
+) : ViewModel()

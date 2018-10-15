@@ -1,9 +1,7 @@
-package io.github.droidkaigi.confsched2019.data.repository
+package io.github.droidkaigi.confsched2019.data.firestore
 
 import dagger.Binds
 import dagger.Module
-import io.github.droidkaigi.confsched2019.data.firestore.FireStore
-import io.github.droidkaigi.confsched2019.data.firestore.FireStoreImpl
 
 @Module(includes = [FireStoreModule.Providers::class])
 internal abstract class FireStoreModule {

@@ -31,7 +31,9 @@ class DataSessionRepository @Inject constructor(
     override suspend fun sessions(withFavorite: Boolean): List<Session> = coroutineScope {
         val sessionsAsync = async { sessionDatabase.sessions() }
         val allSpeakersAsync = async { sessionDatabase.allSpeaker() }
-        val fabSessionIdsAsync = async { if (withFavorite) fireStore.getFavoriteSessionIds() else listOf() }
+        val fabSessionIdsAsync = async {
+            if (withFavorite) fireStore.getFavoriteSessionIds() else listOf()
+        }
 
         awaitAll(fabSessionIdsAsync, sessionsAsync, allSpeakersAsync)
         val sessionEntities = sessionsAsync.await()
@@ -45,16 +47,18 @@ class DataSessionRepository @Inject constructor(
                 { it.startTime.unix },
                 { it.room.id }
             ))
-        speakerSessions//  + specialSessions
+        speakerSessions //  + specialSessions
     }
 
     override suspend fun sessionChannel(): ReceiveChannel<List<Session>> = coroutineScope {
         try {
             val allSpeakerDeferred = async { sessionDatabase.allSpeaker() }
-            val fabSessionIdsObservable: Observable<List<Int>> = fireStore.getFavoriteSessionChannel()
+            val fabSessionIdsObservable: Observable<List<Int>> = fireStore
+                .getFavoriteSessionChannel()
                 .asObservable(Dispatchers.Default)
 //            .doOnNext { println("sessionChannel:fabSessionIdsObservable" + it) }
-            val sessionsObservable: Observable<List<SessionWithSpeakers>> = sessionDatabase.sessionsChannel()
+            val sessionsObservable: Observable<List<SessionWithSpeakers>> = sessionDatabase
+                .sessionsChannel()
                 .asObservable(Dispatchers.Default)
 //            .doOnNext { println("sessionChannel:sessionsObservable" + it) }
 
@@ -63,7 +67,8 @@ class DataSessionRepository @Inject constructor(
                 .combineLatest(
                     fabSessionIdsObservable,
                     sessionsObservable,
-                    BiFunction<List<Int>, List<SessionWithSpeakers>, List<Session>> { fabSessionIds: List<Int>, sessionEntities: List<SessionWithSpeakers> ->
+                    BiFunction<List<Int>, List<SessionWithSpeakers>, List<Session>> {
+                        fabSessionIds, sessionEntities: List<SessionWithSpeakers> ->
                         val firstDay = DateTime(sessionEntities.first().session.stime)
                         val speakerSessions = sessionEntities
                             .map { it.toSession(speakerEntities, fabSessionIds, firstDay) }
@@ -102,7 +107,8 @@ class DataSessionRepository @Inject constructor(
         require(speakers.isNotEmpty())
         return Session.SpeechSession(
             id = sessionEntity.id,
-            // dayNumber is starts with 1. Example: First day = 1, Second day = 2. So I plus 1 to period days
+            // dayNumber is starts with 1.
+            // Example: First day = 1, Second day = 2. So I plus 1 to period days
             dayNumber = ((sessionEntity.stime - firstDay.unix) / (60 * 1000 * 24)).toInt(),
             startTime = com.soywiz.klock.DateTime.fromUnix(sessionEntity.stime),
             endTime = com.soywiz.klock.DateTime.fromUnix(sessionEntity.etime),

@@ -82,8 +82,11 @@ fun List<SpeakerResponse>.toSpeakerEntities(): List<SpeakerEntityImpl> =
         )
     }
 
-private fun List<CategoryResponse>.category(categoryIndex: Int, categoryId: Int?): CategoryItemResponse =
-    this[categoryIndex].items!!.first { it!!.id == categoryId }!!
+private fun List<CategoryResponse>.category(
+    categoryIndex: Int,
+    categoryId: Int?
+): CategoryItemResponse {
+    return this[categoryIndex].items!!.first { it!!.id == categoryId }!!
+}
 
-private fun List<RoomResponse>.roomName(roomId: Int?): String =
-    first { it.id == roomId }.name!!
+private fun List<RoomResponse>.roomName(roomId: Int?): String = first { it.id == roomId }.name!!

@@ -3,8 +3,6 @@ package io.github.droidkaigi.confsched2019.data.firestore
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.QuerySnapshot
 import io.github.droidkaigi.confsched2019.ext.android.await
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
@@ -23,7 +21,7 @@ class FireStoreImpl @Inject constructor() : FireStore {
         }
         val channel = BroadcastChannel<List<Int>>(Channel.CONFLATED)
         favoritesRef.whereEqualTo("favorite", true)
-            .addSnapshotListener { favoriteSnapshot: QuerySnapshot?, firebaseFirestoreException: FirebaseFirestoreException? ->
+            .addSnapshotListener { favoriteSnapshot, firebaseFirestoreException ->
                 favoriteSnapshot ?: return@addSnapshotListener
                 val element = favoriteSnapshot.mapNotNull { it.id.toIntOrNull() }
                 println("getFavoriteSessionChannel:offer:" + element)
@@ -61,7 +59,8 @@ class FireStoreImpl @Inject constructor() : FireStore {
 
     fun getFavoritesRef(): CollectionReference {
         val firebaseAuth = FirebaseAuth.getInstance()
-        val firebaseUserId = firebaseAuth.currentUser?.uid ?: throw RuntimeException("RuntimeException")
+        val firebaseUserId = firebaseAuth.currentUser?.uid ?: throw RuntimeException(
+            "RuntimeException")
         return FirebaseFirestore
             .getInstance()
             .collection("users/$firebaseUserId/favorites")

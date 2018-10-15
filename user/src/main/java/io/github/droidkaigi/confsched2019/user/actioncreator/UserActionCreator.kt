@@ -29,10 +29,13 @@ class UserActionCreator @Inject constructor(
     val defaultFirebaseWebClientId: Int
 ) : CoroutineScope by activity.toCoroutineScope(Dispatchers.Main) {
     val googleSignInClient: GoogleSignInClient by lazy {
-        GoogleSignIn.getClient(activity, GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(activity.getString(defaultFirebaseWebClientId))
-            .requestEmail()
-            .build())
+        GoogleSignIn.getClient(
+            activity,
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(activity.getString(defaultFirebaseWebClientId))
+                .requestEmail()
+                .build()
+        )
     }
 
     val firebaseAuth: FirebaseAuth by lazy {
@@ -60,7 +63,9 @@ class UserActionCreator @Inject constructor(
                     }
                     is Ok -> {
                         val resultIntent = activityResult.data as Intent
-                        val account = GoogleSignIn.getSignedInAccountFromIntent(resultIntent).await()
+                        val account = GoogleSignIn
+                            .getSignedInAccountFromIntent(resultIntent)
+                            .await()
                         onSignIn(account)
                     }
                 }

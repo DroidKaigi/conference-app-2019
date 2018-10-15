@@ -49,7 +49,12 @@ class AllSessionsFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_all_sessions, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_all_sessions,
+            container,
+            false
+        )
         return binding.root
     }
 
