@@ -26,7 +26,7 @@ class FireStoreImpl @Inject constructor() : FireStore {
             .addSnapshotListener { favoriteSnapshot: QuerySnapshot?, firebaseFirestoreException: FirebaseFirestoreException? ->
                 favoriteSnapshot ?: return@addSnapshotListener
                 val element = favoriteSnapshot.mapNotNull { it.id.toIntOrNull() }
-                println("getFavoriteSessionChannel:offer:"+element)
+                println("getFavoriteSessionChannel:offer:" + element)
                 channel.offer(element)
             }
         return channel.openSubscription()

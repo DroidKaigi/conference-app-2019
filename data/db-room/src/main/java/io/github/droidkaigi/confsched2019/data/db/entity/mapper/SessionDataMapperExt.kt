@@ -1,8 +1,18 @@
 package io.github.droidkaigi.confsched2019.data.db.entity.mapper
 
 import com.soywiz.klock.SimplerDateFormat
-import io.github.droidkaigi.confsched2019.data.api.response.*
-import io.github.droidkaigi.confsched2019.data.db.entity.*
+import io.github.droidkaigi.confsched2019.data.api.response.CategoryItemResponse
+import io.github.droidkaigi.confsched2019.data.api.response.CategoryResponse
+import io.github.droidkaigi.confsched2019.data.api.response.RoomResponse
+import io.github.droidkaigi.confsched2019.data.api.response.SessionResponse
+import io.github.droidkaigi.confsched2019.data.api.response.SpeakerResponse
+import io.github.droidkaigi.confsched2019.data.db.entity.LevelEntityImpl
+import io.github.droidkaigi.confsched2019.data.db.entity.MessageEntityImpl
+import io.github.droidkaigi.confsched2019.data.db.entity.RoomEntityImpl
+import io.github.droidkaigi.confsched2019.data.db.entity.SessionEntityImpl
+import io.github.droidkaigi.confsched2019.data.db.entity.SessionSpeakerJoinEntityImpl
+import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntityImpl
+import io.github.droidkaigi.confsched2019.data.db.entity.TopicEntityImpl
 
 fun List<SessionResponse>?.toSessionSpeakerJoinEntities(): List<SessionSpeakerJoinEntityImpl> {
     val sessionSpeakerJoinEntity: MutableList<SessionSpeakerJoinEntityImpl> = arrayListOf()

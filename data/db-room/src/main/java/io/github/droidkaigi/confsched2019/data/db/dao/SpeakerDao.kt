@@ -1,10 +1,13 @@
 package io.github.droidkaigi.confsched2019.data.db.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Transaction
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntityImpl
 
-@Dao
-abstract class SpeakerDao {
+@Dao abstract class SpeakerDao {
     @Query("SELECT * FROM speaker")
     abstract fun getAllSpeaker(): List<SpeakerEntityImpl>
 

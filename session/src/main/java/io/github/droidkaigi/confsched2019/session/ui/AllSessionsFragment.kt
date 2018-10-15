@@ -43,6 +43,7 @@ class AllSessionsFragment : DaggerFragment() {
     private val allSessionsStore: AllSessionsStore by lazy {
         ViewModelProviders.of(this, viewModelFactory).get(AllSessionsStore::class.java)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

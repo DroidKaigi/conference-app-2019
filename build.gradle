@@ -1,7 +1,7 @@
-import dependencies.Dep
 import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.LibraryPlugin
+import dependencies.Dep
 
 apply from: file('dependencyGraph.gradle')
 
@@ -59,7 +59,7 @@ allprojects {
                     main = 'com.github.shyiko.ktlint.Main'
                     classpath = configurations.ktlint
                 }
-                
+
                 task ktlintFormat(type: JavaExec, group: "formatting") {
                     description = "Format Kotlin files based on code style."
                     classpath = configurations.ktlint

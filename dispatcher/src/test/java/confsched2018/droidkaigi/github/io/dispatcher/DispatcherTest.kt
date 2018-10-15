@@ -4,9 +4,6 @@ import com.nhaarman.mockitokotlin2.mock
 import io.github.droidkaigi.confsched2019.model.Action
 import io.github.droidkaigi.confsched2019.model.Session
 import kotlinx.coroutines.async
-import kotlinx.coroutines.channels.map
-import kotlinx.coroutines.channels.take
-import kotlinx.coroutines.channels.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.hasItems

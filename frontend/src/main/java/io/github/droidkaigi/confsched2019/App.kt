@@ -20,7 +20,6 @@ class App : DaggerApplication() {
     @Inject lateinit var sessionActionCreator: SessionActionCreator
     @Inject lateinit var userStore: UserStore
 
-
     override fun onCreate() {
         super.onCreate()
         Stetho.initializeWithDefaults(this)

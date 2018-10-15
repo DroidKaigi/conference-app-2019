@@ -1,9 +1,9 @@
 package io.github.droidkaigi.confsched2019.session.ui.item
 
 import com.xwray.groupie.databinding.BindableItem
+import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSessionBinding
-import io.github.droidkaigi.confsched2019.model.Session
 
 data class SessionItem(
     val session: Session.SpeechSession,
