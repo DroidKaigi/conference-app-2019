@@ -76,7 +76,7 @@ class DataSessionRepository @Inject constructor(
                                 { it.startTime.unix },
                                 { it.room.id }
                             ))
-                        speakerSessions//  + specialSessions
+                        speakerSessions // + specialSessions
                     }
                 )
             val receiveChannel: ReceiveChannel<List<Session>> = observable
