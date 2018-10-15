@@ -3,13 +3,13 @@ package io.github.droidkaigi.confsched2019.data.repository
 import dagger.BindsInstance
 import dagger.Component
 import io.github.droidkaigi.confsched2019.data.firestore.FireStore
-import io.github.droidkaigi.confsched2019.data.firestore.FireStoreModule
+import io.github.droidkaigi.confsched2019.data.firestore.FirestoreModule
 import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
 
 @Singleton
 @Component(modules = [
-    FireStoreModule::class
+    FirestoreModule::class
 ])
 interface FireStoreComponent {
     fun fireStore(): FireStore

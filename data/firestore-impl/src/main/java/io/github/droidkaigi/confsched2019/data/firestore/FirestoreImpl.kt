@@ -10,7 +10,7 @@ import kotlinx.coroutines.channels.ReceiveChannel
 import javax.inject.Inject
 
 // waiting https://github.com/Kotlin/kotlinx.coroutines/pull/523
-class FireStoreImpl @Inject constructor() : FireStore {
+class FirestoreImpl @Inject constructor() : FireStore {
 
     override suspend fun getFavoriteSessionChannel(): ReceiveChannel<List<Int>> {
         val favoritesRef = getFavoritesRef()
