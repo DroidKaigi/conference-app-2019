@@ -28,6 +28,8 @@ private class LifecycleCoroutineScope(
     }
 }
 
-fun LifecycleOwner.toCoroutineScope(dispatcher: CoroutineDispatcher = Dispatchers.Default): CoroutineScope {
+fun LifecycleOwner.toCoroutineScope(
+    dispatcher: CoroutineDispatcher = Dispatchers.Default
+): CoroutineScope {
     return LifecycleCoroutineScope(this, dispatcher)
 }

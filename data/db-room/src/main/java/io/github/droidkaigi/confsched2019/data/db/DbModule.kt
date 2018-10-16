@@ -19,7 +19,11 @@ internal abstract class DbModule {
         @JvmStatic
         @Provides
         fun database(context: Context, filename: String?): SessionCacheDatabase {
-            return Room.databaseBuilder(context, SessionCacheDatabase::class.java, filename ?: "droidkaigi.db")
+            return Room.databaseBuilder(
+                context,
+                SessionCacheDatabase::class.java,
+                filename ?: "droidkaigi.db"
+            )
                 .fallbackToDestructiveMigration()
                 .build()
         }
