@@ -67,8 +67,7 @@ class DataSessionRepository @Inject constructor(
                 .combineLatest(
                     fabSessionIdsObservable,
                     sessionsObservable,
-                    BiFunction<List<Int>, List<SessionWithSpeakers>, List<Session>> {
-                        fabSessionIds, sessionEntities: List<SessionWithSpeakers> ->
+                    BiFunction { fabSessionIds, sessionEntities ->
                         val firstDay = DateTime(sessionEntities.first().session.stime)
                         val speakerSessions = sessionEntities
                             .map { it.toSession(speakerEntities, fabSessionIds, firstDay) }
@@ -109,7 +108,7 @@ class DataSessionRepository @Inject constructor(
             id = sessionEntity.id,
             // dayNumber is starts with 1.
             // Example: First day = 1, Second day = 2. So I plus 1 to period days
-            dayNumber = ((sessionEntity.stime - firstDay.unix) / (60 * 1000 * 24)).toInt(),
+            dayNumber = DateTime(sessionEntity.stime).dayOfYear - firstDay.dayOfYear + 1,
             startTime = com.soywiz.klock.DateTime.fromUnix(sessionEntity.stime),
             endTime = com.soywiz.klock.DateTime.fromUnix(sessionEntity.etime),
             title = sessionEntity.title,

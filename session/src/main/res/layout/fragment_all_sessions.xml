@@ -12,18 +12,24 @@
         tools:context="io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment"
         >
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/all_sessions_recycler"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/sessions_tab_layout"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             />
 
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/sessions_viewpager"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sessions_tab_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="0dp"
+            />
         <ProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
