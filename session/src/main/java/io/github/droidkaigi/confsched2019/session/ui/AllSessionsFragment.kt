@@ -6,31 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.databinding.ViewHolder
 import dagger.Binds
 import dagger.Module
 import dagger.android.support.DaggerFragment
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.LoadingState
-import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentAllSessionsBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionStore
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import javax.inject.Inject
 
 class AllSessionsFragment : DaggerFragment() {
-    companion object {
-        fun newInstance() = AllSessionsFragment()
-    }
-
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject lateinit var sessionActionCreator: SessionActionCreator
 
@@ -58,34 +52,42 @@ class AllSessionsFragment : DaggerFragment() {
         return binding.root
     }
 
-    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
-
-    private val onFavoriteClickListener = { clickedSession: Session.SpeechSession ->
-        sessionActionCreator.toggleFavorite(clickedSession)
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding.allSessionsRecycler.adapter = groupAdapter
+        binding.sessionsTabLayout.setupWithViewPager(binding.sessionsViewpager)
+        binding.sessionsViewpager.adapter = object : FragmentStatePagerAdapter(
+            childFragmentManager
+        ) {
+            override fun getItem(position: Int) = Tab.values()[position].fragment()
+            override fun getPageTitle(position: Int) = Tab.values()[position].title()
+            override fun getCount(): Int = Tab.values().size
+        }
         progressTimeLatch = ProgressTimeLatch { showProgress ->
             binding.progressBar.isVisible = showProgress
         }.apply {
             loading = true
         }
-
-        sessionStore.sessions.changed(this) { sessions ->
-            val items = sessions.filterIsInstance<Session.SpeechSession>()
-                .map { session ->
-                    SessionItem(
-                        session = session,
-                        onFavoriteClickListener = onFavoriteClickListener
-                    )
-                }
-            groupAdapter.update(items)
-        }
         sessionStore.loadingState.changed(this) {
             progressTimeLatch.loading = it == LoadingState.LOADING
         }
+    }
+
+    enum class Tab {
+        Day1 {
+            override fun title() = "Day1"
+            override fun fragment() = DaySessionsFragment.newInstance(1)
+        },
+        Day2 {
+            override fun title() = "Day2"
+            override fun fragment() = DaySessionsFragment.newInstance(1)
+        },
+        Favorite {
+            override fun title() = "Favorite"
+            override fun fragment() = FavoriteSessionsFragment.newInstance()
+        };
+
+        abstract fun title(): String
+        abstract fun fragment(): Fragment
     }
 }
 

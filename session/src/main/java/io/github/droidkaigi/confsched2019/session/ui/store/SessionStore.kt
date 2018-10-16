@@ -1,6 +1,7 @@
 package io.github.droidkaigi.confsched2019.session.ui.store
 
 import androidx.lifecycle.LiveData
+import com.shopify.livedataktx.map
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.toLiveData
 import io.github.droidkaigi.confsched2019.model.Action
@@ -12,7 +13,7 @@ import javax.inject.Singleton
 
 @Singleton
 class SessionStore @Inject constructor(
-    private val dispatcher: Dispatcher
+    dispatcher: Dispatcher
 ) {
     val sessions: LiveData<List<Session>> = dispatcher
         .subscribe<Action.AllSessionLoaded>()
@@ -22,4 +23,17 @@ class SessionStore @Inject constructor(
         .subscribe<Action.AllSessionLoadingStateChanged>()
         .map { it.loadingState }
         .toLiveData(LoadingState.LOADING)
+
+    fun daySessions(day: Int): LiveData<List<Session>> {
+        return sessions
+            .map { it.orEmpty().filter { it.dayNumber == day } }
+    }
+
+    fun favoriteSessions(): LiveData<List<Session.SpeechSession>> {
+        return sessions
+            .map {
+                it.orEmpty().filterIsInstance<Session.SpeechSession>()
+                    .filter { it.isFavorited }
+            }
+    }
 }

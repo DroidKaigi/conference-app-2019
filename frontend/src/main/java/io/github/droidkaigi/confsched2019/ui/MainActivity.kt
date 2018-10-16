@@ -12,6 +12,10 @@ import dagger.android.support.DaggerAppCompatActivity
 import io.github.droidkaigi.confsched2019.R
 import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment
 import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragmentModule
+import io.github.droidkaigi.confsched2019.session.ui.DaySessionsFragment
+import io.github.droidkaigi.confsched2019.session.ui.DaySessionsFragmentModule
+import io.github.droidkaigi.confsched2019.session.ui.FavoriteSessionsFragment
+import io.github.droidkaigi.confsched2019.session.ui.FavoriteSessionsFragmentModule
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
 import io.github.droidkaigi.confsched2019.user.store.UserStore
 import javax.inject.Inject
@@ -47,6 +51,12 @@ interface MainActivityModule {
 
     @ContributesAndroidInjector(modules = [AllSessionsFragmentModule::class])
     fun contributeAllSessionsFragment(): AllSessionsFragment
+
+    @ContributesAndroidInjector(modules = [DaySessionsFragmentModule::class])
+    fun contributeDaySessionsFragment(): DaySessionsFragment
+
+    @ContributesAndroidInjector(modules = [FavoriteSessionsFragmentModule::class])
+    fun contributeFavoriteSessionsFragment(): FavoriteSessionsFragment
 
     @Module
     abstract class MainActivityBuilder {
