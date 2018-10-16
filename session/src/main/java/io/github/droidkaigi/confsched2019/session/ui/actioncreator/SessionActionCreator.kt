@@ -41,7 +41,6 @@ class SessionActionCreator @Inject constructor(
             try {
                 dispatcher.send(Action.AllSessionLoadingStateChanged(LoadingState.LOADING))
                 sessionRepository.toggleFavorite(session)
-                val sessions = sessionRepository.sessions(withFavorite = true)
                 dispatcher.send(Action.AllSessionLoadingStateChanged(LoadingState.FINISHED))
             } catch (e: Exception) {
                 e.printStackTrace()

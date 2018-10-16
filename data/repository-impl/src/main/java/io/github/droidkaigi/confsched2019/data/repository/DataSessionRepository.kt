@@ -67,7 +67,7 @@ class DataSessionRepository @Inject constructor(
                 .combineLatest(
                     fabSessionIdsObservable,
                     sessionsObservable,
-                    BiFunction<List<Int>, List<SessionWithSpeakers>, List<Session>> { fabSessionIds, sessionEntities: List<SessionWithSpeakers> ->
+                    BiFunction { fabSessionIds, sessionEntities ->
                         val firstDay = DateTime(sessionEntities.first().session.stime)
                         val speakerSessions = sessionEntities
                             .map { it.toSession(speakerEntities, fabSessionIds, firstDay) }

@@ -14,7 +14,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.android.support.DaggerFragment
 import io.github.droidkaigi.confsched2019.ext.android.changed
-import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionsBinding
