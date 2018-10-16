@@ -26,7 +26,7 @@ kotlin {
             implementation Dep.Kotlin.commonModuleTest
             implementation Dep.Kotlin.commonModuleTestAnnotations
         }
-        jvmTest{
+        jvmTest {
             dependencies {
                 implementation Dep.Kotlin.jvmModuleTest
                 implementation Dep.Kotlin.jvmModuleTestJunit

@@ -13,6 +13,7 @@ inline fun <T : Any> LiveData<T>.changed(
 ): Removable<T> {
     return nonNull().distinct().observe(owner, onChanged)
 }
+
 inline fun <T : Any> LiveData<T>.changedForever(
     crossinline onChanged: (T) -> Unit
 ): Removable<T> {

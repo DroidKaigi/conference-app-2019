@@ -14,10 +14,12 @@ import javax.inject.Singleton
 class SessionStore @Inject constructor(
     private val dispatcher: Dispatcher
 ) {
-    val sessions: LiveData<List<Session>> = dispatcher.subscribe<Action.AllSessionLoaded>()
+    val sessions: LiveData<List<Session>> = dispatcher
+        .subscribe<Action.AllSessionLoaded>()
         .map { it.sessions }
         .toLiveData(listOf())
-    val loadingState: LiveData<LoadingState> = dispatcher.subscribe<Action.AllSessionLoadingStateChanged>()
+    val loadingState: LiveData<LoadingState> = dispatcher
+        .subscribe<Action.AllSessionLoadingStateChanged>()
         .map { it.loadingState }
         .toLiveData(LoadingState.LOADING)
 }

@@ -14,9 +14,10 @@ import io.github.droidkaigi.confsched2019.ext.android.toCoroutineScope
 import io.github.droidkaigi.confsched2019.model.Action
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.android.Main
 import kotlinx.coroutines.launch
-import nl.adaptivity.android.coroutines.Maybe.*
+import nl.adaptivity.android.coroutines.Maybe.Cancelled
+import nl.adaptivity.android.coroutines.Maybe.Error
+import nl.adaptivity.android.coroutines.Maybe.Ok
 import nl.adaptivity.android.coroutines.activityResult
 import javax.inject.Inject
 import javax.inject.Named
@@ -28,10 +29,13 @@ class UserActionCreator @Inject constructor(
     val defaultFirebaseWebClientId: Int
 ) : CoroutineScope by activity.toCoroutineScope(Dispatchers.Main) {
     val googleSignInClient: GoogleSignInClient by lazy {
-        GoogleSignIn.getClient(activity, GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(activity.getString(defaultFirebaseWebClientId))
-            .requestEmail()
-            .build())
+        GoogleSignIn.getClient(
+            activity,
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(activity.getString(defaultFirebaseWebClientId))
+                .requestEmail()
+                .build()
+        )
     }
 
     val firebaseAuth: FirebaseAuth by lazy {
@@ -59,7 +63,9 @@ class UserActionCreator @Inject constructor(
                     }
                     is Ok -> {
                         val resultIntent = activityResult.data as Intent
-                        val account = GoogleSignIn.getSignedInAccountFromIntent(resultIntent).await()
+                        val account = GoogleSignIn
+                            .getSignedInAccountFromIntent(resultIntent)
+                            .await()
                         onSignIn(account)
                     }
                 }

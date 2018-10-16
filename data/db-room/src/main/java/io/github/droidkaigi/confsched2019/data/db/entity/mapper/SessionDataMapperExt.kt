@@ -1,9 +1,18 @@
 package io.github.droidkaigi.confsched2019.data.db.entity.mapper
 
-import com.soywiz.klock.DateTime
 import com.soywiz.klock.SimplerDateFormat
-import io.github.droidkaigi.confsched2019.data.api.response.*
-import io.github.droidkaigi.confsched2019.data.db.entity.*
+import io.github.droidkaigi.confsched2019.data.api.response.CategoryItemResponse
+import io.github.droidkaigi.confsched2019.data.api.response.CategoryResponse
+import io.github.droidkaigi.confsched2019.data.api.response.RoomResponse
+import io.github.droidkaigi.confsched2019.data.api.response.SessionResponse
+import io.github.droidkaigi.confsched2019.data.api.response.SpeakerResponse
+import io.github.droidkaigi.confsched2019.data.db.entity.LevelEntityImpl
+import io.github.droidkaigi.confsched2019.data.db.entity.MessageEntityImpl
+import io.github.droidkaigi.confsched2019.data.db.entity.RoomEntityImpl
+import io.github.droidkaigi.confsched2019.data.db.entity.SessionEntityImpl
+import io.github.droidkaigi.confsched2019.data.db.entity.SessionSpeakerJoinEntityImpl
+import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntityImpl
+import io.github.droidkaigi.confsched2019.data.db.entity.TopicEntityImpl
 
 fun List<SessionResponse>?.toSessionSpeakerJoinEntities(): List<SessionSpeakerJoinEntityImpl> {
     val sessionSpeakerJoinEntity: MutableList<SessionSpeakerJoinEntityImpl> = arrayListOf()
@@ -27,8 +36,10 @@ fun List<SessionResponse>.toSessionEntities(
 private val FORMATTER: SimplerDateFormat =
     SimplerDateFormat("yyyy-MM-dd'T'HH:mm:ssxxx")
 
-fun SessionResponse.toSessionEntityImpl(categories: List<CategoryResponse>,
-    rooms: List<RoomResponse>): SessionEntityImpl {
+fun SessionResponse.toSessionEntityImpl(
+    categories: List<CategoryResponse>,
+    rooms: List<RoomResponse>
+): SessionEntityImpl {
     val sessionFormat = categories.category(0, categoryItems[0])
     val language = categories.category(1, categoryItems[1])
     val topic = categories.category(2, categoryItems[2])
@@ -71,8 +82,11 @@ fun List<SpeakerResponse>.toSpeakerEntities(): List<SpeakerEntityImpl> =
         )
     }
 
-private fun List<CategoryResponse>.category(categoryIndex: Int, categoryId: Int?): CategoryItemResponse =
-    this[categoryIndex].items!!.first { it!!.id == categoryId }!!
+private fun List<CategoryResponse>.category(
+    categoryIndex: Int,
+    categoryId: Int?
+): CategoryItemResponse {
+    return this[categoryIndex].items!!.first { it!!.id == categoryId }!!
+}
 
-private fun List<RoomResponse>.roomName(roomId: Int?): String =
-    first { it.id == roomId }.name!!
+private fun List<RoomResponse>.roomName(roomId: Int?): String = first { it.id == roomId }.name!!

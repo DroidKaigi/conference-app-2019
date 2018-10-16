@@ -3,9 +3,12 @@ package io.github.droidkaigi.confsched2019.ext.android
 import android.util.Log
 import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
-import kotlinx.coroutines.*
-import kotlinx.coroutines.android.Main
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.launch
 
 @MainThread
 fun <T> ReceiveChannel<T>.toLiveData(defaultValue: T? = null):

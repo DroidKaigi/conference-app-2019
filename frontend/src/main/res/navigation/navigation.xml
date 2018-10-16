@@ -1,31 +1,36 @@
 <navigation
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        app:startDestination="@+id/session">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/session"
+    >
 
     <fragment
-            android:id="@+id/session"
-            android:label="@string/session_label"
-            android:name="io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment"
-            tools:layout="@layout/fragment_all_sessions">
+        android:id="@+id/session"
+        android:label="@string/session_label"
+        android:name="io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment"
+        tools:layout="@layout/fragment_all_sessions"
+        >
     </fragment>
     <fragment
-            android:id="@+id/announce"
-            android:label="@string/announce_label"
-            android:name="io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment"
-            tools:layout="@layout/fragment_all_sessions">
+        android:id="@+id/announce"
+        android:label="@string/announce_label"
+        android:name="io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment"
+        tools:layout="@layout/fragment_all_sessions"
+        >
     </fragment>
     <fragment
-            android:id="@+id/map"
-            android:label="@string/map_label"
-            android:name="io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment"
-            tools:layout="@layout/fragment_all_sessions">
+        android:id="@+id/map"
+        android:label="@string/map_label"
+        android:name="io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment"
+        tools:layout="@layout/fragment_all_sessions"
+        >
     </fragment>
     <fragment
-            android:id="@+id/other"
-            android:label="@string/other_label"
-            android:name="io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment"
-            tools:layout="@layout/fragment_all_sessions">
+        android:id="@+id/other"
+        android:label="@string/other_label"
+        android:name="io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment"
+        tools:layout="@layout/fragment_all_sessions"
+        >
     </fragment>
 </navigation>

@@ -18,4 +18,3 @@ data class SessionResponseImpl(
     @Optional
     override val message: SessionMessageResponseImpl? = null
 ) : SessionResponse
-

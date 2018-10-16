@@ -6,11 +6,19 @@ import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionWithSpeakers
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntity
 import io.github.droidkaigi.confsched2019.data.firestore.FireStore
-import io.github.droidkaigi.confsched2019.model.*
+import io.github.droidkaigi.confsched2019.model.Level
+import io.github.droidkaigi.confsched2019.model.Room
+import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.SessionMessage
+import io.github.droidkaigi.confsched2019.model.Speaker
+import io.github.droidkaigi.confsched2019.model.Topic
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.rx2.asObservable
 import kotlinx.coroutines.rx2.openSubscription
 import javax.inject.Inject
@@ -23,7 +31,9 @@ class DataSessionRepository @Inject constructor(
     override suspend fun sessions(withFavorite: Boolean): List<Session> = coroutineScope {
         val sessionsAsync = async { sessionDatabase.sessions() }
         val allSpeakersAsync = async { sessionDatabase.allSpeaker() }
-        val fabSessionIdsAsync = async { if (withFavorite) fireStore.getFavoriteSessionIds() else listOf() }
+        val fabSessionIdsAsync = async {
+            if (withFavorite) fireStore.getFavoriteSessionIds() else listOf()
+        }
 
         awaitAll(fabSessionIdsAsync, sessionsAsync, allSpeakersAsync)
         val sessionEntities = sessionsAsync.await()
@@ -37,16 +47,18 @@ class DataSessionRepository @Inject constructor(
                 { it.startTime.unix },
                 { it.room.id }
             ))
-        speakerSessions//  + specialSessions
+        speakerSessions //  + specialSessions
     }
 
     override suspend fun sessionChannel(): ReceiveChannel<List<Session>> = coroutineScope {
         try {
             val allSpeakerDeferred = async { sessionDatabase.allSpeaker() }
-            val fabSessionIdsObservable: Observable<List<Int>> = fireStore.getFavoriteSessionChannel()
+            val fabSessionIdsObservable: Observable<List<Int>> = fireStore
+                .getFavoriteSessionChannel()
                 .asObservable(Dispatchers.Default)
 //            .doOnNext { println("sessionChannel:fabSessionIdsObservable" + it) }
-            val sessionsObservable: Observable<List<SessionWithSpeakers>> = sessionDatabase.sessionsChannel()
+            val sessionsObservable: Observable<List<SessionWithSpeakers>> = sessionDatabase
+                .sessionsChannel()
                 .asObservable(Dispatchers.Default)
 //            .doOnNext { println("sessionChannel:sessionsObservable" + it) }
 
@@ -55,7 +67,8 @@ class DataSessionRepository @Inject constructor(
                 .combineLatest(
                     fabSessionIdsObservable,
                     sessionsObservable,
-                    BiFunction<List<Int>, List<SessionWithSpeakers>, List<Session>> { fabSessionIds: List<Int>, sessionEntities: List<SessionWithSpeakers> ->
+                    BiFunction<List<Int>, List<SessionWithSpeakers>, List<Session>> {
+                        fabSessionIds, sessionEntities: List<SessionWithSpeakers> ->
                         val firstDay = DateTime(sessionEntities.first().session.stime)
                         val speakerSessions = sessionEntities
                             .map { it.toSession(speakerEntities, fabSessionIds, firstDay) }
@@ -63,13 +76,13 @@ class DataSessionRepository @Inject constructor(
                                 { it.startTime.unix },
                                 { it.room.id }
                             ))
-                        speakerSessions//  + specialSessions
+                        speakerSessions // + specialSessions
                     }
                 )
             val receiveChannel: ReceiveChannel<List<Session>> = observable
                 .openSubscription()
             return@coroutineScope receiveChannel
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
             throw e
         }
@@ -94,7 +107,8 @@ class DataSessionRepository @Inject constructor(
         require(speakers.isNotEmpty())
         return Session.SpeechSession(
             id = sessionEntity.id,
-            // dayNumber is starts with 1. Example: First day = 1, Second day = 2. So I plus 1 to period days
+            // dayNumber is starts with 1.
+            // Example: First day = 1, Second day = 2. So I plus 1 to period days
             dayNumber = ((sessionEntity.stime - firstDay.unix) / (60 * 1000 * 24)).toInt(),
             startTime = com.soywiz.klock.DateTime.fromUnix(sessionEntity.stime),
             endTime = com.soywiz.klock.DateTime.fromUnix(sessionEntity.etime),

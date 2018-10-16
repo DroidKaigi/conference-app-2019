@@ -35,7 +35,7 @@ sealed class Session(
     ) : Session(id, dayNumber, startTime, endTime)
 
     val isFinished: Boolean
-        get() =  DateTime.now().unix > endTime.unix
+        get() = DateTime.now().unix > endTime.unix
 
     val isOnGoing: Boolean
         get() = DateTime.now().unix in startTime.unix..endTime.unix

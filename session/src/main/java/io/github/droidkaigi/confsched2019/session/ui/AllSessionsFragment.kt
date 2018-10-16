@@ -43,12 +43,18 @@ class AllSessionsFragment : DaggerFragment() {
     private val allSessionsStore: AllSessionsStore by lazy {
         ViewModelProviders.of(this, viewModelFactory).get(AllSessionsStore::class.java)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_all_sessions, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_all_sessions,
+            container,
+            false
+        )
         return binding.root
     }
 

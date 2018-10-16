@@ -4,17 +4,17 @@ require 'pry'
 begin
   # Skip gradle lint task
   # It means we need to run lint tasks before running Danger
-  android_lint.skip_gradle_task = true
+  android_lint.skip_gradle_task=true
 
   # Check modified/new files only
-  android_lint.filtering = true
+  android_lint.filtering=true
 
   # Default: Warning
   # android_lint.severity = "Error"
 
   # Report lint warnings
   Dir.glob("**/lint-results*.xml").each do |xml|
-    android_lint.report_file = xml
+    android_lint.report_file=xml
     android_lint.lint(inline_mode: true)
   end
 end
@@ -27,6 +27,17 @@ begin
     fail("Failed tests found") unless junit.failures.empty?
   else
     fail("Test results not found")
+  end
+end
+
+# Checkstyle
+begin
+  # Check modified/new files only
+  checkstyle_reports.inline_comment=true
+
+  # Report lint warnings
+  Dir.glob("**/checkstyle.xml").each do |xml|
+    checkstyle_reports.report(xml, modified_files_only: true)
   end
 end
 

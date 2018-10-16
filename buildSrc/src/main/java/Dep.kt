@@ -36,8 +36,9 @@ object Dep {
         val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata:${Versions.aac}"
         val roomCompiler = "androidx.room:room-compiler:${Versions.aac}"
         val roomRuntime = "androidx.room:room-runtime:${Versions.aac}"
-        val roomRxJava =  "androidx.room:room-rxjava2:${Versions.aac}"
-        object Navigation{
+        val roomRxJava = "androidx.room:room-rxjava2:${Versions.aac}"
+
+        object Navigation {
             val runtime = "android.arch.navigation:navigation-runtime:${Versions.navigation}"
             val runtimeKtx = "android.arch.navigation:navigation-runtime-ktx:${Versions.navigation}"
             val fragment = "android.arch.navigation:navigation-fragment:${Versions.navigation}"
