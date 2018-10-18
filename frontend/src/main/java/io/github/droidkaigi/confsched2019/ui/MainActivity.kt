@@ -2,20 +2,13 @@ package io.github.droidkaigi.confsched2019.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.android.support.DaggerAppCompatActivity
 import io.github.droidkaigi.confsched2019.R
-import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment
-import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragmentModule
-import io.github.droidkaigi.confsched2019.session.ui.DaySessionsFragment
-import io.github.droidkaigi.confsched2019.session.ui.DaySessionsFragmentModule
-import io.github.droidkaigi.confsched2019.session.ui.FavoriteSessionsFragment
-import io.github.droidkaigi.confsched2019.session.ui.FavoriteSessionsFragmentModule
+import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment
+import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragmentModule
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
 import io.github.droidkaigi.confsched2019.user.store.UserStore
 import javax.inject.Inject
@@ -28,19 +21,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
-        if (savedInstanceState == null) {
-            val navHostFragment = supportFragmentManager
-                .findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment
-            findViewById<BottomNavigationView>(R.id.bottom_nav_view)?.let { bottomNavView ->
-                NavigationUI.setupWithNavController(bottomNavView, navHostFragment.navController)
-            }
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        userActionCreator.setupUser()
+        setContentView(R.layout.activity_main)
     }
 }
 
@@ -49,14 +30,11 @@ interface MainActivityModule {
     @Binds
     fun providesAppCompatActivity(mainActivity: MainActivity): AppCompatActivity
 
-    @ContributesAndroidInjector(modules = [AllSessionsFragmentModule::class])
-    fun contributeAllSessionsFragment(): AllSessionsFragment
+    @ContributesAndroidInjector(modules = [MainFragmentModule::class])
+    fun contributeMainFragment(): MainFragment
 
-    @ContributesAndroidInjector(modules = [DaySessionsFragmentModule::class])
-    fun contributeDaySessionsFragment(): DaySessionsFragment
-
-    @ContributesAndroidInjector(modules = [FavoriteSessionsFragmentModule::class])
-    fun contributeFavoriteSessionsFragment(): FavoriteSessionsFragment
+    @ContributesAndroidInjector(modules = [SessionDetailFragmentModule::class])
+    fun contributeSessionDetailFragment(): SessionDetailFragment
 
     @Module
     abstract class MainActivityBuilder {

@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Binds
@@ -60,7 +61,14 @@ class FavoriteSessionsFragment : DaggerFragment() {
                 .map { session ->
                     SessionItem(
                         session = session,
-                        onFavoriteClickListener = onFavoriteClickListener
+                        onFavoriteClickListener = onFavoriteClickListener,
+                        onClickListener = { clickedSession->
+                            Navigation
+                                .findNavController(requireActivity(), R.id.root_nav_host_fragment)
+                                .navigate(R.id.action_session_to_session_detail, Bundle().apply {
+                                    putString(SessionDetailFragment.EXTRA_SESSION, clickedSession.id)
+                                })
+                        }
                     )
                 }
             groupAdapter.update(items)

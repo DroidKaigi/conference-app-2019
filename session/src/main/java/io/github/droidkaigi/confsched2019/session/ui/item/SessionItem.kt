@@ -8,6 +8,7 @@ import io.github.droidkaigi.confsched2019.session.databinding.ItemSessionBinding
 data class SessionItem(
     val session: Session.SpeechSession,
     private val onFavoriteClickListener: (Session.SpeechSession) -> Unit,
+    private val onClickListener: (Session.SpeechSession) -> Unit,
     private val isShowDayNumber: Boolean = false,
     private val searchQuery: String = "",
     private val simplify: Boolean = false,
@@ -17,6 +18,7 @@ data class SessionItem(
 ) {
 
     override fun bind(viewBinding: ItemSessionBinding, position: Int) {
+        viewBinding.root.setOnClickListener { onClickListener(session) }
         viewBinding.session = session
         viewBinding.searchQuery = searchQuery
         viewBinding.favorite.setOnClickListener {

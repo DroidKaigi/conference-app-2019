@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Binds
@@ -24,7 +23,7 @@ import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionStore
 import javax.inject.Inject
 
-class DaySessionsFragment : DaggerFragment() {
+class SessionDetailFragment : DaggerFragment() {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject lateinit var sessionActionCreator: SessionActionCreator
@@ -56,39 +55,25 @@ class DaySessionsFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
         binding.allSessionsRecycler.adapter = groupAdapter
 
-        sessionStore.daySessions(arguments?.getInt(EXTRA_DAY) ?: 0).changed(this) { sessions ->
-            val items = sessions.filterIsInstance<Session.SpeechSession>()
-                .map { session ->
-                    SessionItem(
-                        session = session,
-                        onFavoriteClickListener = onFavoriteClickListener,
-                        onClickListener = { clickedSession->
-                            Navigation
-                                .findNavController(requireActivity(), R.id.root_nav_host_fragment)
-                                .navigate(R.id.action_session_to_session_detail, Bundle().apply {
-                                    putString(SessionDetailFragment.EXTRA_SESSION, clickedSession.id)
-                                })
-                        }
-                    )
-                }
-            groupAdapter.update(items)
+        val sessionId = arguments?.getString(EXTRA_SESSION) ?: ""
+        sessionStore.session(sessionId).changed(this) { session ->
         }
     }
 
     companion object {
-        const val EXTRA_DAY = "day"
-        fun newInstance(day: Int): DaySessionsFragment {
-            return DaySessionsFragment().apply {
-                arguments = Bundle().apply { putInt(EXTRA_DAY, day) }
+        const val EXTRA_SESSION = "session"
+        fun newInstance(day: Int): SessionDetailFragment {
+            return SessionDetailFragment().apply {
+                arguments = Bundle().apply { putInt(EXTRA_SESSION, day) }
             }
         }
     }
 }
 
 @Module
-interface DaySessionsFragmentModule {
+interface SessionDetailFragmentModule {
     @Binds
-    fun providesLifecycle(sessionsFragment: DaySessionsFragment): LifecycleOwner {
+    fun providesLifecycle(sessionsFragment: SessionDetailFragment): LifecycleOwner {
         return sessionsFragment.viewLifecycleOwner
     }
 }

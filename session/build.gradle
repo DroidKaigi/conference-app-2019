@@ -45,6 +45,8 @@ dependencies {
 
 
     api Dep.Arch.lifecycleExtensions
+    api Dep.Arch.Navigation.runtime
+    api Dep.Arch.Navigation.runtimeKtx
     implementation Dep.AndroidKtx.core
 
     implementation Dep.Dagger.core
