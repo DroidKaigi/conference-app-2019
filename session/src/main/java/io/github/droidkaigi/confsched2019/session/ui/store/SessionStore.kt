@@ -37,7 +37,7 @@ class SessionStore @Inject constructor(
             }
     }
 
-    fun session(sessionId: String): LiveData<Session> {
+    fun session(sessionId: String): LiveData<Session.SpeechSession> {
         return sessions
             .map {
                 it.orEmpty().filterIsInstance<Session.SpeechSession>()
