@@ -28,8 +28,8 @@ class App : DaggerApplication() {
         setupLeakCanary()
         setupFirestore()
 
-        userStore.logined.changedForever {
-            sessionActionCreator.load()
+        userStore.logined.changedForever { login ->
+            if (login) sessionActionCreator.load()
         }
     }
 

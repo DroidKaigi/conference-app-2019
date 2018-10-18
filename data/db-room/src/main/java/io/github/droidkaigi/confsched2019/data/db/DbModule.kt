@@ -8,6 +8,7 @@ import dagger.Provides
 import io.github.droidkaigi.confsched2019.data.db.dao.SessionDao
 import io.github.droidkaigi.confsched2019.data.db.dao.SessionSpeakerJoinDao
 import io.github.droidkaigi.confsched2019.data.db.dao.SpeakerDao
+import javax.inject.Singleton
 
 @Module(includes = [DbModule.Providers::class])
 internal abstract class DbModule {
@@ -16,6 +17,7 @@ internal abstract class DbModule {
 
     @Module
     internal object Providers {
+        @Singleton
         @JvmStatic
         @Provides
         fun database(context: Context, filename: String?): SessionCacheDatabase {
