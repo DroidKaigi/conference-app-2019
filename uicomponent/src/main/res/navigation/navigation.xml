@@ -22,7 +22,9 @@
         android:label="@string/session_label"
         tools:layout="@layout/fragment_all_sessions"
         >
-        <argument android:name="session"
-                  android:defaultValue="none"/>
+        <argument
+            android:name="session"
+            app:argType="string"
+            />
     </fragment>
 </navigation>

@@ -22,6 +22,7 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionAction
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionStore
+import io.github.droidkaigi.confsched2019.ui.MainFragmentDirections
 import javax.inject.Inject
 
 class FavoriteSessionsFragment : DaggerFragment() {
@@ -62,12 +63,11 @@ class FavoriteSessionsFragment : DaggerFragment() {
                     SessionItem(
                         session = session,
                         onFavoriteClickListener = onFavoriteClickListener,
-                        onClickListener = { clickedSession->
+                        onClickListener = { clickedSession ->
                             Navigation
                                 .findNavController(requireActivity(), R.id.root_nav_host_fragment)
-                                .navigate(R.id.action_session_to_session_detail, Bundle().apply {
-                                    putString(SessionDetailFragment.EXTRA_SESSION, clickedSession.id)
-                                })
+                                .navigate(MainFragmentDirections.actionSessionToSessionDetail(
+                                    clickedSession.id))
                         }
                     )
                 }

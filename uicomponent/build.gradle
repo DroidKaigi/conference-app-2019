@@ -2,6 +2,7 @@ import dependencies.Dep
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'androidx.navigation.safeargs'
 
 android {
     compileSdkVersion 28
@@ -25,6 +26,9 @@ android {
 dependencies {
     api Dep.Android.design
     implementation Dep.Kotlin.stdlibJvm
+
+    api Dep.Arch.Navigation.runtime
+    api Dep.Arch.Navigation.runtimeKtx
 }
 repositories {
     mavenCentral()
