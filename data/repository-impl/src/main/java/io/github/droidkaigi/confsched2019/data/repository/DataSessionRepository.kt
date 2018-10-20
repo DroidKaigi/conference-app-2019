@@ -12,15 +12,15 @@ import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionMessage
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.model.Topic
-import io.reactivex.Observable
-import io.reactivex.functions.BiFunction
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.rx2.asObservable
-import kotlinx.coroutines.rx2.openSubscription
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.selects.select
 import javax.inject.Inject
 
 class DataSessionRepository @Inject constructor(
@@ -50,37 +50,46 @@ class DataSessionRepository @Inject constructor(
         speakerSessions //  + specialSessions
     }
 
-    override suspend fun sessionChannel(): ReceiveChannel<List<Session>> = coroutineScope {
+    override suspend fun sessionChannel(): ReceiveChannel<List<Session>> {
         try {
             val allSpeakerDeferred = async { sessionDatabase.allSpeaker() }
-            val fabSessionIdsObservable: Observable<List<Int>> = fireStore
+            val fabSessionIdsChannel: ReceiveChannel<List<Int>> = fireStore
                 .getFavoriteSessionChannel()
-                .asObservable(Dispatchers.Default)
 //            .doOnNext { println("sessionChannel:fabSessionIdsObservable" + it) }
-            val sessionsObservable: Observable<List<SessionWithSpeakers>> = sessionDatabase
+            val sessionsChannel: ReceiveChannel<List<SessionWithSpeakers>> = sessionDatabase
                 .sessionsChannel()
-                .asObservable(Dispatchers.Default)
 //            .doOnNext { println("sessionChannel:sessionsObservable" + it) }
-
             val speakerEntities = allSpeakerDeferred.await()
-            val observable: Observable<List<Session>> = Observable
-                .combineLatest(
-                    fabSessionIdsObservable,
-                    sessionsObservable,
-                    BiFunction { fabSessionIds, sessionEntities ->
+
+            val channel: BroadcastChannel<List<Session>> = BroadcastChannel<List<Session>>(
+                Channel.CONFLATED)
+
+            GlobalScope.launch {
+                var fabSessions: List<Int>? = null
+                var sessionEntities: List<SessionWithSpeakers>? = null
+                while (true) {
+                    select<Unit> {
+                        fabSessionIdsChannel.onReceive {
+                            fabSessions = it
+                        }
+                        sessionsChannel.onReceive {
+                            sessionEntities = it
+                        }
+                        val fabSessions = fabSessions ?: return@select
+                        val sessionEntities = sessionEntities ?: return@select
                         val firstDay = DateTime(sessionEntities.first().session.stime)
                         val speakerSessions = sessionEntities
-                            .map { it.toSession(speakerEntities, fabSessionIds, firstDay) }
+                            .map { it.toSession(speakerEntities, fabSessions, firstDay) }
                             .sortedWith(compareBy(
                                 { it.startTime.unix },
                                 { it.room.id }
                             ))
-                        speakerSessions // + specialSessions
+                        channel.offer(speakerSessions) // + specialSessions
                     }
-                )
-            val receiveChannel: ReceiveChannel<List<Session>> = observable
-                .openSubscription()
-            return@coroutineScope receiveChannel
+                }
+            }
+
+            return channel.openSubscription()
         } catch (e: Exception) {
             e.printStackTrace()
             throw e
