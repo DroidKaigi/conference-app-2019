@@ -66,7 +66,6 @@ class DaySessionsFragment : DaggerFragment() {
                                 .findNavController(requireActivity(), R.id.root_nav_host_fragment)
                                 .navigate(MainFragmentDirections.actionSessionToSessionDetail(
                                     clickedSession.id))
-
                         }
                     )
                 }
