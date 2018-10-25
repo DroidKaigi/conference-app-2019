@@ -75,9 +75,9 @@ class DaySessionsFragment : DaggerFragment() {
 
     companion object {
         const val EXTRA_DAY = "day"
-        fun newInstance(day: Int): DaySessionsFragment {
+        fun newInstance(args: DaySessionsFragmentArgs): DaySessionsFragment {
             return DaySessionsFragment().apply {
-                arguments = Bundle().apply { putInt(EXTRA_DAY, day) }
+                arguments = args.toBundle()
             }
         }
     }

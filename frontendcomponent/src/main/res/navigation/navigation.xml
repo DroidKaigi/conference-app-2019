@@ -27,4 +27,21 @@
             app:argType="string"
             />
     </fragment>
+    <fragment
+        android:id="@+id/session_day"
+        android:name="io.github.droidkaigi.confsched2019.session.ui.DaySessionsFragment"
+        android:label="@string/session_label"
+        tools:layout="@layout/fragment_sessions"
+        >
+        <argument
+            android:name="day"
+            app:argType="integer"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/session_favorite"
+        android:name="io.github.droidkaigi.confsched2019.session.ui.FavoriteSessionsFragment"
+        android:label="@string/session_label"
+        tools:layout="@layout/fragment_sessions"
+        />
 </navigation>

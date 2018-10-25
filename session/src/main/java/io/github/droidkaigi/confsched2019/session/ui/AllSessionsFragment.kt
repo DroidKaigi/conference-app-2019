@@ -74,11 +74,17 @@ class AllSessionsFragment : DaggerFragment() {
     enum class Tab {
         Day1 {
             override fun title() = "Day1"
-            override fun fragment() = DaySessionsFragment.newInstance(1)
+            override fun fragment(): DaySessionsFragment {
+                return DaySessionsFragment.newInstance(DaySessionsFragmentArgs
+                    .Builder(1)
+                    .build())
+            }
         },
         Day2 {
             override fun title() = "Day2"
-            override fun fragment() = DaySessionsFragment.newInstance(1)
+            override fun fragment() = DaySessionsFragment.newInstance(DaySessionsFragmentArgs
+                .Builder(2)
+                .build())
         },
         Favorite {
             override fun title() = "Favorite"
@@ -95,7 +101,8 @@ abstract class AllSessionsFragmentModule {
     @Module
     companion object {
         @JvmStatic @Provides fun providesLifecycle(
-            allSessionsFragment: AllSessionsFragment): LifecycleOwner {
+            allSessionsFragment: AllSessionsFragment
+        ): LifecycleOwner {
             return allSessionsFragment.viewLifecycleOwner
         }
     }
