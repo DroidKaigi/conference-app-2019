@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import dagger.Module
+import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import dagger.android.support.DaggerFragment
 import io.github.droidkaigi.confsched2019.R
@@ -62,19 +65,27 @@ class MainFragment : DaggerFragment() {
 }
 
 @Module
-interface MainFragmentModule {
+abstract class MainFragmentModule {
 
     @ContributesAndroidInjector(modules = [AllSessionsFragmentModule::class])
-    fun contributeAllSessionsFragment(): AllSessionsFragment
+    abstract fun contributeAllSessionsFragment(): AllSessionsFragment
 
     @ContributesAndroidInjector(modules = [DaySessionsFragmentModule::class])
-    fun contributeDaySessionsFragment(): DaySessionsFragment
+    abstract fun contributeDaySessionsFragment(): DaySessionsFragment
 
     @ContributesAndroidInjector(modules = [FavoriteSessionsFragmentModule::class])
-    fun contributeFavoriteSessionsFragment(): FavoriteSessionsFragment
+    abstract fun contributeFavoriteSessionsFragment(): FavoriteSessionsFragment
 
-//    @Binds
-//    fun providesLifecycle(mainFragment: MainFragment): LifecycleOwner {
-//        return mainFragment.viewLifecycleOwner
-//    }
+    @Module
+    companion object {
+
+        @Provides @JvmStatic fun providesActivity(mainFragment: MainFragment): FragmentActivity {
+            return mainFragment.requireActivity()
+        }
+
+        @Provides @JvmStatic fun providesLifecycle(mainFragment: MainFragment): LifecycleOwner {
+            return mainFragment.viewLifecycleOwner
+        }
+    }
+
 }

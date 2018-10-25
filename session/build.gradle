@@ -28,7 +28,7 @@ android {
 
 dependencies {
     implementation project(":user")
-    implementation project(":uicomponent")
+    implementation project(':frontendcomponent')
     implementation project(":model")
     implementation project(":data:repository")
     implementation project(":ext:android")
@@ -52,6 +52,13 @@ dependencies {
 
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport
+    kapt Dep.Dagger.compiler
+    kapt Dep.Dagger.androidProcessor
+    implementation 'me.tatarka.injectedvmprovider:injectedvmprovider-extensions:2.0'
+    implementation 'me.tatarka.injectedvmprovider:injectedvmprovider:2.0'
+    implementation 'me.tatarka.injectedvmprovider:injectedvmprovider-ktx:2.0'
+    compileOnly Dep.Dagger.assistedInjectAnnotations
+    kapt Dep.Dagger.assistedInjectProcessor
 
     implementation Dep.Groupie.groupie
     implementation Dep.Groupie.databinding

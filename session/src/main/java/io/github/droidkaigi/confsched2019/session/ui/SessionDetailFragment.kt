@@ -5,31 +5,45 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import dagger.Binds
+import com.squareup.inject.assisted.dagger2.AssistedModule
 import dagger.Module
-import dagger.android.support.DaggerFragment
-import io.github.droidkaigi.confsched2019.ext.android.changed
+import dagger.Provides
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.HasSupportFragmentInjector
+import io.github.droidkaigi.confsched2019.ext.android.changedNonNull
+import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionDetailBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionDetailActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionDetailStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionStore
+import me.tatarka.injectedvmprovider.ktx.injectedViewModelProvider
 import javax.inject.Inject
+import javax.inject.Named
 
-class SessionDetailFragment : DaggerFragment() {
+class SessionDetailFragment : Fragment(), HasSupportFragmentInjector {
 
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
     @Inject lateinit var sessionActionCreator: SessionActionCreator
+    @Inject lateinit var sessionDetailActionCreator: SessionDetailActionCreator
 
     lateinit var binding: FragmentSessionDetailBinding
 
     @Inject lateinit var sessionStore: SessionStore
 
-    private val allSessionsStore: AllSessionsStore by lazy {
-        ViewModelProviders.of(this, viewModelFactory).get(AllSessionsStore::class.java)
+    @Inject lateinit var sessionDetailStoreFactory: SessionDetailStore.Factory
+
+    private val sessionDetailStore: SessionDetailStore by lazy {
+        injectedViewModelProvider
+            .get(SessionDetailStore::class.java.name) {
+                sessionDetailStoreFactory.create(sessionDetailFragmentArgs.session)
+            }
     }
 
     override fun onCreateView(
@@ -42,33 +56,44 @@ class SessionDetailFragment : DaggerFragment() {
         return binding.root
     }
 
+    private lateinit var sessionDetailFragmentArgs: SessionDetailFragmentArgs
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        AndroidSupportInjection.inject(this)
 
-        val sessionId = arguments?.getString(EXTRA_SESSION) ?: ""
+        sessionDetailFragmentArgs = SessionDetailFragmentArgs.fromBundle(arguments)
         binding.favorite.setOnClickListener {
-            val session = sessionStore.session(sessionId).value ?: return@setOnClickListener
+            val session = sessionDetailStore.session.value ?: return@setOnClickListener
             sessionActionCreator.toggleFavorite(session)
         }
-        sessionStore.session(sessionId).changed(this) { session ->
+        sessionDetailActionCreator.load(sessionDetailFragmentArgs.session)
+        sessionDetailStore.session.changedNonNull(
+            this) { session: Session.SpeechSession ->
             binding.session = session
         }
     }
 
-    companion object {
-        const val EXTRA_SESSION = "session"
-        fun newInstance(day: Int): SessionDetailFragment {
-            return SessionDetailFragment().apply {
-                arguments = Bundle().apply { putInt(EXTRA_SESSION, day) }
-            }
-        }
+    override fun supportFragmentInjector(): AndroidInjector<Fragment>? {
+        return childFragmentInjector
     }
 }
 
-@Module
-interface SessionDetailFragmentModule {
-    @Binds
-    fun providesLifecycle(sessionsFragment: SessionDetailFragment): LifecycleOwner {
-        return sessionsFragment.viewLifecycleOwner
+@AssistedModule
+@Module(includes = [AssistedInject_SessionDetailFragmentModule::class])
+abstract class SessionDetailFragmentModule {
+
+    @Module
+    companion object {
+        @JvmStatic @Provides
+        @Named("sessionDetailFragment")
+        fun providesLifecycle(sessionsFragment: SessionDetailFragment): LifecycleOwner {
+            return sessionsFragment.viewLifecycleOwner
+        }
+
+        @JvmStatic @Provides
+        fun provideActivity(sessionsFragment: SessionDetailFragment): FragmentActivity {
+            return sessionsFragment.requireActivity()
+        }
     }
 }

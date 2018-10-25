@@ -75,11 +75,11 @@ class DataSessionRepository @Inject constructor(
                         sessionsChannel.onReceive {
                             sessionEntities = it
                         }
-                        val fabSessions = fabSessions ?: return@select
-                        val sessionEntities = sessionEntities ?: return@select
-                        val firstDay = DateTime(sessionEntities.first().session.stime)
-                        val speakerSessions = sessionEntities
-                            .map { it.toSession(speakerEntities, fabSessions, firstDay) }
+                        val nonNullFabSessions = fabSessions ?: return@select
+                        val nonNullSessionEntities = sessionEntities ?: return@select
+                        val firstDay = DateTime(nonNullSessionEntities.first().session.stime)
+                        val speakerSessions = nonNullSessionEntities
+                            .map { it.toSession(speakerEntities, nonNullFabSessions, firstDay) }
                             .sortedWith(compareBy(
                                 { it.startTime.unix },
                                 { it.room.id }

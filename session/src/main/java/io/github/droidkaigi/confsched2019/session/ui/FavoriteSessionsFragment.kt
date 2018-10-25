@@ -6,13 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.android.support.DaggerFragment
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.Session
@@ -23,19 +21,24 @@ import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionStore
 import io.github.droidkaigi.confsched2019.ui.MainFragmentDirections
+import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
+import javax.inject.Provider
 
 class FavoriteSessionsFragment : DaggerFragment() {
-
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-    @Inject lateinit var sessionActionCreator: SessionActionCreator
-
     lateinit var binding: FragmentSessionsBinding
 
+    @Inject lateinit var sessionActionCreator: SessionActionCreator
     @Inject lateinit var sessionStore: SessionStore
-
+    @Inject lateinit var allSessionsStoreProvider: Provider<AllSessionsStore>
     private val allSessionsStore: AllSessionsStore by lazy {
-        ViewModelProviders.of(this, viewModelFactory).get(AllSessionsStore::class.java)
+        InjectedViewModelProviders.of(requireActivity())[allSessionsStoreProvider]
+    }
+
+    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
+
+    private val onFavoriteClickListener = { clickedSession: Session.SpeechSession ->
+        sessionActionCreator.toggleFavorite(clickedSession)
     }
 
     override fun onCreateView(
@@ -45,12 +48,6 @@ class FavoriteSessionsFragment : DaggerFragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sessions, container, false)
         return binding.root
-    }
-
-    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
-
-    private val onFavoriteClickListener = { clickedSession: Session.SpeechSession ->
-        sessionActionCreator.toggleFavorite(clickedSession)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -83,8 +80,8 @@ class FavoriteSessionsFragment : DaggerFragment() {
 }
 
 @Module
-interface FavoriteSessionsFragmentModule {
-    @Binds
+object FavoriteSessionsFragmentModule {
+    @JvmStatic @Provides
     fun providesLifecycle(sessionsFragment: FavoriteSessionsFragment): LifecycleOwner {
         return sessionsFragment.viewLifecycleOwner
     }

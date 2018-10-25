@@ -36,13 +36,4 @@ class SessionStore @Inject constructor(
                     .filter { it.isFavorited }
             }
     }
-
-    fun session(sessionId: String): LiveData<Session.SpeechSession> {
-        return sessions
-            .map {
-                it.orEmpty().filterIsInstance<Session.SpeechSession>()
-                .first{it.id == sessionId}
-            }
-    }
-
 }

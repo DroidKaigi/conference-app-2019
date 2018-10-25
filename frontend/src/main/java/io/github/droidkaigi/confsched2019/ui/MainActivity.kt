@@ -1,7 +1,7 @@
 package io.github.droidkaigi.confsched2019.ui
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -28,7 +28,7 @@ class MainActivity : DaggerAppCompatActivity() {
 @Module
 interface MainActivityModule {
     @Binds
-    fun providesAppCompatActivity(mainActivity: MainActivity): AppCompatActivity
+    fun providesActivity(mainActivity: MainActivity): FragmentActivity
 
     @ContributesAndroidInjector(modules = [MainFragmentModule::class])
     fun contributeMainFragment(): MainFragment

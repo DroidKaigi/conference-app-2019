@@ -64,7 +64,10 @@ object Dep {
         val core = "com.google.dagger:dagger:${Versions.dagger}"
         val compiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
         val androidSupport = "com.google.dagger:dagger-android-support:${Versions.dagger}"
+        val android = "com.google.dagger:dagger-android:${Versions.dagger}"
         val androidProcessor = "com.google.dagger:dagger-android-processor:${Versions.dagger}"
+        val assistedInjectAnnotations = "com.squareup.inject:assisted-inject-annotations-dagger2:0.3.0"
+        val assistedInjectProcessor = "com.squareup.inject:assisted-inject-processor-dagger2:0.3.0"
     }
 
     object Android {
