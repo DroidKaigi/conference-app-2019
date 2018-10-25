@@ -2,7 +2,7 @@ package dependencies
 
 private object Versions {
     val retrofit = "2.4.0"
-    val kotlin = "1.3.0-rc-145"
+    val kotlin = "1.3.0-rc-190"
     val stetho = "1.5.0"
     val aac = "2.0.0"
     val dagger = "2.16"
