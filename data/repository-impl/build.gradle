@@ -33,7 +33,6 @@ dependencies {
     implementation Dep.Kotlin.stdlibJvm
     implementation Dep.Kotlin.serialization
     api Dep.Kotlin.coroutines
-    api Dep.Kotlin.coroutinesRx2
     implementation Dep.Arch.lifecycleLiveData
     kapt Dep.Arch.roomCompiler
 

@@ -19,14 +19,11 @@ class SessionActionCreator @Inject constructor(
     fun load() = launch(coroutineContext) {
         dispatcher.send(Action.AllSessionLoadingStateChanged(LoadingState.LOADING))
         try {
-            // 1. load db data
-            dispatcher.send(Action.AllSessionLoaded(sessionRepository.sessions(false)))
-
-            // 2. fetch api data
+            // fetch api data
             sessionRepository.refresh()
             dispatcher.send(Action.AllSessionLoadingStateChanged(LoadingState.FINISHED))
 
-            // 3. listen session state
+            // listen session state
             val sessionChannel = sessionRepository.sessionChannel()
             sessionChannel.consumeEach { sessions ->
                 dispatcher.send(Action.AllSessionLoaded(sessions))

@@ -20,9 +20,4 @@ abstract class SessionDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insert(sessions: List<SessionEntityImpl>)
-
-    open fun clearAndInsert(newSessions: List<SessionEntityImpl>) {
-        deleteAll()
-        insert(newSessions)
-    }
 }

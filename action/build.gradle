@@ -5,7 +5,7 @@ apply plugin: 'kotlin'
 
 dependencies {
     api project(":model")
-    api "com.soywiz:klock:0.2.0"
+    api Dep.Klock.jvm
 
     implementation Dep.Kotlin.stdlibJvm
 }

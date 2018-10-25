@@ -9,10 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.android.support.DaggerFragment
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.LoadingState
@@ -22,21 +20,22 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionAction
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionStore
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
+import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
+import javax.inject.Provider
 
 class AllSessionsFragment : DaggerFragment() {
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-    @Inject lateinit var sessionActionCreator: SessionActionCreator
-
     lateinit var binding: FragmentAllSessionsBinding
 
-    private lateinit var progressTimeLatch: ProgressTimeLatch
-
+    @Inject lateinit var sessionActionCreator: SessionActionCreator
     @Inject lateinit var sessionStore: SessionStore
 
+    @Inject lateinit var allSessionsStoreProvider: Provider<AllSessionsStore>
     private val allSessionsStore: AllSessionsStore by lazy {
-        ViewModelProviders.of(this, viewModelFactory).get(AllSessionsStore::class.java)
+        InjectedViewModelProviders.of(requireActivity())[allSessionsStoreProvider]
     }
+
+    private lateinit var progressTimeLatch: ProgressTimeLatch
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,11 +74,17 @@ class AllSessionsFragment : DaggerFragment() {
     enum class Tab {
         Day1 {
             override fun title() = "Day1"
-            override fun fragment() = DaySessionsFragment.newInstance(1)
+            override fun fragment(): DaySessionsFragment {
+                return DaySessionsFragment.newInstance(DaySessionsFragmentArgs
+                    .Builder(1)
+                    .build())
+            }
         },
         Day2 {
             override fun title() = "Day2"
-            override fun fragment() = DaySessionsFragment.newInstance(1)
+            override fun fragment() = DaySessionsFragment.newInstance(DaySessionsFragmentArgs
+                .Builder(2)
+                .build())
         },
         Favorite {
             override fun title() = "Favorite"
@@ -92,9 +97,13 @@ class AllSessionsFragment : DaggerFragment() {
 }
 
 @Module
-interface AllSessionsFragmentModule {
-    @Binds
-    fun providesLifecycle(allSessionsFragment: AllSessionsFragment): LifecycleOwner {
-        return allSessionsFragment.viewLifecycleOwner
+abstract class AllSessionsFragmentModule {
+    @Module
+    companion object {
+        @JvmStatic @Provides fun providesLifecycle(
+            allSessionsFragment: AllSessionsFragment
+        ): LifecycleOwner {
+            return allSessionsFragment.viewLifecycleOwner
+        }
     }
 }

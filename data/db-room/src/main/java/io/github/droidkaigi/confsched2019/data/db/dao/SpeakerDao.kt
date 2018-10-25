@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntityImpl
 
 @Dao abstract class SpeakerDao {
@@ -17,9 +16,6 @@ import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntityImpl
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insert(speakers: List<SpeakerEntityImpl>)
 
-    @Transaction
     open fun clearAndInsert(newSessions: List<SpeakerEntityImpl>) {
-        deleteAll()
-        insert(newSessions)
     }
 }

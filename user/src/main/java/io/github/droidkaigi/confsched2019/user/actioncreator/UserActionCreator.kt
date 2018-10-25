@@ -1,7 +1,7 @@
 package io.github.droidkaigi.confsched2019.user.actioncreator
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -23,7 +23,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class UserActionCreator @Inject constructor(
-    val activity: AppCompatActivity,
+    val activity: FragmentActivity,
     val dispatcher: Dispatcher,
     @Named("defaultFirebaseWebClientId")
     val defaultFirebaseWebClientId: Int
@@ -82,7 +82,7 @@ class UserActionCreator @Inject constructor(
 
     private suspend fun onSignIn(account: GoogleSignInAccount) {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-        val result = firebaseAuth.signInWithCredential(credential).await()
+        firebaseAuth.signInWithCredential(credential).await()
 //        val user = result.user
         dispatcher.send(Action.UserRegistered)
     }

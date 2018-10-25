@@ -32,23 +32,28 @@ class RoomSessionDatabase @Inject constructor(
         return sessionSpeakerJoinDao.getAllSessionsLiveData().openSubscription()
     }
 
-    override suspend fun sessions(): List<SessionWithSpeakers> {
-        return sessionSpeakerJoinDao.getAllSessions()
+    override suspend fun sessions(): List<SessionWithSpeakers> = withContext(Dispatchers.IO) {
+        sessionSpeakerJoinDao.getAllSessions()
     }
 
-    override suspend fun allSpeaker(): List<SpeakerEntity> = speakerDao.getAllSpeaker()
+    override suspend fun allSpeaker(): List<SpeakerEntity> = withContext(Dispatchers.IO) {
+        speakerDao.getAllSpeaker()
+    }
 
     override suspend fun save(apiResponse: Response) {
         withContext(Dispatchers.IO) {
             // FIXME: SQLiteDatabaseLockedException
-//            sessionDatabase.runInTransaction {
-            speakerDao.clearAndInsert(apiResponse.speakers.orEmpty().toSpeakerEntities())
-            val sessions = apiResponse.sessions
-            val sessionEntities = sessions.toSessionEntities(apiResponse.categories.orEmpty(),
-                apiResponse.rooms.orEmpty())
-            sessionDao.clearAndInsert(sessionEntities)
-            sessionSpeakerJoinDao.insert(sessions.toSessionSpeakerJoinEntities())
-//            }
+            sessionDatabase.runInTransaction {
+                sessionDatabase.sqlite().execSQL("PRAGMA defer_foreign_keys = TRUE")
+                sessionDatabase.clearAllTables()
+                val speakers = apiResponse.speakers.orEmpty().toSpeakerEntities()
+                speakerDao.insert(speakers)
+                val sessions = apiResponse.sessions
+                val sessionEntities = sessions.toSessionEntities(apiResponse.categories.orEmpty(),
+                    apiResponse.rooms.orEmpty())
+                sessionDao.insert(sessionEntities)
+                sessionSpeakerJoinDao.insert(sessions.toSessionSpeakerJoinEntities())
+            }
         }
     }
 }

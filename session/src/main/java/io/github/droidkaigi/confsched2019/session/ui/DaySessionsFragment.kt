@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.android.support.DaggerFragment
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.Session
@@ -21,19 +20,20 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionAction
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionStore
+import io.github.droidkaigi.confsched2019.ui.MainFragmentDirections
+import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
+import javax.inject.Provider
 
 class DaySessionsFragment : DaggerFragment() {
-
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-    @Inject lateinit var sessionActionCreator: SessionActionCreator
-
     lateinit var binding: FragmentSessionsBinding
 
+    @Inject lateinit var sessionActionCreator: SessionActionCreator
     @Inject lateinit var sessionStore: SessionStore
 
+    @Inject lateinit var allSessionsStoreProvider: Provider<AllSessionsStore>
     private val allSessionsStore: AllSessionsStore by lazy {
-        ViewModelProviders.of(this, viewModelFactory).get(AllSessionsStore::class.java)
+        InjectedViewModelProviders.of(requireActivity())[allSessionsStoreProvider]
     }
 
     override fun onCreateView(
@@ -60,7 +60,13 @@ class DaySessionsFragment : DaggerFragment() {
                 .map { session ->
                     SessionItem(
                         session = session,
-                        onFavoriteClickListener = onFavoriteClickListener
+                        onFavoriteClickListener = onFavoriteClickListener,
+                        onClickListener = { clickedSession ->
+                            Navigation
+                                .findNavController(requireActivity(), R.id.root_nav_host_fragment)
+                                .navigate(MainFragmentDirections.actionSessionToSessionDetail(
+                                    clickedSession.id))
+                        }
                     )
                 }
             groupAdapter.update(items)
@@ -69,17 +75,17 @@ class DaySessionsFragment : DaggerFragment() {
 
     companion object {
         const val EXTRA_DAY = "day"
-        fun newInstance(day: Int): DaySessionsFragment {
+        fun newInstance(args: DaySessionsFragmentArgs): DaySessionsFragment {
             return DaySessionsFragment().apply {
-                arguments = Bundle().apply { putInt(EXTRA_DAY, day) }
+                arguments = args.toBundle()
             }
         }
     }
 }
 
 @Module
-interface DaySessionsFragmentModule {
-    @Binds
+object DaySessionsFragmentModule {
+    @JvmStatic @Provides
     fun providesLifecycle(sessionsFragment: DaySessionsFragment): LifecycleOwner {
         return sessionsFragment.viewLifecycleOwner
     }
