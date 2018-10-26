@@ -23,7 +23,7 @@ abstract class SessionSpeakerJoinDao {
     @Transaction
     @CheckResult
     @Query("SELECT * FROM session")
-    abstract fun getAllSessionsLiveData(): Flowable<List<SessionWithSpeakersImpl>>
+    abstract fun getAllSessionsObservable(): Flowable<List<SessionWithSpeakersImpl>>
 
     @Insert abstract fun insert(sessionSpeakerJoin: List<SessionSpeakerJoinEntityImpl>)
 }

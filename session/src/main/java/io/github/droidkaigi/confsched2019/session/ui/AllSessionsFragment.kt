@@ -11,23 +11,27 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.LifecycleOwner
 import dagger.Module
 import dagger.Provides
-import dagger.android.support.DaggerFragment
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentAllSessionsBinding
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionStore
+import io.github.droidkaigi.confsched2019.ui.DaggerFragment
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
+import javax.inject.Named
 import javax.inject.Provider
 
 class AllSessionsFragment : DaggerFragment() {
+
     lateinit var binding: FragmentAllSessionsBinding
 
     @Inject lateinit var sessionActionCreator: SessionActionCreator
+    @Inject lateinit var allSessionActionCreator: AllSessionActionCreator
     @Inject lateinit var sessionStore: SessionStore
 
     @Inject lateinit var allSessionsStoreProvider: Provider<AllSessionsStore>
@@ -53,6 +57,7 @@ class AllSessionsFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        allSessionActionCreator.load()
         binding.sessionsTabLayout.setupWithViewPager(binding.sessionsViewpager)
         binding.sessionsViewpager.adapter = object : FragmentStatePagerAdapter(
             childFragmentManager
@@ -94,13 +99,14 @@ class AllSessionsFragment : DaggerFragment() {
         abstract fun title(): String
         abstract fun fragment(): Fragment
     }
+
 }
 
 @Module
 abstract class AllSessionsFragmentModule {
     @Module
     companion object {
-        @JvmStatic @Provides fun providesLifecycle(
+        @Named("AllSessionsFragment") @JvmStatic @Provides fun providesLifecycle(
             allSessionsFragment: AllSessionsFragment
         ): LifecycleOwner {
             return allSessionsFragment.viewLifecycleOwner

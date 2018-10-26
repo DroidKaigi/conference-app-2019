@@ -11,7 +11,6 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
-import dagger.android.support.DaggerFragment
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.R
@@ -20,6 +19,7 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionAction
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionStore
+import io.github.droidkaigi.confsched2019.ui.DaggerFragment
 import io.github.droidkaigi.confsched2019.ui.MainFragmentDirections
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
@@ -55,7 +55,7 @@ class DaySessionsFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
         binding.allSessionsRecycler.adapter = groupAdapter
 
-        sessionStore.daySessions(arguments?.getInt(EXTRA_DAY) ?: 0).changed(this) { sessions ->
+        allSessionsStore.daySessions(arguments?.getInt(EXTRA_DAY) ?: 0).changed(this) { sessions ->
             val items = sessions.filterIsInstance<Session.SpeechSession>()
                 .map { session ->
                     SessionItem(

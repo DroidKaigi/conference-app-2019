@@ -27,6 +27,8 @@ dependencies {
     api Dep.Android.design
     implementation Dep.Kotlin.stdlibJvm
 
+    api Dep.Dagger.androidSupport
+
     api Dep.Arch.Navigation.runtime
     api Dep.Arch.Navigation.runtimeKtx
 }

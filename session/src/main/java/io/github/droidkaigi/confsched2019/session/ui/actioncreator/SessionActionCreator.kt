@@ -22,12 +22,6 @@ class SessionActionCreator @Inject constructor(
             // fetch api data
             sessionRepository.refresh()
             dispatcher.send(Action.AllSessionLoadingStateChanged(LoadingState.FINISHED))
-
-            // listen session state
-            val sessionChannel = sessionRepository.sessionChannel()
-            sessionChannel.consumeEach { sessions ->
-                dispatcher.send(Action.AllSessionLoaded(sessions))
-            }
         } catch (e: Exception) {
             e.printStackTrace()
         }

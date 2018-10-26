@@ -1,5 +1,6 @@
 package io.github.droidkaigi.confsched2019.data.firestore
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
@@ -25,17 +26,19 @@ class FirestoreImpl @Inject constructor() : FireStore {
         if (snapshot.isEmpty) {
             favoritesRef.add(mapOf("initialized" to true)).await()
         }
-        val channel = BroadcastChannel<List<Int>>(Channel.CONFLATED)
-        favoritesRef.whereEqualTo("favorite", true)
+        val channel = Channel<List<Int>>(Channel.CONFLATED)
+        val listenerRegistration = favoritesRef.whereEqualTo("favorite", true)
             .addSnapshotListener(
                 MetadataChanges.INCLUDE
             ) { favoriteSnapshot, firebaseFirestoreException ->
                 favoriteSnapshot ?: return@addSnapshotListener
                 val element = favoriteSnapshot.mapNotNull { it.id.toIntOrNull() }
-                println("getFavoriteSessionChannel:offer:" + element)
                 channel.offer(element)
             }
-        return channel.openSubscription()
+        channel.invokeOnClose {
+            listenerRegistration.remove()
+        }
+        return channel
     }
 
     override suspend fun getFavoriteSessionIds(): List<Int> {

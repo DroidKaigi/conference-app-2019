@@ -15,7 +15,7 @@ import javax.inject.Named
 class SessionDetailActionCreator @Inject constructor(
     val dispatcher: Dispatcher,
     val sessionRepository: SessionRepository,
-    @Named("sessionDetailFragment") val lifecycleOwner: LifecycleOwner
+    @Named("SessionDetailFragment") val lifecycleOwner: LifecycleOwner
 ) : CoroutineScope by lifecycleOwner.toCoroutineScope() {
     fun load(sessionId: String) {
         launch {

@@ -29,7 +29,7 @@ class RoomSessionDatabase @Inject constructor(
     private val sessionSpeakerJoinDao: SessionSpeakerJoinDao
 ) : SessionDatabase {
     override fun sessionsChannel(): ReceiveChannel<List<SessionWithSpeakers>> {
-        return sessionSpeakerJoinDao.getAllSessionsLiveData().openSubscription()
+        return sessionSpeakerJoinDao.getAllSessionsObservable().openSubscription()
     }
 
     override suspend fun sessions(): List<SessionWithSpeakers> = withContext(Dispatchers.IO) {
