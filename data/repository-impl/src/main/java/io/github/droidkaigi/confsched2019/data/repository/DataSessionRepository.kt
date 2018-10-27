@@ -54,14 +54,12 @@ class DataSessionRepository @Inject constructor(
 
     override suspend fun sessionChannel(): ReceiveChannel<List<Session>> {
         try {
-            val allSpeakerDeferred = async { sessionDatabase.allSpeaker() }
             val fabSessionIdsChannel: ReceiveChannel<List<Int>> = fireStore
                 .getFavoriteSessionChannel()
 //            .doOnNext { println("sessionChannel:fabSessionIdsObservable" + it) }
             val sessionsChannel: ReceiveChannel<List<SessionWithSpeakers>> = sessionDatabase
                 .sessionsChannel()
 //            .doOnNext { println("sessionChannel:sessionsObservable" + it) }
-            val speakerEntities = allSpeakerDeferred.await()
 
             val channel: BroadcastChannel<List<Session>> = BroadcastChannel<List<Session>>(
                 Channel.CONFLATED)
@@ -80,14 +78,7 @@ class DataSessionRepository @Inject constructor(
                             }
                             val nonNullFabSessions = fabSessions ?: return@select
                             val nonNullSessionEntities = sessionEntities ?: return@select
-                            val firstDay = DateTime(nonNullSessionEntities.first().session.stime)
-                            val speakerSessions = nonNullSessionEntities
-                                .map { it.toSession(speakerEntities, nonNullFabSessions, firstDay) }
-                                .sortedWith(compareBy(
-                                    { it.startTime.unix },
-                                    { it.room.id }
-                                ))
-                            channel.offer(speakerSessions) // + specialSessions
+                            sendSessionChange(nonNullSessionEntities, nonNullFabSessions, channel)
                         }
                     }
                 } finally {
@@ -102,6 +93,26 @@ class DataSessionRepository @Inject constructor(
         } catch (e: Exception) {
             e.printStackTrace()
             throw e
+        }
+    }
+
+    private fun CoroutineScope.sendSessionChange(
+        nonNullSessionEntities: List<SessionWithSpeakers>,
+        nonNullFabSessions: List<Int>,
+        channel: BroadcastChannel<List<Session>>
+    ) {
+        launch {
+            val allSpeakerDeferred = async { sessionDatabase.allSpeaker() }
+            val speakerEntities = allSpeakerDeferred.await()
+            val firstSession = nonNullSessionEntities.firstOrNull() ?: return@launch
+            val firstDay = DateTime(firstSession.session.stime)
+            val speakerSessions = nonNullSessionEntities
+                .map { it.toSession(speakerEntities, nonNullFabSessions, firstDay) }
+                .sortedWith(compareBy(
+                    { it.startTime.unix },
+                    { it.room.id }
+                ))
+            channel.offer(speakerSessions) // + specialSessions
         }
     }
 
