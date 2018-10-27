@@ -10,10 +10,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.await
-import io.github.droidkaigi.confsched2019.ext.android.toCoroutineScope
+import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
 import io.github.droidkaigi.confsched2019.model.Action
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import nl.adaptivity.android.coroutines.Maybe.Cancelled
 import nl.adaptivity.android.coroutines.Maybe.Error
@@ -25,9 +24,8 @@ import javax.inject.Named
 class UserActionCreator @Inject constructor(
     val activity: FragmentActivity,
     val dispatcher: Dispatcher,
-    @Named("defaultFirebaseWebClientId")
-    val defaultFirebaseWebClientId: Int
-) : CoroutineScope by activity.toCoroutineScope(Dispatchers.Main) {
+    @Named("defaultFirebaseWebClientId") val defaultFirebaseWebClientId: Int
+) : CoroutineScope by activity.coroutineScope {
     val googleSignInClient: GoogleSignInClient by lazy {
         GoogleSignIn.getClient(
             activity,

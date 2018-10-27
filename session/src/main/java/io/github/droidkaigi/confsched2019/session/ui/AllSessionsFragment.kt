@@ -8,7 +8,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Lifecycle
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.ext.android.changed
@@ -17,14 +17,11 @@ import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentAllSessionsBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionStore
 import io.github.droidkaigi.confsched2019.ui.DaggerFragment
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
-import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
 import javax.inject.Named
-import javax.inject.Provider
 
 class AllSessionsFragment : DaggerFragment() {
 
@@ -33,11 +30,6 @@ class AllSessionsFragment : DaggerFragment() {
     @Inject lateinit var sessionActionCreator: SessionActionCreator
     @Inject lateinit var allSessionActionCreator: AllSessionActionCreator
     @Inject lateinit var sessionStore: SessionStore
-
-    @Inject lateinit var allSessionsStoreProvider: Provider<AllSessionsStore>
-    private val allSessionsStore: AllSessionsStore by lazy {
-        InjectedViewModelProviders.of(requireActivity())[allSessionsStoreProvider]
-    }
 
     private lateinit var progressTimeLatch: ProgressTimeLatch
 
@@ -108,8 +100,8 @@ abstract class AllSessionsFragmentModule {
     companion object {
         @Named("AllSessionsFragment") @JvmStatic @Provides fun providesLifecycle(
             allSessionsFragment: AllSessionsFragment
-        ): LifecycleOwner {
-            return allSessionsFragment.viewLifecycleOwner
+        ): Lifecycle {
+            return allSessionsFragment.viewLifecycleOwner.lifecycle
         }
     }
 }

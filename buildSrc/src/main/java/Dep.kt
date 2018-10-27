@@ -98,9 +98,9 @@ object Dep {
     val liveDataKtx = "com.shopify:livedata-ktx:2.0.1"
 
     object LeakCanary {
-        val leakCanary = "com.squareup.leakcanary:leakcanary-android:1.7-SNAPSHOT"
-        val leakCanaryNoOp = "com.squareup.leakcanary:leakcanary-android-no-op:1.7-SNAPSHOT"
-        val leakCanaryFragment = "com.squareup.leakcanary:leakcanary-support-fragment:1.7-SNAPSHOT"
+        val leakCanary = "com.squareup.leakcanary:leakcanary-android:1.6.2"
+        val leakCanaryNoOp = "com.squareup.leakcanary:leakcanary-android-no-op:1.6.2"
+        val leakCanaryFragment = "com.squareup.leakcanary:leakcanary-support-fragment:1.6.2"
     }
 
     object Stetho {
