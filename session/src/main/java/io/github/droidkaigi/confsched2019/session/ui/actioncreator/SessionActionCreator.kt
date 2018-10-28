@@ -23,7 +23,8 @@ class SessionActionCreator @Inject constructor(
             sessionRepository.refresh()
             dispatcher.send(Action.AllSessionLoadingStateChanged(LoadingState.FINISHED))
         } catch (e: Exception) {
-            e.printStackTrace()
+            // TODO: error handling
+            throw e
         }
     }
 
@@ -34,7 +35,8 @@ class SessionActionCreator @Inject constructor(
                 sessionRepository.toggleFavorite(session)
                 dispatcher.send(Action.AllSessionLoadingStateChanged(LoadingState.FINISHED))
             } catch (e: Exception) {
-                e.printStackTrace()
+                // TODO: error handling
+                throw e
             }
         }
     }

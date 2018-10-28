@@ -28,8 +28,19 @@
             />
     </fragment>
     <fragment
-        android:id="@+id/session_day"
-        android:name="io.github.droidkaigi.confsched2019.session.ui.DaySessionsFragment"
+        android:id="@+id/sessions"
+        android:name="io.github.droidkaigi.confsched2019.session.ui.SessionsFragment"
+        android:label="@string/session_label"
+        tools:layout="@layout/fragment_sessions"
+        >
+        <argument
+            android:name="tabIndex"
+            app:argType="integer"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/bottom_session_day"
+        android:name="io.github.droidkaigi.confsched2019.session.ui.BottomSheetDaySessionsFragment"
         android:label="@string/session_label"
         tools:layout="@layout/fragment_sessions"
         >

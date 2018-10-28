@@ -24,6 +24,7 @@ android {
 }
 
 dependencies {
+    api project(":model")
     api Dep.Android.design
     implementation Dep.Kotlin.stdlibJvm
 

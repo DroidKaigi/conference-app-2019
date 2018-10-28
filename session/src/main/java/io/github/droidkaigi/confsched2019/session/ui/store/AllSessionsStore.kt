@@ -7,6 +7,7 @@ import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.toLiveData
 import io.github.droidkaigi.confsched2019.model.Action
 import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.SessionTab
 import kotlinx.coroutines.channels.map
 import javax.inject.Inject
 
@@ -17,6 +18,11 @@ class AllSessionsStore @Inject constructor(
         .subscribe<Action.AllSessionLoaded>()
         .map { it.sessions }
         .toLiveData(listOf())
+
+    val selectedTab: LiveData<SessionTab> = dispatcher
+        .subscribe<Action.SessionTabSelected>()
+        .map { it.sessionTab }
+        .toLiveData(SessionTab.tabs[0])
 
     fun daySessions(day: Int): LiveData<List<Session>> {
         return sessions

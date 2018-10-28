@@ -9,11 +9,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Lifecycle
-import com.shopify.livedataktx.filter
+import androidx.viewpager.widget.ViewPager
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.LoadingState
+import io.github.droidkaigi.confsched2019.model.SessionTab
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentAllSessionsBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionActionCreator
@@ -52,18 +53,28 @@ class AllSessionsFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        userStore.logined.changed(viewLifecycleOwner) {logined ->
-            if(logined) allSessionActionCreator.load()
+        userStore.logined.changed(viewLifecycleOwner) { logined ->
+            if (logined) allSessionActionCreator.load()
         }
 
         binding.sessionsTabLayout.setupWithViewPager(binding.sessionsViewpager)
         binding.sessionsViewpager.adapter = object : FragmentStatePagerAdapter(
             childFragmentManager
         ) {
-            override fun getItem(position: Int) = Tab.values()[position].fragment()
-            override fun getPageTitle(position: Int) = Tab.values()[position].title()
-            override fun getCount(): Int = Tab.values().size
+            override fun getItem(position: Int): Fragment {
+                return SessionsFragment.newInstance(SessionsFragmentArgs
+                        .Builder(position)
+                        .build())
+            }
+
+            override fun getPageTitle(position: Int) = SessionTab.tabs[position].title
+            override fun getCount(): Int = SessionTab.tabs.size
         }
+        binding.sessionsViewpager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+            override fun onPageSelected(position: Int) {
+                allSessionActionCreator.selectTab(SessionTab.tabs[position])
+            }
+        })
         progressTimeLatch = ProgressTimeLatch { showProgress ->
             binding.progressBar.isVisible = showProgress
         }.apply {
@@ -73,31 +84,6 @@ class AllSessionsFragment : DaggerFragment() {
             progressTimeLatch.loading = it == LoadingState.LOADING
         }
     }
-
-    enum class Tab {
-        Day1 {
-            override fun title() = "Day1"
-            override fun fragment(): DaySessionsFragment {
-                return DaySessionsFragment.newInstance(DaySessionsFragmentArgs
-                    .Builder(1)
-                    .build())
-            }
-        },
-        Day2 {
-            override fun title() = "Day2"
-            override fun fragment() = DaySessionsFragment.newInstance(DaySessionsFragmentArgs
-                .Builder(2)
-                .build())
-        },
-        Favorite {
-            override fun title() = "Favorite"
-            override fun fragment() = FavoriteSessionsFragment.newInstance()
-        };
-
-        abstract fun title(): String
-        abstract fun fragment(): Fragment
-    }
-
 }
 
 @Module

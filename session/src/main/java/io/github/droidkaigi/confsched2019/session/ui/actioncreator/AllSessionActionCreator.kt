@@ -5,6 +5,7 @@ import io.github.droidkaigi.confsched2019.data.repository.SessionRepository
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
 import io.github.droidkaigi.confsched2019.model.Action
+import io.github.droidkaigi.confsched2019.model.SessionTab
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
@@ -25,7 +26,11 @@ class AllSessionActionCreator @Inject constructor(
             }
         } catch (e: Exception) {
             // TODO: Error Handling
-            e.printStackTrace()
+            throw e
         }
+    }
+
+    fun selectTab(sessionTab: SessionTab) {
+        dispatcher.launchAndSend(Action.SessionTabSelected(sessionTab))
     }
 }

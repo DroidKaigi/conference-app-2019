@@ -84,6 +84,10 @@ dependencies {
     testImplementation Dep.junit
     androidTestImplementation Dep.Android.testRunner
     androidTestImplementation Dep.Android.espressoCore
+
+    Dep.Hyperion.hyperionPlugins.forEach{
+            debugImplementation it
+    }
 }
 
 
