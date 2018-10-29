@@ -32,6 +32,8 @@ dependencies {
 
     api Dep.Arch.Navigation.runtime
     api Dep.Arch.Navigation.runtimeKtx
+    api Dep.Arch.Navigation.fragmentKtx
+    api Dep.Arch.Navigation.uiKtx
 }
 repositories {
     mavenCentral()

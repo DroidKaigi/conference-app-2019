@@ -62,6 +62,8 @@ dependencies {
     implementation Dep.Arch.Navigation.runtime
     implementation Dep.Arch.Navigation.fragment
     implementation Dep.Arch.Navigation.ui
+    implementation Dep.Arch.Navigation.runtimeKtx
+    implementation Dep.Arch.Navigation.fragmentKtx
 
     implementation Dep.Stetho.stetho
 

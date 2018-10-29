@@ -7,10 +7,25 @@
 
     <fragment
         android:id="@id/session"
-        android:name="io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment"
+        android:name="io.github.droidkaigi.confsched2019.ui.MainFragment"
+        android:label="@string/session_label"
+        tools:layout="@layout/fragment_main"
+        >
+        <action
+            android:id="@id/action_session_to_session_detail"
+            app:destination="@id/session_detail"
+            />
+    </fragment>
+    <fragment
+        android:id="@id/session_detail"
+        android:name="io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment"
         android:label="@string/session_label"
         tools:layout="@layout/fragment_all_sessions"
         >
+        <argument
+            android:name="session"
+            app:argType="string"
+            />
     </fragment>
     <fragment
         android:id="@+id/announce"

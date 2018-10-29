@@ -51,7 +51,7 @@ class MainFragment : DaggerFragment() {
         if (savedInstanceState == null) {
             val navHostFragment = childFragmentManager
                 .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-            navHostFragment.setGraph(R.navigation.navigation_bottom)
+            navHostFragment.setGraph(R.navigation.navigation)
         }
     }
 

@@ -4,28 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/main"
     >
-
     <fragment
         android:id="@+id/main"
-        android:name="io.github.droidkaigi.confsched2019.ui.MainFragment"
+        android:name="io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment"
         android:label="@string/session_label"
-        tools:layout="@layout/activity_main"
+        tools:layout="@layout/fragment_all_session"
         >
-        <action
-            android:id="@id/action_session_to_session_detail"
-            app:destination="@id/session_detail"
-            />
-    </fragment>
-    <fragment
-        android:id="@id/session_detail"
-        android:name="io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment"
-        android:label="@string/session_label"
-        tools:layout="@layout/fragment_all_sessions"
-        >
-        <argument
-            android:name="session"
-            app:argType="string"
-            />
     </fragment>
     <fragment
         android:id="@+id/sessions"

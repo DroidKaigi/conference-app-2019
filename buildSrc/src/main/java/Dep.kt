@@ -44,6 +44,7 @@ object Dep {
             val fragment = "android.arch.navigation:navigation-fragment:${Versions.navigation}"
             val ui = "android.arch.navigation:navigation-ui:${Versions.navigation}"
             val fragmentKtx = "android.arch.navigation:navigation-fragment-ktx:${Versions.navigation}"
+            val uiKtx = "android.arch.navigation:navigation-ui-ktx:${Versions.navigation}"
             val safeArgsPlugin = "android.arch.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
             val testingKtx = "android.arch.navigation:navigation-testing-ktx:${Versions.navigation}"
         }
