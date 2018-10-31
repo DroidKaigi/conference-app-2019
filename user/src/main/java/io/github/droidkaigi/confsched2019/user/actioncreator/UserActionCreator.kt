@@ -66,12 +66,12 @@ class UserActionCreator @Inject constructor(
         }
     }
 
-    //    private suspend fun onSignIn(account: GoogleSignInAccount) {
-    //        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-    //        firebaseAuth.signInWithCredential(credential).await()
-    ////        val user = result.user
-    //        dispatcher.send(Action.UserRegistered)
-    //    }
+    // private suspend fun onSignIn(account: GoogleSignInAccount) {
+    //     val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+    //     firebaseAuth.signInWithCredential(credential).await()
+    //     val user = result.user
+    //     dispatcher.send(Action.UserRegistered)
+    // }
 
     private fun onError(e: Exception? = null) {
         e?.printStackTrace()

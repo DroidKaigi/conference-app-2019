@@ -28,7 +28,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 />
 
-
             <fragment
                 android:id="@+id/root_nav_host_fragment"
                 android:name="androidx.navigation.fragment.NavHostFragment"

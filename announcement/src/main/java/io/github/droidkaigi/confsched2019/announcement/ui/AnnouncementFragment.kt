@@ -61,7 +61,6 @@ class AnnouncementFragment : DaggerFragment() {
         }
         announcementActionCreator.load()
     }
-
 }
 
 @Module

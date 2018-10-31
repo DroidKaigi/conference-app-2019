@@ -1,11 +1,5 @@
 package io.github.droidkaigi.confsched2019.data.db
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.OnLifecycleEvent
 import io.github.droidkaigi.confsched2019.data.api.response.Response
 import io.github.droidkaigi.confsched2019.data.db.dao.SessionDao
 import io.github.droidkaigi.confsched2019.data.db.dao.SessionSpeakerJoinDao
