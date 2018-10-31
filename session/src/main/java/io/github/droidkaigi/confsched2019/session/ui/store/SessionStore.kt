@@ -20,5 +20,4 @@ class SessionStore @Inject constructor(
         .subscribe<Action.AllSessionLoadingStateChanged>()
         .map { it.loadingState }
         .toLiveData(LoadingState.LOADING)
-
 }

@@ -47,31 +47,31 @@ class UserActionCreator @Inject constructor(
                 onError(e)
             }
             // Google Sign In
-//                val activityResult = activity.activityResult(googleSignInClient.signInIntent)
-//                when (activityResult) {
-//                    is Error -> {
-//                        throw activityResult.e
-//                    }
-//                    is Cancelled -> {
-//                        throw RuntimeException()
-//                    }
-//                    is Ok -> {
-//                        val resultIntent = activityResult.data as Intent
-//                        val account = GoogleSignIn
-//                            .getSignedInAccountFromIntent(resultIntent)
-//                            .await()
-//                        onSignIn(account)
-//                    }
-//                }
+            //                val activityResult = activity.activityResult(googleSignInClient.signInIntent)
+            //                when (activityResult) {
+            //                    is Error -> {
+            //                        throw activityResult.e
+            //                    }
+            //                    is Cancelled -> {
+            //                        throw RuntimeException()
+            //                    }
+            //                    is Ok -> {
+            //                        val resultIntent = activityResult.data as Intent
+            //                        val account = GoogleSignIn
+            //                            .getSignedInAccountFromIntent(resultIntent)
+            //                            .await()
+            //                        onSignIn(account)
+            //                    }
+            //                }
         }
     }
 
-//    private suspend fun onSignIn(account: GoogleSignInAccount) {
-//        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-//        firebaseAuth.signInWithCredential(credential).await()
-////        val user = result.user
-//        dispatcher.send(Action.UserRegistered)
-//    }
+    //    private suspend fun onSignIn(account: GoogleSignInAccount) {
+    //        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+    //        firebaseAuth.signInWithCredential(credential).await()
+    ////        val user = result.user
+    //        dispatcher.send(Action.UserRegistered)
+    //    }
 
     private fun onError(e: Exception? = null) {
         e?.printStackTrace()

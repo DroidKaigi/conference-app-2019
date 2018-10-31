@@ -60,7 +60,6 @@ class AnnouncementFragment : DaggerFragment() {
             progressTimeLatch.loading = it == LoadingState.LOADING
         }
         announcementActionCreator.load()
-
     }
 
 }

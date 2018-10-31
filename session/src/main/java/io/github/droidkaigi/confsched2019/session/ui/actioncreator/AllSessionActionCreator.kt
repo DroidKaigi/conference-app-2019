@@ -16,7 +16,7 @@ class AllSessionActionCreator @Inject constructor(
     val dispatcher: Dispatcher,
     val sessionRepository: SessionRepository,
     @Named("AllSessionsFragment") val lifecycle: Lifecycle
-) : CoroutineScope by lifecycle.coroutineScope{
+) : CoroutineScope by lifecycle.coroutineScope {
     fun load() = launch {
         try {
             // listen session state
