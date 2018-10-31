@@ -7,7 +7,6 @@ import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.Session
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,14 +21,9 @@ class SessionActionCreator @Inject constructor(
             // fetch api data
             sessionRepository.refresh()
             dispatcher.send(Action.AllSessionLoadingStateChanged(LoadingState.FINISHED))
-
-            // listen session state
-            val sessionChannel = sessionRepository.sessionChannel()
-            sessionChannel.consumeEach { sessions ->
-                dispatcher.send(Action.AllSessionLoaded(sessions))
-            }
         } catch (e: Exception) {
-            e.printStackTrace()
+            // TODO: error handling
+            throw e
         }
     }
 
@@ -40,7 +34,8 @@ class SessionActionCreator @Inject constructor(
                 sessionRepository.toggleFavorite(session)
                 dispatcher.send(Action.AllSessionLoadingStateChanged(LoadingState.FINISHED))
             } catch (e: Exception) {
-                e.printStackTrace()
+                // TODO: error handling
+                throw e
             }
         }
     }

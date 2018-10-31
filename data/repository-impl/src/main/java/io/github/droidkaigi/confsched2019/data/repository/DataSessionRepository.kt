@@ -1,5 +1,6 @@
 package io.github.droidkaigi.confsched2019.data.repository
 
+import android.util.Log
 import com.soywiz.klock.DateTime
 import io.github.droidkaigi.confsched2019.data.api.SessionApi
 import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
@@ -12,7 +13,7 @@ import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionMessage
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.model.Topic
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.channels.BroadcastChannel
@@ -22,6 +23,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.selects.select
 import javax.inject.Inject
+import kotlin.coroutines.coroutineContext
 
 class DataSessionRepository @Inject constructor(
     val sessionApi: SessionApi,
@@ -52,40 +54,38 @@ class DataSessionRepository @Inject constructor(
 
     override suspend fun sessionChannel(): ReceiveChannel<List<Session>> {
         try {
-            val allSpeakerDeferred = async { sessionDatabase.allSpeaker() }
             val fabSessionIdsChannel: ReceiveChannel<List<Int>> = fireStore
                 .getFavoriteSessionChannel()
 //            .doOnNext { println("sessionChannel:fabSessionIdsObservable" + it) }
             val sessionsChannel: ReceiveChannel<List<SessionWithSpeakers>> = sessionDatabase
                 .sessionsChannel()
 //            .doOnNext { println("sessionChannel:sessionsObservable" + it) }
-            val speakerEntities = allSpeakerDeferred.await()
 
             val channel: BroadcastChannel<List<Session>> = BroadcastChannel<List<Session>>(
                 Channel.CONFLATED)
 
-            GlobalScope.launch {
+            CoroutineScope(coroutineContext).launch {
                 var fabSessions: List<Int>? = null
                 var sessionEntities: List<SessionWithSpeakers>? = null
-                while (true) {
-                    select<Unit> {
-                        fabSessionIdsChannel.onReceive {
-                            fabSessions = it
+                try {
+                    while (true) {
+                        select<Unit> {
+                            fabSessionIdsChannel.onReceive {
+                                fabSessions = it
+                            }
+                            sessionsChannel.onReceive {
+                                sessionEntities = it
+                            }
+                            val nonNullFabSessions = fabSessions ?: return@select
+                            val nonNullSessionEntities = sessionEntities ?: return@select
+                            sendSessionChange(nonNullSessionEntities, nonNullFabSessions, channel)
                         }
-                        sessionsChannel.onReceive {
-                            sessionEntities = it
-                        }
-                        val nonNullFabSessions = fabSessions ?: return@select
-                        val nonNullSessionEntities = sessionEntities ?: return@select
-                        val firstDay = DateTime(nonNullSessionEntities.first().session.stime)
-                        val speakerSessions = nonNullSessionEntities
-                            .map { it.toSession(speakerEntities, nonNullFabSessions, firstDay) }
-                            .sortedWith(compareBy(
-                                { it.startTime.unix },
-                                { it.room.id }
-                            ))
-                        channel.offer(speakerSessions) // + specialSessions
                     }
+                } finally {
+                    Log.d("DataSessionRepository", "finally")
+                    sessionsChannel.cancel()
+                    fabSessionIdsChannel.cancel()
+                    channel.close()
                 }
             }
 
@@ -93,6 +93,26 @@ class DataSessionRepository @Inject constructor(
         } catch (e: Exception) {
             e.printStackTrace()
             throw e
+        }
+    }
+
+    private fun CoroutineScope.sendSessionChange(
+        nonNullSessionEntities: List<SessionWithSpeakers>,
+        nonNullFabSessions: List<Int>,
+        channel: BroadcastChannel<List<Session>>
+    ) {
+        launch {
+            val allSpeakerDeferred = async { sessionDatabase.allSpeaker() }
+            val speakerEntities = allSpeakerDeferred.await()
+            val firstSession = nonNullSessionEntities.firstOrNull() ?: return@launch
+            val firstDay = DateTime(firstSession.session.stime)
+            val speakerSessions = nonNullSessionEntities
+                .map { it.toSession(speakerEntities, nonNullFabSessions, firstDay) }
+                .sortedWith(compareBy(
+                    { it.startTime.unix },
+                    { it.room.id }
+                ))
+            channel.offer(speakerSessions) // + specialSessions
         }
     }
 

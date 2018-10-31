@@ -86,7 +86,7 @@ abstract class SessionDetailFragmentModule {
     @Module
     companion object {
         @JvmStatic @Provides
-        @Named("sessionDetailFragment")
+        @Named("SessionDetailFragment")
         fun providesLifecycle(sessionsFragment: SessionDetailFragment): LifecycleOwner {
             return sessionsFragment.viewLifecycleOwner
         }

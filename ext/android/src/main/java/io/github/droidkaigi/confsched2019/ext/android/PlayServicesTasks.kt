@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.TaskCompletionSource
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
@@ -22,6 +23,7 @@ import kotlin.coroutines.resumeWithException
 /**
  * Converts this deferred value to the instance of [Task].
  */
+@ExperimentalCoroutinesApi
 public fun <T> Deferred<T>.asTask(): Task<T> {
     val cancellation = CancellationTokenSource()
     val source = TaskCompletionSource<T>(cancellation.token)

@@ -13,11 +13,14 @@ kotlin {
             api project(":data:api")
             api Dep.Kotlin.coroutines
         }
-        jvmMain.dependencies {
-            api Dep.Kotlin.stdlibJvm
-            api project(":model")
-            api project(":data:api")
-            api Dep.Kotlin.coroutines
+        jvmMain {
+            dependsOn commonMain
+            dependencies {
+                api Dep.Kotlin.stdlibJvm
+                api project(":model")
+                api project(":data:api")
+                api Dep.Kotlin.coroutines
+            }
         }
     }
 }

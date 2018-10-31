@@ -42,6 +42,7 @@ android {
 dependencies {
     implementation project(":model")
     implementation project(":session")
+    implementation project(":announcement")
     implementation project(":action")
     implementation project(':frontendcomponent')
     implementation project(':user')
@@ -62,6 +63,8 @@ dependencies {
     implementation Dep.Arch.Navigation.runtime
     implementation Dep.Arch.Navigation.fragment
     implementation Dep.Arch.Navigation.ui
+    implementation Dep.Arch.Navigation.runtimeKtx
+    implementation Dep.Arch.Navigation.fragmentKtx
 
     implementation Dep.Stetho.stetho
 
@@ -84,6 +87,10 @@ dependencies {
     testImplementation Dep.junit
     androidTestImplementation Dep.Android.testRunner
     androidTestImplementation Dep.Android.espressoCore
+
+    Dep.Hyperion.hyperionPlugins.forEach{
+            debugImplementation it
+    }
 }
 
 

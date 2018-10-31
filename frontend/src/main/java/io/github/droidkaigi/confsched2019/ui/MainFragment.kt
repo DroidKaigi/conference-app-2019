@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -17,9 +16,10 @@ import io.github.droidkaigi.confsched2019.R
 import io.github.droidkaigi.confsched2019.databinding.FragmentMainBinding
 import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment
 import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragmentModule
-import io.github.droidkaigi.confsched2019.session.ui.DaySessionsFragment
+import io.github.droidkaigi.confsched2019.session.ui.BottomSheetDaySessionsFragment
+import io.github.droidkaigi.confsched2019.session.ui.SessionsFragment
 import io.github.droidkaigi.confsched2019.session.ui.DaySessionsFragmentModule
-import io.github.droidkaigi.confsched2019.session.ui.FavoriteSessionsFragment
+import io.github.droidkaigi.confsched2019.session.ui.BottomSheetFavoriteSessionsFragment
 import io.github.droidkaigi.confsched2019.session.ui.FavoriteSessionsFragmentModule
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
 import io.github.droidkaigi.confsched2019.user.store.UserStore
@@ -51,10 +51,7 @@ class MainFragment : DaggerFragment() {
         if (savedInstanceState == null) {
             val navHostFragment = childFragmentManager
                 .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-            NavigationUI.setupWithNavController(
-                binding.bottomNavView,
-                navHostFragment.navController
-            )
+            navHostFragment.setGraph(R.navigation.navigation)
         }
     }
 
@@ -71,10 +68,13 @@ abstract class MainFragmentModule {
     abstract fun contributeAllSessionsFragment(): AllSessionsFragment
 
     @ContributesAndroidInjector(modules = [DaySessionsFragmentModule::class])
-    abstract fun contributeDaySessionsFragment(): DaySessionsFragment
+    abstract fun contributeDaySessionsFragment(): SessionsFragment
+
+    @ContributesAndroidInjector(modules = [DaySessionsFragmentModule::class])
+    abstract fun contributeBottomSheetDaySessionsFragment(): BottomSheetDaySessionsFragment
 
     @ContributesAndroidInjector(modules = [FavoriteSessionsFragmentModule::class])
-    abstract fun contributeFavoriteSessionsFragment(): FavoriteSessionsFragment
+    abstract fun contributeFavoriteSessionsFragment(): BottomSheetFavoriteSessionsFragment
 
     @Module
     companion object {
@@ -87,5 +87,4 @@ abstract class MainFragmentModule {
             return mainFragment.viewLifecycleOwner
         }
     }
-
 }

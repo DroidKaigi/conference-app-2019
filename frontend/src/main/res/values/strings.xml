@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">conferenceapp2019</string>
+    <string name="app_name">DroidKaigi 2019</string>
 
     <!-- Session -->
     <string name="session_label">session</string>

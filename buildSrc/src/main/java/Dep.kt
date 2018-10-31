@@ -2,11 +2,11 @@ package dependencies
 
 private object Versions {
     val retrofit = "2.4.0"
-    val kotlin = "1.3.0-rc-190"
+    val kotlin = "1.3.0"
     val stetho = "1.5.0"
     val aac = "2.0.0"
     val dagger = "2.16"
-    val coroutines = "0.30.2-eap13"
+    val coroutines = "1.0.0"
     val navigation = "1.0.0-alpha06"
 }
 
@@ -44,6 +44,7 @@ object Dep {
             val fragment = "android.arch.navigation:navigation-fragment:${Versions.navigation}"
             val ui = "android.arch.navigation:navigation-ui:${Versions.navigation}"
             val fragmentKtx = "android.arch.navigation:navigation-fragment-ktx:${Versions.navigation}"
+            val uiKtx = "android.arch.navigation:navigation-ui-ktx:${Versions.navigation}"
             val safeArgsPlugin = "android.arch.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
             val testingKtx = "android.arch.navigation:navigation-testing-ktx:${Versions.navigation}"
         }
@@ -98,13 +99,29 @@ object Dep {
     val liveDataKtx = "com.shopify:livedata-ktx:2.0.1"
 
     object LeakCanary {
-        val leakCanary = "com.squareup.leakcanary:leakcanary-android:1.7-SNAPSHOT"
-        val leakCanaryNoOp = "com.squareup.leakcanary:leakcanary-android-no-op:1.7-SNAPSHOT"
-        val leakCanaryFragment = "com.squareup.leakcanary:leakcanary-support-fragment:1.7-SNAPSHOT"
+        val leakCanary = "com.squareup.leakcanary:leakcanary-android:1.6.2"
+        val leakCanaryNoOp = "com.squareup.leakcanary:leakcanary-android-no-op:1.6.2"
+        val leakCanaryFragment = "com.squareup.leakcanary:leakcanary-support-fragment:1.6.2"
     }
 
     object Stetho {
         val stetho = "com.facebook.stetho:stetho:${Versions.stetho}"
+    }
+
+    object Hyperion {
+        val hyperionPlugins = listOf(
+            "com.willowtreeapps.hyperion:hyperion-core:0.9.24" ,
+            "com.willowtreeapps.hyperion:hyperion-attr:0.9.24" ,
+            "com.willowtreeapps.hyperion:hyperion-measurement:0.9.24" ,
+            "com.willowtreeapps.hyperion:hyperion-disk:0.9.24" ,
+            "com.willowtreeapps.hyperion:hyperion-recorder:0.9.24"
+            , "com.willowtreeapps.hyperion:hyperion-phoenix:0.9.24"
+            , "com.willowtreeapps.hyperion:hyperion-crash:0.9.24"
+            , "com.willowtreeapps.hyperion:hyperion-shared-preferences:0.9.24"
+            , "com.willowtreeapps.hyperion:hyperion-geiger-counter:0.9.24"
+            , "com.willowtreeapps.hyperion:hyperion-timber:0.9.24"
+            , "com.willowtreeapps.hyperion:hyperion-build-config:0.9.24"
+        )
     }
 
     object Groupie {
@@ -119,4 +136,10 @@ object Dep {
 
     val junit = "junit:junit:4.12"
     val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC1"
+
+    object InjectedVmProvider{
+        val injectedVmProvider = "me.tatarka.injectedvmprovider:injectedvmprovider:2.0"
+        val extension = "me.tatarka.injectedvmprovider:injectedvmprovider-extensions:2.0"
+        val ktx = "me.tatarka.injectedvmprovider:injectedvmprovider-ktx:2.0"
+    }
 }

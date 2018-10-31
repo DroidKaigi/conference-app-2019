@@ -3,7 +3,7 @@ package io.github.droidkaigi.confsched2019.session.ui.actioncreator
 import androidx.lifecycle.LifecycleOwner
 import io.github.droidkaigi.confsched2019.data.repository.SessionRepository
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
-import io.github.droidkaigi.confsched2019.ext.android.toCoroutineScope
+import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
 import io.github.droidkaigi.confsched2019.model.Action
 import io.github.droidkaigi.confsched2019.model.Session
 import kotlinx.coroutines.CoroutineScope
@@ -15,8 +15,8 @@ import javax.inject.Named
 class SessionDetailActionCreator @Inject constructor(
     val dispatcher: Dispatcher,
     val sessionRepository: SessionRepository,
-    @Named("sessionDetailFragment") val lifecycleOwner: LifecycleOwner
-) : CoroutineScope by lifecycleOwner.toCoroutineScope() {
+    @Named("SessionDetailFragment") val lifecycleOwner: LifecycleOwner
+) : CoroutineScope by lifecycleOwner.coroutineScope {
     fun load(sessionId: String) {
         launch {
             try {

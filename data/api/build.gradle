@@ -10,10 +10,12 @@ kotlin {
             api Dep.Kotlin.stdlibCommon
             api project(":model")
         }
-        jvmMain.dependencies {
-            api Dep.Kotlin.stdlibJvm
-            api project(":model")
-            api Dep.Kotlin.coroutines
+        jvmMain {
+            dependsOn commonMain
+            dependencies {
+                api Dep.Kotlin.stdlibJvm
+                api Dep.Kotlin.coroutines
+            }
         }
     }
 }

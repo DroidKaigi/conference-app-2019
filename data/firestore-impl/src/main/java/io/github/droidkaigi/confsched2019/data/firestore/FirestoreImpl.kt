@@ -10,7 +10,6 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.Source
 import io.github.droidkaigi.confsched2019.ext.android.await
-import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
 import javax.inject.Inject
@@ -25,17 +24,19 @@ class FirestoreImpl @Inject constructor() : FireStore {
         if (snapshot.isEmpty) {
             favoritesRef.add(mapOf("initialized" to true)).await()
         }
-        val channel = BroadcastChannel<List<Int>>(Channel.CONFLATED)
-        favoritesRef.whereEqualTo("favorite", true)
+        val channel = Channel<List<Int>>(Channel.CONFLATED)
+        val listenerRegistration = favoritesRef.whereEqualTo("favorite", true)
             .addSnapshotListener(
                 MetadataChanges.INCLUDE
             ) { favoriteSnapshot, firebaseFirestoreException ->
                 favoriteSnapshot ?: return@addSnapshotListener
                 val element = favoriteSnapshot.mapNotNull { it.id.toIntOrNull() }
-                println("getFavoriteSessionChannel:offer:" + element)
                 channel.offer(element)
             }
-        return channel.openSubscription()
+        channel.invokeOnClose {
+            listenerRegistration.remove()
+        }
+        return channel
     }
 
     override suspend fun getFavoriteSessionIds(): List<Int> {
