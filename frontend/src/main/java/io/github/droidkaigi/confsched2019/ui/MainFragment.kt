@@ -19,7 +19,7 @@ import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.BottomSheetDaySessionsFragment
 import io.github.droidkaigi.confsched2019.session.ui.SessionsFragment
 import io.github.droidkaigi.confsched2019.session.ui.DaySessionsFragmentModule
-import io.github.droidkaigi.confsched2019.session.ui.FavoriteSessionsFragment
+import io.github.droidkaigi.confsched2019.session.ui.BottomSheetFavoriteSessionsFragment
 import io.github.droidkaigi.confsched2019.session.ui.FavoriteSessionsFragmentModule
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
 import io.github.droidkaigi.confsched2019.user.store.UserStore
@@ -74,7 +74,7 @@ abstract class MainFragmentModule {
     abstract fun contributeBottomSheetDaySessionsFragment(): BottomSheetDaySessionsFragment
 
     @ContributesAndroidInjector(modules = [FavoriteSessionsFragmentModule::class])
-    abstract fun contributeFavoriteSessionsFragment(): FavoriteSessionsFragment
+    abstract fun contributeFavoriteSessionsFragment(): BottomSheetFavoriteSessionsFragment
 
     @Module
     companion object {
@@ -87,5 +87,4 @@ abstract class MainFragmentModule {
             return mainFragment.viewLifecycleOwner
         }
     }
-
 }

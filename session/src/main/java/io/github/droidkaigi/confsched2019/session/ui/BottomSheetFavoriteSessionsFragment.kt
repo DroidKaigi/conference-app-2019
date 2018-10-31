@@ -18,18 +18,16 @@ import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionsBi
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
-import io.github.droidkaigi.confsched2019.session.ui.store.SessionStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.ui.MainFragmentDirections
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
 import javax.inject.Provider
 
-class FavoriteSessionsFragment : DaggerFragment() {
+class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
     lateinit var binding: FragmentSessionsBinding
 
     @Inject lateinit var sessionActionCreator: SessionActionCreator
-    @Inject lateinit var sessionStore: SessionStore
     @Inject lateinit var allSessionsStoreProvider: Provider<AllSessionsStore>
     private val allSessionsStore: AllSessionsStore by lazy {
         InjectedViewModelProviders.of(requireActivity())[allSessionsStoreProvider]
@@ -73,8 +71,8 @@ class FavoriteSessionsFragment : DaggerFragment() {
     }
 
     companion object {
-        fun newInstance(): FavoriteSessionsFragment {
-            return FavoriteSessionsFragment()
+        fun newInstance(): BottomSheetFavoriteSessionsFragment {
+            return BottomSheetFavoriteSessionsFragment()
         }
     }
 }
@@ -82,7 +80,9 @@ class FavoriteSessionsFragment : DaggerFragment() {
 @Module
 object FavoriteSessionsFragmentModule {
     @JvmStatic @Provides
-    fun providesLifecycle(sessionsFragment: FavoriteSessionsFragment): LifecycleOwner {
-        return sessionsFragment.viewLifecycleOwner
+    fun providesLifecycle(
+        sessionsFragmentBottomSheet: BottomSheetFavoriteSessionsFragment
+    ): LifecycleOwner {
+        return sessionsFragmentBottomSheet.viewLifecycleOwner
     }
 }
