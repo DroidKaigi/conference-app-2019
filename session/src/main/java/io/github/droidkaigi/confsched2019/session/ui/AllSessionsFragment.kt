@@ -20,7 +20,7 @@ import io.github.droidkaigi.confsched2019.session.databinding.FragmentAllSession
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionStore
-import io.github.droidkaigi.confsched2019.ui.DaggerFragment
+import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.user.store.UserStore
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import javax.inject.Inject
@@ -63,18 +63,20 @@ class AllSessionsFragment : DaggerFragment() {
         ) {
             override fun getItem(position: Int): Fragment {
                 return SessionsFragment.newInstance(SessionsFragmentArgs
-                        .Builder(position)
-                        .build())
+                    .Builder(position)
+                    .build())
             }
 
             override fun getPageTitle(position: Int) = SessionTab.tabs[position].title
             override fun getCount(): Int = SessionTab.tabs.size
         }
-        binding.sessionsViewpager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
-            override fun onPageSelected(position: Int) {
-                allSessionActionCreator.selectTab(SessionTab.tabs[position])
+        binding.sessionsViewpager.addOnPageChangeListener(
+            object : ViewPager.SimpleOnPageChangeListener() {
+                override fun onPageSelected(position: Int) {
+                    allSessionActionCreator.selectTab(SessionTab.tabs[position])
+                }
             }
-        })
+        )
         progressTimeLatch = ProgressTimeLatch { showProgress ->
             binding.progressBar.isVisible = showProgress
         }.apply {

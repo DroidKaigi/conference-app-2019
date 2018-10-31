@@ -34,6 +34,11 @@ dependencies {
     api Dep.Arch.Navigation.runtimeKtx
     api Dep.Arch.Navigation.fragmentKtx
     api Dep.Arch.Navigation.uiKtx
+
+    implementation Dep.Dagger.core
+    implementation Dep.Dagger.androidSupport
+    kapt Dep.Dagger.compiler
+    kapt Dep.Dagger.androidProcessor
 }
 repositories {
     mavenCentral()

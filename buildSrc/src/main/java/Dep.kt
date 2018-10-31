@@ -2,11 +2,11 @@ package dependencies
 
 private object Versions {
     val retrofit = "2.4.0"
-    val kotlin = "1.3.0-rc-190"
+    val kotlin = "1.3.0"
     val stetho = "1.5.0"
     val aac = "2.0.0"
     val dagger = "2.16"
-    val coroutines = "0.30.2-eap13"
+    val coroutines = "1.0.0"
     val navigation = "1.0.0-alpha06"
 }
 
@@ -136,4 +136,10 @@ object Dep {
 
     val junit = "junit:junit:4.12"
     val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC1"
+
+    object InjectedVmProvider{
+        val injectedVmProvider = "me.tatarka.injectedvmprovider:injectedvmprovider:2.0"
+        val extension = "me.tatarka.injectedvmprovider:injectedvmprovider-extensions:2.0"
+        val ktx = "me.tatarka.injectedvmprovider:injectedvmprovider-ktx:2.0"
+    }
 }

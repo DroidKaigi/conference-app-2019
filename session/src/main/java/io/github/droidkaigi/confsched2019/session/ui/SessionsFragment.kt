@@ -23,9 +23,9 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionAction
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionStore
-import io.github.droidkaigi.confsched2019.ui.BottomSheetBehavior
-import io.github.droidkaigi.confsched2019.ui.DaggerFragment
+import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.ui.MainFragmentDirections
+import io.github.droidkaigi.confsched2019.widget.BottomSheetBehavior
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
 import javax.inject.Provider
@@ -79,15 +79,17 @@ class SessionsFragment : DaggerFragment() {
                 .commit()
         }
         bottomSheetBehavior.isHideable = false
-        binding.sessionSheet.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
-            override fun onPreDraw(): Boolean {
-                binding.sessionSheet.viewTreeObserver.removeOnPreDrawListener(this)
-                if (isDetached) return false
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        binding.sessionSheet.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    binding.sessionSheet.viewTreeObserver.removeOnPreDrawListener(this)
+                    if (isDetached) return false
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 
-                return false
+                    return false
+                }
             }
-        })
+        )
         allSessionsStore.selectedTab.changed(viewLifecycleOwner) {
             if (SessionTab.tabs[args.tabIndex] == it) {
                 bottomSheetBehavior.isHideable = false
@@ -167,7 +169,8 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
 object DaySessionsFragmentModule {
     @JvmStatic @Provides
     fun providesLifecycle(
-        sessionsFragmentBottomSheet: BottomSheetDaySessionsFragment): LifecycleOwner {
+        sessionsFragmentBottomSheet: BottomSheetDaySessionsFragment
+    ): LifecycleOwner {
         return sessionsFragmentBottomSheet.viewLifecycleOwner
     }
 }

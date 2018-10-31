@@ -19,8 +19,8 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionAction
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionStore
-import io.github.droidkaigi.confsched2019.ui.DaggerFragment
-import io.github.droidkaigi.confsched2019.ui.MainFragmentDirections
+import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
+import io.github.droidkaigi.confsched2019.widget.MainFragmentDirections
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
 import javax.inject.Provider

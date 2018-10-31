@@ -11,6 +11,8 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.android.support.DaggerAppCompatActivity
 import io.github.droidkaigi.confsched2019.R
+import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment
+import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragmentModule
 import io.github.droidkaigi.confsched2019.databinding.ActivityMainBinding
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragmentModule
@@ -51,6 +53,9 @@ interface MainActivityModule {
 
     @ContributesAndroidInjector(modules = [SessionDetailFragmentModule::class])
     fun contributeSessionDetailFragment(): SessionDetailFragment
+
+    @ContributesAndroidInjector(modules = [AnnouncementFragmentModule::class])
+    fun contributeAnnouncementFragment(): AnnouncementFragment
 
     @Module
     abstract class MainActivityBuilder {

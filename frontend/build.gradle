@@ -42,6 +42,7 @@ android {
 dependencies {
     implementation project(":model")
     implementation project(":session")
+    implementation project(":announcement")
     implementation project(":action")
     implementation project(':frontendcomponent')
     implementation project(':user')

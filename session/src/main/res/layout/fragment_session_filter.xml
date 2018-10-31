@@ -21,113 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="this is the filter"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="this is the filter"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="this is the filter"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="this is the filter"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="this is the filter"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="this is the filter"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="this is the filter"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="this is the filter"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="this is the filter"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="this is the filter"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="this is the filter"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-                </LinearLayout>
-
+                <!--TODO: Implement filter -->
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
@@ -140,7 +34,7 @@
             app:behavior_hideable="false"
             app:behavior_peekHeight="64dp"
             app:behavior_skipCollapsed="false"
-            app:layout_behavior="io.github.droidkaigi.confsched2019.ui.BottomSheetBehavior"
+            app:layout_behavior="io.github.droidkaigi.confsched2019.widget.BottomSheetBehavior"
             tools:layout="@layout/fragment_sessions"
             />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

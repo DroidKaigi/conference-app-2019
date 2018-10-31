@@ -1,4 +1,4 @@
-package io.github.droidkaigi.confsched2019.ui;
+package io.github.droidkaigi.confsched2019.widget;
 
 import android.content.Context;
 import androidx.test.InstrumentationRegistry;

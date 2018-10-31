@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.data.db.DbComponent
 import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
-import kotlinx.coroutines.CommonPool
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 @Module
@@ -16,7 +16,7 @@ object DbComponentModule {
     fun provideItemStore(application: Application): SessionDatabase {
         return DbComponent.builder()
             .context(application)
-            .coroutineContext(CommonPool)
+            .coroutineContext(Dispatchers.Default)
             .filename("droidkaigi.db")
             .build()
             .sessionDatabase()
