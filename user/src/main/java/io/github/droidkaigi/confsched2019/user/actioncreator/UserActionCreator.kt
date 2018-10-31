@@ -1,12 +1,7 @@
 package io.github.droidkaigi.confsched2019.user.actioncreator
 
 import androidx.fragment.app.FragmentActivity
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.await
 import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
@@ -21,15 +16,15 @@ class UserActionCreator @Inject constructor(
     val dispatcher: Dispatcher,
     @Named("defaultFirebaseWebClientId") val defaultFirebaseWebClientId: Int
 ) : CoroutineScope by activity.coroutineScope {
-//    val googleSignInClient: GoogleSignInClient by lazy {
-//        GoogleSignIn.getClient(
-//            activity,
-//            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestIdToken(activity.getString(defaultFirebaseWebClientId))
-//                .requestEmail()
-//                .build()
-//        )
-//    }
+    // val googleSignInClient: GoogleSignInClient by lazy {
+    //     GoogleSignIn.getClient(
+    //         activity,
+    //         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+    //             .requestIdToken(activity.getString(defaultFirebaseWebClientId))
+    //             .requestEmail()
+    //             .build()
+    //     )
+    // }
 
     val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
