@@ -59,7 +59,7 @@ class DataSessionRepository @Inject constructor(
 //            .doOnNext { println("sessionChannel:fabSessionIdsObservable" + it) }
             val sessionsChannel: ReceiveChannel<List<SessionWithSpeakers>> = sessionDatabase
                 .sessionsChannel()
-//            .doOnNext { println("sessionChannel:sessionsObservable" + it) }
+//            .doOnNext { println("sessionChannel:feature:sessionsObservable" + it) }
 
             val channel: BroadcastChannel<List<Session>> = BroadcastChannel<List<Session>>(
                 Channel.CONFLATED)

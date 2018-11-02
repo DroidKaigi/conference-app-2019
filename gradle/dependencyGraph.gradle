@@ -1,11 +1,12 @@
-// from: https://github.com/JakeWharton/SdkSearch/blob/cf85f774e9b2453cde095298d8204f6bda15b1ca/gradle/projectDependencyGraph.gradle
+// from: https://github.com/JakeWharton/SdkSearch/blob/3351cad9bfacb0a364858e843774147143f58c7a/gradle/projectDependencyGraph.gradle
 task projectDependencyGraph {
     doLast {
-        def dot = new File(rootProject.buildDir, 'project.dot')
+        def dot = new File(rootProject.rootDir, 'project.dot')
+        dot.parentFile.mkdirs()
         dot.delete()
 
         dot << 'digraph {\n'
-        dot << "  graph [label=\"${rootProject.name}\\n \",labelloc=t,fontsize=30];\n"
+        dot << "  graph [label=\"${rootProject.name}\\n \",labelloc=t,fontsize=30,ranksep=1.4];\n"
         dot << '  node [style=filled, fillcolor="#bbbbbb"];\n'
         dot << '  rankdir=TB;\n'
 
@@ -19,7 +20,7 @@ task projectDependencyGraph {
 
         def projects = new LinkedHashSet<Project>()
         def dependencies = new LinkedHashMap<Tuple2<Project, Project>, List<String>>()
-        def commonProjects = []
+        def multiplatformProjects = []
         def jsProjects = []
         def androidProjects = []
         def javaProjects = []
@@ -29,8 +30,8 @@ task projectDependencyGraph {
             def project = queue.remove(0)
             queue.addAll(project.childProjects.values())
 
-            if (project.plugins.hasPlugin('org.jetbrains.kotlin.platform.common')) {
-                commonProjects.add(project)
+            if (project.plugins.hasPlugin('org.jetbrains.kotlin.multiplatform')) {
+                multiplatformProjects.add(project)
             }
             if (project.plugins.hasPlugin('kotlin2js')) {
                 jsProjects.add(project)
@@ -56,9 +57,6 @@ task projectDependencyGraph {
 
                     if (config.name.toLowerCase().endsWith('implementation')) {
                         traits.add('style=dotted')
-                    } else if (config.name == 'expectedBy') {
-                        traits.add('style=dashed')
-                        traits.add('arrowhead=none')
                     }
                 }
             }
@@ -72,11 +70,11 @@ task projectDependencyGraph {
 
             if (rootProjects.contains(project)) {
                 traits.add('shape=box')
-            } else if (commonProjects.contains(project)) {
-                traits.add('style=dashed, color=black')
             }
 
-            if (jsProjects.contains(project)) {
+            if (multiplatformProjects.contains(project)) {
+                traits.add('fillcolor="#ffd2b3"')
+            } else if (jsProjects.contains(project)) {
                 traits.add('fillcolor="#ffffba"')
             } else if (androidProjects.contains(project)) {
                 traits.add('fillcolor="#baffc9"')
@@ -108,11 +106,12 @@ task projectDependencyGraph {
 
         dot << '}\n'
 
-        def p = 'dot -Tpng -O project.dot'.execute([], rootProject.buildDir)
+        def p = 'dot -Tpng -O project.dot'.execute([], dot.parentFile)
         p.waitFor()
         if (p.exitValue() != 0) {
             throw new RuntimeException(p.errorStream.text)
         }
+        dot.delete()
 
         println("Project module dependency graph created at ${dot.absolutePath}.png")
     }

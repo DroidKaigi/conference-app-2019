@@ -8,7 +8,7 @@ apply from: rootProject.file('gradle/android.gradle')
 
 dependencies {
     api project(":data:firestore")
-    api project(":ext:android")
+    api project(':ext:android-extension')
     api project(":model")
 
     implementation Dep.Kotlin.stdlibJvm
