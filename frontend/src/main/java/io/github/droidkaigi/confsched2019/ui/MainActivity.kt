@@ -16,16 +16,8 @@ import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragmentMo
 import io.github.droidkaigi.confsched2019.databinding.ActivityMainBinding
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragmentModule
-import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
-import io.github.droidkaigi.confsched2019.user.store.UserStore
-import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
-    @Inject
-    lateinit var userActionCreator: UserActionCreator
-    @Inject
-    lateinit var userStore: UserStore
-
     val binding: ActivityMainBinding by lazy {
         DataBindingUtil.setContentView<ActivityMainBinding>(
             this,

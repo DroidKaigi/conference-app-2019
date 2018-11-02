@@ -1,12 +1,3 @@
 <resources>
     <string name="app_name">DroidKaigi 2019</string>
-
-    <!-- Session -->
-    <string name="session_label">session</string>
-    <!-- Announce -->
-    <string name="announce_label">announce</string>
-    <!-- Map -->
-    <string name="map_label">map</string>
-    <!-- Other -->
-    <string name="other_label">other</string>
 </resources>

@@ -3,7 +3,7 @@ import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.LibraryPlugin
 import dependencies.Dep
 
-apply from: file('dependencyGraph.gradle')
+apply from: file('gradle/dependencyGraph.gradle')
 
 buildscript {
     repositories {

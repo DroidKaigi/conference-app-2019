@@ -16,7 +16,7 @@ object DbComponentModule {
     fun provideItemStore(application: Application): SessionDatabase {
         return DbComponent.builder()
             .context(application)
-            .coroutineContext(Dispatchers.Default)
+            .coroutineContext(Dispatchers.IO)
             .filename("droidkaigi.db")
             .build()
             .sessionDatabase()

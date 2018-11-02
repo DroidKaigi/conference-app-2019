@@ -26,7 +26,6 @@ fun <T> ReceiveChannel<T>.toLiveData(defaultValue: T? = null):
         super.onActive()
         job = launch(Dispatchers.Main) {
             for (element in this@toLiveData) {
-                Log.d("ReceiveChannel", "postValue:" + element)
                 postValue(element)
             }
         }

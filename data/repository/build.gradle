@@ -1,10 +1,13 @@
 import dependencies.Dep
 
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-multiplatform'
+
+apply from: rootProject.file('gradle/android.gradle')
 
 kotlin {
     targets {
-        fromPreset(presets.jvm, 'jvm')
+        fromPreset(presets.android, 'android')
     }
     sourceSets {
         commonMain.dependencies {
@@ -12,7 +15,7 @@ kotlin {
             api project(":model")
             api Dep.Kotlin.coroutines
         }
-        jvmMain {
+        androidMain {
             dependsOn commonMain
             dependencies {
                 api Dep.Kotlin.stdlibJvm

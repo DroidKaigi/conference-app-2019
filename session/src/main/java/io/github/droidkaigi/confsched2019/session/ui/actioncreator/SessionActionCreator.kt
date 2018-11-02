@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class SessionActionCreator @Inject constructor(
     val dispatcher: Dispatcher,
-    val sessionRepository: SessionRepository
+    private val sessionRepository: SessionRepository
 ) : CoroutineScope by GlobalScope {
 
     fun load() = launch(coroutineContext) {

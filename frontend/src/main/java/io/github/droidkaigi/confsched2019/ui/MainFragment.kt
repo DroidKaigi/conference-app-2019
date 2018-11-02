@@ -27,10 +27,7 @@ import javax.inject.Inject
 
 class MainFragment : DaggerFragment() {
     lateinit var binding: FragmentMainBinding
-    @Inject
-    lateinit var userActionCreator: UserActionCreator
-    @Inject
-    lateinit var userStore: UserStore
+    @Inject lateinit var userActionCreator: UserActionCreator
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,11 +75,6 @@ abstract class MainFragmentModule {
 
     @Module
     companion object {
-
-        @Provides @JvmStatic fun providesActivity(mainFragment: MainFragment): FragmentActivity {
-            return mainFragment.requireActivity()
-        }
-
         @Provides @JvmStatic fun providesLifecycle(mainFragment: MainFragment): LifecycleOwner {
             return mainFragment.viewLifecycleOwner
         }

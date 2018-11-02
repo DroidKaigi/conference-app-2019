@@ -1,8 +1,13 @@
 import dependencies.Dep
 
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-multiplatform'
+
+apply from: rootProject.file('gradle/android.gradle')
+
 kotlin {
     targets {
+        fromPreset(presets.android, 'android')
         fromPreset(presets.jvm, 'jvm')
     }
     sourceSets {
@@ -25,6 +30,9 @@ kotlin {
                 api Dep.Kotlin.stdlibJvm
             }
         }
+        androidMain{
+            dependsOn jvmMain
+        }
         commonTest.dependencies {
             implementation Dep.Kotlin.commonModuleTest
             implementation Dep.Kotlin.commonModuleTestAnnotations
@@ -34,7 +42,7 @@ kotlin {
                 implementation Dep.Kotlin.jvmModuleTest
                 implementation Dep.Kotlin.jvmModuleTestJunit
             }
-            dependsOn jvmMain
+            dependsOn androidMain
         }
     }
 }

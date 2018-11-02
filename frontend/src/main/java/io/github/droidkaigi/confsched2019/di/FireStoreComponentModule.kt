@@ -14,7 +14,7 @@ object FireStoreComponentModule {
     @Singleton
     fun provideRepository(): FireStore {
         return FireStoreComponent.builder()
-            .coroutineContext(Dispatchers.Default)
+            .coroutineContext(Dispatchers.IO)
             .build()
             .fireStore()
     }

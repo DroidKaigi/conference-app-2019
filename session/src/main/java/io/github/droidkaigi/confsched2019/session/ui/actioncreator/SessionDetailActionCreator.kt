@@ -29,7 +29,8 @@ class SessionDetailActionCreator @Inject constructor(
                     dispatcher.send(Action.SessionLoaded(session))
                 }
             } catch (e: Exception) {
-                e.printStackTrace()
+                // TODO: error handling
+                throw e
             }
         }
     }
