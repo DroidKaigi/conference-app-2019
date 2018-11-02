@@ -1,0 +1,95 @@
+import dependencies.Dep
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "io.github.droidkaigi.confsched2019"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 2
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        // For Android Studio Gradle sync
+        applicationIdSuffix ".debug"
+    }
+    buildTypes {
+        release {
+            applicationIdSuffix ""
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+    lintOptions {
+        lintConfig file("${project.projectDir}/lint.xml")
+
+        xmlReport System.getenv("CI") == "true"
+        htmlReport System.getenv("CI") != "true"
+
+        xmlOutput file("lint-results.xml")
+        htmlOutput file("lint-results.html")
+    }
+}
+
+dependencies {
+    implementation project(":model")
+    implementation project(":feature:session")
+    implementation project(":feature:announcement")
+    implementation project(':frontendcomponent:androidcomponent')
+    implementation project(':feature:user')
+    implementation project(':data:db-room')
+    implementation project(':data:repository-impl')
+    implementation project(':data:firestore-impl')
+    implementation project(':data:api-retrofit')
+
+    implementation Dep.Kotlin.stdlibJvm
+    api Dep.Kotlin.coroutines
+
+    implementation Dep.Firebase.fireStore
+
+    implementation Dep.Android.appCompat
+    implementation Dep.Android.constraint
+
+    implementation Dep.Arch.Navigation.runtime
+    implementation Dep.Arch.Navigation.fragment
+    implementation Dep.Arch.Navigation.ui
+    implementation Dep.Arch.Navigation.runtimeKtx
+    implementation Dep.Arch.Navigation.fragmentKtx
+
+    implementation Dep.Stetho.stetho
+
+    releaseImplementation Dep.LeakCanary.leakCanary
+    debugImplementation Dep.LeakCanary.leakCanary
+    debugImplementation Dep.LeakCanary.leakCanaryFragment
+
+    implementation Dep.Firebase.core
+    implementation Dep.Firebase.auth
+    implementation Dep.PlayServices.auth
+
+    api Dep.Dagger.core
+    api Dep.Dagger.androidSupport
+    api Dep.Dagger.android
+    kapt Dep.Dagger.compiler
+    kapt Dep.Dagger.androidProcessor
+    compileOnly Dep.Dagger.assistedInjectAnnotations
+    kapt Dep.Dagger.assistedInjectProcessor
+
+    testImplementation Dep.junit
+    androidTestImplementation Dep.Android.testRunner
+    androidTestImplementation Dep.Android.espressoCore
+
+    Dep.Hyperion.hyperionPlugins.forEach {
+        debugImplementation it
+    }
+}
+
+
+apply plugin: 'com.google.gms.google-services'

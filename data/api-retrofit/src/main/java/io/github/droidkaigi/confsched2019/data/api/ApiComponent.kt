@@ -15,11 +15,9 @@ interface ApiComponent {
 
     @Component.Builder
     interface Builder {
-        @BindsInstance
-        fun context(context: Context): Builder
+        @BindsInstance fun context(context: Context): Builder
 
-        @BindsInstance
-        fun coroutineContext(coroutineContext: CoroutineContext): Builder
+        @BindsInstance fun coroutineContext(coroutineContext: CoroutineContext): Builder
 
         fun build(): ApiComponent
     }

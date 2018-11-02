@@ -10,11 +10,13 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.Source
 import io.github.droidkaigi.confsched2019.ext.android.await
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
 import javax.inject.Inject
 
 // waiting https://github.com/Kotlin/kotlinx.coroutines/pull/523
+@ExperimentalCoroutinesApi
 class FirestoreImpl @Inject constructor() : FireStore {
 
     override suspend fun getFavoriteSessionChannel(): ReceiveChannel<List<Int>> {
@@ -28,7 +30,7 @@ class FirestoreImpl @Inject constructor() : FireStore {
         val listenerRegistration = favoritesRef.whereEqualTo("favorite", true)
             .addSnapshotListener(
                 MetadataChanges.INCLUDE
-            ) { favoriteSnapshot, firebaseFirestoreException ->
+            ) { favoriteSnapshot, _ ->
                 favoriteSnapshot ?: return@addSnapshotListener
                 val element = favoriteSnapshot.mapNotNull { it.id.toIntOrNull() }
                 channel.offer(element)
@@ -47,6 +49,7 @@ class FirestoreImpl @Inject constructor() : FireStore {
         if (snapshot.isEmpty) {
             favoritesRef.add(mapOf("initialized" to true)).await()
         }
+
         val favorites = favoritesRef.whereEqualTo("favorite", true).fastGet()
         return favorites.documents.mapNotNull { it.id.toIntOrNull() }
     }
@@ -69,7 +72,8 @@ class FirestoreImpl @Inject constructor() : FireStore {
     fun getFavoritesRef(): CollectionReference {
         val firebaseAuth = FirebaseAuth.getInstance()
         val firebaseUserId = firebaseAuth.currentUser?.uid ?: throw RuntimeException(
-            "RuntimeException")
+            "RuntimeException"
+        )
         return FirebaseFirestore
             .getInstance()
             .collection("users/$firebaseUserId/favorites")

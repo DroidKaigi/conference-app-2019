@@ -110,10 +110,10 @@ object Dep {
 
     object Hyperion {
         val hyperionPlugins = listOf(
-            "com.willowtreeapps.hyperion:hyperion-core:0.9.24" ,
-            "com.willowtreeapps.hyperion:hyperion-attr:0.9.24" ,
-            "com.willowtreeapps.hyperion:hyperion-measurement:0.9.24" ,
-            "com.willowtreeapps.hyperion:hyperion-disk:0.9.24" ,
+            "com.willowtreeapps.hyperion:hyperion-core:0.9.24",
+            "com.willowtreeapps.hyperion:hyperion-attr:0.9.24",
+            "com.willowtreeapps.hyperion:hyperion-measurement:0.9.24",
+            "com.willowtreeapps.hyperion:hyperion-disk:0.9.24",
             "com.willowtreeapps.hyperion:hyperion-recorder:0.9.24"
             , "com.willowtreeapps.hyperion:hyperion-phoenix:0.9.24"
             , "com.willowtreeapps.hyperion:hyperion-crash:0.9.24"
@@ -135,9 +135,9 @@ object Dep {
     }
 
     val junit = "junit:junit:4.12"
-    val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC1"
+    val mockk = "io.mockk:mockk:1.8.10"
 
-    object InjectedVmProvider{
+    object InjectedVmProvider {
         val injectedVmProvider = "me.tatarka.injectedvmprovider:injectedvmprovider:2.0"
         val extension = "me.tatarka.injectedvmprovider:injectedvmprovider-extensions:2.0"
         val ktx = "me.tatarka.injectedvmprovider:injectedvmprovider-ktx:2.0"

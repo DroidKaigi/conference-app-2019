@@ -1,6 +1,5 @@
 package io.github.droidkaigi.confsched2019.data.repository
 
-import android.util.Log
 import com.soywiz.klock.DateTime
 import io.github.droidkaigi.confsched2019.data.api.SessionApi
 import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
@@ -14,6 +13,7 @@ import io.github.droidkaigi.confsched2019.model.SessionMessage
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.model.Topic
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.channels.BroadcastChannel
@@ -25,19 +25,22 @@ import kotlinx.coroutines.selects.select
 import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 
+@ExperimentalCoroutinesApi
 class DataSessionRepository @Inject constructor(
-    val sessionApi: SessionApi,
-    val sessionDatabase: SessionDatabase,
-    val fireStore: FireStore
+    private val sessionApi: SessionApi,
+    private val sessionDatabase: SessionDatabase,
+    private val fireStore: FireStore
 ) : SessionRepository {
-    override suspend fun sessions(withFavorite: Boolean): List<Session> = coroutineScope {
+
+    override suspend fun sessions(): List<Session> = coroutineScope {
         val sessionsAsync = async { sessionDatabase.sessions() }
         val allSpeakersAsync = async { sessionDatabase.allSpeaker() }
         val fabSessionIdsAsync = async {
-            if (withFavorite) fireStore.getFavoriteSessionIds() else listOf()
+            fireStore.getFavoriteSessionIds()
         }
 
         awaitAll(fabSessionIdsAsync, sessionsAsync, allSpeakersAsync)
+
         val sessionEntities = sessionsAsync.await()
         if (sessionEntities.isEmpty()) return@coroutineScope listOf<Session>()
         val speakerEntities = allSpeakersAsync.await()
@@ -59,10 +62,11 @@ class DataSessionRepository @Inject constructor(
 //            .doOnNext { println("sessionChannel:fabSessionIdsObservable" + it) }
             val sessionsChannel: ReceiveChannel<List<SessionWithSpeakers>> = sessionDatabase
                 .sessionsChannel()
-//            .doOnNext { println("sessionChannel:sessionsObservable" + it) }
+//            .doOnNext { println("sessionChannel:feature:sessionsObservable" + it) }
 
             val channel: BroadcastChannel<List<Session>> = BroadcastChannel<List<Session>>(
-                Channel.CONFLATED)
+                Channel.CONFLATED
+            )
 
             CoroutineScope(coroutineContext).launch {
                 var fabSessions: List<Int>? = null
@@ -82,7 +86,6 @@ class DataSessionRepository @Inject constructor(
                         }
                     }
                 } finally {
-                    Log.d("DataSessionRepository", "finally")
                     sessionsChannel.cancel()
                     fabSessionIdsChannel.cancel()
                     channel.close()

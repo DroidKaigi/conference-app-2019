@@ -5,8 +5,7 @@ import dagger.Module
 
 @Module(includes = [RepositoryModule.Providers::class])
 internal abstract class RepositoryModule {
-    @Binds
-    abstract fun sessionDatabase(impl: DataSessionRepository): SessionRepository
+    @Binds abstract fun sessionDatabase(impl: DataSessionRepository): SessionRepository
 
     @Module
     internal object Providers

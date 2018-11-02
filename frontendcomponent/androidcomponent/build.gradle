@@ -1,0 +1,37 @@
+import dependencies.Dep
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'androidx.navigation.safeargs'
+
+apply from: rootProject.file('gradle/android.gradle')
+
+dependencies {
+    api project(":model")
+    api Dep.Android.design
+    implementation Dep.Kotlin.stdlibJvm
+
+    api Dep.Dagger.androidSupport
+    implementation Dep.Kotlin.stdlibJvm
+    api Dep.Kotlin.coroutines
+
+    api Dep.Klock.jvm
+
+    api Dep.Arch.Navigation.runtime
+    api Dep.Arch.Navigation.runtimeKtx
+    api Dep.Arch.Navigation.fragmentKtx
+    api Dep.Arch.Navigation.uiKtx
+
+    implementation Dep.Dagger.core
+    implementation Dep.Dagger.androidSupport
+    kapt Dep.Dagger.compiler
+    kapt Dep.Dagger.androidProcessor
+
+    testImplementation Dep.junit
+    testImplementation Dep.mockk
+    androidTestImplementation Dep.Android.testRunner
+    androidTestImplementation Dep.Android.espressoCore
+}
+repositories {
+    mavenCentral()
+}

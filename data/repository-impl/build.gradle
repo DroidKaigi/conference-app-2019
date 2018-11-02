@@ -4,24 +4,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
-android {
-    compileSdkVersion 28
-
-    defaultConfig {
-        minSdkVersion 21
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
-}
+apply from: rootProject.file('gradle/android.gradle')
 
 dependencies {
     api project(":data:repository")
@@ -35,6 +18,8 @@ dependencies {
     api Dep.Kotlin.coroutines
     implementation Dep.Arch.lifecycleLiveData
     kapt Dep.Arch.roomCompiler
+
+    api Dep.Klock.jvm
 
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport

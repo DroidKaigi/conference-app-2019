@@ -5,27 +5,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlinx-serialization'
 apply plugin: 'kotlin-kapt'
 
-android {
-    compileSdkVersion 28
-
-    defaultConfig {
-        minSdkVersion 21
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
-}
+apply from: rootProject.file('gradle/android.gradle')
 
 dependencies {
     api project(":data:db")
+    api project(":data:api")
 
     implementation Dep.Kotlin.stdlibJvm
     implementation Dep.Kotlin.serialization
@@ -34,6 +18,7 @@ dependencies {
     api Dep.Arch.roomRuntime
     implementation Dep.Arch.roomRxJava
     api Dep.Arch.lifecycleLiveData
+    api Dep.Klock.jvm
     kapt Dep.Arch.roomCompiler
 
     implementation Dep.Dagger.core
