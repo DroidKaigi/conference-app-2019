@@ -16,13 +16,8 @@ import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragmentMo
 import io.github.droidkaigi.confsched2019.databinding.ActivityMainBinding
 import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment
 import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragmentModule
-import io.github.droidkaigi.confsched2019.session.ui.BottomSheetDaySessionsFragment
-import io.github.droidkaigi.confsched2019.session.ui.BottomSheetFavoriteSessionsFragment
-import io.github.droidkaigi.confsched2019.session.ui.DaySessionsFragmentModule
-import io.github.droidkaigi.confsched2019.session.ui.FavoriteSessionsFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragmentModule
-import io.github.droidkaigi.confsched2019.session.ui.SessionsFragment
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
 import javax.inject.Inject
 
@@ -57,15 +52,6 @@ abstract class MainActivityModule {
 
     @ContributesAndroidInjector(modules = [AllSessionsFragmentModule::class])
     abstract fun contributeAllSessionsFragment(): AllSessionsFragment
-
-    @ContributesAndroidInjector(modules = [DaySessionsFragmentModule::class])
-    abstract fun contributeDaySessionsFragment(): SessionsFragment
-
-    @ContributesAndroidInjector(modules = [DaySessionsFragmentModule::class])
-    abstract fun contributeBottomSheetDaySessionsFragment(): BottomSheetDaySessionsFragment
-
-    @ContributesAndroidInjector(modules = [FavoriteSessionsFragmentModule::class])
-    abstract fun contributeFavoriteSessionsFragment(): BottomSheetFavoriteSessionsFragment
 
     @ContributesAndroidInjector(modules = [SessionDetailFragmentModule::class])
     abstract fun contributeSessionDetailFragment(): SessionDetailFragment

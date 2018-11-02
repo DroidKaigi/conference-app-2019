@@ -19,10 +19,8 @@ import io.github.droidkaigi.confsched2019.ext.android.changedNonNull
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionDetailBinding
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionDetailActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionDetailStore
-import io.github.droidkaigi.confsched2019.session.ui.store.SessionStore
 import me.tatarka.injectedvmprovider.ktx.injectedViewModelProvider
 import javax.inject.Inject
 import javax.inject.Named
@@ -30,12 +28,9 @@ import javax.inject.Named
 class SessionDetailFragment : Fragment(), HasSupportFragmentInjector {
 
     @Inject lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
-    @Inject lateinit var sessionActionCreator: SessionActionCreator
     @Inject lateinit var sessionDetailActionCreator: SessionDetailActionCreator
 
     lateinit var binding: FragmentSessionDetailBinding
-
-    @Inject lateinit var sessionStore: SessionStore
 
     @Inject lateinit var sessionDetailStoreFactory: SessionDetailStore.Factory
 
@@ -51,8 +46,10 @@ class SessionDetailFragment : Fragment(), HasSupportFragmentInjector {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_session_detail, container,
-            false)
+        binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_session_detail, container,
+            false
+        )
         return binding.root
     }
 
@@ -65,11 +62,12 @@ class SessionDetailFragment : Fragment(), HasSupportFragmentInjector {
         sessionDetailFragmentArgs = SessionDetailFragmentArgs.fromBundle(arguments)
         binding.favorite.setOnClickListener {
             val session = sessionDetailStore.session.value ?: return@setOnClickListener
-            sessionActionCreator.toggleFavorite(session)
+            sessionDetailActionCreator.toggleFavorite(session)
         }
         sessionDetailActionCreator.load(sessionDetailFragmentArgs.session)
         sessionDetailStore.session.changedNonNull(
-            this) { session: Session.SpeechSession ->
+            this
+        ) { session: Session.SpeechSession ->
             binding.session = session
         }
     }

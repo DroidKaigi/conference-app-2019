@@ -1,6 +1,7 @@
 package io.github.droidkaigi.confsched2019.dispatcher
 
 import io.github.droidkaigi.confsched2019.model.Action
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.ReceiveChannel
@@ -10,6 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@ExperimentalCoroutinesApi
 @Singleton
 class Dispatcher @Inject constructor() {
     private val _actions = BroadcastChannel<Action>(100)

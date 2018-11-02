@@ -49,6 +49,7 @@ class FirestoreImpl @Inject constructor() : FireStore {
         if (snapshot.isEmpty) {
             favoritesRef.add(mapOf("initialized" to true)).await()
         }
+
         val favorites = favoritesRef.whereEqualTo("favorite", true).fastGet()
         return favorites.documents.mapNotNull { it.id.toIntOrNull() }
     }
@@ -71,7 +72,8 @@ class FirestoreImpl @Inject constructor() : FireStore {
     fun getFavoritesRef(): CollectionReference {
         val firebaseAuth = FirebaseAuth.getInstance()
         val firebaseUserId = firebaseAuth.currentUser?.uid ?: throw RuntimeException(
-            "RuntimeException")
+            "RuntimeException"
+        )
         return FirebaseFirestore
             .getInstance()
             .collection("users/$firebaseUserId/favorites")

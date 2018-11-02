@@ -12,7 +12,7 @@ import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionsBinding
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
@@ -23,8 +23,7 @@ import javax.inject.Provider
 class BottomSheetDaySessionsFragment : DaggerFragment() {
     lateinit var binding: FragmentSessionsBinding
 
-    @Inject lateinit var sessionActionCreator: SessionActionCreator
-
+    @Inject lateinit var allSessionActionCreator: AllSessionActionCreator
     @Inject lateinit var allSessionsStoreProvider: Provider<AllSessionsStore>
     private val allSessionsStore: AllSessionsStore by lazy {
         InjectedViewModelProviders.of(requireActivity())[allSessionsStoreProvider]
@@ -42,7 +41,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
     private val groupAdapter = GroupAdapter<ViewHolder<*>>()
 
     private val onFavoriteClickListener = { clickedSession: Session.SpeechSession ->
-        sessionActionCreator.toggleFavorite(clickedSession)
+        allSessionActionCreator.toggleFavorite(clickedSession)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
