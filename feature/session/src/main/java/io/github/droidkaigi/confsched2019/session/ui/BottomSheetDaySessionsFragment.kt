@@ -16,7 +16,6 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionAction
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
-import io.github.droidkaigi.confsched2019.ui.MainFragmentDirections
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
 import javax.inject.Provider
@@ -60,8 +59,11 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                         onClickListener = { clickedSession ->
                             Navigation
                                 .findNavController(requireActivity(), R.id.root_nav_host_fragment)
-                                .navigate(MainFragmentDirections.actionSessionToSessionDetail(
-                                    clickedSession.id))
+                                .navigate(
+                                    AllSessionsFragmentDirections.actionSessionToSessionDetail(
+                                        clickedSession.id
+                                    )
+                                )
                         }
                     )
                 }

@@ -14,10 +14,21 @@ import io.github.droidkaigi.confsched2019.R
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragmentModule
 import io.github.droidkaigi.confsched2019.databinding.ActivityMainBinding
+import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment
+import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragmentModule
+import io.github.droidkaigi.confsched2019.session.ui.BottomSheetDaySessionsFragment
+import io.github.droidkaigi.confsched2019.session.ui.BottomSheetFavoriteSessionsFragment
+import io.github.droidkaigi.confsched2019.session.ui.DaySessionsFragmentModule
+import io.github.droidkaigi.confsched2019.session.ui.FavoriteSessionsFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragmentModule
+import io.github.droidkaigi.confsched2019.session.ui.SessionsFragment
+import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
+import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
+    @Inject lateinit var userActionCreator: UserActionCreator
+
     val binding: ActivityMainBinding by lazy {
         DataBindingUtil.setContentView<ActivityMainBinding>(
             this,
@@ -33,20 +44,34 @@ class MainActivity : DaggerAppCompatActivity() {
         binding.navView.setupWithNavController(navController)
         binding.toolbar.setupWithNavController(navController, binding.drawerLayout)
     }
+
+    override fun onStart() {
+        super.onStart()
+        userActionCreator.setupUser()
+    }
 }
 
 @Module
-interface MainActivityModule {
+abstract class MainActivityModule {
     @Binds abstract fun providesActivity(mainActivity: MainActivity): FragmentActivity
 
-    @ContributesAndroidInjector(modules = [MainFragmentModule::class])
-    fun contributeMainFragment(): MainFragment
+    @ContributesAndroidInjector(modules = [AllSessionsFragmentModule::class])
+    abstract fun contributeAllSessionsFragment(): AllSessionsFragment
+
+    @ContributesAndroidInjector(modules = [DaySessionsFragmentModule::class])
+    abstract fun contributeDaySessionsFragment(): SessionsFragment
+
+    @ContributesAndroidInjector(modules = [DaySessionsFragmentModule::class])
+    abstract fun contributeBottomSheetDaySessionsFragment(): BottomSheetDaySessionsFragment
+
+    @ContributesAndroidInjector(modules = [FavoriteSessionsFragmentModule::class])
+    abstract fun contributeFavoriteSessionsFragment(): BottomSheetFavoriteSessionsFragment
 
     @ContributesAndroidInjector(modules = [SessionDetailFragmentModule::class])
-    fun contributeSessionDetailFragment(): SessionDetailFragment
+    abstract fun contributeSessionDetailFragment(): SessionDetailFragment
 
     @ContributesAndroidInjector(modules = [AnnouncementFragmentModule::class])
-    fun contributeAnnouncementFragment(): AnnouncementFragment
+    abstract fun contributeAnnouncementFragment(): AnnouncementFragment
 
     @Module
     abstract class MainActivityBuilder {

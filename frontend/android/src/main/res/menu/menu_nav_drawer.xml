@@ -2,7 +2,7 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@id/session"
+        android:id="@id/main"
         android:title="@string/session_label"
         />
     <!--TODO: use icon android:icon="@drawable/ic_home_white_24dp"-->
