@@ -1,9 +1,12 @@
 package io.github.droidkaigi.confsched2019.dispatcher
 
-import com.nhaarman.mockitokotlin2.mock
 import io.github.droidkaigi.confsched2019.model.Action
 import io.github.droidkaigi.confsched2019.model.Session
+import io.mockk.mockk
 import kotlinx.coroutines.async
+import kotlinx.coroutines.channels.map
+import kotlinx.coroutines.channels.take
+import kotlinx.coroutines.channels.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.hasItems
@@ -12,11 +15,9 @@ import org.junit.Assert.assertThat
 import org.junit.Test
 
 class DispatcherTest {
-    @Test
-    fun sendAndReceive() {
-        val sessions = listOf<Session>(mock())
+    @Test fun sendAndReceive() {
+        val sessions = listOf<Session>(mockk())
         val dispatcher = Dispatcher()
-
 
         runBlocking {
             val allSessionLoaded = async {
@@ -30,9 +31,8 @@ class DispatcherTest {
         }
     }
 
-    @Test
-    fun sendAndMultipleReceive() {
-        val sessions = listOf<Session>(mock())
+    @Test fun sendAndMultipleReceive() {
+        val sessions = listOf<Session>(mockk())
         val dispatcher = Dispatcher()
 
 
@@ -52,10 +52,9 @@ class DispatcherTest {
         }
     }
 
-    @Test
-    fun multipleSendAndReceive() {
-        val sessions1 = listOf<Session>(mock())
-        val sessions2 = listOf<Session>(mock())
+    @Test fun multipleSendAndReceive() {
+        val sessions1 = listOf<Session>(mockk())
+        val sessions2 = listOf<Session>(mockk())
         val dispatcher = Dispatcher()
 
 
@@ -74,10 +73,9 @@ class DispatcherTest {
         }
     }
 
-    @Test
-    fun multipleSendAndMultipleReceive() {
-        val sessions1 = listOf<Session>(mock(name = "session1"))
-        val sessions2 = listOf<Session>(mock(name = "session2"))
+    @Test fun multipleSendAndMultipleReceive() {
+        val sessions1 = listOf<Session>(mockk(name = "session1"))
+        val sessions2 = listOf<Session>(mockk(name = "session2"))
         val dispatcher = Dispatcher()
 
 

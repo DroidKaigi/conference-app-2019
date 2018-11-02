@@ -15,14 +15,11 @@ interface DbComponent {
 
     @Component.Builder
     interface Builder {
-        @BindsInstance
-        fun context(context: Context): Builder
+        @BindsInstance fun context(context: Context): Builder
 
-        @BindsInstance
-        fun coroutineContext(coroutineContext: CoroutineContext): Builder
+        @BindsInstance fun coroutineContext(coroutineContext: CoroutineContext): Builder
 
-        @BindsInstance
-        fun filename(filename: String?): Builder
+        @BindsInstance fun filename(filename: String?): Builder
 
         fun build(): DbComponent
     }

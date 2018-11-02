@@ -100,8 +100,7 @@ class SessionsFragment : DaggerFragment() {
 
 @Module
 object DaySessionsFragmentModule {
-    @JvmStatic @Provides
-    fun providesLifecycle(
+    @JvmStatic @Provides fun providesLifecycle(
         sessionsFragmentBottomSheet: BottomSheetDaySessionsFragment
     ): LifecycleOwner {
         return sessionsFragmentBottomSheet.viewLifecycleOwner

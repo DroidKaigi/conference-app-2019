@@ -79,8 +79,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
 
 @Module
 object FavoriteSessionsFragmentModule {
-    @JvmStatic @Provides
-    fun providesLifecycle(
+    @JvmStatic @Provides fun providesLifecycle(
         sessionsFragmentBottomSheet: BottomSheetFavoriteSessionsFragment
     ): LifecycleOwner {
         return sessionsFragmentBottomSheet.viewLifecycleOwner

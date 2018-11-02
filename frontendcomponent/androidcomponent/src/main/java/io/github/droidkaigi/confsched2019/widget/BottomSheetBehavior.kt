@@ -79,8 +79,7 @@ class BottomSheetBehavior<V : View> : Behavior<V> {
         annotation class State
 
         /** Utility to get the [BottomSheetBehavior] from a [view]. */
-        @JvmStatic
-        fun from(view: View): BottomSheetBehavior<*> {
+        @JvmStatic fun from(view: View): BottomSheetBehavior<*> {
             val lp = view.layoutParams as? CoordinatorLayout.LayoutParams
                 ?: throw IllegalArgumentException("view is not a child of CoordinatorLayout")
             return lp.behavior as? BottomSheetBehavior

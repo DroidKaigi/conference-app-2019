@@ -91,8 +91,9 @@ abstract class SessionDetailFragmentModule {
             return sessionsFragment.viewLifecycleOwner
         }
 
-        @JvmStatic @Provides
-        fun provideActivity(sessionsFragment: SessionDetailFragment): FragmentActivity {
+        @JvmStatic @Provides fun provideActivity(
+            sessionsFragment: SessionDetailFragment
+        ): FragmentActivity {
             return sessionsFragment.requireActivity()
         }
     }

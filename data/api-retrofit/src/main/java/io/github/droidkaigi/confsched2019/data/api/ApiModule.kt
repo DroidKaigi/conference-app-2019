@@ -12,14 +12,11 @@ import retrofit2.Retrofit
 
 @Module(includes = [ApiModule.Providers::class])
 internal abstract class ApiModule {
-    @Binds
-    abstract fun sessionApi(impl: RetrofitSessionApi): SessionApi
+    @Binds abstract fun sessionApi(impl: RetrofitSessionApi): SessionApi
 
     @Module
     internal object Providers {
-        @JvmStatic
-        @Provides
-        fun retrofit(): Retrofit {
+        @JvmStatic @Provides fun retrofit(): Retrofit {
             val contentType = MediaType.get("application/json; charset=utf-8")
             val json = JSON.nonstrict
             return Retrofit.Builder()

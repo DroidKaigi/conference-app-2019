@@ -12,10 +12,7 @@ import javax.inject.Singleton
 
 @Module
 object RepositoryComponentModule {
-    @JvmStatic
-    @Provides
-    @Singleton
-    fun provideRepository(
+    @JvmStatic @Provides @Singleton fun provideRepository(
         api: SessionApi,
         database: SessionDatabase,
         fireStore: FireStore

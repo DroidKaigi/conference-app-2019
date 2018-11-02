@@ -9,8 +9,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.launch
 
-@MainThread
-fun <T> ReceiveChannel<T>.toLiveData(defaultValue: T? = null):
+@MainThread fun <T> ReceiveChannel<T>.toLiveData(defaultValue: T? = null):
     LiveData<T> = object : LiveData<T>(),
     CoroutineScope by GlobalScope {
     lateinit var job: Job

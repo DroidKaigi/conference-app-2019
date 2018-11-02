@@ -23,8 +23,7 @@ import kotlin.coroutines.resumeWithException
 /**
  * Converts this deferred value to the instance of [Task].
  */
-@ExperimentalCoroutinesApi
-public fun <T> Deferred<T>.asTask(): Task<T> {
+@ExperimentalCoroutinesApi fun <T> Deferred<T>.asTask(): Task<T> {
     val cancellation = CancellationTokenSource()
     val source = TaskCompletionSource<T>(cancellation.token)
 

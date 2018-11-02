@@ -10,10 +10,9 @@ import javax.inject.Singleton
 
 @Module
 object DbComponentModule {
-    @JvmStatic
-    @Provides
-    @Singleton
-    fun provideItemStore(application: Application): SessionDatabase {
+    @JvmStatic @Provides @Singleton fun provideItemStore(
+        application: Application
+    ): SessionDatabase {
         return DbComponent.builder()
             .context(application)
             .coroutineContext(Dispatchers.IO)

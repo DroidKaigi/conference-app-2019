@@ -9,10 +9,7 @@ import javax.inject.Singleton
 
 @Module
 object FireStoreComponentModule {
-    @JvmStatic
-    @Provides
-    @Singleton
-    fun provideRepository(): FireStore {
+    @JvmStatic @Provides @Singleton fun provideRepository(): FireStore {
         return FireStoreComponent.builder()
             .coroutineContext(Dispatchers.IO)
             .build()

@@ -37,8 +37,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
 @Module
 interface MainActivityModule {
-    @Binds
-    fun providesActivity(mainActivity: MainActivity): FragmentActivity
+    @Binds abstract fun providesActivity(mainActivity: MainActivity): FragmentActivity
 
     @ContributesAndroidInjector(modules = [MainFragmentModule::class])
     fun contributeMainFragment(): MainFragment

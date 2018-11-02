@@ -12,15 +12,14 @@ import javax.inject.Singleton
 
 @Module(includes = [DbModule.Providers::class])
 internal abstract class DbModule {
-    @Binds
-    abstract fun sessionDatabase(impl: RoomSessionDatabase): SessionDatabase
+    @Binds abstract fun sessionDatabase(impl: RoomSessionDatabase): SessionDatabase
 
     @Module
     internal object Providers {
-        @Singleton
-        @JvmStatic
-        @Provides
-        fun database(context: Context, filename: String?): SessionCacheDatabase {
+        @Singleton @JvmStatic @Provides fun database(
+            context: Context,
+            filename: String?
+        ): SessionCacheDatabase {
             return Room.databaseBuilder(
                 context,
                 SessionCacheDatabase::class.java,
@@ -30,21 +29,16 @@ internal abstract class DbModule {
                 .build()
         }
 
-        @JvmStatic
-        @Provides
-        fun sessionDao(databaseSession: SessionCacheDatabase): SessionDao {
+        @JvmStatic @Provides fun sessionDao(databaseSession: SessionCacheDatabase): SessionDao {
             return databaseSession.sessionDao()
         }
 
-        @JvmStatic
-        @Provides
-        fun speakerDao(databaseSession: SessionCacheDatabase): SpeakerDao {
+        @JvmStatic @Provides fun speakerDao(databaseSession: SessionCacheDatabase): SpeakerDao {
             return databaseSession.speakerDao()
         }
 
-        @JvmStatic
-        @Provides
-        fun sessionSpeakerJoinDao(databaseSession: SessionCacheDatabase): SessionSpeakerJoinDao {
+        @JvmStatic @Provides fun sessionSpeakerJoinDao(
+            databaseSession: SessionCacheDatabase): SessionSpeakerJoinDao {
             return databaseSession.sessionSpeakerJoinDao()
         }
     }
