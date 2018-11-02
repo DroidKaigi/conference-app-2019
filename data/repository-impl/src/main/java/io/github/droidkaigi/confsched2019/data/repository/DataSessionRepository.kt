@@ -14,6 +14,7 @@ import io.github.droidkaigi.confsched2019.model.SessionMessage
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.model.Topic
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.channels.BroadcastChannel
@@ -25,10 +26,11 @@ import kotlinx.coroutines.selects.select
 import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 
+@ExperimentalCoroutinesApi
 class DataSessionRepository @Inject constructor(
-    val sessionApi: SessionApi,
-    val sessionDatabase: SessionDatabase,
-    val fireStore: FireStore
+    private val sessionApi: SessionApi,
+    private val sessionDatabase: SessionDatabase,
+    private val fireStore: FireStore
 ) : SessionRepository {
     override suspend fun sessions(withFavorite: Boolean): List<Session> = coroutineScope {
         val sessionsAsync = async { sessionDatabase.sessions() }

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.NavHostFragment
 import dagger.Module
@@ -17,12 +16,11 @@ import io.github.droidkaigi.confsched2019.databinding.FragmentMainBinding
 import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment
 import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.BottomSheetDaySessionsFragment
-import io.github.droidkaigi.confsched2019.session.ui.SessionsFragment
-import io.github.droidkaigi.confsched2019.session.ui.DaySessionsFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.BottomSheetFavoriteSessionsFragment
+import io.github.droidkaigi.confsched2019.session.ui.DaySessionsFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.FavoriteSessionsFragmentModule
+import io.github.droidkaigi.confsched2019.session.ui.SessionsFragment
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
-import io.github.droidkaigi.confsched2019.user.store.UserStore
 import javax.inject.Inject
 
 class MainFragment : DaggerFragment() {

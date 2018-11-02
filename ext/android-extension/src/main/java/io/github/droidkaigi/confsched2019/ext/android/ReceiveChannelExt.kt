@@ -1,6 +1,5 @@
 package io.github.droidkaigi.confsched2019.ext.android
 
-import android.util.Log
 import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineScope
