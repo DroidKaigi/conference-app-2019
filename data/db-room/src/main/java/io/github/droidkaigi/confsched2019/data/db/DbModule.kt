@@ -38,7 +38,8 @@ internal abstract class DbModule {
         }
 
         @JvmStatic @Provides fun sessionSpeakerJoinDao(
-            databaseSession: SessionCacheDatabase): SessionSpeakerJoinDao {
+            databaseSession: SessionCacheDatabase
+        ): SessionSpeakerJoinDao {
             return databaseSession.sessionSpeakerJoinDao()
         }
     }
