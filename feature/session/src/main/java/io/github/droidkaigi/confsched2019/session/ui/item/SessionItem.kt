@@ -2,7 +2,6 @@ package io.github.droidkaigi.confsched2019.session.ui.item
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.core.view.size
@@ -15,14 +14,12 @@ import io.github.droidkaigi.confsched2019.session.databinding.ItemSessionBinding
 import io.github.droidkaigi.confsched2019.util.lazyWithParam
 import kotlin.math.max
 
-data class SessionItem(
+class SessionItem(
     val speechSession: Session.SpeechSession,
     private val onFavoriteClickListener: (Session.SpeechSession) -> Unit,
     private val onClickListener: (Session.SpeechSession) -> Unit,
     private val isShowDayNumber: Boolean = false,
-    private val searchQuery: String = "",
-    private val simplify: Boolean = false,
-    private val userIdInDetail: String? = null
+    private val searchQuery: String = ""
 ) : BindableItem<ItemSessionBinding>(
     speechSession.id.toLong()
 ) {
@@ -81,4 +78,19 @@ data class SessionItem(
     }
 
     override fun getLayout(): Int = R.layout.item_session
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as SessionItem
+
+        if (speechSession != other.speechSession) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return speechSession.hashCode()
+    }
 }
