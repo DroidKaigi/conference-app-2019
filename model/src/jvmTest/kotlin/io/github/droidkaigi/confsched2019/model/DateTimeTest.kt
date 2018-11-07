@@ -7,8 +7,15 @@ import kotlin.test.assertEquals
 class DateTimeTest {
 
     @Test fun dateFormat() {
-        assertEquals(16, SimplerDateFormat("""yyyy-MM-dd'T'HH:mm:ss""")
-            .parseDate("2018-10-08T16:32:59")
-            .hours)
+        SimplerDateFormat("""yyyy-MM-dd'T'HH:mm:ss""")
+            .parse("2018-02-08T10:50:00")
+            .utc
+            .minutes
+        assertEquals(
+            16, SimplerDateFormat("""yyyy-MM-dd'T'HH:mm:ss""")
+            .parse("2018-10-08T16:32:59")
+            .utc
+            .hours
+        )
     }
 }

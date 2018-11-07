@@ -1,5 +1,6 @@
 package io.github.droidkaigi.confsched2019.session.ui
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
@@ -19,6 +21,7 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionAct
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
+import io.github.droidkaigi.confsched2019.session.ui.widget.SessionsItemDecoration
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
 import javax.inject.Provider
@@ -50,12 +53,15 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.allSessionsRecycler.adapter = groupAdapter
+        binding.allSessionsRecycler.addItemDecoration(
+            SessionsItemDecoration(resources, groupAdapter)
+        )
 
         allSessionsStore.favoriteSessions().changed(this) { sessions ->
             val items = sessions
                 .map { session ->
                     SessionItem(
-                        session = session,
+                        speechSession = session,
                         onFavoriteClickListener = onFavoriteClickListener,
                         onClickListener = { clickedSession ->
                             Navigation

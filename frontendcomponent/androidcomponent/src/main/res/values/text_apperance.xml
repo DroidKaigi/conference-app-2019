@@ -1,0 +1,34 @@
+<resources>
+    <!-- see https://github.com/material-components/material-components-android/blob/2997b6995f32bbd7f7a4f24f4030278a50c15e6f/docs/theming/Typography.md -->
+
+    <!-- Regular 20sp -->
+    <style name="TextAppearance.App.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:fontFamily">@font/notosans_regular</item>
+    </style>
+
+    <!-- Regular 16sp -->
+    <style name="TextAppearance.App.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:fontFamily">@font/notosans_regular</item>
+    </style>
+
+    <!-- Medium 14sp -->
+    <style name="TextAppearance.App.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:fontFamily">@font/notosans_medium</item>
+    </style>
+
+    <!-- Regular 16sp -->
+    <style name="TextAppearance.App.Body1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:fontFamily">@font/notosans_regular</item>
+    </style>
+
+    <!-- Regular 14sp -->
+    <style name="TextAppearance.App.Body2" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:fontFamily">@font/notosans_regular</item>
+    </style>
+
+    <!-- Regular 12sp -->
+    <style name="TextAppearance.App.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:fontFamily">@font/notosans_regular</item>
+    </style>
+
+</resources>

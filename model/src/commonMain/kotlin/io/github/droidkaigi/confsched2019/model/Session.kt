@@ -1,6 +1,7 @@
 package io.github.droidkaigi.confsched2019.model
 
 import com.soywiz.klock.DateTime
+import com.soywiz.klock.TimeSpan
 
 sealed class Session(
     open val id: String,
@@ -35,8 +36,11 @@ sealed class Session(
     ) : Session(id, dayNumber, startTime, endTime)
 
     val isFinished: Boolean
-        get() = DateTime.now().unix > endTime.unix
+        get() = DateTime.nowUnixLong() > endTime.unixMillisLong
 
     val isOnGoing: Boolean
-        get() = DateTime.now().unix in startTime.unix..endTime.unix
+        get() = DateTime.nowUnixLong() in startTime.unixMillisLong..endTime.unixMillisLong
+
+    val timeInMinutes: Int
+        get() = TimeSpan(endTime.unixMillis - startTime.unixMillis).minutes.toInt()
 }

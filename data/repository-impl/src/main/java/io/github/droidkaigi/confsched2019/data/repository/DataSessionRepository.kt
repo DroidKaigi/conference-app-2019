@@ -49,7 +49,7 @@ class DataSessionRepository @Inject constructor(
         val speakerSessions = sessionEntities
             .map { it.toSession(speakerEntities, fabSessionIds, firstDay) }
             .sortedWith(compareBy(
-                { it.startTime.unix },
+                { it.startTime.unixMillisLong },
                 { it.room.id }
             ))
         speakerSessions //  + specialSessions
@@ -112,7 +112,7 @@ class DataSessionRepository @Inject constructor(
             val speakerSessions = nonNullSessionEntities
                 .map { it.toSession(speakerEntities, nonNullFabSessions, firstDay) }
                 .sortedWith(compareBy(
-                    { it.startTime.unix },
+                    { it.startTime.unixMillisLong },
                     { it.room.id }
                 ))
             channel.offer(speakerSessions) // + specialSessions
