@@ -5,24 +5,49 @@ import android.view.LayoutInflater
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.core.view.size
+import androidx.navigation.NavController
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSessionBinding
+import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragmentDirections
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionActionCreator
+import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.util.lazyWithParam
 import kotlin.math.max
 
-class SessionItem(
-    val speechSession: Session.SpeechSession,
-    private val onFavoriteClickListener: (Session.SpeechSession) -> Unit,
-    private val onClickListener: (Session.SpeechSession) -> Unit,
-    private val isShowDayNumber: Boolean = false,
-    private val searchQuery: String = ""
+class SessionItem @AssistedInject constructor(
+    @Assisted val speechSession: Session.SpeechSession,
+    @Assisted private val searchQuery: String = "",
+    navController: NavController,
+    allSessionActionCreator: AllSessionActionCreator,
+    val systemStore: SystemStore
 ) : BindableItem<ItemSessionBinding>(
     speechSession.id.toLong()
 ) {
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(
+            speechSession: Session.SpeechSession,
+            searchQuery: String = ""
+        ): SessionItem
+    }
+
+    private val onFavoriteClickListener: (Session.SpeechSession) -> Unit = { speechSession ->
+        allSessionActionCreator.toggleFavorite(speechSession)
+    }
+    private val onClickListener: (Session.SpeechSession) -> Unit = { speechSession ->
+        navController
+            .navigate(
+                AllSessionsFragmentDirections.actionSessionToSessionDetail(
+                    speechSession.id
+                )
+            )
+    }
     val layoutInflater by lazyWithParam<Context, LayoutInflater> { context ->
         LayoutInflater.from(context)
     }
@@ -40,9 +65,8 @@ class SessionItem(
                 speechSession.timeInMinutes,
                 speechSession.room.name
             )
-            // TODO: Support english
-            levelChip.text = speechSession.level.getNameByLang(Lang.JA)
-            topicChip.text = speechSession.topic.getNameByLang(Lang.JA)
+            levelChip.text = speechSession.level.getNameByLang(systemStore.lang)
+            topicChip.text = speechSession.topic.getNameByLang(systemStore.lang)
 
             bindSpeaker()
 

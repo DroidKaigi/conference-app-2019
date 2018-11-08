@@ -26,6 +26,8 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
 
     @Inject lateinit var allSessionActionCreator: AllSessionActionCreator
     @Inject lateinit var allSessionsStoreProvider: Provider<AllSessionsStore>
+    @Inject lateinit var sessionItemFactory: SessionItem.Factory
+
     private val allSessionsStore: AllSessionsStore by lazy {
         InjectedViewModelProviders.of(requireActivity())[allSessionsStoreProvider]
     }
@@ -41,10 +43,6 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
 
     private val groupAdapter = GroupAdapter<ViewHolder<*>>()
 
-    private val onFavoriteClickListener = { clickedSession: Session.SpeechSession ->
-        allSessionActionCreator.toggleFavorite(clickedSession)
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.allSessionsRecycler.adapter = groupAdapter
@@ -57,19 +55,8 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
         allSessionsStore.daySessions(daySessionsFragmentArgs.day).changed(this) { sessions ->
             val items = sessions.filterIsInstance<Session.SpeechSession>()
                 .map { session ->
-                    SessionItem(
-                        speechSession = session,
-                        onFavoriteClickListener = onFavoriteClickListener,
-                        onClickListener = { clickedSession ->
-                            Navigation
-                                .findNavController(requireActivity(), R.id.root_nav_host_fragment)
-                                .navigate(
-                                    AllSessionsFragmentDirections.actionSessionToSessionDetail(
-                                        clickedSession.id
-                                    )
-                                )
-                        }
-                    )
+                    sessionItemFactory.create(session)
+
                 }
             groupAdapter.update(items)
         }

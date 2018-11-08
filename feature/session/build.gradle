@@ -10,6 +10,7 @@ android.dataBinding.enabled = true
 
 dependencies {
     implementation project(":feature:user")
+    implementation project(":feature:system")
     implementation project(':frontendcomponent:androidcomponent')
     implementation project(":model")
     implementation project(":data:repository")
@@ -47,4 +48,5 @@ dependencies {
     testImplementation Dep.junit
     androidTestImplementation Dep.Android.testRunner
     androidTestImplementation Dep.Android.espressoCore
+    compile project(path: ':feature:system')
 }

@@ -3,21 +3,26 @@ package io.github.droidkaigi.confsched2019.ui
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import dagger.android.support.DaggerAppCompatActivity
 import io.github.droidkaigi.confsched2019.R
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragmentModule
 import io.github.droidkaigi.confsched2019.databinding.ActivityMainBinding
+import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
 import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment
 import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragmentModule
+import io.github.droidkaigi.confsched2019.system.actioncreator.SystemActionCreator
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
 import javax.inject.Inject
 
@@ -53,11 +58,19 @@ abstract class MainActivityModule {
     @ContributesAndroidInjector(modules = [AllSessionsFragmentModule::class])
     abstract fun contributeAllSessionsFragment(): AllSessionsFragment
 
-    @ContributesAndroidInjector(modules = [SessionDetailFragmentModule::class])
+    @ContributesAndroidInjector(modules = [SessionDetailFragmentModule::class, SessionAssistedInjectModule::class])
     abstract fun contributeSessionDetailFragment(): SessionDetailFragment
 
     @ContributesAndroidInjector(modules = [AnnouncementFragmentModule::class])
     abstract fun contributeAnnouncementFragment(): AnnouncementFragment
+
+    @Module
+    companion object {
+        @JvmStatic @Provides fun provideNavController(mainActivity: MainActivity): NavController {
+            return Navigation
+                .findNavController(mainActivity, R.id.root_nav_host_fragment)
+        }
+    }
 
     @Module
     abstract class MainActivityBuilder {
