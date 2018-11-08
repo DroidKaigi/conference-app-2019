@@ -35,7 +35,11 @@ class SessionItem(
             favorite.setOnClickListener {
                 onFavoriteClickListener(speechSession)
             }
-            timeAndRoom.text = "${speechSession.timeInMinutes}min / ${speechSession.room.name}"
+            timeAndRoom.text = root.context.getString(
+                R.string.session_duration_room_format,
+                speechSession.timeInMinutes,
+                speechSession.room.name
+            )
             // TODO: Support english
             levelChip.text = speechSession.level.getNameByLang(Lang.JA)
             topicChip.text = speechSession.topic.getNameByLang(Lang.JA)
@@ -60,6 +64,7 @@ class SessionItem(
                 return@forEach
             }
             if (existSpeakerView != null && speaker == null) {
+                // Cache for performance
                 existSpeakerView.isVisible = false
                 return@forEach
             }

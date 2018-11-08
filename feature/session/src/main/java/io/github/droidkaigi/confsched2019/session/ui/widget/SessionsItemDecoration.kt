@@ -33,7 +33,10 @@ class SessionsItemDecoration(
     }
 
     override fun getItemOffsets(
-        outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
     ) {
         outRect.left = leftSpace
     }
@@ -58,7 +61,11 @@ class SessionsItemDecoration(
                 }
                 if (lastTime != time) {
                     val viewCenterY = (view.top + view.bottom) / 2
-                    val yPosition = if (viewCenterY < textMinTop || time == previousTime) textMinTop else viewCenterY
+                    val yPosition = if (viewCenterY < textMinTop || time == previousTime) {
+                        textMinTop
+                    } else {
+                        viewCenterY
+                    }
                     c.drawText(
                         time,
                         textLeftSpace.toFloat(),
@@ -71,4 +78,3 @@ class SessionsItemDecoration(
         }
     }
 }
-
