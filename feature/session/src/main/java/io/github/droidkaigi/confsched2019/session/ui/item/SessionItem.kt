@@ -14,7 +14,7 @@ import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSessionBinding
 import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragmentDirections
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionsActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.util.lazyWithParam
@@ -25,7 +25,7 @@ class SessionItem @AssistedInject constructor(
     @Assisted private val searchQuery: String = "",
     @Assisted allSessionsStore: AllSessionsStore,
     navController: NavController,
-    allSessionActionCreator: AllSessionActionCreator,
+    allSessionsActionCreator: AllSessionsActionCreator,
     val systemStore: SystemStore
 ) : BindableItem<ItemSessionBinding>(
     speechSession.id.toLong()
@@ -40,7 +40,7 @@ class SessionItem @AssistedInject constructor(
     }
 
     private val onFavoriteClickListener: (Session.SpeechSession) -> Unit = { speechSession ->
-        allSessionActionCreator.toggleFavoriteAndLoad(speechSession, allSessionsStore.filters)
+        allSessionsActionCreator.toggleFavoriteAndLoad(speechSession, allSessionsStore.filters)
     }
     private val onClickListener: (Session.SpeechSession) -> Unit = { speechSession ->
         navController

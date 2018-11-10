@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @AllSessionsScope
 @ExperimentalCoroutinesApi
-class AllSessionActionCreator @Inject constructor(
+class AllSessionsActionCreator @Inject constructor(
     val dispatcher: Dispatcher,
     val sessionRepository: SessionRepository,
     @AllSessionsScope val lifecycle: Lifecycle

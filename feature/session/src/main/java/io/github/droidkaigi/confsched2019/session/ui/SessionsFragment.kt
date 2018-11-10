@@ -21,8 +21,8 @@ import io.github.droidkaigi.confsched2019.model.SessionTab
 import io.github.droidkaigi.confsched2019.model.Topic
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionFilterBinding
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionsActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
@@ -34,8 +34,8 @@ import javax.inject.Provider
 class SessionsFragment : DaggerFragment() {
     lateinit var binding: FragmentSessionFilterBinding
 
-    @Inject lateinit var sessionActionCreator: SessionActionCreator
-    @Inject lateinit var allSessionActionCreator: AllSessionActionCreator
+    @Inject lateinit var sessionsActionCreator: SessionsActionCreator
+    @Inject lateinit var allSessionsActionCreator: AllSessionsActionCreator
     @Inject lateinit var allSessionsStoreProvider: Provider<AllSessionsStore>
     @Inject lateinit var systemStore: SystemStore
     private val allSessionsStore: AllSessionsStore by lazy {
@@ -95,7 +95,7 @@ class SessionsFragment : DaggerFragment() {
             }
         )
         binding.filterReset.setOnClickListener {
-            allSessionActionCreator.clearFilters()
+            allSessionsActionCreator.clearFilters()
         }
 
         allSessionsStore.filtersChange.observe(viewLifecycleOwner) {
@@ -105,7 +105,7 @@ class SessionsFragment : DaggerFragment() {
             binding.filterRoomChip.setupFilter(
                 rooms,
                 Room::name,
-                allSessionActionCreator::changeFilter
+                allSessionsActionCreator::changeFilter
             )
 
         }
@@ -113,14 +113,14 @@ class SessionsFragment : DaggerFragment() {
             binding.filterTopicChip.setupFilter(
                 topics,
                 { topics -> topics.getNameByLang(systemStore.lang) },
-                allSessionActionCreator::changeFilter
+                allSessionsActionCreator::changeFilter
             )
         }
         allSessionsStore.langs.changed(viewLifecycleOwner) { langs ->
             binding.filterLangChip.setupFilter(
                 langs,
                 Lang::toString,
-                allSessionActionCreator::changeFilter
+                allSessionsActionCreator::changeFilter
             )
         }
         allSessionsStore.selectedTab.changed(viewLifecycleOwner) {

@@ -11,10 +11,9 @@ import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.ext.android.changed
-import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionsBinding
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionsActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
@@ -26,7 +25,7 @@ import javax.inject.Provider
 class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
     lateinit var binding: FragmentSessionsBinding
 
-    @Inject lateinit var allSessionActionCreator: AllSessionActionCreator
+    @Inject lateinit var allSessionsActionCreator: AllSessionsActionCreator
     @Inject lateinit var allSessionsStoreProvider: Provider<AllSessionsStore>
     @Inject lateinit var sessionItemFactory: SessionItem.Factory
 

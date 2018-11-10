@@ -12,14 +12,14 @@ import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import io.github.droidkaigi.confsched2019.di.createAppComponent
 import io.github.droidkaigi.confsched2019.ext.android.changedForever
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
 import io.github.droidkaigi.confsched2019.system.actioncreator.SystemActionCreator
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.user.store.UserStore
 import javax.inject.Inject
 
 class App : DaggerApplication() {
-    @Inject lateinit var sessionActionCreator: SessionActionCreator
+    @Inject lateinit var sessionsActionCreator: SessionsActionCreator
     @Inject lateinit var userStore: UserStore
     @Inject lateinit var systemStore: SystemStore
     @Inject lateinit var systemActionCreator: SystemActionCreator
@@ -33,7 +33,7 @@ class App : DaggerApplication() {
         setupFirestore()
 
         userStore.logined.changedForever { login ->
-            if (login) sessionActionCreator.load()
+            if (login) sessionsActionCreator.load()
         }
         systemStore.systemProperty.changedForever {
             // listening
@@ -63,7 +63,8 @@ class App : DaggerApplication() {
             "com.google.android.gms.fonts",
             "com.google.android.gms",
             "Noto Color Emoji Compat",
-            R.array.com_google_android_gms_fonts_certs)
+            R.array.com_google_android_gms_fonts_certs
+        )
         val config = FontRequestEmojiCompatConfig(applicationContext, fontRequest)
             .setReplaceAll(true)
             .registerInitCallback(object : EmojiCompat.InitCallback() {
