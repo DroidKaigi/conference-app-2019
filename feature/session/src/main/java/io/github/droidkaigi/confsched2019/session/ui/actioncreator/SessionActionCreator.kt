@@ -28,17 +28,4 @@ class SessionActionCreator @Inject constructor(
             throw e
         }
     }
-
-    fun toggleFavorite(session: Session.SpeechSession) {
-        launch {
-            try {
-                dispatcher.send(Action.AllSessionLoadingStateChanged(LoadingState.LOADING))
-                sessionRepository.toggleFavorite(session)
-                dispatcher.send(Action.AllSessionLoadingStateChanged(LoadingState.FINISHED))
-            } catch (e: Exception) {
-                // TODO: error handling
-                throw e
-            }
-        }
-    }
 }

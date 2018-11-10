@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.Navigation
+import com.shopify.livedataktx.observe
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
 import io.github.droidkaigi.confsched2019.ext.android.changed
@@ -55,7 +55,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
         allSessionsStore.daySessions(daySessionsFragmentArgs.day).changed(this) { sessions ->
             val items = sessions.filterIsInstance<Session.SpeechSession>()
                 .map { session ->
-                    sessionItemFactory.create(session)
+                    sessionItemFactory.create(session,allSessionsStore)
 
                 }
             groupAdapter.update(items)

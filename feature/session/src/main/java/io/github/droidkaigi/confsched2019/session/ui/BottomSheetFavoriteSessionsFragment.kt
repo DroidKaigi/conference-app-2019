@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
-import androidx.navigation.Navigation
-import com.squareup.inject.assisted.dagger2.AssistedModule
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
@@ -38,10 +36,6 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
 
     private val groupAdapter = GroupAdapter<ViewHolder<*>>()
 
-    private val onFavoriteClickListener = { clickedSession: Session.SpeechSession ->
-        allSessionActionCreator.toggleFavorite(clickedSession)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -61,7 +55,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
         allSessionsStore.favoriteSessions().changed(this) { sessions ->
             val items = sessions
                 .map { session ->
-                    sessionItemFactory.create(session)
+                    sessionItemFactory.create(session, allSessionsStore)
                 }
             groupAdapter.update(items)
         }

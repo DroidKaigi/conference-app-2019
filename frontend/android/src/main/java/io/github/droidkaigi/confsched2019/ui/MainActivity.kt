@@ -17,6 +17,7 @@ import io.github.droidkaigi.confsched2019.R
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragmentModule
 import io.github.droidkaigi.confsched2019.databinding.ActivityMainBinding
+import io.github.droidkaigi.confsched2019.session.di.AllSessionsScope
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
 import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment
 import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragmentModule
@@ -56,6 +57,7 @@ abstract class MainActivityModule {
     @Binds abstract fun providesActivity(mainActivity: MainActivity): FragmentActivity
 
     @ContributesAndroidInjector(modules = [AllSessionsFragmentModule::class])
+    @AllSessionsScope
     abstract fun contributeAllSessionsFragment(): AllSessionsFragment
 
     @ContributesAndroidInjector(modules = [SessionDetailFragmentModule::class, SessionAssistedInjectModule::class])

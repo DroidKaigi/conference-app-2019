@@ -9,13 +9,13 @@ import androidx.navigation.NavController
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.xwray.groupie.databinding.BindableItem
-import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSessionBinding
 import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragmentDirections
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.util.lazyWithParam
 import kotlin.math.max
@@ -23,6 +23,7 @@ import kotlin.math.max
 class SessionItem @AssistedInject constructor(
     @Assisted val speechSession: Session.SpeechSession,
     @Assisted private val searchQuery: String = "",
+    @Assisted allSessionsStore: AllSessionsStore,
     navController: NavController,
     allSessionActionCreator: AllSessionActionCreator,
     val systemStore: SystemStore
@@ -33,12 +34,13 @@ class SessionItem @AssistedInject constructor(
     interface Factory {
         fun create(
             speechSession: Session.SpeechSession,
+            allSessionsStore: AllSessionsStore,
             searchQuery: String = ""
         ): SessionItem
     }
 
     private val onFavoriteClickListener: (Session.SpeechSession) -> Unit = { speechSession ->
-        allSessionActionCreator.toggleFavorite(speechSession)
+        allSessionActionCreator.toggleFavoriteAndLoad(speechSession, allSessionsStore.filters)
     }
     private val onClickListener: (Session.SpeechSession) -> Unit = { speechSession ->
         navController

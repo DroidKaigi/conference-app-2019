@@ -10,6 +10,7 @@
 
 
         <!-- see https://github.com/material-components/material-components-android/blob/2997b6995f32bbd7f7a4f24f4030278a50c15e6f/docs/theming/Typography.md -->
+        <item name="textAppearanceHeadline5">@style/TextAppearance.App.Headline5</item>
         <item name="textAppearanceHeadline6">@style/TextAppearance.App.Headline6</item>
         <item name="textAppearanceSubtitle1">@style/TextAppearance.App.Subtitle1</item>
         <item name="textAppearanceSubtitle2">@style/TextAppearance.App.Subtitle2</item>

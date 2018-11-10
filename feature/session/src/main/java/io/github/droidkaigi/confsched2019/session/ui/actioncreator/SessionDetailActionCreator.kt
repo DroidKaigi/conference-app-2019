@@ -46,7 +46,7 @@ class SessionDetailActionCreator @Inject constructor(
     private suspend fun newSession(
         sessionId: String
     ): Session.SpeechSession {
-        val sessions = sessionRepository.sessions()
+        val sessions = sessionRepository.sessionContents().sessions
         val session = sessions
             .filterIsInstance<Session.SpeechSession>()
             .first { it.id == sessionId }

@@ -6,9 +6,11 @@ import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionWithSpeakers
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntity
 import io.github.droidkaigi.confsched2019.data.firestore.FireStore
+import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.Level
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.model.SessionMessage
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.model.Topic
@@ -32,7 +34,7 @@ class DataSessionRepository @Inject constructor(
     private val fireStore: FireStore
 ) : SessionRepository {
 
-    override suspend fun sessions(): List<Session> = coroutineScope {
+    override suspend fun sessionContents(): SessionContents = coroutineScope {
         val sessionsAsync = async { sessionDatabase.sessions() }
         val allSpeakersAsync = async { sessionDatabase.allSpeaker() }
         val fabSessionIdsAsync = async {
@@ -42,7 +44,7 @@ class DataSessionRepository @Inject constructor(
         awaitAll(fabSessionIdsAsync, sessionsAsync, allSpeakersAsync)
 
         val sessionEntities = sessionsAsync.await()
-        if (sessionEntities.isEmpty()) return@coroutineScope listOf<Session>()
+        if (sessionEntities.isEmpty()) return@coroutineScope SessionContents.EMPTY
         val speakerEntities = allSpeakersAsync.await()
         val fabSessionIds = fabSessionIdsAsync.await()
         val firstDay = DateTime(sessionEntities.first().session.stime)
@@ -52,7 +54,13 @@ class DataSessionRepository @Inject constructor(
                 { it.startTime.unixMillisLong },
                 { it.room.id }
             ))
-        speakerSessions //  + specialSessions
+        val sessions = speakerSessions //  + specialSessions
+        SessionContents(
+            sessions = sessions,
+            langs = Lang.values().toList(),
+            rooms = speakerSessions.map { it.room }.distinct(),
+            topics = speakerSessions.map { it.topic }.distinct()
+        )
     }
 
     override suspend fun sessionChannel(): ReceiveChannel<List<Session>> {

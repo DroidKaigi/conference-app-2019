@@ -5,18 +5,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.core.view.forEach
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
+import com.shopify.livedataktx.observe
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.model.Lang
+import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.SessionTab
+import io.github.droidkaigi.confsched2019.model.Topic
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionFilterBinding
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
+import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.widget.BottomSheetBehavior
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
@@ -26,8 +35,9 @@ class SessionsFragment : DaggerFragment() {
     lateinit var binding: FragmentSessionFilterBinding
 
     @Inject lateinit var sessionActionCreator: SessionActionCreator
-
+    @Inject lateinit var allSessionActionCreator: AllSessionActionCreator
     @Inject lateinit var allSessionsStoreProvider: Provider<AllSessionsStore>
+    @Inject lateinit var systemStore: SystemStore
     private val allSessionsStore: AllSessionsStore by lazy {
         InjectedViewModelProviders.of(requireActivity())[allSessionsStoreProvider]
     }
@@ -37,8 +47,10 @@ class SessionsFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_session_filter, container,
-            false)
+        binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_session_filter, container,
+            false
+        )
         return binding.root
     }
 
@@ -57,7 +69,8 @@ class SessionsFragment : DaggerFragment() {
                     BottomSheetDaySessionsFragment.newInstance(
                         BottomSheetDaySessionsFragmentArgs
                             .Builder(tab.day)
-                            .build())
+                            .build()
+                    )
                 }
                 SessionTab.Favorite -> {
                     BottomSheetFavoriteSessionsFragment.newInstance()
@@ -81,10 +94,102 @@ class SessionsFragment : DaggerFragment() {
                 }
             }
         )
+        binding.filterReset.setOnClickListener {
+            allSessionActionCreator.clearFilters()
+        }
+
+        allSessionsStore.filtersChange.observe(viewLifecycleOwner) {
+            applyFilters()
+        }
+        allSessionsStore.rooms.changed(viewLifecycleOwner) { rooms ->
+            binding.filterRoomChip.setupFilter(
+                rooms,
+                Room::name,
+                allSessionActionCreator::changeFilter
+            )
+
+        }
+        allSessionsStore.topics.changed(viewLifecycleOwner) { topics ->
+            binding.filterTopicChip.setupFilter(
+                topics,
+                { topics -> topics.getNameByLang(systemStore.lang) },
+                allSessionActionCreator::changeFilter
+            )
+        }
+        allSessionsStore.langs.changed(viewLifecycleOwner) { langs ->
+            binding.filterLangChip.setupFilter(
+                langs,
+                Lang::toString,
+                allSessionActionCreator::changeFilter
+            )
+        }
         allSessionsStore.selectedTab.changed(viewLifecycleOwner) {
             if (SessionTab.tabs[args.tabIndex] == it) {
                 bottomSheetBehavior.isHideable = false
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }
+        }
+    }
+
+    private fun <T> ChipGroup.setupFilter(
+        items: List<T>,
+        chipText: (T) -> String,
+        onChecked: (T, Boolean) -> Unit
+    ) {
+        removeAllViews()
+        items
+            .map { item ->
+                val chip = LayoutInflater.from(context).inflate(
+                    R.layout.layout_chip,
+                    this,
+                    false
+                ) as Chip
+                chip.apply {
+                    text = chipText(item)
+                    tag = item
+                    setOnCheckedChangeListener { buttonView, isChecked ->
+                        onChecked(item, isChecked)
+                    }
+                }
+            }
+            .forEach {
+                addView(it)
+            }
+        applyFilters()
+    }
+
+    private fun applyFilters() {
+        val filterRooms = allSessionsStore.filters.rooms
+        binding.filterRoomChip.forEach {
+            if (filterRooms.isNotEmpty()) {
+                val chip = it as? Chip ?: return@forEach
+                val room = it.tag as? Room ?: return@forEach
+                chip.isChecked = filterRooms.contains(room)
+            } else {
+                val chip = it as? Chip ?: return@forEach
+                chip.isChecked = false
+            }
+        }
+        val filterLangs = allSessionsStore.filters.langs
+        binding.filterLangChip.forEach {
+            if (filterLangs.isNotEmpty()) {
+                val chip = it as? Chip ?: return@forEach
+                val lang = it.tag as? Lang ?: return@forEach
+                chip.isChecked = filterLangs.contains(lang)
+            } else {
+                val chip = it as? Chip ?: return@forEach
+                chip.isChecked = false
+            }
+        }
+        val filterTopics = allSessionsStore.filters.topics
+        binding.filterTopicChip.forEach {
+            if (filterTopics.isNotEmpty()) {
+                val chip = it as? Chip ?: return@forEach
+                val topic = it.tag as? Topic ?: return@forEach
+                chip.isChecked = filterTopics.contains(topic)
+            } else {
+                val chip = it as? Chip ?: return@forEach
+                chip.isChecked = false
             }
         }
     }
