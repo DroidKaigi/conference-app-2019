@@ -18,19 +18,16 @@ kotlin {
                 progressiveMode = true
             }
             dependencies {
-                api Dep.Klock.common
                 api Dep.Kotlin.stdlibCommon
-
             }
         }
         jvmMain {
-            dependsOn commonMain
             dependencies {
-                api Dep.Klock.jvm
                 api Dep.Kotlin.stdlibJvm
+                api Dep.Klock.jvm
             }
         }
-        androidMain{
+        androidMain {
             dependsOn jvmMain
         }
         commonTest.dependencies {
@@ -42,9 +39,11 @@ kotlin {
                 implementation Dep.Kotlin.jvmModuleTest
                 implementation Dep.Kotlin.jvmModuleTestJunit
             }
-            dependsOn androidMain
         }
     }
+}
+dependencies {
+    api Dep.Klock.common
 }
 configurations {
     compileClasspath

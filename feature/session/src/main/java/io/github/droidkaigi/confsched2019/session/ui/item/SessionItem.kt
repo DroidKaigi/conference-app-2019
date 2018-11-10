@@ -1,46 +1,125 @@
 package io.github.droidkaigi.confsched2019.session.ui.item
 
+import android.content.Context
+import android.view.LayoutInflater
+import android.widget.TextView
+import androidx.core.view.isVisible
+import androidx.core.view.size
+import androidx.navigation.NavController
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 import com.xwray.groupie.databinding.BindableItem
+import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSessionBinding
+import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragmentDirections
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionActionCreator
+import io.github.droidkaigi.confsched2019.system.store.SystemStore
+import io.github.droidkaigi.confsched2019.util.lazyWithParam
+import kotlin.math.max
 
-data class SessionItem(
-    val session: Session.SpeechSession,
-    private val onFavoriteClickListener: (Session.SpeechSession) -> Unit,
-    private val onClickListener: (Session.SpeechSession) -> Unit,
-    private val isShowDayNumber: Boolean = false,
-    private val searchQuery: String = "",
-    private val simplify: Boolean = false,
-    private val userIdInDetail: String? = null
+class SessionItem @AssistedInject constructor(
+    @Assisted val speechSession: Session.SpeechSession,
+    @Assisted private val searchQuery: String = "",
+    navController: NavController,
+    allSessionActionCreator: AllSessionActionCreator,
+    val systemStore: SystemStore
 ) : BindableItem<ItemSessionBinding>(
-    session.id.toLong()
+    speechSession.id.toLong()
 ) {
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(
+            speechSession: Session.SpeechSession,
+            searchQuery: String = ""
+        ): SessionItem
+    }
+
+    private val onFavoriteClickListener: (Session.SpeechSession) -> Unit = { speechSession ->
+        allSessionActionCreator.toggleFavorite(speechSession)
+    }
+    private val onClickListener: (Session.SpeechSession) -> Unit = { speechSession ->
+        navController
+            .navigate(
+                AllSessionsFragmentDirections.actionSessionToSessionDetail(
+                    speechSession.id
+                )
+            )
+    }
+    val layoutInflater by lazyWithParam<Context, LayoutInflater> { context ->
+        LayoutInflater.from(context)
+    }
 
     override fun bind(viewBinding: ItemSessionBinding, position: Int) {
-        viewBinding.root.setOnClickListener { onClickListener(session) }
-        viewBinding.session = session
-        viewBinding.searchQuery = searchQuery
-        viewBinding.favorite.setOnClickListener {
-            onFavoriteClickListener(session)
-        }
-        viewBinding.isShowDayNumber = isShowDayNumber
-        viewBinding.simplify = simplify
+        with(viewBinding) {
+            root.setOnClickListener { onClickListener(speechSession) }
+            session = speechSession
+            searchQuery = searchQuery
+            favorite.setOnClickListener {
+                onFavoriteClickListener(speechSession)
+            }
+            timeAndRoom.text = root.context.getString(
+                R.string.session_duration_room_format,
+                speechSession.timeInMinutes,
+                speechSession.room.name
+            )
+            levelChip.text = speechSession.level.getNameByLang(systemStore.lang)
+            topicChip.text = speechSession.topic.getNameByLang(systemStore.lang)
 
-        session.message?.let { message ->
-            viewBinding.message.text = if (true) {
-                message.jaMessage
-            } else {
-                message.enMessage
+            bindSpeaker()
+
+            speechSession.message?.let { message ->
+                this@with.message.text = if (true) {
+                    message.jaMessage
+                } else {
+                    message.enMessage
+                }
             }
         }
+    }
 
-//        when (session.level) {
-//            is Level.Beginner -> R.drawable.ic_beginner_lightgreen_20dp
-//            is Level.IntermediateOrExpert -> R.drawable.ic_intermediate_senior_bluegray_20dp
-//            is Level.Niche -> R.drawable.ic_niche_cyan_20dp
-//        }
+    private fun ItemSessionBinding.bindSpeaker() {
+        (0 until max(speakers.size, speechSession.speakers.size)).forEach { index ->
+            val existSpeakerView: TextView? = speakers.getChildAt(index) as? TextView
+            val speaker: Speaker? = speechSession.speakers.getOrNull(index)
+            if (existSpeakerView == null && speaker == null) {
+                return@forEach
+            }
+            if (existSpeakerView != null && speaker == null) {
+                // Cache for performance
+                existSpeakerView.isVisible = false
+                return@forEach
+            }
+            if (existSpeakerView == null && speaker != null) {
+                val speakerView = layoutInflater.get(root.context).inflate(
+                    R.layout.layout_speaker, speakers, false
+                ) as TextView
+                speakerView.text = speaker.name
+                speakers.addView(speakerView)
+                return@forEach
+            }
+            if (existSpeakerView != null && speaker != null) {
+                existSpeakerView.text = speaker.name
+            }
+        }
     }
 
     override fun getLayout(): Int = R.layout.item_session
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as SessionItem
+
+        if (speechSession != other.speechSession) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return speechSession.hashCode()
+    }
 }

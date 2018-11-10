@@ -12,11 +12,11 @@
         android:background="@drawable/bg_bottom_sheet_dialog_fragment"
         tools:context="io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment"
         >
+
         <TextView
             android:id="@+id/bottom_sheet_title"
             android:layout_width="wrap_content"
-            android:layout_height="64dp"
-            android:text="@string/app_name"
+            android:layout_height="32dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             />
 

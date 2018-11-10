@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.Navigation
+import com.squareup.inject.assisted.dagger2.AssistedModule
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
@@ -19,6 +20,7 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionAct
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
+import io.github.droidkaigi.confsched2019.session.ui.widget.SessionsItemDecoration
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
 import javax.inject.Provider
@@ -28,6 +30,8 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
 
     @Inject lateinit var allSessionActionCreator: AllSessionActionCreator
     @Inject lateinit var allSessionsStoreProvider: Provider<AllSessionsStore>
+    @Inject lateinit var sessionItemFactory: SessionItem.Factory
+
     private val allSessionsStore: AllSessionsStore by lazy {
         InjectedViewModelProviders.of(requireActivity())[allSessionsStoreProvider]
     }
@@ -50,23 +54,14 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.allSessionsRecycler.adapter = groupAdapter
+        binding.allSessionsRecycler.addItemDecoration(
+            SessionsItemDecoration(resources, groupAdapter)
+        )
 
         allSessionsStore.favoriteSessions().changed(this) { sessions ->
             val items = sessions
                 .map { session ->
-                    SessionItem(
-                        session = session,
-                        onFavoriteClickListener = onFavoriteClickListener,
-                        onClickListener = { clickedSession ->
-                            Navigation
-                                .findNavController(requireActivity(), R.id.root_nav_host_fragment)
-                                .navigate(
-                                    AllSessionsFragmentDirections.actionSessionToSessionDetail(
-                                        clickedSession.id
-                                    )
-                                )
-                        }
-                    )
+                    sessionItemFactory.create(session)
                 }
             groupAdapter.update(items)
         }

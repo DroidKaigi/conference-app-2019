@@ -1,6 +1,6 @@
 package io.github.droidkaigi.confsched2019.dispatcher
 
-import io.github.droidkaigi.confsched2019.model.Action
+import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.model.Session
 import io.mockk.mockk
 import kotlinx.coroutines.async

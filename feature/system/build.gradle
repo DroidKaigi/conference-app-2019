@@ -1,0 +1,25 @@
+import dependencies.Dep
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+apply from: rootProject.file('gradle/android.gradle')
+
+dependencies {
+    implementation project(':ext:android-extension')
+    implementation project(':frontendcomponent:androidcomponent')
+
+    implementation Dep.Kotlin.stdlibJvm
+    api Dep.Kotlin.coroutines
+    implementation Dep.Kotlin.androidCoroutinesDispatcher
+    implementation Dep.Kotlin.androidCoroutines
+    implementation Dep.Android.appCompat
+    implementation Dep.Dagger.core
+    implementation Dep.Dagger.androidSupport
+    kapt Dep.Dagger.compiler
+    kapt Dep.Dagger.androidProcessor
+    testImplementation Dep.junit
+    androidTestImplementation Dep.Android.testRunner
+}
+

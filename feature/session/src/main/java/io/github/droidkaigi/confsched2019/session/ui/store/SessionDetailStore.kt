@@ -6,7 +6,7 @@ import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.toLiveData
-import io.github.droidkaigi.confsched2019.model.Action
+import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.model.Session
 import kotlinx.coroutines.channels.filter
 import kotlinx.coroutines.channels.map

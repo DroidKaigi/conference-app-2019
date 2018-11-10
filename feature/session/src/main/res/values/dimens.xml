@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="session_bottom_sheet_left_time_space">76dp</dimen>
+    <dimen name="session_bottom_sheet_left_time_text_size">20dp</dimen>
+    <dimen name="session_bottom_sheet_left_time_text_left">16dp</dimen>
+    <dimen name="session_bottom_sheet_left_time_text_top_min">22dp</dimen>
+</resources>

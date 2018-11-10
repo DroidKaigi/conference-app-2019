@@ -19,3 +19,8 @@ android {
         }
     }
 }
+kotlin.sourceSets.all {
+    languageSettings {
+        progressiveMode = true
+    }
+}

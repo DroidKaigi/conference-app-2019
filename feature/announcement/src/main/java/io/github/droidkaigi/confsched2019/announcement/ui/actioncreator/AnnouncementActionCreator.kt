@@ -3,7 +3,7 @@ package io.github.droidkaigi.confsched2019.announcement.ui.actioncreator
 import androidx.lifecycle.Lifecycle
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
-import io.github.droidkaigi.confsched2019.model.Action
+import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

@@ -114,13 +114,13 @@ object Dep {
             "com.willowtreeapps.hyperion:hyperion-attr:0.9.24",
             "com.willowtreeapps.hyperion:hyperion-measurement:0.9.24",
             "com.willowtreeapps.hyperion:hyperion-disk:0.9.24",
-            "com.willowtreeapps.hyperion:hyperion-recorder:0.9.24"
-            , "com.willowtreeapps.hyperion:hyperion-phoenix:0.9.24"
-            , "com.willowtreeapps.hyperion:hyperion-crash:0.9.24"
-            , "com.willowtreeapps.hyperion:hyperion-shared-preferences:0.9.24"
-            , "com.willowtreeapps.hyperion:hyperion-geiger-counter:0.9.24"
-            , "com.willowtreeapps.hyperion:hyperion-timber:0.9.24"
-            , "com.willowtreeapps.hyperion:hyperion-build-config:0.9.24"
+            "com.willowtreeapps.hyperion:hyperion-recorder:0.9.24",
+            "com.willowtreeapps.hyperion:hyperion-phoenix:0.9.24",
+            "com.willowtreeapps.hyperion:hyperion-crash:0.9.24",
+            "com.willowtreeapps.hyperion:hyperion-shared-preferences:0.9.24",
+            "com.willowtreeapps.hyperion:hyperion-geiger-counter:0.9.24",
+            "com.willowtreeapps.hyperion:hyperion-timber:0.9.24",
+            "com.willowtreeapps.hyperion:hyperion-build-config:0.9.24"
         )
     }
 
@@ -130,8 +130,8 @@ object Dep {
     }
 
     object Klock {
-        val common = "com.soywiz:klock-common:0.5.0"
-        val jvm = "com.soywiz:klock:0.5.0"
+        val common = "com.soywiz:klock:1.0.0"
+        val jvm = "com.soywiz:klock-jvm:1.0.0"
     }
 
     val junit = "junit:junit:4.12"

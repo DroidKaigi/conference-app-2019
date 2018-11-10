@@ -77,8 +77,7 @@ class SessionDetailFragment : Fragment(), HasSupportFragmentInjector {
     }
 }
 
-@AssistedModule
-@Module(includes = [AssistedInject_SessionDetailFragmentModule::class])
+@Module
 abstract class SessionDetailFragmentModule {
 
     @Module

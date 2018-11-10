@@ -32,7 +32,7 @@
             android:layout_gravity="bottom"
             android:layout_marginBottom="4dp"
             app:behavior_hideable="false"
-            app:behavior_peekHeight="64dp"
+            app:behavior_peekHeight="32dp"
             app:behavior_skipCollapsed="false"
             app:layout_behavior="io.github.droidkaigi.confsched2019.widget.BottomSheetBehavior"
             tools:layout="@layout/fragment_sessions"

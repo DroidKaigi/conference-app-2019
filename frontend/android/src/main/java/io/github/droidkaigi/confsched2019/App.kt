@@ -13,12 +13,16 @@ import dagger.android.DaggerApplication
 import io.github.droidkaigi.confsched2019.di.createAppComponent
 import io.github.droidkaigi.confsched2019.ext.android.changedForever
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionActionCreator
+import io.github.droidkaigi.confsched2019.system.actioncreator.SystemActionCreator
+import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.user.store.UserStore
 import javax.inject.Inject
 
 class App : DaggerApplication() {
     @Inject lateinit var sessionActionCreator: SessionActionCreator
     @Inject lateinit var userStore: UserStore
+    @Inject lateinit var systemStore: SystemStore
+    @Inject lateinit var systemActionCreator: SystemActionCreator
 
     override fun onCreate() {
         super.onCreate()
@@ -31,6 +35,10 @@ class App : DaggerApplication() {
         userStore.logined.changedForever { login ->
             if (login) sessionActionCreator.load()
         }
+        systemStore.systemProperty.changedForever {
+            // listening
+        }
+        systemActionCreator.setupSystem()
     }
 
     private fun setupFirestore() {

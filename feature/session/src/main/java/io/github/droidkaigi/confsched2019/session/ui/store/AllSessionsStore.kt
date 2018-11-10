@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.shopify.livedataktx.map
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.toLiveData
-import io.github.droidkaigi.confsched2019.model.Action
+import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionTab
 import kotlinx.coroutines.channels.map

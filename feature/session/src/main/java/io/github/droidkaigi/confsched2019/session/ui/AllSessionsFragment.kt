@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
+import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.SessionTab
@@ -97,10 +98,10 @@ abstract class AllSessionsFragmentModule {
     @ContributesAndroidInjector(modules = [DaySessionsFragmentModule::class])
     abstract fun contributeDaySessionsFragment(): SessionsFragment
 
-    @ContributesAndroidInjector(modules = [DaySessionsFragmentModule::class])
+    @ContributesAndroidInjector(modules = [DaySessionsFragmentModule::class, SessionAssistedInjectModule::class])
     abstract fun contributeBottomSheetDaySessionsFragment(): BottomSheetDaySessionsFragment
 
-    @ContributesAndroidInjector(modules = [FavoriteSessionsFragmentModule::class])
+    @ContributesAndroidInjector(modules = [FavoriteSessionsFragmentModule::class, SessionAssistedInjectModule::class])
     abstract fun contributeFavoriteSessionsFragment(): BottomSheetFavoriteSessionsFragment
 
     @Module

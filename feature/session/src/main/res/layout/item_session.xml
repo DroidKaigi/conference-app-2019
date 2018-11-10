@@ -23,29 +23,15 @@
             name="searchQuery"
             type="String"
             />
-
-        <variable
-            name="simplify"
-            type="boolean"
-            />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
         android:foreground="?android:attr/selectableItemBackground"
         >
-
-        <TextView
-            android:id="@+id/room"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:maxLines="3"
-            android:text="@{session.room.name}"
-            app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text=" / Room A"
-            />
 
         <androidx.emoji.widget.EmojiTextView
             android:id="@+id/title"
@@ -53,34 +39,100 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
+            android:fontFamily="@font/notosans_medium"
             android:text="@{session.title}"
             android:textAlignment="viewStart"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textAppearance="?textAppearanceSubtitle2"
+            app:layout_constraintEnd_toStartOf="@id/favorite"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_goneMarginTop="12dp"
             tools:text="テストセッション"
             />
 
-        <androidx.emoji.widget.EmojiTextView
-            android:id="@+id/description"
+        <ImageView
+            android:id="@+id/favorite"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="16dp"
+            android:scaleType="centerInside"
+            android:contentDescription="@string/session_description_favorite_image"
+            android:src="@{session.isFavorited ? @drawable/ic_bookmark_black_24dp : @drawable/ic_bookmark_border_black_24dp}"
+            android:tint="@{session.isFavorited ? @color/colorAccent : @color/colorDisabled}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/title"
+            />
+
+        <LinearLayout
+            android:id="@+id/speakers"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            />
+
+        <TextView
+            android:id="@+id/time_and_room"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?textAppearanceCaption"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/speakers"
+            tools:text="30min / Room A"
+            />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="12dp"
-            android:ellipsize="end"
-            android:includeFontPadding="false"
-            android:maxLines="3"
-            android:paddingBottom="2dp"
-            android:text="@{session.desc}"
-            android:textAlignment="viewStart"
-            android:visibility="@{simplify ? View.GONE : View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            tools:text="Material is the metaphor A material metaphor is the unifying theory of a rationalized space and a system of motion. The material is grounded in tactile reality, inspired by the study of paper and ink, yet technologically advanced and open to imagination and magic."
-            />
+            app:layout_constraintTop_toBottomOf="@id/time_and_room"
+            >
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/language_chip"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{session.language}"
+                android:textAppearance="?textAppearanceCaption"
+                android:textColor="@android:color/white"
+                app:chipBackgroundColor="#7982e1"
+                tools:text="Japanese"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/level_chip"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?textAppearanceCaption"
+                android:textColor="@android:color/white"
+                app:chipBackgroundColor="#ffd189"
+                tools:text="中・上級者向け"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/topic_chip"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?textAppearanceCaption"
+                android:textColor="@android:color/white"
+                app:chipBackgroundColor="#95959c"
+                tools:text="ソフトウェアアーキテクチャ"
+                />
+        </com.google.android.material.chip.ChipGroup>
+
 
         <androidx.emoji.widget.EmojiTextView
             android:id="@+id/message"
@@ -96,18 +148,7 @@
             android:visibility="@{session.message == null ? View.GONE : View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/description"
-            />
-
-        <ImageView
-            android:id="@+id/favorite"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/session_description_favorite_image"
-            android:background="@{session.isFavorited ? @android:color/white : @android:color/black}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/time_and_room"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
