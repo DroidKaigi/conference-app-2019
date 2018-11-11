@@ -108,6 +108,7 @@ jobs:
       - checkout
       - run: *init_bash
       - restore_cache: *restore_gradle_cache
+      - run: ./gradlew testDebugUnitTest --continue
       - run: ./gradlew lintDebug --continue
       - run: ./gradlew ktlint --continue
       - restore_cache: *restore_danger_cache
