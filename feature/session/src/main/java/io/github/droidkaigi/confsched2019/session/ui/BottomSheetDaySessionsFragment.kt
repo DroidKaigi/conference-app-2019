@@ -55,7 +55,6 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
             val items = sessions.filterIsInstance<Session.SpeechSession>()
                 .map { session ->
                     sessionItemFactory.create(session, allSessionsStore)
-
                 }
             groupAdapter.update(items)
         }
