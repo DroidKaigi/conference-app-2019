@@ -12,6 +12,7 @@ import dagger.Provides
 import io.github.droidkaigi.confsched2019.announcement.R
 import io.github.droidkaigi.confsched2019.announcement.databinding.FragmentAnnouncementBinding
 import io.github.droidkaigi.confsched2019.announcement.ui.actioncreator.AnnouncementActionCreator
+import io.github.droidkaigi.confsched2019.announcement.ui.di.AnnouncementScope
 import io.github.droidkaigi.confsched2019.announcement.ui.store.AnnouncementStore
 import io.github.droidkaigi.confsched2019.announcement.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.ext.android.changed
@@ -19,7 +20,6 @@ import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
-import javax.inject.Named
 import javax.inject.Provider
 
 class AnnouncementFragment : DaggerFragment() {
@@ -56,8 +56,12 @@ class AnnouncementFragment : DaggerFragment() {
         }.apply {
             loading = true
         }
-        announcementStore.loadingState.changed(this) {
+        announcementStore.loadingState.changed(viewLifecycleOwner) {
             progressTimeLatch.loading = it == LoadingState.LOADING
+        }
+        announcementStore.posts.changed(viewLifecycleOwner) {
+            // TODO: Implement announcement list
+            println(it)
         }
         announcementActionCreator.load()
     }
@@ -67,7 +71,7 @@ class AnnouncementFragment : DaggerFragment() {
 abstract class AnnouncementFragmentModule {
     @Module
     companion object {
-        @Named("AnnouncementFragment") @JvmStatic @Provides fun providesLifecycle(
+        @AnnouncementScope @JvmStatic @Provides fun providesLifecycle(
             announcementFragment: AnnouncementFragment
         ): Lifecycle {
             return announcementFragment.viewLifecycleOwner.lifecycle

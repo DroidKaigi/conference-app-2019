@@ -11,7 +11,7 @@ android.dataBinding.enabled = true
 dependencies {
     implementation project(":feature:user")
     implementation project(':frontendcomponent:androidcomponent')
-    implementation project(":data:repository")
+    implementation project(":data:firestore")
     implementation project(':ext:android-extension')
 
     implementation Dep.Kotlin.stdlibJvm

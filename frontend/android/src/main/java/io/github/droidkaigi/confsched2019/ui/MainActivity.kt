@@ -16,6 +16,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import io.github.droidkaigi.confsched2019.R
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragmentModule
+import io.github.droidkaigi.confsched2019.announcement.ui.di.AnnouncementScope
 import io.github.droidkaigi.confsched2019.databinding.ActivityMainBinding
 import io.github.droidkaigi.confsched2019.session.di.AllSessionsScope
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
@@ -23,7 +24,6 @@ import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment
 import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragmentModule
-import io.github.droidkaigi.confsched2019.system.actioncreator.SystemActionCreator
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
 import javax.inject.Inject
 
@@ -56,13 +56,16 @@ class MainActivity : DaggerAppCompatActivity() {
 abstract class MainActivityModule {
     @Binds abstract fun providesActivity(mainActivity: MainActivity): FragmentActivity
 
-    @ContributesAndroidInjector(modules = [AllSessionsFragmentModule::class])
     @AllSessionsScope
+    @ContributesAndroidInjector(modules = [AllSessionsFragmentModule::class])
     abstract fun contributeAllSessionsFragment(): AllSessionsFragment
 
-    @ContributesAndroidInjector(modules = [SessionDetailFragmentModule::class, SessionAssistedInjectModule::class])
+    @ContributesAndroidInjector(
+        modules = [SessionDetailFragmentModule::class, SessionAssistedInjectModule::class]
+    )
     abstract fun contributeSessionDetailFragment(): SessionDetailFragment
 
+    @AnnouncementScope
     @ContributesAndroidInjector(modules = [AnnouncementFragmentModule::class])
     abstract fun contributeAnnouncementFragment(): AnnouncementFragment
 

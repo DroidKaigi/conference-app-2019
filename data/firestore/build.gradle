@@ -23,6 +23,19 @@ kotlin {
                 api Dep.Kotlin.coroutines
             }
         }
+        commonTest.dependencies {
+            implementation Dep.Kotlin.commonModuleTest
+            implementation Dep.Kotlin.commonModuleTestAnnotations
+            implementation Dep.MockK.common
+        }
+        androidTest {
+            dependsOn commonMain
+            dependencies {
+                implementation Dep.Kotlin.jvmModuleTest
+                implementation Dep.Kotlin.jvmModuleTestJunit
+                implementation Dep.MockK.jvm
+            }
+        }
     }
 }
 

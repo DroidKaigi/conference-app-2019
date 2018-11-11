@@ -16,6 +16,8 @@ dependencies {
     api Dep.PlayServices.auth
     api Dep.Arch.lifecycleLiveData
     api Dep.liveDataKtx
+
+    testImplementation Dep.junit
 }
 
 

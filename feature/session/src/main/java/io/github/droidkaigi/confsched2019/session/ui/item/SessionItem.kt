@@ -62,6 +62,7 @@ class SessionItem @AssistedInject constructor(
             favorite.setOnClickListener {
                 onFavoriteClickListener(speechSession)
             }
+            @Suppress("StringFormatMatches") // FIXME
             timeAndRoom.text = root.context.getString(
                 R.string.session_duration_room_format,
                 speechSession.timeInMinutes,

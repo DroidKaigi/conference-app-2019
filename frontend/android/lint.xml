@@ -4,4 +4,7 @@
         <!-- Firebase dependencies caused this issue -->
         <ignore path="*/io.grpc/grpc-core/*"/>
     </issue>
+    <issue id="GoogleAppIndexingWarning">
+        <ignore path="src/main/AndroidManifest.xml"/>
+    </issue>
 </lint>

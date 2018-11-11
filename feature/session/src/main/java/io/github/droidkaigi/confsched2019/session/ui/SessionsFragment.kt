@@ -107,7 +107,6 @@ class SessionsFragment : DaggerFragment() {
                 Room::name,
                 allSessionsActionCreator::changeFilter
             )
-
         }
         allSessionsStore.topics.changed(viewLifecycleOwner) { topics ->
             binding.filterTopicChip.setupFilter(
