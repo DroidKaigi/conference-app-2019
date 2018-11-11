@@ -9,7 +9,9 @@ import com.google.firebase.firestore.MetadataChanges
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.Source
+import com.soywiz.klock.DateTime
 import io.github.droidkaigi.confsched2019.ext.android.await
+import io.github.droidkaigi.confsched2019.model.Post
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
@@ -78,6 +80,28 @@ class FirestoreImpl @Inject constructor() : FireStore {
             .getInstance()
             .collection("users/$firebaseUserId/favorites")
     }
+
+    override suspend fun getAnnouncements(): List<Post> {
+        val snapshot = FirebaseFirestore.getInstance()
+            .collection("posts")
+            .whereEqualTo("published", true)
+            .orderBy("date", Query.Direction.DESCENDING)
+            .get()
+            .await()
+        val posts = toPosts(snapshot)
+        return posts
+    }
+}
+
+private fun FirestoreImpl.toPosts(
+    snapshot: QuerySnapshot
+): List<Post> {
+    val postEntities: List<PostEntity> = snapshot
+        .map { it.toObject(PostEntity::class.java) }
+    val posts = postEntities.map {
+        Post(it.title!!, it.content!!, DateTime(it.date!!.time))//, it.type)
+    }
+    return posts
 }
 
 private suspend fun DocumentReference.fastGet(): DocumentSnapshot {

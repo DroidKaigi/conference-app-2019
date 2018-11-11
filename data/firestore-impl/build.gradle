@@ -17,6 +17,8 @@ dependencies {
     implementation Dep.Firebase.fireStore
     api Dep.Arch.lifecycleLiveData
 
+    api Dep.Klock.jvm
+
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport
     kapt Dep.Dagger.compiler
