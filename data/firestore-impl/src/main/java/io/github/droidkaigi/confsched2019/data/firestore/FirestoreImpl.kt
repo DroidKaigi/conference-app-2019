@@ -99,7 +99,7 @@ private fun FirestoreImpl.toPosts(
     val postEntities: List<PostEntity> = snapshot
         .map { it.toObject(PostEntity::class.java) }
     val posts = postEntities.map {
-        Post(it.title!!, it.content!!, DateTime(it.date!!.time))//, it.type)
+        Post(it.title!!, it.content!!, DateTime(it.date!!.time)) // , it.type)
     }
     return posts
 }
