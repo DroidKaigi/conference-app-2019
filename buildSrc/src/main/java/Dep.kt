@@ -119,7 +119,6 @@ object Dep {
             "com.willowtreeapps.hyperion:hyperion-crash:0.9.24",
             "com.willowtreeapps.hyperion:hyperion-shared-preferences:0.9.24",
             "com.willowtreeapps.hyperion:hyperion-geiger-counter:0.9.24",
-            "com.willowtreeapps.hyperion:hyperion-timber:0.9.24",
             "com.willowtreeapps.hyperion:hyperion-build-config:0.9.24"
         )
     }
