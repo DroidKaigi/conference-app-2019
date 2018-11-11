@@ -11,7 +11,7 @@ export BUNDLE_GEMFILE="$danger_path/Gemfile"
 
 export MERGED_JUNIT_RESULT_FILE="$PWD/merged_junit.xml"
 
-dirs="$(find ./*/build/test-results -type d -name "*UnitTest"|xargs)" || :
+dirs="$(find . -path "*/build/test-results/*" -type d -name "*UnitTest"|xargs)" || :
 
 if [[ -n "$dirs" ]]; then
   merge_junit_files -i "$dirs" -o "$MERGED_JUNIT_RESULT_FILE"
