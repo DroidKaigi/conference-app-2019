@@ -135,7 +135,11 @@ object Dep {
     }
 
     val junit = "junit:junit:4.12"
-    val mockk = "io.mockk:mockk:1.8.10"
+
+    object MockK {
+        val jvm = "io.mockk:mockk:1.8.12"
+        val common = "io.mockk:mockk-common:1.8.12"
+    }
 
     object InjectedVmProvider {
         val injectedVmProvider = "me.tatarka.injectedvmprovider:injectedvmprovider:2.0"

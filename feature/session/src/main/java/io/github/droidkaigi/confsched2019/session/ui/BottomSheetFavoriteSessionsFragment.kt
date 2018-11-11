@@ -6,17 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
-import androidx.navigation.Navigation
-import com.squareup.inject.assisted.dagger2.AssistedModule
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.ext.android.changed
-import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionsBinding
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionsActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
@@ -28,7 +25,7 @@ import javax.inject.Provider
 class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
     lateinit var binding: FragmentSessionsBinding
 
-    @Inject lateinit var allSessionActionCreator: AllSessionActionCreator
+    @Inject lateinit var allSessionsActionCreator: AllSessionsActionCreator
     @Inject lateinit var allSessionsStoreProvider: Provider<AllSessionsStore>
     @Inject lateinit var sessionItemFactory: SessionItem.Factory
 
@@ -37,10 +34,6 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
     }
 
     private val groupAdapter = GroupAdapter<ViewHolder<*>>()
-
-    private val onFavoriteClickListener = { clickedSession: Session.SpeechSession ->
-        allSessionActionCreator.toggleFavorite(clickedSession)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,7 +54,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
         allSessionsStore.favoriteSessions().changed(this) { sessions ->
             val items = sessions
                 .map { session ->
-                    sessionItemFactory.create(session)
+                    sessionItemFactory.create(session, allSessionsStore)
                 }
             groupAdapter.update(items)
         }

@@ -46,8 +46,9 @@ class SessionsItemDecoration(
         for (i in 0 until parent.childCount) {
             val view = parent.getChildAt(i)
             val position = parent.getChildAdapterPosition(view)
-            var item = groupAdapter.getItem(position)
-            var previousItem = if (position - 1 < 0) {
+            if (position == -1 || position >= groupAdapter.itemCount) return
+            val item = groupAdapter.getItem(position)
+            val previousItem = if (position - 1 < 0) {
                 null
             } else {
                 groupAdapter.getItem(position - 1)

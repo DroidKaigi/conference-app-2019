@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="session_description_favorite_image">favorite image</string>
-    <string name="session_duration_room_format">%1$dmin / %2$s</string>
+    <string name="session_description_favorite_image" translatable="false">favorite image</string>
+    <string name="session_duration_room_format" translatable="false">%1$dmin / %2$s</string>
+    <string name="session_filter_title">Filter</string>
+    <string name="session_filter_reset">Reset</string>
+    <string name="session_filter_room" translatable="false">Room</string>
+    <string name="session_filter_language" translatable="false">Language</string>
+    <string name="session_filter_topic" translatable="false">Topic</string>
 </resources>
