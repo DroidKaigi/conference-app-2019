@@ -20,12 +20,12 @@ import javax.inject.Inject
 
 @AllSessionsScope
 @ExperimentalCoroutinesApi
-class AllSessionsActionCreator @Inject constructor(
+class SessionPagesActionCreator @Inject constructor(
     val dispatcher: Dispatcher,
     val sessionRepository: SessionRepository,
     @AllSessionsScope val lifecycle: Lifecycle
 ) : CoroutineScope by lifecycle.coroutineScope {
-    fun load(filters: Filters) = launch {
+    fun applyFilter(filters: Filters) = launch {
         try {
             dispatcher.send(Action.AllSessionLoadingStateChanged(LoadingState.LOADING))
             loadContent(filters)

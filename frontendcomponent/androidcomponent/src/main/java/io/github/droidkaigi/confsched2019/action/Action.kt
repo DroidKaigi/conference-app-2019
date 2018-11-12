@@ -11,6 +11,7 @@ import io.github.droidkaigi.confsched2019.model.SystemProperty
 import io.github.droidkaigi.confsched2019.model.Topic
 
 sealed class Action {
+    class SessionLoadingStateChanged(val loadingState: LoadingState) : Action()
     class AllSessionLoadingStateChanged(val loadingState: LoadingState) : Action()
     data class AllSessionLoaded(
         val sessionContents: SessionContents

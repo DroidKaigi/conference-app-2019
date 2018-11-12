@@ -17,11 +17,20 @@ class SessionsActionCreator @Inject constructor(
 ) : CoroutineScope by GlobalScope + SupervisorJob() {
 
     fun load() = launch {
-        dispatcher.send(Action.AllSessionLoadingStateChanged(LoadingState.LOADING))
+        dispatcher.send(Action.SessionLoadingStateChanged(LoadingState.LOADING))
         try {
+            // load db data
+            val sessionContents = sessionRepository.sessionContents()
+            dispatcher.send(Action.AllSessionLoaded(sessionContents))
+
             // fetch api data
             sessionRepository.refresh()
-            dispatcher.send(Action.AllSessionLoadingStateChanged(LoadingState.FINISHED))
+
+            // reload db data
+            val sessionContentsRefreshed = sessionRepository.sessionContents()
+            dispatcher.send(Action.AllSessionLoaded(sessionContentsRefreshed))
+
+            dispatcher.send(Action.SessionLoadingStateChanged(LoadingState.FINISHED))
         } catch (e: Exception) {
             // TODO: error handling
             throw e

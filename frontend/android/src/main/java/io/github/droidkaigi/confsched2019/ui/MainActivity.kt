@@ -20,10 +20,10 @@ import io.github.droidkaigi.confsched2019.announcement.ui.di.AnnouncementScope
 import io.github.droidkaigi.confsched2019.databinding.ActivityMainBinding
 import io.github.droidkaigi.confsched2019.session.di.AllSessionsScope
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
-import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment
 import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragmentModule
+import io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
 import javax.inject.Inject
 
@@ -58,7 +58,7 @@ abstract class MainActivityModule {
 
     @AllSessionsScope
     @ContributesAndroidInjector(modules = [AllSessionsFragmentModule::class])
-    abstract fun contributeAllSessionsFragment(): AllSessionsFragment
+    abstract fun contributeAllSessionsFragment(): SessionPagesFragment
 
     @ContributesAndroidInjector(
         modules = [SessionDetailFragmentModule::class, SessionAssistedInjectModule::class]

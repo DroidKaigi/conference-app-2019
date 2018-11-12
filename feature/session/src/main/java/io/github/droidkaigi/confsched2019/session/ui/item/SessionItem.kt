@@ -13,9 +13,9 @@ import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSessionBinding
-import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragmentDirections
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionsActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
+import io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragmentDirections
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPagesActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.util.lazyWithParam
 import kotlin.math.max
@@ -23,9 +23,9 @@ import kotlin.math.max
 class SessionItem @AssistedInject constructor(
     @Assisted val speechSession: Session.SpeechSession,
     @Assisted private val searchQuery: String = "",
-    @Assisted allSessionsStore: AllSessionsStore,
+    @Assisted sessionPagesStore: SessionPagesStore,
     navController: NavController,
-    allSessionsActionCreator: AllSessionsActionCreator,
+    sessionPagesActionCreator: SessionPagesActionCreator,
     val systemStore: SystemStore
 ) : BindableItem<ItemSessionBinding>(
     speechSession.id.toLong()
@@ -34,18 +34,18 @@ class SessionItem @AssistedInject constructor(
     interface Factory {
         fun create(
             speechSession: Session.SpeechSession,
-            allSessionsStore: AllSessionsStore,
+            sessionPagesStore: SessionPagesStore,
             searchQuery: String = ""
         ): SessionItem
     }
 
     private val onFavoriteClickListener: (Session.SpeechSession) -> Unit = { speechSession ->
-        allSessionsActionCreator.toggleFavoriteAndLoad(speechSession, allSessionsStore.filters)
+        sessionPagesActionCreator.toggleFavoriteAndLoad(speechSession, sessionPagesStore.filters)
     }
     private val onClickListener: (Session.SpeechSession) -> Unit = { speechSession ->
         navController
             .navigate(
-                AllSessionsFragmentDirections.actionSessionToSessionDetail(
+                SessionPagesFragmentDirections.actionSessionToSessionDetail(
                     speechSession.id
                 )
             )

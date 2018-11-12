@@ -9,7 +9,7 @@
         android:id="@+id/allsessions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment"
+        tools:context="io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment"
         >
 
         <com.google.android.material.tabs.TabLayout

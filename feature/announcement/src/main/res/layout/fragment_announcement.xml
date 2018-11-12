@@ -9,7 +9,7 @@
         android:id="@+id/announcement"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment"
+        tools:context="io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment"
         >
 
         <androidx.recyclerview.widget.RecyclerView
@@ -23,6 +23,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
+
         <ProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"

@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager.widget.ViewPager
-import com.shopify.livedataktx.observe
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -18,12 +17,12 @@ import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.SessionTab
 import io.github.droidkaigi.confsched2019.session.R
-import io.github.droidkaigi.confsched2019.session.databinding.FragmentAllSessionsBinding
+import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionPagesBinding
 import io.github.droidkaigi.confsched2019.session.di.AllSessionsScope
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.AllSessionsActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPagesActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.store.AllSessionsStore
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.user.store.UserStore
@@ -32,17 +31,19 @@ import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
 import javax.inject.Provider
 
-class AllSessionsFragment : DaggerFragment() {
+class SessionPagesFragment : DaggerFragment() {
 
-    lateinit var binding: FragmentAllSessionsBinding
+    lateinit var binding: FragmentSessionPagesBinding
 
     @Inject lateinit var sessionsActionCreator: SessionsActionCreator
-    @Inject lateinit var allSessionsStoreProvider: Provider<AllSessionsStore>
-    private val allSessionsStore: AllSessionsStore by lazy {
-        InjectedViewModelProviders.of(requireActivity())[allSessionsStoreProvider]
-    }
-    @Inject lateinit var allSessionsActionCreator: AllSessionsActionCreator
     @Inject lateinit var sessionsStore: SessionsStore
+
+    @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
+    private val sessionPagesStore: SessionPagesStore by lazy {
+        InjectedViewModelProviders.of(requireActivity())[sessionPagesStoreProvider]
+    }
+    @Inject lateinit var sessionPagesActionCreator: SessionPagesActionCreator
+
     @Inject lateinit var userStore: UserStore
 
     private lateinit var progressTimeLatch: ProgressTimeLatch
@@ -54,7 +55,7 @@ class AllSessionsFragment : DaggerFragment() {
     ): View {
         binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_all_sessions,
+            R.layout.fragment_session_pages,
             container,
             false
         )
@@ -63,13 +64,9 @@ class AllSessionsFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        userStore.logined.changed(viewLifecycleOwner) { logined ->
-            if (logined) allSessionsActionCreator.load(allSessionsStore.filters)
-        }
-
-        allSessionsStore.filtersChange.observe(viewLifecycleOwner) {
+        sessionPagesStore.filtersChange.changed(viewLifecycleOwner) {
             if (userStore.logined.value == true) {
-                allSessionsActionCreator.load(allSessionsStore.filters)
+                sessionPagesActionCreator.applyFilter(sessionPagesStore.filters)
             }
         }
 
@@ -78,8 +75,8 @@ class AllSessionsFragment : DaggerFragment() {
             childFragmentManager
         ) {
             override fun getItem(position: Int): Fragment {
-                return SessionsFragment.newInstance(
-                    SessionsFragmentArgs
+                return SessionPageFragment.newInstance(
+                    SessionPageFragmentArgs
                         .Builder(position)
                         .build()
                 )
@@ -91,7 +88,7 @@ class AllSessionsFragment : DaggerFragment() {
         binding.sessionsViewpager.addOnPageChangeListener(
             object : ViewPager.SimpleOnPageChangeListener() {
                 override fun onPageSelected(position: Int) {
-                    allSessionsActionCreator.selectTab(SessionTab.tabs[position])
+                    sessionPagesActionCreator.selectTab(SessionTab.tabs[position])
                 }
             }
         )
@@ -109,11 +106,11 @@ class AllSessionsFragment : DaggerFragment() {
 @Module
 abstract class AllSessionsFragmentModule {
 
-    @ContributesAndroidInjector(modules = [DaySessionsFragmentModule::class])
-    abstract fun contributeDaySessionsFragment(): SessionsFragment
+    @ContributesAndroidInjector(modules = [SessionFilterFragmentModule::class])
+    abstract fun contributeSessionFilterFragment(): SessionPageFragment
 
     @ContributesAndroidInjector(
-        modules = [DaySessionsFragmentModule::class, SessionAssistedInjectModule::class]
+        modules = [SessionFilterFragmentModule::class, SessionAssistedInjectModule::class]
     )
     abstract fun contributeBottomSheetDaySessionsFragment(): BottomSheetDaySessionsFragment
 
@@ -125,9 +122,9 @@ abstract class AllSessionsFragmentModule {
     @Module
     companion object {
         @AllSessionsScope @JvmStatic @Provides fun providesLifecycle(
-            allSessionsFragment: AllSessionsFragment
+            sessionPagesFragment: SessionPagesFragment
         ): Lifecycle {
-            return allSessionsFragment.viewLifecycleOwner.lifecycle
+            return sessionPagesFragment.viewLifecycleOwner.lifecycle
         }
     }
 }

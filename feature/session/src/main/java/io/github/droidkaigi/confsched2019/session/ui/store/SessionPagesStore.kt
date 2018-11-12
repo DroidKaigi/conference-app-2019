@@ -10,6 +10,7 @@ import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.toLiveData
 import io.github.droidkaigi.confsched2019.model.Filters
 import io.github.droidkaigi.confsched2019.model.Lang
+import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
@@ -18,9 +19,13 @@ import io.github.droidkaigi.confsched2019.model.Topic
 import kotlinx.coroutines.channels.map
 import javax.inject.Inject
 
-class AllSessionsStore @Inject constructor(
+class SessionPagesStore @Inject constructor(
     dispatcher: Dispatcher
 ) : ViewModel() {
+    val loadingState = dispatcher
+        .subscribe<Action.AllSessionLoadingStateChanged>()
+        .map { it.loadingState }
+        .toLiveData(LoadingState.LOADING)
     private val contents = dispatcher
         .subscribe<Action.AllSessionLoaded>()
         .map { it.sessionContents }
@@ -89,6 +94,9 @@ class AllSessionsStore @Inject constructor(
         .combineWith(langFilterChanged) { unit, liveData -> }
         .combineWith(filterCleared) { unit1, unit2 -> }
     val filters = Filters()
+
+    val isLoadingFinished: Boolean
+        get() = loadingState.value == LoadingState.FINISHED
 
     val selectedTab: LiveData<SessionTab> = dispatcher
         .subscribe<Action.SessionTabSelected>()
