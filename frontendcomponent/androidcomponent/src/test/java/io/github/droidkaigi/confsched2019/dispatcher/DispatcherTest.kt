@@ -16,7 +16,7 @@ import org.junit.Test
 
 class DispatcherTest {
     @Test fun sendAndReceive() {
-        val sessionContents:SessionContents = mockk()
+        val sessionContents: SessionContents = mockk()
         val dispatcher = Dispatcher()
 
         runBlocking {
@@ -32,7 +32,7 @@ class DispatcherTest {
     }
 
     @Test fun sendAndMultipleReceive() {
-        val sessionContents:SessionContents = mockk()
+        val sessionContents: SessionContents = mockk()
         val dispatcher = Dispatcher()
 
 
@@ -53,8 +53,8 @@ class DispatcherTest {
     }
 
     @Test fun multipleSendAndReceive() {
-        val sessionContents1:SessionContents = mockk()
-        val sessionContents2:SessionContents = mockk()
+        val sessionContents1: SessionContents = mockk()
+        val sessionContents2: SessionContents = mockk()
         val dispatcher = Dispatcher()
 
 
@@ -68,26 +68,28 @@ class DispatcherTest {
             launch {
                 dispatcher.send(Action.AllSessionLoaded(sessionContents2))
             }
-            assertThat(allSessionLoaded1.await().map { it.sessionContents },
-                `is`(listOf(sessionContents1, sessionContents2)))
+            assertThat(
+                allSessionLoaded1.await().map { it.sessionContents },
+                `is`(listOf(sessionContents1, sessionContents2))
+            )
         }
     }
 
     @Test fun multipleSendAndMultipleReceive() {
-        val sessionContents1 :SessionContents= mockk()
-        val sessionContents2 :SessionContents= mockk()
+        val sessionContents1: SessionContents = mockk()
+        val sessionContents2: SessionContents = mockk()
         val dispatcher = Dispatcher()
 
 
         runBlocking {
             val allSessionLoaded1 = async {
                 dispatcher.subscribe<Action.AllSessionLoaded>().map {
-                    println("map1:" + it);it
+                    it
                 }.take(2).toList()
             }
             val allSessionLoaded2 = async {
                 dispatcher.subscribe<Action.AllSessionLoaded>().map {
-                    println("map2:" + it);it
+                    it
                 }.take(2).toList()
             }
             launch {
@@ -96,10 +98,14 @@ class DispatcherTest {
             launch {
                 dispatcher.send(Action.AllSessionLoaded(sessionContents2))
             }
-            assertThat(allSessionLoaded1.await().map { it.sessionContents },
-                hasItems(sessionContents1, sessionContents2))
-            assertThat(allSessionLoaded2.await().map { it.sessionContents },
-                hasItems(sessionContents1, sessionContents2))
+            assertThat(
+                allSessionLoaded1.await().map { it.sessionContents },
+                hasItems(sessionContents1, sessionContents2)
+            )
+            assertThat(
+                allSessionLoaded2.await().map { it.sessionContents },
+                hasItems(sessionContents1, sessionContents2)
+            )
         }
     }
 }

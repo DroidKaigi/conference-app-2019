@@ -18,17 +18,22 @@ import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragmentModule
 import io.github.droidkaigi.confsched2019.announcement.ui.di.AnnouncementScope
 import io.github.droidkaigi.confsched2019.databinding.ActivityMainBinding
+import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.session.di.AllSessionsScope
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
 import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
+import io.github.droidkaigi.confsched2019.user.store.UserStore
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
     @Inject lateinit var userActionCreator: UserActionCreator
+    @Inject lateinit var userStore: UserStore
+    @Inject lateinit var sessionsActionCreator: SessionsActionCreator
 
     val binding: ActivityMainBinding by lazy {
         DataBindingUtil.setContentView<ActivityMainBinding>(
@@ -44,6 +49,12 @@ class MainActivity : DaggerAppCompatActivity() {
         setupActionBarWithNavController(navController, binding.drawerLayout)
         binding.navView.setupWithNavController(navController)
         binding.toolbar.setupWithNavController(navController, binding.drawerLayout)
+
+        userStore.logined.changed(this) { logined ->
+            if (logined) {
+                sessionsActionCreator.load()
+            }
+        }
     }
 
     override fun onStart() {

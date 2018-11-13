@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager.widget.ViewPager
+import com.shopify.livedataktx.observe
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -64,7 +65,7 @@ class SessionPagesFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        sessionPagesStore.filtersChange.changed(viewLifecycleOwner) {
+        sessionPagesStore.filtersChange.observe(viewLifecycleOwner) {
             if (userStore.logined.value == true) {
                 sessionPagesActionCreator.applyFilter(sessionPagesStore.filters)
             }

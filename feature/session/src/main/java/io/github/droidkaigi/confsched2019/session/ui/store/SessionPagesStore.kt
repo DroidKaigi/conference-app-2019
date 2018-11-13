@@ -1,9 +1,8 @@
 package io.github.droidkaigi.confsched2019.session.ui.store
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
-import com.shopify.livedataktx.combineWith
-import com.shopify.livedataktx.distinct
 import com.shopify.livedataktx.map
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
@@ -42,8 +41,21 @@ class SessionPagesStore @Inject constructor(
     private val roomFilterChanged = dispatcher
         .subscribe<Action.RoomFilterChanged>()
         .toLiveData()
-        .distinct()
-        .map { roomFilterChanged ->
+
+    private val topicFilterChanged = dispatcher
+        .subscribe<Action.TopicFilterChanged>()
+        .toLiveData()
+
+    private val langFilterChanged = dispatcher
+        .subscribe<Action.LangFilterChanged>()
+        .toLiveData()
+
+    private val filterCleared = dispatcher
+        .subscribe<Action.FilterCleared>()
+        .toLiveData()
+
+    val filtersChange: LiveData<Any> = MediatorLiveData<Any>().apply {
+        addSource(roomFilterChanged) { roomFilterChanged ->
             roomFilterChanged?.let {
                 if (roomFilterChanged.checked) {
                     filters.rooms.add(it.room)
@@ -51,13 +63,9 @@ class SessionPagesStore @Inject constructor(
                     filters.rooms.remove(it.room)
                 }
             }
-            roomFilterChanged
+            value = roomFilterChanged
         }
-    private val topicFilterChanged = dispatcher
-        .subscribe<Action.TopicFilterChanged>()
-        .toLiveData()
-        .distinct()
-        .map { topicFilterChanged ->
+        addSource(topicFilterChanged) { topicFilterChanged ->
             topicFilterChanged?.let {
                 if (topicFilterChanged.checked) {
                     filters.topics.add(it.topic)
@@ -65,13 +73,9 @@ class SessionPagesStore @Inject constructor(
                     filters.topics.remove(it.topic)
                 }
             }
-            roomFilterChanged
+            value = topicFilterChanged
         }
-    private val langFilterChanged = dispatcher
-        .subscribe<Action.LangFilterChanged>()
-        .toLiveData()
-        .distinct()
-        .map { langFilterChanged ->
+        addSource(langFilterChanged) { langFilterChanged ->
             langFilterChanged?.let {
                 if (langFilterChanged.checked) {
                     filters.langs.add(it.lang)
@@ -79,20 +83,13 @@ class SessionPagesStore @Inject constructor(
                     filters.langs.remove(it.lang)
                 }
             }
-            roomFilterChanged
+            value = langFilterChanged
         }
-    private val filterCleared = dispatcher
-        .subscribe<Action.FilterCleared>()
-        .toLiveData()
-        .distinct()
-        .map {
+        addSource(filterCleared) {
             filters.clear()
-            Unit
+            value = it
         }
-    val filtersChange: LiveData<Unit> = roomFilterChanged
-        .combineWith(topicFilterChanged) { _, topic -> }
-        .combineWith(langFilterChanged) { unit, liveData -> }
-        .combineWith(filterCleared) { unit1, unit2 -> }
+    }
     val filters = Filters()
 
     val isLoadingFinished: Boolean

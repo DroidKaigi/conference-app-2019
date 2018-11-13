@@ -31,11 +31,6 @@ class App : DaggerApplication() {
         setupEmojiCompat()
         setupLeakCanary()
         setupFirestore()
-        userStore.logined.changedForever { logined ->
-            if (logined) {
-                sessionsActionCreator.load()
-            }
-        }
         systemStore.systemProperty.changedForever {
             // listening
         }
