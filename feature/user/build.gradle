@@ -8,6 +8,7 @@ apply from: rootProject.file('gradle/android.gradle')
 
 dependencies {
     implementation project(':ext:android-extension')
+    implementation project(':feature:system')
     implementation project(':frontendcomponent:androidcomponent')
 
     implementation Dep.Firebase.core

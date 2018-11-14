@@ -54,8 +54,8 @@ class MainActivity : DaggerAppCompatActivity() {
         binding.navView.setupWithNavController(navController)
         binding.toolbar.setupWithNavController(navController, binding.drawerLayout)
 
-        userStore.logined.changed(this) { logined ->
-            if (logined) {
+        userStore.logined.changed(this) { loggedin ->
+            if (loggedin) {
                 sessionsActionCreator.load()
             }
         }
@@ -70,7 +70,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        userActionCreator.setupUser()
+        userActionCreator.setupUserIfNeeded()
     }
 }
 
