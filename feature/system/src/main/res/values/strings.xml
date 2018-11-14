@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_error_network">Please check your Internet connection and Retry</string>
+    <string name="system_error_server">An server error has occurred. Retry later</string>
+    <string name="system_error_unknown">An unknown error has occurred. Retry later</string>
+</resources>

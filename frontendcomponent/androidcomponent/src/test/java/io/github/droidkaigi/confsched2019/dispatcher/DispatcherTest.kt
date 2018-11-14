@@ -24,7 +24,7 @@ class DispatcherTest {
                 dispatcher.subscribe<Action.AllSessionLoaded>().receive()
             }
             val job = launch {
-                dispatcher.send(Action.AllSessionLoaded(sessionContents))
+                dispatcher.dispatch(Action.AllSessionLoaded(sessionContents))
             }
             job.join()
             assertThat(allSessionLoaded.await().sessionContents, `is`(sessionContents))
@@ -44,7 +44,7 @@ class DispatcherTest {
                 dispatcher.subscribe<Action.AllSessionLoaded>().receive()
             }
             val job = launch {
-                dispatcher.send(Action.AllSessionLoaded(sessionContents))
+                dispatcher.dispatch(Action.AllSessionLoaded(sessionContents))
             }
             job.join()
             assertThat(allSessionLoaded1.await().sessionContents, `is`(sessionContents))
@@ -63,10 +63,10 @@ class DispatcherTest {
                 dispatcher.subscribe<Action.AllSessionLoaded>().take(2).toList()
             }
             launch {
-                dispatcher.send(Action.AllSessionLoaded(sessionContents1))
+                dispatcher.dispatch(Action.AllSessionLoaded(sessionContents1))
             }
             launch {
-                dispatcher.send(Action.AllSessionLoaded(sessionContents2))
+                dispatcher.dispatch(Action.AllSessionLoaded(sessionContents2))
             }
             assertThat(
                 allSessionLoaded1.await().map { it.sessionContents },
@@ -93,10 +93,10 @@ class DispatcherTest {
                 }.take(2).toList()
             }
             launch {
-                dispatcher.send(Action.AllSessionLoaded(sessionContents1))
+                dispatcher.dispatch(Action.AllSessionLoaded(sessionContents1))
             }
             launch {
-                dispatcher.send(Action.AllSessionLoaded(sessionContents2))
+                dispatcher.dispatch(Action.AllSessionLoaded(sessionContents2))
             }
             assertThat(
                 allSessionLoaded1.await().map { it.sessionContents },

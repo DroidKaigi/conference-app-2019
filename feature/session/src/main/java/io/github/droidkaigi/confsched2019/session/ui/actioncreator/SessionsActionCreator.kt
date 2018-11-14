@@ -4,36 +4,33 @@ import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.data.repository.SessionRepository
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.model.LoadingState
+import io.github.droidkaigi.confsched2019.system.actioncreator.ErrorHandler
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SessionsActionCreator @Inject constructor(
-    val dispatcher: Dispatcher,
+    override val dispatcher: Dispatcher,
     private val sessionRepository: SessionRepository
-) {
+) : ErrorHandler {
 
     fun load() = GlobalScope.launch {
-        println("SessionsActionCreator 1")
-        dispatcher.send(Action.SessionLoadingStateChanged(LoadingState.LOADING))
-        println("SessionsActionCreator 2")
+        dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
         try {
             // load db data
             val sessionContents = sessionRepository.sessionContents()
-            dispatcher.send(Action.AllSessionLoaded(sessionContents))
-            println("SessionsActionCreator 3")
+            dispatcher.dispatch(Action.AllSessionLoaded(sessionContents))
 
             // fetch api data
             sessionRepository.refresh()
 
             // reload db data
             val sessionContentsRefreshed = sessionRepository.sessionContents()
-            dispatcher.send(Action.AllSessionLoaded(sessionContentsRefreshed))
+            dispatcher.dispatch(Action.AllSessionLoaded(sessionContentsRefreshed))
 
-            dispatcher.send(Action.SessionLoadingStateChanged(LoadingState.FINISHED))
+            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.FINISHED))
         } catch (e: Exception) {
-            // TODO: error handling
-            throw e
+            onError(e = e)
         }
     }
 }

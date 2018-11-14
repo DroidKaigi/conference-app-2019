@@ -18,7 +18,7 @@ class SystemActionCreator @Inject constructor(
     fun setupSystem() {
         val lang = if (Locale.getDefault().equals(Locale.JAPAN)) Lang.JA else Lang.EN
         val systemProperty = SystemProperty(lang)
-        dispatcher.launchAndSend(Action.SystemPropertyLoaded(systemProperty))
+        dispatcher.launchAndDispatch(Action.SystemPropertyLoaded(systemProperty))
     }
 
     private fun onError(e: Exception? = null) {

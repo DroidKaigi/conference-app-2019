@@ -13,27 +13,26 @@ import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionTab
 import io.github.droidkaigi.confsched2019.model.Topic
 import io.github.droidkaigi.confsched2019.session.di.AllSessionsScope
+import io.github.droidkaigi.confsched2019.system.actioncreator.ErrorHandler
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AllSessionsScope
-@ExperimentalCoroutinesApi
 class SessionPagesActionCreator @Inject constructor(
-    val dispatcher: Dispatcher,
+    override val dispatcher: Dispatcher,
     val sessionRepository: SessionRepository,
     @AllSessionsScope val lifecycle: Lifecycle
-) : CoroutineScope by lifecycle.coroutineScope {
+) : CoroutineScope by lifecycle.coroutineScope,
+    ErrorHandler {
     fun applyFilter(filters: Filters) = launch {
         try {
-            dispatcher.send(Action.AllSessionLoadingStateChanged(LoadingState.LOADING))
+            dispatcher.dispatch(Action.AllSessionLoadingStateChanged(LoadingState.LOADING))
             loadContent(filters)
         } catch (e: Exception) {
-            // TODO: Error Handling
-            throw e
+            onError(e = e)
         } finally {
-            dispatcher.send(Action.AllSessionLoadingStateChanged(LoadingState.FINISHED))
+            dispatcher.dispatch(Action.AllSessionLoadingStateChanged(LoadingState.FINISHED))
         }
     }
 
@@ -42,7 +41,7 @@ class SessionPagesActionCreator @Inject constructor(
         val filteredSessionContents = sessionContents.copy(
             sessions = sessionContents.sessions.filter(filters::isPass)
         )
-        dispatcher.send(Action.AllSessionLoaded(filteredSessionContents))
+        dispatcher.dispatch(Action.AllSessionLoaded(filteredSessionContents))
     }
 
     fun toggleFavoriteAndLoad(
@@ -51,35 +50,34 @@ class SessionPagesActionCreator @Inject constructor(
     ) {
         launch {
             try {
-                dispatcher.send(Action.AllSessionLoadingStateChanged(LoadingState.LOADING))
+                dispatcher.dispatch(Action.AllSessionLoadingStateChanged(LoadingState.LOADING))
                 sessionRepository.toggleFavorite(session)
                 loadContent(filters)
             } catch (e: Exception) {
-                // TODO: error handling
-                throw e
+                onError(e = e)
             } finally {
-                dispatcher.send(Action.AllSessionLoadingStateChanged(LoadingState.FINISHED))
+                dispatcher.dispatch(Action.AllSessionLoadingStateChanged(LoadingState.FINISHED))
             }
         }
     }
 
     fun selectTab(sessionTab: SessionTab) {
-        dispatcher.launchAndSend(Action.SessionTabSelected(sessionTab))
+        dispatcher.launchAndDispatch(Action.SessionTabSelected(sessionTab))
     }
 
     fun changeFilter(room: Room, checked: Boolean) {
-        dispatcher.launchAndSend(Action.RoomFilterChanged(room, checked))
+        dispatcher.launchAndDispatch(Action.RoomFilterChanged(room, checked))
     }
 
     fun changeFilter(topic: Topic, checked: Boolean) {
-        dispatcher.launchAndSend(Action.TopicFilterChanged(topic, checked))
+        dispatcher.launchAndDispatch(Action.TopicFilterChanged(topic, checked))
     }
 
     fun changeFilter(lang: Lang, checked: Boolean) {
-        dispatcher.launchAndSend(Action.LangFilterChanged(lang, checked))
+        dispatcher.launchAndDispatch(Action.LangFilterChanged(lang, checked))
     }
 
     fun clearFilters() {
-        dispatcher.launchAndSend(Action.FilterCleared())
+        dispatcher.launchAndDispatch(Action.FilterCleared())
     }
 }

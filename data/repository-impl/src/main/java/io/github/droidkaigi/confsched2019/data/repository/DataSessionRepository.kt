@@ -15,7 +15,6 @@ import io.github.droidkaigi.confsched2019.model.SessionMessage
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.model.Topic
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.channels.BroadcastChannel
@@ -27,7 +26,6 @@ import kotlinx.coroutines.selects.select
 import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 
-@ExperimentalCoroutinesApi
 class DataSessionRepository @Inject constructor(
     private val sessionApi: SessionApi,
     private val sessionDatabase: SessionDatabase,

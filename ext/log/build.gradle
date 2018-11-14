@@ -1,35 +1,19 @@
 import dependencies.Dep
 
-apply plugin: 'com.android.library'
 apply plugin: 'kotlin-multiplatform'
+apply plugin: 'com.android.library'
 
 apply from: rootProject.file('gradle/android.gradle')
 
 kotlin {
     targets {
         fromPreset(presets.android, 'android')
-        fromPreset(presets.jvm, 'jvm')
     }
     sourceSets {
-        commonMain {
-            languageSettings {
-                languageVersion = '1.3'
-                apiVersion = '1.3'
-                progressiveMode = true
-            }
-            dependencies {
-                api Dep.Kotlin.stdlibCommon
-                implementation Dep.Klock.common
-            }
-        }
-        jvmMain {
-            dependencies {
-                api Dep.Kotlin.stdlibJvm
-                implementation Dep.Klock.jvm
-            }
+        commonMain.dependencies {
+            api Dep.Kotlin.stdlibCommon
         }
         androidMain {
-            dependsOn jvmMain
             dependencies {
                 api Dep.Kotlin.stdlibJvm
             }
@@ -39,8 +23,7 @@ kotlin {
             implementation Dep.Kotlin.commonModuleTestAnnotations
             implementation Dep.MockK.common
         }
-        jvmTest {
-            dependsOn jvmMain
+        androidTest {
             dependencies {
                 implementation Dep.Kotlin.jvmModuleTest
                 implementation Dep.Kotlin.jvmModuleTestJunit
@@ -49,6 +32,8 @@ kotlin {
         }
     }
 }
+
+
 configurations {
     compileClasspath
 }

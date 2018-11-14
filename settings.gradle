@@ -13,4 +13,5 @@ include ':frontend:android',
         ':data:repository-impl',
         ':data:firestore',
         ':data:firestore-impl',
-        ':ext:android-extension'
+        ':ext:android-extension',
+        ':ext:log'

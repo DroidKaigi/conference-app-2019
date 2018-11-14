@@ -12,13 +12,11 @@ import com.google.firebase.firestore.Source
 import com.soywiz.klock.DateTime
 import io.github.droidkaigi.confsched2019.ext.android.await
 import io.github.droidkaigi.confsched2019.model.Post
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
 import javax.inject.Inject
 
 // waiting https://github.com/Kotlin/kotlinx.coroutines/pull/523
-@ExperimentalCoroutinesApi
 class FirestoreImpl @Inject constructor() : FireStore {
 
     override suspend fun getFavoriteSessionChannel(): ReceiveChannel<List<Int>> {

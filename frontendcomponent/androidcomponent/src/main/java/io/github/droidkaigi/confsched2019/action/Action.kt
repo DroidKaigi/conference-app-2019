@@ -1,5 +1,6 @@
 package io.github.droidkaigi.confsched2019.action
 
+import io.github.droidkaigi.confsched2019.model.ErrorMessage
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.Post
@@ -43,4 +44,5 @@ sealed class Action {
 
     class AnnouncementLoadingStateChanged(val loadingState: LoadingState) : Action()
     class AnnouncementLoaded(val posts: List<Post>) : Action()
+    class Error(val msg: ErrorMessage) : Action()
 }
