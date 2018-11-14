@@ -9,6 +9,7 @@ import io.github.droidkaigi.confsched2019.util.logd
 import io.github.droidkaigi.confsched2019.util.loge
 import kotlinx.coroutines.CancellationException
 import retrofit2.HttpException
+import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
@@ -20,7 +21,7 @@ interface ErrorHandler {
                 logd(e = e) {
                     "coroutine canceled"
                 }
-            is UnknownHostException, is SocketTimeoutException -> {
+            is UnknownHostException, is SocketTimeoutException, is ConnectException -> {
                 val message = ErrorMessage.of(R.string.system_error_network, e)
                 loge(e = e)
                 dispatcher.launchAndDispatch(Action.Error(message))
