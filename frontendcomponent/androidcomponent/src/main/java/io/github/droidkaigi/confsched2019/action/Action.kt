@@ -25,19 +25,18 @@ sealed class Action {
 
     open class FilterChange<T>(val value: T, open val checked: Boolean) : Action()
     data class RoomFilterChanged(
-        val room: Room, override val checked: Boolean
-    ) : FilterChange<Room>(
-        room, checked
-    )
+        val room: Room,
+        override val checked: Boolean
+    ) : FilterChange<Room>(room, checked)
 
     data class TopicFilterChanged(
-        val topic: Topic, override val checked: Boolean
-    ) : FilterChange<Topic>(
-        topic, checked
-    )
+        val topic: Topic,
+        override val checked: Boolean
+    ) : FilterChange<Topic>(topic, checked)
 
     data class LangFilterChanged(
-        val lang: Lang, override val checked: Boolean
+        val lang: Lang,
+        override val checked: Boolean
     ) : FilterChange<Lang>(lang, checked)
 
     class FilterCleared : Action()
