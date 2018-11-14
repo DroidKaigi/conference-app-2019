@@ -9,7 +9,7 @@
         android:id="@+id/filter_coodinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment"
+        tools:context="io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment"
         >
 
         <ScrollView
@@ -133,7 +133,7 @@
             app:behavior_peekHeight="32dp"
             app:behavior_skipCollapsed="false"
             app:layout_behavior="io.github.droidkaigi.confsched2019.widget.BottomSheetBehavior"
-            tools:layout="@layout/fragment_sessions"
+            tools:layout="@layout/fragment_bottom_sheet_sessions"
             />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -16,7 +16,7 @@ import org.junit.Test
 
 class DispatcherTest {
     @Test fun sendAndReceive() {
-        val sessionContents:SessionContents = mockk()
+        val sessionContents: SessionContents = mockk()
         val dispatcher = Dispatcher()
 
         runBlocking {
@@ -24,7 +24,7 @@ class DispatcherTest {
                 dispatcher.subscribe<Action.AllSessionLoaded>().receive()
             }
             val job = launch {
-                dispatcher.send(Action.AllSessionLoaded(sessionContents))
+                dispatcher.dispatch(Action.AllSessionLoaded(sessionContents))
             }
             job.join()
             assertThat(allSessionLoaded.await().sessionContents, `is`(sessionContents))
@@ -32,7 +32,7 @@ class DispatcherTest {
     }
 
     @Test fun sendAndMultipleReceive() {
-        val sessionContents:SessionContents = mockk()
+        val sessionContents: SessionContents = mockk()
         val dispatcher = Dispatcher()
 
 
@@ -44,7 +44,7 @@ class DispatcherTest {
                 dispatcher.subscribe<Action.AllSessionLoaded>().receive()
             }
             val job = launch {
-                dispatcher.send(Action.AllSessionLoaded(sessionContents))
+                dispatcher.dispatch(Action.AllSessionLoaded(sessionContents))
             }
             job.join()
             assertThat(allSessionLoaded1.await().sessionContents, `is`(sessionContents))
@@ -53,8 +53,8 @@ class DispatcherTest {
     }
 
     @Test fun multipleSendAndReceive() {
-        val sessionContents1:SessionContents = mockk()
-        val sessionContents2:SessionContents = mockk()
+        val sessionContents1: SessionContents = mockk()
+        val sessionContents2: SessionContents = mockk()
         val dispatcher = Dispatcher()
 
 
@@ -63,43 +63,49 @@ class DispatcherTest {
                 dispatcher.subscribe<Action.AllSessionLoaded>().take(2).toList()
             }
             launch {
-                dispatcher.send(Action.AllSessionLoaded(sessionContents1))
+                dispatcher.dispatch(Action.AllSessionLoaded(sessionContents1))
             }
             launch {
-                dispatcher.send(Action.AllSessionLoaded(sessionContents2))
+                dispatcher.dispatch(Action.AllSessionLoaded(sessionContents2))
             }
-            assertThat(allSessionLoaded1.await().map { it.sessionContents },
-                `is`(listOf(sessionContents1, sessionContents2)))
+            assertThat(
+                allSessionLoaded1.await().map { it.sessionContents },
+                `is`(listOf(sessionContents1, sessionContents2))
+            )
         }
     }
 
     @Test fun multipleSendAndMultipleReceive() {
-        val sessionContents1 :SessionContents= mockk()
-        val sessionContents2 :SessionContents= mockk()
+        val sessionContents1: SessionContents = mockk()
+        val sessionContents2: SessionContents = mockk()
         val dispatcher = Dispatcher()
 
 
         runBlocking {
             val allSessionLoaded1 = async {
                 dispatcher.subscribe<Action.AllSessionLoaded>().map {
-                    println("map1:" + it);it
+                    it
                 }.take(2).toList()
             }
             val allSessionLoaded2 = async {
                 dispatcher.subscribe<Action.AllSessionLoaded>().map {
-                    println("map2:" + it);it
+                    it
                 }.take(2).toList()
             }
             launch {
-                dispatcher.send(Action.AllSessionLoaded(sessionContents1))
+                dispatcher.dispatch(Action.AllSessionLoaded(sessionContents1))
             }
             launch {
-                dispatcher.send(Action.AllSessionLoaded(sessionContents2))
+                dispatcher.dispatch(Action.AllSessionLoaded(sessionContents2))
             }
-            assertThat(allSessionLoaded1.await().map { it.sessionContents },
-                hasItems(sessionContents1, sessionContents2))
-            assertThat(allSessionLoaded2.await().map { it.sessionContents },
-                hasItems(sessionContents1, sessionContents2))
+            assertThat(
+                allSessionLoaded1.await().map { it.sessionContents },
+                hasItems(sessionContents1, sessionContents2)
+            )
+            assertThat(
+                allSessionLoaded2.await().map { it.sessionContents },
+                hasItems(sessionContents1, sessionContents2)
+            )
         }
     }
 }

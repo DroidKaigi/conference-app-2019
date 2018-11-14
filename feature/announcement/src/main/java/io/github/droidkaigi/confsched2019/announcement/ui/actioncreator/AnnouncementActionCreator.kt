@@ -16,9 +16,10 @@ class AnnouncementActionCreator @Inject constructor(
     val fireStore: FireStore,
     @AnnouncementScope val lifecycle: Lifecycle
 ) : CoroutineScope by lifecycle.coroutineScope {
+
     fun load() = launch {
-        dispatcher.send(Action.AnnouncementLoadingStateChanged(LoadingState.LOADING))
-        dispatcher.send(Action.AnnouncementLoaded(fireStore.getAnnouncements()))
-        dispatcher.send(Action.AnnouncementLoadingStateChanged(LoadingState.FINISHED))
+        dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADING))
+        dispatcher.dispatch(Action.AnnouncementLoaded(fireStore.getAnnouncements()))
+        dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.FINISHED))
     }
 }

@@ -1,8 +1,10 @@
 package dependencies
 
 private object Versions {
+    val androidCompileSdkVersion = 28
+    val androidMinSdkVersion = 21
     val retrofit = "2.4.0"
-    val kotlin = "1.3.0"
+    val kotlin = "1.3.10"
     val stetho = "1.5.0"
     val aac = "2.0.0"
     val dagger = "2.16"
@@ -131,6 +133,10 @@ object Dep {
     object Klock {
         val common = "com.soywiz:klock:1.0.0"
         val jvm = "com.soywiz:klock-jvm:1.0.0"
+    }
+
+    object KotlinLogging {
+        val kotlinLogging = "io.github.microutils:kotlin-logging:1.6.20"
     }
 
     val junit = "junit:junit:4.12"

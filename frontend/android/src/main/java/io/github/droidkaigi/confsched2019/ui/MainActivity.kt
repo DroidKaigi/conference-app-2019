@@ -8,6 +8,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.snackbar.Snackbar
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -18,17 +19,25 @@ import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragmentModule
 import io.github.droidkaigi.confsched2019.announcement.ui.di.AnnouncementScope
 import io.github.droidkaigi.confsched2019.databinding.ActivityMainBinding
+import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.model.ErrorMessage
 import io.github.droidkaigi.confsched2019.session.di.AllSessionsScope
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
-import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment
 import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragmentModule
+import io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
+import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
+import io.github.droidkaigi.confsched2019.user.store.UserStore
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
     @Inject lateinit var userActionCreator: UserActionCreator
+    @Inject lateinit var userStore: UserStore
+    @Inject lateinit var sessionsActionCreator: SessionsActionCreator
+    @Inject lateinit var systemStore: SystemStore
 
     val binding: ActivityMainBinding by lazy {
         DataBindingUtil.setContentView<ActivityMainBinding>(
@@ -44,6 +53,19 @@ class MainActivity : DaggerAppCompatActivity() {
         setupActionBarWithNavController(navController, binding.drawerLayout)
         binding.navView.setupWithNavController(navController)
         binding.toolbar.setupWithNavController(navController, binding.drawerLayout)
+
+        userStore.logined.changed(this) { logined ->
+            if (logined) {
+                sessionsActionCreator.load()
+            }
+        }
+        systemStore.errorMsg.changed(this) { message ->
+            val messageStr = when (message) {
+                is ErrorMessage.ResourceIdMessage -> getString(message.messageId)
+                is ErrorMessage.Message -> message.message
+            }
+            Snackbar.make(binding.root, messageStr, Snackbar.LENGTH_LONG).show()
+        }
     }
 
     override fun onStart() {
@@ -58,7 +80,7 @@ abstract class MainActivityModule {
 
     @AllSessionsScope
     @ContributesAndroidInjector(modules = [AllSessionsFragmentModule::class])
-    abstract fun contributeAllSessionsFragment(): AllSessionsFragment
+    abstract fun contributeAllSessionsFragment(): SessionPagesFragment
 
     @ContributesAndroidInjector(
         modules = [SessionDetailFragmentModule::class, SessionAssistedInjectModule::class]

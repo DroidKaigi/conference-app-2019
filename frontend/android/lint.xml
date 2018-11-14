@@ -6,5 +6,6 @@
     </issue>
     <issue id="GoogleAppIndexingWarning">
         <ignore path="src/main/AndroidManifest.xml"/>
+        <ignore path="src/debug/AndroidManifest.xml"/>
     </issue>
 </lint>

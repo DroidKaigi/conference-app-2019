@@ -3,11 +3,9 @@ package io.github.droidkaigi.confsched2019
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
-import com.facebook.stetho.Stetho
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
-import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import io.github.droidkaigi.confsched2019.di.createAppComponent
@@ -18,7 +16,7 @@ import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.user.store.UserStore
 import javax.inject.Inject
 
-class App : DaggerApplication() {
+open class App : DaggerApplication() {
     @Inject lateinit var sessionsActionCreator: SessionsActionCreator
     @Inject lateinit var userStore: UserStore
     @Inject lateinit var systemStore: SystemStore
@@ -26,15 +24,9 @@ class App : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        Stetho.initializeWithDefaults(this)
 
         setupEmojiCompat()
-        setupLeakCanary()
         setupFirestore()
-
-        userStore.logined.changedForever { login ->
-            if (login) sessionsActionCreator.load()
-        }
         systemStore.systemProperty.changedForever {
             // listening
         }
@@ -49,13 +41,6 @@ class App : DaggerApplication() {
             .setPersistenceEnabled(true)
             .build()
         firestore.setFirestoreSettings(settings)
-    }
-
-    private fun setupLeakCanary() {
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            return
-        }
-        LeakCanary.install(this)
     }
 
     fun setupEmojiCompat() {

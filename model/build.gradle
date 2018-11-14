@@ -49,8 +49,6 @@ kotlin {
         }
     }
 }
-dependencies {
-}
 configurations {
     compileClasspath
 }

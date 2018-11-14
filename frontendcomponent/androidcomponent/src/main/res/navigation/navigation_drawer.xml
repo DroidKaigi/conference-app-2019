@@ -6,9 +6,9 @@
     >
     <fragment
         android:id="@+id/main"
-        android:name="io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragment"
+        android:name="io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment"
         android:label="@string/session_label"
-        tools:layout="@layout/fragment_all_session"
+        tools:layout="@layout/fragment_session_page"
         >
         <action
             android:id="@id/action_session_to_session_detail"
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/sessions"
-        android:name="io.github.droidkaigi.confsched2019.session.ui.SessionsFragment"
+        android:name="io.github.droidkaigi.confsched2019.session.ui.SessionPageFragment"
         android:label="@string/session_label"
         tools:layout="@layout/fragment_sessions"
         >
@@ -48,7 +48,7 @@
         android:id="@id/session_detail"
         android:name="io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment"
         android:label="@string/session_label"
-        tools:layout="@layout/fragment_all_sessions"
+        tools:layout="@layout/fragment_session_pages"
         >
         <argument
             android:name="session"
@@ -59,21 +59,21 @@
         android:id="@+id/announce"
         android:name="io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment"
         android:label="@string/announce_label"
-        tools:layout="@layout/fragment_all_sessions"
+        tools:layout="@layout/fragment_session_pages"
         >
     </fragment>
     <fragment
         android:id="@+id/map"
         android:name="io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment"
         android:label="@string/map_label"
-        tools:layout="@layout/fragment_all_sessions"
+        tools:layout="@layout/fragment_session_pages"
         >
     </fragment>
     <fragment
         android:id="@+id/other"
         android:name="io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment"
         android:label="@string/other_label"
-        tools:layout="@layout/fragment_all_sessions"
+        tools:layout="@layout/fragment_session_pages"
         >
     </fragment>
 </navigation>
