@@ -15,7 +15,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import io.github.droidkaigi.confsched2019.ext.android.changed
-import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.SessionTab
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionPagesBinding
@@ -67,7 +66,7 @@ class SessionPagesFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
         sessionPagesStore.filtersChange.observe(viewLifecycleOwner) {
             if (userStore.logined.value == true) {
-                sessionPagesActionCreator.applyFilter(sessionPagesStore.filters)
+                sessionPagesActionCreator.load(sessionPagesStore.filters)
             }
         }
 
@@ -98,8 +97,15 @@ class SessionPagesFragment : DaggerFragment() {
         }.apply {
             loading = true
         }
+
+        fun applyLoadingState() {
+            progressTimeLatch.loading = sessionsStore.isLoading || sessionPagesStore.isLoading
+        }
         sessionsStore.loadingState.changed(this) {
-            progressTimeLatch.loading = it == LoadingState.LOADING
+            applyLoadingState()
+        }
+        sessionPagesStore.loadingState.changed(this) {
+            applyLoadingState()
         }
     }
 }

@@ -56,7 +56,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
         userStore.logined.changed(this) { loggedin ->
             if (loggedin) {
-                sessionsActionCreator.load()
+                sessionsActionCreator.refresh()
             }
         }
         systemStore.errorMsg.changed(this) { message ->

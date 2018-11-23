@@ -75,7 +75,6 @@ dependencies {
 
     implementation Dep.Firebase.core
     implementation Dep.Firebase.auth
-    implementation Dep.PlayServices.auth
 
     api Dep.Dagger.core
     api Dep.Dagger.androidSupport

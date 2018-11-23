@@ -10,10 +10,10 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.Source
 import com.soywiz.klock.DateTime
-import io.github.droidkaigi.confsched2019.ext.android.await
 import io.github.droidkaigi.confsched2019.model.Post
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 // waiting https://github.com/Kotlin/kotlinx.coroutines/pull/523
@@ -86,15 +86,13 @@ class FirestoreImpl @Inject constructor() : FireStore {
             .orderBy("date", Query.Direction.DESCENDING)
             .get()
             .await()
-        val posts = toPosts(snapshot)
+        val posts = snapshot.toPosts()
         return posts
     }
 }
 
-private fun FirestoreImpl.toPosts(
-    snapshot: QuerySnapshot
-): List<Post> {
-    val postEntities: List<PostEntity> = snapshot
+private fun QuerySnapshot.toPosts(): List<Post> {
+    val postEntities: List<PostEntity> = this
         .map { it.toObject(PostEntity::class.java) }
     val posts = postEntities.map {
         Post(it.title!!, it.content!!, DateTime(it.date!!.time)) // , it.type)

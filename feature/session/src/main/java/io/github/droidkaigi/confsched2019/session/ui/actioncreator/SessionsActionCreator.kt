@@ -14,23 +14,24 @@ class SessionsActionCreator @Inject constructor(
     private val sessionRepository: SessionRepository
 ) : ErrorHandler {
 
-    fun load() = GlobalScope.launch {
-        dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
+    fun refresh() = GlobalScope.launch {
+        dispatcher.dispatch(Action.SessionRefreshStateChanged(LoadingState.LOADING))
         try {
-            // load db data
+            // refresh db data
             val sessionContents = sessionRepository.sessionContents()
-            dispatcher.dispatch(Action.AllSessionLoaded(sessionContents))
+            dispatcher.dispatch(Action.SessionsLoaded(sessionContents))
 
             // fetch api data
             sessionRepository.refresh()
 
             // reload db data
             val sessionContentsRefreshed = sessionRepository.sessionContents()
-            dispatcher.dispatch(Action.AllSessionLoaded(sessionContentsRefreshed))
-
-            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.FINISHED))
+            dispatcher.dispatch(Action.SessionsLoaded(sessionContentsRefreshed))
         } catch (e: Exception) {
             onError(e = e)
+        } finally {
+            dispatcher.dispatch(Action.SessionRefreshStateChanged(LoadingState.FINISHED))
+            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.FINISHED))
         }
     }
 }

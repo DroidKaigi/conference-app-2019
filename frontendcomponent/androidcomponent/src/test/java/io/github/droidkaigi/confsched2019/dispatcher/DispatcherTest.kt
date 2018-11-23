@@ -21,10 +21,10 @@ class DispatcherTest {
 
         runBlocking {
             val allSessionLoaded = async {
-                dispatcher.subscribe<Action.AllSessionLoaded>().receive()
+                dispatcher.subscribe<Action.SessionsLoaded>().receive()
             }
             val job = launch {
-                dispatcher.dispatch(Action.AllSessionLoaded(sessionContents))
+                dispatcher.dispatch(Action.SessionsLoaded(sessionContents))
             }
             job.join()
             assertThat(allSessionLoaded.await().sessionContents, `is`(sessionContents))
@@ -38,13 +38,13 @@ class DispatcherTest {
 
         runBlocking {
             val allSessionLoaded1 = async {
-                dispatcher.subscribe<Action.AllSessionLoaded>().receive()
+                dispatcher.subscribe<Action.SessionsLoaded>().receive()
             }
             val allSessionLoaded2 = async {
-                dispatcher.subscribe<Action.AllSessionLoaded>().receive()
+                dispatcher.subscribe<Action.SessionsLoaded>().receive()
             }
             val job = launch {
-                dispatcher.dispatch(Action.AllSessionLoaded(sessionContents))
+                dispatcher.dispatch(Action.SessionsLoaded(sessionContents))
             }
             job.join()
             assertThat(allSessionLoaded1.await().sessionContents, `is`(sessionContents))
@@ -60,13 +60,13 @@ class DispatcherTest {
 
         runBlocking {
             val allSessionLoaded1 = async {
-                dispatcher.subscribe<Action.AllSessionLoaded>().take(2).toList()
+                dispatcher.subscribe<Action.SessionsLoaded>().take(2).toList()
             }
             launch {
-                dispatcher.dispatch(Action.AllSessionLoaded(sessionContents1))
+                dispatcher.dispatch(Action.SessionsLoaded(sessionContents1))
             }
             launch {
-                dispatcher.dispatch(Action.AllSessionLoaded(sessionContents2))
+                dispatcher.dispatch(Action.SessionsLoaded(sessionContents2))
             }
             assertThat(
                 allSessionLoaded1.await().map { it.sessionContents },
@@ -83,20 +83,20 @@ class DispatcherTest {
 
         runBlocking {
             val allSessionLoaded1 = async {
-                dispatcher.subscribe<Action.AllSessionLoaded>().map {
+                dispatcher.subscribe<Action.SessionsLoaded>().map {
                     it
                 }.take(2).toList()
             }
             val allSessionLoaded2 = async {
-                dispatcher.subscribe<Action.AllSessionLoaded>().map {
+                dispatcher.subscribe<Action.SessionsLoaded>().map {
                     it
                 }.take(2).toList()
             }
             launch {
-                dispatcher.dispatch(Action.AllSessionLoaded(sessionContents1))
+                dispatcher.dispatch(Action.SessionsLoaded(sessionContents1))
             }
             launch {
-                dispatcher.dispatch(Action.AllSessionLoaded(sessionContents2))
+                dispatcher.dispatch(Action.SessionsLoaded(sessionContents2))
             }
             assertThat(
                 allSessionLoaded1.await().map { it.sessionContents },

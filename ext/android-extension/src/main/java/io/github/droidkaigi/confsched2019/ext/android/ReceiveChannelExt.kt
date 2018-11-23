@@ -36,7 +36,9 @@ import kotlinx.coroutines.launch
     }
 }
 
-@MainThread fun <T> ReceiveChannel<T>.toLiveData(defaultValue: T? = null): LiveData<T> {
+@MainThread fun <T> ReceiveChannel<T>.toLiveData(
+    defaultValue: T? = null
+): LiveData<T> {
     return object : LiveData<T>(), CoroutineScope by GlobalScope {
         lateinit var job: Job
 

@@ -13,7 +13,7 @@ dependencies {
 
     implementation Dep.Firebase.core
     implementation Dep.Firebase.auth
-    implementation Dep.PlayServices.auth
+    implementation Dep.Firebase.fireStore
 
     implementation Dep.Kotlin.stdlibJvm
     api Dep.Kotlin.coroutines

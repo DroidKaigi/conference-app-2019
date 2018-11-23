@@ -44,6 +44,8 @@ dependencies {
 
     implementation Dep.Retrofit.client
 
+    implementation Dep.Firebase.fireStore
+
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport
     kapt Dep.Dagger.compiler

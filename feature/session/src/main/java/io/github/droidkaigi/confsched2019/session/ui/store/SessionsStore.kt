@@ -14,7 +14,9 @@ class SessionsStore @Inject constructor(
     dispatcher: Dispatcher
 ) {
     val loadingState: LiveData<LoadingState> = dispatcher
-        .subscribe<Action.SessionLoadingStateChanged>()
+        .subscribe<Action.SessionRefreshStateChanged>()
         .map { it.loadingState }
         .toLiveData(LoadingState.LOADING)
+    val isLoading
+        get() = loadingState.value == LoadingState.LOADING
 }
