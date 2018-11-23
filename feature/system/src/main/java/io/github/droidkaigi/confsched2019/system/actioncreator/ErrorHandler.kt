@@ -22,7 +22,10 @@ interface ErrorHandler {
                 logd(e = e) {
                     "coroutine canceled"
                 }
-            is UnknownHostException, is SocketTimeoutException, is ConnectException, is FirebaseFirestoreException -> {
+            is UnknownHostException,
+            is SocketTimeoutException,
+            is ConnectException,
+            is FirebaseFirestoreException -> {
                 val message = ErrorMessage.of(R.string.system_error_network, e)
                 loge(e = e)
                 dispatcher.launchAndDispatch(Action.Error(message))
