@@ -25,23 +25,15 @@ class SessionPagesActionCreator @Inject constructor(
     @AllSessionsScope val lifecycle: Lifecycle
 ) : CoroutineScope by lifecycle.coroutineScope,
     ErrorHandler {
-    fun applyFilter(filters: Filters) = launch {
+    fun load(filters: Filters) = launch {
         try {
-            dispatcher.dispatch(Action.AllSessionLoadingStateChanged(LoadingState.LOADING))
+            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
             loadContent(filters)
         } catch (e: Exception) {
             onError(e = e)
         } finally {
-            dispatcher.dispatch(Action.AllSessionLoadingStateChanged(LoadingState.FINISHED))
+            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.FINISHED))
         }
-    }
-
-    private suspend fun loadContent(filters: Filters) {
-        val sessionContents = sessionRepository.sessionContents()
-        val filteredSessionContents = sessionContents.copy(
-            sessions = sessionContents.sessions.filter(filters::isPass)
-        )
-        dispatcher.dispatch(Action.AllSessionLoaded(filteredSessionContents))
     }
 
     fun toggleFavoriteAndLoad(
@@ -50,15 +42,23 @@ class SessionPagesActionCreator @Inject constructor(
     ) {
         launch {
             try {
-                dispatcher.dispatch(Action.AllSessionLoadingStateChanged(LoadingState.LOADING))
+                dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
                 sessionRepository.toggleFavorite(session)
                 loadContent(filters)
             } catch (e: Exception) {
                 onError(e = e)
             } finally {
-                dispatcher.dispatch(Action.AllSessionLoadingStateChanged(LoadingState.FINISHED))
+                dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.FINISHED))
             }
         }
+    }
+
+    private suspend fun loadContent(filters: Filters) {
+        val sessionContents = sessionRepository.sessionContents()
+        val filteredSessionContents = sessionContents.copy(
+            sessions = sessionContents.sessions.filter(filters::isPass)
+        )
+        dispatcher.dispatch(Action.SessionsLoaded(filteredSessionContents))
     }
 
     fun selectTab(sessionTab: SessionTab) {

@@ -4,22 +4,23 @@ import androidx.fragment.app.FragmentActivity
 import com.google.firebase.auth.FirebaseAuth
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
-import io.github.droidkaigi.confsched2019.ext.android.await
 import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
+import io.github.droidkaigi.confsched2019.system.actioncreator.ErrorHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class UserActionCreator @Inject constructor(
     val activity: FragmentActivity,
-    val dispatcher: Dispatcher
-) : CoroutineScope by activity.coroutineScope {
+    override val dispatcher: Dispatcher
+) : CoroutineScope by activity.coroutineScope, ErrorHandler {
 
     val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }
 
-    fun setupUser() {
+    fun setupUserIfNeeded() {
         if (firebaseAuth.currentUser == null) {
             signIn()
         } else {
@@ -33,12 +34,8 @@ class UserActionCreator @Inject constructor(
                 firebaseAuth.signInAnonymously().await()
                 dispatcher.dispatch(Action.UserRegistered)
             } catch (e: Exception) {
-                onError(e)
+                onError(e = e)
             }
         }
-    }
-
-    private fun onError(e: Exception? = null) {
-        e?.printStackTrace()
     }
 }

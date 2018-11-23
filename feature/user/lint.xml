@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="InvalidPackage">
+        <!-- Firebase dependencies caused this issue -->
+        <ignore path="*/io.grpc/grpc-core/*"/>
+    </issue>
+    <issue id="GoogleAppIndexingWarning">
+        <ignore path="src/main/AndroidManifest.xml"/>
+        <ignore path="src/debug/AndroidManifest.xml"/>
+    </issue>
+</lint>

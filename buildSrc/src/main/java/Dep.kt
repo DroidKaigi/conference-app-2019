@@ -23,6 +23,7 @@ object Dep {
         val coroutinesRx2 = "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:${Versions.coroutines}"
         val coroutinesReactive = "org.jetbrains.kotlinx:kotlinx-coroutines-reactive:${Versions.coroutines}"
         val androidCoroutines = "net.devrieze:android-coroutines:0.7.0"
+        val coroutinesPlayServices = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${Versions.coroutines}"
         val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.8.1-rc13"
         val jvmModuleTest = "org.jetbrains.kotlin:kotlin-test"
         val jvmModuleTestJunit = "org.jetbrains.kotlin:kotlin-test-junit"
@@ -53,14 +54,14 @@ object Dep {
     }
 
     object Firebase {
-        val core = "com.google.firebase:firebase-core:16.0.3"
-        val fireStore = "com.google.firebase:firebase-firestore:17.0.1"
-        val auth = "com.google.firebase:firebase-auth:16.0.3"
+        val core = "com.google.firebase:firebase-core:16.0.4"
+        val fireStore = "com.google.firebase:firebase-firestore:17.1.3"
+        val auth = "com.google.firebase:firebase-auth:16.0.5"
     }
 
     object PlayServices {
-        val plugin = "com.google.gms:google-services:4.0.1"
-        val auth = "com.google.android.gms:play-services-auth:15.0.1"
+        val plugin = "com.google.gms:google-services:4.1.0"
+        val auth = "com.google.android.gms:play-services-auth:16.0.1"
     }
 
     object Dagger {

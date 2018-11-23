@@ -22,11 +22,13 @@ class SessionPagesStore @Inject constructor(
     dispatcher: Dispatcher
 ) : ViewModel() {
     val loadingState = dispatcher
-        .subscribe<Action.AllSessionLoadingStateChanged>()
+        .subscribe<Action.SessionLoadingStateChanged>()
         .map { it.loadingState }
         .toLiveData(LoadingState.LOADING)
+    val isLoading
+        get() = loadingState.value == LoadingState.LOADING
     private val contents = dispatcher
-        .subscribe<Action.AllSessionLoaded>()
+        .subscribe<Action.SessionsLoaded>()
         .map { it.sessionContents }
         .toLiveData(SessionContents.EMPTY)
     val sessions: LiveData<List<Session>> = contents

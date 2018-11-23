@@ -1,5 +1,6 @@
 package io.github.droidkaigi.confsched2019.system.actioncreator
 
+import com.google.firebase.firestore.FirebaseFirestoreException
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.model.ErrorMessage
@@ -9,6 +10,7 @@ import io.github.droidkaigi.confsched2019.util.logd
 import io.github.droidkaigi.confsched2019.util.loge
 import kotlinx.coroutines.CancellationException
 import retrofit2.HttpException
+import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
@@ -20,7 +22,10 @@ interface ErrorHandler {
                 logd(e = e) {
                     "coroutine canceled"
                 }
-            is UnknownHostException, is SocketTimeoutException -> {
+            is UnknownHostException,
+            is SocketTimeoutException,
+            is ConnectException,
+            is FirebaseFirestoreException -> {
                 val message = ErrorMessage.of(R.string.system_error_network, e)
                 loge(e = e)
                 dispatcher.launchAndDispatch(Action.Error(message))
