@@ -1,15 +1,15 @@
 package io.github.droidkaigi.confsched2019.model
 
-sealed class SessionTab {
+sealed class SessionPage {
 
-    object Favorite : SessionTab() {
+    object Favorite : SessionPage() {
         override val title = "Favorite"
     }
 
     open class Day(
         override val title: String,
         val day: Int
-    ) : SessionTab() {
+    ) : SessionPage() {
     }
 
     object Day1 : Day("Day1", 1)
@@ -18,6 +18,10 @@ sealed class SessionTab {
     abstract val title: String
 
     companion object {
-        val tabs = listOf(Day1, Day2, Favorite)
+        val pages = listOf(Day1, Day2, Favorite)
+
+        fun pageOfDay(dayNumber: Int): Day {
+            return pages.filterIsInstance<Day>().first { it.day == dayNumber }
+        }
     }
 }

@@ -35,6 +35,9 @@ sealed class Session(
         val room: Room?
     ) : Session(id, dayNumber, startTime, endTime)
 
+    val startDayText
+        get() = startTime.format("yyyy.M.d")
+
     val isFinished: Boolean
         get() = DateTime.nowUnixLong() > endTime.unixMillisLong
 

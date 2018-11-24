@@ -14,20 +14,26 @@ import com.google.android.material.chip.ChipGroup
 import com.shopify.livedataktx.observe
 import dagger.Module
 import dagger.Provides
+import dagger.android.ContributesAndroidInjector
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.Room
-import io.github.droidkaigi.confsched2019.model.SessionTab
+import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.model.Topic
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionFilterBinding
+import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
+import io.github.droidkaigi.confsched2019.session.di.SessionPageScope
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPageActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPagesActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionPageStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.widget.BottomSheetBehavior
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
+import me.tatarka.injectedvmprovider.ktx.injectedViewModelProvider
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -36,10 +42,20 @@ class SessionPageFragment : DaggerFragment() {
 
     @Inject lateinit var sessionsActionCreator: SessionsActionCreator
     @Inject lateinit var sessionPagesActionCreator: SessionPagesActionCreator
-    @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
+    @Inject lateinit var sessionPageActionCreator: SessionPageActionCreator
     @Inject lateinit var systemStore: SystemStore
+
+    @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
     private val sessionPagesStore: SessionPagesStore by lazy {
         InjectedViewModelProviders.of(requireActivity())[sessionPagesStoreProvider]
+    }
+
+    @Inject lateinit var sessionPageStoreFactory: SessionPageStore.Factory
+    private val sessionPageStore: SessionPageStore by lazy {
+        injectedViewModelProvider
+            .get(SessionPageStore::class.java.name) {
+                sessionPageStoreFactory.create(SessionPage.pages[args.tabIndex])
+            }
     }
 
     override fun onCreateView(
@@ -64,15 +80,15 @@ class SessionPageFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState == null) {
-            val fragment: Fragment = when (val tab = SessionTab.tabs[args.tabIndex]) {
-                is SessionTab.Day -> {
+            val fragment: Fragment = when (val tab = SessionPage.pages[args.tabIndex]) {
+                is SessionPage.Day -> {
                     BottomSheetDaySessionsFragment.newInstance(
                         BottomSheetDaySessionsFragmentArgs
                             .Builder(tab.day)
                             .build()
                     )
                 }
-                SessionTab.Favorite -> {
+                SessionPage.Favorite -> {
                     BottomSheetFavoriteSessionsFragment.newInstance()
                 }
             }
@@ -111,7 +127,7 @@ class SessionPageFragment : DaggerFragment() {
         sessionPagesStore.topics.changed(viewLifecycleOwner) { topics ->
             binding.filterTopicChip.setupFilter(
                 topics,
-                { topics -> topics.getNameByLang(systemStore.lang) },
+                { topic -> topic.getNameByLang(systemStore.lang) },
                 sessionPagesActionCreator::changeFilter
             )
         }
@@ -123,11 +139,28 @@ class SessionPageFragment : DaggerFragment() {
             )
         }
         sessionPagesStore.selectedTab.changed(viewLifecycleOwner) {
-            if (SessionTab.tabs[args.tabIndex] == it) {
+            if (SessionPage.pages[args.tabIndex] == it) {
                 bottomSheetBehavior.isHideable = false
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
             }
         }
+        sessionPageStore.toggleFilterSheet.observe(viewLifecycleOwner) {
+            bottomSheetBehavior.state =
+                if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+                    BottomSheetBehavior.STATE_EXPANDED
+                } else {
+                    BottomSheetBehavior.STATE_COLLAPSED
+                }
+        }
+        bottomSheetBehavior.addBottomSheetCallback(
+            object : BottomSheetBehavior.BottomSheetCallback {
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    sessionPageActionCreator.changeFilterSheet(
+                        SessionPage.pages[args.tabIndex], newState
+                    )
+                }
+            }
+        )
     }
 
     private fun <T> ChipGroup.setupFilter(
@@ -203,10 +236,24 @@ class SessionPageFragment : DaggerFragment() {
 }
 
 @Module
-object SessionFilterFragmentModule {
-    @JvmStatic @Provides fun providesLifecycle(
-        sessionsFragmentBottomSheet: BottomSheetDaySessionsFragment
-    ): LifecycleOwner {
-        return sessionsFragmentBottomSheet.viewLifecycleOwner
+abstract class SessionFilterFragmentModule {
+
+    @ContributesAndroidInjector(
+        modules = [SessionAssistedInjectModule::class]
+    )
+    abstract fun contributeBottomSheetDaySessionsFragment(): BottomSheetDaySessionsFragment
+
+    @ContributesAndroidInjector(
+        modules = [SessionAssistedInjectModule::class]
+    )
+    abstract fun contributeFavoriteSessionsFragment(): BottomSheetFavoriteSessionsFragment
+
+    @Module
+    companion object {
+        @JvmStatic @SessionPageScope @Provides fun providesLifecycle(
+            sessionPageFragment: SessionPageFragment
+        ): LifecycleOwner {
+            return sessionPageFragment.viewLifecycleOwner
+        }
     }
 }

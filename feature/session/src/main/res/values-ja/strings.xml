@@ -2,4 +2,5 @@
 <resources>
     <string name="session_filter_title">フィルター</string>
     <string name="session_filter_reset">リセット</string>
+    <string name="session_filter_button">絞り込む</string>
 </resources>
