@@ -15,11 +15,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import io.github.droidkaigi.confsched2019.ext.android.changed
-import io.github.droidkaigi.confsched2019.model.SessionTab
+import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionPagesBinding
-import io.github.droidkaigi.confsched2019.session.di.AllSessionsScope
-import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
+import io.github.droidkaigi.confsched2019.session.di.SessionPageScope
+import io.github.droidkaigi.confsched2019.session.di.SessionPagesScope
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPagesActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
@@ -64,12 +64,6 @@ class SessionPagesFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        sessionPagesStore.filtersChange.observe(viewLifecycleOwner) {
-            if (userStore.logined.value == true) {
-                sessionPagesActionCreator.load(sessionPagesStore.filters)
-            }
-        }
-
         binding.sessionsTabLayout.setupWithViewPager(binding.sessionsViewpager)
         binding.sessionsViewpager.adapter = object : FragmentStatePagerAdapter(
             childFragmentManager
@@ -82,13 +76,13 @@ class SessionPagesFragment : DaggerFragment() {
                 )
             }
 
-            override fun getPageTitle(position: Int) = SessionTab.tabs[position].title
-            override fun getCount(): Int = SessionTab.tabs.size
+            override fun getPageTitle(position: Int) = SessionPage.pages[position].title
+            override fun getCount(): Int = SessionPage.pages.size
         }
         binding.sessionsViewpager.addOnPageChangeListener(
             object : ViewPager.SimpleOnPageChangeListener() {
                 override fun onPageSelected(position: Int) {
-                    sessionPagesActionCreator.selectTab(SessionTab.tabs[position])
+                    sessionPagesActionCreator.selectTab(SessionPage.pages[position])
                 }
             }
         )
@@ -98,6 +92,11 @@ class SessionPagesFragment : DaggerFragment() {
             loading = true
         }
 
+        sessionPagesStore.filtersChange.observe(viewLifecycleOwner) {
+            if (userStore.logined.value == true) {
+                sessionPagesActionCreator.load(sessionPagesStore.filters)
+            }
+        }
         fun applyLoadingState() {
             progressTimeLatch.loading = sessionsStore.isLoading || sessionPagesStore.isLoading
         }
@@ -111,24 +110,15 @@ class SessionPagesFragment : DaggerFragment() {
 }
 
 @Module
-abstract class AllSessionsFragmentModule {
+abstract class SessionPagesFragmentModule {
 
+    @SessionPageScope
     @ContributesAndroidInjector(modules = [SessionFilterFragmentModule::class])
     abstract fun contributeSessionFilterFragment(): SessionPageFragment
 
-    @ContributesAndroidInjector(
-        modules = [SessionFilterFragmentModule::class, SessionAssistedInjectModule::class]
-    )
-    abstract fun contributeBottomSheetDaySessionsFragment(): BottomSheetDaySessionsFragment
-
-    @ContributesAndroidInjector(
-        modules = [FavoriteSessionsFragmentModule::class, SessionAssistedInjectModule::class]
-    )
-    abstract fun contributeFavoriteSessionsFragment(): BottomSheetFavoriteSessionsFragment
-
     @Module
     companion object {
-        @AllSessionsScope @JvmStatic @Provides fun providesLifecycle(
+        @SessionPagesScope @JvmStatic @Provides fun providesLifecycle(
             sessionPagesFragment: SessionPagesFragment
         ): Lifecycle {
             return sessionPagesFragment.viewLifecycleOwner.lifecycle

@@ -10,19 +10,19 @@ import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
-import io.github.droidkaigi.confsched2019.model.SessionTab
+import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.model.Topic
-import io.github.droidkaigi.confsched2019.session.di.AllSessionsScope
+import io.github.droidkaigi.confsched2019.session.di.SessionPagesScope
 import io.github.droidkaigi.confsched2019.system.actioncreator.ErrorHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@AllSessionsScope
+@SessionPagesScope
 class SessionPagesActionCreator @Inject constructor(
     override val dispatcher: Dispatcher,
-    val sessionRepository: SessionRepository,
-    @AllSessionsScope val lifecycle: Lifecycle
+    private val sessionRepository: SessionRepository,
+    @SessionPagesScope val lifecycle: Lifecycle
 ) : CoroutineScope by lifecycle.coroutineScope,
     ErrorHandler {
     fun load(filters: Filters) = launch {
@@ -61,8 +61,8 @@ class SessionPagesActionCreator @Inject constructor(
         dispatcher.dispatch(Action.SessionsLoaded(filteredSessionContents))
     }
 
-    fun selectTab(sessionTab: SessionTab) {
-        dispatcher.launchAndDispatch(Action.SessionTabSelected(sessionTab))
+    fun selectTab(sessionPage: SessionPage) {
+        dispatcher.launchAndDispatch(Action.SessionPageSelected(sessionPage))
     }
 
     fun changeFilter(room: Room, checked: Boolean) {

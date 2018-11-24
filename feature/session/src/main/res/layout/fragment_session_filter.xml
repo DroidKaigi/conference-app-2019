@@ -40,11 +40,12 @@
                     />
 
 
-                <TextView
+                <com.google.android.material.chip.Chip
                     android:id="@+id/filter_reset"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
+                    app:chipBackgroundColor="#d12016"
                     android:text="@string/session_filter_reset"
                     android:textAppearance="?textAppearanceSubtitle1"
                     android:textColor="@android:color/white"
@@ -130,7 +131,7 @@
             android:layout_gravity="bottom"
             android:layout_marginBottom="4dp"
             app:behavior_hideable="false"
-            app:behavior_peekHeight="32dp"
+            app:behavior_peekHeight="64dp"
             app:behavior_skipCollapsed="false"
             app:layout_behavior="io.github.droidkaigi.confsched2019.widget.BottomSheetBehavior"
             tools:layout="@layout/fragment_bottom_sheet_sessions"

@@ -21,12 +21,12 @@ import io.github.droidkaigi.confsched2019.announcement.ui.di.AnnouncementScope
 import io.github.droidkaigi.confsched2019.databinding.ActivityMainBinding
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.ErrorMessage
-import io.github.droidkaigi.confsched2019.session.di.AllSessionsScope
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
-import io.github.droidkaigi.confsched2019.session.ui.AllSessionsFragmentModule
+import io.github.droidkaigi.confsched2019.session.di.SessionPagesScope
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment
+import io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
@@ -78,9 +78,11 @@ class MainActivity : DaggerAppCompatActivity() {
 abstract class MainActivityModule {
     @Binds abstract fun providesActivity(mainActivity: MainActivity): FragmentActivity
 
-    @AllSessionsScope
-    @ContributesAndroidInjector(modules = [AllSessionsFragmentModule::class])
-    abstract fun contributeAllSessionsFragment(): SessionPagesFragment
+    @SessionPagesScope
+    @ContributesAndroidInjector(
+        modules = [SessionPagesFragmentModule::class, SessionAssistedInjectModule::class]
+    )
+    abstract fun contributeSessionPagesFragment(): SessionPagesFragment
 
     @ContributesAndroidInjector(
         modules = [SessionDetailFragmentModule::class, SessionAssistedInjectModule::class]

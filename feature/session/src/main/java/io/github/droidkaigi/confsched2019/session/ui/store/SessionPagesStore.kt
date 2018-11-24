@@ -13,7 +13,7 @@ import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
-import io.github.droidkaigi.confsched2019.model.SessionTab
+import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.model.Topic
 import kotlinx.coroutines.channels.map
 import javax.inject.Inject
@@ -97,10 +97,10 @@ class SessionPagesStore @Inject constructor(
     val isLoadingFinished: Boolean
         get() = loadingState.value == LoadingState.FINISHED
 
-    val selectedTab: LiveData<SessionTab> = dispatcher
-        .subscribe<Action.SessionTabSelected>()
-        .map { it.sessionTab }
-        .toLiveData(SessionTab.tabs[0])
+    val selectedTab: LiveData<SessionPage> = dispatcher
+        .subscribe<Action.SessionPageSelected>()
+        .map { it.sessionPage }
+        .toLiveData(SessionPage.pages[0])
 
     fun daySessions(day: Int): LiveData<List<Session>> {
         return sessions

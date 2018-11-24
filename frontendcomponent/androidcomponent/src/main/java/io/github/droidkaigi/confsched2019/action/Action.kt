@@ -7,7 +7,7 @@ import io.github.droidkaigi.confsched2019.model.Post
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
-import io.github.droidkaigi.confsched2019.model.SessionTab
+import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.model.SystemProperty
 import io.github.droidkaigi.confsched2019.model.Topic
 
@@ -20,7 +20,7 @@ sealed class Action {
 
     object UserRegistered : Action()
     data class SessionLoaded(val session: Session.SpeechSession) : Action()
-    data class SessionTabSelected(val sessionTab: SessionTab) : Action()
+    data class SessionPageSelected(val sessionPage: SessionPage) : Action()
     class SystemPropertyLoaded(val system: SystemProperty) : Action()
 
     open class FilterChange<T>(val value: T, open val checked: Boolean) : Action()
@@ -44,4 +44,6 @@ sealed class Action {
     class AnnouncementLoadingStateChanged(val loadingState: LoadingState) : Action()
     class AnnouncementLoaded(val posts: List<Post>) : Action()
     class Error(val msg: ErrorMessage) : Action()
+    class BottomSheetFilterToggled(val page: SessionPage) : Action()
+    class BottomSheetFilterStateChanged(val page: SessionPage, val bottomSheetState: Int) : Action()
 }
