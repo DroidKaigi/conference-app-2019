@@ -24,7 +24,8 @@ class SessionPageActionCreator @Inject constructor(
     }
 
     fun changeFilterSheet(
-        page: SessionPage, @BottomSheetBehavior.Companion.State bottomSheetState: Int
+        page: SessionPage,
+        @BottomSheetBehavior.Companion.State bottomSheetState: Int
     ) {
         dispatcher.launchAndDispatch(Action.BottomSheetFilterStateChanged(page, bottomSheetState))
     }

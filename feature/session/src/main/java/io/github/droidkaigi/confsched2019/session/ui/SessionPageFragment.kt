@@ -152,13 +152,15 @@ class SessionPageFragment : DaggerFragment() {
                     BottomSheetBehavior.STATE_COLLAPSED
                 }
         }
-        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                sessionPageActionCreator.changeFilterSheet(
-                    SessionPage.pages[args.tabIndex], newState
-                )
+        bottomSheetBehavior.addBottomSheetCallback(
+            object : BottomSheetBehavior.BottomSheetCallback {
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    sessionPageActionCreator.changeFilterSheet(
+                        SessionPage.pages[args.tabIndex], newState
+                    )
+                }
             }
-        })
+        )
     }
 
     private fun <T> ChipGroup.setupFilter(

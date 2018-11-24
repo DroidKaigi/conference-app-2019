@@ -81,7 +81,9 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
         binding.sessionsRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                val findFirstVisibleItemPosition = (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val findFirstVisibleItemPosition = linearLayoutManager
+                    .findFirstVisibleItemPosition()
                 binding.bottomSheetTitle.text = (groupAdapter
                     .getItem(findFirstVisibleItemPosition) as SessionItem)
                     .speechSession
@@ -101,14 +103,16 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
             groupAdapter.update(items)
         }
         sessionPageStore.filterSheetState.changed(this) { newState ->
-            if (newState == BottomSheetBehavior.STATE_EXPANDED || newState == BottomSheetBehavior.STATE_COLLAPSED) {
+            if (newState == BottomSheetBehavior.STATE_EXPANDED ||
+                newState == BottomSheetBehavior.STATE_COLLAPSED) {
                 TransitionManager.beginDelayedTransition(
                     binding.root as ViewGroup, AutoTransition().apply {
                     excludeChildren(binding.bottomSheetTitle, true)
                     excludeChildren(binding.sessionsRecycler, true)
                 })
-                binding.bottomSheetShowFilterButton.isVisible = newState != BottomSheetBehavior.STATE_COLLAPSED
-                binding.bottomSheetHideFilterButton.isVisible = newState == BottomSheetBehavior.STATE_COLLAPSED
+                val isCollapsed = newState == BottomSheetBehavior.STATE_COLLAPSED
+                binding.bottomSheetShowFilterButton.isVisible = !isCollapsed
+                binding.bottomSheetHideFilterButton.isVisible = isCollapsed
             }
         }
     }

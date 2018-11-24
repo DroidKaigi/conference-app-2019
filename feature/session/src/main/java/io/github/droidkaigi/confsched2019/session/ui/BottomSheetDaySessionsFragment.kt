@@ -91,14 +91,16 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
             groupAdapter.update(items)
         }
         sessionPageStore.filterSheetState.changed(this) { newState ->
-            if (newState == BottomSheetBehavior.STATE_EXPANDED || newState == BottomSheetBehavior.STATE_COLLAPSED) {
+            if (newState == BottomSheetBehavior.STATE_EXPANDED ||
+                newState == BottomSheetBehavior.STATE_COLLAPSED) {
                 TransitionManager.beginDelayedTransition(
                     binding.root as ViewGroup, AutoTransition().apply {
                     excludeChildren(binding.bottomSheetTitle, true)
                     excludeChildren(binding.sessionsRecycler, true)
                 })
-                binding.bottomSheetShowFilterButton.isVisible = newState != BottomSheetBehavior.STATE_COLLAPSED
-                binding.bottomSheetHideFilterButton.isVisible = newState == BottomSheetBehavior.STATE_COLLAPSED
+                val isCollapsed = newState == BottomSheetBehavior.STATE_COLLAPSED
+                binding.bottomSheetShowFilterButton.isVisible = !isCollapsed
+                binding.bottomSheetHideFilterButton.isVisible = isCollapsed
             }
 
         }
