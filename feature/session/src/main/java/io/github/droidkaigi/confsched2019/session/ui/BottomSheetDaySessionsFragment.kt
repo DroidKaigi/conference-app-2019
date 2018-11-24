@@ -102,7 +102,6 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                 binding.bottomSheetShowFilterButton.isVisible = !isCollapsed
                 binding.bottomSheetHideFilterButton.isVisible = isCollapsed
             }
-
         }
     }
 
