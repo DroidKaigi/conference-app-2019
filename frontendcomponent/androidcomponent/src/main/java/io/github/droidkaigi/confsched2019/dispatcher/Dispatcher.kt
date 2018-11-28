@@ -11,7 +11,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Suppress("EXPERIMENTAL_API_USAGE")
 @Singleton
 class Dispatcher @Inject constructor() {
     private val _actions = BroadcastChannel<Action>(Channel.CONFLATED)

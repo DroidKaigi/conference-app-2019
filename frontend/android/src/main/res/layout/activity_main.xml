@@ -38,7 +38,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
-                app:navGraph="@navigation/navigation_drawer"
+                app:navGraph="@navigation/navigation"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

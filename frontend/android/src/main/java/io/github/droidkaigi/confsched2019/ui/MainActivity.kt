@@ -27,6 +27,8 @@ import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment
 import io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragmentModule
+import io.github.droidkaigi.confsched2019.session.ui.SpeakerFragment
+import io.github.droidkaigi.confsched2019.session.ui.SpeakerFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
@@ -88,6 +90,11 @@ abstract class MainActivityModule {
         modules = [SessionDetailFragmentModule::class, SessionAssistedInjectModule::class]
     )
     abstract fun contributeSessionDetailFragment(): SessionDetailFragment
+
+    @ContributesAndroidInjector(
+        modules = [SpeakerFragmentModule::class, SessionAssistedInjectModule::class]
+    )
+    abstract fun contributeSpeakerFragment(): SpeakerFragment
 
     @AnnouncementScope
     @ContributesAndroidInjector(modules = [AnnouncementFragmentModule::class])

@@ -54,6 +54,21 @@
             android:name="session"
             app:argType="string"
             />
+        <action
+            android:id="@id/action_session_detail_to_speaker"
+            app:destination="@id/speaker"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/speaker"
+        android:name="io.github.droidkaigi.confsched2019.session.ui.SpeakerFragment"
+        android:label="@string/speaker_label"
+        tools:layout="@layout/fragment_speaker"
+        >
+        <argument
+            android:name="speaker"
+            app:argType="string"
+            />
     </fragment>
     <fragment
         android:id="@+id/announce"
