@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.NavController
 import dagger.Module
 import dagger.Provides
 import dagger.android.AndroidInjector
@@ -28,6 +29,7 @@ class SessionDetailFragment : Fragment(), HasSupportFragmentInjector {
 
     @Inject lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
     @Inject lateinit var sessionDetailActionCreator: SessionDetailActionCreator
+    @Inject lateinit var navController: NavController
 
     lateinit var binding: FragmentSessionDetailBinding
 
@@ -59,6 +61,15 @@ class SessionDetailFragment : Fragment(), HasSupportFragmentInjector {
         AndroidSupportInjection.inject(this)
 
         sessionDetailFragmentArgs = SessionDetailFragmentArgs.fromBundle(arguments)
+        binding.root.setOnClickListener {
+            val speaker = sessionDetailStore.session.value?.speakers?.firstOrNull()
+                ?: return@setOnClickListener
+            navController.navigate(
+                SessionDetailFragmentDirections.actionSessionDetailToSpeaker(
+                    speaker.id
+                )
+            )
+        }
         binding.favorite.setOnClickListener {
             val session = sessionDetailStore.session.value ?: return@setOnClickListener
             sessionDetailActionCreator.toggleFavorite(session)

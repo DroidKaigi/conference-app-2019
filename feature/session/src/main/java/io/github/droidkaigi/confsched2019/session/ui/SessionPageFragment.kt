@@ -96,6 +96,7 @@ class SessionPageFragment : DaggerFragment() {
             childFragmentManager
                 .beginTransaction()
                 .replace(R.id.session_sheet, fragment)
+                .disallowAddToBackStack()
                 .commit()
         }
         bottomSheetBehavior.isHideable = false
