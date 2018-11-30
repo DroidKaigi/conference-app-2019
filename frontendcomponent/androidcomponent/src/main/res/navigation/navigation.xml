@@ -78,6 +78,13 @@
         >
     </fragment>
     <fragment
+        android:id="@+id/sponsor"
+        android:name="io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragment"
+        android:label="@string/sponsor_label"
+        tools:layout="@layout/fragment_session_pages"
+        >
+    </fragment>
+    <fragment
         android:id="@+id/map"
         android:name="io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment"
         android:label="@string/map_label"

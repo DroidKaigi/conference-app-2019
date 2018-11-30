@@ -7,6 +7,8 @@
     <string name="speaker_label">speaker</string>
     <!-- Announce -->
     <string name="announce_label">announce</string>
+    <!-- Sponsor -->
+    <string name="sponsor_label">sponsor</string>
     <!-- Map -->
     <string name="map_label">map</string>
     <!-- Other -->

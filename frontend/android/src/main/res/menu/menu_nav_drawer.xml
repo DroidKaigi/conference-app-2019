@@ -11,6 +11,10 @@
         android:title="@string/announce_label"
         />
     <item
+        android:id="@id/sponsor"
+        android:title="@string/sponsor_label"
+        />
+    <item
         android:id="@id/map"
         android:title="@string/map_label"
         />

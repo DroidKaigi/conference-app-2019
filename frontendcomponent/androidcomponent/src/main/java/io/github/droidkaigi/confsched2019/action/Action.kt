@@ -9,6 +9,7 @@ import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.model.Speaker
+import io.github.droidkaigi.confsched2019.model.Sponsor
 import io.github.droidkaigi.confsched2019.model.SystemProperty
 import io.github.droidkaigi.confsched2019.model.Topic
 
@@ -49,4 +50,6 @@ sealed class Action {
     class AnnouncementLoadingStateChanged(val loadingState: LoadingState) : Action()
     class AnnouncementLoaded(val posts: List<Post>) : Action()
     class Error(val msg: ErrorMessage) : Action()
+    class SponsorLoadingStateChanged(val loadingState: LoadingState) : Action()
+    class SponsorLoaded(val sponsors: List<Sponsor>) : Action()
 }
