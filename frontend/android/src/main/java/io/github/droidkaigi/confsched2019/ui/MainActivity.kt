@@ -1,6 +1,10 @@
 package io.github.droidkaigi.confsched2019.ui
 
+import android.graphics.PorterDuff
+import android.os.Build
 import android.os.Bundle
+import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
@@ -58,6 +62,25 @@ class MainActivity : DaggerAppCompatActivity() {
         setupActionBarWithNavController(navController, binding.drawerLayout)
         binding.navView.setupWithNavController(navController)
         binding.toolbar.setupWithNavController(navController, binding.drawerLayout)
+        navController.addOnNavigatedListener { controller, destination ->
+            val isWhiteTheme = destination.id != R.id.main
+            binding.isWhiteTheme = isWhiteTheme
+            if (23 <= Build.VERSION.SDK_INT) {
+                window.decorView.systemUiVisibility = if (isWhiteTheme) {
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                } else {
+                    0
+                }
+            }
+            val toolbarContentsColor = ContextCompat.getColor(
+                this, if (isWhiteTheme) android.R.color.black else R.color.white
+            )
+            binding.toolbar.navigationIcon?.setColorFilter(
+                toolbarContentsColor,
+                PorterDuff.Mode.SRC_ATOP
+            )
+            binding.toolbar.setTitleTextColor(toolbarContentsColor)
+        }
 
         userStore.logined.changed(this) { loggedin ->
             if (loggedin) {
