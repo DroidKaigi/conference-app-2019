@@ -113,8 +113,8 @@ class SessionPagesFragment : DaggerFragment() {
 abstract class SessionPagesFragmentModule {
 
     @SessionPageScope
-    @ContributesAndroidInjector(modules = [SessionFilterFragmentModule::class])
-    abstract fun contributeSessionFilterFragment(): SessionPageFragment
+    @ContributesAndroidInjector(modules = [SessionPageFragmentModule::class])
+    abstract fun contributeSessionPageFragment(): SessionPageFragment
 
     @Module
     companion object {

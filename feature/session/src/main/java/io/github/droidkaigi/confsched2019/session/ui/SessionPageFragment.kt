@@ -237,7 +237,7 @@ class SessionPageFragment : DaggerFragment() {
 }
 
 @Module
-abstract class SessionFilterFragmentModule {
+abstract class SessionPageFragmentModule {
 
     @ContributesAndroidInjector(
         modules = [SessionAssistedInjectModule::class]
