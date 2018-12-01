@@ -44,6 +44,7 @@ dependencies {
     implementation project(":model")
     implementation project(":feature:session")
     implementation project(":feature:announcement")
+    implementation project(":feature:sponsor")
     implementation project(':frontendcomponent:androidcomponent')
     implementation project(':feature:user')
     implementation project(':feature:system')
