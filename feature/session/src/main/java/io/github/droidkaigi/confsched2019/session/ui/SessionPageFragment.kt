@@ -21,7 +21,7 @@ import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.model.Topic
 import io.github.droidkaigi.confsched2019.session.R
-import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionFilterBinding
+import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionPageBinding
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
 import io.github.droidkaigi.confsched2019.session.di.SessionPageScope
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPageActionCreator
@@ -38,7 +38,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 class SessionPageFragment : DaggerFragment() {
-    lateinit var binding: FragmentSessionFilterBinding
+    lateinit var binding: FragmentSessionPageBinding
 
     @Inject lateinit var sessionsActionCreator: SessionsActionCreator
     @Inject lateinit var sessionPagesActionCreator: SessionPagesActionCreator
@@ -64,7 +64,7 @@ class SessionPageFragment : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_session_filter, container,
+            inflater, R.layout.fragment_session_page, container,
             false
         )
         return binding.root
@@ -237,7 +237,7 @@ class SessionPageFragment : DaggerFragment() {
 }
 
 @Module
-abstract class SessionFilterFragmentModule {
+abstract class SessionPageFragmentModule {
 
     @ContributesAndroidInjector(
         modules = [SessionAssistedInjectModule::class]
