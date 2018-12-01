@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{session.language}"
                 android:textAppearance="?textAppearanceCaption"
-                android:textColor="@android:color/white"
+                android:textColor="@color/white"
                 app:chipBackgroundColor="#7982e1"
                 tools:text="Japanese"
                 />
@@ -116,7 +116,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?textAppearanceCaption"
-                android:textColor="@android:color/white"
+                android:textColor="@color/white"
                 app:chipBackgroundColor="#ffd189"
                 tools:text="中・上級者向け"
                 />
@@ -127,7 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?textAppearanceCaption"
-                android:textColor="@android:color/white"
+                android:textColor="@color/white"
                 app:chipBackgroundColor="#95959c"
                 tools:text="ソフトウェアアーキテクチャ"
                 />

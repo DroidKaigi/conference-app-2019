@@ -82,7 +82,7 @@ object Dep {
         val testRunner = "androidx.test:runner:1.1.0-alpha3"
         val emoji = "androidx.emoji:emoji-appcompat:1.0.0"
         val espressoCore = "androidx.test.espresso:espresso-core:3.1.0-alpha3"
-        val design = "com.google.android.material:material:1.0.0"
+        val design = "com.google.android.material:material:1.1.0-alpha01"
     }
 
     object Retrofit {

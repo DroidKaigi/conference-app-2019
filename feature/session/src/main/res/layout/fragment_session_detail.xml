@@ -115,7 +115,7 @@
             <ImageView
                 android:id="@+id/favorite"
                 android:layout_marginEnd="8dp"
-                android:background="@{session.isFavorited ? @android:color/white : @android:color/black}"
+                android:background="@{session.isFavorited ? @color/white : @android:color/black}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:contentDescription="@string/session_description_favorite_image"

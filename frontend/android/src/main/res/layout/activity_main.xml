@@ -6,10 +6,23 @@
     tools:context=".widget.MainActivity"
     >
 
+    <data>
+
+        <variable
+            name="isWhiteTheme"
+            type="boolean"
+            />
+
+        <import type="androidx.databinding.adapters.Converters"/>
+    </data>
+
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        app:statusBarBackground="@{isWhiteTheme ? Converters.convertColorToDrawable(@color/white) : Converters.convertColorToDrawable(@color/colorPrimary)}"
+        android:background="@{isWhiteTheme ? Converters.convertColorToDrawable(@color/white) : Converters.convertColorToDrawable(@color/colorPrimary)}"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +35,7 @@
                 android:layout_width="0dp"
                 android:layout_height="64dp"
                 android:elevation="0dp"
-                android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+                android:background="@{isWhiteTheme ? Converters.convertColorToDrawable(@color/white) : Converters.convertColorToDrawable(@color/colorPrimary)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -47,6 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
+            android:background="@color/white"
             app:menu="@menu/menu_nav_drawer"
             />
     </androidx.drawerlayout.widget.DrawerLayout>

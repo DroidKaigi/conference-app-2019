@@ -7,8 +7,8 @@
     tools:text="hoge"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:chipStrokeColor="@android:color/white"
+    app:chipStrokeColor="@color/white"
     app:chipBackgroundColor="@android:color/transparent"
-    android:textColor="@android:color/white"
+    android:textColor="@color/white"
     app:chipStrokeWidth="1dp"
     />
