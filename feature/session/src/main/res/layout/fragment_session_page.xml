@@ -9,6 +9,7 @@
         android:id="@+id/filter_coodinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
         tools:context="io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment"
         >
 
@@ -45,10 +46,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    app:chipBackgroundColor="#d12016"
                     android:text="@string/session_filter_reset"
                     android:textAppearance="?textAppearanceSubtitle1"
                     android:textColor="@color/white"
+                    app:chipBackgroundColor="#d12016"
                     app:layout_constraintBottom_toBottomOf="@id/filter_title"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/filter_title"
