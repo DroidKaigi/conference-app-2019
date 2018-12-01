@@ -47,9 +47,6 @@ class SessionDetailFragment : Fragment(), HasSupportFragmentInjector {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        requireActivity().setTheme(
-            io.github.droidkaigi.confsched2019.widget.component.R.style.AppTheme_White
-        )
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_session_detail, container,
             false

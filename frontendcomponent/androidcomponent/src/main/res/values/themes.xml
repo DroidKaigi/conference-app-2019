@@ -21,8 +21,4 @@
         <item name="textAppearanceBody2">@style/TextAppearance.App.Body2</item>
         <item name="textAppearanceCaption">@style/TextAppearance.App.Caption</item>
     </style>
-    <!-- Base application theme. -->
-    <style name="AppTheme.White">
-        <item name="android:windowBackground">@color/white</item>
-    </style>
 </resources>
