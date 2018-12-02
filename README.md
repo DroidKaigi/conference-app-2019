@@ -49,13 +49,13 @@ Normal line: api
 
 # Architecture
 
-Flux-based Architecture
-Unidirectional data flow
+Unidirectional data flow(Flux-based) Architecture with Kotlin Coroutines and AndroidX Libraries(LiveData, ViewModel, Room) DataBinding, dependency injection, Firebase etc.
+
 
 ![](images/architecture.png)
 
 
-## Fragment -> Action Creator
+## Activity/Fragment -> Action Creator
 
 ![image](https://user-images.githubusercontent.com/1386930/49335556-b0cfb480-f632-11e8-9575-0fdef07f73eb.png)
 
@@ -73,7 +73,7 @@ class SessionPagesFragment : DaggerFragment() {
 
 ![image](https://user-images.githubusercontent.com/1386930/49335562-c7760b80-f632-11e8-8981-8c9c1ce3ec7b.png)
 
-Action Creator fetches data from DB / API with Kotlin Coroutines suspend function. And Tne Action Creator dispatches data loaded action and loading state changed actions. 
+Action Creator fetches data from DB / API with `Kotlin Coroutines suspend function`. And Action Creator dispatches data loaded action and loading state changed actions. 
 
 ```kotlin
 class SessionPagesActionCreator @Inject constructor(
@@ -118,8 +118,8 @@ sealed class Action {
 
 ![image](https://user-images.githubusercontent.com/1386930/49335566-df4d8f80-f632-11e8-9c8e-2fe00bfa6334.png)
 
-Store subscribe dispatcher's action with Kotlin Coroutines channel and transform it to LiveData.
-This store is a ViewModel. But if the store is used by whole application(ex: UserStore), you can change the store to a singleton.
+Store subscribe dispatcher's action with `Kotlin Coroutines channel` and transform it to AndroidX `LiveData`.
+This store is a `ViewModel`. But if the store is used by whole application(ex: UserStore), you can change the store to a singleton.
 
 ```kotlin
 class SessionPagesStore @Inject constructor(
@@ -138,11 +138,11 @@ class SessionPagesStore @Inject constructor(
         .toLiveData(SessionContents.EMPTY)
 ```
 
-## Store -> Fragment
+## Store -> Activity/Fragment
 
 ![image](https://user-images.githubusercontent.com/1386930/49335569-e83e6100-f632-11e8-9231-3ad58fe8beea.png)
 
-In fragment, we can observe Store's LiveData. Now we can show UI.
+In fragment, we can observe Store's `LiveData`. You can display the UI with `LiveData`.
 
 ```kotlin
     override fun onActivityCreated(savedInstanceState: Bundle?) {
