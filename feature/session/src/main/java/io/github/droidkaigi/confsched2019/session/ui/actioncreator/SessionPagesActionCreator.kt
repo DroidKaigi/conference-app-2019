@@ -10,6 +10,7 @@ import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.model.Topic
 import io.github.droidkaigi.confsched2019.session.di.SessionPagesScope
@@ -25,14 +26,17 @@ class SessionPagesActionCreator @Inject constructor(
     @SessionPagesScope val lifecycle: Lifecycle
 ) : CoroutineScope by lifecycle.coroutineScope,
     ErrorHandler {
-    fun load(filters: Filters) = launch {
-        try {
-            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
-            loadContent(filters)
-        } catch (e: Exception) {
-            onError(e = e)
-        } finally {
-            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.FINISHED))
+    fun load(filters: Filters) {
+        launch {
+            try {
+                dispatcher.dispatchLoadingState(LoadingState.LOADING)
+                val sessionContents = loadContent(filters)
+                dispatcher.dispatch(Action.SessionsLoaded(sessionContents))
+            } catch (e: Exception) {
+                onError(e)
+            } finally {
+                dispatcher.dispatchLoadingState(LoadingState.FINISHED)
+            }
         }
     }
 
@@ -42,23 +46,23 @@ class SessionPagesActionCreator @Inject constructor(
     ) {
         launch {
             try {
-                dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
+                dispatcher.dispatchLoadingState(LoadingState.LOADING)
                 sessionRepository.toggleFavorite(session)
-                loadContent(filters)
+                val sessionContents = loadContent(filters)
+                dispatcher.dispatch(Action.SessionsLoaded(sessionContents))
             } catch (e: Exception) {
-                onError(e = e)
+                onError(e)
             } finally {
-                dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.FINISHED))
+                dispatcher.dispatchLoadingState(LoadingState.FINISHED)
             }
         }
     }
 
-    private suspend fun loadContent(filters: Filters) {
+    private suspend fun loadContent(filters: Filters): SessionContents {
         val sessionContents = sessionRepository.sessionContents()
-        val filteredSessionContents = sessionContents.copy(
+        return sessionContents.copy(
             sessions = sessionContents.sessions.filter(filters::isPass)
         )
-        dispatcher.dispatch(Action.SessionsLoaded(filteredSessionContents))
     }
 
     fun selectTab(sessionPage: SessionPage) {
@@ -79,5 +83,9 @@ class SessionPagesActionCreator @Inject constructor(
 
     fun clearFilters() {
         dispatcher.launchAndDispatch(Action.FilterCleared())
+    }
+
+    private suspend fun Dispatcher.dispatchLoadingState(loadingState: LoadingState) {
+        dispatch(Action.SessionLoadingStateChanged(loadingState))
     }
 }

@@ -16,7 +16,7 @@ import java.net.UnknownHostException
 
 interface ErrorHandler {
     val dispatcher: Dispatcher
-    fun onError(msg: String? = null, e: Throwable) {
+    fun onError(e: Throwable, msg: String? = null) {
         when (e) {
             is CancellationException ->
                 logd(e = e) {

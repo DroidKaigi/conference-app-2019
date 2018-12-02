@@ -28,7 +28,7 @@ class SessionsActionCreator @Inject constructor(
             val sessionContentsRefreshed = sessionRepository.sessionContents()
             dispatcher.dispatch(Action.SessionsLoaded(sessionContentsRefreshed))
         } catch (e: Exception) {
-            onError(e = e)
+            onError(e)
         } finally {
             dispatcher.dispatch(Action.SessionRefreshStateChanged(LoadingState.FINISHED))
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.FINISHED))

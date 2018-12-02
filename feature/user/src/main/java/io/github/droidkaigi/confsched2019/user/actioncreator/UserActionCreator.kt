@@ -34,7 +34,7 @@ class UserActionCreator @Inject constructor(
                 firebaseAuth.signInAnonymously().await()
                 dispatcher.dispatch(Action.UserRegistered)
             } catch (e: Exception) {
-                onError(e = e)
+                onError(e)
             }
         }
     }

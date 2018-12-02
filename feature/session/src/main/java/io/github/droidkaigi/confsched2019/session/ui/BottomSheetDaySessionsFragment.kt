@@ -33,10 +33,10 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
 
     @Inject lateinit var sessionPagesActionCreator: SessionPagesActionCreator
     @Inject lateinit var sessionPageActionCreator: SessionPageActionCreator
-    @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
     @Inject lateinit var sessionPageFragmentProvider: Provider<SessionPageFragment>
     @Inject lateinit var sessionItemFactory: SessionItem.Factory
 
+    @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
     private val sessionPagesStore: SessionPagesStore by lazy {
         InjectedViewModelProviders.of(requireActivity())[sessionPagesStoreProvider]
     }
