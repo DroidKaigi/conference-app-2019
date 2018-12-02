@@ -7,7 +7,6 @@ import io.github.droidkaigi.confsched2019.data.db.entity.SessionWithSpeakers
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntity
 import io.github.droidkaigi.confsched2019.data.firestore.FireStore
 import io.github.droidkaigi.confsched2019.model.Lang
-import io.github.droidkaigi.confsched2019.model.Level
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
@@ -155,7 +154,6 @@ class DataSessionRepository @Inject constructor(
             format = sessionEntity.sessionFormat,
             language = sessionEntity.language,
             topic = Topic(sessionEntity.topic.id, sessionEntity.topic.name),
-            level = Level.of(sessionEntity.level.id, sessionEntity.level.name),
             isFavorited = favList!!.map { it.toString() }.contains(sessionEntity.id),
             speakers = speakers,
             message = sessionEntity.message?.let {

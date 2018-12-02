@@ -109,18 +109,7 @@
                 app:chipBackgroundColor="#7982e1"
                 tools:text="Japanese"
                 />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/level_chip"
-                style="@style/Widget.MaterialComponents.Chip.Action"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?textAppearanceCaption"
-                android:textColor="@color/white"
-                app:chipBackgroundColor="#ffd189"
-                tools:text="中・上級者向け"
-                />
-
+    
             <com.google.android.material.chip.Chip
                 android:id="@+id/topic_chip"
                 style="@style/Widget.MaterialComponents.Chip.Action"
