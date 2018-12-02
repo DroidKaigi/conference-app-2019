@@ -1,5 +1,6 @@
 include ':frontend:android',
         ':frontendcomponent:androidcomponent',
+        ':frontendcomponent:androidtestcomponent',
         ':feature:session',
         ':feature:announcement',
         ':feature:sponsor',

@@ -47,9 +47,11 @@ dependencies {
     implementation Dep.Groupie.databinding
 
     testImplementation Dep.junit
+    testImplementation Dep.KotlinTest.assertions
+    testImplementation Dep.MockK.jvm
+    testImplementation project(':frontendcomponent:androidtestcomponent')
     androidTestImplementation Dep.Android.testRunner
     androidTestImplementation Dep.Android.espressoCore
-    compile project(path: ':feature:system')
 }
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions {

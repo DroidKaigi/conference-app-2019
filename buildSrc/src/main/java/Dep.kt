@@ -142,9 +142,13 @@ object Dep {
 
     val junit = "junit:junit:4.12"
 
+    object KotlinTest {
+        val assertions = "io.kotlintest:kotlintest-assertions:3.1.10"
+    }
+
     object MockK {
-        val jvm = "io.mockk:mockk:1.8.12"
-        val common = "io.mockk:mockk-common:1.8.12"
+        val jvm = "io.mockk:mockk:1.8.13.kotlin13"
+        val common = "io.mockk:mockk-common:1.8.13.kotlin13"
     }
 
     object InjectedVmProvider {
