@@ -37,6 +37,7 @@ object Dep {
     object Arch {
         val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.aac}"
         val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata:${Versions.aac}"
+        val coreTesting = "androidx.arch.core:core-testing:${Versions.aac}"
         val roomCompiler = "androidx.room:room-compiler:${Versions.aac}"
         val roomRuntime = "androidx.room:room-runtime:${Versions.aac}"
         val roomRxJava = "androidx.room:room-rxjava2:${Versions.aac}"
@@ -142,9 +143,13 @@ object Dep {
 
     val junit = "junit:junit:4.12"
 
+    object KotlinTest {
+        val assertions = "io.kotlintest:kotlintest-assertions:3.1.10"
+    }
+
     object MockK {
-        val jvm = "io.mockk:mockk:1.8.12"
-        val common = "io.mockk:mockk-common:1.8.12"
+        val jvm = "io.mockk:mockk:1.8.13.kotlin13"
+        val common = "io.mockk:mockk-common:1.8.13.kotlin13"
     }
 
     object InjectedVmProvider {

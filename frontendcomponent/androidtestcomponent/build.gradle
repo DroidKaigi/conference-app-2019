@@ -1,0 +1,35 @@
+import dependencies.Dep
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'androidx.navigation.safeargs'
+
+apply from: rootProject.file('gradle/android.gradle')
+
+dependencies {
+    implementation Dep.Kotlin.stdlibJvm
+
+    api Dep.Dagger.androidSupport
+    implementation Dep.Kotlin.stdlibJvm
+    api Dep.Arch.coreTesting
+    api Dep.Kotlin.coroutines
+
+    implementation Dep.junit
+    implementation(Dep.MockK.jvm) {
+        exclude group: 'net.bytebuddy', module: 'byte-buddy'
+        exclude group: 'net.bytebuddy', module: 'byte-buddy-android'
+        exclude group: 'net.bytebuddy', module: 'byte-buddy-agent'
+        exclude group: 'io.mockk', module: 'mockk-agent-jvm'
+    }
+}
+repositories {
+    mavenCentral()
+}
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        freeCompilerArgs = [
+                '-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi',
+                '-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi'
+        ]
+    }
+}

@@ -1,27 +1,27 @@
 package io.github.droidkaigi.confsched2019.ext.android
 
-import androidx.lifecycle.GenericLifecycleObserver
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.Lifecycle.State.DESTROYED
-import androidx.lifecycle.Lifecycle.State.INITIALIZED
 import androidx.lifecycle.LifecycleOwner
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import java.util.concurrent.ConcurrentHashMap
 
 /**
+ * from: https://github.com/Kotlin/kotlinx.coroutines/pull/760
+ * Modify to use [CoroutinePlugin] for testing
  * Returns a [CoroutineScope] that uses [Dispatchers.Main] by default, and that is cancelled when
  * the [Lifecycle] reaches [Lifecycle.State.DESTROYED] state.
  *
  * Note that this value is cached until the Lifecycle reaches the destroyed state.
  */
 val Lifecycle.coroutineScope: CoroutineScope
-    get() = lifecycleCoroutineScopes[this] ?: job.let { job ->
-        val newScope = CoroutineScope(job + Dispatchers.Main)
+    get() = cachedLifecycleCoroutineScopes[this] ?: job.let { job ->
+        val newScope = CoroutineScope(job + CoroutinePlugin.mainDispatcher)
         if (job.isActive) {
-            lifecycleCoroutineScopes[this] = newScope
-            job.invokeOnCompletion { _ -> lifecycleCoroutineScopes -= this }
+            cachedLifecycleCoroutineScopes[this] = newScope
+            job.invokeOnCompletion { _ -> cachedLifecycleCoroutineScopes -= this }
         }
         newScope
     }
@@ -35,20 +35,7 @@ val Lifecycle.coroutineScope: CoroutineScope
 inline val LifecycleOwner.coroutineScope get() = lifecycle.coroutineScope
 
 /**
- * Returns a [CoroutineScope] that uses [Dispatchers.Main] by default, and that will be cancelled as
- * soon as this [Lifecycle] [currentState][Lifecycle.getCurrentState] is no longer
- * [at least][Lifecycle.State.isAtLeast] the passed [activeWhile] state.
- *
- * **Beware**: if the current state is lower than the passed [activeWhile] state, you'll get an
- * already cancelled scope.
- */
-fun Lifecycle.createScope(activeWhile: Lifecycle.State): CoroutineScope {
-    if (activeWhile == DESTROYED) return coroutineScope
-    return CoroutineScope(createJob(activeWhile) + Dispatchers.Main)
-}
-
-/**
- * Returns a [Job] that will be cancelled as soon as the [Lifecycle] reaches
+ * Returns a [SupervisorJob] that will be cancelled as soon as the [Lifecycle] reaches
  * [Lifecycle.State.DESTROYED] state.
  *
  * Note that this value is cached until the Lifecycle reaches the destroyed state.
@@ -56,37 +43,12 @@ fun Lifecycle.createScope(activeWhile: Lifecycle.State): CoroutineScope {
  * You can use this job for custom [CoroutineScope]s, or as a parent [Job].
  */
 val Lifecycle.job: Job
-    get() = lifecycleJobs[this] ?: createJob().also {
+    get() = cachedLifecycleJobs[this] ?: createJob().also {
         if (it.isActive) {
-            lifecycleJobs[this] = it
-            it.invokeOnCompletion { _ -> lifecycleJobs -= this }
+            cachedLifecycleJobs[this] = it
+            it.invokeOnCompletion { _ -> cachedLifecycleJobs -= this }
         }
     }
 
-/**
- * Creates a [Job] that will be cancelled as soon as this [Lifecycle]
- * [currentState][Lifecycle.getCurrentState] is no longer [at least][Lifecycle.State.isAtLeast] the
- * passed [activeWhile] state.
- *
- * **Beware**: if the current state is lower than the passed [activeWhile] state, you'll get an
- * already cancelled job.
- */
-fun Lifecycle.createJob(activeWhile: Lifecycle.State = INITIALIZED): Job {
-    require(activeWhile != Lifecycle.State.DESTROYED) {
-        "DESTROYED is a terminal state that is forbidden for createJob(…), to avoid leaks."
-    }
-    return Job().also { job ->
-        if (!currentState.isAtLeast(activeWhile)) job.cancel()
-        else addObserver(object : GenericLifecycleObserver {
-            override fun onStateChanged(source: LifecycleOwner?, event: Lifecycle.Event) {
-                if (!currentState.isAtLeast(activeWhile)) {
-                    removeObserver(this)
-                    job.cancel()
-                }
-            }
-        })
-    }
-}
-
-private val lifecycleJobs = ConcurrentHashMap<Lifecycle, Job>()
-private val lifecycleCoroutineScopes = ConcurrentHashMap<Lifecycle, CoroutineScope>()
+private val cachedLifecycleJobs = ConcurrentHashMap<Lifecycle, Job>()
+private val cachedLifecycleCoroutineScopes = ConcurrentHashMap<Lifecycle, CoroutineScope>()
