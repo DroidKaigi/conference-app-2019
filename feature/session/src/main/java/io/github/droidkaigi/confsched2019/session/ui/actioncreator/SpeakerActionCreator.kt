@@ -27,7 +27,7 @@ class SpeakerActionCreator @Inject constructor(
             val speaker = newSpeaker(speakerId)
             dispatcher.dispatch(Action.SpeakerLoaded(speaker))
         } catch (e: Exception) {
-            onError(e = e)
+            onError(e)
         }
     }
 

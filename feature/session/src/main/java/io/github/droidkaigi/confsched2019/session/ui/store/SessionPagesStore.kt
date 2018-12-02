@@ -27,17 +27,18 @@ class SessionPagesStore @Inject constructor(
         .toLiveData(LoadingState.LOADING)
     val isLoading
         get() = loadingState.value == LoadingState.LOADING
-    private val contents = dispatcher
+
+    private val sessionContents = dispatcher
         .subscribe<Action.SessionsLoaded>()
         .map { it.sessionContents }
         .toLiveData(SessionContents.EMPTY)
-    val sessions: LiveData<List<Session>> = contents
+    val sessions: LiveData<List<Session>> = sessionContents
         .map { it?.sessions.orEmpty() }
-    val langs: LiveData<List<Lang>> = contents
+    val langs: LiveData<List<Lang>> = sessionContents
         .map { it?.langs.orEmpty() }
-    val topics: LiveData<List<Topic>> = contents
+    val topics: LiveData<List<Topic>> = sessionContents
         .map { it?.topics.orEmpty() }
-    val rooms: LiveData<List<Room>> = contents
+    val rooms: LiveData<List<Room>> = sessionContents
         .map { it?.rooms.orEmpty() }
 
     private val roomFilterChanged = dispatcher

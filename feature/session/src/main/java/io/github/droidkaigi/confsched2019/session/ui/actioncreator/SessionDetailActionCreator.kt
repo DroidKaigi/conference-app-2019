@@ -19,12 +19,14 @@ class SessionDetailActionCreator @Inject constructor(
 ) : CoroutineScope by lifecycleOwner.coroutineScope,
     ErrorHandler {
 
-    fun load(sessionId: String) = launch {
-        try {
-            val session = newSession(sessionId)
-            dispatcher.dispatch(Action.SessionLoaded(session))
-        } catch (e: Exception) {
-            onError(e = e)
+    fun load(sessionId: String) {
+        launch {
+            try {
+                val session = getSession(sessionId)
+                dispatcher.dispatch(Action.SessionLoaded(session))
+            } catch (e: Exception) {
+                onError(e)
+            }
         }
     }
 
@@ -38,18 +40,17 @@ class SessionDetailActionCreator @Inject constructor(
                     )
                 )
             } catch (e: Exception) {
-                onError(e = e)
+                onError(e)
             }
         }
     }
 
-    private suspend fun newSession(
+    private suspend fun getSession(
         sessionId: String
     ): Session.SpeechSession {
         val sessions = sessionRepository.sessionContents().sessions
-        val session = sessions
+        return sessions
             .filterIsInstance<Session.SpeechSession>()
             .first { it.id == sessionId }
-        return session
     }
 }

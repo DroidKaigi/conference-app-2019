@@ -14,13 +14,13 @@ import io.github.droidkaigi.confsched2019.model.SystemProperty
 import io.github.droidkaigi.confsched2019.model.Topic
 
 sealed class Action {
-    class SessionRefreshStateChanged(val loadingState: LoadingState) : Action()
+    data class SessionRefreshStateChanged(val loadingState: LoadingState) : Action()
     class SessionLoadingStateChanged(val loadingState: LoadingState) : Action()
     data class SessionsLoaded(
         val sessionContents: SessionContents
     ) : Action()
 
-    class SpeakerLoaded(val speaker: Speaker) : Action()
+    data class SpeakerLoaded(val speaker: Speaker) : Action()
     data class SessionLoaded(val session: Session.SpeechSession) : Action()
     data class SessionPageSelected(val sessionPage: SessionPage) : Action()
     class SystemPropertyLoaded(val system: SystemProperty) : Action()
