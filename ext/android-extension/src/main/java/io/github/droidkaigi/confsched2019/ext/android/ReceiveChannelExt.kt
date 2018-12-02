@@ -4,7 +4,6 @@ import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
 import com.shopify.livedataktx.SingleLiveData
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.ReceiveChannel
@@ -22,7 +21,7 @@ import kotlinx.coroutines.launch
 
         override fun onActive() {
             super.onActive()
-            job = launch(Dispatchers.Main) {
+            job = launch(CoroutinePlugin.mainDispatcher) {
                 for (element in this@toSingleLiveData) {
                     postValue(element)
                 }
@@ -50,7 +49,7 @@ import kotlinx.coroutines.launch
 
         override fun onActive() {
             super.onActive()
-            job = launch(Dispatchers.Main) {
+            job = launch(CoroutinePlugin.mainDispatcher) {
                 for (element in this@toLiveData) {
                     postValue(element)
                 }
