@@ -68,7 +68,6 @@ class SessionItem @AssistedInject constructor(
                 speechSession.timeInMinutes,
                 speechSession.room.name
             )
-            levelChip.text = speechSession.level.getNameByLang(systemStore.lang)
             topicChip.text = speechSession.topic.getNameByLang(systemStore.lang)
 
             bindSpeaker()

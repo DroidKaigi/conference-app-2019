@@ -20,7 +20,6 @@ sealed class Session(
         val format: String,
         val language: String,
         val topic: Topic,
-        val level: Level,
         val isFavorited: Boolean,
         val speakers: List<Speaker>,
         val message: SessionMessage?

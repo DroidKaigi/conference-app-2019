@@ -2,7 +2,6 @@ package io.github.droidkaigi.confsched2019
 
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.minutes
-import io.github.droidkaigi.confsched2019.model.Level
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionMessage
@@ -31,7 +30,6 @@ fun dummySessionData(): List<Session> {
             format = "this is format2",
             language = "English",
             topic = Topic(10, "Tool"),
-            level = Level.of(3540, "Advanced"),
             isFavorited = true
             ,
             speakers = listOf(),
@@ -52,7 +50,6 @@ fun firstDummySpeechSession(): Session.SpeechSession {
         format = "this is format",
         language = "日本語",
         topic = Topic(id = 10, name = "App Architecture"),
-        level = Level.of(3540, "Beginner"),
         isFavorited = false,
         speakers = listOf(),
         message = null

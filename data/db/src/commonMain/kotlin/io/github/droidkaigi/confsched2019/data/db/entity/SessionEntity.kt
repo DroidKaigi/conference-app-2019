@@ -8,7 +8,6 @@ interface SessionEntity {
     var etime: Long
     var sessionFormat: String
     var language: String
-    val level: LevelEntity
     val topic: TopicEntity
     val room: RoomEntity
     val message: MessageEntity?

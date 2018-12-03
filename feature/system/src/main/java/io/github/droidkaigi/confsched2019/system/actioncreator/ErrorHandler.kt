@@ -1,5 +1,7 @@
 package io.github.droidkaigi.confsched2019.system.actioncreator
 
+import com.google.firebase.FirebaseApiNotAvailableException
+import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.firestore.FirebaseFirestoreException
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
@@ -25,7 +27,9 @@ interface ErrorHandler {
             is UnknownHostException,
             is SocketTimeoutException,
             is ConnectException,
-            is FirebaseFirestoreException -> {
+            is FirebaseFirestoreException,
+            is FirebaseApiNotAvailableException,
+            is FirebaseNetworkException -> {
                 val message = ErrorMessage.of(R.string.system_error_network, e)
                 loge(e = e)
                 dispatcher.launchAndDispatch(Action.Error(message))

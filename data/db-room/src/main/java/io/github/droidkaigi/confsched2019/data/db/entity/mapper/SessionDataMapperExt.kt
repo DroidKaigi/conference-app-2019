@@ -7,7 +7,6 @@ import io.github.droidkaigi.confsched2019.data.api.response.CategoryResponse
 import io.github.droidkaigi.confsched2019.data.api.response.RoomResponse
 import io.github.droidkaigi.confsched2019.data.api.response.SessionResponse
 import io.github.droidkaigi.confsched2019.data.api.response.SpeakerResponse
-import io.github.droidkaigi.confsched2019.data.db.entity.LevelEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.MessageEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.RoomEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionEntityImpl
@@ -44,7 +43,6 @@ fun SessionResponse.toSessionEntityImpl(
     val sessionFormat = categories.category(0, categoryItems[0])
     val language = categories.category(1, categoryItems[1])
     val topic = categories.category(2, categoryItems[2])
-    val level = categories.category(3, categoryItems[3])
     return SessionEntityImpl(
         id = id,
         title = title,
@@ -57,7 +55,6 @@ fun SessionResponse.toSessionEntityImpl(
             MessageEntityImpl(it.ja!!, it.en!!)
         },
         topic = TopicEntityImpl(topic.id!!, topic.name!!),
-        level = LevelEntityImpl(level.id!!, level.name!!),
         room = RoomEntityImpl(roomId, rooms.roomName(roomId))
     )
 }
