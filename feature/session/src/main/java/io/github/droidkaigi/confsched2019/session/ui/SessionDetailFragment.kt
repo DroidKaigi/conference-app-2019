@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
-import androidx.navigation.NavController
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
@@ -35,7 +34,6 @@ class SessionDetailFragment : Fragment(), HasSupportFragmentInjector {
     @Inject lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
     @Inject lateinit var sessionDetailActionCreator: SessionDetailActionCreator
     @Inject lateinit var systemStore: SystemStore
-    @Inject lateinit var navController: NavController
     @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
 
     lateinit var binding: FragmentSessionDetailBinding
@@ -74,6 +72,7 @@ class SessionDetailFragment : Fragment(), HasSupportFragmentInjector {
         sessionDetailActionCreator.load(sessionDetailFragmentArgs.session)
         sessionDetailStore.session.changedNonNull(this) { session: Session.SpeechSession ->
             binding.session = session
+            @Suppress("StringFormatMatches") // FIXME
             binding.timeAndRoom.text = getString(
                 R.string.session_duration_room_format,
                 session.timeInMinutes,
