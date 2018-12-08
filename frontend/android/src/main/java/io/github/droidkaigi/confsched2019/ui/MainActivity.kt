@@ -24,10 +24,10 @@ import io.github.droidkaigi.confsched2019.about.ui.AboutFragmentModule
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragmentModule
 import io.github.droidkaigi.confsched2019.databinding.ActivityMainBinding
+import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.ErrorMessage
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
-import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.session.di.SessionPagesScope
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragmentModule
@@ -63,7 +63,7 @@ class MainActivity : DaggerAppCompatActivity() {
         setupActionBarWithNavController(navController, binding.drawerLayout)
         binding.navView.setupWithNavController(navController)
         binding.toolbar.setupWithNavController(navController, binding.drawerLayout)
-        navController.addOnNavigatedListener { _, destination ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             val isWhiteTheme = destination.id != R.id.main
             binding.isWhiteTheme = isWhiteTheme
             if (23 <= Build.VERSION.SDK_INT) {

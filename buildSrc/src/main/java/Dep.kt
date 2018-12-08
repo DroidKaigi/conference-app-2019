@@ -9,7 +9,7 @@ private object Versions {
     val aac = "2.0.0"
     val dagger = "2.16"
     val coroutines = "1.0.0"
-    val navigation = "1.0.0-alpha06"
+    val navigation = "1.0.0-alpha08"
 }
 
 object Dep {
