@@ -71,17 +71,24 @@
             />
     </fragment>
     <fragment
+        android:id="@+id/about"
+        android:name="io.github.droidkaigi.confsched2019.about.ui.AboutFragment"
+        android:label="@string/about_label"
+        tools:layout="@layout/fragment_about"
+        >
+    </fragment>
+    <fragment
         android:id="@+id/announce"
         android:name="io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment"
         android:label="@string/announce_label"
-        tools:layout="@layout/fragment_session_pages"
+        tools:layout="@layout/fragment_announcement"
         >
     </fragment>
     <fragment
         android:id="@+id/sponsor"
         android:name="io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragment"
         android:label="@string/sponsor_label"
-        tools:layout="@layout/fragment_session_pages"
+        tools:layout="@layout/fragment_sponsor"
         >
     </fragment>
     <fragment

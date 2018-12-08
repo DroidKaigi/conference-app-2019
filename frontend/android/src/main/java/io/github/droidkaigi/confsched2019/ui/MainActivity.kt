@@ -19,6 +19,8 @@ import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import dagger.android.support.DaggerAppCompatActivity
 import io.github.droidkaigi.confsched2019.R
+import io.github.droidkaigi.confsched2019.about.ui.AboutFragment
+import io.github.droidkaigi.confsched2019.about.ui.AboutFragmentModule
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragmentModule
 import io.github.droidkaigi.confsched2019.databinding.ActivityMainBinding
@@ -122,6 +124,12 @@ abstract class MainActivityModule {
         modules = [SpeakerFragmentModule::class, SessionAssistedInjectModule::class]
     )
     abstract fun contributeSpeakerFragment(): SpeakerFragment
+
+    @PageScope
+    @ContributesAndroidInjector(
+        modules = [AboutFragmentModule::class]
+    )
+    abstract fun contributeAboutFragment(): AboutFragment
 
     @PageScope
     @ContributesAndroidInjector(modules = [AnnouncementFragmentModule::class])
