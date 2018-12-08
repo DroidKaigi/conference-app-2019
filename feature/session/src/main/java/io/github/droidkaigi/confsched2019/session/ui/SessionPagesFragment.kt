@@ -18,7 +18,7 @@ import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionPagesBinding
-import io.github.droidkaigi.confsched2019.session.di.SessionPageScope
+import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.session.di.SessionPagesScope
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPagesActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
@@ -112,7 +112,7 @@ class SessionPagesFragment : DaggerFragment() {
 @Module
 abstract class SessionPagesFragmentModule {
 
-    @SessionPageScope
+    @PageScope
     @ContributesAndroidInjector(modules = [SessionPageFragmentModule::class])
     abstract fun contributeSessionPageFragment(): SessionPageFragment
 

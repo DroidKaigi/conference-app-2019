@@ -21,11 +21,11 @@ import dagger.android.support.DaggerAppCompatActivity
 import io.github.droidkaigi.confsched2019.R
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragmentModule
-import io.github.droidkaigi.confsched2019.announcement.ui.di.AnnouncementScope
 import io.github.droidkaigi.confsched2019.databinding.ActivityMainBinding
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.ErrorMessage
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
+import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.session.di.SessionPagesScope
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragmentModule
@@ -36,7 +36,6 @@ import io.github.droidkaigi.confsched2019.session.ui.SpeakerFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
 import io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragment
 import io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragmentModule
-import io.github.droidkaigi.confsched2019.sponsor.ui.di.SponsorScope
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
 import io.github.droidkaigi.confsched2019.user.store.UserStore
@@ -62,7 +61,7 @@ class MainActivity : DaggerAppCompatActivity() {
         setupActionBarWithNavController(navController, binding.drawerLayout)
         binding.navView.setupWithNavController(navController)
         binding.toolbar.setupWithNavController(navController, binding.drawerLayout)
-        navController.addOnNavigatedListener { controller, destination ->
+        navController.addOnNavigatedListener { _, destination ->
             val isWhiteTheme = destination.id != R.id.main
             binding.isWhiteTheme = isWhiteTheme
             if (23 <= Build.VERSION.SDK_INT) {
@@ -112,21 +111,23 @@ abstract class MainActivityModule {
     )
     abstract fun contributeSessionPagesFragment(): SessionPagesFragment
 
+    @PageScope
     @ContributesAndroidInjector(
         modules = [SessionDetailFragmentModule::class, SessionAssistedInjectModule::class]
     )
     abstract fun contributeSessionDetailFragment(): SessionDetailFragment
 
+    @PageScope
     @ContributesAndroidInjector(
         modules = [SpeakerFragmentModule::class, SessionAssistedInjectModule::class]
     )
     abstract fun contributeSpeakerFragment(): SpeakerFragment
 
-    @AnnouncementScope
+    @PageScope
     @ContributesAndroidInjector(modules = [AnnouncementFragmentModule::class])
     abstract fun contributeAnnouncementFragment(): AnnouncementFragment
 
-    @SponsorScope
+    @PageScope
     @ContributesAndroidInjector(modules = [SponsorFragmentModule::class])
     abstract fun contributeSponsorFragment(): SponsorFragment
 

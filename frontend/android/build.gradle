@@ -38,9 +38,6 @@ android {
         xmlOutput file("lint-results.xml")
         htmlOutput file("lint-results.html")
     }
-    dexOptions {
-        javaMaxHeapSize "8g"
-    }
 }
 
 dependencies {
