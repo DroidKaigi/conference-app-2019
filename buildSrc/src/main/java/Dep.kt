@@ -4,7 +4,7 @@ private object Versions {
     val androidCompileSdkVersion = 28
     val androidMinSdkVersion = 21
     val retrofit = "2.4.0"
-    val kotlin = "1.3.10"
+    val kotlin = "1.3.11"
     val stetho = "1.5.0"
     val aac = "2.0.0"
     val dagger = "2.16"
