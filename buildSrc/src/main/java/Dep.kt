@@ -8,7 +8,7 @@ private object Versions {
     val stetho = "1.5.0"
     val aac = "2.0.0"
     val dagger = "2.16"
-    val coroutines = "1.0.0"
+    val coroutines = "1.0.1"
     val navigation = "1.0.0-alpha08"
 }
 
@@ -38,9 +38,13 @@ object Dep {
         val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.aac}"
         val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata:${Versions.aac}"
         val coreTesting = "androidx.arch.core:core-testing:${Versions.aac}"
-        val roomCompiler = "androidx.room:room-compiler:${Versions.aac}"
-        val roomRuntime = "androidx.room:room-runtime:${Versions.aac}"
-        val roomRxJava = "androidx.room:room-rxjava2:${Versions.aac}"
+
+        object Room {
+            val version = "2.1.0-alpha03"
+            val compiler = "androidx.room:room-compiler:${version}"
+            val runtime = "androidx.room:room-runtime:${version}"
+            val rxJava = "androidx.room:room-rxjava2:${version}"
+        }
 
         object Navigation {
             val runtime = "android.arch.navigation:navigation-runtime:${Versions.navigation}"
