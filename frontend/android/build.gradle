@@ -43,6 +43,7 @@ android {
 dependencies {
     implementation project(":model")
     implementation project(":feature:session")
+    implementation project(":feature:about")
     implementation project(":feature:announcement")
     implementation project(":feature:sponsor")
     implementation project(':frontendcomponent:androidcomponent')

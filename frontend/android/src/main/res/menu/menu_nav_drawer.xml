@@ -5,7 +5,10 @@
         android:id="@id/main"
         android:title="@string/session_label"
         />
-    <!--TODO: use icon android:icon="@drawable/ic_home_white_24dp"-->
+    <item
+        android:id="@id/about"
+        android:title="@string/about_label"
+        />
     <item
         android:id="@id/announce"
         android:title="@string/announce_label"
