@@ -46,6 +46,9 @@ dependencies {
     implementation Dep.Groupie.groupie
     implementation Dep.Groupie.databinding
 
+    implementation Dep.Picasso.picasso
+    implementation Dep.Picasso.picassoTransformation
+
     testImplementation Dep.junit
     testImplementation Dep.KotlinTest.assertions
     testImplementation Dep.MockK.jvm

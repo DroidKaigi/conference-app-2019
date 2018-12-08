@@ -23,7 +23,7 @@ import io.github.droidkaigi.confsched2019.model.Topic
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionPageBinding
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
-import io.github.droidkaigi.confsched2019.session.di.SessionPageScope
+import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPageActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPagesActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
@@ -251,7 +251,7 @@ abstract class SessionPageFragmentModule {
 
     @Module
     companion object {
-        @JvmStatic @SessionPageScope @Provides fun providesLifecycle(
+        @JvmStatic @PageScope @Provides fun providesLifecycle(
             sessionPageFragment: SessionPageFragment
         ): LifecycleOwner {
             return sessionPageFragment.viewLifecycleOwner

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import dagger.Module
 import dagger.Provides
@@ -14,6 +15,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
+import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changedNonNull
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.session.R
@@ -79,9 +81,9 @@ abstract class SpeakerFragmentModule {
     @Module
     companion object {
         @JvmStatic @Provides
-        @Named("SpeakerFragment")
-        fun providesLifecycle(sessionsFragment: SpeakerFragment): LifecycleOwner {
-            return sessionsFragment.viewLifecycleOwner
+        @PageScope
+        fun providesLifecycle(sessionsFragment: SpeakerFragment): Lifecycle {
+            return sessionsFragment.viewLifecycleOwner.lifecycle
         }
 
         @JvmStatic @Provides fun provideActivity(

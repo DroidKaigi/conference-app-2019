@@ -1,0 +1,44 @@
+package io.github.droidkaigi.confsched2019.session.ui.item
+
+import androidx.navigation.NavController
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
+import com.squareup.picasso.Picasso
+import com.xwray.groupie.databinding.BindableItem
+import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.Speaker
+import io.github.droidkaigi.confsched2019.session.R
+import io.github.droidkaigi.confsched2019.session.databinding.ItemSpeakerBinding
+import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragmentDirections
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
+
+class SpeakerItem @AssistedInject constructor(
+    @Assisted val speaker: Speaker,
+    val navController: NavController
+) : BindableItem<ItemSpeakerBinding>(){
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(
+            speaker: Speaker
+        ): SpeakerItem
+    }
+
+    override fun getLayout(): Int = R.layout.item_speaker
+
+    override fun bind(itemBinding: ItemSpeakerBinding, position: Int) {
+        itemBinding.speakerText.text = speaker.name
+        Picasso.get()
+            .load(speaker.imageUrl)
+            .transform(CropCircleTransformation())
+            .into(itemBinding.speakerImage)
+
+        itemBinding.speakerText.setOnClickListener {
+            navController.navigate(
+                SessionDetailFragmentDirections.actionSessionDetailToSpeaker(
+                    speaker.id
+                )
+            )
+        }
+    }
+}

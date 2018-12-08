@@ -30,98 +30,258 @@
             />
     </data>
 
-    <androidx.cardview.widget.CardView
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:targetApi="lollipop"
+        android:layout_height="match_parent"
         >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             >
 
-            <TextView
-                android:id="@+id/room"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:maxLines="3"
-                app:layout_constraintStart_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="@{session.room.name}"
-                tools:text=" / Room A"
-                />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
 
-            <androidx.emoji.widget.EmojiTextView
-                android:id="@+id/title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
-                android:text="@{session.title}"
-                android:textAlignment="viewStart"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_goneMarginTop="12dp"
-                tools:text="テストセッション"
-                />
+                <TextView
+                    android:id="@+id/room"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3"
+                    android:text="@{session.room.name}"
+                    app:layout_constraintStart_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text=" / Room A"
+                    />
 
-            <androidx.emoji.widget.EmojiTextView
-                android:id="@+id/description"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="12dp"
-                android:ellipsize="end"
-                android:includeFontPadding="false"
-                android:maxLines="3"
-                android:paddingBottom="2dp"
-                android:text="@{session.desc}"
-                android:textAlignment="viewStart"
-                android:visibility="@{simplify ? View.GONE : View.VISIBLE}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/title"
-                app:layout_constraintTop_toBottomOf="@id/title"
-                tools:text="Material is the metaphor A material metaphor is the unifying theory of a rationalized space and a system of motion. The material is grounded in tactile reality, inspired by the study of paper and ink, yet technologically advanced and open to imagination and magic."
-                />
+                <androidx.emoji.widget.EmojiTextView
+                    android:id="@+id/title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@{session.title}"
+                    android:textAlignment="viewStart"
+                    android:textAppearance="@style/TextAppearance.App.Headline5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_goneMarginTop="12dp"
+                    tools:text="テストセッション"
+                    />
 
-            <androidx.emoji.widget.EmojiTextView
-                android:id="@+id/message"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="14dp"
-                android:ellipsize="end"
-                android:includeFontPadding="false"
-                android:maxLines="3"
-                android:paddingBottom="2dp"
-                android:textAlignment="viewStart"
-                android:visibility="@{session.message == null ? View.GONE : View.VISIBLE}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/title"
-                app:layout_constraintTop_toBottomOf="@id/description"
-                />
+                <TextView
+                    android:id="@+id/time_and_room"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="@style/TextAppearance.App.Subtitle2"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@id/title"
+                    app:layout_constraintTop_toBottomOf="@id/title"
+                    tools:text="20min / Hall"
+                    />
 
-            <ImageView
-                android:id="@+id/favorite"
-                android:layout_marginEnd="8dp"
-                android:background="@{session.isFavorited ? @color/white : @android:color/black}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:contentDescription="@string/session_description_favorite_image"
-                android:layout_height="40dp"
-                android:layout_width="40dp"
-                />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/start_end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    app:layout_constraintStart_toStartOf="@id/title"
+                    app:layout_constraintTop_toBottomOf="@id/time_and_room"
+                    tools:text="2月2日 10:20-10:40"
+                    />
+
+                <ImageView
+                    android:id="@+id/divider1"
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_marginTop="48dp"
+                    android:contentDescription="@null"
+                    android:layerType="software"
+                    android:src="@drawable/shape_dashed_line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/start_end_time"
+                    />
+
+                <androidx.emoji.widget.EmojiTextView
+                    android:id="@+id/description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    android:ellipsize="end"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="2dp"
+                    android:text="@{session.desc}"
+                    android:textAlignment="viewStart"
+                    android:visibility="@{simplify ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/title"
+                    app:layout_constraintTop_toBottomOf="@id/divider1"
+                    tools:text="Material is the metaphor A material metaphor is the unifying theory of a rationalized space and a system of motion. The material is grounded in tactile reality, inspired by the study of paper and ink, yet technologically advanced and open to imagination and magic."
+                    />
+
+
+                <ImageView
+                    android:id="@+id/divider2"
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_marginTop="28dp"
+                    android:contentDescription="@null"
+                    android:layerType="software"
+                    android:src="@drawable/shape_dashed_line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/description"
+                    />
+
+                <TextView
+                    android:id="@+id/tag_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/session_detail_tag"
+                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    app:layout_constraintStart_toStartOf="@id/title"
+                    app:layout_constraintTop_toBottomOf="@id/divider2"
+                    />
+
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chip_group"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/title"
+                    app:layout_constraintTop_toBottomOf="@id/tag_title"
+                    >
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/language_chip"
+                        style="@style/Widget.MaterialComponents.Chip.Action"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{session.language}"
+                        android:textAppearance="?textAppearanceCaption"
+                        android:textColor="@color/white"
+                        app:chipBackgroundColor="#7982e1"
+                        tools:text="Japanese"
+                        />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/topic_chip"
+                        style="@style/Widget.MaterialComponents.Chip.Action"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?textAppearanceCaption"
+                        android:textColor="@color/white"
+                        app:chipBackgroundColor="#95959c"
+                        tools:text="ソフトウェアアーキテクチャ"
+                        />
+                </com.google.android.material.chip.ChipGroup>
+
+                <ImageView
+                    android:id="@+id/divider3"
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_marginTop="28dp"
+                    android:contentDescription="@null"
+                    android:layerType="software"
+                    android:src="@drawable/shape_dashed_line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/chip_group"
+                    />
+
+
+                <TextView
+                    android:id="@+id/servey_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/session_detail_survey"
+                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    app:layout_constraintStart_toStartOf="@id/title"
+                    app:layout_constraintTop_toBottomOf="@id/divider3"
+                    />
+
+                <ImageView
+                    android:id="@+id/divider4"
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_marginTop="28dp"
+                    android:contentDescription="@null"
+                    android:layerType="software"
+                    android:src="@drawable/shape_dashed_line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/servey_title"
+                    />
+
+                <TextView
+                    android:id="@+id/speaker_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/session_detail_speaker"
+                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    app:layout_constraintStart_toStartOf="@id/title"
+                    app:layout_constraintTop_toBottomOf="@id/divider4"
+                    />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/speakers"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/speaker_title"
+                    />
+
+                <androidx.emoji.widget.EmojiTextView
+                    android:id="@+id/message"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="14dp"
+                    android:ellipsize="end"
+                    android:includeFontPadding="false"
+                    android:maxLines="3"
+                    android:paddingBottom="2dp"
+                    android:textAlignment="viewStart"
+                    android:visibility="@{session.message == null ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/title"
+                    app:layout_constraintTop_toBottomOf="@id/speakers"
+                    />
+
+
+                <ImageView
+                    android:id="@+id/favorite"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@{session.isFavorited ? @color/white : @android:color/black}"
+                    android:contentDescription="@string/session_description_favorite_image"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

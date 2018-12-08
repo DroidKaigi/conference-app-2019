@@ -157,4 +157,9 @@ object Dep {
         val extension = "me.tatarka.injectedvmprovider:injectedvmprovider-extensions:2.0"
         val ktx = "me.tatarka.injectedvmprovider:injectedvmprovider-ktx:2.0"
     }
+
+    object Picasso {
+        val picasso = "com.squareup.picasso:picasso:2.71828"
+        val picassoTransformation = "jp.wasabeef:picasso-transformations:2.2.1"
+    }
 }

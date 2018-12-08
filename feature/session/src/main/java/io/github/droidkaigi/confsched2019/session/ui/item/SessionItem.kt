@@ -2,12 +2,15 @@ package io.github.droidkaigi.confsched2019.session.ui.item
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.core.view.size
 import androidx.navigation.NavController
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
+import com.squareup.picasso.Picasso
 import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.Speaker
@@ -18,6 +21,7 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPagesA
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.util.lazyWithParam
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlin.math.max
 
 class SessionItem @AssistedInject constructor(
@@ -84,7 +88,7 @@ class SessionItem @AssistedInject constructor(
 
     private fun ItemSessionBinding.bindSpeaker() {
         (0 until max(speakers.size, speechSession.speakers.size)).forEach { index ->
-            val existSpeakerView: TextView? = speakers.getChildAt(index) as? TextView
+            val existSpeakerView = speakers.getChildAt(index) as? ViewGroup
             val speaker: Speaker? = speechSession.speakers.getOrNull(index)
             if (existSpeakerView == null && speaker == null) {
                 return@forEach
@@ -97,15 +101,35 @@ class SessionItem @AssistedInject constructor(
             if (existSpeakerView == null && speaker != null) {
                 val speakerView = layoutInflater.get(root.context).inflate(
                     R.layout.layout_speaker, speakers, false
-                ) as TextView
-                speakerView.text = speaker.name
+                ) as ViewGroup
+                val imageView: ImageView = speakerView.findViewById(
+                    R.id.speaker_image
+                )
+                val textView: TextView = speakerView.findViewById(R.id.speaker)
+                bindSpeakerData(speaker, textView, imageView)
+
                 speakers.addView(speakerView)
                 return@forEach
             }
             if (existSpeakerView != null && speaker != null) {
-                existSpeakerView.text = speaker.name
+                val textView: TextView = existSpeakerView.findViewById(R.id.speaker)
+                textView.text = speaker.name
+                val imageView = existSpeakerView.findViewById<ImageView>(R.id.speaker_image)
+                bindSpeakerData(speaker, textView, imageView)
             }
         }
+    }
+
+    private fun bindSpeakerData(
+        speaker: Speaker,
+        textView: TextView,
+        imageView: ImageView
+    ) {
+        textView.text = speaker.name
+        Picasso.get()
+            .load(speaker.imageUrl)
+            .transform(CropCircleTransformation())
+            .into(imageView)
     }
 
     override fun getLayout(): Int = R.layout.item_session
