@@ -5,18 +5,16 @@ import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.databinding.BindableItem
-import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSpeakerBinding
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragmentDirections
-import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
 class SpeakerItem @AssistedInject constructor(
     @Assisted val speaker: Speaker,
     val navController: NavController
-) : BindableItem<ItemSpeakerBinding>(){
+) : BindableItem<ItemSpeakerBinding>() {
     @AssistedInject.Factory
     interface Factory {
         fun create(

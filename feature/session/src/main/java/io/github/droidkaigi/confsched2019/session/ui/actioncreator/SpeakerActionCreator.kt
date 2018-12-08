@@ -1,7 +1,6 @@
 package io.github.droidkaigi.confsched2019.session.ui.actioncreator
 
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.data.repository.SessionRepository
 import io.github.droidkaigi.confsched2019.di.PageScope

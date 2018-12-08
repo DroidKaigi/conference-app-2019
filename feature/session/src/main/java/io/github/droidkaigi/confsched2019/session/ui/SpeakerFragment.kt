@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
 import dagger.Module
 import dagger.Provides
 import dagger.android.AndroidInjector
@@ -24,7 +23,6 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SpeakerAction
 import io.github.droidkaigi.confsched2019.session.ui.store.SpeakerStore
 import me.tatarka.injectedvmprovider.ktx.injectedViewModelProvider
 import javax.inject.Inject
-import javax.inject.Named
 
 class SpeakerFragment : Fragment(), HasSupportFragmentInjector {
 
