@@ -17,7 +17,7 @@ dependencies {
     implementation Dep.Kotlin.serialization
     api Dep.Kotlin.coroutines
     implementation Dep.Arch.lifecycleLiveData
-    kapt Dep.Arch.roomCompiler
+    kapt Dep.Arch.Room.compiler
 
     api Dep.Klock.jvm
 

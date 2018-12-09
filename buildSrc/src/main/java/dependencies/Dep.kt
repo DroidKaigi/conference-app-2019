@@ -1,29 +1,19 @@
 package dependencies
 
-private object Versions {
-    val androidCompileSdkVersion = 28
-    val androidMinSdkVersion = 21
-    val retrofit = "2.4.0"
-    val kotlin = "1.3.10"
-    val stetho = "1.5.0"
-    val aac = "2.0.0"
-    val dagger = "2.16"
-    val coroutines = "1.0.0"
-    val navigation = "1.0.0-alpha06"
-}
-
 object Dep {
     object Kotlin {
-        val plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
-        val serializationPlugin = "org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}"
-        val stdlibCommon = "org.jetbrains.kotlin:kotlin-stdlib-common:${Versions.kotlin}"
-        val stdlibJvm = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
-        val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
-        val androidCoroutinesDispatcher = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
-        val coroutinesRx2 = "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:${Versions.coroutines}"
-        val coroutinesReactive = "org.jetbrains.kotlinx:kotlinx-coroutines-reactive:${Versions.coroutines}"
+        val version = "1.3.11"
+        val plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
+        val serializationPlugin = "org.jetbrains.kotlin:kotlin-serialization:$version"
+        val stdlibCommon = "org.jetbrains.kotlin:kotlin-stdlib-common:$version"
+        val stdlibJvm = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version"
+        val coroutinesVersion = "1.0.1"
+        val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+        val androidCoroutinesDispatcher = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+        val coroutinesRx2 = "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:$coroutinesVersion"
+        val coroutinesReactive = "org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$coroutinesVersion"
         val androidCoroutines = "net.devrieze:android-coroutines:0.7.0"
-        val coroutinesPlayServices = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${Versions.coroutines}"
+        val coroutinesPlayServices = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesVersion"
         val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.8.1-rc13"
         val jvmModuleTest = "org.jetbrains.kotlin:kotlin-test"
         val jvmModuleTestJunit = "org.jetbrains.kotlin:kotlin-test-junit"
@@ -35,22 +25,27 @@ object Dep {
     }
 
     object Arch {
-        val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.aac}"
-        val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata:${Versions.aac}"
-        val coreTesting = "androidx.arch.core:core-testing:${Versions.aac}"
-        val roomCompiler = "androidx.room:room-compiler:${Versions.aac}"
-        val roomRuntime = "androidx.room:room-runtime:${Versions.aac}"
-        val roomRxJava = "androidx.room:room-rxjava2:${Versions.aac}"
+        val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:2.0.0"
+        val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata:2.0.0"
+        val coreTesting = "androidx.arch.core:core-testing:2.0.0"
+
+        object Room {
+            val version = "2.1.0-alpha03"
+            val compiler = "androidx.room:room-compiler:$version"
+            val runtime = "androidx.room:room-runtime:$version"
+            val rxJava = "androidx.room:room-rxjava2:$version"
+        }
 
         object Navigation {
-            val runtime = "android.arch.navigation:navigation-runtime:${Versions.navigation}"
-            val runtimeKtx = "android.arch.navigation:navigation-runtime-ktx:${Versions.navigation}"
-            val fragment = "android.arch.navigation:navigation-fragment:${Versions.navigation}"
-            val ui = "android.arch.navigation:navigation-ui:${Versions.navigation}"
-            val fragmentKtx = "android.arch.navigation:navigation-fragment-ktx:${Versions.navigation}"
-            val uiKtx = "android.arch.navigation:navigation-ui-ktx:${Versions.navigation}"
-            val safeArgsPlugin = "android.arch.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
-            val testingKtx = "android.arch.navigation:navigation-testing-ktx:${Versions.navigation}"
+            val version = "1.0.0-alpha08"
+            val runtime = "android.arch.navigation:navigation-runtime:$version"
+            val runtimeKtx = "android.arch.navigation:navigation-runtime-ktx:$version"
+            val fragment = "android.arch.navigation:navigation-fragment:$version"
+            val ui = "android.arch.navigation:navigation-ui:$version"
+            val fragmentKtx = "android.arch.navigation:navigation-fragment-ktx:$version"
+            val uiKtx = "android.arch.navigation:navigation-ui-ktx:$version"
+            val safeArgsPlugin = "android.arch.navigation:navigation-safe-args-gradle-plugin:$version"
+            val testingKtx = "android.arch.navigation:navigation-testing-ktx:$version"
         }
     }
 
@@ -66,11 +61,12 @@ object Dep {
     }
 
     object Dagger {
-        val core = "com.google.dagger:dagger:${Versions.dagger}"
-        val compiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
-        val androidSupport = "com.google.dagger:dagger-android-support:${Versions.dagger}"
-        val android = "com.google.dagger:dagger-android:${Versions.dagger}"
-        val androidProcessor = "com.google.dagger:dagger-android-processor:${Versions.dagger}"
+        val version = "2.16"
+        val core = "com.google.dagger:dagger:$version"
+        val compiler = "com.google.dagger:dagger-compiler:$version"
+        val androidSupport = "com.google.dagger:dagger-android-support:$version"
+        val android = "com.google.dagger:dagger-android:$version"
+        val androidProcessor = "com.google.dagger:dagger-android-processor:$version"
         val assistedInjectAnnotations = "com.squareup.inject:assisted-inject-annotations-dagger2:0.3.0"
         val assistedInjectProcessor = "com.squareup.inject:assisted-inject-processor-dagger2:0.3.0"
     }
@@ -87,7 +83,8 @@ object Dep {
     }
 
     object Retrofit {
-        val client = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+        val version = "2.4.0"
+        val client = "com.squareup.retrofit2:retrofit:$version"
         val adapterKotlinCoroutines = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
         val converterKotlinxSerialization = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.1.0"
     }
@@ -109,7 +106,7 @@ object Dep {
     }
 
     object Stetho {
-        val stetho = "com.facebook.stetho:stetho:${Versions.stetho}"
+        val stetho = "com.facebook.stetho:stetho:1.5.0"
     }
 
     object Hyperion {

@@ -15,11 +15,11 @@ dependencies {
     implementation Dep.Kotlin.serialization
     api Dep.Kotlin.coroutines
     api Dep.Kotlin.coroutinesRx2
-    api Dep.Arch.roomRuntime
-    implementation Dep.Arch.roomRxJava
+    api Dep.Arch.Room.runtime
+    implementation Dep.Arch.Room.rxJava
     api Dep.Arch.lifecycleLiveData
     api Dep.Klock.jvm
-    kapt Dep.Arch.roomCompiler
+    kapt Dep.Arch.Room.compiler
 
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport
