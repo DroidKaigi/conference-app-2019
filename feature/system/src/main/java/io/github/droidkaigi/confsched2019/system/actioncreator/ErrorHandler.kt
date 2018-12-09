@@ -10,8 +10,8 @@ import io.github.droidkaigi.confsched2019.system.BuildConfig
 import io.github.droidkaigi.confsched2019.system.R
 import io.github.droidkaigi.confsched2019.util.logd
 import io.github.droidkaigi.confsched2019.util.loge
+import io.ktor.client.features.BadResponseStatusException
 import kotlinx.coroutines.CancellationException
-import retrofit2.HttpException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -34,7 +34,7 @@ interface ErrorHandler {
                 loge(e = e)
                 dispatcher.launchAndDispatch(Action.Error(message))
             }
-            is HttpException -> {
+            is BadResponseStatusException -> {
                 val message = ErrorMessage.of(R.string.system_error_server, e)
                 loge(e = e)
                 dispatcher.launchAndDispatch(Action.Error(message))

@@ -10,6 +10,7 @@ buildscript {
         jcenter()
         maven { url "https://kotlin.bintray.com/kotlinx" }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+        maven { url "https://dl.bintray.com/kotlin/ktor"}
         maven { url "http://kotlin.bintray.com/kotlin-dev" }
         maven { url "https://plugins.gradle.org/m2/" }
     }
@@ -32,6 +33,7 @@ allprojects {
         maven { url "https://kotlin.bintray.com/kotlinx" }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
         maven { url "http://kotlin.bintray.com/kotlin-dev" }
+        maven { url "https://dl.bintray.com/kotlin/ktor"}
         maven { url "https://dl.bintray.com/soywiz/soywiz" }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
     }

@@ -12,8 +12,8 @@ dependencies {
 
     implementation Dep.Kotlin.stdlibJvm
     implementation Dep.Kotlin.serialization
-    implementation Dep.Retrofit.adapterKotlinCoroutines
-    implementation Dep.Retrofit.converterKotlinxSerialization
+    implementation Dep.Ktor.clientAndroid
+    implementation Dep.Ktor.jsonJvm
     implementation Dep.OkHttp.client
     implementation Dep.Stetho.stetho
     implementation Dep.Dagger.core

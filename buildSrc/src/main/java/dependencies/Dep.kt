@@ -82,11 +82,9 @@ object Dep {
         val design = "com.google.android.material:material:1.1.0-alpha01"
     }
 
-    object Retrofit {
-        val version = "2.4.0"
-        val client = "com.squareup.retrofit2:retrofit:$version"
-        val adapterKotlinCoroutines = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
-        val converterKotlinxSerialization = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.1.0"
+    object Ktor {
+        val clientAndroid = "io.ktor:ktor-client-android:1.0.1"
+        val jsonJvm = "io.ktor:ktor-client-json-jvm:1.0.1"
     }
 
     object AndroidKtx {

@@ -52,7 +52,7 @@ dependencies {
     implementation project(':data:db-room')
     implementation project(':data:repository-impl')
     implementation project(':data:firestore-impl')
-    implementation project(':data:api-retrofit')
+    implementation project(':data:api-impl')
     implementation project(':ext:log')
 
     implementation Dep.Kotlin.stdlibJvm

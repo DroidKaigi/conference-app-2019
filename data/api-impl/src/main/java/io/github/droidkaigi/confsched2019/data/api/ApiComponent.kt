@@ -11,7 +11,7 @@ import kotlin.coroutines.CoroutineContext
     ApiModule::class
 ])
 interface ApiComponent {
-    fun sessionApi(): SessionApi
+    fun DroidKaigiApi(): DroidKaigiApi
 
     @Component.Builder
     interface Builder {
