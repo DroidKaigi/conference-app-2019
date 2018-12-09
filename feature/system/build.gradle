@@ -42,7 +42,7 @@ dependencies {
     implementation Dep.Kotlin.androidCoroutines
     implementation Dep.Android.appCompat
 
-    implementation Dep.Retrofit.client
+    implementation Dep.Ktor.clientAndroid
 
     implementation Dep.Firebase.fireStore
 

@@ -1,7 +1,7 @@
 package io.github.droidkaigi.confsched2019.data.repository
 
 import com.soywiz.klock.DateTime
-import io.github.droidkaigi.confsched2019.data.api.SessionApi
+import io.github.droidkaigi.confsched2019.data.api.DroidKaigiApi
 import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionWithSpeakers
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntity
@@ -26,7 +26,7 @@ import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 
 class DataSessionRepository @Inject constructor(
-    private val sessionApi: SessionApi,
+    private val droidKaigiApi: DroidKaigiApi,
     private val sessionDatabase: SessionDatabase,
     private val fireStore: FireStore
 ) : SessionRepository {
@@ -174,7 +174,7 @@ class DataSessionRepository @Inject constructor(
     )
 
     override suspend fun refresh() {
-        val response = sessionApi.getSessions()
+        val response = droidKaigiApi.getSessions()
         sessionDatabase.save(response)
     }
 }
