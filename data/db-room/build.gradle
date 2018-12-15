@@ -10,6 +10,7 @@ apply from: rootProject.file('gradle/android.gradle')
 dependencies {
     api project(":data:db")
     api project(":data:api")
+    api project(":ext:android-extension")
 
     implementation Dep.Kotlin.stdlibJvm
     implementation Dep.Kotlin.serialization

@@ -3,7 +3,6 @@ package io.github.droidkaigi.confsched2019.ext.android
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import java.util.concurrent.ConcurrentHashMap
@@ -18,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap
  */
 val Lifecycle.coroutineScope: CoroutineScope
     get() = cachedLifecycleCoroutineScopes[this] ?: job.let { job ->
-        val newScope = CoroutineScope(job + CoroutinePlugin.mainDispatcher)
+        val newScope = CoroutineScope(job + Dispatchers.Main)
         if (job.isActive) {
             cachedLifecycleCoroutineScopes[this] = newScope
             job.invokeOnCompletion { _ -> cachedLifecycleCoroutineScopes -= this }

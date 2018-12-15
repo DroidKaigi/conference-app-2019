@@ -5,12 +5,12 @@ import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.data.repository.SessionRepository
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
+import io.github.droidkaigi.confsched2019.ext.android.Dispatchers
 import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.system.actioncreator.ErrorHandler
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -24,14 +24,14 @@ class SpeakerActionCreator @Inject constructor(
 
     fun load(speakerId: String) = launch {
         try {
-            val speaker = newSpeaker(speakerId)
+            val speaker = getSpeaker(speakerId)
             dispatcher.dispatch(Action.SpeakerLoaded(speaker))
         } catch (e: Exception) {
             onError(e)
         }
     }
 
-    private suspend fun newSpeaker(
+    private suspend fun getSpeaker(
         speakerId: String
     ): Speaker {
         return withContext(Dispatchers.Default) {
