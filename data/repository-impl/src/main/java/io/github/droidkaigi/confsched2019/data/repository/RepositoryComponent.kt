@@ -6,7 +6,6 @@ import io.github.droidkaigi.confsched2019.data.api.DroidKaigiApi
 import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.firestore.FireStore
 import javax.inject.Singleton
-import kotlin.coroutines.CoroutineContext
 
 @Singleton
 @Component(modules = [
@@ -22,8 +21,6 @@ interface RepositoryComponent {
         @BindsInstance fun database(database: SessionDatabase): Builder
 
         @BindsInstance fun fireStore(fireStore: FireStore): Builder
-
-        @BindsInstance fun coroutineContext(coroutineContext: CoroutineContext): Builder
 
         fun build(): RepositoryComponent
     }

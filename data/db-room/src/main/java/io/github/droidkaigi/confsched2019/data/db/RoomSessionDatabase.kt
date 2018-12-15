@@ -9,32 +9,33 @@ import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntity
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionEntities
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionSpeakerJoinEntities
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSpeakerEntities
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.reactive.openSubscription
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 class RoomSessionDatabase @Inject constructor(
     private val sessionDatabase: SessionCacheDatabase,
     private val sessionDao: SessionDao,
     private val speakerDao: SpeakerDao,
-    private val sessionSpeakerJoinDao: SessionSpeakerJoinDao
+    private val sessionSpeakerJoinDao: SessionSpeakerJoinDao,
+    private val coroutineContext: CoroutineContext
 ) : SessionDatabase {
     override fun sessionsChannel(): ReceiveChannel<List<SessionWithSpeakers>> {
         return sessionSpeakerJoinDao.getAllSessionsObservable().openSubscription()
     }
 
-    override suspend fun sessions(): List<SessionWithSpeakers> = withContext(Dispatchers.IO) {
+    override suspend fun sessions(): List<SessionWithSpeakers> = withContext(coroutineContext) {
         sessionSpeakerJoinDao.getAllSessions()
     }
 
-    override suspend fun allSpeaker(): List<SpeakerEntity> = withContext(Dispatchers.IO) {
+    override suspend fun allSpeaker(): List<SpeakerEntity> = withContext(coroutineContext) {
         speakerDao.getAllSpeaker()
     }
 
     override suspend fun save(apiResponse: Response) {
-        withContext(Dispatchers.IO) {
+        withContext(coroutineContext) {
             // FIXME: SQLiteDatabaseLockedException
             sessionDatabase.runInTransaction {
                 sessionDatabase.sqlite().execSQL("PRAGMA defer_foreign_keys = TRUE")

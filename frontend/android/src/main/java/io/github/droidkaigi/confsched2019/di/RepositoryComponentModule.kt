@@ -7,7 +7,6 @@ import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.firestore.FireStore
 import io.github.droidkaigi.confsched2019.data.repository.RepositoryComponent
 import io.github.droidkaigi.confsched2019.data.repository.SessionRepository
-import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 @Module
@@ -21,7 +20,6 @@ object RepositoryComponentModule {
             .api(api)
             .database(database)
             .fireStore(fireStore)
-            .coroutineContext(Dispatchers.Default)
             .build()
             .sessionRepository()
     }

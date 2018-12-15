@@ -5,14 +5,12 @@ import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.data.api.ApiComponent
 import io.github.droidkaigi.confsched2019.data.api.DroidKaigiApi
-import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 @Module object ApiComponentModule {
     @JvmStatic @Provides @Singleton fun provideApi(application: Application): DroidKaigiApi {
         return ApiComponent.builder()
             .context(application)
-            .coroutineContext(Dispatchers.IO)
             .build()
             .DroidKaigiApi()
     }

@@ -5,7 +5,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Lifecycle.State.INITIALIZED
 import androidx.lifecycle.LifecycleOwner
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
@@ -22,7 +21,7 @@ import kotlinx.coroutines.launch
  * already cancelled scope.
  */
 fun Lifecycle.createScope(activeWhile: Lifecycle.State): CoroutineScope {
-    return CoroutineScope(createJob(activeWhile) + CoroutinePlugin.mainDispatcher)
+    return CoroutineScope(createJob(activeWhile) + Dispatchers.Main)
 }
 
 /**
@@ -40,7 +39,7 @@ fun Lifecycle.createJob(activeWhile: Lifecycle.State = INITIALIZED): Job {
     return SupervisorJob().also { job ->
         when (currentState) {
             Lifecycle.State.DESTROYED -> job.cancel() // Fast path if already destroyed
-            else -> GlobalScope.launch(CoroutinePlugin.mainDispatcher) {
+            else -> GlobalScope.launch(Dispatchers.Main) {
                 // State is usually synced on next loop,
                 // this allows to use STARTED from onStart in Activities for example.
                 addObserver(object : GenericLifecycleObserver {

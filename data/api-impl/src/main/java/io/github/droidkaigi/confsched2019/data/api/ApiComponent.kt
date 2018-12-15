@@ -4,7 +4,6 @@ import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
-import kotlin.coroutines.CoroutineContext
 
 @Singleton
 @Component(modules = [
@@ -16,8 +15,6 @@ interface ApiComponent {
     @Component.Builder
     interface Builder {
         @BindsInstance fun context(context: Context): Builder
-
-        @BindsInstance fun coroutineContext(coroutineContext: CoroutineContext): Builder
 
         fun build(): ApiComponent
     }
