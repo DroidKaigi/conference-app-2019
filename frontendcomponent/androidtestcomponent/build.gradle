@@ -11,7 +11,7 @@ dependencies {
 
     api Dep.Dagger.androidSupport
     implementation Dep.Kotlin.stdlibJvm
-    api Dep.Arch.coreTesting
+    api Dep.AndroidX.coreTesting
     api Dep.Kotlin.coroutines
 
     implementation Dep.junit

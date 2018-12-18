@@ -15,7 +15,7 @@ dependencies {
 
     api Dep.PlayServices.auth
     api Dep.Kotlin.coroutinesPlayServices
-    api Dep.Arch.lifecycleLiveData
+    api Dep.AndroidX.lifecycleLiveData
     api Dep.liveDataKtx
 
     testImplementation Dep.junit
