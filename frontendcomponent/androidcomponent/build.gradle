@@ -8,7 +8,7 @@ apply from: rootProject.file('gradle/android.gradle')
 
 dependencies {
     api project(":model")
-    api Dep.Android.design
+    api Dep.AndroidX.design
     implementation Dep.Kotlin.stdlibJvm
 
     api Dep.Dagger.androidSupport
@@ -17,18 +17,18 @@ dependencies {
 
     api Dep.Klock.jvm
 
-    api Dep.Arch.Navigation.runtime
-    api Dep.Arch.Navigation.runtimeKtx
-    api Dep.Arch.Navigation.fragmentKtx
-    api Dep.Arch.Navigation.uiKtx
+    api Dep.AndroidX.Navigation.runtime
+    api Dep.AndroidX.Navigation.runtimeKtx
+    api Dep.AndroidX.Navigation.fragmentKtx
+    api Dep.AndroidX.Navigation.uiKtx
 
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport
 
     testImplementation Dep.junit
     testImplementation Dep.MockK.jvm
-    androidTestImplementation Dep.Android.testRunner
-    androidTestImplementation Dep.Android.espressoCore
+    androidTestImplementation Dep.AndroidX.testRunner
+    androidTestImplementation Dep.AndroidX.espressoCore
 }
 repositories {
     mavenCentral()

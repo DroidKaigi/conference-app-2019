@@ -60,14 +60,14 @@ dependencies {
 
     implementation Dep.Firebase.fireStore
 
-    implementation Dep.Android.appCompat
-    implementation Dep.Android.constraint
+    implementation Dep.AndroidX.appCompat
+    implementation Dep.AndroidX.constraint
 
-    implementation Dep.Arch.Navigation.runtime
-    implementation Dep.Arch.Navigation.fragment
-    implementation Dep.Arch.Navigation.ui
-    implementation Dep.Arch.Navigation.runtimeKtx
-    implementation Dep.Arch.Navigation.fragmentKtx
+    implementation Dep.AndroidX.Navigation.runtime
+    implementation Dep.AndroidX.Navigation.fragment
+    implementation Dep.AndroidX.Navigation.ui
+    implementation Dep.AndroidX.Navigation.runtimeKtx
+    implementation Dep.AndroidX.Navigation.fragmentKtx
 
     implementation Dep.Stetho.stetho
 
@@ -88,8 +88,8 @@ dependencies {
 
     testImplementation Dep.junit
 
-    androidTestImplementation Dep.Android.testRunner
-    androidTestImplementation Dep.Android.espressoCore
+    androidTestImplementation Dep.AndroidX.testRunner
+    androidTestImplementation Dep.AndroidX.espressoCore
 
     Dep.Hyperion.hyperionPlugins.forEach {
         debugImplementation it

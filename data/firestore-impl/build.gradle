@@ -15,7 +15,7 @@ dependencies {
     api Dep.Kotlin.coroutines
     implementation Dep.Firebase.auth
     implementation Dep.Firebase.fireStore
-    api Dep.Arch.lifecycleLiveData
+    api Dep.AndroidX.lifecycleLiveData
 
     api Dep.Klock.jvm
 

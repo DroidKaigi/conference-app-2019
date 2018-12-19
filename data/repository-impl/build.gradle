@@ -11,13 +11,14 @@ dependencies {
     implementation project(":data:api")
     implementation project(":data:db")
     implementation project(":data:firestore")
+    implementation project(":ext:log")
     api project(":model")
 
     implementation Dep.Kotlin.stdlibJvm
     implementation Dep.Kotlin.serialization
     api Dep.Kotlin.coroutines
-    implementation Dep.Arch.lifecycleLiveData
-    kapt Dep.Arch.Room.compiler
+    implementation Dep.AndroidX.lifecycleLiveData
+    kapt Dep.AndroidX.Room.compiler
 
     api Dep.Klock.jvm
 
