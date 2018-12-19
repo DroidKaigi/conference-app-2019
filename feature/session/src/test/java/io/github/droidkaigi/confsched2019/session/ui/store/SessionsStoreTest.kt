@@ -39,6 +39,7 @@ class SessionsStoreTest {
 
         sessionPagesStore.isLoading shouldBe false
         verifySequence {
+            observer(LoadingState.INITIALIZED)
             observer(LoadingState.LOADING)
             observer(LoadingState.LOADED)
         }
