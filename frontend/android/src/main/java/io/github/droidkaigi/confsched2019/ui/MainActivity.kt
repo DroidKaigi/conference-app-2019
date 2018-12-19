@@ -35,18 +35,14 @@ import io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment
 import io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.SpeakerFragment
 import io.github.droidkaigi.confsched2019.session.ui.SpeakerFragmentModule
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
 import io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragment
 import io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragmentModule
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
-import io.github.droidkaigi.confsched2019.user.store.UserStore
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
     @Inject lateinit var userActionCreator: UserActionCreator
-    @Inject lateinit var userStore: UserStore
-    @Inject lateinit var sessionsActionCreator: SessionsActionCreator
     @Inject lateinit var systemStore: SystemStore
 
     val binding: ActivityMainBinding by lazy {
@@ -83,11 +79,6 @@ class MainActivity : DaggerAppCompatActivity() {
             binding.toolbar.setTitleTextColor(toolbarContentsColor)
         }
 
-        userStore.logined.changed(this) { loggedin ->
-            if (loggedin) {
-                sessionsActionCreator.refresh()
-            }
-        }
         systemStore.errorMsg.changed(this) { message ->
             val messageStr = when (message) {
                 is ErrorMessage.ResourceIdMessage -> getString(message.messageId)

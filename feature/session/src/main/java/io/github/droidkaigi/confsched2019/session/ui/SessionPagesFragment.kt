@@ -10,26 +10,24 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager.widget.ViewPager
+import com.shopify.livedataktx.filter
+import com.shopify.livedataktx.nonNull
 import com.shopify.livedataktx.observe
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
+import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionPagesBinding
-import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.session.di.SessionPagesScope
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPagesActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.user.store.UserStore
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
-import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
-import javax.inject.Provider
 
 class SessionPagesFragment : DaggerFragment() {
 
@@ -38,11 +36,8 @@ class SessionPagesFragment : DaggerFragment() {
     @Inject lateinit var sessionsActionCreator: SessionsActionCreator
     @Inject lateinit var sessionsStore: SessionsStore
 
-    @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
-    private val sessionPagesStore: SessionPagesStore by lazy {
-        InjectedViewModelProviders.of(requireActivity())[sessionPagesStoreProvider]
-    }
-    @Inject lateinit var sessionPagesActionCreator: SessionPagesActionCreator
+    @Inject lateinit var sessionPagesStore: SessionsStore
+    @Inject lateinit var sessionPagesActionCreator: SessionsActionCreator
 
     @Inject lateinit var userStore: UserStore
 
@@ -92,6 +87,11 @@ class SessionPagesFragment : DaggerFragment() {
             loading = true
         }
 
+        userStore.logined.nonNull().filter { it }.changed(this) { loggedin ->
+            if (sessionPagesStore.isInitilized) {
+                sessionsActionCreator.refresh()
+            }
+        }
         sessionPagesStore.filtersChange.observe(viewLifecycleOwner) {
             if (userStore.logined.value == true) {
                 sessionPagesActionCreator.load(sessionPagesStore.filters)

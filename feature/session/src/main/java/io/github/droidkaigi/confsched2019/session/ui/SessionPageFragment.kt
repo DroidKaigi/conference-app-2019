@@ -15,6 +15,7 @@ import com.shopify.livedataktx.observe
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
+import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.Room
@@ -23,32 +24,25 @@ import io.github.droidkaigi.confsched2019.model.Topic
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionPageBinding
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
-import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPageActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPagesActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPageStore
-import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.widget.BottomSheetBehavior
-import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import me.tatarka.injectedvmprovider.ktx.injectedViewModelProvider
 import javax.inject.Inject
-import javax.inject.Provider
 
 class SessionPageFragment : DaggerFragment() {
     lateinit var binding: FragmentSessionPageBinding
 
     @Inject lateinit var sessionsActionCreator: SessionsActionCreator
-    @Inject lateinit var sessionPagesActionCreator: SessionPagesActionCreator
+    @Inject lateinit var sessionPagesActionCreator: SessionsActionCreator
     @Inject lateinit var sessionPageActionCreator: SessionPageActionCreator
     @Inject lateinit var systemStore: SystemStore
 
-    @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
-    private val sessionPagesStore: SessionPagesStore by lazy {
-        InjectedViewModelProviders.of(requireActivity())[sessionPagesStoreProvider]
-    }
+    @Inject lateinit var sessionStore: SessionsStore
 
     @Inject lateinit var sessionPageStoreFactory: SessionPageStore.Factory
     private val sessionPageStore: SessionPageStore by lazy {
@@ -115,31 +109,31 @@ class SessionPageFragment : DaggerFragment() {
             sessionPagesActionCreator.clearFilters()
         }
 
-        sessionPagesStore.filtersChange.observe(viewLifecycleOwner) {
+        sessionStore.filtersChange.observe(viewLifecycleOwner) {
             applyFilters()
         }
-        sessionPagesStore.rooms.changed(viewLifecycleOwner) { rooms ->
+        sessionStore.rooms.changed(viewLifecycleOwner) { rooms ->
             binding.filterRoomChip.setupFilter(
                 rooms,
                 Room::name,
                 sessionPagesActionCreator::changeFilter
             )
         }
-        sessionPagesStore.topics.changed(viewLifecycleOwner) { topics ->
+        sessionStore.topics.changed(viewLifecycleOwner) { topics ->
             binding.filterTopicChip.setupFilter(
                 topics,
                 { topic -> topic.getNameByLang(systemStore.lang) },
                 sessionPagesActionCreator::changeFilter
             )
         }
-        sessionPagesStore.langs.changed(viewLifecycleOwner) { langs ->
+        sessionStore.langs.changed(viewLifecycleOwner) { langs ->
             binding.filterLangChip.setupFilter(
                 langs,
                 Lang::toString,
                 sessionPagesActionCreator::changeFilter
             )
         }
-        sessionPagesStore.selectedTab.changed(viewLifecycleOwner) {
+        sessionStore.selectedTab.changed(viewLifecycleOwner) {
             if (SessionPage.pages[args.tabIndex] == it) {
                 bottomSheetBehavior.isHideable = false
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -192,7 +186,7 @@ class SessionPageFragment : DaggerFragment() {
     }
 
     private fun applyFilters() {
-        val filterRooms = sessionPagesStore.filters.rooms
+        val filterRooms = sessionStore.filters.rooms
         binding.filterRoomChip.forEach {
             if (filterRooms.isNotEmpty()) {
                 val chip = it as? Chip ?: return@forEach
@@ -203,7 +197,7 @@ class SessionPageFragment : DaggerFragment() {
                 chip.isChecked = false
             }
         }
-        val filterLangs = sessionPagesStore.filters.langs
+        val filterLangs = sessionStore.filters.langs
         binding.filterLangChip.forEach {
             if (filterLangs.isNotEmpty()) {
                 val chip = it as? Chip ?: return@forEach
@@ -214,7 +208,7 @@ class SessionPageFragment : DaggerFragment() {
                 chip.isChecked = false
             }
         }
-        val filterTopics = sessionPagesStore.filters.topics
+        val filterTopics = sessionStore.filters.topics
         binding.filterTopicChip.forEach {
             if (filterTopics.isNotEmpty()) {
                 val chip = it as? Chip ?: return@forEach

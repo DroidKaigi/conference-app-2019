@@ -19,7 +19,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class SessionPagesStoreTest {
+class SessionsStoreTest {
     @JvmField @Rule val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Before fun setUp() {
@@ -29,24 +29,25 @@ class SessionPagesStoreTest {
 
     @Test fun loadingState() = runBlocking<Unit> {
         val dispatcher = Dispatcher()
-        val sessionPagesStore = SessionPagesStore(dispatcher)
+        val sessionPagesStore = SessionsStore(dispatcher)
         val observer = mockk<(LoadingState?) -> Unit>(relaxed = true)
 
         sessionPagesStore.loadingState.changedForever(observer)
 
         dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
-        dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.FINISHED))
+        dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
 
         sessionPagesStore.isLoading shouldBe false
         verifySequence {
+            observer(LoadingState.INITIALIZED)
             observer(LoadingState.LOADING)
-            observer(LoadingState.FINISHED)
+            observer(LoadingState.LOADED)
         }
     }
 
     @Test fun sessions() = runBlocking<Unit> {
         val dispatcher = Dispatcher()
-        val sessionPagesStore = SessionPagesStore(dispatcher)
+        val sessionPagesStore = SessionsStore(dispatcher)
         val observer: (List<Session>) -> Unit = mockk(relaxed = true)
         sessionPagesStore.sessions.changedForever(observer)
 

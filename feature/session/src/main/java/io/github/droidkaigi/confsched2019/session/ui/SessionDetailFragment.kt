@@ -17,16 +17,15 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
 import io.github.droidkaigi.confsched2019.di.PageScope
-import io.github.droidkaigi.confsched2019.ext.android.changedNonNull
+import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionDetailBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionDetailActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeakerItem
-import io.github.droidkaigi.confsched2019.session.ui.store.SessionDetailStore
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionsStore
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
-import me.tatarka.injectedvmprovider.ktx.injectedViewModelProvider
 import javax.inject.Inject
 
 class SessionDetailFragment : Fragment(), HasSupportFragmentInjector {
@@ -38,13 +37,7 @@ class SessionDetailFragment : Fragment(), HasSupportFragmentInjector {
 
     lateinit var binding: FragmentSessionDetailBinding
 
-    @Inject lateinit var sessionDetailStoreFactory: SessionDetailStore.Factory
-    private val sessionDetailStore: SessionDetailStore by lazy {
-        injectedViewModelProvider
-            .get(SessionDetailStore::class.java.name) {
-                sessionDetailStoreFactory.create(sessionDetailFragmentArgs.session)
-            }
-    }
+    @Inject lateinit var sessionsStore: SessionsStore
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,12 +58,12 @@ class SessionDetailFragment : Fragment(), HasSupportFragmentInjector {
         AndroidSupportInjection.inject(this)
 
         sessionDetailFragmentArgs = SessionDetailFragmentArgs.fromBundle(arguments)
+        val sessionLiveData = sessionsStore.speakerSession(sessionDetailFragmentArgs.session)
         binding.favorite.setOnClickListener {
-            val session = sessionDetailStore.session.value ?: return@setOnClickListener
+            val session = sessionLiveData.value ?: return@setOnClickListener
             sessionDetailActionCreator.toggleFavorite(session)
         }
-        sessionDetailActionCreator.load(sessionDetailFragmentArgs.session)
-        sessionDetailStore.session.changedNonNull(this) { session: Session.SpeechSession ->
+        sessionLiveData.changed(this) { session: Session.SpeechSession ->
             binding.session = session
             @Suppress("StringFormatMatches") // FIXME
             binding.timeAndRoom.text = getString(
