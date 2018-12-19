@@ -20,14 +20,13 @@ import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentBottomSheetSessionsBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPageActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPagesActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPageStore
-import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.session.ui.widget.SessionsItemDecoration
 import io.github.droidkaigi.confsched2019.widget.BottomSheetBehavior
-import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import me.tatarka.injectedvmprovider.ktx.injectedViewModelProvider
 import javax.inject.Inject
 import javax.inject.Provider
@@ -35,15 +34,12 @@ import javax.inject.Provider
 class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
     lateinit var binding: FragmentBottomSheetSessionsBinding
 
-    @Inject lateinit var sessionPagesActionCreator: SessionPagesActionCreator
+    @Inject lateinit var sessionsActionCreator: SessionsActionCreator
     @Inject lateinit var sessionPageActionCreator: SessionPageActionCreator
-    @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
     @Inject lateinit var sessionPageFragmentProvider: Provider<SessionPageFragment>
     @Inject lateinit var sessionItemFactory: SessionItem.Factory
 
-    private val sessionPagesStore: SessionPagesStore by lazy {
-        InjectedViewModelProviders.of(requireActivity())[sessionPagesStoreProvider]
-    }
+    @Inject lateinit var sessionsStore: SessionsStore
     @Inject lateinit var sessionDetailStoreFactory: SessionPageStore.Factory
     private val sessionPageStore: SessionPageStore by lazy {
         sessionPageFragmentProvider.get().injectedViewModelProvider
@@ -91,10 +87,10 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
             }
         })
 
-        sessionPagesStore.favoriteSessions().changed(this) { sessions ->
+        sessionsStore.favoriteSessions().changed(this) { sessions ->
             val items = sessions
                 .map { session ->
-                    sessionItemFactory.create(session, sessionPagesStore)
+                    sessionItemFactory.create(session, sessionsStore)
                 }
             binding.bottomSheetTitle.text = items
                 .firstOrNull()

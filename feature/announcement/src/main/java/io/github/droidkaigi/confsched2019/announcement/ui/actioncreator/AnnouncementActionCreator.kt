@@ -20,6 +20,6 @@ class AnnouncementActionCreator @Inject constructor(
     fun load() = launch {
         dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADING))
         dispatcher.dispatch(Action.AnnouncementLoaded(fireStore.getAnnouncements()))
-        dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.FINISHED))
+        dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADED))
     }
 }

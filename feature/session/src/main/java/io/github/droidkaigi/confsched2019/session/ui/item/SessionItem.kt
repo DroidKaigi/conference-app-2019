@@ -17,8 +17,8 @@ import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSessionBinding
 import io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragmentDirections
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPagesActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionsStore
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.util.lazyWithParam
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
@@ -27,9 +27,9 @@ import kotlin.math.max
 class SessionItem @AssistedInject constructor(
     @Assisted val speechSession: Session.SpeechSession,
     @Assisted private val searchQuery: String = "",
-    @Assisted sessionPagesStore: SessionPagesStore,
+    @Assisted sessionsStore: SessionsStore,
     navController: NavController,
-    sessionPagesActionCreator: SessionPagesActionCreator,
+    sessionsActionCreator: SessionsActionCreator,
     val systemStore: SystemStore
 ) : BindableItem<ItemSessionBinding>(
     speechSession.id.toLong()
@@ -38,13 +38,13 @@ class SessionItem @AssistedInject constructor(
     interface Factory {
         fun create(
             speechSession: Session.SpeechSession,
-            sessionPagesStore: SessionPagesStore,
+            sessionsStore: SessionsStore,
             searchQuery: String = ""
         ): SessionItem
     }
 
     private val onFavoriteClickListener: (Session.SpeechSession) -> Unit = { speechSession ->
-        sessionPagesActionCreator.toggleFavoriteAndLoad(speechSession, sessionPagesStore.filters)
+        sessionsActionCreator.toggleFavoriteAndLoad(speechSession, sessionsStore.filters)
     }
     private val onClickListener: (Session.SpeechSession) -> Unit = { speechSession ->
         navController

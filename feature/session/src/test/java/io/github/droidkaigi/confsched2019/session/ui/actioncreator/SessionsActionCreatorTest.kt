@@ -21,7 +21,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
-class SessionPagesActionCreatorTest {
+class SessionsActionCreatorTest {
     @RelaxedMockK lateinit var dispatcher: Dispatcher
     @RelaxedMockK lateinit var sessionRepository: SessionRepository
 
@@ -33,7 +33,7 @@ class SessionPagesActionCreatorTest {
     @Test fun load() = runBlocking<Unit> {
         val lifecycleOwner = TestLifecycleOwner().handleEvent(Lifecycle.Event.ON_RESUME)
         coEvery { sessionRepository.sessionContents() } returns SessionContents.EMPTY
-        val sessionPagesActionCreator = SessionPagesActionCreator(
+        val sessionPagesActionCreator = SessionsActionCreator(
             dispatcher,
             sessionRepository,
             lifecycleOwner.lifecycle
@@ -45,7 +45,7 @@ class SessionPagesActionCreatorTest {
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
             sessionRepository.sessionContents()
             dispatcher.dispatch(Action.SessionsLoaded(SessionContents.EMPTY))
-            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.FINISHED))
+            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
         }
     }
 
@@ -56,7 +56,7 @@ class SessionPagesActionCreatorTest {
             sessions = dummySessionData
         )
         coEvery { sessionRepository.sessionContents() } returns dummySessionContents
-        val sessionPagesActionCreator = SessionPagesActionCreator(
+        val sessionPagesActionCreator = SessionsActionCreator(
             dispatcher,
             sessionRepository,
             lifecycleOwner.lifecycle
@@ -74,7 +74,7 @@ class SessionPagesActionCreatorTest {
             dispatcher.dispatch(
                 Action.SessionsLoaded(dummySessionContents)
             )
-            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.FINISHED))
+            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
         }
     }
 }

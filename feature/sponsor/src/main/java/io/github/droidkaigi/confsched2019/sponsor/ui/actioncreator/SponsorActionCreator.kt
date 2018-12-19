@@ -18,6 +18,6 @@ class SponsorActionCreator @Inject constructor(
     fun load() = launch {
         dispatcher.dispatch(Action.SponsorLoadingStateChanged(LoadingState.LOADING))
         dispatcher.dispatch(Action.SponsorLoaded(listOf())) // TODO
-        dispatcher.dispatch(Action.SponsorLoadingStateChanged(LoadingState.FINISHED))
+        dispatcher.dispatch(Action.SponsorLoadingStateChanged(LoadingState.LOADED))
     }
 }
