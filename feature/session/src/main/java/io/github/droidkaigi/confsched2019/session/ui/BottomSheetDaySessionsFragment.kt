@@ -35,7 +35,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
     @Inject lateinit var sessionPageFragmentProvider: Provider<SessionPageFragment>
     @Inject lateinit var sessionItemFactory: SessionItem.Factory
 
-    @Inject lateinit var  sessionsStore: SessionsStore
+    @Inject lateinit var sessionsStore: SessionsStore
 
     @Inject lateinit var sessionPageStoreFactory: SessionPageStore.Factory
     private val sessionPageStore: SessionPageStore by lazy {
