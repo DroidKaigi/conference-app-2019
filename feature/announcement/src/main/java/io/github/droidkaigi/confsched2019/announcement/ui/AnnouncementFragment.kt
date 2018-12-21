@@ -7,11 +7,14 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.announcement.R
 import io.github.droidkaigi.confsched2019.announcement.databinding.FragmentAnnouncementBinding
 import io.github.droidkaigi.confsched2019.announcement.ui.actioncreator.AnnouncementActionCreator
+import io.github.droidkaigi.confsched2019.announcement.ui.item.AnnouncementItem
 import io.github.droidkaigi.confsched2019.announcement.ui.store.AnnouncementStore
 import io.github.droidkaigi.confsched2019.announcement.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.di.PageScope
@@ -34,6 +37,8 @@ class AnnouncementFragment : DaggerFragment() {
 
     private lateinit var progressTimeLatch: ProgressTimeLatch
 
+    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,6 +55,7 @@ class AnnouncementFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        binding.announcementRecycler.adapter = groupAdapter
 
         progressTimeLatch = ProgressTimeLatch { showProgress ->
             binding.progressBar.isVisible = showProgress
@@ -59,9 +65,12 @@ class AnnouncementFragment : DaggerFragment() {
         announcementStore.loadingState.changed(viewLifecycleOwner) {
             progressTimeLatch.loading = it == LoadingState.LOADING
         }
-        announcementStore.posts.changed(viewLifecycleOwner) {
-            // TODO: Implement announcement list
-            println(it)
+        announcementStore.posts.changed(viewLifecycleOwner) { posts ->
+            val items = posts
+                .map { post ->
+                    AnnouncementItem(post)
+                }
+            groupAdapter.update(items)
         }
         announcementActionCreator.load()
     }
