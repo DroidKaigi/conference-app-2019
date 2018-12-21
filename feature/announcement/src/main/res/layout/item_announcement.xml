@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     >
 
     <data>
@@ -12,5 +14,57 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+
+        <TextView
+            android:id="@+id/date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="8dp"
+            android:gravity="start|center_vertical"
+            android:textAppearance="@style/TextAppearance.App.Caption"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="01.25 12:01"
+            />
+
+        <ImageView
+            android:id="@+id/announcement_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/date_text"
+            app:layout_constraintTop_toBottomOf="@id/date_text"
+            tools:background="@color/colorPrimaryDark"
+            />
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="27dp"
+            android:layout_marginStart="16dp"
+            android:gravity="start|center_vertical"
+            android:textAppearance="@style/TextAppearance.App.Subtitle1"
+            app:layout_constraintBottom_toBottomOf="@id/announcement_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/announcement_image"
+            app:layout_constraintTop_toTopOf="@id/announcement_image"
+            tools:text="Day2のセッションについて"
+            />
+
+        <TextView
+            android:id="@+id/content_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="27dp"
+            android:gravity="start"
+            android:textAppearance="@style/TextAppearance.App.Caption"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/title_text"
+            app:layout_constraintTop_toBottomOf="@id/title_text"
+            tools:text="aaaaaaaaaaaaaああああああああああああああああああああああああああああaaaaaaaaaaaaaああああああああああああああああああああああああああああaaaaaaaaaaaaaああああああああああああああああああああああああああああ"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
