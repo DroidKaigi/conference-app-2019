@@ -18,3 +18,5 @@ include ':frontend:android',
         ':data:firestore-impl',
         ':ext:android-extension',
         ':ext:log'
+
+enableFeaturePreview('GRADLE_METADATA')

@@ -19,13 +19,12 @@ kotlin {
             }
             dependencies {
                 api Dep.Kotlin.stdlibCommon
-                implementation Dep.Klock.common
+                api Dep.Klock.common
             }
         }
         jvmMain {
             dependencies {
                 api Dep.Kotlin.stdlibJvm
-                implementation Dep.Klock.jvm
             }
         }
         androidMain {
