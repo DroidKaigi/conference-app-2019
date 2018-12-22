@@ -6,7 +6,6 @@ import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntity
 import kotlinx.coroutines.channels.ReceiveChannel
 
 interface SessionDatabase {
-    fun sessionsChannel(): ReceiveChannel<List<SessionWithSpeakers>>
     suspend fun sessions(): List<SessionWithSpeakers>
     suspend fun allSpeaker(): List<SpeakerEntity>
     suspend fun save(apiResponse: Response)
