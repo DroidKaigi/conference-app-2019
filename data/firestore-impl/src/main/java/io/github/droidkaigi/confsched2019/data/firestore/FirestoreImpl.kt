@@ -5,41 +5,16 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.MetadataChanges
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.Source
 import com.soywiz.klock.DateTime
 import io.github.droidkaigi.confsched2019.model.Post
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 // waiting https://github.com/Kotlin/kotlinx.coroutines/pull/523
 class FirestoreImpl @Inject constructor() : FireStore {
-
-    override suspend fun getFavoriteSessionChannel(): ReceiveChannel<List<Int>> {
-        val favoritesRef = getFavoritesRef()
-        val snapshot = favoritesRef
-            .fastGet()
-        if (snapshot.isEmpty) {
-            favoritesRef.add(mapOf("initialized" to true)).await()
-        }
-        val channel = Channel<List<Int>>(Channel.CONFLATED)
-        val listenerRegistration = favoritesRef.whereEqualTo("favorite", true)
-            .addSnapshotListener(
-                MetadataChanges.INCLUDE
-            ) { favoriteSnapshot, _ ->
-                favoriteSnapshot ?: return@addSnapshotListener
-                val element = favoriteSnapshot.mapNotNull { it.id.toIntOrNull() }
-                channel.offer(element)
-            }
-        channel.invokeOnClose {
-            listenerRegistration.remove()
-        }
-        return channel
-    }
 
     override suspend fun getFavoriteSessionIds(): List<Int> {
         if (FirebaseAuth.getInstance().currentUser?.uid == null) return listOf()

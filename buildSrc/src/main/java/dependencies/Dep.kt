@@ -27,7 +27,6 @@ object Dep {
             val version = "2.1.0-alpha03"
             val compiler = "androidx.room:room-compiler:$version"
             val runtime = "androidx.room:room-runtime:$version"
-            val rxJava = "androidx.room:room-rxjava2:$version"
         }
 
         object Navigation {
@@ -49,7 +48,6 @@ object Dep {
         val coroutinesVersion = "1.0.1"
         val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
         val androidCoroutinesDispatcher = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
-        val coroutinesRx2 = "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:$coroutinesVersion"
         val coroutinesReactive = "org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$coroutinesVersion"
         val androidCoroutines = "net.devrieze:android-coroutines:0.7.0"
         val coroutinesPlayServices = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesVersion"
