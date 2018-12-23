@@ -18,6 +18,7 @@ import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionPagesBinding
@@ -35,9 +36,6 @@ class SessionPagesFragment : DaggerFragment() {
 
     @Inject lateinit var sessionsActionCreator: SessionsActionCreator
     @Inject lateinit var sessionsStore: SessionsStore
-
-    @Inject lateinit var sessionPagesStore: SessionsStore
-    @Inject lateinit var sessionPagesActionCreator: SessionsActionCreator
 
     @Inject lateinit var userStore: UserStore
 
@@ -77,7 +75,7 @@ class SessionPagesFragment : DaggerFragment() {
         binding.sessionsViewpager.addOnPageChangeListener(
             object : ViewPager.SimpleOnPageChangeListener() {
                 override fun onPageSelected(position: Int) {
-                    sessionPagesActionCreator.selectTab(SessionPage.pages[position])
+                    sessionsActionCreator.selectTab(SessionPage.pages[position])
                 }
             }
         )
@@ -88,23 +86,17 @@ class SessionPagesFragment : DaggerFragment() {
         }
 
         userStore.registered.nonNull().filter { it }.changed(this) { _ ->
-            if (sessionPagesStore.isInitilized) {
+            if (sessionsStore.isInitilized) {
                 sessionsActionCreator.refresh()
             }
         }
-        sessionPagesStore.filtersChange.observe(viewLifecycleOwner) {
+        sessionsStore.filtersChange.observe(viewLifecycleOwner) {
             if (userStore.registered.value == true) {
-                sessionPagesActionCreator.load(sessionPagesStore.filters)
+                sessionsActionCreator.load(sessionsStore.filters)
             }
         }
-        fun applyLoadingState() {
-            progressTimeLatch.loading = sessionsStore.isLoading || sessionPagesStore.isLoading
-        }
         sessionsStore.loadingState.changed(this) {
-            applyLoadingState()
-        }
-        sessionPagesStore.loadingState.changed(this) {
-            applyLoadingState()
+            progressTimeLatch.loading = it == LoadingState.LOADING
         }
     }
 }
