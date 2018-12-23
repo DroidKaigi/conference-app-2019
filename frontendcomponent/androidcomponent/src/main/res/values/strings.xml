@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">uicomponent</string>
+    <string name="app_name" translatable="false">uicomponent</string>
 
     <!-- Session -->
     <string name="session_label">session</string>
     <!-- Speaker -->
-    <string name="speaker_label">speaker</string>
+    <string name="speaker_label" translatable="false">speaker</string>
     <!-- Announce -->
     <string name="announce_label">announce</string>
     <!-- About -->
@@ -14,5 +14,5 @@
     <!-- Map -->
     <string name="map_label">map</string>
     <!-- Other -->
-    <string name="other_label">other</string>
+    <string name="other_label" translatable="false">other</string>
 </resources>
