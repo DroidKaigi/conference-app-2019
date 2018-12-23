@@ -26,6 +26,8 @@ import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragmentMo
 import io.github.droidkaigi.confsched2019.databinding.ActivityMainBinding
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.floormap.ui.FloorMapFragment
+import io.github.droidkaigi.confsched2019.floormap.ui.FloorMapFragmentModule
 import io.github.droidkaigi.confsched2019.model.ErrorMessage
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
 import io.github.droidkaigi.confsched2019.session.di.SessionPagesScope
@@ -125,6 +127,10 @@ abstract class MainActivityModule {
     @PageScope
     @ContributesAndroidInjector(modules = [AnnouncementFragmentModule::class])
     abstract fun contributeAnnouncementFragment(): AnnouncementFragment
+
+    @PageScope
+    @ContributesAndroidInjector(modules = [FloorMapFragmentModule::class])
+    abstract fun contributeFloorMapFragment(): FloorMapFragment
 
     @PageScope
     @ContributesAndroidInjector(modules = [SponsorFragmentModule::class])
