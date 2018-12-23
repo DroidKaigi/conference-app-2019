@@ -87,13 +87,13 @@ class SessionPagesFragment : DaggerFragment() {
             loading = true
         }
 
-        userStore.logined.nonNull().filter { it }.changed(this) { loggedin ->
+        userStore.registered.nonNull().filter { it }.changed(this) { _ ->
             if (sessionPagesStore.isInitilized) {
                 sessionsActionCreator.refresh()
             }
         }
         sessionPagesStore.filtersChange.observe(viewLifecycleOwner) {
-            if (userStore.logined.value == true) {
+            if (userStore.registered.value == true) {
                 sessionPagesActionCreator.load(sessionPagesStore.filters)
             }
         }

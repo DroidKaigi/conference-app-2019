@@ -44,7 +44,8 @@ class DataSessionRepository @Inject constructor(
                 { it.startTime.unixMillisLong },
                 { it.room.id }
             ))
-        val sessions = speakerSessions //  + specialSessions
+        val sessions = (speakerSessions + Session.SpecialSession.specialSessions())
+            .sortedBy { it.startTime }
         SessionContents(
             sessions = sessions,
             langs = Lang.values().toList(),

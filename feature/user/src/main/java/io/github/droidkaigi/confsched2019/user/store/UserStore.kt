@@ -12,7 +12,7 @@ import javax.inject.Singleton
 class UserStore @Inject constructor(
     dispatcher: Dispatcher
 ) {
-    val logined: LiveData<Boolean> = dispatcher.subscribe<Action.UserRegistered>()
+    val registered: LiveData<Boolean> = dispatcher.subscribe<Action.UserRegistered>()
         .map { true }
         .toLiveData(false)
 }

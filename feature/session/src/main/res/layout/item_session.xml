@@ -13,16 +13,6 @@
             name="session"
             type="io.github.droidkaigi.confsched2019.model.Session.SpeechSession"
             />
-
-        <variable
-            name="isShowDayNumber"
-            type="boolean"
-            />
-
-        <variable
-            name="searchQuery"
-            type="String"
-            />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
