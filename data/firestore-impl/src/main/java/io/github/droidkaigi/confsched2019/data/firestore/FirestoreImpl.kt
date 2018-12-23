@@ -94,8 +94,14 @@ class FirestoreImpl @Inject constructor() : FireStore {
 private fun QuerySnapshot.toPosts(): List<Post> {
     val postEntities: List<PostEntity> = this
         .map { it.toObject(PostEntity::class.java) }
-    val posts = postEntities.map {
-        Post(it.title!!, it.content!!, DateTime(it.date!!.time)) // , it.type)
+    val posts = postEntities.mapNotNull {
+        if (it.title == null || it.content == null || it.date == null || it.type == null) return@mapNotNull null
+        val postType = try {
+            Post.Type.valueOf(it.type.toUpperCase())
+        } catch (e: IllegalArgumentException) {
+            return@mapNotNull null
+        }
+        Post(it.title, it.content, DateTime(it.date.time), postType)
     }
     return posts
 }

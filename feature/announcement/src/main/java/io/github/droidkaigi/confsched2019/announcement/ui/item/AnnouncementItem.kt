@@ -17,8 +17,12 @@ class AnnouncementItem(
     }
 
     override fun bind(itemBinding: ItemAnnouncementBinding, position: Int) {
-        // TODO: bind category icon
-        // itemBinding.categoryIcon
+        // TODO: apply new category icon
+        itemBinding.categoryIcon.setImageResource(when (post.type) {
+            Post.Type.NOTIFICATION -> R.drawable.ic_feed_notification_blue_20dp
+            Post.Type.ALERT -> R.drawable.ic_feed_alert_amber_20dp
+            Post.Type.FEEDBACK -> R.drawable.ic_feed_feedback_cyan_20dp
+        })
 
         itemBinding.dateText.text = dateFormatter.format(post.date.toOffset(jstOffset))
 
