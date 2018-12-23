@@ -87,7 +87,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
             }
         })
 
-        sessionsStore.favoriteSessions().changed(this) { sessions ->
+        sessionsStore.favoriteSessions().changed(viewLifecycleOwner) { sessions ->
             val items = sessions
                 .map { session ->
                     speechSessionItemFactory.create(session, sessionsStore)
@@ -98,7 +98,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
                 ?.startDayText
             groupAdapter.update(items)
         }
-        sessionPageStore.filterSheetState.changed(this) { newState ->
+        sessionPageStore.filterSheetState.changed(viewLifecycleOwner) { newState ->
             if (newState == BottomSheetBehavior.STATE_EXPANDED ||
                 newState == BottomSheetBehavior.STATE_COLLAPSED) {
                 TransitionManager.beginDelayedTransition(

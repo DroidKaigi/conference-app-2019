@@ -63,7 +63,7 @@ class SessionDetailFragment : Fragment(), HasSupportFragmentInjector {
             val session = sessionLiveData.value ?: return@setOnClickListener
             sessionDetailActionCreator.toggleFavorite(session)
         }
-        sessionLiveData.changed(this) { session: Session.SpeechSession ->
+        sessionLiveData.changed(viewLifecycleOwner) { session: Session.SpeechSession ->
             binding.session = session
             @Suppress("StringFormatMatches") // FIXME
             binding.timeAndRoom.text = getString(

@@ -10,8 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager.widget.ViewPager
-import com.shopify.livedataktx.filter
-import com.shopify.livedataktx.nonNull
 import com.shopify.livedataktx.observe
 import dagger.Module
 import dagger.Provides
@@ -85,17 +83,18 @@ class SessionPagesFragment : DaggerFragment() {
             loading = true
         }
 
-        userStore.registered.nonNull().filter { it }.changed(this) { _ ->
-            if (sessionsStore.isInitilized) {
+        userStore.registered.changed(viewLifecycleOwner) { registered ->
+            // Now, registered, we can load sessions
+            if (registered && sessionsStore.isInitilized) {
                 sessionsActionCreator.refresh()
             }
         }
         sessionsStore.filtersChange.observe(viewLifecycleOwner) {
-            if (userStore.registered.value == true) {
+            if (sessionsStore.isLoaded) {
                 sessionsActionCreator.load(sessionsStore.filters)
             }
         }
-        sessionsStore.loadingState.changed(this) {
+        sessionsStore.loadingState.changed(viewLifecycleOwner) {
             progressTimeLatch.loading = it == LoadingState.LOADING
         }
     }

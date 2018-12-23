@@ -78,7 +78,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
         binding.bottomSheetShowFilterButton.setOnClickListener(onFilterButtonClick)
         binding.bottomSheetHideFilterButton.setOnClickListener(onFilterButtonClick)
 
-        sessionsStore.daySessions(args.day).changed(this) { sessions ->
+        sessionsStore.daySessions(args.day).changed(viewLifecycleOwner) { sessions ->
             val items = sessions
                 .map<Session, Item<*>> { session ->
                     when (session) {
@@ -96,7 +96,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                 ?.startDayText
             groupAdapter.update(items)
         }
-        sessionPageStore.filterSheetState.changed(this) { newState ->
+        sessionPageStore.filterSheetState.changed(viewLifecycleOwner) { newState ->
             if (newState == BottomSheetBehavior.STATE_EXPANDED ||
                 newState == BottomSheetBehavior.STATE_COLLAPSED) {
                 TransitionManager.beginDelayedTransition(
