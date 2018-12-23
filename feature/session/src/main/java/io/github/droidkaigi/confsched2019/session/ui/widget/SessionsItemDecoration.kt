@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupAdapter
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
+import io.github.droidkaigi.confsched2019.session.ui.item.SpeechSessionItem
 
 class SessionsItemDecoration(
     val resources: Resources,
@@ -54,9 +55,9 @@ class SessionsItemDecoration(
                 groupAdapter.getItem(position - 1)
             }
             if (item is SessionItem) {
-                val time = item.speechSession.startTime.toString("HH:mm")
-                val previousTime = if (previousItem is SessionItem) {
-                    previousItem.speechSession.startTime.toString("HH:mm")
+                val time = item.session.startTime.toString("HH:mm")
+                val previousTime = if (previousItem is SpeechSessionItem) {
+                    previousItem.session.startTime.toString("HH:mm")
                 } else {
                     null
                 }

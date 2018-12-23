@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Item
 import com.xwray.groupie.databinding.ViewHolder
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.Session
@@ -18,6 +19,8 @@ import io.github.droidkaigi.confsched2019.session.databinding.FragmentBottomShee
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPageActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
+import io.github.droidkaigi.confsched2019.session.ui.item.SpecialSessionItem
+import io.github.droidkaigi.confsched2019.session.ui.item.SpeechSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPageStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
@@ -33,7 +36,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
     @Inject lateinit var sessionsActionCreator: SessionsActionCreator
     @Inject lateinit var sessionPageActionCreator: SessionPageActionCreator
     @Inject lateinit var sessionPageFragmentProvider: Provider<SessionPageFragment>
-    @Inject lateinit var sessionItemFactory: SessionItem.Factory
+    @Inject lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
 
     @Inject lateinit var sessionsStore: SessionsStore
 
@@ -76,13 +79,20 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
         binding.bottomSheetHideFilterButton.setOnClickListener(onFilterButtonClick)
 
         sessionsStore.daySessions(args.day).changed(this) { sessions ->
-            val items = sessions.filterIsInstance<Session.SpeechSession>()
-                .map { session ->
-                    sessionItemFactory.create(session, sessionsStore)
+            val items = sessions
+                .map<Session, Item<*>> { session ->
+                    when (session) {
+                        is Session.SpeechSession ->
+                            speechSessionItemFactory.create(session, sessionsStore)
+                        is Session.SpecialSession ->
+                            SpecialSessionItem(session)
+                    }
                 }
             binding.bottomSheetTitle.text = items
+                .asSequence()
+                .filterIsInstance<SessionItem>()
                 .firstOrNull()
-                ?.speechSession
+                ?.session
                 ?.startDayText
             groupAdapter.update(items)
         }

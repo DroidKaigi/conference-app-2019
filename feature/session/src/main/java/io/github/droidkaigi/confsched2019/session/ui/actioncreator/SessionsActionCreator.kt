@@ -50,7 +50,7 @@ class SessionsActionCreator @Inject constructor(
         launch {
             try {
                 dispatcher.dispatchLoadingState(LoadingState.LOADING)
-                val sessionContents = loadContent(filters)
+                val sessionContents = sessionRepository.loadContent(filters)
                 dispatcher.dispatch(Action.SessionsLoaded(sessionContents))
             } catch (e: Exception) {
                 onError(e)
@@ -68,7 +68,7 @@ class SessionsActionCreator @Inject constructor(
             try {
                 dispatcher.dispatchLoadingState(LoadingState.LOADING)
                 sessionRepository.toggleFavorite(session)
-                val sessionContents = loadContent(filters)
+                val sessionContents = sessionRepository.loadContent(filters)
                 dispatcher.dispatch(Action.SessionsLoaded(sessionContents))
             } catch (e: Exception) {
                 onError(e)
@@ -78,8 +78,8 @@ class SessionsActionCreator @Inject constructor(
         }
     }
 
-    private suspend fun loadContent(filters: Filters): SessionContents {
-        val sessionContents = sessionRepository.sessionContents()
+    private suspend fun SessionRepository.loadContent(filters: Filters): SessionContents {
+        val sessionContents = this.sessionContents()
         return sessionContents.copy(
             sessions = sessionContents.sessions.filter(filters::isPass)
         )
