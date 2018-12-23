@@ -49,12 +49,12 @@ dependencies {
     implementation Dep.Picasso.picasso
     implementation Dep.Picasso.picassoTransformation
 
-    testImplementation Dep.junit
-    testImplementation Dep.KotlinTest.assertions
+    testImplementation Dep.Test.junit
+    testImplementation Dep.Test.kotlinTestAssertions
     testImplementation Dep.MockK.jvm
     testImplementation project(':frontendcomponent:androidtestcomponent')
-    androidTestImplementation Dep.AndroidX.testRunner
-    androidTestImplementation Dep.AndroidX.espressoCore
+    androidTestImplementation Dep.Test.testRunner
+    androidTestImplementation Dep.Test.espressoCore
 }
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions {

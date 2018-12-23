@@ -30,8 +30,7 @@ fun dummySessionData(): List<Session> {
             format = "this is format2",
             language = "English",
             topic = Topic(10, "Tool"),
-            isFavorited = true
-            ,
+            isFavorited = true,
             speakers = listOf(),
             message = SessionMessage("部屋移動", "room moved")
         )

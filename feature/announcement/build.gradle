@@ -43,7 +43,7 @@ dependencies {
     implementation Dep.Groupie.groupie
     implementation Dep.Groupie.databinding
 
-    testImplementation Dep.junit
-    androidTestImplementation Dep.AndroidX.testRunner
-    androidTestImplementation Dep.AndroidX.espressoCore
+    testImplementation Dep.Test.junit
+    androidTestImplementation Dep.Test.testRunner
+    androidTestImplementation Dep.Test.espressoCore
 }

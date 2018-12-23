@@ -32,7 +32,7 @@ dependencies {
 
     implementation Dep.KotlinLogging.kotlinLogging
 
-    testImplementation Dep.junit
-    androidTestImplementation Dep.AndroidX.testRunner
+    testImplementation Dep.Test.junit
+    androidTestImplementation Dep.Test.testRunner
 }
 

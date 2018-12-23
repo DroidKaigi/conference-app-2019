@@ -24,15 +24,15 @@ kotlin {
             }
         }
         commonTest.dependencies {
-            implementation Dep.Kotlin.commonModuleTest
-            implementation Dep.Kotlin.commonModuleTestAnnotations
+            implementation Dep.Test.KotlinMultiPlatform.commonModuleTest
+            implementation Dep.Test.KotlinMultiPlatform.commonModuleTestAnnotations
             implementation Dep.MockK.common
         }
         androidTest {
             dependsOn commonMain
             dependencies {
-                implementation Dep.Kotlin.jvmModuleTest
-                implementation Dep.Kotlin.jvmModuleTestJunit
+                implementation Dep.Test.KotlinMultiPlatform.jvmModuleTest
+                implementation Dep.Test.KotlinMultiPlatform.jvmModuleTestJunit
                 implementation Dep.MockK.jvm
             }
         }
