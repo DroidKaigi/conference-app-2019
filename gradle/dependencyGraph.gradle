@@ -44,6 +44,7 @@ task projectDependencyGraph {
             }
 
             project.configurations.all { config ->
+                if (config.name.toLowerCase().contains("test")) return
                 config.dependencies
                         .withType(ProjectDependency)
                         .collect { it.dependencyProject }
