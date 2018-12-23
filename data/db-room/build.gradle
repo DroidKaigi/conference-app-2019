@@ -25,7 +25,7 @@ dependencies {
     kapt Dep.Dagger.compiler
     kapt Dep.Dagger.androidProcessor
 
-    testImplementation Dep.junit
+    testImplementation Dep.Test.junit
 }
 
 

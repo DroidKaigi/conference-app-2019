@@ -11,10 +11,10 @@ dependencies {
 
     api Dep.Dagger.androidSupport
     implementation Dep.Kotlin.stdlibJvm
-    api Dep.AndroidX.coreTesting
+    api Dep.Test.archCore
     api Dep.Kotlin.coroutines
 
-    implementation Dep.junit
+    implementation Dep.Test.junit
     implementation(Dep.MockK.jvm) {
         exclude group: 'net.bytebuddy', module: 'byte-buddy'
         exclude group: 'net.bytebuddy', module: 'byte-buddy-android'
