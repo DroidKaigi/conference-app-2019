@@ -15,7 +15,7 @@ fun dummySessionData(): List<Session> {
             1,
             startTime,
             startTime + 30.minutes,
-            0,
+            "session",
             Room(0, "Hall")
         ),
         firstDummySpeechSession(),
