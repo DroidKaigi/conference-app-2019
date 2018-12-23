@@ -1,0 +1,49 @@
+import dependencies.Dep
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs'
+
+apply from: rootProject.file('gradle/android.gradle')
+android.dataBinding.enabled = true
+
+dependencies {
+    implementation project(":feature:user")
+    implementation project(":feature:system")
+    implementation project(':frontendcomponent:androidcomponent')
+    implementation project(':ext:android-extension')
+
+    implementation Dep.Kotlin.stdlibJvm
+    api Dep.Kotlin.coroutines
+    implementation Dep.Kotlin.androidCoroutinesDispatcher
+
+    implementation Dep.AndroidX.appCompat
+    implementation Dep.AndroidX.constraint
+    implementation Dep.AndroidX.recyclerView
+    api Dep.AndroidX.emoji
+    implementation Dep.AndroidX.design
+
+
+    api Dep.AndroidX.lifecycleExtensions
+    api Dep.AndroidX.Navigation.runtime
+    api Dep.AndroidX.Navigation.runtimeKtx
+    implementation Dep.AndroidX.coreKtx
+
+    implementation Dep.Dagger.core
+    implementation Dep.Dagger.androidSupport
+    kapt Dep.Dagger.compiler
+    kapt Dep.Dagger.androidProcessor
+    implementation Dep.InjectedVmProvider.extension
+    implementation Dep.InjectedVmProvider.injectedVmProvider
+    implementation Dep.InjectedVmProvider.ktx
+    compileOnly Dep.Dagger.assistedInjectAnnotations
+    kapt Dep.Dagger.assistedInjectProcessor
+
+    implementation Dep.Groupie.groupie
+    implementation Dep.Groupie.databinding
+
+    testImplementation Dep.Test.junit
+    androidTestImplementation Dep.Test.testRunner
+    androidTestImplementation Dep.Test.espressoCore
+}

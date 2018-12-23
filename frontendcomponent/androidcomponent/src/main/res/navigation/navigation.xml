@@ -8,7 +8,6 @@
         android:id="@+id/main"
         android:name="io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment"
         android:label="@string/session_label"
-        tools:layout="@layout/fragment_session_page"
         >
         <action
             android:id="@id/action_session_to_session_detail"
@@ -19,7 +18,6 @@
         android:id="@+id/sessions"
         android:name="io.github.droidkaigi.confsched2019.session.ui.SessionPageFragment"
         android:label="@string/session_label"
-        tools:layout="@layout/fragment_sessions"
         >
         <argument
             android:name="tabIndex"
@@ -30,7 +28,6 @@
         android:id="@+id/bottom_session_day"
         android:name="io.github.droidkaigi.confsched2019.session.ui.BottomSheetDaySessionsFragment"
         android:label="@string/session_label"
-        tools:layout="@layout/fragment_sessions"
         >
         <argument
             android:name="day"
@@ -41,14 +38,12 @@
         android:id="@+id/session_favorite"
         android:name="io.github.droidkaigi.confsched2019.session.ui.BottomSheetFavoriteSessionsFragment"
         android:label="@string/session_label"
-        tools:layout="@layout/fragment_sessions"
         />
 
     <fragment
         android:id="@id/session_detail"
         android:name="io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment"
         android:label="@string/session_label"
-        tools:layout="@layout/fragment_session_pages"
         >
         <argument
             android:name="session"
@@ -63,7 +58,6 @@
         android:id="@+id/speaker"
         android:name="io.github.droidkaigi.confsched2019.session.ui.SpeakerFragment"
         android:label="@string/speaker_label"
-        tools:layout="@layout/fragment_speaker"
         >
         <argument
             android:name="speaker"
@@ -74,35 +68,30 @@
         android:id="@+id/about"
         android:name="io.github.droidkaigi.confsched2019.about.ui.AboutFragment"
         android:label="@string/about_label"
-        tools:layout="@layout/fragment_about"
         >
     </fragment>
     <fragment
         android:id="@+id/announce"
         android:name="io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment"
         android:label="@string/announce_label"
-        tools:layout="@layout/fragment_announcement"
         >
     </fragment>
     <fragment
         android:id="@+id/sponsor"
         android:name="io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragment"
         android:label="@string/sponsor_label"
-        tools:layout="@layout/fragment_sponsor"
         >
     </fragment>
     <fragment
-        android:id="@+id/map"
-        android:name="io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment"
+        android:id="@+id/floormap"
+        android:name="io.github.droidkaigi.confsched2019.floormap.ui.FloorMapFragment"
         android:label="@string/map_label"
-        tools:layout="@layout/fragment_session_pages"
         >
     </fragment>
     <fragment
         android:id="@+id/other"
         android:name="io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment"
         android:label="@string/other_label"
-        tools:layout="@layout/fragment_session_pages"
         >
     </fragment>
 </navigation>
