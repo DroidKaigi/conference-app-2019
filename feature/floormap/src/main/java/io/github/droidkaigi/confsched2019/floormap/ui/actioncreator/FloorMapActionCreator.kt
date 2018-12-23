@@ -6,18 +6,24 @@ import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
 import io.github.droidkaigi.confsched2019.model.LoadingState
+import io.github.droidkaigi.confsched2019.system.actioncreator.ErrorHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class FloorMapActionCreator @Inject constructor(
-    val dispatcher: Dispatcher,
+    override val dispatcher: Dispatcher,
     @PageScope val lifecycle: Lifecycle
-) : CoroutineScope by lifecycle.coroutineScope {
+) : CoroutineScope by lifecycle.coroutineScope,
+    ErrorHandler {
 
     fun load() = launch {
-        dispatcher.dispatch(Action.FloorMapLoadingStateChanged(LoadingState.LOADING))
-        // todo: load something?
-        dispatcher.dispatch(Action.FloorMapLoadingStateChanged(LoadingState.LOADED))
+        try {
+            dispatcher.dispatch(Action.FloorMapLoadingStateChanged(LoadingState.LOADING))
+            // todo: load something?
+            dispatcher.dispatch(Action.FloorMapLoadingStateChanged(LoadingState.LOADED))
+        } catch (e: Exception) {
+            onError(e)
+        }
     }
 }
