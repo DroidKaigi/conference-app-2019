@@ -95,7 +95,9 @@ private fun QuerySnapshot.toPosts(): List<Post> {
     val postEntities: List<PostEntity> = this
         .map { it.toObject(PostEntity::class.java) }
     val posts = postEntities.mapNotNull {
-        if (it.title == null || it.content == null || it.date == null || it.type == null) return@mapNotNull null
+        if (it.title == null || it.content == null || it.date == null || it.type == null) {
+            return@mapNotNull null
+        }
         val postType = try {
             Post.Type.valueOf(it.type.toUpperCase())
         } catch (e: IllegalArgumentException) {
