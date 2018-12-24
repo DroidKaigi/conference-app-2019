@@ -18,7 +18,7 @@
         android:title="@string/sponsor_label"
         />
     <item
-        android:id="@id/map"
+        android:id="@id/floormap"
         android:title="@string/map_label"
         />
     <item

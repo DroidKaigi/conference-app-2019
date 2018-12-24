@@ -13,16 +13,6 @@
             name="session"
             type="io.github.droidkaigi.confsched2019.model.Session.SpeechSession"
             />
-
-        <variable
-            name="isShowDayNumber"
-            type="boolean"
-            />
-
-        <variable
-            name="searchQuery"
-            type="String"
-            />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -59,7 +49,7 @@
             android:scaleType="centerInside"
             android:contentDescription="@string/session_description_favorite_image"
             android:src="@{session.isFavorited ? @drawable/ic_bookmark_black_24dp : @drawable/ic_bookmark_border_black_24dp}"
-            android:tint="@{session.isFavorited ? @color/colorAccent : @color/gray1}"
+            android:tint="@{session.isFavorited ? @color/colorPrimary : @color/gray1}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/title"
             />

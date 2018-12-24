@@ -6,7 +6,6 @@ import kotlinx.coroutines.channels.ReceiveChannel
 
 interface SessionRepository {
     suspend fun sessionContents(): SessionContents
-    suspend fun sessionChannel(): ReceiveChannel<List<Session>>
     suspend fun refresh()
     suspend fun toggleFavorite(session: Session.SpeechSession)
 }

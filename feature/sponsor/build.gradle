@@ -10,6 +10,7 @@ android.dataBinding.enabled = true
 
 dependencies {
     implementation project(':frontendcomponent:androidcomponent')
+    implementation project(':feature:system')
     implementation project(':ext:android-extension')
 
     implementation Dep.Kotlin.stdlibJvm
@@ -40,7 +41,7 @@ dependencies {
     implementation Dep.Groupie.groupie
     implementation Dep.Groupie.databinding
 
-    testImplementation Dep.junit
-    androidTestImplementation Dep.AndroidX.testRunner
-    androidTestImplementation Dep.AndroidX.espressoCore
+    testImplementation Dep.Test.junit
+    androidTestImplementation Dep.Test.testRunner
+    androidTestImplementation Dep.Test.espressoCore
 }

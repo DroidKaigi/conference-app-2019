@@ -45,6 +45,7 @@ dependencies {
     implementation project(":feature:session")
     implementation project(":feature:about")
     implementation project(":feature:announcement")
+    implementation project(":feature:floormap")
     implementation project(":feature:sponsor")
     implementation project(':frontendcomponent:androidcomponent')
     implementation project(':feature:user')
@@ -86,10 +87,10 @@ dependencies {
     compileOnly Dep.Dagger.assistedInjectAnnotations
     kapt Dep.Dagger.assistedInjectProcessor
 
-    testImplementation Dep.junit
+    testImplementation Dep.Test.junit
 
-    androidTestImplementation Dep.AndroidX.testRunner
-    androidTestImplementation Dep.AndroidX.espressoCore
+    androidTestImplementation Dep.Test.testRunner
+    androidTestImplementation Dep.Test.espressoCore
 
     Dep.Hyperion.hyperionPlugins.forEach {
         debugImplementation it

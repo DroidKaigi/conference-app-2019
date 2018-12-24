@@ -10,14 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager.widget.ViewPager
-import com.shopify.livedataktx.filter
-import com.shopify.livedataktx.nonNull
 import com.shopify.livedataktx.observe
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionPagesBinding
@@ -35,9 +34,6 @@ class SessionPagesFragment : DaggerFragment() {
 
     @Inject lateinit var sessionsActionCreator: SessionsActionCreator
     @Inject lateinit var sessionsStore: SessionsStore
-
-    @Inject lateinit var sessionPagesStore: SessionsStore
-    @Inject lateinit var sessionPagesActionCreator: SessionsActionCreator
 
     @Inject lateinit var userStore: UserStore
 
@@ -77,7 +73,7 @@ class SessionPagesFragment : DaggerFragment() {
         binding.sessionsViewpager.addOnPageChangeListener(
             object : ViewPager.SimpleOnPageChangeListener() {
                 override fun onPageSelected(position: Int) {
-                    sessionPagesActionCreator.selectTab(SessionPage.pages[position])
+                    sessionsActionCreator.selectTab(SessionPage.pages[position])
                 }
             }
         )
@@ -87,24 +83,19 @@ class SessionPagesFragment : DaggerFragment() {
             loading = true
         }
 
-        userStore.logined.nonNull().filter { it }.changed(this) { loggedin ->
-            if (sessionPagesStore.isInitilized) {
+        userStore.registered.changed(viewLifecycleOwner) { registered ->
+            // Now, registered, we can load sessions
+            if (registered && sessionsStore.isInitilized) {
                 sessionsActionCreator.refresh()
             }
         }
-        sessionPagesStore.filtersChange.observe(viewLifecycleOwner) {
-            if (userStore.logined.value == true) {
-                sessionPagesActionCreator.load(sessionPagesStore.filters)
+        sessionsStore.filtersChange.observe(viewLifecycleOwner) {
+            if (sessionsStore.isLoaded) {
+                sessionsActionCreator.load(sessionsStore.filters)
             }
         }
-        fun applyLoadingState() {
-            progressTimeLatch.loading = sessionsStore.isLoading || sessionPagesStore.isLoading
-        }
-        sessionsStore.loadingState.changed(this) {
-            applyLoadingState()
-        }
-        sessionPagesStore.loadingState.changed(this) {
-            applyLoadingState()
+        sessionsStore.loadingState.changed(viewLifecycleOwner) {
+            progressTimeLatch.loading = it == LoadingState.LOADING
         }
     }
 }

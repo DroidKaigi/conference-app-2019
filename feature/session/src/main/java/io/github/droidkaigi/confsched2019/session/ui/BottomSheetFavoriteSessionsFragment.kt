@@ -21,7 +21,7 @@ import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentBottomSheetSessionsBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPageActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
+import io.github.droidkaigi.confsched2019.session.ui.item.SpeechSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPageStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
@@ -37,7 +37,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
     @Inject lateinit var sessionsActionCreator: SessionsActionCreator
     @Inject lateinit var sessionPageActionCreator: SessionPageActionCreator
     @Inject lateinit var sessionPageFragmentProvider: Provider<SessionPageFragment>
-    @Inject lateinit var sessionItemFactory: SessionItem.Factory
+    @Inject lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
 
     @Inject lateinit var sessionsStore: SessionsStore
     @Inject lateinit var sessionDetailStoreFactory: SessionPageStore.Factory
@@ -81,24 +81,24 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
                 val findFirstVisibleItemPosition = linearLayoutManager
                     .findFirstVisibleItemPosition()
                 binding.bottomSheetTitle.text = (groupAdapter
-                    .getItem(findFirstVisibleItemPosition) as SessionItem)
-                    .speechSession
+                    .getItem(findFirstVisibleItemPosition) as SpeechSessionItem)
+                    .session
                     .startDayText
             }
         })
 
-        sessionsStore.favoriteSessions().changed(this) { sessions ->
+        sessionsStore.favoriteSessions().changed(viewLifecycleOwner) { sessions ->
             val items = sessions
                 .map { session ->
-                    sessionItemFactory.create(session, sessionsStore)
+                    speechSessionItemFactory.create(session, sessionsStore)
                 }
             binding.bottomSheetTitle.text = items
                 .firstOrNull()
-                ?.speechSession
+                ?.session
                 ?.startDayText
             groupAdapter.update(items)
         }
-        sessionPageStore.filterSheetState.changed(this) { newState ->
+        sessionPageStore.filterSheetState.changed(viewLifecycleOwner) { newState ->
             if (newState == BottomSheetBehavior.STATE_EXPANDED ||
                 newState == BottomSheetBehavior.STATE_COLLAPSED) {
                 TransitionManager.beginDelayedTransition(

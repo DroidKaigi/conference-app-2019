@@ -38,7 +38,6 @@ class SessionPageFragment : DaggerFragment() {
     lateinit var binding: FragmentSessionPageBinding
 
     @Inject lateinit var sessionsActionCreator: SessionsActionCreator
-    @Inject lateinit var sessionPagesActionCreator: SessionsActionCreator
     @Inject lateinit var sessionPageActionCreator: SessionPageActionCreator
     @Inject lateinit var systemStore: SystemStore
 
@@ -106,7 +105,7 @@ class SessionPageFragment : DaggerFragment() {
             }
         )
         binding.filterReset.setOnClickListener {
-            sessionPagesActionCreator.clearFilters()
+            sessionsActionCreator.clearFilters()
         }
 
         sessionStore.filtersChange.observe(viewLifecycleOwner) {
@@ -116,21 +115,21 @@ class SessionPageFragment : DaggerFragment() {
             binding.filterRoomChip.setupFilter(
                 rooms,
                 Room::name,
-                sessionPagesActionCreator::changeFilter
+                sessionsActionCreator::changeFilter
             )
         }
         sessionStore.topics.changed(viewLifecycleOwner) { topics ->
             binding.filterTopicChip.setupFilter(
                 topics,
                 { topic -> topic.getNameByLang(systemStore.lang) },
-                sessionPagesActionCreator::changeFilter
+                sessionsActionCreator::changeFilter
             )
         }
         sessionStore.langs.changed(viewLifecycleOwner) { langs ->
             binding.filterLangChip.setupFilter(
                 langs,
                 Lang::toString,
-                sessionPagesActionCreator::changeFilter
+                sessionsActionCreator::changeFilter
             )
         }
         sessionStore.selectedTab.changed(viewLifecycleOwner) {

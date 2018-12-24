@@ -25,10 +25,10 @@ dependencies {
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport
 
-    testImplementation Dep.junit
+    testImplementation Dep.Test.junit
     testImplementation Dep.MockK.jvm
-    androidTestImplementation Dep.AndroidX.testRunner
-    androidTestImplementation Dep.AndroidX.espressoCore
+    androidTestImplementation Dep.Test.testRunner
+    androidTestImplementation Dep.Test.espressoCore
 }
 repositories {
     mavenCentral()

@@ -14,6 +14,8 @@ import io.github.droidkaigi.confsched2019.model.SystemProperty
 import io.github.droidkaigi.confsched2019.model.Topic
 
 sealed class Action {
+    class Error(val msg: ErrorMessage) : Action()
+
     data class SessionLoadingStateChanged(val loadingState: LoadingState) : Action()
     data class SessionsLoaded(
         val sessionContents: SessionContents
@@ -51,4 +53,6 @@ sealed class Action {
     class Error(val msg: ErrorMessage) : Action()
     class SponsorLoadingStateChanged(val loadingState: LoadingState) : Action()
     class SponsorLoaded(val sponsors: List<Sponsor>) : Action()
+
+    class FloorMapLoadingStateChanged(val loadingState: LoadingState) : Action()
 }

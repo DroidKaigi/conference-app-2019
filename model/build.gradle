@@ -19,13 +19,12 @@ kotlin {
             }
             dependencies {
                 api Dep.Kotlin.stdlibCommon
-                implementation Dep.Klock.common
+                api Dep.Klock.common
             }
         }
         jvmMain {
             dependencies {
                 api Dep.Kotlin.stdlibJvm
-                implementation Dep.Klock.jvm
             }
         }
         androidMain {
@@ -35,15 +34,15 @@ kotlin {
             }
         }
         commonTest.dependencies {
-            implementation Dep.Kotlin.commonModuleTest
-            implementation Dep.Kotlin.commonModuleTestAnnotations
+            implementation Dep.Test.KotlinMultiPlatform.commonModuleTest
+            implementation Dep.Test.KotlinMultiPlatform.commonModuleTestAnnotations
             implementation Dep.MockK.common
         }
         jvmTest {
             dependsOn jvmMain
             dependencies {
-                implementation Dep.Kotlin.jvmModuleTest
-                implementation Dep.Kotlin.jvmModuleTestJunit
+                implementation Dep.Test.KotlinMultiPlatform.jvmModuleTest
+                implementation Dep.Test.KotlinMultiPlatform.jvmModuleTestJunit
                 implementation Dep.MockK.jvm
             }
         }

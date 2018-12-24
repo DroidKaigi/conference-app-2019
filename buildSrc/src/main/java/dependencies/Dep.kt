@@ -1,5 +1,6 @@
 package dependencies
 
+@Suppress("unused")
 object Dep {
     object GradlePlugin {
         val android = "com.android.tools.build:gradle:3.2.0"
@@ -9,25 +10,38 @@ object Dep {
         val safeArgs = "android.arch.navigation:navigation-safe-args-gradle-plugin:${AndroidX.Navigation.version}"
     }
 
+    object Test {
+        val junit = "junit:junit:4.12"
+        val testRunner = "androidx.test:runner:1.1.0"
+        val androidJunit4 = "androidx.test.ext.junit:1.1.0"
+        val archCore = "androidx.arch.core:core-testing:2.0.0"
+        val espressoCore = "androidx.test.espresso:espresso-core:3.1.0-alpha3"
+        val kotlinTestAssertions = "io.kotlintest:kotlintest-assertions:3.1.10"
+        val testingKtx = "android.arch.navigation:navigation-testing-ktx:${AndroidX.Navigation.version}"
+
+        object KotlinMultiPlatform {
+            val jvmModuleTest = "org.jetbrains.kotlin:kotlin-test"
+            val jvmModuleTestJunit = "org.jetbrains.kotlin:kotlin-test-junit"
+            val commonModuleTest = "org.jetbrains.kotlin:kotlin-test-common"
+            val commonModuleTestAnnotations = "org.jetbrains.kotlin:kotlin-test-annotations-common"
+        }
+    }
+
     object AndroidX {
         val appCompat = "androidx.appcompat:appcompat:1.0.0"
         val recyclerView = "androidx.recyclerview:recyclerview:1.0.0"
         val constraint = "androidx.constraintlayout:constraintlayout:1.1.2"
-        val testRunner = "androidx.test:runner:1.1.0-alpha3"
         val emoji = "androidx.emoji:emoji-appcompat:1.0.0"
-        val espressoCore = "androidx.test.espresso:espresso-core:3.1.0-alpha3"
         val design = "com.google.android.material:material:1.1.0-alpha01"
         val coreKtx = "androidx.core:core-ktx:1.0.0-alpha1"
 
         val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:2.0.0"
         val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata:2.0.0"
-        val coreTesting = "androidx.arch.core:core-testing:2.0.0"
 
         object Room {
             val version = "2.1.0-alpha03"
             val compiler = "androidx.room:room-compiler:$version"
             val runtime = "androidx.room:room-runtime:$version"
-            val rxJava = "androidx.room:room-rxjava2:$version"
         }
 
         object Navigation {
@@ -38,7 +52,6 @@ object Dep {
             val ui = "android.arch.navigation:navigation-ui:$version"
             val fragmentKtx = "android.arch.navigation:navigation-fragment-ktx:$version"
             val uiKtx = "android.arch.navigation:navigation-ui-ktx:$version"
-            val testingKtx = "android.arch.navigation:navigation-testing-ktx:$version"
         }
     }
 
@@ -49,15 +62,10 @@ object Dep {
         val coroutinesVersion = "1.0.1"
         val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
         val androidCoroutinesDispatcher = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
-        val coroutinesRx2 = "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:$coroutinesVersion"
         val coroutinesReactive = "org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$coroutinesVersion"
         val androidCoroutines = "net.devrieze:android-coroutines:0.7.0"
         val coroutinesPlayServices = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesVersion"
         val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.8.1-rc13"
-        val jvmModuleTest = "org.jetbrains.kotlin:kotlin-test"
-        val jvmModuleTestJunit = "org.jetbrains.kotlin:kotlin-test-junit"
-        val commonModuleTest = "org.jetbrains.kotlin:kotlin-test-common"
-        val commonModuleTestAnnotations = "org.jetbrains.kotlin:kotlin-test-annotations-common"
     }
 
     object Firebase {
@@ -136,12 +144,6 @@ object Dep {
 
     object KotlinLogging {
         val kotlinLogging = "io.github.microutils:kotlin-logging:1.6.20"
-    }
-
-    val junit = "junit:junit:4.12"
-
-    object KotlinTest {
-        val assertions = "io.kotlintest:kotlintest-assertions:3.1.10"
     }
 
     object MockK {

@@ -27,6 +27,8 @@ import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragmentMo
 import io.github.droidkaigi.confsched2019.databinding.ActivityMainBinding
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.floormap.ui.FloorMapFragment
+import io.github.droidkaigi.confsched2019.floormap.ui.FloorMapFragmentModule
 import io.github.droidkaigi.confsched2019.model.ErrorMessage
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
 import io.github.droidkaigi.confsched2019.session.di.SessionPagesScope
@@ -40,11 +42,13 @@ import io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragment
 import io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragmentModule
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
+import io.github.droidkaigi.confsched2019.user.store.UserStore
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
     @Inject lateinit var userActionCreator: UserActionCreator
     @Inject lateinit var systemStore: SystemStore
+    @Inject lateinit var userStore: UserStore
 
     val binding: ActivityMainBinding by lazy {
         DataBindingUtil.setContentView<ActivityMainBinding>(
@@ -91,11 +95,11 @@ class MainActivity : DaggerAppCompatActivity() {
             }
             Snackbar.make(binding.root, messageStr, Snackbar.LENGTH_LONG).show()
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        userActionCreator.setupUserIfNeeded()
+        userStore.registered.changed(this) { registered ->
+            if (!registered) {
+                userActionCreator.load()
+            }
+        }
     }
 }
 
@@ -130,6 +134,10 @@ abstract class MainActivityModule {
     @PageScope
     @ContributesAndroidInjector(modules = [AnnouncementFragmentModule::class])
     abstract fun contributeAnnouncementFragment(): AnnouncementFragment
+
+    @PageScope
+    @ContributesAndroidInjector(modules = [FloorMapFragmentModule::class])
+    abstract fun contributeFloorMapFragment(): FloorMapFragment
 
     @PageScope
     @ContributesAndroidInjector(modules = [SponsorFragmentModule::class])
