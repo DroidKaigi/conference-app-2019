@@ -7,19 +7,26 @@ import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
 import io.github.droidkaigi.confsched2019.model.LoadingState
+import io.github.droidkaigi.confsched2019.system.actioncreator.ErrorHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AnnouncementActionCreator @Inject constructor(
-    val dispatcher: Dispatcher,
+    override val dispatcher: Dispatcher,
     val fireStore: FireStore,
     @PageScope val lifecycle: Lifecycle
-) : CoroutineScope by lifecycle.coroutineScope {
+) : CoroutineScope by lifecycle.coroutineScope,
+    ErrorHandler {
 
     fun load() = launch {
-        dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADING))
-        dispatcher.dispatch(Action.AnnouncementLoaded(fireStore.getAnnouncements()))
-        dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADED))
+        try {
+            dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADING))
+            dispatcher.dispatch(Action.AnnouncementLoaded(fireStore.getAnnouncements()))
+            dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADED))
+        } catch (e: Exception) {
+            onError(e)
+            dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.INITIALIZED))
+        }
     }
 }

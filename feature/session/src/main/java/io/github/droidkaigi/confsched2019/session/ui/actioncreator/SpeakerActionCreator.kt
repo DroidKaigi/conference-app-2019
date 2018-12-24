@@ -24,19 +24,18 @@ class SpeakerActionCreator @Inject constructor(
 
     fun load(speakerId: String) = launch {
         try {
-            val speaker = getSpeaker(speakerId)
+            val speaker = sessionRepository.getSpeaker(speakerId)
             dispatcher.dispatch(Action.SpeakerLoaded(speaker))
         } catch (e: Exception) {
             onError(e)
         }
     }
 
-    private suspend fun getSpeaker(
+    private suspend fun SessionRepository.getSpeaker(
         speakerId: String
     ): Speaker {
         return withContext(Dispatchers.Default) {
-            sessionRepository
-                .sessionContents()
+            sessionContents()
                 .sessions
                 .filterIsInstance<Session.SpeechSession>()
                 .flatMap { it.speakers }

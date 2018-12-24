@@ -41,11 +41,13 @@ import io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragment
 import io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragmentModule
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
+import io.github.droidkaigi.confsched2019.user.store.UserStore
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
     @Inject lateinit var userActionCreator: UserActionCreator
     @Inject lateinit var systemStore: SystemStore
+    @Inject lateinit var userStore: UserStore
 
     val binding: ActivityMainBinding by lazy {
         DataBindingUtil.setContentView<ActivityMainBinding>(
@@ -88,11 +90,11 @@ class MainActivity : DaggerAppCompatActivity() {
             }
             Snackbar.make(binding.root, messageStr, Snackbar.LENGTH_LONG).show()
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        userActionCreator.setupUserIfNeeded()
+        userStore.registered.changed(this) { registered ->
+            if (!registered) {
+                userActionCreator.load()
+            }
+        }
     }
 }
 

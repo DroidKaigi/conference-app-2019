@@ -20,7 +20,7 @@ class UserActionCreator @Inject constructor(
         FirebaseAuth.getInstance()
     }
 
-    fun setupUserIfNeeded() {
+    fun load() {
         if (firebaseAuth.currentUser == null) {
             signIn()
         } else {

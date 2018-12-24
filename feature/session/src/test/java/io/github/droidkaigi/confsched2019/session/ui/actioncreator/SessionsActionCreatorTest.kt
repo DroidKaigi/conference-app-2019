@@ -33,13 +33,13 @@ class SessionsActionCreatorTest {
     @Test fun load() = runBlocking<Unit> {
         val lifecycleOwner = TestLifecycleOwner().handleEvent(Lifecycle.Event.ON_RESUME)
         coEvery { sessionRepository.sessionContents() } returns SessionContents.EMPTY
-        val sessionPagesActionCreator = SessionsActionCreator(
+        val sessionsActionCreator = SessionsActionCreator(
             dispatcher,
             sessionRepository,
             lifecycleOwner.lifecycle
         )
 
-        sessionPagesActionCreator.load(Filters())
+        sessionsActionCreator.load(Filters())
 
         coVerify(ordering = Ordering.SEQUENCE) {
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
@@ -56,13 +56,13 @@ class SessionsActionCreatorTest {
             sessions = dummySessionData
         )
         coEvery { sessionRepository.sessionContents() } returns dummySessionContents
-        val sessionPagesActionCreator = SessionsActionCreator(
+        val sessionsActionCreator = SessionsActionCreator(
             dispatcher,
             sessionRepository,
             lifecycleOwner.lifecycle
         )
 
-        sessionPagesActionCreator.toggleFavoriteAndLoad(
+        sessionsActionCreator.toggleFavoriteAndLoad(
             firstDummySpeechSession(),
             Filters()
         )

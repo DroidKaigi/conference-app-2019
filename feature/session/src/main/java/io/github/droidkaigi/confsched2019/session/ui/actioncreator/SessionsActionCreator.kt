@@ -28,8 +28,8 @@ class SessionsActionCreator @Inject constructor(
     ErrorHandler {
     fun refresh() = launch {
         try {
-            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
-            // refresh db data
+            dispatcher.dispatchLoadingState(LoadingState.LOADING)
+            // At first, load db data
             val sessionContents = sessionRepository.sessionContents()
             dispatcher.dispatch(Action.SessionsLoaded(sessionContents))
 
@@ -37,12 +37,12 @@ class SessionsActionCreator @Inject constructor(
             sessionRepository.refresh()
 
             // reload db data
-            val sessionContentsRefreshed = sessionRepository.sessionContents()
-            dispatcher.dispatch(Action.SessionsLoaded(sessionContentsRefreshed))
+            val refreshedSessionContents = sessionRepository.sessionContents()
+            dispatcher.dispatch(Action.SessionsLoaded(refreshedSessionContents))
+            dispatcher.dispatchLoadingState(LoadingState.LOADED)
         } catch (e: Exception) {
             onError(e)
-        } finally {
-            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
+            dispatcher.dispatchLoadingState(LoadingState.INITIALIZED)
         }
     }
 
@@ -52,10 +52,10 @@ class SessionsActionCreator @Inject constructor(
                 dispatcher.dispatchLoadingState(LoadingState.LOADING)
                 val sessionContents = sessionRepository.loadContent(filters)
                 dispatcher.dispatch(Action.SessionsLoaded(sessionContents))
+                dispatcher.dispatchLoadingState(LoadingState.LOADED)
             } catch (e: Exception) {
                 onError(e)
-            } finally {
-                dispatcher.dispatchLoadingState(LoadingState.LOADED)
+                dispatcher.dispatchLoadingState(LoadingState.INITIALIZED)
             }
         }
     }
@@ -70,10 +70,10 @@ class SessionsActionCreator @Inject constructor(
                 sessionRepository.toggleFavorite(session)
                 val sessionContents = sessionRepository.loadContent(filters)
                 dispatcher.dispatch(Action.SessionsLoaded(sessionContents))
+                dispatcher.dispatchLoadingState(LoadingState.LOADED)
             } catch (e: Exception) {
                 onError(e)
-            } finally {
-                dispatcher.dispatchLoadingState(LoadingState.LOADED)
+                dispatcher.dispatchLoadingState(LoadingState.INITIALIZED)
             }
         }
     }

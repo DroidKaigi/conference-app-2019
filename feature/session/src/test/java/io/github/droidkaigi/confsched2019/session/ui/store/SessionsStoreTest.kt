@@ -29,15 +29,15 @@ class SessionsStoreTest {
 
     @Test fun loadingState() = runBlocking<Unit> {
         val dispatcher = Dispatcher()
-        val sessionPagesStore = SessionsStore(dispatcher)
+        val sessionsStore = SessionsStore(dispatcher)
         val observer = mockk<(LoadingState?) -> Unit>(relaxed = true)
 
-        sessionPagesStore.loadingState.changedForever(observer)
+        sessionsStore.loadingState.changedForever(observer)
 
         dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
         dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
 
-        sessionPagesStore.isLoading shouldBe false
+        sessionsStore.isLoading shouldBe false
         verifySequence {
             observer(LoadingState.INITIALIZED)
             observer(LoadingState.LOADING)
@@ -47,9 +47,9 @@ class SessionsStoreTest {
 
     @Test fun sessions() = runBlocking<Unit> {
         val dispatcher = Dispatcher()
-        val sessionPagesStore = SessionsStore(dispatcher)
+        val sessionsStore = SessionsStore(dispatcher)
         val observer: (List<Session>) -> Unit = mockk(relaxed = true)
-        sessionPagesStore.sessions.changedForever(observer)
+        sessionsStore.sessions.changedForever(observer)
 
         dispatcher.dispatch(
             Action.SessionsLoaded(SessionContents.EMPTY.copy(sessions = dummySessionData()))
