@@ -5,10 +5,10 @@ import com.soywiz.klock.TimezoneOffset
 import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.announcement.R
 import io.github.droidkaigi.confsched2019.announcement.databinding.ItemAnnouncementBinding
-import io.github.droidkaigi.confsched2019.model.Post
+import io.github.droidkaigi.confsched2019.model.Announcement
 
 class AnnouncementItem(
-    val post: Post
+    val announcement: Announcement
 ) : BindableItem<ItemAnnouncementBinding>() {
 
     companion object {
@@ -18,16 +18,16 @@ class AnnouncementItem(
 
     override fun bind(itemBinding: ItemAnnouncementBinding, position: Int) {
         // TODO: apply new category icon
-        itemBinding.categoryIcon.setImageResource(when (post.type) {
-            Post.Type.NOTIFICATION -> R.drawable.ic_feed_notification_blue_20dp
-            Post.Type.ALERT -> R.drawable.ic_feed_alert_amber_20dp
-            Post.Type.FEEDBACK -> R.drawable.ic_feed_feedback_cyan_20dp
+        itemBinding.categoryIcon.setImageResource(when (announcement.type) {
+            Announcement.Type.NOTIFICATION -> R.drawable.ic_feed_notification_blue_20dp
+            Announcement.Type.ALERT -> R.drawable.ic_feed_alert_amber_20dp
+            Announcement.Type.FEEDBACK -> R.drawable.ic_feed_feedback_cyan_20dp
         })
 
-        itemBinding.dateText.text = dateFormatter.format(post.date.toOffset(jstOffset))
+        itemBinding.dateText.text = dateFormatter.format(announcement.date.toOffset(jstOffset))
 
-        itemBinding.titleText.text = post.title
-        itemBinding.contentText.text = post.content
+        itemBinding.titleText.text = announcement.title
+        itemBinding.contentText.text = announcement.content
     }
 
     override fun getLayout(): Int = R.layout.item_announcement

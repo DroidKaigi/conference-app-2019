@@ -2,7 +2,7 @@ package io.github.droidkaigi.confsched2019.model
 
 import com.soywiz.klock.DateTime
 
-data class Post(
+data class Announcement(
     val title: String,
     val content: String,
     val date: DateTime,

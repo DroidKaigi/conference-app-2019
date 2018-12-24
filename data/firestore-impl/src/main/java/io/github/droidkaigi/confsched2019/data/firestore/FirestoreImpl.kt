@@ -10,7 +10,7 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.Source
 import com.soywiz.klock.DateTime
-import io.github.droidkaigi.confsched2019.model.Post
+import io.github.droidkaigi.confsched2019.model.Announcement
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.tasks.await
@@ -79,33 +79,33 @@ class FirestoreImpl @Inject constructor() : FireStore {
             .collection("users/$firebaseUserId/favorites")
     }
 
-    override suspend fun getAnnouncements(): List<Post> {
+    override suspend fun getAnnouncements(): List<Announcement> {
         val snapshot = FirebaseFirestore.getInstance()
             .collection("posts")
             .whereEqualTo("published", true)
             .orderBy("date", Query.Direction.DESCENDING)
             .get()
             .await()
-        val posts = snapshot.toPosts()
-        return posts
+        val announcements = snapshot.toAnnouncements()
+        return announcements
     }
 }
 
-private fun QuerySnapshot.toPosts(): List<Post> {
+private fun QuerySnapshot.toAnnouncements(): List<Announcement> {
     val postEntities: List<PostEntity> = this
         .map { it.toObject(PostEntity::class.java) }
-    val posts = postEntities.mapNotNull {
+    val announcements = postEntities.mapNotNull {
         if (it.title == null || it.content == null || it.date == null || it.type == null) {
             return@mapNotNull null
         }
-        val postType = try {
-            Post.Type.valueOf(it.type.toUpperCase())
+        val announcementType = try {
+            Announcement.Type.valueOf(it.type.toUpperCase())
         } catch (e: IllegalArgumentException) {
             return@mapNotNull null
         }
-        Post(it.title, it.content, DateTime(it.date.time), postType)
+        Announcement(it.title, it.content, DateTime(it.date.time), announcementType)
     }
-    return posts
+    return announcements
 }
 
 private suspend fun DocumentReference.fastGet(): DocumentSnapshot {

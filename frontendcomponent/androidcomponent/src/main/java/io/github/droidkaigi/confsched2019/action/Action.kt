@@ -3,7 +3,7 @@ package io.github.droidkaigi.confsched2019.action
 import io.github.droidkaigi.confsched2019.model.ErrorMessage
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LoadingState
-import io.github.droidkaigi.confsched2019.model.Post
+import io.github.droidkaigi.confsched2019.model.Announcement
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
@@ -47,7 +47,7 @@ sealed class Action {
     object UserRegistered : Action()
 
     class AnnouncementLoadingStateChanged(val loadingState: LoadingState) : Action()
-    class AnnouncementLoaded(val posts: List<Post>) : Action()
+    class AnnouncementLoaded(val announcements: List<Announcement>) : Action()
     class Error(val msg: ErrorMessage) : Action()
     class SponsorLoadingStateChanged(val loadingState: LoadingState) : Action()
     class SponsorLoaded(val sponsors: List<Sponsor>) : Action()

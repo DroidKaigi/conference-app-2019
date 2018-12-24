@@ -65,10 +65,10 @@ class AnnouncementFragment : DaggerFragment() {
         announcementStore.loadingState.changed(viewLifecycleOwner) {
             progressTimeLatch.loading = it == LoadingState.LOADING
         }
-        announcementStore.posts.changed(viewLifecycleOwner) { posts ->
-            val items = posts
-                .map { post ->
-                    AnnouncementItem(post)
+        announcementStore.announcements.changed(viewLifecycleOwner) { announcements ->
+            val items = announcements
+                .map { announcement ->
+                    AnnouncementItem(announcement)
                 }
             groupAdapter.update(items)
         }
