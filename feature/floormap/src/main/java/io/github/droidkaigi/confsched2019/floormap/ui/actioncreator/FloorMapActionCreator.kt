@@ -24,6 +24,7 @@ class FloorMapActionCreator @Inject constructor(
             dispatcher.dispatch(Action.FloorMapLoadingStateChanged(LoadingState.LOADED))
         } catch (e: Exception) {
             onError(e)
+            dispatcher.dispatch(Action.FloorMapLoadingStateChanged(LoadingState.INITIALIZED))
         }
     }
 }
