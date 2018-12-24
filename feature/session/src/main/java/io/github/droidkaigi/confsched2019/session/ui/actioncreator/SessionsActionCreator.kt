@@ -29,7 +29,7 @@ class SessionsActionCreator @Inject constructor(
     fun refresh() = launch {
         try {
             dispatcher.dispatchLoadingState(LoadingState.LOADING)
-            // refresh db data
+            // At first, load db data
             val sessionContents = sessionRepository.sessionContents()
             dispatcher.dispatch(Action.SessionsLoaded(sessionContents))
 
@@ -37,8 +37,8 @@ class SessionsActionCreator @Inject constructor(
             sessionRepository.refresh()
 
             // reload db data
-            val sessionContentsRefreshed = sessionRepository.sessionContents()
-            dispatcher.dispatch(Action.SessionsLoaded(sessionContentsRefreshed))
+            val refreshedSessionContents = sessionRepository.sessionContents()
+            dispatcher.dispatch(Action.SessionsLoaded(refreshedSessionContents))
             dispatcher.dispatchLoadingState(LoadingState.LOADED)
         } catch (e: Exception) {
             onError(e)
