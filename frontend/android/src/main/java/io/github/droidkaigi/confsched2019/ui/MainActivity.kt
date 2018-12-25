@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
@@ -60,9 +61,13 @@ class MainActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.toolbar)
         val navController = findNavController(R.id.root_nav_host_fragment)
-        setupActionBarWithNavController(navController, binding.drawerLayout)
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.main, R.id.about, R.id.announce),
+            binding.drawerLayout
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
-        binding.toolbar.setupWithNavController(navController, binding.drawerLayout)
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val isWhiteTheme = destination.id != R.id.main
             binding.isWhiteTheme = isWhiteTheme
