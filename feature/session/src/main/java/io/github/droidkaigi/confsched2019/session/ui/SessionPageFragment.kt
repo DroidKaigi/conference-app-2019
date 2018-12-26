@@ -35,14 +35,12 @@ import me.tatarka.injectedvmprovider.ktx.injectedViewModelProvider
 import javax.inject.Inject
 
 class SessionPageFragment : DaggerFragment() {
-    lateinit var binding: FragmentSessionPageBinding
+    private lateinit var binding: FragmentSessionPageBinding
 
     @Inject lateinit var sessionsActionCreator: SessionsActionCreator
     @Inject lateinit var sessionPageActionCreator: SessionPageActionCreator
     @Inject lateinit var systemStore: SystemStore
-
     @Inject lateinit var sessionStore: SessionsStore
-
     @Inject lateinit var sessionPageStoreFactory: SessionPageStore.Factory
     private val sessionPageStore: SessionPageStore by lazy {
         injectedViewModelProvider
@@ -50,6 +48,13 @@ class SessionPageFragment : DaggerFragment() {
                 sessionPageStoreFactory.create(SessionPage.pages[args.tabIndex])
             }
     }
+
+    private val args: SessionPageFragmentArgs by lazy {
+        SessionPageFragmentArgs.fromBundle(arguments)
+    }
+
+    private val bottomSheetBehavior: BottomSheetBehavior<*>
+        get() = BottomSheetBehavior.from(binding.sessionSheet)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,47 +68,10 @@ class SessionPageFragment : DaggerFragment() {
         return binding.root
     }
 
-    private val args: SessionPageFragmentArgs by lazy {
-        SessionPageFragmentArgs.fromBundle(arguments)
-    }
-
-    private val bottomSheetBehavior: BottomSheetBehavior<*>
-        get() = BottomSheetBehavior.from(binding.sessionSheet)
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        if (savedInstanceState == null) {
-            val fragment: Fragment = when (val tab = SessionPage.pages[args.tabIndex]) {
-                is SessionPage.Day -> {
-                    BottomSheetDaySessionsFragment.newInstance(
-                        BottomSheetDaySessionsFragmentArgs
-                            .Builder(tab.day)
-                            .build()
-                    )
-                }
-                SessionPage.Favorite -> {
-                    BottomSheetFavoriteSessionsFragment.newInstance()
-                }
-            }
+        setupBottomSheet(savedInstanceState)
 
-            childFragmentManager
-                .beginTransaction()
-                .replace(R.id.session_sheet, fragment)
-                .disallowAddToBackStack()
-                .commit()
-        }
-        bottomSheetBehavior.isHideable = false
-        binding.sessionSheet.viewTreeObserver.addOnPreDrawListener(
-            object : ViewTreeObserver.OnPreDrawListener {
-                override fun onPreDraw(): Boolean {
-                    binding.sessionSheet.viewTreeObserver.removeOnPreDrawListener(this)
-                    if (isDetached) return false
-                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-
-                    return false
-                }
-            }
-        )
         binding.filterReset.setOnClickListener {
             sessionsActionCreator.clearFilters()
         }
@@ -146,6 +114,41 @@ class SessionPageFragment : DaggerFragment() {
                     BottomSheetBehavior.STATE_COLLAPSED
                 }
         }
+    }
+
+    private fun setupBottomSheet(savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) {
+            val fragment: Fragment = when (val tab = SessionPage.pages[args.tabIndex]) {
+                is SessionPage.Day -> {
+                    BottomSheetDaySessionsFragment.newInstance(
+                        BottomSheetDaySessionsFragmentArgs
+                            .Builder(tab.day)
+                            .build()
+                    )
+                }
+                SessionPage.Favorite -> {
+                    BottomSheetFavoriteSessionsFragment.newInstance()
+                }
+            }
+
+            childFragmentManager
+                .beginTransaction()
+                .replace(R.id.session_sheet, fragment)
+                .disallowAddToBackStack()
+                .commit()
+        }
+        bottomSheetBehavior.isHideable = false
+        binding.sessionSheet.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    binding.sessionSheet.viewTreeObserver.removeOnPreDrawListener(this)
+                    if (isDetached) return false
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+
+                    return false
+                }
+            }
+        )
         bottomSheetBehavior.addBottomSheetCallback(
             object : BottomSheetBehavior.BottomSheetCallback {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {

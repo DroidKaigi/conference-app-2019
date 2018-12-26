@@ -30,11 +30,10 @@ import javax.inject.Inject
 
 class SessionPagesFragment : DaggerFragment() {
 
-    lateinit var binding: FragmentSessionPagesBinding
+    private lateinit var binding: FragmentSessionPagesBinding
 
     @Inject lateinit var sessionsActionCreator: SessionsActionCreator
     @Inject lateinit var sessionsStore: SessionsStore
-
     @Inject lateinit var userStore: UserStore
 
     private lateinit var progressTimeLatch: ProgressTimeLatch
@@ -55,6 +54,31 @@ class SessionPagesFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setupSessionPager()
+
+        progressTimeLatch = ProgressTimeLatch { showProgress ->
+            binding.progressBar.isVisible = showProgress
+        }.apply {
+            loading = true
+        }
+
+        userStore.registered.changed(viewLifecycleOwner) { registered ->
+            // Now, registered, we can load sessions
+            if (registered && sessionsStore.isInitilized) {
+                sessionsActionCreator.refresh()
+            }
+        }
+        sessionsStore.filtersChange.observe(viewLifecycleOwner) {
+            if (sessionsStore.isLoaded) {
+                sessionsActionCreator.load(sessionsStore.filters)
+            }
+        }
+        sessionsStore.loadingState.changed(viewLifecycleOwner) {
+            progressTimeLatch.loading = it == LoadingState.LOADING
+        }
+    }
+
+    private fun setupSessionPager() {
         binding.sessionsTabLayout.setupWithViewPager(binding.sessionsViewpager)
         binding.sessionsViewpager.adapter = object : FragmentStatePagerAdapter(
             childFragmentManager
@@ -77,26 +101,6 @@ class SessionPagesFragment : DaggerFragment() {
                 }
             }
         )
-        progressTimeLatch = ProgressTimeLatch { showProgress ->
-            binding.progressBar.isVisible = showProgress
-        }.apply {
-            loading = true
-        }
-
-        userStore.registered.changed(viewLifecycleOwner) { registered ->
-            // Now, registered, we can load sessions
-            if (registered && sessionsStore.isInitilized) {
-                sessionsActionCreator.refresh()
-            }
-        }
-        sessionsStore.filtersChange.observe(viewLifecycleOwner) {
-            if (sessionsStore.isLoaded) {
-                sessionsActionCreator.load(sessionsStore.filters)
-            }
-        }
-        sessionsStore.loadingState.changed(viewLifecycleOwner) {
-            progressTimeLatch.loading = it == LoadingState.LOADING
-        }
     }
 }
 

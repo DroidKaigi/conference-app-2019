@@ -9,13 +9,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import dagger.Module
 import dagger.Provides
+import io.github.droidkaigi.confsched2019.di.PageScope
+import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.floormap.R
 import io.github.droidkaigi.confsched2019.floormap.databinding.FragmentFloorMapBinding
 import io.github.droidkaigi.confsched2019.floormap.ui.actioncreator.FloorMapActionCreator
 import io.github.droidkaigi.confsched2019.floormap.ui.store.FloorMapStore
 import io.github.droidkaigi.confsched2019.floormap.ui.widget.DaggerFragment
-import io.github.droidkaigi.confsched2019.di.PageScope
-import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
@@ -24,7 +24,7 @@ import javax.inject.Provider
 
 class FloorMapFragment : DaggerFragment() {
 
-    lateinit var binding: FragmentFloorMapBinding
+    private lateinit var binding: FragmentFloorMapBinding
 
     @Inject lateinit var floorMapStoreProvider: Provider<FloorMapStore>
     private val floorMapStore: FloorMapStore by lazy {

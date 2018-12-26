@@ -31,21 +31,24 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 class BottomSheetDaySessionsFragment : DaggerFragment() {
-    lateinit var binding: FragmentBottomSheetSessionsBinding
+    private lateinit var binding: FragmentBottomSheetSessionsBinding
 
     @Inject lateinit var sessionsActionCreator: SessionsActionCreator
     @Inject lateinit var sessionPageActionCreator: SessionPageActionCreator
     @Inject lateinit var sessionPageFragmentProvider: Provider<SessionPageFragment>
     @Inject lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
-
     @Inject lateinit var sessionsStore: SessionsStore
-
     @Inject lateinit var sessionPageStoreFactory: SessionPageStore.Factory
     private val sessionPageStore: SessionPageStore by lazy {
         sessionPageFragmentProvider.get().injectedViewModelProvider
             .get(SessionPageStore::class.java.name) {
                 sessionPageStoreFactory.create(SessionPage.pages[args.day])
             }
+    }
+
+    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
+    private val args: BottomSheetDaySessionsFragmentArgs by lazy {
+        BottomSheetDaySessionsFragmentArgs.fromBundle(arguments)
     }
 
     override fun onCreateView(
@@ -57,12 +60,6 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
             inflater, R.layout.fragment_bottom_sheet_sessions, container, false
         )
         return binding.root
-    }
-
-    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
-
-    private val args: BottomSheetDaySessionsFragmentArgs by lazy {
-        BottomSheetDaySessionsFragmentArgs.fromBundle(arguments)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -88,13 +85,15 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                             SpecialSessionItem(session)
                     }
                 }
-            binding.bottomSheetTitle.text = items
+            groupAdapter.update(items)
+
+            val titleText = items
                 .asSequence()
                 .filterIsInstance<SessionItem>()
                 .firstOrNull()
                 ?.session
-                ?.startDayText
-            groupAdapter.update(items)
+                ?.startDayText ?: return@changed
+            binding.bottomSheetTitle.text = titleText
         }
         sessionPageStore.filterSheetState.changed(viewLifecycleOwner) { newState ->
             if (newState == BottomSheetBehavior.STATE_EXPANDED ||

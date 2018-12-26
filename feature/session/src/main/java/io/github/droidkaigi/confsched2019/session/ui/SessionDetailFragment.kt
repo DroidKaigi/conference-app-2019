@@ -5,17 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
-import dagger.android.support.HasSupportFragmentInjector
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.Lang
@@ -25,19 +21,17 @@ import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionDet
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionDetailActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeakerItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionsStore
+import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import javax.inject.Inject
 
-class SessionDetailFragment : Fragment(), HasSupportFragmentInjector {
+class SessionDetailFragment : DaggerFragment() {
+    private lateinit var binding: FragmentSessionDetailBinding
 
-    @Inject lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
     @Inject lateinit var sessionDetailActionCreator: SessionDetailActionCreator
     @Inject lateinit var systemStore: SystemStore
-    @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
-
-    lateinit var binding: FragmentSessionDetailBinding
-
     @Inject lateinit var sessionsStore: SessionsStore
+    @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,6 +47,8 @@ class SessionDetailFragment : Fragment(), HasSupportFragmentInjector {
 
     private lateinit var sessionDetailFragmentArgs: SessionDetailFragmentArgs
 
+    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         AndroidSupportInjection.inject(this)
@@ -63,6 +59,7 @@ class SessionDetailFragment : Fragment(), HasSupportFragmentInjector {
             val session = sessionLiveData.value ?: return@setOnClickListener
             sessionDetailActionCreator.toggleFavorite(session)
         }
+        binding.speakers.adapter = groupAdapter
         sessionLiveData.changed(viewLifecycleOwner) { session: Session.SpeechSession ->
             binding.session = session
             @Suppress("StringFormatMatches") // FIXME
@@ -90,17 +87,11 @@ class SessionDetailFragment : Fragment(), HasSupportFragmentInjector {
             }
             binding.topicChip.text = session.topic.getNameByLang(systemStore.lang)
 
-            binding.speakers.adapter = GroupAdapter<ViewHolder<*>>().apply {
-
-                update(
-                    session.speakers.map { speakerItemFactory.create(it) }
-                )
-            }
+            val sessionItems = session
+                .speakers
+                .map { speakerItemFactory.create(it) }
+            groupAdapter.update(sessionItems)
         }
-    }
-
-    override fun supportFragmentInjector(): AndroidInjector<Fragment>? {
-        return childFragmentInjector
     }
 }
 
