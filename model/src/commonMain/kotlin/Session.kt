@@ -36,16 +36,15 @@ sealed class Session(
         val room: Room?
     ) : Session(id, dayNumber, startTime, endTime) {
         companion object {
-
-            private val FORMATTER: DateFormat =
+            private val formatter: DateFormat =
                 DateFormat("yyyy-MM-dd'T'HH:mm:ss")
 
             fun specialSessions() = listOf(
                 SpecialSession(
                     "100000",
                     1,
-                    FORMATTER.parse("2018-02-08T10:00:00").utc,
-                    FORMATTER.parse("2018-02-08T10:20:00").utc,
+                    formatter.parse("2018-02-08T10:00:00").utc,
+                    formatter.parse("2018-02-08T10:20:00").utc,
                     LocaleMessage("Welcome talk", "ウェルカムトーク").get(),
                     Room(513, "Hall")
                 )

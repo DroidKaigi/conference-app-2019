@@ -14,8 +14,8 @@ import javax.inject.Inject
 
 class AnnouncementActionCreator @Inject constructor(
     override val dispatcher: Dispatcher,
-    val fireStore: FireStore,
-    @PageScope val lifecycle: Lifecycle
+    private val fireStore: FireStore,
+    @PageScope private val lifecycle: Lifecycle
 ) : CoroutineScope by lifecycle.coroutineScope,
     ErrorHandler {
 

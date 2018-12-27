@@ -42,6 +42,7 @@ object Dep {
             val version = "2.1.0-alpha03"
             val compiler = "androidx.room:room-compiler:$version"
             val runtime = "androidx.room:room-runtime:$version"
+            val coroutine = "androidx.room:room-coroutines:$version"
         }
 
         object Navigation {

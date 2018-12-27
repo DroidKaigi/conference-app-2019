@@ -16,6 +16,7 @@ dependencies {
     implementation Dep.Kotlin.serialization
     api Dep.Kotlin.coroutines
     api Dep.AndroidX.Room.runtime
+    api Dep.AndroidX.Room.coroutine
     api Dep.AndroidX.lifecycleLiveData
     api Dep.Klock.jvm
     kapt Dep.AndroidX.Room.compiler

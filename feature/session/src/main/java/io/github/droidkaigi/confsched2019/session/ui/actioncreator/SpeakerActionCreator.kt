@@ -18,7 +18,7 @@ import javax.inject.Inject
 class SpeakerActionCreator @Inject constructor(
     override val dispatcher: Dispatcher,
     val sessionRepository: SessionRepository,
-    @PageScope val lifecycle: Lifecycle
+    @PageScope private val lifecycle: Lifecycle
 ) : CoroutineScope by lifecycle.coroutineScope,
     ErrorHandler {
 

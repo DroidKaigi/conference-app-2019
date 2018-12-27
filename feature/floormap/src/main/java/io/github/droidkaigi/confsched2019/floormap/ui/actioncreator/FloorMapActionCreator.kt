@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class FloorMapActionCreator @Inject constructor(
     override val dispatcher: Dispatcher,
-    @PageScope val lifecycle: Lifecycle
+    @PageScope private val lifecycle: Lifecycle
 ) : CoroutineScope by lifecycle.coroutineScope,
     ErrorHandler {
 
