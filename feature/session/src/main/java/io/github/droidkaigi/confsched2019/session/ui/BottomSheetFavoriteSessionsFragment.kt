@@ -107,12 +107,12 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
 
     private fun applyTitleText() {
         val linearLayoutManager = binding.sessionsRecycler.layoutManager as LinearLayoutManager
-        val firstVisiblePosition = linearLayoutManager.findFirstVisibleItemPosition()
-        if (firstVisiblePosition == RecyclerView.NO_POSITION || firstVisiblePosition >= groupAdapter.itemCount) {
+        val firstPosition = linearLayoutManager.findFirstVisibleItemPosition()
+        if (firstPosition == RecyclerView.NO_POSITION || firstPosition >= groupAdapter.itemCount) {
             return
         }
         binding.bottomSheetTitle.text = (groupAdapter
-            .getItem(firstVisiblePosition) as SpeechSessionItem)
+            .getItem(firstPosition) as SpeechSessionItem)
             .session
             .startDayText
     }

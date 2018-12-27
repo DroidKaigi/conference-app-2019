@@ -52,5 +52,3 @@ fun SpeakerEntity.toSpeaker(): Speaker = Speaker(
     blogUrl = blogUrl,
     githubUrl = githubUrl
 )
-
-
