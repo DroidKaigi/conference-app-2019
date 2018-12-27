@@ -86,6 +86,13 @@ We use `AssistedInject` for creating item.
 ```
 
 ## Multi Module Project
+
+### Module conceptual diagram
+
+![image](https://user-images.githubusercontent.com/1386930/50476158-6dd2e800-0a0a-11e9-8737-3319e70ead38.png)
+
+### Generated diagram
+
 Green: Android Module  
 Orange: Common Module
 
