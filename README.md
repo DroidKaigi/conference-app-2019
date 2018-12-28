@@ -34,6 +34,14 @@ We've designated these issues as good candidates for easy contribution. You can 
 
 # Development Environment
 
+### Multi module project
+
+We separate the modules for each feature.
+
+![image](https://user-images.githubusercontent.com/1386930/50482797-e302e500-0a2b-11e9-9609-52cf87882840.png)
+
+You can check [generated module dependency diagram](project.dot.png)
+
 ## Unidirectional data flow(Flux-based) Architecture
 
 Unidirectional data flow(Flux-based) Architecture with `Kotlin Coroutines` and `AndroidX` Libraries(`LiveData`, `ViewModel`, `Room`) `DataBinding`, `Dagger` and `AssistedInejct`, `Firebase` etc.
@@ -85,21 +93,6 @@ We use `AssistedInject` for creating item.
         groupAdapter.update(speakerItems)
 ```
 
-## Multi Module Project
-
-### Module conceptual diagram
-
-![image](https://user-images.githubusercontent.com/1386930/50476158-6dd2e800-0a0a-11e9-8737-3319e70ead38.png)
-
-### Generated diagram
-
-Green: Android Module  
-Orange: Common Module
-
-Dashed line: implementation  
-Normal line: api
-
-![](project.dot.png)
 
 # Architecture
 
