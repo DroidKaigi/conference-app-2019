@@ -27,7 +27,7 @@ class SessionsStore @Inject constructor(
         .subscribe<Action.SessionLoadingStateChanged>()
         .map { it.loadingState }
         .toLiveData(LoadingState.INITIALIZED)
-    val isInitilized: Boolean
+    val isInitialized: Boolean
         get() = loadingState.value == LoadingState.INITIALIZED
     val isLoading
         get() = loadingState.value == LoadingState.LOADING

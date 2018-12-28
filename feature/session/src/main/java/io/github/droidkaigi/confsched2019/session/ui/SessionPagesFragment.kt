@@ -64,7 +64,7 @@ class SessionPagesFragment : DaggerFragment() {
 
         userStore.registered.changed(viewLifecycleOwner) { registered ->
             // Now, registered, we can load sessions
-            if (registered && sessionsStore.isInitilized) {
+            if (registered && sessionsStore.isInitialized) {
                 sessionsActionCreator.refresh()
             }
         }
