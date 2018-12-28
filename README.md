@@ -52,7 +52,7 @@ Unidirectional data flow(Flux-based) Architecture with `Kotlin Coroutines` and `
 
 By using `Groupie` you can simplify the implementation around RecyclerView.
 
-```
+```kotlin
 class SpeakerItem @AssistedInject constructor(
     @Assisted val speaker: Speaker, // Inject by AssistedInject
     val navController: NavController // Inject by Dagger
@@ -83,7 +83,7 @@ class SpeakerItem @AssistedInject constructor(
 
 We use `AssistedInject` for creating item.
 
-```
+```kotlin
     @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
     
 ...
