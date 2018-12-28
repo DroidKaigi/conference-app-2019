@@ -64,7 +64,6 @@ object Dep {
         val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
         val androidCoroutinesDispatcher = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
         val coroutinesReactive = "org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$coroutinesVersion"
-        val androidCoroutines = "net.devrieze:android-coroutines:0.7.0"
         val coroutinesPlayServices = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesVersion"
         val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.8.1-rc13"
     }
@@ -141,10 +140,6 @@ object Dep {
         val version = "1.0.0"
         val common = "com.soywiz:klock:$version"
         val jvm = "com.soywiz:klock-jvm:$version"
-    }
-
-    object KotlinLogging {
-        val kotlinLogging = "io.github.microutils:kotlin-logging:1.6.20"
     }
 
     object MockK {
