@@ -13,6 +13,7 @@ import javax.inject.Singleton
 )
 interface ApiComponent {
     fun DroidKaigiApi(): DroidKaigiApi
+    fun GoogleFormApi(): GoogleFormApi
 
     @Component.Builder
     interface Builder {
