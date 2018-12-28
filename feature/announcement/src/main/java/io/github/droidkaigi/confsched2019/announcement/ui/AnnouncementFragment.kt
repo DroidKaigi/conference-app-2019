@@ -27,7 +27,7 @@ import javax.inject.Provider
 
 class AnnouncementFragment : DaggerFragment() {
 
-    lateinit var binding: FragmentAnnouncementBinding
+    private lateinit var binding: FragmentAnnouncementBinding
 
     @Inject lateinit var announcementStoreProvider: Provider<AnnouncementStore>
     private val announcementStore: AnnouncementStore by lazy {

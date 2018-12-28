@@ -19,6 +19,7 @@ dependencies {
     api Dep.Kotlin.coroutines
     implementation Dep.AndroidX.lifecycleLiveData
     kapt Dep.AndroidX.Room.compiler
+    kapt Dep.AndroidX.Room.coroutine
 
     api Dep.Klock.jvm
 

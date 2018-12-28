@@ -13,7 +13,6 @@ import io.github.droidkaigi.confsched2019.model.Announcement
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-// waiting https://github.com/Kotlin/kotlinx.coroutines/pull/523
 class FirestoreImpl @Inject constructor() : FireStore {
 
     override suspend fun getFavoriteSessionIds(): List<Int> {
@@ -44,7 +43,7 @@ class FirestoreImpl @Inject constructor() : FireStore {
         }
     }
 
-    fun getFavoritesRef(): CollectionReference {
+    private fun getFavoritesRef(): CollectionReference {
         val firebaseAuth = FirebaseAuth.getInstance()
         val firebaseUserId = firebaseAuth.currentUser?.uid ?: throw RuntimeException(
             "RuntimeException"

@@ -23,7 +23,7 @@ import javax.inject.Inject
 class SessionsActionCreator @Inject constructor(
     override val dispatcher: Dispatcher,
     private val sessionRepository: SessionRepository,
-    @SessionPagesScope val lifecycle: Lifecycle
+    @SessionPagesScope private val lifecycle: Lifecycle
 ) : CoroutineScope by lifecycle.coroutineScope,
     ErrorHandler {
     fun refresh() = launch {

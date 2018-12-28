@@ -18,7 +18,6 @@ dependencies {
     implementation Dep.Kotlin.stdlibJvm
     api Dep.Kotlin.coroutines
     implementation Dep.Kotlin.androidCoroutinesDispatcher
-    implementation Dep.Kotlin.androidCoroutines
     implementation Dep.AndroidX.appCompat
 
     implementation Dep.Ktor.clientAndroid
@@ -29,8 +28,6 @@ dependencies {
     implementation Dep.Dagger.androidSupport
     kapt Dep.Dagger.compiler
     kapt Dep.Dagger.androidProcessor
-
-    implementation Dep.KotlinLogging.kotlinLogging
 
     testImplementation Dep.Test.junit
     androidTestImplementation Dep.Test.testRunner

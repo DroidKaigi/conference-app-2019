@@ -15,7 +15,7 @@ import io.github.droidkaigi.confsched2019.di.PageScope
 
 class AboutFragment : DaggerFragment() {
 
-    lateinit var binding: FragmentAboutBinding
+    private lateinit var binding: FragmentAboutBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,

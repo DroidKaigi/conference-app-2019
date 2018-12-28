@@ -46,20 +46,38 @@ import io.github.droidkaigi.confsched2019.user.store.UserStore
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
-    @Inject lateinit var userActionCreator: UserActionCreator
-    @Inject lateinit var systemStore: SystemStore
-    @Inject lateinit var userStore: UserStore
 
-    val binding: ActivityMainBinding by lazy {
+    private val binding: ActivityMainBinding by lazy {
         DataBindingUtil.setContentView<ActivityMainBinding>(
             this,
             R.layout.activity_main
         )
     }
 
+    @Inject lateinit var userActionCreator: UserActionCreator
+    @Inject lateinit var systemStore: SystemStore
+    @Inject lateinit var userStore: UserStore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.toolbar)
+        setupNavigation()
+
+        systemStore.errorMsg.changed(this) { message ->
+            val messageStr = when (message) {
+                is ErrorMessage.ResourceIdMessage -> getString(message.messageId)
+                is ErrorMessage.Message -> message.message
+            }
+            Snackbar.make(binding.root, messageStr, Snackbar.LENGTH_LONG).show()
+        }
+        userStore.registered.changed(this) { registered ->
+            if (!registered) {
+                userActionCreator.load()
+            }
+        }
+    }
+
+    private fun setupNavigation() {
         val navController = findNavController(R.id.root_nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(
             setOf(R.id.main, R.id.about, R.id.announce),
@@ -86,19 +104,6 @@ class MainActivity : DaggerAppCompatActivity() {
                 PorterDuff.Mode.SRC_ATOP
             )
             binding.toolbar.setTitleTextColor(toolbarContentsColor)
-        }
-
-        systemStore.errorMsg.changed(this) { message ->
-            val messageStr = when (message) {
-                is ErrorMessage.ResourceIdMessage -> getString(message.messageId)
-                is ErrorMessage.Message -> message.message
-            }
-            Snackbar.make(binding.root, messageStr, Snackbar.LENGTH_LONG).show()
-        }
-        userStore.registered.changed(this) { registered ->
-            if (!registered) {
-                userActionCreator.load()
-            }
         }
     }
 }

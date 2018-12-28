@@ -32,7 +32,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
-    lateinit var binding: FragmentBottomSheetSessionsBinding
+    private lateinit var binding: FragmentBottomSheetSessionsBinding
 
     @Inject lateinit var sessionsActionCreator: SessionsActionCreator
     @Inject lateinit var sessionPageActionCreator: SessionPageActionCreator
@@ -77,13 +77,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
         binding.sessionsRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
-                val findFirstVisibleItemPosition = linearLayoutManager
-                    .findFirstVisibleItemPosition()
-                binding.bottomSheetTitle.text = (groupAdapter
-                    .getItem(findFirstVisibleItemPosition) as SpeechSessionItem)
-                    .session
-                    .startDayText
+                applyTitleText()
             }
         })
 
@@ -92,11 +86,9 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
                 .map { session ->
                     speechSessionItemFactory.create(session, sessionsStore)
                 }
-            binding.bottomSheetTitle.text = items
-                .firstOrNull()
-                ?.session
-                ?.startDayText
+
             groupAdapter.update(items)
+            applyTitleText()
         }
         sessionPageStore.filterSheetState.changed(viewLifecycleOwner) { newState ->
             if (newState == BottomSheetBehavior.STATE_EXPANDED ||
@@ -111,6 +103,18 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
                 binding.bottomSheetHideFilterButton.isVisible = isCollapsed
             }
         }
+    }
+
+    private fun applyTitleText() {
+        val linearLayoutManager = binding.sessionsRecycler.layoutManager as LinearLayoutManager
+        val firstPosition = linearLayoutManager.findFirstVisibleItemPosition()
+        if (firstPosition == RecyclerView.NO_POSITION || firstPosition >= groupAdapter.itemCount) {
+            return
+        }
+        binding.bottomSheetTitle.text = (groupAdapter
+            .getItem(firstPosition) as SpeechSessionItem)
+            .session
+            .startDayText
     }
 
     companion object {

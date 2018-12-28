@@ -20,13 +20,11 @@ class RoomSessionDatabase @Inject constructor(
     private val sessionSpeakerJoinDao: SessionSpeakerJoinDao,
     private val coroutineContext: CoroutineContext
 ) : SessionDatabase {
-    override suspend fun sessions(): List<SessionWithSpeakers> = withContext(coroutineContext) {
-        sessionSpeakerJoinDao.getAllSessions()
+    override suspend fun sessions(): List<SessionWithSpeakers> {
+        return sessionSpeakerJoinDao.getAllSessions()
     }
 
-    override suspend fun allSpeaker(): List<SpeakerEntity> = withContext(coroutineContext) {
-        speakerDao.getAllSpeaker()
-    }
+    override suspend fun allSpeaker(): List<SpeakerEntity> = speakerDao.getAllSpeaker()
 
     override suspend fun save(apiResponse: Response) {
         withContext(coroutineContext) {
