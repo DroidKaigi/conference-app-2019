@@ -1,4 +1,4 @@
-# DroidKaigi 2019 official Android app[WIP]
+# DroidKaigi 2019 official Android app
 
 [DroidKaigi 2019](https://droidkaigi.jp/2019/en/) is a conference tailored for developers on 8th and 9th February 2019.
 
@@ -69,14 +69,6 @@ class SpeakerItem @AssistedInject constructor(
     override fun bind(itemBinding: ItemSpeakerBinding, position: Int) {
         itemBinding.speakerText.text = speaker.name
         ...
-        
-        itemBinding.speakerText.setOnClickListener {
-            navController.navigate(
-                SessionDetailFragmentDirections.actionSessionDetailToSpeaker(
-                    speaker.id
-                )
-            )
-        }
     }
 }
 ```
@@ -126,7 +118,7 @@ Action Creator fetches data from DB / API with `Kotlin Coroutines suspend functi
 ```kotlin
 class AnnouncementActionCreator @Inject constructor(
     override val dispatcher: Dispatcher,
-    val fireStore: FireStore,
+    val firestore: Firestore,
     @PageScope val lifecycle: Lifecycle
 ) : CoroutineScope by lifecycle.coroutineScope,
     ErrorHandler {
@@ -135,7 +127,7 @@ class AnnouncementActionCreator @Inject constructor(
         try {
             dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADING))
             // fetch announcement by Kotlin Coroutines suspend function
-            dispatcher.dispatch(Action.AnnouncementLoaded(fireStore.getAnnouncements()))
+            dispatcher.dispatch(Action.AnnouncementLoaded(firestore.getAnnouncements()))
             dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADED))
         } catch (e: Exception) {
             onError(e)
@@ -208,5 +200,48 @@ Thank you for contributing!
 ## Credit
 This project uses some modern Android libraries and source codes.
 
-* AndroidX Libraries
-* TBW
+* [Android Jetpack](https://developer.android.com/jetpack/) (Google)
+  * Foundation
+    * AppCompat
+    * Android KTX
+    * Mutidex
+    * Test
+  * Architecture
+    * Data Binding
+    * Lifecycles
+    * LiveData
+    * Navigation
+  * UI
+    * Emoji
+    * Fragment
+    * Transition
+    * ConstraintLayout
+    * RecyclerView
+    * ...
+* [Kotlin](https://kotlinlang.org/) (Jetbrains)
+  * Stdlib
+  * Coroutines
+  * Serialization
+* [Firebase](https://firebase.google.com/) (Google)
+  * Auth
+  * Firestore
+* [Dagger 2](https://google.github.io/dagger/)
+  * Core (Google)
+  * AndroidSupport (Google)
+  * [AssistedInject](https://github.com/square/AssistedInject) (Square)
+* [Ktor](https://ktor.io/) (Jetbrains)
+  * Android Client
+  * Json
+* [OkHttp](http://square.github.io/okhttp/) (Jetbrains)
+  * Client
+  * LoggingInterceptor
+* [livedata-ktx](https://github.com/Shopify/livedata-ktx) (Shopify)
+* [LeakCanary](https://github.com/square/leakcanary) (Square)
+* [Stetho](http://facebook.github.io/stetho/) (Facebook)
+* [Hyperion-Android](https://github.com/willowtreeapps/Hyperion-Android) (WillowTree)
+* [Groupie](https://github.com/lisawray/groupie) (lisawray)
+* [KLOCK](https://korlibs.soywiz.com/klock/) (soywiz)
+* [MockK](http://mockk.io) (oleksiyp)
+* [Injected ViewModel Provider](https://github.com/evant/injectedvmprovider) (evant)
+* [Google I/O 2018](https://github.com/google/iosched) (Google)
+* [Picasso](http://square.github.io/picasso/) (Square)
