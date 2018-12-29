@@ -66,7 +66,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
         binding.sessionsRecycler.adapter = groupAdapter
         binding.sessionsRecycler.addItemDecoration(
-            SessionsItemDecoration(resources, groupAdapter)
+            SessionsItemDecoration(requireContext(), groupAdapter)
         )
 
         val onFilterButtonClick: (View) -> Unit = {

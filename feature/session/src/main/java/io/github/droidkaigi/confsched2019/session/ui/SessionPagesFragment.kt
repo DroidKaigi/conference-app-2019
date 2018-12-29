@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.chip.Chip
 import com.shopify.livedataktx.observe
 import dagger.Module
 import dagger.Provides
@@ -101,6 +102,18 @@ class SessionPagesFragment : DaggerFragment() {
                 }
             }
         )
+
+        (0 until binding.sessionsTabLayout.tabCount).forEach {
+            val view = layoutInflater.inflate(
+                R.layout.layout_title_chip, binding.sessionsTabLayout, false
+            ) as ViewGroup
+            val chip = view.getChildAt(0) as Chip
+            val tab = binding.sessionsTabLayout.getTabAt(it)
+            tab?.let {
+                chip.text = tab.text
+                tab.setCustomView(view)
+            }
+        }
     }
 }
 

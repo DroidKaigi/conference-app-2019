@@ -1,5 +1,8 @@
 package io.github.droidkaigi.confsched2019
 
+import android.graphics.Typeface
+import android.os.Handler
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
@@ -12,6 +15,7 @@ import io.github.droidkaigi.confsched2019.di.createAppComponent
 import io.github.droidkaigi.confsched2019.ext.android.changedForever
 import io.github.droidkaigi.confsched2019.system.actioncreator.SystemActionCreator
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
+import io.github.droidkaigi.confsched2019.util.logd
 import javax.inject.Inject
 
 open class App : DaggerApplication() {
@@ -21,12 +25,26 @@ open class App : DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
 
+        setupFont()
         setupEmojiCompat()
         setupFirestore()
         systemStore.systemProperty.changedForever {
             // listening
         }
         systemActionCreator.setupSystem()
+    }
+
+    private fun setupFont() {
+        // fetch font for cache
+        ResourcesCompat.getFont(this, R.font.lekton, object : ResourcesCompat.FontCallback() {
+            override fun onFontRetrievalFailed(reason: Int) {
+                logd { "onFontRetrievalFailed$reason" }
+            }
+
+            override fun onFontRetrieved(typeface: Typeface) {
+                // do nothing
+            }
+        }, Handler())
     }
 
     private fun setupFirestore() {
