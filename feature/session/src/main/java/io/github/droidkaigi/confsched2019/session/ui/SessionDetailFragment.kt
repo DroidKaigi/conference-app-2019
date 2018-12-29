@@ -57,7 +57,7 @@ class SessionDetailFragment : DaggerFragment() {
 
         sessionDetailFragmentArgs = SessionDetailFragmentArgs.fromBundle(arguments)
         val sessionLiveData = sessionsStore.speakerSession(sessionDetailFragmentArgs.session)
-        binding.favorite.setOnClickListener {
+        binding.sessionFavorite.setOnClickListener {
             val session = sessionLiveData.value ?: return@setOnClickListener
             sessionDetailActionCreator.toggleFavorite(session)
         }
@@ -65,12 +65,12 @@ class SessionDetailFragment : DaggerFragment() {
         sessionLiveData.changed(viewLifecycleOwner) { session: Session.SpeechSession ->
             binding.session = session
             @Suppress("StringFormatMatches") // FIXME
-            binding.timeAndRoom.text = getString(
+            binding.sessionTimeAndRoom.text = getString(
                 R.string.session_duration_room_format,
                 session.timeInMinutes,
                 session.room.name
             )
-            binding.startEndTime.text = buildString {
+            binding.sessionStartEndTime.text = buildString {
                 // ex: 2月2日 10:20-10:40
                 if (systemStore.lang == Lang.EN) {
                     append(session.startTime.format("M"))

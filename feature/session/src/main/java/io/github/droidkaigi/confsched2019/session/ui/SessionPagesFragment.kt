@@ -58,7 +58,7 @@ class SessionPagesFragment : DaggerFragment() {
         setupSessionPager()
 
         progressTimeLatch = ProgressTimeLatch { showProgress ->
-            binding.progressBar.isVisible = showProgress
+            binding.sessionsProgressBar.isVisible = showProgress
         }.apply {
             loading = true
         }

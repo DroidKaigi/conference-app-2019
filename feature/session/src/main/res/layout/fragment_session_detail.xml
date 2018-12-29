@@ -50,19 +50,8 @@
                 android:layout_height="match_parent"
                 >
 
-                <TextView
-                    android:id="@+id/room"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:maxLines="3"
-                    android:text="@{session.room.name}"
-                    app:layout_constraintStart_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text=" / Room A"
-                    />
-
                 <androidx.emoji.widget.EmojiTextView
-                    android:id="@+id/title"
+                    android:id="@+id/session_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -79,7 +68,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/time_and_room"
+                    android:id="@+id/session_time_and_room"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -92,7 +81,7 @@
 
 
                 <ImageView
-                    android:id="@+id/time_image"
+                    android:id="@+id/session_time_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -104,14 +93,14 @@
                     />
 
                 <TextView
-                    android:id="@+id/start_end_time"
+                    android:id="@+id/session_start_end_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:textAppearance="@style/TextAppearance.App.Subtitle1"
-                    app:layout_constraintBottom_toBottomOf="@id/time_image"
-                    app:layout_constraintStart_toEndOf="@id/time_image"
-                    app:layout_constraintTop_toTopOf="@id/time_image"
+                    app:layout_constraintBottom_toBottomOf="@id/session_time_image"
+                    app:layout_constraintStart_toEndOf="@id/session_time_image"
+                    app:layout_constraintTop_toTopOf="@id/session_time_image"
                     tools:text="2月2日 10:20-10:40"
                     />
 
@@ -125,11 +114,11 @@
                     android:src="@drawable/shape_dashed_line"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/time_image"
+                    app:layout_constraintTop_toBottomOf="@id/session_time_image"
                     />
 
                 <androidx.emoji.widget.EmojiTextView
-                    android:id="@+id/description"
+                    android:id="@+id/session_description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -157,11 +146,11 @@
                     android:src="@drawable/shape_dashed_line"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/description"
+                    app:layout_constraintTop_toBottomOf="@id/session_description"
                     />
 
                 <TextView
-                    android:id="@+id/tag_title"
+                    android:id="@+id/session_tag_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -173,14 +162,14 @@
 
 
                 <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/chip_group"
+                    android:id="@+id/session_tags"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/title"
-                    app:layout_constraintTop_toBottomOf="@id/tag_title"
+                    app:layout_constraintTop_toBottomOf="@id/session_tag_title"
                     >
 
                     <com.google.android.material.chip.Chip
@@ -217,12 +206,12 @@
                     android:src="@drawable/shape_dashed_line"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/chip_group"
+                    app:layout_constraintTop_toBottomOf="@id/session_tags"
                     />
 
 
                 <TextView
-                    android:id="@+id/servey_title"
+                    android:id="@+id/session_survery_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -242,11 +231,11 @@
                     android:src="@drawable/shape_dashed_line"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/servey_title"
+                    app:layout_constraintTop_toBottomOf="@id/session_survery_title"
                     />
 
                 <TextView
-                    android:id="@+id/speaker_title"
+                    android:id="@+id/session_speaker_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -266,11 +255,11 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/speaker_title"
+                    app:layout_constraintTop_toBottomOf="@id/session_speaker_title"
                     />
 
                 <androidx.emoji.widget.EmojiTextView
-                    android:id="@+id/message"
+                    android:id="@+id/session_message"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -288,7 +277,7 @@
 
 
                 <ImageView
-                    android:id="@+id/favorite"
+                    android:id="@+id/session_favorite"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginEnd="8dp"
