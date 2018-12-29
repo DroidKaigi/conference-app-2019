@@ -70,6 +70,8 @@ dependencies {
     implementation Dep.AndroidX.Navigation.runtimeKtx
     implementation Dep.AndroidX.Navigation.fragmentKtx
 
+    implementation Dep.AndroidX.coreKtx
+
     implementation Dep.Stetho.stetho
 
     releaseImplementation Dep.LeakCanary.leakCanary

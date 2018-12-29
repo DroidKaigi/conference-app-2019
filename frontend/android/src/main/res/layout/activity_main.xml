@@ -39,7 +39,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                />
+                >
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/bg_logo"
+                    android:contentDescription="@string/app_logo_description"
+                    />
+            </androidx.appcompat.widget.Toolbar>
 
             <fragment
                 android:id="@+id/root_nav_host_fragment"
