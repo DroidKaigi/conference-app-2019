@@ -10,7 +10,10 @@ android.dataBinding.enabled = true
 
 dependencies {
     implementation project(':frontendcomponent:androidcomponent')
+    implementation project(":model")
+    implementation project(":data:repository")
     implementation project(':ext:android-extension')
+    implementation project(':ext:log')
 
     implementation Dep.Kotlin.stdlibJvm
     api Dep.Kotlin.coroutines
