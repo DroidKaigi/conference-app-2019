@@ -38,15 +38,14 @@ android {
         xmlOutput file("lint-results.xml")
         htmlOutput file("lint-results.html")
     }
-    dexOptions {
-        javaMaxHeapSize "8g"
-    }
 }
 
 dependencies {
     implementation project(":model")
     implementation project(":feature:session")
+    implementation project(":feature:about")
     implementation project(":feature:announcement")
+    implementation project(":feature:floormap")
     implementation project(":feature:sponsor")
     implementation project(':frontendcomponent:androidcomponent')
     implementation project(':feature:user')
@@ -54,7 +53,7 @@ dependencies {
     implementation project(':data:db-room')
     implementation project(':data:repository-impl')
     implementation project(':data:firestore-impl')
-    implementation project(':data:api-retrofit')
+    implementation project(':data:api-impl')
     implementation project(':ext:log')
 
     implementation Dep.Kotlin.stdlibJvm
@@ -62,14 +61,16 @@ dependencies {
 
     implementation Dep.Firebase.fireStore
 
-    implementation Dep.Android.appCompat
-    implementation Dep.Android.constraint
+    implementation Dep.AndroidX.appCompat
+    implementation Dep.AndroidX.constraint
 
-    implementation Dep.Arch.Navigation.runtime
-    implementation Dep.Arch.Navigation.fragment
-    implementation Dep.Arch.Navigation.ui
-    implementation Dep.Arch.Navigation.runtimeKtx
-    implementation Dep.Arch.Navigation.fragmentKtx
+    implementation Dep.AndroidX.Navigation.runtime
+    implementation Dep.AndroidX.Navigation.fragment
+    implementation Dep.AndroidX.Navigation.ui
+    implementation Dep.AndroidX.Navigation.runtimeKtx
+    implementation Dep.AndroidX.Navigation.fragmentKtx
+
+    implementation Dep.AndroidX.coreKtx
 
     implementation Dep.Stetho.stetho
 
@@ -88,10 +89,10 @@ dependencies {
     compileOnly Dep.Dagger.assistedInjectAnnotations
     kapt Dep.Dagger.assistedInjectProcessor
 
-    testImplementation Dep.junit
+    testImplementation Dep.Test.junit
 
-    androidTestImplementation Dep.Android.testRunner
-    androidTestImplementation Dep.Android.espressoCore
+    androidTestImplementation Dep.Test.testRunner
+    androidTestImplementation Dep.Test.espressoCore
 
     Dep.Hyperion.hyperionPlugins.forEach {
         debugImplementation it

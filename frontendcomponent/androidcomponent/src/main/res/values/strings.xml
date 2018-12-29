@@ -1,16 +1,18 @@
 <resources>
-    <string name="app_name">uicomponent</string>
+    <string name="app_name" translatable="false">uicomponent</string>
 
     <!-- Session -->
-    <string name="session_label">session</string>
+    <string name="session_label">Session</string>
     <!-- Speaker -->
-    <string name="speaker_label">speaker</string>
+    <string name="speaker_label" translatable="false">Speaker</string>
     <!-- Announce -->
-    <string name="announce_label">announce</string>
+    <string name="announce_label">Announce</string>
+    <!-- About -->
+    <string name="about_label">About</string>
     <!-- Sponsor -->
-    <string name="sponsor_label">sponsor</string>
-    <!-- Map -->
-    <string name="map_label">map</string>
-    <!-- Other -->
-    <string name="other_label">other</string>
+    <string name="sponsor_label">Sponsor</string>
+    <!-- FloorMap -->
+    <string name="map_label">Floormap</string>
+    <!-- Survey -->
+    <string name="survey_label">Entire survey</string>
 </resources>

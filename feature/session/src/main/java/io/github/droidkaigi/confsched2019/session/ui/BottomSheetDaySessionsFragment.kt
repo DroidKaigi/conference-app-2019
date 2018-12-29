@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Item
 import com.xwray.groupie.databinding.ViewHolder
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.Session
@@ -16,37 +17,38 @@ import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentBottomSheetSessionsBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPageActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPagesActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
+import io.github.droidkaigi.confsched2019.session.ui.item.SpecialSessionItem
+import io.github.droidkaigi.confsched2019.session.ui.item.SpeechSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPageStore
-import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.session.ui.widget.SessionsItemDecoration
 import io.github.droidkaigi.confsched2019.widget.BottomSheetBehavior
-import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import me.tatarka.injectedvmprovider.ktx.injectedViewModelProvider
 import javax.inject.Inject
 import javax.inject.Provider
 
 class BottomSheetDaySessionsFragment : DaggerFragment() {
-    lateinit var binding: FragmentBottomSheetSessionsBinding
+    private lateinit var binding: FragmentBottomSheetSessionsBinding
 
-    @Inject lateinit var sessionPagesActionCreator: SessionPagesActionCreator
+    @Inject lateinit var sessionsActionCreator: SessionsActionCreator
     @Inject lateinit var sessionPageActionCreator: SessionPageActionCreator
     @Inject lateinit var sessionPageFragmentProvider: Provider<SessionPageFragment>
-    @Inject lateinit var sessionItemFactory: SessionItem.Factory
-
-    @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
-    private val sessionPagesStore: SessionPagesStore by lazy {
-        InjectedViewModelProviders.of(requireActivity())[sessionPagesStoreProvider]
-    }
-
+    @Inject lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
+    @Inject lateinit var sessionsStore: SessionsStore
     @Inject lateinit var sessionPageStoreFactory: SessionPageStore.Factory
     private val sessionPageStore: SessionPageStore by lazy {
         sessionPageFragmentProvider.get().injectedViewModelProvider
             .get(SessionPageStore::class.java.name) {
                 sessionPageStoreFactory.create(SessionPage.pages[args.day])
             }
+    }
+
+    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
+    private val args: BottomSheetDaySessionsFragmentArgs by lazy {
+        BottomSheetDaySessionsFragmentArgs.fromBundle(arguments)
     }
 
     override fun onCreateView(
@@ -60,17 +62,11 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
         return binding.root
     }
 
-    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
-
-    private val args: BottomSheetDaySessionsFragmentArgs by lazy {
-        BottomSheetDaySessionsFragmentArgs.fromBundle(arguments)
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.sessionsRecycler.adapter = groupAdapter
         binding.sessionsRecycler.addItemDecoration(
-            SessionsItemDecoration(resources, groupAdapter)
+            SessionsItemDecoration(requireContext(), groupAdapter)
         )
 
         val onFilterButtonClick: (View) -> Unit = {
@@ -79,18 +75,27 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
         binding.bottomSheetShowFilterButton.setOnClickListener(onFilterButtonClick)
         binding.bottomSheetHideFilterButton.setOnClickListener(onFilterButtonClick)
 
-        sessionPagesStore.daySessions(args.day).changed(this) { sessions ->
-            val items = sessions.filterIsInstance<Session.SpeechSession>()
-                .map { session ->
-                    sessionItemFactory.create(session, sessionPagesStore)
+        sessionsStore.daySessions(args.day).changed(viewLifecycleOwner) { sessions ->
+            val items = sessions
+                .map<Session, Item<*>> { session ->
+                    when (session) {
+                        is Session.SpeechSession ->
+                            speechSessionItemFactory.create(session, sessionsStore)
+                        is Session.SpecialSession ->
+                            SpecialSessionItem(session)
+                    }
                 }
-            binding.bottomSheetTitle.text = items
-                .firstOrNull()
-                ?.speechSession
-                ?.startDayText
             groupAdapter.update(items)
+
+            val titleText = items
+                .asSequence()
+                .filterIsInstance<SessionItem>()
+                .firstOrNull()
+                ?.session
+                ?.startDayText ?: return@changed
+            binding.bottomSheetTitle.text = titleText
         }
-        sessionPageStore.filterSheetState.changed(this) { newState ->
+        sessionPageStore.filterSheetState.changed(viewLifecycleOwner) { newState ->
             if (newState == BottomSheetBehavior.STATE_EXPANDED ||
                 newState == BottomSheetBehavior.STATE_COLLAPSED) {
                 TransitionManager.beginDelayedTransition(

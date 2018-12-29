@@ -9,12 +9,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import dagger.Module
 import dagger.Provides
+import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.sponsor.R
 import io.github.droidkaigi.confsched2019.sponsor.databinding.FragmentSponsorBinding
 import io.github.droidkaigi.confsched2019.sponsor.ui.actioncreator.SponsorActionCreator
-import io.github.droidkaigi.confsched2019.sponsor.ui.di.SponsorScope
 import io.github.droidkaigi.confsched2019.sponsor.ui.store.SponsorStore
 import io.github.droidkaigi.confsched2019.sponsor.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
@@ -71,7 +71,7 @@ class SponsorFragment : DaggerFragment() {
 abstract class SponsorFragmentModule {
     @Module
     companion object {
-        @SponsorScope @JvmStatic @Provides fun providesLifecycle(
+        @PageScope @JvmStatic @Provides fun providesLifecycle(
             sponsorFragment: SponsorFragment
         ): Lifecycle {
             return sponsorFragment.viewLifecycleOwner.lifecycle

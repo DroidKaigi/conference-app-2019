@@ -1,20 +1,22 @@
 package io.github.droidkaigi.confsched2019.action
 
+import io.github.droidkaigi.confsched2019.model.Announcement
 import io.github.droidkaigi.confsched2019.model.ErrorMessage
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LoadingState
-import io.github.droidkaigi.confsched2019.model.Post
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.model.Sponsor
+import io.github.droidkaigi.confsched2019.model.SponsorCategory
 import io.github.droidkaigi.confsched2019.model.SystemProperty
 import io.github.droidkaigi.confsched2019.model.Topic
 
 sealed class Action {
-    data class SessionRefreshStateChanged(val loadingState: LoadingState) : Action()
+    class Error(val msg: ErrorMessage) : Action()
+
     data class SessionLoadingStateChanged(val loadingState: LoadingState) : Action()
     data class SessionsLoaded(
         val sessionContents: SessionContents
@@ -48,8 +50,10 @@ sealed class Action {
     object UserRegistered : Action()
 
     class AnnouncementLoadingStateChanged(val loadingState: LoadingState) : Action()
-    class AnnouncementLoaded(val posts: List<Post>) : Action()
-    class Error(val msg: ErrorMessage) : Action()
+    class AnnouncementLoaded(val announcements: List<Announcement>) : Action()
+
     class SponsorLoadingStateChanged(val loadingState: LoadingState) : Action()
-    class SponsorLoaded(val sponsors: List<Sponsor>) : Action()
+    class SponsorLoaded(val sponsors: List<SponsorCategory>) : Action()
+
+    class FloorMapLoadingStateChanged(val loadingState: LoadingState) : Action()
 }

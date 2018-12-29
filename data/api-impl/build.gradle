@@ -1,0 +1,32 @@
+import dependencies.Dep
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlinx-serialization'
+apply plugin: 'kotlin-kapt'
+
+apply from: rootProject.file('gradle/android.gradle')
+android.libraryVariants.all {
+    // TODO replace with https://issuetracker.google.com/issues/72050365 once released.
+    it.generateBuildConfig.enabled = true
+}
+
+dependencies {
+    api project(":data:api")
+
+    implementation Dep.Kotlin.stdlibJvm
+    implementation Dep.Kotlin.serialization
+    implementation Dep.Ktor.clientAndroid
+    implementation Dep.Ktor.jsonJvm
+    implementation Dep.OkHttp.client
+    implementation Dep.Stetho.stetho
+    implementation Dep.Dagger.core
+    implementation Dep.Dagger.androidSupport
+    implementation Dep.OkHttp.loggingInterceptor
+    kapt Dep.Dagger.compiler
+    kapt Dep.Dagger.androidProcessor
+
+    testImplementation Dep.Test.junit
+}
+
+

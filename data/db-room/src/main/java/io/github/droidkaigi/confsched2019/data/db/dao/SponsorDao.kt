@@ -5,12 +5,11 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.github.droidkaigi.confsched2019.data.db.entity.SponsorEntityImpl
-import io.reactivex.Flowable
 
 @Dao
 abstract class SponsorDao {
     @Query("SELECT * FROM sponsor")
-    abstract fun sponsorsFlowable(): Flowable<List<SponsorEntityImpl>>
+    abstract suspend fun allSponsors(): List<SponsorEntityImpl>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insert(sponsors: List<SponsorEntityImpl>)

@@ -21,17 +21,17 @@ dependencies {
     api Dep.Kotlin.coroutines
     implementation Dep.Kotlin.androidCoroutinesDispatcher
 
-    implementation Dep.Android.appCompat
-    implementation Dep.Android.constraint
-    implementation Dep.Android.recyclerView
-    api Dep.Android.emoji
-    implementation Dep.Android.design
+    implementation Dep.AndroidX.appCompat
+    implementation Dep.AndroidX.constraint
+    implementation Dep.AndroidX.recyclerView
+    api Dep.AndroidX.emoji
+    implementation Dep.AndroidX.design
 
 
-    api Dep.Arch.lifecycleExtensions
-    api Dep.Arch.Navigation.runtime
-    api Dep.Arch.Navigation.runtimeKtx
-    implementation Dep.AndroidKtx.core
+    api Dep.AndroidX.lifecycleExtensions
+    api Dep.AndroidX.Navigation.runtime
+    api Dep.AndroidX.Navigation.runtimeKtx
+    implementation Dep.AndroidX.coreKtx
 
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport
@@ -46,12 +46,15 @@ dependencies {
     implementation Dep.Groupie.groupie
     implementation Dep.Groupie.databinding
 
-    testImplementation Dep.junit
-    testImplementation Dep.KotlinTest.assertions
+    implementation Dep.Picasso.picasso
+    implementation Dep.Picasso.picassoTransformation
+
+    testImplementation Dep.Test.junit
+    testImplementation Dep.Test.kotlinTestAssertions
     testImplementation Dep.MockK.jvm
     testImplementation project(':frontendcomponent:androidtestcomponent')
-    androidTestImplementation Dep.Android.testRunner
-    androidTestImplementation Dep.Android.espressoCore
+    androidTestImplementation Dep.Test.testRunner
+    androidTestImplementation Dep.Test.espressoCore
 }
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions {

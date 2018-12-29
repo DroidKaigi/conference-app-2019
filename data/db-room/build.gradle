@@ -10,23 +10,23 @@ apply from: rootProject.file('gradle/android.gradle')
 dependencies {
     api project(":data:db")
     api project(":data:api")
+    api project(":ext:android-extension")
 
     implementation Dep.Kotlin.stdlibJvm
     implementation Dep.Kotlin.serialization
     api Dep.Kotlin.coroutines
-    api Dep.Kotlin.coroutinesRx2
-    api Dep.Arch.roomRuntime
-    implementation Dep.Arch.roomRxJava
-    api Dep.Arch.lifecycleLiveData
+    api Dep.AndroidX.Room.runtime
+    api Dep.AndroidX.Room.coroutine
+    api Dep.AndroidX.lifecycleLiveData
     api Dep.Klock.jvm
-    kapt Dep.Arch.roomCompiler
+    kapt Dep.AndroidX.Room.compiler
 
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport
     kapt Dep.Dagger.compiler
     kapt Dep.Dagger.androidProcessor
 
-    testImplementation Dep.junit
+    testImplementation Dep.Test.junit
 }
 
 

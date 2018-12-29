@@ -18,14 +18,13 @@ dependencies {
     implementation Dep.Kotlin.stdlibJvm
     api Dep.Kotlin.coroutines
     implementation Dep.Kotlin.androidCoroutinesDispatcher
-    implementation Dep.Kotlin.androidCoroutines
-    implementation Dep.Android.appCompat
+    implementation Dep.AndroidX.appCompat
     implementation Dep.Stetho.stetho
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport
     kapt Dep.Dagger.compiler
     kapt Dep.Dagger.androidProcessor
-    testImplementation Dep.junit
-    androidTestImplementation Dep.Android.testRunner
+    testImplementation Dep.Test.junit
+    androidTestImplementation Dep.Test.testRunner
 }
 

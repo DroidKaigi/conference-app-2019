@@ -1,7 +1,9 @@
 package io.github.droidkaigi.confsched2019.model
 
+import com.soywiz.klock.DateFormat
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.TimeSpan
+import com.soywiz.klock.parse
 
 sealed class Session(
     open val id: String,
@@ -30,9 +32,25 @@ sealed class Session(
         override val dayNumber: Int,
         override val startTime: DateTime,
         override val endTime: DateTime,
-        val title: Int,
+        val title: String,
         val room: Room?
-    ) : Session(id, dayNumber, startTime, endTime)
+    ) : Session(id, dayNumber, startTime, endTime) {
+        companion object {
+            private val formatter: DateFormat =
+                DateFormat("yyyy-MM-dd'T'HH:mm:ss")
+
+            fun specialSessions() = listOf(
+                SpecialSession(
+                    "100000",
+                    1,
+                    formatter.parse("2018-02-08T10:00:00").utc,
+                    formatter.parse("2018-02-08T10:20:00").utc,
+                    LocaleMessage("Welcome talk", "ウェルカムトーク").get(),
+                    Room(513, "Hall")
+                )
+            )
+        }
+    }
 
     val startDayText
         get() = startTime.format("yyyy.M.d")

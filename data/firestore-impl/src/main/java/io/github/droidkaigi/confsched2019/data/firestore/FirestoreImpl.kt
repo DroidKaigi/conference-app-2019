@@ -5,41 +5,15 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.MetadataChanges
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.Source
 import com.soywiz.klock.DateTime
-import io.github.droidkaigi.confsched2019.model.Post
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.ReceiveChannel
+import io.github.droidkaigi.confsched2019.model.Announcement
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-// waiting https://github.com/Kotlin/kotlinx.coroutines/pull/523
 class FirestoreImpl @Inject constructor() : FireStore {
-
-    override suspend fun getFavoriteSessionChannel(): ReceiveChannel<List<Int>> {
-        val favoritesRef = getFavoritesRef()
-        val snapshot = favoritesRef
-            .fastGet()
-        if (snapshot.isEmpty) {
-            favoritesRef.add(mapOf("initialized" to true)).await()
-        }
-        val channel = Channel<List<Int>>(Channel.CONFLATED)
-        val listenerRegistration = favoritesRef.whereEqualTo("favorite", true)
-            .addSnapshotListener(
-                MetadataChanges.INCLUDE
-            ) { favoriteSnapshot, _ ->
-                favoriteSnapshot ?: return@addSnapshotListener
-                val element = favoriteSnapshot.mapNotNull { it.id.toIntOrNull() }
-                channel.offer(element)
-            }
-        channel.invokeOnClose {
-            listenerRegistration.remove()
-        }
-        return channel
-    }
 
     override suspend fun getFavoriteSessionIds(): List<Int> {
         if (FirebaseAuth.getInstance().currentUser?.uid == null) return listOf()
@@ -69,7 +43,7 @@ class FirestoreImpl @Inject constructor() : FireStore {
         }
     }
 
-    fun getFavoritesRef(): CollectionReference {
+    private fun getFavoritesRef(): CollectionReference {
         val firebaseAuth = FirebaseAuth.getInstance()
         val firebaseUserId = firebaseAuth.currentUser?.uid ?: throw RuntimeException(
             "RuntimeException"
@@ -79,25 +53,33 @@ class FirestoreImpl @Inject constructor() : FireStore {
             .collection("users/$firebaseUserId/favorites")
     }
 
-    override suspend fun getAnnouncements(): List<Post> {
+    override suspend fun getAnnouncements(): List<Announcement> {
         val snapshot = FirebaseFirestore.getInstance()
             .collection("posts")
             .whereEqualTo("published", true)
             .orderBy("date", Query.Direction.DESCENDING)
             .get()
             .await()
-        val posts = snapshot.toPosts()
-        return posts
+        val announcements = snapshot.toAnnouncements()
+        return announcements
     }
 }
 
-private fun QuerySnapshot.toPosts(): List<Post> {
+private fun QuerySnapshot.toAnnouncements(): List<Announcement> {
     val postEntities: List<PostEntity> = this
         .map { it.toObject(PostEntity::class.java) }
-    val posts = postEntities.map {
-        Post(it.title!!, it.content!!, DateTime(it.date!!.time)) // , it.type)
+    val announcements = postEntities.mapNotNull {
+        if (it.title == null || it.content == null || it.date == null || it.type == null) {
+            return@mapNotNull null
+        }
+        val announcementType = try {
+            Announcement.Type.valueOf(it.type.toUpperCase())
+        } catch (e: IllegalArgumentException) {
+            return@mapNotNull null
+        }
+        Announcement(it.title, it.content, DateTime(it.date.time), announcementType)
     }
-    return posts
+    return announcements
 }
 
 private suspend fun DocumentReference.fastGet(): DocumentSnapshot {

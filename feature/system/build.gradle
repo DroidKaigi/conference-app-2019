@@ -1,36 +1,15 @@
 import dependencies.Dep
-import dependencies.Versions
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
-android {
-    compileSdkVersion Versions.androidCompileSdkVersion
-
-    defaultConfig {
-        minSdkVersion Versions.androidMinSdkVersion
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-    lintOptions {
-        def lintFile = file("${project.projectDir}/lint.xml")
-        if (lintFile.exists()) {
-            lintConfig lintFile
-        }
-    }
+apply from: rootProject.file('gradle/android.gradle')
+android.libraryVariants.all {
+    // TODO replace with https://issuetracker.google.com/issues/72050365 once released.
+    it.generateBuildConfig.enabled = true
 }
-kotlin.sourceSets.all {
-    languageSettings {
-        progressiveMode = true
-    }
-}
+
 dependencies {
     implementation project(':ext:android-extension')
     implementation project(':ext:log')
@@ -39,10 +18,9 @@ dependencies {
     implementation Dep.Kotlin.stdlibJvm
     api Dep.Kotlin.coroutines
     implementation Dep.Kotlin.androidCoroutinesDispatcher
-    implementation Dep.Kotlin.androidCoroutines
-    implementation Dep.Android.appCompat
+    implementation Dep.AndroidX.appCompat
 
-    implementation Dep.Retrofit.client
+    implementation Dep.Ktor.clientAndroid
 
     implementation Dep.Firebase.fireStore
 
@@ -51,9 +29,7 @@ dependencies {
     kapt Dep.Dagger.compiler
     kapt Dep.Dagger.androidProcessor
 
-    implementation Dep.KotlinLogging.kotlinLogging
-
-    testImplementation Dep.junit
-    androidTestImplementation Dep.Android.testRunner
+    testImplementation Dep.Test.junit
+    androidTestImplementation Dep.Test.testRunner
 }
 

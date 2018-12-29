@@ -7,6 +7,7 @@ import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.toLiveData
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.Sponsor
+import io.github.droidkaigi.confsched2019.model.SponsorCategory
 import kotlinx.coroutines.channels.map
 import javax.inject.Inject
 
@@ -17,7 +18,7 @@ class SponsorStore @Inject constructor(
         .subscribe<Action.SponsorLoadingStateChanged>()
         .map { it.loadingState }
         .toLiveData(LoadingState.LOADING)
-    val sponsors: LiveData<List<Sponsor>> = dispatcher
+    val sponsors: LiveData<List<SponsorCategory>> = dispatcher
         .subscribe<Action.SponsorLoaded>()
         .map { it.sponsors }
         .toLiveData(listOf())

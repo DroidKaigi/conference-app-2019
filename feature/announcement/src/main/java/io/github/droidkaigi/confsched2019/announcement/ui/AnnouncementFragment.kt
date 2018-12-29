@@ -7,14 +7,17 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.announcement.R
 import io.github.droidkaigi.confsched2019.announcement.databinding.FragmentAnnouncementBinding
 import io.github.droidkaigi.confsched2019.announcement.ui.actioncreator.AnnouncementActionCreator
-import io.github.droidkaigi.confsched2019.announcement.ui.di.AnnouncementScope
+import io.github.droidkaigi.confsched2019.announcement.ui.item.AnnouncementItem
 import io.github.droidkaigi.confsched2019.announcement.ui.store.AnnouncementStore
 import io.github.droidkaigi.confsched2019.announcement.ui.widget.DaggerFragment
+import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
@@ -24,7 +27,7 @@ import javax.inject.Provider
 
 class AnnouncementFragment : DaggerFragment() {
 
-    lateinit var binding: FragmentAnnouncementBinding
+    private lateinit var binding: FragmentAnnouncementBinding
 
     @Inject lateinit var announcementStoreProvider: Provider<AnnouncementStore>
     private val announcementStore: AnnouncementStore by lazy {
@@ -33,6 +36,8 @@ class AnnouncementFragment : DaggerFragment() {
     @Inject lateinit var announcementActionCreator: AnnouncementActionCreator
 
     private lateinit var progressTimeLatch: ProgressTimeLatch
+
+    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,6 +55,7 @@ class AnnouncementFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        binding.announcementRecycler.adapter = groupAdapter
 
         progressTimeLatch = ProgressTimeLatch { showProgress ->
             binding.progressBar.isVisible = showProgress
@@ -59,9 +65,12 @@ class AnnouncementFragment : DaggerFragment() {
         announcementStore.loadingState.changed(viewLifecycleOwner) {
             progressTimeLatch.loading = it == LoadingState.LOADING
         }
-        announcementStore.posts.changed(viewLifecycleOwner) {
-            // TODO: Implement announcement list
-            println(it)
+        announcementStore.announcements.changed(viewLifecycleOwner) { announcements ->
+            val items = announcements
+                .map { announcement ->
+                    AnnouncementItem(announcement)
+                }
+            groupAdapter.update(items)
         }
         announcementActionCreator.load()
     }
@@ -71,7 +80,7 @@ class AnnouncementFragment : DaggerFragment() {
 abstract class AnnouncementFragmentModule {
     @Module
     companion object {
-        @AnnouncementScope @JvmStatic @Provides fun providesLifecycle(
+        @PageScope @JvmStatic @Provides fun providesLifecycle(
             announcementFragment: AnnouncementFragment
         ): Lifecycle {
             return announcementFragment.viewLifecycleOwner.lifecycle

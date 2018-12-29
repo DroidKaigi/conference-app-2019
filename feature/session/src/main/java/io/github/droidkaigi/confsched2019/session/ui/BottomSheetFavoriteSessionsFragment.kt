@@ -20,30 +20,26 @@ import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentBottomSheetSessionsBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPageActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPagesActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.item.SpeechSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPageStore
-import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.session.ui.widget.SessionsItemDecoration
 import io.github.droidkaigi.confsched2019.widget.BottomSheetBehavior
-import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import me.tatarka.injectedvmprovider.ktx.injectedViewModelProvider
 import javax.inject.Inject
 import javax.inject.Provider
 
 class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
-    lateinit var binding: FragmentBottomSheetSessionsBinding
+    private lateinit var binding: FragmentBottomSheetSessionsBinding
 
-    @Inject lateinit var sessionPagesActionCreator: SessionPagesActionCreator
+    @Inject lateinit var sessionsActionCreator: SessionsActionCreator
     @Inject lateinit var sessionPageActionCreator: SessionPageActionCreator
-    @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
     @Inject lateinit var sessionPageFragmentProvider: Provider<SessionPageFragment>
-    @Inject lateinit var sessionItemFactory: SessionItem.Factory
+    @Inject lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
 
-    private val sessionPagesStore: SessionPagesStore by lazy {
-        InjectedViewModelProviders.of(requireActivity())[sessionPagesStoreProvider]
-    }
+    @Inject lateinit var sessionsStore: SessionsStore
     @Inject lateinit var sessionDetailStoreFactory: SessionPageStore.Factory
     private val sessionPageStore: SessionPageStore by lazy {
         sessionPageFragmentProvider.get().injectedViewModelProvider
@@ -69,7 +65,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
         binding.sessionsRecycler.adapter = groupAdapter
         binding.sessionsRecycler.addItemDecoration(
-            SessionsItemDecoration(resources, groupAdapter)
+            SessionsItemDecoration(requireContext(), groupAdapter)
         )
 
         val onFilterButtonClick: (View) -> Unit = {
@@ -81,28 +77,20 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
         binding.sessionsRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
-                val findFirstVisibleItemPosition = linearLayoutManager
-                    .findFirstVisibleItemPosition()
-                binding.bottomSheetTitle.text = (groupAdapter
-                    .getItem(findFirstVisibleItemPosition) as SessionItem)
-                    .speechSession
-                    .startDayText
+                applyTitleText()
             }
         })
 
-        sessionPagesStore.favoriteSessions().changed(this) { sessions ->
+        sessionsStore.favoriteSessions().changed(viewLifecycleOwner) { sessions ->
             val items = sessions
                 .map { session ->
-                    sessionItemFactory.create(session, sessionPagesStore)
+                    speechSessionItemFactory.create(session, sessionsStore)
                 }
-            binding.bottomSheetTitle.text = items
-                .firstOrNull()
-                ?.speechSession
-                ?.startDayText
+
             groupAdapter.update(items)
+            applyTitleText()
         }
-        sessionPageStore.filterSheetState.changed(this) { newState ->
+        sessionPageStore.filterSheetState.changed(viewLifecycleOwner) { newState ->
             if (newState == BottomSheetBehavior.STATE_EXPANDED ||
                 newState == BottomSheetBehavior.STATE_COLLAPSED) {
                 TransitionManager.beginDelayedTransition(
@@ -115,6 +103,18 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
                 binding.bottomSheetHideFilterButton.isVisible = isCollapsed
             }
         }
+    }
+
+    private fun applyTitleText() {
+        val linearLayoutManager = binding.sessionsRecycler.layoutManager as LinearLayoutManager
+        val firstPosition = linearLayoutManager.findFirstVisibleItemPosition()
+        if (firstPosition == RecyclerView.NO_POSITION || firstPosition >= groupAdapter.itemCount) {
+            return
+        }
+        binding.bottomSheetTitle.text = (groupAdapter
+            .getItem(firstPosition) as SpeechSessionItem)
+            .session
+            .startDayText
     }
 
     companion object {

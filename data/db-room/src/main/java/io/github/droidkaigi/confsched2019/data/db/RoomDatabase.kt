@@ -13,34 +13,27 @@ import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionEntitie
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionSpeakerJoinEntities
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSpeakerEntities
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSponsorEntities
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.reactive.openSubscription
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
-class
-RoomDatabase @Inject constructor(
+class RoomDatabase @Inject constructor(
     private val database: CacheDatabase,
     private val sessionDao: SessionDao,
     private val speakerDao: SpeakerDao,
     private val sessionSpeakerJoinDao: SessionSpeakerJoinDao,
+    private val coroutineContext: CoroutineContext,
     private val sponsorDao: SponsorDao
-) : SessionDatabase, SponsorDatabase {
-    override fun sessionsChannel(): ReceiveChannel<List<SessionWithSpeakers>> {
-        return sessionSpeakerJoinDao.getAllSessionsObservable().openSubscription()
+) : SessionDatabase, SponsorDatabase  {
+    override suspend fun sessions(): List<SessionWithSpeakers> {
+        return sessionSpeakerJoinDao.getAllSessions()
     }
 
-    override suspend fun sessions(): List<SessionWithSpeakers> = withContext(Dispatchers.IO) {
-        sessionSpeakerJoinDao.getAllSessions()
-    }
-
-    override suspend fun allSpeaker(): List<SpeakerEntity> = withContext(Dispatchers.IO) {
-        speakerDao.getAllSpeaker()
-    }
+    override suspend fun allSpeaker(): List<SpeakerEntity> = speakerDao.getAllSpeaker()
 
     override suspend fun save(apiResponse: Response) {
-        withContext(Dispatchers.IO) {
+        withContext(coroutineContext) {
             // FIXME: SQLiteDatabaseLockedException
             database.runInTransaction {
                 database.sqlite().execSQL("PRAGMA defer_foreign_keys = TRUE")
@@ -56,12 +49,12 @@ RoomDatabase @Inject constructor(
         }
     }
 
-    override fun sponsorChannel(): ReceiveChannel<List<SponsorEntity>> {
-        return sponsorDao.sponsorsFlowable().openSubscription()
+    override suspend fun sponsors(): List<SponsorEntity> {
+        return sponsorDao.allSponsors()
     }
 
     override suspend fun save(apiResponse: SponsorResponse) {
-        withContext(Dispatchers.IO) {
+        withContext(coroutineContext) {
             database.runInTransaction {
 
                 val sponsors = listOf(

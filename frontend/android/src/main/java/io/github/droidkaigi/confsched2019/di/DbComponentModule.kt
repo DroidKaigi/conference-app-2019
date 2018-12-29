@@ -6,7 +6,7 @@ import dagger.Provides
 import io.github.droidkaigi.confsched2019.data.db.DbComponent
 import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.db.SponsorDatabase
-import kotlinx.coroutines.Dispatchers
+import io.github.droidkaigi.confsched2019.ext.android.Dispatchers
 import javax.inject.Singleton
 
 @Module

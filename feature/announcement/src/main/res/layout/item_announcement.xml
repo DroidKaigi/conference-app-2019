@@ -1,16 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     >
-
-    <data>
-
-        <import type="android.view.View"/>
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         >
+
+        <TextView
+            android:id="@+id/date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="8dp"
+            android:gravity="start|center_vertical"
+            android:textAlignment="viewStart"
+            android:textAppearance="@style/TextAppearance.App.Caption"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="01.25 12:01"
+            />
+
+        <ImageView
+            android:id="@+id/category_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/announcement_description_category_icon"
+            app:layout_constraintStart_toStartOf="@id/date_text"
+            app:layout_constraintTop_toBottomOf="@id/date_text"
+            />
+
+        <androidx.emoji.widget.EmojiTextView
+            android:id="@+id/title_text"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="27dp"
+            android:layout_marginStart="16dp"
+            android:ellipsize="end"
+            android:gravity="start|center_vertical"
+            android:maxLines="2"
+            android:textAlignment="viewStart"
+            android:textAppearance="@style/TextAppearance.App.Subtitle1"
+            app:layout_constraintBottom_toBottomOf="@id/category_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/category_icon"
+            app:layout_constraintTop_toTopOf="@id/category_icon"
+            tools:text="Day2のセッションについて"
+            />
+
+        <androidx.emoji.widget.EmojiTextView
+            android:id="@+id/content_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="27dp"
+            android:autoLink="web"
+            android:gravity="start"
+            android:paddingBottom="16dp"
+            android:textAlignment="viewStart"
+            android:textAppearance="@style/TextAppearance.App.Caption"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/title_text"
+            app:layout_constraintTop_toBottomOf="@id/title_text"
+            tools:text="aaaaaaaaaaaaaああああああああああああああああああああああああああああaaaaaaaaaaaaaああああああああああああああああああああああああああああaaaaaaaaaaaaaああああああああああああああああああああああああああああ"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

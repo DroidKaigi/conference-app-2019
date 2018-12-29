@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.data.firestore.FireStore
 import io.github.droidkaigi.confsched2019.data.repository.FireStoreComponent
-import kotlinx.coroutines.Dispatchers
+import io.github.droidkaigi.confsched2019.ext.android.Dispatchers
 import javax.inject.Singleton
 
 @Module
