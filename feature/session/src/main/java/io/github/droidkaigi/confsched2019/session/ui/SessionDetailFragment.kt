@@ -39,7 +39,9 @@ class SessionDetailFragment : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_session_detail, container,
+            inflater,
+            R.layout.fragment_session_detail,
+            container,
             false
         )
         return binding.root
