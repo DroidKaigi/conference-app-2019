@@ -12,6 +12,7 @@ import kotlin.coroutines.CoroutineContext
 ])
 interface ApiComponent {
     fun sessionApi(): SessionApi
+    fun sponsorApi(): SponsorApi
 
     @Component.Builder
     interface Builder {
