@@ -15,11 +15,14 @@
             android:id="@+id/sessions_tab_layout"
             style="@style/Widget.MaterialComponents.TabLayout.Colored"
             android:layout_width="0dp"
-            android:background="?colorPrimary"
             android:layout_height="wrap_content"
+            android:background="?colorPrimary"
+            android:tabStripEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:tabIndicatorColor="@android:color/transparent"
+            app:tabRippleColor="@null"
             />
 
         <androidx.viewpager.widget.ViewPager

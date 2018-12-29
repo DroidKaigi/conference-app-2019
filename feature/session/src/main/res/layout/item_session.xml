@@ -18,9 +18,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
         android:foreground="?android:attr/selectableItemBackground"
+        android:paddingBottom="24dp"
+        android:paddingEnd="0dp"
+        android:paddingStart="@dimen/session_bottom_sheet_left_time_space"
+        android:paddingTop="24dp"
         >
 
         <androidx.emoji.widget.EmojiTextView
@@ -29,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:fontFamily="@font/notosans_medium"
+            android:fontFamily="@font/lekton"
             android:text="@{session.title}"
             android:textAlignment="viewStart"
             android:textAppearance="?textAppearanceSubtitle2"
@@ -46,8 +48,8 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginEnd="16dp"
-            android:scaleType="centerInside"
             android:contentDescription="@string/session_description_favorite_image"
+            android:scaleType="centerInside"
             android:src="@{session.isFavorited ? @drawable/ic_bookmark_black_24dp : @drawable/ic_bookmark_border_black_24dp}"
             android:tint="@{session.isFavorited ? @color/colorPrimary : @color/gray1}"
             app:layout_constraintEnd_toEndOf="parent"
@@ -93,18 +95,22 @@
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="false"
+                android:enabled="false"
                 android:text="@{session.language}"
                 android:textAppearance="?textAppearanceCaption"
                 android:textColor="@color/white"
                 app:chipBackgroundColor="#7982e1"
                 tools:text="Japanese"
                 />
-    
+
             <com.google.android.material.chip.Chip
                 android:id="@+id/topic_chip"
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="false"
+                android:enabled="false"
                 android:textAppearance="?textAppearanceCaption"
                 android:textColor="@color/white"
                 app:chipBackgroundColor="#95959c"

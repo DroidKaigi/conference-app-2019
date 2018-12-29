@@ -1,24 +1,23 @@
 package io.github.droidkaigi.confsched2019.session.ui.widget
 
+import android.content.Context
 import android.content.res.Resources
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.Rect
-import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupAdapter
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeechSessionItem
+import io.github.droidkaigi.confsched2019.util.logd
 
 class SessionsItemDecoration(
-    val resources: Resources,
+    val context: Context,
     val groupAdapter: GroupAdapter<*>
 ) : RecyclerView.ItemDecoration() {
-    val leftSpace = resources.getDimensionPixelSize(
-        R.dimen.session_bottom_sheet_left_time_space
-    )
+    private val resources = context.resources
     val textLeftSpace = resources.getDimensionPixelSize(
         R.dimen.session_bottom_sheet_left_time_text_left
     )
@@ -31,15 +30,12 @@ class SessionsItemDecoration(
             R.dimen.session_bottom_sheet_left_time_text_size
         ).toFloat()
         color = Color.BLACK
-    }
-
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        outRect.left = leftSpace
+        isAntiAlias = true
+        try {
+            typeface = ResourcesCompat.getFont(context, R.font.lekton)
+        } catch (e: Resources.NotFoundException) {
+            logd(e = e)
+        }
     }
 
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {

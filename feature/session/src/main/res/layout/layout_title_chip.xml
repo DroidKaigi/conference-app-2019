@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:duplicateParentState="true"
+    >
+
+    <com.google.android.material.chip.Chip
+        style="@style/Widget.MaterialComponents.Chip.Choice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:duplicateParentState="true"
+        android:enabled="false"
+        android:fontFamily="@font/lekton"
+        android:textColor="@color/white"
+        app:chipBackgroundColor="@color/colorPrimary"
+        app:chipStrokeColor="@color/selector_tab_title"
+        app:chipStrokeWidth="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:textEndPadding="16dp"
+        app:textStartPadding="16dp"
+        tools:text="hoge"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
