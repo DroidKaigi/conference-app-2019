@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
@@ -87,7 +88,12 @@ class MainActivity : DaggerAppCompatActivity() {
         binding.navView.setupWithNavController(navController)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            val isWhiteTheme = destination.id != R.id.main
+            val (_, isWhiteTheme, showLogoImage) = ScreenConfiguration.getConfiguration(
+                destination.id
+            )
+            binding.logo.isVisible = showLogoImage
+            if (showLogoImage) supportActionBar?.title = ""
+
             binding.isWhiteTheme = isWhiteTheme
             if (23 <= Build.VERSION.SDK_INT) {
                 window.decorView.systemUiVisibility = if (isWhiteTheme) {

@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">DroidKaigi 2019</string>
+    <string name="app_name" translatable="false">DroidKaigi 2019</string>
+    <string name="app_logo_description" translatable="false">logo image</string>
 </resources>
