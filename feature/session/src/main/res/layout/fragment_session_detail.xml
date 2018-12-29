@@ -95,22 +95,22 @@
                     android:id="@+id/time_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_access_time_black_24dp"
                     android:layout_marginTop="16dp"
                     android:tint="@color/gray2"
                     app:layout_constraintStart_toStartOf="@id/title"
                     app:layout_constraintTop_toBottomOf="@id/time_and_room"
+                    app:srcCompat="@drawable/ic_access_time_black_24dp"
                     />
 
                 <TextView
                     android:id="@+id/start_end_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    app:layout_constraintBottom_toBottomOf="@id/time_image"
                     app:layout_constraintStart_toEndOf="@id/time_image"
                     app:layout_constraintTop_toTopOf="@id/time_image"
-                    app:layout_constraintBottom_toBottomOf="@id/time_image"
-                    android:layout_marginStart="8dp"
                     tools:text="2月2日 10:20-10:40"
                     />
 
@@ -260,7 +260,9 @@
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/speaker_title"
