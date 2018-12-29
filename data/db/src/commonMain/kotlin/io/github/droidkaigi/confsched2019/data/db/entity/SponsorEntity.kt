@@ -4,4 +4,6 @@ interface SponsorEntity {
     var name: String
     var url: String
     var image: String
+    var category: String
+    var categoryIndex: Int
 }

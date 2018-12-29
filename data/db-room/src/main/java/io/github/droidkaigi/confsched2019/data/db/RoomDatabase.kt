@@ -63,14 +63,17 @@ RoomDatabase @Inject constructor(
     override suspend fun save(apiResponse: SponsorResponse) {
         withContext(Dispatchers.IO) {
             database.runInTransaction {
+
                 val sponsors = listOf(
-                    apiResponse.gold,
-                    apiResponse.platinum,
-                    apiResponse.support,
-                    apiResponse.tech
+                    apiResponse.platinum to "platinum",
+                    apiResponse.gold to "gold",
+                    apiResponse.support to "support",
+                    apiResponse.tech to "tech"
                 )
+                    .mapIndexed { categoryIndex, (list, category) ->
+                        list.toSponsorEntities(category, categoryIndex)
+                    }
                     .flatten()
-                    .toSponsorEntities()
 
                 sponsorDao.insert(sponsors)
             }

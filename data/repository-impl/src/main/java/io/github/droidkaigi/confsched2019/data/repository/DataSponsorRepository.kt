@@ -5,6 +5,7 @@ import io.github.droidkaigi.confsched2019.data.db.SponsorDatabase
 import io.github.droidkaigi.confsched2019.data.db.entity.SponsorEntity
 import io.github.droidkaigi.confsched2019.model.Sponsor
 import io.github.droidkaigi.confsched2019.data.firestore.FireStore
+import io.github.droidkaigi.confsched2019.model.SponsorCategory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.launch
@@ -19,7 +20,16 @@ class DataSponsorRepository @Inject constructor(
     override suspend fun sponsors() = sponsorDatabase
         .sponsorChannel()
         .receive()
-        .map(SponsorEntity::toSponsor)
+        .groupBy { it.categoryIndex }
+        .map { (_, sponsors) ->
+            val category = sponsors.first().category
+            val index = sponsors.first().categoryIndex
+            SponsorCategory(
+                category,
+                index,
+                sponsors.map(SponsorEntity::toSponsor)
+            )
+        }
 
     override suspend fun refresh() {
         val response = sponsorApi.getSponsors()

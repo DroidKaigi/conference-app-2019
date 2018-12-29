@@ -8,6 +8,7 @@ data class SponsorEntityImpl(
     @PrimaryKey
     override var name: String,
     override var url: String,
-    override var image: String
-) : SponsorEntity {
-}
+    override var image: String,
+    override var category: String,
+    override var categoryIndex: Int
+) : SponsorEntity
