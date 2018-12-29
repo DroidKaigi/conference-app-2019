@@ -88,11 +88,11 @@ class MainActivity : DaggerAppCompatActivity() {
         binding.navView.setupWithNavController(navController)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            val (_, isWhiteTheme, showLogoImage) = ScreenConfiguration.getConfiguration(
+            val (_, isWhiteTheme, hasTitle, showLogoImage) = PageConfiguration.getConfiguration(
                 destination.id
             )
             binding.logo.isVisible = showLogoImage
-            if (showLogoImage) supportActionBar?.title = ""
+            if (!hasTitle) supportActionBar?.title = ""
 
             binding.isWhiteTheme = isWhiteTheme
             if (23 <= Build.VERSION.SDK_INT) {
