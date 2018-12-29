@@ -88,10 +88,4 @@
         android:label="@string/map_label"
         >
     </fragment>
-    <fragment
-        android:id="@+id/other"
-        android:name="io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment"
-        android:label="@string/other_label"
-        >
-    </fragment>
 </navigation>

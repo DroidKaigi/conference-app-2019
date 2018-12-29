@@ -5,4 +5,5 @@
     <string name="session_label">タイムライン</string>
     <string name="about_label">Droidkaigiとは</string>
     <string name="sponsor_label">スポンサーページ</string>
+    <string name="survey_label">全体アンケート</string>
 </resources>
