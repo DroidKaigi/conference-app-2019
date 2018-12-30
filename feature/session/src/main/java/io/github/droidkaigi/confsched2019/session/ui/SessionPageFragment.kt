@@ -54,7 +54,7 @@ class SessionPageFragment : DaggerFragment() {
     }
 
     private val bottomSheetBehavior: BottomSheetBehavior<*>
-        get() = BottomSheetBehavior.from(binding.sessionSheet)
+        get() = BottomSheetBehavior.from(binding.sessionsSheet)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,7 +72,7 @@ class SessionPageFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
         setupBottomSheet(savedInstanceState)
 
-        binding.filterReset.setOnClickListener {
+        binding.sessionsFilterReset.setOnClickListener {
             sessionsActionCreator.clearFilters()
         }
 
@@ -80,21 +80,21 @@ class SessionPageFragment : DaggerFragment() {
             applyFilters()
         }
         sessionStore.rooms.changed(viewLifecycleOwner) { rooms ->
-            binding.filterRoomChip.setupFilter(
+            binding.sessionsFilterRoomChip.setupFilter(
                 rooms,
                 Room::name,
                 sessionsActionCreator::changeFilter
             )
         }
         sessionStore.topics.changed(viewLifecycleOwner) { topics ->
-            binding.filterTopicChip.setupFilter(
+            binding.sessionsFilterTopicChip.setupFilter(
                 topics,
                 { topic -> topic.getNameByLang(systemStore.lang) },
                 sessionsActionCreator::changeFilter
             )
         }
         sessionStore.langs.changed(viewLifecycleOwner) { langs ->
-            binding.filterLangChip.setupFilter(
+            binding.sessionsFilterLangChip.setupFilter(
                 langs,
                 Lang::toString,
                 sessionsActionCreator::changeFilter
@@ -133,15 +133,15 @@ class SessionPageFragment : DaggerFragment() {
 
             childFragmentManager
                 .beginTransaction()
-                .replace(R.id.session_sheet, fragment)
+                .replace(R.id.sessions_sheet, fragment)
                 .disallowAddToBackStack()
                 .commit()
         }
         bottomSheetBehavior.isHideable = false
-        binding.sessionSheet.viewTreeObserver.addOnPreDrawListener(
+        binding.sessionsSheet.viewTreeObserver.addOnPreDrawListener(
             object : ViewTreeObserver.OnPreDrawListener {
                 override fun onPreDraw(): Boolean {
-                    binding.sessionSheet.viewTreeObserver.removeOnPreDrawListener(this)
+                    binding.sessionsSheet.viewTreeObserver.removeOnPreDrawListener(this)
                     if (isDetached) return false
                     bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 
@@ -189,7 +189,7 @@ class SessionPageFragment : DaggerFragment() {
 
     private fun applyFilters() {
         val filterRooms = sessionStore.filters.rooms
-        binding.filterRoomChip.forEach {
+        binding.sessionsFilterRoomChip.forEach {
             if (filterRooms.isNotEmpty()) {
                 val chip = it as? Chip ?: return@forEach
                 val room = it.tag as? Room ?: return@forEach
@@ -200,7 +200,7 @@ class SessionPageFragment : DaggerFragment() {
             }
         }
         val filterLangs = sessionStore.filters.langs
-        binding.filterLangChip.forEach {
+        binding.sessionsFilterLangChip.forEach {
             if (filterLangs.isNotEmpty()) {
                 val chip = it as? Chip ?: return@forEach
                 val lang = it.tag as? Lang ?: return@forEach
@@ -211,7 +211,7 @@ class SessionPageFragment : DaggerFragment() {
             }
         }
         val filterTopics = sessionStore.filters.topics
-        binding.filterTopicChip.forEach {
+        binding.sessionsFilterTopicChip.forEach {
             if (filterTopics.isNotEmpty()) {
                 val chip = it as? Chip ?: return@forEach
                 val topic = it.tag as? Topic ?: return@forEach
