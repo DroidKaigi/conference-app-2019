@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     >
 
     <data>
@@ -11,16 +13,142 @@
             />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         >
 
-        <TextView
-            android:text="@{speaker.name}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <androidx.emoji.widget.EmojiTextView
+                    android:id="@+id/speaker_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@{speaker.name}"
+                    android:textAlignment="viewStart"
+                    android:textAppearance="@style/TextAppearance.App.Headline5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_goneMarginTop="12dp"
+                    tools:text="takahirom"
+                    />
+
+                <TextView
+                    android:id="@+id/speaker_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@{speaker.tagLine}"
+                    android:textAppearance="@style/TextAppearance.App.Subtitle2"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@id/speaker_name"
+                    app:layout_constraintTop_toBottomOf="@id/speaker_name"
+                    app:layout_constraintEnd_toStartOf="@id/speaker_image"
+                    app:layout_constraintHorizontal_bias="0"
+                    android:layout_marginEnd="16dp"
+                    tools:text="DroidKaigi"
+                    />
+
+                <ImageView
+                    android:id="@+id/speaker_image"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="16dp"
+                    app:imageUrl="@{speaker.imageUrl}"
+                    app:circleCrop="@{true}"
+                    android:contentDescription="@string/speaker_label"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@tools:sample/avatars"
+                    />
+
+                <ImageView
+                    android:id="@+id/divider1"
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_marginTop="56dp"
+                    android:contentDescription="@null"
+                    android:layerType="software"
+                    android:src="@drawable/shape_dashed_line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/speaker_title"
+                    />
+
+                <androidx.emoji.widget.EmojiTextView
+                    android:id="@+id/speaker_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    android:ellipsize="end"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="2dp"
+                    android:text="@{speaker.tagLine}"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/speaker_name"
+                    app:layout_constraintTop_toBottomOf="@id/divider1"
+                    tools:text="Material is the metaphor A material metaphor is the unifying theory of a rationalized space and a system of motion. The material is grounded in tactile reality, inspired by the study of paper and ink, yet technologically advanced and open to imagination and magic."
+                    />
+
+
+                <ImageView
+                    android:id="@+id/divider2"
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_marginTop="28dp"
+                    android:contentDescription="@null"
+                    android:layerType="software"
+                    android:src="@drawable/shape_dashed_line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/speaker_description"
+                    />
+
+
+                <TextView
+                    android:id="@+id/speaker_session_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/session_speaker_sessions"
+                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    app:layout_constraintStart_toStartOf="@id/speaker_name"
+                    app:layout_constraintTop_toBottomOf="@id/divider2"
+                    />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/speaker_sessions"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/speaker_session_title"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

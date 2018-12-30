@@ -13,4 +13,5 @@
     <string name="session_detail_tag" translatable="false">Tags</string>
     <string name="session_detail_survey">Survey</string>
     <string name="session_detail_speaker" translatable="false">Speaker</string>
+    <string name="session_speaker_sessions" translatable="false">Session</string>
 </resources>

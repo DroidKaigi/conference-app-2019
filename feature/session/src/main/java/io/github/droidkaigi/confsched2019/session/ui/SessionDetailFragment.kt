@@ -61,7 +61,7 @@ class SessionDetailFragment : DaggerFragment() {
             val session = sessionLiveData.value ?: return@setOnClickListener
             sessionDetailActionCreator.toggleFavorite(session)
         }
-        binding.speakers.adapter = groupAdapter
+        binding.sessionSpeakers.adapter = groupAdapter
         sessionLiveData.changed(viewLifecycleOwner) { session: Session.SpeechSession ->
             binding.session = session
             @Suppress("StringFormatMatches") // FIXME
