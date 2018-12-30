@@ -35,8 +35,10 @@ class RoomSessionDatabase @Inject constructor(
                 val speakers = apiResponse.speakers.orEmpty().toSpeakerEntities()
                 speakerDao.insert(speakers)
                 val sessions = apiResponse.sessions
-                val sessionEntities = sessions.toSessionEntities(apiResponse.categories.orEmpty(),
-                    apiResponse.rooms.orEmpty())
+                val sessionEntities = sessions.toSessionEntities(
+                    apiResponse.categories.orEmpty(),
+                    apiResponse.rooms.orEmpty()
+                )
                 sessionDao.insert(sessionEntities)
                 sessionSpeakerJoinDao.insert(sessions.toSessionSpeakerJoinEntities())
             }
