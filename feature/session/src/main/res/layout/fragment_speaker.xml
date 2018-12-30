@@ -70,6 +70,8 @@
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_margin="16dp"
+                    app:imageUrl="@{speaker.imageUrl}"
+                    app:circleCrop="@{true}"
                     android:contentDescription="@string/speaker_label"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
