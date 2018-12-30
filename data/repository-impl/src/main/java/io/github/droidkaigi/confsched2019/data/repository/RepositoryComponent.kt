@@ -8,9 +8,11 @@ import io.github.droidkaigi.confsched2019.data.firestore.FireStore
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [
-    RepositoryModule::class
-])
+@Component(
+    modules = [
+        RepositoryModule::class
+    ]
+)
 interface RepositoryComponent {
     fun sessionRepository(): SessionRepository
 

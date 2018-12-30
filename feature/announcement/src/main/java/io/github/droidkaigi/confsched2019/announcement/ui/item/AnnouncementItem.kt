@@ -18,11 +18,13 @@ class AnnouncementItem(
 
     override fun bind(itemBinding: ItemAnnouncementBinding, position: Int) {
         // TODO: apply new category icon
-        itemBinding.categoryIcon.setImageResource(when (announcement.type) {
-            Announcement.Type.NOTIFICATION -> R.drawable.ic_feed_notification_blue_20dp
-            Announcement.Type.ALERT -> R.drawable.ic_feed_alert_amber_20dp
-            Announcement.Type.FEEDBACK -> R.drawable.ic_feed_feedback_cyan_20dp
-        })
+        itemBinding.categoryIcon.setImageResource(
+            when (announcement.type) {
+                Announcement.Type.NOTIFICATION -> R.drawable.ic_feed_notification_blue_20dp
+                Announcement.Type.ALERT -> R.drawable.ic_feed_alert_amber_20dp
+                Announcement.Type.FEEDBACK -> R.drawable.ic_feed_feedback_cyan_20dp
+            }
+        )
 
         itemBinding.dateText.text = dateFormatter.format(announcement.date.toOffset(jstOffset))
 
