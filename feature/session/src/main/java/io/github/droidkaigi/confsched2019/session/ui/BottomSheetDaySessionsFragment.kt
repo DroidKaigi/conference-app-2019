@@ -97,12 +97,13 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
         }
         sessionPageStore.filterSheetState.changed(viewLifecycleOwner) { newState ->
             if (newState == BottomSheetBehavior.STATE_EXPANDED ||
-                newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                newState == BottomSheetBehavior.STATE_COLLAPSED
+            ) {
                 TransitionManager.beginDelayedTransition(
                     binding.root as ViewGroup, AutoTransition().apply {
-                    excludeChildren(binding.sessionsBottomSheetTitle, true)
-                    excludeChildren(binding.sessionsRecycler, true)
-                })
+                        excludeChildren(binding.sessionsBottomSheetTitle, true)
+                        excludeChildren(binding.sessionsRecycler, true)
+                    })
                 val isCollapsed = newState == BottomSheetBehavior.STATE_COLLAPSED
                 binding.sessionsBottomSheetShowFilterButton.isVisible = !isCollapsed
                 binding.sessionsBottomSheetHideFilterButton.isVisible = isCollapsed
