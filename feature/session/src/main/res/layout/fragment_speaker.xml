@@ -11,6 +11,16 @@
             name="speaker"
             type="io.github.droidkaigi.confsched2019.model.Speaker"
             />
+
+        <variable
+            name="session"
+            type="io.github.droidkaigi.confsched2019.model.Session.SpeechSession"
+            />
+
+        <variable
+            name="lang"
+            type="io.github.droidkaigi.confsched2019.model.Lang"
+            />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,15 +63,15 @@
                     android:id="@+id/speaker_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginTop="4dp"
                     android:text="@{speaker.tagLine}"
                     android:textAppearance="@style/TextAppearance.App.Subtitle2"
                     android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="@id/speaker_name"
-                    app:layout_constraintTop_toBottomOf="@id/speaker_name"
                     app:layout_constraintEnd_toStartOf="@id/speaker_image"
                     app:layout_constraintHorizontal_bias="0"
-                    android:layout_marginEnd="16dp"
+                    app:layout_constraintStart_toStartOf="@id/speaker_name"
+                    app:layout_constraintTop_toBottomOf="@id/speaker_name"
                     tools:text="DroidKaigi"
                     />
 
@@ -70,9 +80,9 @@
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_margin="16dp"
-                    app:imageUrl="@{speaker.imageUrl}"
-                    app:circleCrop="@{true}"
                     android:contentDescription="@string/speaker_label"
+                    app:circleCrop="@{true}"
+                    app:imageUrl="@{speaker.imageUrl}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@tools:sample/avatars"
@@ -124,7 +134,7 @@
 
 
                 <TextView
-                    android:id="@+id/speaker_session_title"
+                    android:id="@+id/speaker_session_head"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -135,17 +145,48 @@
                     />
 
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/speaker_sessions"
-                    android:orientation="vertical"
+                <TextView
+                    android:id="@+id/speaker_session_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="12dp"
+                    android:paddingTop="12dp"
+                    android:text="@{session.title}"
+                    android:textAppearance="@style/TextAppearance.App.Subtitle2"
+                    android:textSize="16sp"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="@id/speaker_name"
+                    app:layout_constraintTop_toBottomOf="@id/speaker_session_head"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="How to create DroidKaigi App long title test long title test"
+                    />
+
+
+                <TextView
+                    android:id="@+id/speaker_session_summary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="4dp"
+                    android:paddingBottom="12dp"
+                    android:text="@{session.summary(lang)}"
+                    android:textAppearance="@style/TextAppearance.App.Caption"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="@id/speaker_name"
+                    app:layout_constraintTop_toBottomOf="@id/speaker_session_title"
+                    tools:text="2月7日 10:20-10:40 / 30min / Hall"
+                    />
+
+                <View
+                    android:id="@+id/speaker_session_background"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="?selectableItemBackground"
+                    app:layout_constraintBottom_toBottomOf="@id/speaker_session_summary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/speaker_session_title"
+                    app:layout_constraintTop_toTopOf="@id/speaker_session_title"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

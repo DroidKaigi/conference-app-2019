@@ -1,7 +1,6 @@
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/main"
     >
     <fragment
@@ -10,7 +9,7 @@
         android:label="@string/session_label"
         >
         <action
-            android:id="@id/action_session_to_session_detail"
+            android:id="@+id/action_session_to_session_detail"
             app:destination="@id/session_detail"
             />
     </fragment>
@@ -50,7 +49,7 @@
             app:argType="string"
             />
         <action
-            android:id="@id/action_session_detail_to_speaker"
+            android:id="@+id/action_session_detail_to_speaker"
             app:destination="@id/speaker"
             />
     </fragment>
@@ -62,6 +61,10 @@
         <argument
             android:name="speaker"
             app:argType="string"
+            />
+        <action
+            android:id="@+id/action_speaker_to_session_detail"
+            app:destination="@id/session_detail"
             />
     </fragment>
     <fragment

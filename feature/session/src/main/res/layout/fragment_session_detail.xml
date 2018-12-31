@@ -25,8 +25,8 @@
             />
 
         <variable
-            name="simplify"
-            type="boolean"
+            name="lang"
+            type="io.github.droidkaigi.confsched2019.model.Lang"
             />
     </data>
 
@@ -94,6 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    android:text="@{session.timeSummary(lang)}"
                     app:layout_constraintBottom_toBottomOf="@id/session_time_image"
                     app:layout_constraintStart_toEndOf="@id/session_time_image"
                     app:layout_constraintTop_toTopOf="@id/session_time_image"
@@ -124,7 +125,6 @@
                     android:paddingBottom="2dp"
                     android:text="@{session.desc}"
                     android:textAlignment="viewStart"
-                    android:visibility="@{simplify ? View.GONE : View.VISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider1"

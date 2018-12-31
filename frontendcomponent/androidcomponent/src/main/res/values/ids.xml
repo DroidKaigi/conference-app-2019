@@ -3,7 +3,5 @@
     <item type="id" name="root_nav_host_fragment"/>
     <item type="id" name="session"/>
     <item type="id" name="session_detail"/>
-    <item type="id" name="action_session_to_session_detail"/>
-    <item type="id" name="action_session_detail_to_speaker"/>
     <item type="id" name="nav_host_fragment"/>
 </resources>
