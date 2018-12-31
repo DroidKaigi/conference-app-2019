@@ -34,7 +34,7 @@ object Dep {
         val recyclerView = "androidx.recyclerview:recyclerview:1.0.0"
         val constraint = "androidx.constraintlayout:constraintlayout:1.1.2"
         val emoji = "androidx.emoji:emoji-appcompat:1.0.0"
-        val design = "com.google.android.material:material:1.1.0-alpha01"
+        val design = "com.google.android.material:material:1.1.0-alpha02"
         val coreKtx = "androidx.core:core-ktx:1.0.0-alpha1"
 
         val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:2.0.0"
