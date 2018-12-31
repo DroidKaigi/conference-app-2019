@@ -82,7 +82,6 @@ class SessionDetailFragment : DaggerFragment() {
                         "not implemented yet",
                         Toast.LENGTH_SHORT
                     ).show()
-
             }
             return@setOnMenuItemClickListener true
         }
