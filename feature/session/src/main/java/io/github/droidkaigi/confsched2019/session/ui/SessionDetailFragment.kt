@@ -15,8 +15,8 @@ import dagger.Provides
 import dagger.android.support.AndroidSupportInjection
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
-import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionDetailBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionDetailActionCreator
@@ -89,29 +89,13 @@ class SessionDetailFragment : DaggerFragment() {
 
     private fun applySessionLayout(session: Session.SpeechSession) {
         binding.session = session
+        binding.lang = defaultLang()
         @Suppress("StringFormatMatches") // FIXME
         binding.sessionTimeAndRoom.text = getString(
             R.string.session_duration_room_format,
             session.timeInMinutes,
             session.room.name
         )
-        binding.sessionStartEndTime.text = buildString {
-            // ex: 2月2日 10:20-10:40
-            if (systemStore.lang == Lang.EN) {
-                append(session.startTime.format("M"))
-                append(".")
-                append(session.startTime.format("d"))
-            } else {
-                append(session.startTime.format("M"))
-                append("月")
-                append(session.startTime.format("d"))
-                append("日")
-            }
-            append(" ")
-            append(session.startTime.format("h:m"))
-            append("-")
-            append(session.endTime.format("h:m"))
-        }
         binding.topicChip.text = session.topic.getNameByLang(systemStore.lang)
 
         val sessionItems = session
