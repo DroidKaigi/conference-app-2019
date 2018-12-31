@@ -229,6 +229,7 @@ This project uses some modern Android libraries and source codes.
   * Core (Google)
   * AndroidSupport (Google)
   * [AssistedInject](https://github.com/square/AssistedInject) (Square)
+* [Material Components for Android](https://github.com/material-components/material-components-android) (Google)
 * [Ktor](https://ktor.io/) (Jetbrains)
   * Android Client
   * Json
