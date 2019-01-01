@@ -17,15 +17,17 @@ import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentBottomSheetSessionsBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPageActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.item.SpecialSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeechSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPageStore
-import io.github.droidkaigi.confsched2019.session.ui.store.SessionsStore
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.session.ui.widget.SessionsItemDecoration
 import io.github.droidkaigi.confsched2019.widget.BottomSheetBehavior
+import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import me.tatarka.injectedvmprovider.ktx.injectedViewModelProvider
 import javax.inject.Inject
 import javax.inject.Provider
@@ -33,17 +35,21 @@ import javax.inject.Provider
 class BottomSheetDaySessionsFragment : DaggerFragment() {
     private lateinit var binding: FragmentBottomSheetSessionsBinding
 
-    @Inject lateinit var sessionsActionCreator: SessionsActionCreator
+    @Inject lateinit var sessionContentsActionCreator: SessionContentsActionCreator
     @Inject lateinit var sessionPageActionCreator: SessionPageActionCreator
     @Inject lateinit var sessionPageFragmentProvider: Provider<SessionPageFragment>
     @Inject lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
-    @Inject lateinit var sessionsStore: SessionsStore
+    @Inject lateinit var sessionContentsStore: SessionContentsStore
     @Inject lateinit var sessionPageStoreFactory: SessionPageStore.Factory
     private val sessionPageStore: SessionPageStore by lazy {
         sessionPageFragmentProvider.get().injectedViewModelProvider
             .get(SessionPageStore::class.java.name) {
                 sessionPageStoreFactory.create(SessionPage.pages[args.day])
             }
+    }
+    @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
+    val sessionPagesStore: SessionPagesStore by lazy {
+        InjectedViewModelProviders.of(requireActivity()).get(sessionPagesStoreProvider)
     }
 
     private val groupAdapter = GroupAdapter<ViewHolder<*>>()
@@ -75,12 +81,12 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
         binding.sessionsBottomSheetShowFilterButton.setOnClickListener(onFilterButtonClick)
         binding.sessionsBottomSheetHideFilterButton.setOnClickListener(onFilterButtonClick)
 
-        sessionsStore.daySessions(args.day).changed(viewLifecycleOwner) { sessions ->
+        sessionPagesStore.filteredDaySessions(args.day).changed(viewLifecycleOwner) { sessions ->
             val items = sessions
                 .map<Session, Item<*>> { session ->
                     when (session) {
                         is Session.SpeechSession ->
-                            speechSessionItemFactory.create(session, sessionsStore)
+                            speechSessionItemFactory.create(session)
                         is Session.SpecialSession ->
                             SpecialSessionItem(session)
                     }

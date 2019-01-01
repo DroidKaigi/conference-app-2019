@@ -17,8 +17,7 @@ import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSessionBinding
 import io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragmentDirections
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.store.SessionsStore
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.util.lazyWithParam
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
@@ -26,9 +25,8 @@ import kotlin.math.max
 
 class SpeechSessionItem @AssistedInject constructor(
     @Assisted override val session: Session.SpeechSession,
-    @Assisted sessionsStore: SessionsStore,
     navController: NavController,
-    sessionsActionCreator: SessionsActionCreator,
+    sessionContentsActionCreator: SessionContentsActionCreator,
     val systemStore: SystemStore
 ) : BindableItem<ItemSessionBinding>(
     session.id.toLong()
@@ -38,13 +36,12 @@ class SpeechSessionItem @AssistedInject constructor(
     @AssistedInject.Factory
     interface Factory {
         fun create(
-            session: Session.SpeechSession,
-            sessionsStore: SessionsStore
+            session: Session.SpeechSession
         ): SpeechSessionItem
     }
 
     private val onFavoriteClickListener: (Session.SpeechSession) -> Unit = { session ->
-        sessionsActionCreator.toggleFavoriteAndLoad(session, sessionsStore.filters)
+        sessionContentsActionCreator.toggleFavoriteAndLoad(session)
     }
     private val onClickListener: (Session.SpeechSession) -> Unit = { session ->
         navController

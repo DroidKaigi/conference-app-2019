@@ -5,10 +5,10 @@ import io.github.droidkaigi.confsched2019.model.ErrorMessage
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.Room
+import io.github.droidkaigi.confsched2019.model.SearchResult
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.model.SessionPage
-import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.model.Sponsor
 import io.github.droidkaigi.confsched2019.model.SystemProperty
 import io.github.droidkaigi.confsched2019.model.Topic
@@ -17,12 +17,14 @@ sealed class Action {
     class Error(val msg: ErrorMessage) : Action()
 
     data class SessionLoadingStateChanged(val loadingState: LoadingState) : Action()
-    data class SessionsLoaded(
+    data class SessionContentsLoaded(
         val sessionContents: SessionContents
     ) : Action()
 
-    data class SpeakerLoaded(val speaker: Speaker) : Action()
-    data class SessionLoaded(val session: Session.SpeechSession) : Action()
+    data class SessionsLoaded(
+        val sessions: List<Session>
+    ) : Action()
+
     data class SessionPageSelected(val sessionPage: SessionPage) : Action()
     class SystemPropertyLoaded(val system: SystemProperty) : Action()
 
@@ -45,6 +47,8 @@ sealed class Action {
     class FilterCleared : Action()
     class BottomSheetFilterToggled(val page: SessionPage) : Action()
     class BottomSheetFilterStateChanged(val page: SessionPage, val bottomSheetState: Int) : Action()
+
+    data class SearchResultLoaded(val searchResult: SearchResult) : Action()
 
     object UserRegistered : Action()
 

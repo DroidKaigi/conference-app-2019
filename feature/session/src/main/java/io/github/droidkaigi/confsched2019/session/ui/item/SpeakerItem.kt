@@ -14,7 +14,7 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation
 class SpeakerItem @AssistedInject constructor(
     @Assisted val speaker: Speaker,
     val navController: NavController
-) : BindableItem<ItemSpeakerBinding>() {
+) : BindableItem<ItemSpeakerBinding>(speaker.id.hashCode().toLong()) {
     @AssistedInject.Factory
     interface Factory {
         fun create(

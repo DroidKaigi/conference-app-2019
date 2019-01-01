@@ -21,21 +21,30 @@ import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionPagesBinding
-import io.github.droidkaigi.confsched2019.session.di.SessionPagesScope
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionsActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.store.SessionsStore
+import io.github.droidkaigi.confsched2019.session.di.SessionPageScope
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPagesActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.user.store.UserStore
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
+import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
+import javax.inject.Provider
 
 class SessionPagesFragment : DaggerFragment() {
 
     private lateinit var binding: FragmentSessionPagesBinding
 
-    @Inject lateinit var sessionsActionCreator: SessionsActionCreator
-    @Inject lateinit var sessionsStore: SessionsStore
+    @Inject lateinit var sessionPagesActionCreator: SessionPagesActionCreator
+    @Inject lateinit var sessionContentsActionCreator: SessionContentsActionCreator
+    @Inject lateinit var sessionContentsStore: SessionContentsStore
     @Inject lateinit var userStore: UserStore
+    @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
+    private val sessionPagesStore: SessionPagesStore by lazy {
+        InjectedViewModelProviders.of(requireActivity()).get(sessionPagesStoreProvider)
+    }
 
     private lateinit var progressTimeLatch: ProgressTimeLatch
 
@@ -64,19 +73,27 @@ class SessionPagesFragment : DaggerFragment() {
         }
 
         userStore.registered.changed(viewLifecycleOwner) { registered ->
-            // Now, registered, we can load sessions
-            if (registered && sessionsStore.isInitialized) {
-                sessionsActionCreator.refresh()
+            // Now, registered, we can load filteredSessions
+            if (registered && sessionContentsStore.isInitialized) {
+                sessionContentsActionCreator.refresh()
             }
         }
-        sessionsStore.filtersChange.observe(viewLifecycleOwner) {
-            if (sessionsStore.isLoaded) {
-                sessionsActionCreator.load(sessionsStore.filters)
+        sessionPagesStore.filtersChange.observe(viewLifecycleOwner) {
+            if (sessionContentsStore.isLoaded) {
+                sessionContentsActionCreator.load()
             }
         }
-        sessionsStore.loadingState.changed(viewLifecycleOwner) {
-            progressTimeLatch.loading = it == LoadingState.LOADING
+        sessionContentsStore.loadingState.changed(viewLifecycleOwner) { loadingState ->
+            progressTimeLatch.loading = loadingState == LoadingState.LOADING
+            if (loadingState == LoadingState.LOADED) {
+                loadSessions()
+            }
         }
+    }
+
+    private fun loadSessions() {
+        val sessions = sessionContentsStore.sessions
+        sessionPagesActionCreator.load(sessions)
     }
 
     private fun setupSessionPager() {
@@ -98,7 +115,7 @@ class SessionPagesFragment : DaggerFragment() {
         binding.sessionsViewpager.addOnPageChangeListener(
             object : ViewPager.SimpleOnPageChangeListener() {
                 override fun onPageSelected(position: Int) {
-                    sessionsActionCreator.selectTab(SessionPage.pages[position])
+                    sessionPagesActionCreator.selectTab(SessionPage.pages[position])
                 }
             }
         )
@@ -120,13 +137,13 @@ class SessionPagesFragment : DaggerFragment() {
 @Module
 abstract class SessionPagesFragmentModule {
 
-    @PageScope
+    @SessionPageScope
     @ContributesAndroidInjector(modules = [SessionPageFragmentModule::class])
     abstract fun contributeSessionPageFragment(): SessionPageFragment
 
     @Module
     companion object {
-        @SessionPagesScope @JvmStatic @Provides fun providesLifecycle(
+        @PageScope @JvmStatic @Provides fun providesLifecycle(
             sessionPagesFragment: SessionPagesFragment
         ): Lifecycle {
             return sessionPagesFragment.viewLifecycleOwner.lifecycle

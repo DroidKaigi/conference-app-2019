@@ -2,27 +2,25 @@ package io.github.droidkaigi.confsched2019.session.ui.store
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.ViewModel
+import com.shopify.livedataktx.combineWith
 import com.shopify.livedataktx.map
-import com.shopify.livedataktx.nonNull
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
+import io.github.droidkaigi.confsched2019.ext.android.mutableLiveDataOf
+import io.github.droidkaigi.confsched2019.ext.android.notifyChange
+import io.github.droidkaigi.confsched2019.ext.android.requireValue
 import io.github.droidkaigi.confsched2019.ext.android.toLiveData
 import io.github.droidkaigi.confsched2019.model.Filters
-import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LoadingState
-import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
-import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.model.SessionPage
-import io.github.droidkaigi.confsched2019.model.Topic
 import kotlinx.coroutines.channels.map
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class SessionsStore @Inject constructor(
+class SessionPagesStore @Inject constructor(
     dispatcher: Dispatcher
-) {
+) : ViewModel() {
     val loadingState = dispatcher
         .subscribe<Action.SessionLoadingStateChanged>()
         .map { it.loadingState }
@@ -34,18 +32,22 @@ class SessionsStore @Inject constructor(
     val isLoaded: Boolean
         get() = loadingState.value == LoadingState.LOADED
 
-    private val sessionContents = dispatcher
+    private val sessions: LiveData<List<Session>> = dispatcher
         .subscribe<Action.SessionsLoaded>()
-        .map { it.sessionContents }
-        .toLiveData(SessionContents.EMPTY)
-    val sessions: LiveData<List<Session>> = sessionContents
-        .map { it?.sessions.orEmpty() }
-    val langs: LiveData<List<Lang>> = sessionContents
-        .map { it?.langs.orEmpty() }
-    val topics: LiveData<List<Topic>> = sessionContents
-        .map { it?.topics.orEmpty() }
-    val rooms: LiveData<List<Room>> = sessionContents
-        .map { it?.rooms.orEmpty() }
+        .map { it.sessions }
+        .toLiveData(listOf())
+
+    private val filtersLiveData = mutableLiveDataOf(Filters())
+    val filters: Filters get() = filtersLiveData.requireValue()
+
+    val filteredSessions: LiveData<List<Session>> = sessions
+        .combineWith(filtersLiveData) { sessions, filters ->
+            sessions ?: return@combineWith listOf<Session>()
+            sessions.filter { session ->
+                filters?.isPass(session) ?: true
+            }
+        }
+        .map { it.orEmpty() }
 
     private val roomFilterChanged = dispatcher
         .subscribe<Action.RoomFilterChanged>()
@@ -64,6 +66,7 @@ class SessionsStore @Inject constructor(
         .toLiveData()
 
     val filtersChange: LiveData<Any> = MediatorLiveData<Any>().apply {
+        val filters = filtersLiveData.requireValue()
         addSource(roomFilterChanged) { roomFilterChanged ->
             roomFilterChanged?.let {
                 if (roomFilterChanged.checked) {
@@ -71,6 +74,7 @@ class SessionsStore @Inject constructor(
                 } else {
                     filters.rooms.remove(it.room)
                 }
+                filtersLiveData.notifyChange()
             }
             value = roomFilterChanged
         }
@@ -81,6 +85,7 @@ class SessionsStore @Inject constructor(
                 } else {
                     filters.topics.remove(it.topic)
                 }
+                filtersLiveData.notifyChange()
             }
             value = topicFilterChanged
         }
@@ -91,48 +96,34 @@ class SessionsStore @Inject constructor(
                 } else {
                     filters.langs.remove(it.lang)
                 }
+                filtersLiveData.notifyChange()
             }
             value = langFilterChanged
         }
         addSource(filterCleared) {
             filters.clear()
+            filtersLiveData.notifyChange()
             value = it
         }
     }
-    val filters = Filters()
 
     val selectedTab: LiveData<SessionPage> = dispatcher
         .subscribe<Action.SessionPageSelected>()
         .map { it.sessionPage }
         .toLiveData(SessionPage.pages[0])
 
-    fun daySessions(day: Int): LiveData<List<Session>> {
-        return sessions
-            .map { it.orEmpty().filter { it.dayNumber == day } }
-    }
-
-    fun speakerSession(sessionId: String): LiveData<Session.SpeechSession> {
-        return sessions
-            .map { it.orEmpty().firstOrNull() { it.id == sessionId } as? Session.SpeechSession }
-            .nonNull()
-    }
-
-    fun speakerSessionBySpeakerId(speakerId: String): LiveData<Session.SpeechSession?> {
-        return sessions
+    fun filteredDaySessions(day: Int): LiveData<List<Session>> {
+        return filteredSessions
             .map { sessions ->
-                sessions?.firstOrNull() { session ->
-                    val speechSession: Session.SpeechSession =
-                        session as? Session.SpeechSession ?: return@firstOrNull false
-                    speechSession.speakers.find { it.id == speakerId } != null
-                } as? Session.SpeechSession
+                sessions.orEmpty().filter { session -> session.dayNumber == day }
             }
     }
 
-    fun favoriteSessions(): LiveData<List<Session.SpeechSession>> {
-        return sessions
-            .map {
-                it.orEmpty().filterIsInstance<Session.SpeechSession>()
-                    .filter { it.isFavorited }
+    fun filteredFavoriteSessions(): LiveData<List<Session.SpeechSession>> {
+        return filteredSessions
+            .map { sessions ->
+                sessions.orEmpty().filterIsInstance<Session.SpeechSession>()
+                    .filter { session -> session.isFavorited }
             }
     }
 }

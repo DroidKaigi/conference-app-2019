@@ -19,9 +19,9 @@ import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionDetailBinding
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionDetailActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeakerItem
-import io.github.droidkaigi.confsched2019.session.ui.store.SessionsStore
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import javax.inject.Inject
@@ -29,9 +29,9 @@ import javax.inject.Inject
 class SessionDetailFragment : DaggerFragment() {
     private lateinit var binding: FragmentSessionDetailBinding
 
-    @Inject lateinit var sessionDetailActionCreator: SessionDetailActionCreator
+    @Inject lateinit var sessionContentsActionCreator: SessionContentsActionCreator
     @Inject lateinit var systemStore: SystemStore
-    @Inject lateinit var sessionsStore: SessionsStore
+    @Inject lateinit var sessionContentsStore: SessionContentsStore
     @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
 
     override fun onCreateView(
@@ -57,15 +57,8 @@ class SessionDetailFragment : DaggerFragment() {
         AndroidSupportInjection.inject(this)
 
         sessionDetailFragmentArgs = SessionDetailFragmentArgs.fromBundle(arguments)
-        val sessionLiveData = sessionsStore.speakerSession(sessionDetailFragmentArgs.session)
-        binding.sessionFavorite.setOnClickListener {
-            val session = sessionLiveData.value ?: return@setOnClickListener
-            sessionDetailActionCreator.toggleFavorite(session)
-        }
+
         binding.sessionSpeakers.adapter = groupAdapter
-        sessionLiveData.changed(viewLifecycleOwner) { session: Session.SpeechSession ->
-            applySessionLayout(session)
-        }
 
         binding.bottomAppBar.replaceMenu(R.menu.menu_session_detail_bottomappbar)
         binding.bottomAppBar.setOnMenuItemClickListener { item ->
@@ -84,6 +77,15 @@ class SessionDetailFragment : DaggerFragment() {
                     ).show()
             }
             return@setOnMenuItemClickListener true
+        }
+
+        val sessionLiveData = sessionContentsStore.speechSession(sessionDetailFragmentArgs.session)
+        sessionLiveData.changed(viewLifecycleOwner) { session ->
+            applySessionLayout(session)
+        }
+        binding.sessionFavorite.setOnClickListener {
+            val session = sessionLiveData.value ?: return@setOnClickListener
+            sessionContentsActionCreator.toggleFavoriteAndLoad(session)
         }
     }
 

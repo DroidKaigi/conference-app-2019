@@ -21,7 +21,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
-class SessionsActionCreatorTest {
+class SessionContentsActionCreatorTest {
     @RelaxedMockK lateinit var dispatcher: Dispatcher
     @RelaxedMockK lateinit var sessionRepository: SessionRepository
 
@@ -33,7 +33,7 @@ class SessionsActionCreatorTest {
     @Test fun load() = runBlocking<Unit> {
         val lifecycleOwner = TestLifecycleOwner().handleEvent(Lifecycle.Event.ON_RESUME)
         coEvery { sessionRepository.sessionContents() } returns SessionContents.EMPTY
-        val sessionsActionCreator = SessionsActionCreator(
+        val sessionsActionCreator = SessionContentsActionCreator(
             dispatcher,
             sessionRepository,
             lifecycleOwner.lifecycle
@@ -44,7 +44,7 @@ class SessionsActionCreatorTest {
         coVerify(ordering = Ordering.SEQUENCE) {
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
             sessionRepository.sessionContents()
-            dispatcher.dispatch(Action.SessionsLoaded(SessionContents.EMPTY))
+            dispatcher.dispatch(Action.SessionContentsLoaded(SessionContents.EMPTY))
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
         }
     }
@@ -56,7 +56,7 @@ class SessionsActionCreatorTest {
             sessions = dummySessionData
         )
         coEvery { sessionRepository.sessionContents() } returns dummySessionContents
-        val sessionsActionCreator = SessionsActionCreator(
+        val sessionsActionCreator = SessionContentsActionCreator(
             dispatcher,
             sessionRepository,
             lifecycleOwner.lifecycle
@@ -72,7 +72,7 @@ class SessionsActionCreatorTest {
             sessionRepository.toggleFavorite(firstDummySpeechSession())
             sessionRepository.sessionContents()
             dispatcher.dispatch(
-                Action.SessionsLoaded(dummySessionContents)
+                Action.SessionContentsLoaded(dummySessionContents)
             )
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
         }

@@ -19,7 +19,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class SessionsStoreTest {
+class SessionContentsStoreTest {
     @JvmField @Rule val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Before fun setUp() {
@@ -29,7 +29,7 @@ class SessionsStoreTest {
 
     @Test fun loadingState() = runBlocking<Unit> {
         val dispatcher = Dispatcher()
-        val sessionsStore = SessionsStore(dispatcher)
+        val sessionsStore = SessionContentsStore(dispatcher)
         val observer = mockk<(LoadingState?) -> Unit>(relaxed = true)
 
         sessionsStore.loadingState.changedForever(observer)
@@ -47,12 +47,12 @@ class SessionsStoreTest {
 
     @Test fun sessions() = runBlocking<Unit> {
         val dispatcher = Dispatcher()
-        val sessionsStore = SessionsStore(dispatcher)
+        val sessionsStore = SessionContentsStore(dispatcher)
         val observer: (List<Session>) -> Unit = mockk(relaxed = true)
-        sessionsStore.sessions.changedForever(observer)
+        sessionsStore.filteredSessions.changedForever(observer)
 
         dispatcher.dispatch(
-            Action.SessionsLoaded(SessionContents.EMPTY.copy(sessions = dummySessionData()))
+            Action.SessionContentsLoaded(SessionContents.EMPTY.copy(sessions = dummySessionData()))
         )
 
         verifySequence {

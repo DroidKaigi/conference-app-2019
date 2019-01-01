@@ -3,6 +3,8 @@ package io.github.droidkaigi.confsched2019.ui
 import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -12,6 +14,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
@@ -32,7 +35,8 @@ import io.github.droidkaigi.confsched2019.floormap.ui.FloorMapFragment
 import io.github.droidkaigi.confsched2019.floormap.ui.FloorMapFragmentModule
 import io.github.droidkaigi.confsched2019.model.ErrorMessage
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
-import io.github.droidkaigi.confsched2019.session.di.SessionPagesScope
+import io.github.droidkaigi.confsched2019.session.ui.SearchFragment
+import io.github.droidkaigi.confsched2019.session.ui.SearchFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment
@@ -78,8 +82,11 @@ class MainActivity : DaggerAppCompatActivity() {
         }
     }
 
+    private val navController: NavController by lazy {
+        findNavController(R.id.root_nav_host_fragment)
+    }
+
     private fun setupNavigation() {
-        val navController = findNavController(R.id.root_nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(
             setOf(R.id.main, R.id.about, R.id.announce),
             binding.drawerLayout
@@ -88,22 +95,20 @@ class MainActivity : DaggerAppCompatActivity() {
         binding.navView.setupWithNavController(navController)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            val (_, isWhiteTheme, hasTitle, showLogoImage) = PageConfiguration.getConfiguration(
-                destination.id
-            )
-            binding.logo.isVisible = showLogoImage
-            if (!hasTitle) supportActionBar?.title = ""
+            val config = PageConfiguration.getConfiguration(destination.id)
+            binding.logo.isVisible = config.isShowLogoImage
+            if (!config.hasTitle) supportActionBar?.title = ""
 
-            binding.isWhiteTheme = isWhiteTheme
+            binding.isWhiteTheme = config.isWhiteTheme
             if (23 <= Build.VERSION.SDK_INT) {
-                window.decorView.systemUiVisibility = if (isWhiteTheme) {
+                window.decorView.systemUiVisibility = if (config.isWhiteTheme) {
                     View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
                 } else {
                     0
                 }
             }
             val toolbarContentsColor = ContextCompat.getColor(
-                this, if (isWhiteTheme) android.R.color.black else R.color.white
+                this, if (config.isWhiteTheme) android.R.color.black else R.color.white
             )
             binding.toolbar.navigationIcon?.setColorFilter(
                 toolbarContentsColor,
@@ -112,13 +117,23 @@ class MainActivity : DaggerAppCompatActivity() {
             binding.toolbar.setTitleTextColor(toolbarContentsColor)
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_toolbar, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return NavigationUI.onNavDestinationSelected(item, navController) ||
+            super.onOptionsItemSelected(item)
+    }
 }
 
 @Module
 abstract class MainActivityModule {
     @Binds abstract fun providesActivity(mainActivity: MainActivity): FragmentActivity
 
-    @SessionPagesScope
+    @PageScope
     @ContributesAndroidInjector(
         modules = [SessionPagesFragmentModule::class, SessionAssistedInjectModule::class]
     )
@@ -135,6 +150,12 @@ abstract class MainActivityModule {
         modules = [SpeakerFragmentModule::class, SessionAssistedInjectModule::class]
     )
     abstract fun contributeSpeakerFragment(): SpeakerFragment
+
+    @PageScope
+    @ContributesAndroidInjector(
+        modules = [SearchFragmentModule::class, SessionAssistedInjectModule::class]
+    )
+    abstract fun contributeSearchFragment(): SearchFragment
 
     @PageScope
     @ContributesAndroidInjector(
