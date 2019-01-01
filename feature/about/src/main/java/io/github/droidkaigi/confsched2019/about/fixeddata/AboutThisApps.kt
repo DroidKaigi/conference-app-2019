@@ -15,6 +15,7 @@ class AboutThisApps {
                     R.string.description_droidkaigi,
                     ""
                 ),
+                // TODO: Set item links
                 // Access Item
                 AboutThisApp.Item(
                     10000 + index++,

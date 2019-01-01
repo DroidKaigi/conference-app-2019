@@ -19,6 +19,8 @@ class AboutHeaderItem(
 
     override fun getLayout(): Int = R.layout.header_about
 
+    // TODO: Set banner image/background
+    // TODO: Set archives click listener
     override fun bind(binding: HeaderAboutBinding, position: Int) {
         binding.headItem = headItem
     }
