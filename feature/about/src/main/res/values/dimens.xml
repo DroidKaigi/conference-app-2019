@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="divider_padding">16dp</dimen>
+    <dimen name="divider_width">1dp</dimen>
+    <dimen name="divider_gap">3dp</dimen>
+</resources>

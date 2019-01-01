@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="what_is_droidkaigi">What is DroidKaigi</string>
-    <string name="description_droidkaigi">DroidKaigiはエンジニアが主役のAndroidカンファレンスです。 Android技術情報の共有とコミュニケーションを目的に、2019年2月7日(木)、8日(金)の2日間開催します。</string>
+    <string name="description_droidkaigi">DroidKaigiはエンジニアが主役のAndroidカンファレンスです。\nAndroid技術情報の共有とコミュニケーションを目的に、2019年2月7日(木)、8日(金)の2日間開催します。</string>
     <string name="access_to_place">会場アクセス</string>
     <string name="check_map">Mapを開く</string>
     <string name="staff_list">スタッフリスト</string>
     <string name="check">見てみる</string>
     <string name="privacy_policy">プライバシーポシリー</string>
+    <string name="license">ライセンス</string>
+    <string name="app_version">アプリバージョン</string>
 </resources>

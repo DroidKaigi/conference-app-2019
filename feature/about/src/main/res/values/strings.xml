@@ -9,4 +9,5 @@
     <string name="privacy_policy">プライバシーポシリー</string>
     <string name="license">ライセンス</string>
     <string name="app_version">アプリバージョン</string>
+    <string name="version_name" translatable="false">1.0.0</string>
 </resources>

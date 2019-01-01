@@ -6,16 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.ViewHolder
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.about.R
 import io.github.droidkaigi.confsched2019.about.databinding.FragmentAboutBinding
+import io.github.droidkaigi.confsched2019.about.fixeddata.AboutThisApps
+import io.github.droidkaigi.confsched2019.about.ui.item.AboutSection
 import io.github.droidkaigi.confsched2019.about.ui.widget.DaggerFragment
+import io.github.droidkaigi.confsched2019.about.ui.widget.DottedItemDecoration
 import io.github.droidkaigi.confsched2019.di.PageScope
 
 class AboutFragment : DaggerFragment() {
 
     private lateinit var binding: FragmentAboutBinding
+    private val aboutSection = AboutSection()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +40,37 @@ class AboutFragment : DaggerFragment() {
         )
         return binding.root
     }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        setupRecyclerView()
+    }
+
+    private fun setupRecyclerView() {
+        val groupAdapter = GroupAdapter<ViewHolder>().apply {
+            add(aboutSection)
+        }
+        binding.aboutRecycler.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            adapter = groupAdapter
+            addItemDecoration(
+                DottedItemDecoration.from(
+                    context,
+                    R.color.gray3,
+                    R.dimen.divider_padding,
+                    R.dimen.divider_padding,
+                    R.dimen.divider_width,
+                    R.dimen.divider_gap
+                )
+            )
+            (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+        }
+        aboutSection.updateAboutThisApps(
+            AboutThisApps.getThisApps()
+        )
+    }
+
 }
 
 @Module
