@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="io.github.droidkaigi.confsched2019.about.fixeddata.AboutThisApp.Item"
+            type="io.github.droidkaigi.confsched2019.model.About"
             />
     </data>
 

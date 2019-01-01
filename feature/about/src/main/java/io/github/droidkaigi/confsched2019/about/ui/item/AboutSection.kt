@@ -2,21 +2,21 @@ package io.github.droidkaigi.confsched2019.about.ui.item
 
 import com.xwray.groupie.Item
 import com.xwray.groupie.Section
-import io.github.droidkaigi.confsched2019.about.fixeddata.AboutThisApp
+import io.github.droidkaigi.confsched2019.model.About
 
 class AboutSection : Section() {
 
     fun updateAboutThisApps(
-        aboutThisApps: List<AboutThisApp>
+        aboutThisApps: List<About>
     ) {
-        val headItem = aboutThisApps.first { it is AboutThisApp.HeadItem } as AboutThisApp.HeadItem
+        val headItem = aboutThisApps.first { it is About.HeadItem } as About.HeadItem
         val header = AboutHeaderItem(
             headItem
         )
         val list = mutableListOf<Item<*>>(header)
-        aboutThisApps.filter { it is AboutThisApp.Item }
+        aboutThisApps.filter { it is About.Item }
             .mapTo(list) {
-                AboutItem(it as AboutThisApp.Item)
+                AboutItem(it as About.Item)
             }
         update(list)
     }

@@ -7,10 +7,10 @@ import com.xwray.groupie.databinding.BindableItem
 import com.xwray.groupie.databinding.ViewHolder
 import io.github.droidkaigi.confsched2019.about.R
 import io.github.droidkaigi.confsched2019.about.databinding.HeaderAboutBinding
-import io.github.droidkaigi.confsched2019.about.fixeddata.AboutThisApp
+import io.github.droidkaigi.confsched2019.model.About
 
 class AboutHeaderItem(
-    private val headItem: AboutThisApp.HeadItem
+    private val headItem: About.HeadItem
 ) : BindableItem<HeaderAboutBinding>() {
 
     override fun createViewHolder(itemView: View): ViewHolder<HeaderAboutBinding> {

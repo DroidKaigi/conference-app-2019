@@ -1,6 +1,6 @@
-package io.github.droidkaigi.confsched2019.about.fixeddata
+package io.github.droidkaigi.confsched2019.model
 
-sealed class AboutThisApp(
+sealed class About(
     open val id: Int,
     open val name: Int,
     open val description: Int,
@@ -11,7 +11,7 @@ sealed class AboutThisApp(
         override val name: Int,
         override val description: Int,
         override val navigationUrl: String?
-    ) : AboutThisApp(id, name, description, navigationUrl)
+    ) : About(id, name, description, navigationUrl)
 
     // TODO: Determine headers link
     data class HeadItem(
@@ -19,5 +19,5 @@ sealed class AboutThisApp(
         override val name: Int,
         override val description: Int,
         override val navigationUrl: String?
-    ) : AboutThisApp(id, name, description, navigationUrl)
+    ) : About(id, name, description, navigationUrl)
 }
