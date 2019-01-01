@@ -34,9 +34,7 @@ inline fun <T : Any> LiveData<T>.changedForever(
 
 fun <T, R> LiveData<T>.mapNotNull(mapper: (T?) -> R?): LiveData<R> = map(mapper).nonNull()
 
-fun <T : Any> LiveData<T>.requireValue(): T {
-    return requireNotNull(value)
-}
+fun <T : Any> LiveData<T>.requireValue(): T = requireNotNull(value)
 
 @MainThread
 fun <T : Any> MutableLiveData<T>.notifyChange(): Unit {

@@ -39,7 +39,7 @@ class SessionContentsActionCreatorTest {
             lifecycleOwner.lifecycle
         )
 
-        sessionsActionCreator.load(Filters())
+        sessionsActionCreator.load()
 
         coVerify(ordering = Ordering.SEQUENCE) {
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
@@ -62,9 +62,8 @@ class SessionContentsActionCreatorTest {
             lifecycleOwner.lifecycle
         )
 
-        sessionsActionCreator.toggleFavoriteAndLoad(
-            firstDummySpeechSession(),
-            Filters()
+        sessionsActionCreator.toggleFavorite(
+            firstDummySpeechSession()
         )
 
         coVerify(ordering = Ordering.SEQUENCE) {

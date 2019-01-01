@@ -41,7 +41,7 @@ class SpeechSessionItem @AssistedInject constructor(
     }
 
     private val onFavoriteClickListener: (Session.SpeechSession) -> Unit = { session ->
-        sessionContentsActionCreator.toggleFavoriteAndLoad(session)
+        sessionContentsActionCreator.toggleFavorite(session)
     }
     private val onClickListener: (Session.SpeechSession) -> Unit = { session ->
         navController

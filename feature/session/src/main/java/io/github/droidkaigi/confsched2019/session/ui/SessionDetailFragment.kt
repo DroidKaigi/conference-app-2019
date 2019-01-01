@@ -79,13 +79,13 @@ class SessionDetailFragment : DaggerFragment() {
             return@setOnMenuItemClickListener true
         }
 
-        val sessionLiveData = sessionContentsStore.speechSession(sessionDetailFragmentArgs.session)
-        sessionLiveData.changed(viewLifecycleOwner) { session ->
-            applySessionLayout(session)
-        }
+        sessionContentsStore.speechSession(sessionDetailFragmentArgs.session)
+            .changed(viewLifecycleOwner) { session ->
+                applySessionLayout(session)
+            }
         binding.sessionFavorite.setOnClickListener {
-            val session = sessionLiveData.value ?: return@setOnClickListener
-            sessionContentsActionCreator.toggleFavoriteAndLoad(session)
+            val session = binding.session ?: return@setOnClickListener
+            sessionContentsActionCreator.toggleFavorite(session)
         }
     }
 

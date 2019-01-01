@@ -48,16 +48,17 @@ class SessionContentsStoreTest {
     @Test fun sessions() = runBlocking<Unit> {
         val dispatcher = Dispatcher()
         val sessionsStore = SessionContentsStore(dispatcher)
-        val observer: (List<Session>) -> Unit = mockk(relaxed = true)
-        sessionsStore.filteredSessions.changedForever(observer)
+        val observer: (SessionContents) -> Unit = mockk(relaxed = true)
+        sessionsStore.sessionContents.changedForever(observer)
+        val dummySessionContents = SessionContents.EMPTY.copy(sessions = dummySessionData())
 
         dispatcher.dispatch(
-            Action.SessionContentsLoaded(SessionContents.EMPTY.copy(sessions = dummySessionData()))
+            Action.SessionContentsLoaded(dummySessionContents)
         )
 
         verifySequence {
-            observer(listOf())
-            observer(dummySessionData())
+            observer(SessionContents.EMPTY)
+            observer(dummySessionContents)
         }
     }
 }
