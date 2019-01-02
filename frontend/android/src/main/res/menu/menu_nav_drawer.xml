@@ -40,6 +40,11 @@
             android:title="@string/sponsor_label"
             android:icon="@drawable/ic_domain_black_24dp"
             />
+        <item
+            android:id="@id/setting"
+            android:title="@string/setting_label"
+            android:icon="@drawable/ic_settings_outline_black_24px"
+        />
     </group>
     <group
         android:id="@+id/survey"

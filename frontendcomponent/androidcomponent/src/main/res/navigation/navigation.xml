@@ -100,4 +100,10 @@
         android:label="@string/map_label"
         >
     </fragment>
+    <fragment
+        android:id="@+id/setting"
+        android:name="io.github.droidkaigi.confsched2019.settings.ui.SettingsFragment"
+        android:label="@string/setting_label"
+        >
+    </fragment>
 </navigation>
