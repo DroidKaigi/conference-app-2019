@@ -1,6 +1,7 @@
 package io.github.droidkaigi.confsched2019.session.ui.item
 
 import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.squareup.picasso.Picasso
@@ -8,17 +9,18 @@ import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSpeakerBinding
-import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragmentDirections
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
 class SpeakerItem @AssistedInject constructor(
     @Assisted val speaker: Speaker,
+    @Assisted val clickNavDirection: NavDirections,
     val navController: NavController
 ) : BindableItem<ItemSpeakerBinding>(speaker.id.hashCode().toLong()) {
     @AssistedInject.Factory
     interface Factory {
         fun create(
-            speaker: Speaker
+            speaker: Speaker,
+            clickNavDirection: NavDirections
         ): SpeakerItem
     }
 
@@ -32,11 +34,7 @@ class SpeakerItem @AssistedInject constructor(
             .into(itemBinding.speakerImage)
 
         itemBinding.speakerText.setOnClickListener {
-            navController.navigate(
-                SessionDetailFragmentDirections.actionSessionDetailToSpeaker(
-                    speaker.id
-                )
-            )
+            navController.navigate(clickNavDirection)
         }
     }
 }

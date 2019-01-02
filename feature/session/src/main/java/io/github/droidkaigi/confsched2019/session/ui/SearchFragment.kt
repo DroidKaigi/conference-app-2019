@@ -23,6 +23,7 @@ import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSearchBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SearchActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SearchStore
+import io.github.droidkaigi.confsched2019.session.ui.item.SpeakerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.SpecialSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeechSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
@@ -43,6 +44,7 @@ class SearchFragment : DaggerFragment() {
     private val searchStore: SearchStore by lazy {
         InjectedViewModelProviders.of(requireActivity()).get(searchStoreProvider)
     }
+    @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
 
     private val groupAdapter = GroupAdapter<ViewHolder<*>>()
 
@@ -64,9 +66,6 @@ class SearchFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.searchRecycler.adapter = groupAdapter
-        binding.searchRecycler.addItemDecoration(
-            SessionsItemDecoration(requireContext(), groupAdapter)
-        )
 
         sessionContentsStore.sessionContents.changed(viewLifecycleOwner) { contents ->
             searchActionCreator.search(
@@ -74,11 +73,18 @@ class SearchFragment : DaggerFragment() {
                 sessionContentsStore.sessionContents.requireValue()
             )
         }
+        // TODO apply design
         searchStore.searchResult.changed(viewLifecycleOwner) { result ->
-            val items = result.sessions
+            val items = mutableListOf<Item<*>>()
+            items += result.speakers.map {
+                speakerItemFactory.create(
+                    it,
+                    SearchFragmentDirections.actionSearchToSpeaker(it.id)
+                )
+            }
+            items += result.sessions
                 .map<Session, Item<*>> { session ->
                     when (session) {
-                        // TODO: Speaker search
                         is Session.SpeechSession ->
                             speechSessionItemFactory.create(session)
                         is Session.SpecialSession ->
@@ -96,6 +102,7 @@ class SearchFragment : DaggerFragment() {
         searchView?.let { searchView ->
             searchView.isIconified = false
             searchView.clearFocus()
+            searchView.queryHint = getString(R.string.session_search_hint)
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(s: String): Boolean {
                     return false

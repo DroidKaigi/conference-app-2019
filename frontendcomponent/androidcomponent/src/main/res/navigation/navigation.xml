@@ -57,6 +57,10 @@
         android:name="io.github.droidkaigi.confsched2019.session.ui.SearchFragment"
         android:label="@string/search_label"
         >
+        <action
+            android:id="@+id/action_search_to_speaker"
+            app:destination="@id/speaker"
+            />
     </fragment>
     <fragment
         android:id="@+id/speaker"

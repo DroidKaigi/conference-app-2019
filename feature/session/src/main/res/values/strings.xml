@@ -16,4 +16,5 @@
     <string name="session_speaker_sessions" translatable="false">Session</string>
     <string name="session_share" translatable="false">Share</string>
     <string name="session_place" translatable="false">Place</string>
+    <string name="session_search_hint">Search..</string>
 </resources>

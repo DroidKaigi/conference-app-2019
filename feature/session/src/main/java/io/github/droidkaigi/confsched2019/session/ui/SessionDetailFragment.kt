@@ -102,7 +102,12 @@ class SessionDetailFragment : DaggerFragment() {
 
         val sessionItems = session
             .speakers
-            .map { speakerItemFactory.create(it) }
+            .map {
+                speakerItemFactory.create(
+                    it,
+                    SessionDetailFragmentDirections.actionSessionDetailToSpeaker(it.id)
+                )
+            }
         groupAdapter.update(sessionItems)
     }
 }
