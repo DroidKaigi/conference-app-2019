@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.solver.GoalRow
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
@@ -64,7 +63,10 @@ class SponsorFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
         groupAdapter.spanCount = 2
 
-        binding.sponsorRecycler.layoutManager = GridLayoutManager(requireContext(), groupAdapter.spanCount).apply {
+        binding.sponsorRecycler.layoutManager = GridLayoutManager(
+            requireContext(),
+            groupAdapter.spanCount
+        ).apply {
             spanSizeLookup = groupAdapter.spanSizeLookup
         }
         binding.sponsorRecycler.adapter = groupAdapter
@@ -99,7 +101,6 @@ class SponsorFragment : DaggerFragment() {
                                     }
                                 }
                             }
-
                         }
                     )
                     setHideWhenEmpty(true)

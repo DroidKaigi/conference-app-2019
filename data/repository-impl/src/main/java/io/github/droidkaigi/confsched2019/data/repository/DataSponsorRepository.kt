@@ -23,7 +23,6 @@ class DataSponsorRepository @Inject constructor(
                 index,
                 sponsors.map(SponsorEntity::toSponsor)
                 )
-
         }
 
     override suspend fun refresh() {

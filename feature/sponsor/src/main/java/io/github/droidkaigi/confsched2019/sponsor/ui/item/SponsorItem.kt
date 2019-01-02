@@ -1,6 +1,5 @@
 package io.github.droidkaigi.confsched2019.sponsor.ui.item
 
-import androidx.annotation.LayoutRes
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.model.Sponsor

@@ -1,13 +1,10 @@
 package io.github.droidkaigi.confsched2019.sponsor.ui.item
 
-import androidx.annotation.LayoutRes
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.model.Sponsor
 import io.github.droidkaigi.confsched2019.sponsor.R
-import io.github.droidkaigi.confsched2019.sponsor.databinding.ItemSponsorBinding
 import io.github.droidkaigi.confsched2019.sponsor.databinding.ItemSponsorShortBinding
-
 
 class ShortSponsorItem internal constructor(
     val sponsor: Sponsor,

@@ -8,4 +8,3 @@ data class SponsorItemResponseImpl(
     override val url: String,
     override val image: String
 ) : SponsorItemResponse
-

@@ -6,7 +6,6 @@ import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.toLiveData
 import io.github.droidkaigi.confsched2019.model.LoadingState
-import io.github.droidkaigi.confsched2019.model.Sponsor
 import io.github.droidkaigi.confsched2019.model.SponsorCategory
 import kotlinx.coroutines.channels.map
 import kotlinx.coroutines.channels.mapNotNull
