@@ -1,7 +1,11 @@
 package io.github.droidkaigi.confsched2019.about.ui.widget
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.DashPathEffect
+import android.graphics.Paint
+import android.graphics.Rect
+import android.graphics.Path
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
