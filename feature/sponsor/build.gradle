@@ -41,6 +41,9 @@ dependencies {
     compileOnly Dep.Dagger.assistedInjectAnnotations
     kapt Dep.Dagger.assistedInjectProcessor
 
+    implementation Dep.Picasso.picasso
+    implementation Dep.Picasso.picassoTransformation
+
     implementation Dep.Groupie.groupie
     implementation Dep.Groupie.databinding
 
