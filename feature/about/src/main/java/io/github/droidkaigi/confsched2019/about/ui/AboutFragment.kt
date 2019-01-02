@@ -26,7 +26,6 @@ class AboutFragment : DaggerFragment() {
     private lateinit var binding: FragmentAboutBinding
     private val aboutSection = AboutSection()
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -70,7 +69,6 @@ class AboutFragment : DaggerFragment() {
             AboutThisApps.getThisApps()
         )
     }
-
 }
 
 @Module
