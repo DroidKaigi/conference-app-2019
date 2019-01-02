@@ -6,36 +6,16 @@ import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.model.Sponsor
 import io.github.droidkaigi.confsched2019.sponsor.R
 import io.github.droidkaigi.confsched2019.sponsor.databinding.ItemSponsorBinding
+import io.github.droidkaigi.confsched2019.sponsor.databinding.ItemSponsorShortBinding
 
-class SponsorItem private constructor(
+
+class ShortSponsorItem internal constructor(
     val sponsor: Sponsor,
     val spanSize: Int,
     val onClick: (url: String) -> Unit
-) : BindableItem<ItemSponsorBinding>() {
+) : BindableItem<ItemSponsorShortBinding>() {
 
-    companion object {
-        fun create(
-            sponsor: Sponsor,
-            spanSize: Int,
-            onClick: (url: String) -> Unit
-        ) = SponsorItem(
-            sponsor,
-            spanSize,
-            onClick
-        )
-
-        fun createShort(
-            sponsor: Sponsor,
-            spanSize: Int,
-            onClick: (url: String) -> Unit
-        ) = ShortSponsorItem(
-            sponsor,
-            spanSize,
-            onClick
-        )
-    }
-
-    override fun bind(viewBinding: ItemSponsorBinding, position: Int) {
+    override fun bind(viewBinding: ItemSponsorShortBinding, position: Int) {
         viewBinding.sponsor = sponsor
 
         Picasso.get()
@@ -47,9 +27,10 @@ class SponsorItem private constructor(
         }
     }
 
-    override fun getLayout(): Int = R.layout.item_sponsor
+    override fun getLayout(): Int = R.layout.item_sponsor_short
 
     override fun getSpanSize(spanCount: Int, position: Int): Int {
         return spanSize
     }
 }
+
