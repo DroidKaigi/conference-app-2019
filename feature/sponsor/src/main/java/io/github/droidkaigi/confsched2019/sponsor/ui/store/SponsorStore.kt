@@ -9,6 +9,7 @@ import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.Sponsor
 import io.github.droidkaigi.confsched2019.model.SponsorCategory
 import kotlinx.coroutines.channels.map
+import kotlinx.coroutines.channels.mapNotNull
 import javax.inject.Inject
 
 class SponsorStore @Inject constructor(
@@ -22,4 +23,9 @@ class SponsorStore @Inject constructor(
         .subscribe<Action.SponsorLoaded>()
         .map { it.sponsors }
         .toLiveData(listOf())
+
+    val clickedSponsorUrl: LiveData<String> = dispatcher
+        .subscribe<Action.SponsorOpenLink>()
+        .mapNotNull { it.sponsorUrl }
+        .toLiveData()
 }
