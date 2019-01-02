@@ -30,4 +30,3 @@ class ShortSponsorItem internal constructor(
         return spanSize
     }
 }
-
