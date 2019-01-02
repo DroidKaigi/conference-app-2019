@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class SponsorActionCreator @Inject constructor(
     override val dispatcher: Dispatcher,
-    val sponsorRepository: SponsorRepository,
+    private val sponsorRepository: SponsorRepository,
     @PageScope private val lifecycle: Lifecycle
 ) : CoroutineScope by lifecycle.coroutineScope,
     ErrorHandler {
@@ -22,11 +22,19 @@ class SponsorActionCreator @Inject constructor(
         try {
             dispatcher.dispatch(Action.SponsorLoadingStateChanged(LoadingState.LOADING))
             sponsorRepository.refresh()
-            dispatcher.dispatch(Action.SponsorLoaded(sponsorRepository.sponsors())) // TODO
+            dispatcher.dispatch(Action.SponsorLoaded(sponsorRepository.sponsors()))
             dispatcher.dispatch(Action.SponsorLoadingStateChanged(LoadingState.LOADED))
         } catch (e: Exception) {
             onError(e)
             dispatcher.dispatch(Action.SponsorLoadingStateChanged(LoadingState.INITIALIZED))
         }
+    }
+
+    fun openSponsorLink(url: String) = launch {
+        dispatcher.dispatch(Action.SponsorOpenLink(url))
+    }
+
+    fun clearSponsorLink() = launch {
+        dispatcher.dispatch(Action.SponsorOpenLink(null))
     }
 }

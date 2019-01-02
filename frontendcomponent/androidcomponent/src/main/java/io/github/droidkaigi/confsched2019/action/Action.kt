@@ -52,8 +52,9 @@ sealed class Action {
     class AnnouncementLoadingStateChanged(val loadingState: LoadingState) : Action()
     class AnnouncementLoaded(val announcements: List<Announcement>) : Action()
 
-    class SponsorLoadingStateChanged(val loadingState: LoadingState) : Action()
-    class SponsorLoaded(val sponsors: List<SponsorCategory>) : Action()
+    data class SponsorLoadingStateChanged(val loadingState: LoadingState) : Action()
+    data class SponsorLoaded(val sponsors: List<SponsorCategory>) : Action()
+    data class SponsorOpenLink(val sponsorUrl: String?) : Action()
 
     class FloorMapLoadingStateChanged(val loadingState: LoadingState) : Action()
 }
