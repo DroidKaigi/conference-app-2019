@@ -30,7 +30,6 @@ class SessionContentsStore @Inject constructor(
         .subscribe<Action.SessionContentsLoaded>()
         .map { it.sessionContents }
         .toLiveData(SessionContents.EMPTY)
-
     val sessions get() = sessionContents.requireValue().sessions
     val langs get() = sessionContents.requireValue().langs
     val topics get() = sessionContents.requireValue().topics

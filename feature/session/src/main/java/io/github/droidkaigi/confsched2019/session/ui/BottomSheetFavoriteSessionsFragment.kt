@@ -37,11 +37,11 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
     private lateinit var binding: FragmentBottomSheetSessionsBinding
 
     @Inject lateinit var sessionContentsActionCreator: SessionContentsActionCreator
+    @Inject lateinit var sessionContentsStore: SessionContentsStore
     @Inject lateinit var sessionPageActionCreator: SessionPageActionCreator
     @Inject lateinit var sessionPageFragmentProvider: Provider<SessionPageFragment>
     @Inject lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
 
-    @Inject lateinit var sessionContentsStore: SessionContentsStore
     @Inject lateinit var sessionDetailStoreFactory: SessionPageStore.Factory
     private val sessionPageStore: SessionPageStore by lazy {
         sessionPageFragmentProvider.get().injectedViewModelProvider
@@ -87,7 +87,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
             }
         })
 
-        sessionPagesStore.filteredFavoriteSessions().changed(viewLifecycleOwner) { sessions ->
+        sessionPagesStore.filteredFavoritedSessions().changed(viewLifecycleOwner) { sessions ->
             val items = sessions
                 .map { session ->
                     speechSessionItemFactory.create(session)

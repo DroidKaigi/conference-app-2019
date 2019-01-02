@@ -77,16 +77,11 @@ class SessionPagesFragment : DaggerFragment() {
             }
         }
         sessionContentsStore.sessionContents.changed(viewLifecycleOwner) { sessionContents ->
-            loadSessions()
+            sessionPagesActionCreator.load(sessionContentsStore.sessions)
         }
         sessionContentsStore.loadingState.changed(viewLifecycleOwner) { loadingState ->
             progressTimeLatch.loading = loadingState.isLoading
         }
-    }
-
-    private fun loadSessions() {
-        val sessions = sessionContentsStore.sessions
-        sessionPagesActionCreator.load(sessions)
     }
 
     private fun setupSessionPager() {

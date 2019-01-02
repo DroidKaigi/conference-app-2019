@@ -30,6 +30,7 @@ class SearchActionCreator @Inject constructor(
             )
             return
         }
-        dispatcher.launchAndDispatch(Action.SearchResultLoaded(sessionContents.search(query)))
+        val searchResult = sessionContents.search(query)
+        dispatcher.launchAndDispatch(Action.SearchResultLoaded(searchResult))
     }
 }

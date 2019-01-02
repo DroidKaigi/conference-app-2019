@@ -36,10 +36,10 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
     private lateinit var binding: FragmentBottomSheetSessionsBinding
 
     @Inject lateinit var sessionContentsActionCreator: SessionContentsActionCreator
+    @Inject lateinit var sessionContentsStore: SessionContentsStore
     @Inject lateinit var sessionPageActionCreator: SessionPageActionCreator
     @Inject lateinit var sessionPageFragmentProvider: Provider<SessionPageFragment>
     @Inject lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
-    @Inject lateinit var sessionContentsStore: SessionContentsStore
     @Inject lateinit var sessionPageStoreFactory: SessionPageStore.Factory
     private val sessionPageStore: SessionPageStore by lazy {
         sessionPageFragmentProvider.get().injectedViewModelProvider
@@ -81,7 +81,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
         binding.sessionsBottomSheetShowFilterButton.setOnClickListener(onFilterButtonClick)
         binding.sessionsBottomSheetHideFilterButton.setOnClickListener(onFilterButtonClick)
 
-        sessionPagesStore.filteredDaySessions(args.day).changed(viewLifecycleOwner) { sessions ->
+        sessionPagesStore.filteredSessionsByDay(args.day).changed(viewLifecycleOwner) { sessions ->
             val items = sessions
                 .map<Session, Item<*>> { session ->
                     when (session) {

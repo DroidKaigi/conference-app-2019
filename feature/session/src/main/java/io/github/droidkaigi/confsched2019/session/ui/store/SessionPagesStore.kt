@@ -87,14 +87,14 @@ class SessionPagesStore @Inject constructor(
         .map { it.sessionPage }
         .toLiveData(SessionPage.pages[0])
 
-    fun filteredDaySessions(day: Int): LiveData<List<Session>> {
+    fun filteredSessionsByDay(day: Int): LiveData<List<Session>> {
         return filteredSessions
             .map { sessions ->
                 sessions.orEmpty().filter { session -> session.dayNumber == day }
             }
     }
 
-    fun filteredFavoriteSessions(): LiveData<List<Session.SpeechSession>> {
+    fun filteredFavoritedSessions(): LiveData<List<Session.SpeechSession>> {
         return filteredSessions
             .map { sessions ->
                 sessions.orEmpty().filterIsInstance<Session.SpeechSession>()
