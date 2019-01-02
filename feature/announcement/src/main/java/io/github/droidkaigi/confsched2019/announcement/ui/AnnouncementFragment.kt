@@ -19,7 +19,6 @@ import io.github.droidkaigi.confsched2019.announcement.ui.store.AnnouncementStor
 import io.github.droidkaigi.confsched2019.announcement.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
-import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
