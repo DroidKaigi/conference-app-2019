@@ -10,14 +10,16 @@ import io.github.droidkaigi.confsched2019.ui.MainActivityModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [
-    AndroidSupportInjectionModule::class,
-    MainActivityModule.MainActivityBuilder::class,
-    DbComponentModule::class,
-    RepositoryComponentModule::class,
-    FireStoreComponentModule::class,
-    ApiComponentModule::class
-])
+@Component(
+    modules = [
+        AndroidSupportInjectionModule::class,
+        MainActivityModule.MainActivityBuilder::class,
+        DbComponentModule::class,
+        RepositoryComponentModule::class,
+        FireStoreComponentModule::class,
+        ApiComponentModule::class
+    ]
+)
 interface AppComponent : AndroidInjector<App> {
     @Component.Builder
     interface Builder {

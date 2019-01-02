@@ -33,7 +33,7 @@ fun List<SessionResponse>.toSessionEntities(
         it.toSessionEntityImpl(categories, rooms)
     }
 
-private val FORMATTER: DateFormat =
+private val dateFormat: DateFormat =
     DateFormat("yyyy-MM-dd'T'HH:mm:ss")
 
 fun SessionResponse.toSessionEntityImpl(
@@ -47,8 +47,8 @@ fun SessionResponse.toSessionEntityImpl(
         id = id,
         title = title,
         desc = description,
-        stime = FORMATTER.parse(startsAt).utc.unixMillisLong,
-        etime = FORMATTER.parse(endsAt).utc.unixMillisLong,
+        stime = dateFormat.parse(startsAt).utc.unixMillisLong,
+        etime = dateFormat.parse(endsAt).utc.unixMillisLong,
         sessionFormat = sessionFormat.name!!,
         language = language.name!!,
         message = message?.let {

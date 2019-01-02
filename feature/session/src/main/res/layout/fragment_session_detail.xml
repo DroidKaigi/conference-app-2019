@@ -25,24 +25,20 @@
             />
 
         <variable
-            name="simplify"
-            type="boolean"
+            name="lang"
+            type="io.github.droidkaigi.confsched2019.model.Lang"
             />
     </data>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
 
         <androidx.core.widget.NestedScrollView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -50,19 +46,8 @@
                 android:layout_height="match_parent"
                 >
 
-                <TextView
-                    android:id="@+id/room"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:maxLines="3"
-                    android:text="@{session.room.name}"
-                    app:layout_constraintStart_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text=" / Room A"
-                    />
-
                 <androidx.emoji.widget.EmojiTextView
-                    android:id="@+id/title"
+                    android:id="@+id/session_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -79,25 +64,40 @@
                     />
 
                 <TextView
-                    android:id="@+id/time_and_room"
+                    android:id="@+id/session_time_and_room"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:textAppearance="@style/TextAppearance.App.Subtitle2"
                     android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="@id/title"
-                    app:layout_constraintTop_toBottomOf="@id/title"
+                    app:layout_constraintStart_toStartOf="@id/session_title"
+                    app:layout_constraintTop_toBottomOf="@id/session_title"
                     tools:text="20min / Hall"
                     />
 
-                <TextView
-                    android:id="@+id/start_end_time"
+
+                <ImageView
+                    android:id="@+id/session_time_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:contentDescription="@string/session_description_time_image"
+                    android:tint="@color/gray2"
+                    app:layout_constraintStart_toStartOf="@id/session_title"
+                    app:layout_constraintTop_toBottomOf="@id/session_time_and_room"
+                    app:srcCompat="@drawable/ic_access_time_black_24dp"
+                    />
+
+                <TextView
+                    android:id="@+id/session_start_end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:textAppearance="@style/TextAppearance.App.Subtitle1"
-                    app:layout_constraintStart_toStartOf="@id/title"
-                    app:layout_constraintTop_toBottomOf="@id/time_and_room"
+                    android:text="@{session.timeSummary(lang)}"
+                    app:layout_constraintBottom_toBottomOf="@id/session_time_image"
+                    app:layout_constraintStart_toEndOf="@id/session_time_image"
+                    app:layout_constraintTop_toTopOf="@id/session_time_image"
                     tools:text="2月2日 10:20-10:40"
                     />
 
@@ -111,11 +111,11 @@
                     android:src="@drawable/shape_dashed_line"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/start_end_time"
+                    app:layout_constraintTop_toBottomOf="@id/session_time_image"
                     />
 
                 <androidx.emoji.widget.EmojiTextView
-                    android:id="@+id/description"
+                    android:id="@+id/session_description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -125,9 +125,8 @@
                     android:paddingBottom="2dp"
                     android:text="@{session.desc}"
                     android:textAlignment="viewStart"
-                    android:visibility="@{simplify ? View.GONE : View.VISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/title"
+                    app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider1"
                     tools:text="Material is the metaphor A material metaphor is the unifying theory of a rationalized space and a system of motion. The material is grounded in tactile reality, inspired by the study of paper and ink, yet technologically advanced and open to imagination and magic."
                     />
@@ -143,30 +142,30 @@
                     android:src="@drawable/shape_dashed_line"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/description"
+                    app:layout_constraintTop_toBottomOf="@id/session_description"
                     />
 
                 <TextView
-                    android:id="@+id/tag_title"
+                    android:id="@+id/session_tag_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/session_detail_tag"
                     android:textAppearance="@style/TextAppearance.App.Subtitle1"
-                    app:layout_constraintStart_toStartOf="@id/title"
+                    app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider2"
                     />
 
 
                 <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/chip_group"
+                    android:id="@+id/session_tags"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/title"
-                    app:layout_constraintTop_toBottomOf="@id/tag_title"
+                    app:layout_constraintStart_toStartOf="@id/session_title"
+                    app:layout_constraintTop_toBottomOf="@id/session_tag_title"
                     >
 
                     <com.google.android.material.chip.Chip
@@ -197,24 +196,24 @@
                     android:id="@+id/divider3"
                     android:layout_width="0dp"
                     android:layout_height="4dp"
-                    android:layout_marginTop="28dp"
+                    android:layout_marginTop="24dp"
                     android:contentDescription="@null"
                     android:layerType="software"
                     android:src="@drawable/shape_dashed_line"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/chip_group"
+                    app:layout_constraintTop_toBottomOf="@id/session_tags"
                     />
 
 
                 <TextView
-                    android:id="@+id/servey_title"
+                    android:id="@+id/session_survery_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/session_detail_survey"
                     android:textAppearance="@style/TextAppearance.App.Subtitle1"
-                    app:layout_constraintStart_toStartOf="@id/title"
+                    app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider3"
                     />
 
@@ -228,33 +227,35 @@
                     android:src="@drawable/shape_dashed_line"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/servey_title"
+                    app:layout_constraintTop_toBottomOf="@id/session_survery_title"
                     />
 
                 <TextView
-                    android:id="@+id/speaker_title"
+                    android:id="@+id/session_speaker_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/session_detail_speaker"
                     android:textAppearance="@style/TextAppearance.App.Subtitle1"
-                    app:layout_constraintStart_toStartOf="@id/title"
+                    app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider4"
                     />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/speakers"
+                    android:id="@+id/session_speakers"
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/speaker_title"
+                    app:layout_constraintTop_toBottomOf="@id/session_speaker_title"
                     />
 
                 <androidx.emoji.widget.EmojiTextView
-                    android:id="@+id/message"
+                    android:id="@+id/session_message"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -266,22 +267,32 @@
                     android:textAlignment="viewStart"
                     android:visibility="@{session.message == null ? View.GONE : View.VISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/title"
-                    app:layout_constraintTop_toBottomOf="@id/speakers"
+                    app:layout_constraintStart_toStartOf="@id/session_title"
+                    app:layout_constraintTop_toBottomOf="@id/session_speakers"
                     />
 
-
-                <ImageView
-                    android:id="@+id/favorite"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="@{session.isFavorited ? @color/white : @android:color/black}"
-                    android:contentDescription="@string/session_description_favorite_image"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottom_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:fabAlignmentMode="end"
+            app:hideOnScroll="true"
+            />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/session_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:src="@{session.isFavorited? @drawable/ic_bookmark_black_24dp : @drawable/ic_bookmark_border_black_24dp}"
+            app:layout_anchor="@id/bottom_app_bar"
+            app:tint="@color/white"
+            />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

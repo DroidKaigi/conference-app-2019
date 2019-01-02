@@ -117,6 +117,17 @@ class SessionsStore @Inject constructor(
             .nonNull()
     }
 
+    fun speakerSessionBySpeakerId(speakerId: String): LiveData<Session.SpeechSession?> {
+        return sessions
+            .map { sessions ->
+                sessions?.firstOrNull() { session ->
+                    val speechSession: Session.SpeechSession =
+                        session as? Session.SpeechSession ?: return@firstOrNull false
+                    speechSession.speakers.find { it.id == speakerId } != null
+                } as? Session.SpeechSession
+            }
+    }
+
     fun favoriteSessions(): LiveData<List<Session.SpeechSession>> {
         return sessions
             .map {

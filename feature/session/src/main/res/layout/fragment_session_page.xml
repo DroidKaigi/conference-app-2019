@@ -26,7 +26,7 @@
                 >
 
                 <TextView
-                    android:id="@+id/filter_title"
+                    android:id="@+id/sessions_filter_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -34,7 +34,7 @@
                     android:text="@string/session_filter_title"
                     android:textAppearance="?textAppearanceHeadline5"
                     android:textColor="@color/white"
-                    app:layout_constraintEnd_toStartOf="@id/filter_reset"
+                    app:layout_constraintEnd_toStartOf="@id/sessions_filter_reset"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -42,7 +42,7 @@
 
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/filter_reset"
+                    android:id="@+id/sessions_filter_reset"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -50,83 +50,83 @@
                     android:textAppearance="?textAppearanceSubtitle1"
                     android:textColor="@color/white"
                     app:chipBackgroundColor="#d12016"
-                    app:layout_constraintBottom_toBottomOf="@id/filter_title"
+                    app:layout_constraintBottom_toBottomOf="@id/sessions_filter_title"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/filter_title"
+                    app:layout_constraintTop_toTopOf="@id/sessions_filter_title"
                     />
 
                 <TextView
-                    android:id="@+id/filter_room_title"
+                    android:id="@+id/sessions_filter_room_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:text="@string/session_filter_room"
                     android:textAppearance="?textAppearanceSubtitle1"
                     android:textColor="@color/white"
-                    app:layout_constraintStart_toStartOf="@id/filter_title"
-                    app:layout_constraintTop_toBottomOf="@id/filter_title"
+                    app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
+                    app:layout_constraintTop_toBottomOf="@id/sessions_filter_title"
                     />
 
                 <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/filter_room_chip"
+                    android:id="@+id/sessions_filter_room_chip"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/filter_title"
-                    app:layout_constraintTop_toBottomOf="@id/filter_room_title"
+                    app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
+                    app:layout_constraintTop_toBottomOf="@id/sessions_filter_room_title"
                     />
 
                 <TextView
-                    android:id="@+id/filter_lang_title"
+                    android:id="@+id/sessions_filter_lang_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:text="@string/session_filter_language"
                     android:textAppearance="?textAppearanceSubtitle1"
                     android:textColor="@color/white"
-                    app:layout_constraintStart_toStartOf="@id/filter_title"
-                    app:layout_constraintTop_toBottomOf="@id/filter_room_chip"
+                    app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
+                    app:layout_constraintTop_toBottomOf="@id/sessions_filter_room_chip"
                     />
 
                 <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/filter_lang_chip"
+                    android:id="@+id/sessions_filter_lang_chip"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/filter_title"
-                    app:layout_constraintTop_toBottomOf="@id/filter_lang_title"
+                    app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
+                    app:layout_constraintTop_toBottomOf="@id/sessions_filter_lang_title"
                     />
 
 
                 <TextView
-                    android:id="@+id/filter_topic_title"
+                    android:id="@+id/sessions_filter_topic_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:text="@string/session_filter_topic"
                     android:textAppearance="?textAppearanceSubtitle1"
                     android:textColor="@color/white"
-                    app:layout_constraintStart_toStartOf="@id/filter_title"
-                    app:layout_constraintTop_toBottomOf="@id/filter_lang_chip"
+                    app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
+                    app:layout_constraintTop_toBottomOf="@id/sessions_filter_lang_chip"
                     />
 
                 <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/filter_topic_chip"
+                    android:id="@+id/sessions_filter_topic_chip"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/filter_title"
-                    app:layout_constraintTop_toBottomOf="@id/filter_topic_title"
+                    app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
+                    app:layout_constraintTop_toBottomOf="@id/sessions_filter_topic_title"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
         <FrameLayout
-            android:id="@+id/session_sheet"
+            android:id="@+id/sessions_sheet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"

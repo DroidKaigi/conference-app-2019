@@ -10,9 +10,9 @@ class DateTimeTest {
     @Test fun dateFormat() {
         assertEquals(
             16, DateFormat("""yyyy-MM-dd'T'HH:mm:ss""")
-            .parse("2018-10-08T16:32:59")
-            .utc
-            .hours
+                .parse("2018-10-08T16:32:59")
+                .utc
+                .hours
         )
     }
 }

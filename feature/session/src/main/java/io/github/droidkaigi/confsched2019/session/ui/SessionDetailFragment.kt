@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
@@ -14,8 +15,8 @@ import dagger.Provides
 import dagger.android.support.AndroidSupportInjection
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
-import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionDetailBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionDetailActionCreator
@@ -39,7 +40,9 @@ class SessionDetailFragment : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_session_detail, container,
+            inflater,
+            R.layout.fragment_session_detail,
+            container,
             false
         )
         return binding.root
@@ -55,43 +58,50 @@ class SessionDetailFragment : DaggerFragment() {
 
         sessionDetailFragmentArgs = SessionDetailFragmentArgs.fromBundle(arguments)
         val sessionLiveData = sessionsStore.speakerSession(sessionDetailFragmentArgs.session)
-        binding.favorite.setOnClickListener {
+        binding.sessionFavorite.setOnClickListener {
             val session = sessionLiveData.value ?: return@setOnClickListener
             sessionDetailActionCreator.toggleFavorite(session)
         }
-        binding.speakers.adapter = groupAdapter
+        binding.sessionSpeakers.adapter = groupAdapter
         sessionLiveData.changed(viewLifecycleOwner) { session: Session.SpeechSession ->
-            binding.session = session
-            @Suppress("StringFormatMatches") // FIXME
-            binding.timeAndRoom.text = getString(
-                R.string.session_duration_room_format,
-                session.timeInMinutes,
-                session.room.name
-            )
-            binding.startEndTime.text = buildString {
-                // ex: 2月2日 10:20-10:40
-                if (systemStore.lang == Lang.EN) {
-                    append(session.startTime.format("M"))
-                    append(".")
-                    append(session.startTime.format("d"))
-                } else {
-                    append(session.startTime.format("M"))
-                    append("月")
-                    append(session.startTime.format("d"))
-                    append("日")
-                }
-                append(" ")
-                append(session.startTime.format("h:m"))
-                append("-")
-                append(session.endTime.format("h:m"))
-            }
-            binding.topicChip.text = session.topic.getNameByLang(systemStore.lang)
-
-            val sessionItems = session
-                .speakers
-                .map { speakerItemFactory.create(it) }
-            groupAdapter.update(sessionItems)
+            applySessionLayout(session)
         }
+
+        binding.bottomAppBar.replaceMenu(R.menu.menu_session_detail_bottomappbar)
+        binding.bottomAppBar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.session_share ->
+                    Toast.makeText(
+                        requireContext(),
+                        "not implemented yet",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                R.id.session_place ->
+                    Toast.makeText(
+                        requireContext(),
+                        "not implemented yet",
+                        Toast.LENGTH_SHORT
+                    ).show()
+            }
+            return@setOnMenuItemClickListener true
+        }
+    }
+
+    private fun applySessionLayout(session: Session.SpeechSession) {
+        binding.session = session
+        binding.lang = defaultLang()
+        @Suppress("StringFormatMatches") // FIXME
+        binding.sessionTimeAndRoom.text = getString(
+            R.string.session_duration_room_format,
+            session.timeInMinutes,
+            session.room.name
+        )
+        binding.topicChip.text = session.topic.getNameByLang(systemStore.lang)
+
+        val sessionItems = session
+            .speakers
+            .map { speakerItemFactory.create(it) }
+        groupAdapter.update(sessionItems)
     }
 }
 

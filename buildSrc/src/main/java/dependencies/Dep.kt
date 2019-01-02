@@ -7,7 +7,8 @@ object Dep {
         val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Kotlin.version}"
         val kotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Kotlin.version}"
         val playServices = "com.google.gms:google-services:4.1.0"
-        val safeArgs = "android.arch.navigation:navigation-safe-args-gradle-plugin:${AndroidX.Navigation.version}"
+        val safeArgs =
+            "android.arch.navigation:navigation-safe-args-gradle-plugin:${AndroidX.Navigation.version}"
     }
 
     object Test {
@@ -17,7 +18,8 @@ object Dep {
         val archCore = "androidx.arch.core:core-testing:2.0.0"
         val espressoCore = "androidx.test.espresso:espresso-core:3.1.0-alpha3"
         val kotlinTestAssertions = "io.kotlintest:kotlintest-assertions:3.1.10"
-        val testingKtx = "android.arch.navigation:navigation-testing-ktx:${AndroidX.Navigation.version}"
+        val testingKtx =
+            "android.arch.navigation:navigation-testing-ktx:${AndroidX.Navigation.version}"
 
         object KotlinMultiPlatform {
             val jvmModuleTest = "org.jetbrains.kotlin:kotlin-test"
@@ -32,7 +34,7 @@ object Dep {
         val recyclerView = "androidx.recyclerview:recyclerview:1.0.0"
         val constraint = "androidx.constraintlayout:constraintlayout:1.1.2"
         val emoji = "androidx.emoji:emoji-appcompat:1.0.0"
-        val design = "com.google.android.material:material:1.1.0-alpha01"
+        val design = "com.google.android.material:material:1.1.0-alpha02"
         val coreKtx = "androidx.core:core-ktx:1.0.0-alpha1"
 
         val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:2.0.0"
@@ -62,9 +64,12 @@ object Dep {
         val stdlibJvm = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version"
         val coroutinesVersion = "1.0.1"
         val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
-        val androidCoroutinesDispatcher = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
-        val coroutinesReactive = "org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$coroutinesVersion"
-        val coroutinesPlayServices = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesVersion"
+        val androidCoroutinesDispatcher =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+        val coroutinesReactive =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$coroutinesVersion"
+        val coroutinesPlayServices =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesVersion"
         val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.8.1-rc13"
     }
 
@@ -85,7 +90,8 @@ object Dep {
         val androidSupport = "com.google.dagger:dagger-android-support:$version"
         val android = "com.google.dagger:dagger-android:$version"
         val androidProcessor = "com.google.dagger:dagger-android-processor:$version"
-        val assistedInjectAnnotations = "com.squareup.inject:assisted-inject-annotations-dagger2:0.3.0"
+        val assistedInjectAnnotations =
+            "com.squareup.inject:assisted-inject-annotations-dagger2:0.3.0"
         val assistedInjectProcessor = "com.squareup.inject:assisted-inject-processor-dagger2:0.3.0"
     }
 

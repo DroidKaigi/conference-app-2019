@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item
+        android:id="@+id/session_share"
+        android:icon="@drawable/ic_share_black_24dp"
+        android:title="@string/session_share"
+        app:iconTint="@color/gray2"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/session_place"
+        android:icon="@drawable/ic_room_black_24dp"
+        android:title="@string/session_place"
+        app:iconTint="@color/gray2"
+        app:showAsAction="ifRoom"
+        />
+
+</menu>

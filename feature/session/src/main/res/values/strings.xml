@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="session_description_favorite_image" translatable="false">favorite image</string>
+    <string name="session_description_time_image" translatable="false">time image</string>
     <string name="session_description_header_image" translatable="false">header image</string>
     <string name="session_duration_room_format" translatable="false">%1$d min / %2$s</string>
     <string name="session_filter_button">Filtering</string>
@@ -12,4 +13,7 @@
     <string name="session_detail_tag" translatable="false">Tags</string>
     <string name="session_detail_survey">Survey</string>
     <string name="session_detail_speaker" translatable="false">Speaker</string>
+    <string name="session_speaker_sessions" translatable="false">Session</string>
+    <string name="session_share" translatable="false">Share</string>
+    <string name="session_place" translatable="false">Place</string>
 </resources>

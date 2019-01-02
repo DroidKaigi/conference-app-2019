@@ -7,9 +7,11 @@ import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
 
 @Singleton
-@Component(modules = [
-    DbModule::class
-])
+@Component(
+    modules = [
+        DbModule::class
+    ]
+)
 interface DbComponent {
     fun sessionDatabase(): SessionDatabase
     fun sponsorDatabase(): SponsorDatabase

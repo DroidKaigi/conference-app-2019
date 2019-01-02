@@ -71,8 +71,8 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
         val onFilterButtonClick: (View) -> Unit = {
             sessionPageActionCreator.toggleFilterExpanded(SessionPage.Favorite)
         }
-        binding.bottomSheetShowFilterButton.setOnClickListener(onFilterButtonClick)
-        binding.bottomSheetHideFilterButton.setOnClickListener(onFilterButtonClick)
+        binding.sessionsBottomSheetShowFilterButton.setOnClickListener(onFilterButtonClick)
+        binding.sessionsBottomSheetHideFilterButton.setOnClickListener(onFilterButtonClick)
 
         binding.sessionsRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -92,15 +92,16 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
         }
         sessionPageStore.filterSheetState.changed(viewLifecycleOwner) { newState ->
             if (newState == BottomSheetBehavior.STATE_EXPANDED ||
-                newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                newState == BottomSheetBehavior.STATE_COLLAPSED
+            ) {
                 TransitionManager.beginDelayedTransition(
                     binding.root as ViewGroup, AutoTransition().apply {
-                    excludeChildren(binding.bottomSheetTitle, true)
-                    excludeChildren(binding.sessionsRecycler, true)
-                })
+                        excludeChildren(binding.sessionsBottomSheetTitle, true)
+                        excludeChildren(binding.sessionsRecycler, true)
+                    })
                 val isCollapsed = newState == BottomSheetBehavior.STATE_COLLAPSED
-                binding.bottomSheetShowFilterButton.isVisible = !isCollapsed
-                binding.bottomSheetHideFilterButton.isVisible = isCollapsed
+                binding.sessionsBottomSheetShowFilterButton.isVisible = !isCollapsed
+                binding.sessionsBottomSheetHideFilterButton.isVisible = isCollapsed
             }
         }
     }
@@ -111,7 +112,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
         if (firstPosition == RecyclerView.NO_POSITION || firstPosition >= groupAdapter.itemCount) {
             return
         }
-        binding.bottomSheetTitle.text = (groupAdapter
+        binding.sessionsBottomSheetTitle.text = (groupAdapter
             .getItem(firstPosition) as SpeechSessionItem)
             .session
             .startDayText

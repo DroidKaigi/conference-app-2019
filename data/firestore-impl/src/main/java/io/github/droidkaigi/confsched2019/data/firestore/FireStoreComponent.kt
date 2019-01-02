@@ -8,9 +8,11 @@ import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
 
 @Singleton
-@Component(modules = [
-    FirestoreModule::class
-])
+@Component(
+    modules = [
+        FirestoreModule::class
+    ]
+)
 interface FireStoreComponent {
     fun fireStore(): FireStore
 

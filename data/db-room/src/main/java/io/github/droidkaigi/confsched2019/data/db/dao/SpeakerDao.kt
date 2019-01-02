@@ -6,7 +6,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntityImpl
 
-@Dao abstract class SpeakerDao {
+@Dao
+abstract class SpeakerDao {
     @Query("SELECT * FROM speaker")
     abstract suspend fun getAllSpeaker(): List<SpeakerEntityImpl>
 

@@ -9,7 +9,8 @@ sealed class Session(
     open val id: String,
     open val dayNumber: Int,
     open val startTime: DateTime,
-    open val endTime: DateTime
+    open val endTime: DateTime,
+    open val room: Room?
 ) {
     data class SpeechSession(
         override val id: String,
@@ -18,14 +19,14 @@ sealed class Session(
         override val endTime: DateTime,
         val title: String,
         val desc: String,
-        val room: Room,
+        override val room: Room,
         val format: String,
         val language: String,
         val topic: Topic,
         val isFavorited: Boolean,
         val speakers: List<Speaker>,
         val message: SessionMessage?
-    ) : Session(id, dayNumber, startTime, endTime)
+    ) : Session(id, dayNumber, startTime, endTime, room)
 
     data class SpecialSession(
         override val id: String,
@@ -33,8 +34,8 @@ sealed class Session(
         override val startTime: DateTime,
         override val endTime: DateTime,
         val title: String,
-        val room: Room?
-    ) : Session(id, dayNumber, startTime, endTime) {
+        override val room: Room?
+    ) : Session(id, dayNumber, startTime, endTime, room) {
         companion object {
             private val formatter: DateFormat =
                 DateFormat("yyyy-MM-dd'T'HH:mm:ss")
@@ -52,8 +53,36 @@ sealed class Session(
         }
     }
 
-    val startDayText
-        get() = startTime.format("yyyy.M.d")
+    val startDayText by lazy { startTime.format("yyyy.M.d") }
+
+    fun timeSummary(lang: Lang) = buildString {
+        // ex: 2月2日 10:20-10:40
+        if (lang == Lang.EN) {
+            append(startTime.format("M"))
+            append(".")
+            append(startTime.format("d"))
+        } else {
+            append(startTime.format("M"))
+            append("月")
+            append(startTime.format("d"))
+            append("日")
+        }
+        append(" ")
+        append(startTime.format("hh:mm"))
+        append(" - ")
+        append(endTime.format("hh:mm"))
+    }
+
+    fun summary(lang: Lang) = buildString {
+        append(timeSummary(lang))
+        append(" / ")
+        append(timeInMinutes)
+        append("min")
+        room?.let {
+            append(" / ")
+            append(it.name)
+        }
+    }
 
     val isFinished: Boolean
         get() = DateTime.nowUnixLong() > endTime.unixMillisLong
