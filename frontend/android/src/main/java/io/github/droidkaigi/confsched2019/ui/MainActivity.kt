@@ -81,7 +81,7 @@ class MainActivity : DaggerAppCompatActivity() {
     private fun setupNavigation() {
         val navController = findNavController(R.id.root_nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.main, R.id.about, R.id.announce),
+            setOf(R.id.main, R.id.about, R.id.announce, R.id.setting),
             binding.drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

@@ -47,6 +47,7 @@ dependencies {
     implementation project(":feature:announcement")
     implementation project(":feature:floormap")
     implementation project(":feature:sponsor")
+    implementation project(":feature:settings")
     implementation project(':frontendcomponent:androidcomponent')
     implementation project(':feature:user')
     implementation project(':feature:system')
