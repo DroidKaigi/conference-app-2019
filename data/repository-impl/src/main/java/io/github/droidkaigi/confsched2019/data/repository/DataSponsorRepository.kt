@@ -14,14 +14,16 @@ class DataSponsorRepository @Inject constructor(
     override suspend fun sponsors() = sponsorDatabase
         .sponsors()
         .groupBy { it.categoryIndex }
-        .map { (_, sponsors) ->
-            val category = sponsors.first().category
+        .mapNotNull { (_, sponsors) ->
+            val category = SponsorCategory.Category.from(sponsors.first().category)
+                ?: return@mapNotNull null
             val index = sponsors.first().categoryIndex
             SponsorCategory(
                 category,
                 index,
                 sponsors.map(SponsorEntity::toSponsor)
-            )
+                )
+
         }
 
     override suspend fun refresh() {
