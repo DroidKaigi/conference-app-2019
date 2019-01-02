@@ -1,9 +1,7 @@
 package io.github.droidkaigi.confsched2019.ext.android
 
-import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.shopify.livedataktx.Removable
 import com.shopify.livedataktx.SupportMediatorLiveData
 import com.shopify.livedataktx.distinct
