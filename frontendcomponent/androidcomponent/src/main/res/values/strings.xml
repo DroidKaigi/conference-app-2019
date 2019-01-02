@@ -15,4 +15,6 @@
     <string name="map_label">Floormap</string>
     <!-- Survey -->
     <string name="survey_label">Entire survey</string>
+    <!-- Setting -->
+    <string name="setting_label" translatable="false">Setting</string>
 </resources>
