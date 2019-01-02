@@ -15,7 +15,6 @@ import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.about.R
 import io.github.droidkaigi.confsched2019.about.databinding.FragmentAboutBinding
-import io.github.droidkaigi.confsched2019.about.fixeddata.AboutThisApps
 import io.github.droidkaigi.confsched2019.about.ui.item.AboutSection
 import io.github.droidkaigi.confsched2019.about.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.about.ui.widget.DottedItemDecoration
@@ -65,9 +64,7 @@ class AboutFragment : DaggerFragment() {
             )
             (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         }
-        aboutSection.updateAboutThisApps(
-            AboutThisApps.getThisApps()
-        )
+        aboutSection.setupAboutThisApps()
     }
 }
 

@@ -1,23 +1,43 @@
 package io.github.droidkaigi.confsched2019.about.ui.item
 
-import com.xwray.groupie.Item
 import com.xwray.groupie.Section
-import io.github.droidkaigi.confsched2019.model.About
+import io.github.droidkaigi.confsched2019.about.R
 
 class AboutSection : Section() {
 
-    fun updateAboutThisApps(
-        aboutThisApps: List<About>
-    ) {
-        val headItem = aboutThisApps.first { it is About.HeadItem } as About.HeadItem
-        val header = AboutHeaderItem(
-            headItem
+    fun setupAboutThisApps() {
+        update(
+            listOf(
+                AboutHeaderItem(),
+                AboutItem(
+                    R.string.about_access_to_place,
+                    R.string.about_check_map
+                ) {
+                    TODO()
+                },
+                AboutItem(
+                    R.string.about_staff_list,
+                    R.string.about_check
+                ) {
+                    TODO()
+                },
+                AboutItem(
+                    R.string.about_privacy_policy,
+                    R.string.about_check
+                ) {
+                    TODO()
+                },
+                AboutItem(
+                    R.string.about_license,
+                    R.string.about_check
+                ) {
+                    TODO()
+                },
+                AboutItem(
+                    R.string.about_app_version,
+                    R.string.about_version_name
+                )
+            )
         )
-        val list = mutableListOf<Item<*>>(header)
-        aboutThisApps.filter { it is About.Item }
-            .mapTo(list) {
-                AboutItem(it as About.Item)
-            }
-        update(list)
     }
 }

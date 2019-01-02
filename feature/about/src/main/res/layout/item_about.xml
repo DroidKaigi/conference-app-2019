@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
+    xmlns:tools="http://schemas.android.com/tools"
+    >
     <data>
         <variable
-            name="item"
-            type="io.github.droidkaigi.confsched2019.model.About"
+            name="name"
+            type="int"
+            />
+
+        <variable
+            name="description"
+            type="int"
             />
     </data>
 
@@ -14,36 +20,39 @@
         android:id="@+id/access_layout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <TextView
             android:id="@+id/label_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.name}"
+            android:text="@{name}"
             android:textColor="@color/gray1"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/access_to_place"/>
+            tools:text="@string/about_access_to_place"
+            />
 
         <TextView
             android:id="@+id/check_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.description}"
-            android:textColor="@color/colorSecondary"
+            android:text="@{description}"
+            android:textColor="@color/gray2"
             android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="@string/check_map"/>
+            tools:text="@string/about_check_map"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
