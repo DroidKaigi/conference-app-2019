@@ -81,7 +81,6 @@ class SessionPagesFragment : DaggerFragment() {
         }
         sessionContentsStore.loadingState.changed(viewLifecycleOwner) { loadingState ->
             progressTimeLatch.loading = loadingState.isLoading
-
         }
     }
 
