@@ -25,6 +25,10 @@ class DataSessionRepository @Inject constructor(
             .sortedBy { it.startTime }
         SessionContents(
             sessions = sessions,
+            speakers = sessions
+                .filterIsInstance<Session.SpeechSession>()
+                .flatMap { it.speakers }
+                .distinct(),
             langs = Lang.values().toList(),
             rooms = speakerSessions.map { it.room }.distinct(),
             topics = speakerSessions.map { it.topic }.distinct()

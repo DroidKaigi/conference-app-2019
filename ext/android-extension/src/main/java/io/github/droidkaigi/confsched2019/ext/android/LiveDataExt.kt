@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import com.shopify.livedataktx.Removable
 import com.shopify.livedataktx.SupportMediatorLiveData
 import com.shopify.livedataktx.distinct
+import com.shopify.livedataktx.map
 import com.shopify.livedataktx.nonNull
 import com.shopify.livedataktx.observe
 
@@ -28,3 +29,7 @@ inline fun <T : Any> LiveData<T>.changedForever(
 ): Removable<T> {
     return nonNull().distinct().observe(onChanged)
 }
+
+fun <T, R> LiveData<T>.mapNotNull(mapper: (T?) -> R?): LiveData<R> = map(mapper).nonNull()
+
+fun <T : Any> LiveData<T>.requireValue(): T = requireNotNull(value)

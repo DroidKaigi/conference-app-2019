@@ -1,9 +1,9 @@
 package io.github.droidkaigi.confsched2019.model
 
 data class Filters(
-    val rooms: MutableSet<Room> = mutableSetOf(),
-    val topics: MutableSet<Topic> = mutableSetOf(),
-    val langs: MutableSet<Lang> = mutableSetOf()
+    val rooms: Set<Room> = mutableSetOf(),
+    val topics: Set<Topic> = mutableSetOf(),
+    val langs: Set<Lang> = mutableSetOf()
 ) {
     fun isPass(
         session: Session
@@ -22,11 +22,5 @@ data class Filters(
             return@run langs.map { it.toString() }.contains(session.language)
         }
         return roomFilterOk && topicFilterOk && langFilterOk
-    }
-
-    fun clear() {
-        rooms.clear()
-        topics.clear()
-        langs.clear()
     }
 }

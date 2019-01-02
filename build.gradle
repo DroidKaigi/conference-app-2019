@@ -20,6 +20,7 @@ buildscript {
         classpath Dep.GradlePlugin.kotlinSerialization
         classpath Dep.GradlePlugin.playServices
         classpath Dep.GradlePlugin.safeArgs
+        classpath Dep.GradlePlugin.jetifier
     }
 }
 
@@ -69,6 +70,17 @@ allprojects {
             }
         }
     }
+
+    configurations.all {
+        resolutionStrategy {
+            eachDependency { DependencyResolveDetails details ->
+                if (details.requested.group == 'com.android.tools.build.jetifier') {
+                    details.useVersion '1.0.0-beta02'
+                }
+            }
+        }
+    }
+
 }
 
 task clean(type: Delete) {
