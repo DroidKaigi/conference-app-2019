@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.core.view.children
 import androidx.core.view.forEach
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -85,24 +86,20 @@ class SessionPageFragment : DaggerFragment() {
             sessionPagesActionCreator.clearFilters()
         }
 
-        sessionPagesStore.filtersChange.observe(viewLifecycleOwner) {
+        sessionPagesStore.filters.observe(viewLifecycleOwner) {
             applyFilters()
         }
         sessionStore.sessionContents.changed(viewLifecycleOwner) { contents ->
             binding.sessionsFilterRoomChip.setupFilter(
                 contents.rooms,
-                Room::name,
-                sessionPagesActionCreator::changeFilter
+                Room::name
             )
             binding.sessionsFilterTopicChip.setupFilter(
-                contents.topics,
-                { topic -> topic.getNameByLang(systemStore.lang) },
-                sessionPagesActionCreator::changeFilter
-            )
+                contents.topics
+            ) { topic -> topic.getNameByLang(systemStore.lang) }
             binding.sessionsFilterLangChip.setupFilter(
                 contents.langs,
-                Lang::toString,
-                sessionPagesActionCreator::changeFilter
+                Lang::toString
             )
         }
         sessionPagesStore.selectedTab.changed(viewLifecycleOwner) {
@@ -167,9 +164,9 @@ class SessionPageFragment : DaggerFragment() {
 
     private fun <T> ChipGroup.setupFilter(
         items: List<T>,
-        chipText: (T) -> String,
-        onChecked: (T, Boolean) -> Unit
+        chipText: (T) -> String
     ) {
+        children.filterIsInstance<Chip>().forEach { it.setOnCheckedChangeListener(null) }
         removeAllViews()
         items
             .map { item ->
@@ -181,9 +178,6 @@ class SessionPageFragment : DaggerFragment() {
                 chip.apply {
                     text = chipText(item)
                     tag = item
-                    setOnCheckedChangeListener { _, isChecked ->
-                        onChecked(item, isChecked)
-                    }
                 }
             }
             .forEach {
@@ -193,37 +187,46 @@ class SessionPageFragment : DaggerFragment() {
     }
 
     private fun applyFilters() {
-        val filterRooms = sessionPagesStore.filters.rooms
+        val filterRooms = sessionPagesStore.filtersValue.rooms
         binding.sessionsFilterRoomChip.forEach {
+            val chip = it as? Chip ?: return@forEach
+            val room = it.tag as? Room ?: return@forEach
+            chip.setOnCheckedChangeListener(null)
             if (filterRooms.isNotEmpty()) {
-                val chip = it as? Chip ?: return@forEach
-                val room = it.tag as? Room ?: return@forEach
                 chip.isChecked = filterRooms.contains(room)
             } else {
-                val chip = it as? Chip ?: return@forEach
                 chip.isChecked = false
             }
-        }
-        val filterLangs = sessionPagesStore.filters.langs
-        binding.sessionsFilterLangChip.forEach {
-            if (filterLangs.isNotEmpty()) {
-                val chip = it as? Chip ?: return@forEach
-                val lang = it.tag as? Lang ?: return@forEach
-                chip.isChecked = filterLangs.contains(lang)
-            } else {
-                val chip = it as? Chip ?: return@forEach
-                chip.isChecked = false
+            chip.setOnCheckedChangeListener { _, isChecked ->
+                sessionPagesActionCreator.changeFilter(room, isChecked)
             }
         }
-        val filterTopics = sessionPagesStore.filters.topics
+        val filterTopics = sessionPagesStore.filtersValue.topics
         binding.sessionsFilterTopicChip.forEach {
+            val chip = it as? Chip ?: return@forEach
+            val topic = it.tag as? Topic ?: return@forEach
+            chip.setOnCheckedChangeListener(null)
             if (filterTopics.isNotEmpty()) {
-                val chip = it as? Chip ?: return@forEach
-                val topic = it.tag as? Topic ?: return@forEach
                 chip.isChecked = filterTopics.contains(topic)
             } else {
-                val chip = it as? Chip ?: return@forEach
                 chip.isChecked = false
+            }
+            chip.setOnCheckedChangeListener { _, isChecked ->
+                sessionPagesActionCreator.changeFilter(topic, isChecked)
+            }
+        }
+        val filterLangs = sessionPagesStore.filtersValue.langs
+        binding.sessionsFilterLangChip.forEach {
+            val chip = it as? Chip ?: return@forEach
+            val lang = it.tag as? Lang ?: return@forEach
+            chip.setOnCheckedChangeListener(null)
+            if (filterLangs.isNotEmpty()) {
+                chip.isChecked = filterLangs.contains(lang)
+            } else {
+                chip.isChecked = false
+            }
+            chip.setOnCheckedChangeListener { _, isChecked ->
+                sessionPagesActionCreator.changeFilter(lang, isChecked)
             }
         }
     }

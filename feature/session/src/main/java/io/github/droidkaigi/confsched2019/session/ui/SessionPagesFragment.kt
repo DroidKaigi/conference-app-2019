@@ -73,21 +73,17 @@ class SessionPagesFragment : DaggerFragment() {
         }
 
         userStore.registered.changed(viewLifecycleOwner) { registered ->
-            // Now, registered, we can load filteredSessions
+            // Now, registered, we can load sessions
             if (registered && sessionContentsStore.isInitialized) {
                 sessionContentsActionCreator.refresh()
             }
         }
-        sessionPagesStore.filtersChange.observe(viewLifecycleOwner) {
-            if (sessionContentsStore.isLoaded) {
-                sessionContentsActionCreator.load()
-            }
+        sessionContentsStore.sessionContents.changed(viewLifecycleOwner) { sessionContents ->
+            loadSessions()
         }
         sessionContentsStore.loadingState.changed(viewLifecycleOwner) { loadingState ->
-            progressTimeLatch.loading = loadingState == LoadingState.LOADING
-            if (loadingState == LoadingState.LOADED) {
-                loadSessions()
-            }
+            progressTimeLatch.loading = loadingState.isLoading
+
         }
     }
 

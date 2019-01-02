@@ -22,12 +22,9 @@ class SessionContentsStore @Inject constructor(
         .subscribe<Action.SessionLoadingStateChanged>()
         .map { it.loadingState }
         .toLiveData(LoadingState.INITIALIZED)
-    val isInitialized: Boolean
-        get() = loadingState.value == LoadingState.INITIALIZED
-    val isLoading
-        get() = loadingState.value == LoadingState.LOADING
-    val isLoaded: Boolean
-        get() = loadingState.value == LoadingState.LOADED
+    val isInitialized: Boolean get() = loadingState.value == LoadingState.INITIALIZED
+    val isLoading get() = loadingState.value == LoadingState.LOADING
+    val isLoaded: Boolean get() = loadingState.value == LoadingState.LOADED
 
     val sessionContents = dispatcher
         .subscribe<Action.SessionContentsLoaded>()

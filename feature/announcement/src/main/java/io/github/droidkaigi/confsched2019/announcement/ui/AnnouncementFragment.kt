@@ -63,7 +63,7 @@ class AnnouncementFragment : DaggerFragment() {
             loading = true
         }
         announcementStore.loadingState.changed(viewLifecycleOwner) {
-            progressTimeLatch.loading = it == LoadingState.LOADING
+            progressTimeLatch.loading = it.isLoading
         }
         announcementStore.announcements.changed(viewLifecycleOwner) { announcements ->
             val items = announcements

@@ -73,7 +73,6 @@ class SearchFragment : DaggerFragment() {
                 searchView?.query?.toString(),
                 sessionContentsStore.sessionContents.requireValue()
             )
-
         }
         searchStore.searchResult.changed(viewLifecycleOwner) { result ->
             val items = result.sessions
@@ -111,7 +110,6 @@ class SearchFragment : DaggerFragment() {
                 }
             })
             searchView.setOnCloseListener { false }
-
         }
     }
 }
