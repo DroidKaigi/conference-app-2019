@@ -29,6 +29,7 @@ import io.github.droidkaigi.confsched2019.sponsor.ui.item.SponsorItem
 import io.github.droidkaigi.confsched2019.sponsor.ui.item.TallSponsorItem
 import io.github.droidkaigi.confsched2019.sponsor.ui.store.SponsorStore
 import io.github.droidkaigi.confsched2019.sponsor.ui.widget.DaggerFragment
+import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
@@ -43,6 +44,7 @@ class SponsorFragment : DaggerFragment() {
         InjectedViewModelProviders.of(requireActivity())[sponsorStoreProvider]
     }
     @Inject lateinit var sponsorActionCreator: SponsorActionCreator
+    @Inject lateinit var activityActionCreator: ActivityActionCreator
 
     private lateinit var progressTimeLatch: ProgressTimeLatch
 
@@ -83,11 +85,6 @@ class SponsorFragment : DaggerFragment() {
         }
         sponsorStore.sponsors.changed(viewLifecycleOwner, this::setupSponsorsLayout)
 
-        sponsorStore.clickedSponsorUrl.changed(viewLifecycleOwner) {
-            sponsorActionCreator.clearSponsorLink()
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
-            startActivity(intent)
-        }
         sponsorActionCreator.load()
     }
 
@@ -117,12 +114,12 @@ class SponsorFragment : DaggerFragment() {
             SponsorCategory.Category.PLATINUM,
             SponsorCategory.Category.GOLD -> {
                 TallSponsorItem(this, spanSize) { sponsorUrl ->
-                    sponsorActionCreator.openSponsorLink(sponsorUrl)
+                    activityActionCreator.openUrl(sponsorUrl)
                 }
             }
             else -> {
                 SponsorItem(this, spanSize) { sponsorUrl ->
-                    sponsorActionCreator.openSponsorLink(sponsorUrl)
+                    activityActionCreator.openUrl(sponsorUrl)
                 }
             }
         }

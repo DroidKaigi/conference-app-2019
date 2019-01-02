@@ -22,9 +22,4 @@ class SponsorStore @Inject constructor(
         .subscribe<Action.SponsorLoaded>()
         .map { it.sponsors }
         .toLiveData(listOf())
-
-    val clickedSponsorUrl: LiveData<String> = dispatcher
-        .subscribe<Action.SponsorOpenLink>()
-        .mapNotNull { it.sponsorUrl }
-        .toLiveData()
 }
