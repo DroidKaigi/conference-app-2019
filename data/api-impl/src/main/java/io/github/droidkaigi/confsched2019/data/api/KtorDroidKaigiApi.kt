@@ -14,7 +14,7 @@ class KtorDroidKaigiApi @Inject constructor(
 ) : DroidKaigiApi {
     override suspend fun getSponsors(): SponsorResponse {
         return httpClient.get<SponsorResponseImpl> {
-            url("https://deploy-preview-37--droidkaigi2019.netlify.com/2019/sponsors.json")
+            url("https://droidkaigi.jp/2019/sponsors.json")
         }
     }
 
