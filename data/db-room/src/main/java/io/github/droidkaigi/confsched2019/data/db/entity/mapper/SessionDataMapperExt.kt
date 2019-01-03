@@ -40,21 +40,27 @@ fun SessionResponse.toSessionEntityImpl(
     categories: List<CategoryResponse>,
     rooms: List<RoomResponse>
 ): SessionEntityImpl {
-    val sessionFormat = categories.category(0, categoryItems[0])
-    val language = categories.category(1, categoryItems[1])
-    val topic = categories.category(2, categoryItems[2])
+    val sessionFormat = categoryItems.getOrNull(0)?.let {
+        categories.category(0, it)
+    }
+    val language = categoryItems.getOrNull(1)?.let {
+        categories.category(1, it)
+    }
+    val topic = categoryItems.getOrNull(2)?.let {
+        categories.category(2, it)
+    }
     return SessionEntityImpl(
         id = id,
         title = title,
         desc = description,
         stime = dateFormat.parse(startsAt).utc.unixMillisLong,
         etime = dateFormat.parse(endsAt).utc.unixMillisLong,
-        sessionFormat = sessionFormat.name!!,
-        language = language.name!!,
+        sessionFormat = sessionFormat?.name ?: "",
+        language = language?.name ?: "",
         message = message?.let {
             MessageEntityImpl(it.ja!!, it.en!!)
         },
-        topic = TopicEntityImpl(topic.id!!, topic.name!!),
+        topic = TopicEntityImpl(topic?.id ?: 0, topic?.name ?: ""),
         room = RoomEntityImpl(roomId, rooms.roomName(roomId))
     )
 }

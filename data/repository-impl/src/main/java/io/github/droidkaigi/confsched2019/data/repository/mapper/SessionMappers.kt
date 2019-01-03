@@ -15,12 +15,12 @@ fun SessionWithSpeakers.toSession(
     firstDay: DateTime
 ): Session.SpeechSession {
     val sessionEntity = session
-    require(speakerIdList.isNotEmpty())
+    //require(speakerIdList.isNotEmpty())
     val speakers = speakerIdList.map { speakerId ->
         val speakerEntity = speakerEntities.first { it.id == speakerId }
         speakerEntity.toSpeaker()
     }
-    require(speakers.isNotEmpty())
+    //require(speakers.isNotEmpty())
     return Session.SpeechSession(
         id = sessionEntity.id,
         // dayNumber is starts with 1.
