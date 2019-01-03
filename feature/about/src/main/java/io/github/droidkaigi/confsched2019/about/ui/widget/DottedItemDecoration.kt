@@ -8,6 +8,7 @@ import android.graphics.Rect
 import android.graphics.Path
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.view.forEach
 import androidx.recyclerview.widget.RecyclerView
 
 class DottedItemDecoration private constructor(
@@ -42,20 +43,16 @@ class DottedItemDecoration private constructor(
         }
     }
 
-    private val paint: Paint = Paint()
-
-    init {
-        paint.apply {
-            color = this@DottedItemDecoration.color
-            style = Paint.Style.STROKE
-            strokeWidth = this@DottedItemDecoration.width.toFloat()
-            pathEffect = DashPathEffect(
-                floatArrayOf(
-                    this@DottedItemDecoration.gap.toFloat(),
-                    this@DottedItemDecoration.gap.toFloat()
-                ),
-                0f)
-        }
+    private val paint: Paint = Paint().apply {
+        color = this@DottedItemDecoration.color
+        style = Paint.Style.STROKE
+        strokeWidth = this@DottedItemDecoration.width.toFloat()
+        pathEffect = DashPathEffect(
+            floatArrayOf(
+                this@DottedItemDecoration.gap.toFloat(),
+                this@DottedItemDecoration.gap.toFloat()
+            ),
+            0f)
     }
 
     override fun getItemOffsets(
@@ -74,10 +71,8 @@ class DottedItemDecoration private constructor(
         val left = paddingLeft.toFloat()
         val right = (parent.width - paddingRight).toFloat()
 
-        val childCount = parent.childCount
         val path = Path()
-        for (i in 0 until childCount) {
-            val child = parent.getChildAt(i)
+        parent.forEach { child ->
             val top = (child.bottom + width / 2).toFloat()
 
             path.moveTo(left, top)

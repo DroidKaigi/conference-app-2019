@@ -54,12 +54,12 @@ class AboutFragment : DaggerFragment() {
             adapter = groupAdapter
             addItemDecoration(
                 DottedItemDecoration.from(
-                    context,
-                    R.color.gray3,
-                    R.dimen.divider_padding,
-                    R.dimen.divider_padding,
-                    R.dimen.divider_width,
-                    R.dimen.divider_gap
+                    context = context,
+                    colorRes = R.color.gray3,
+                    paddingLeftRes = R.dimen.divider_padding,
+                    paddingRightRes = R.dimen.divider_padding,
+                    widthRes = R.dimen.divider_width,
+                    gapRes = R.dimen.divider_gap
                 )
             )
             (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
