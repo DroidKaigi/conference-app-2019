@@ -4,5 +4,7 @@
     <string name="session_filter_reset">リセット</string>
     <string name="session_filter_button">絞り込む</string>
     <string name="session_detail_survey">アンケート</string>
+    <string name="session_detail_go_to_survey">回答する</string>
     <string name="session_search_hint">検索する…</string>
+    <string name="session_go_to_survey">アンケートに回答する</string>
 </resources>
