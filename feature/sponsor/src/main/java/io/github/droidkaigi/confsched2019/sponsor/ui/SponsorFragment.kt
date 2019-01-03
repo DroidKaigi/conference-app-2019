@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Item
 import com.xwray.groupie.Section
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
@@ -18,6 +19,7 @@ import dagger.Provides
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.LoadingState
+import io.github.droidkaigi.confsched2019.model.Sponsor
 import io.github.droidkaigi.confsched2019.model.SponsorCategory
 import io.github.droidkaigi.confsched2019.sponsor.R
 import io.github.droidkaigi.confsched2019.sponsor.databinding.FragmentSponsorBinding
@@ -79,44 +81,51 @@ class SponsorFragment : DaggerFragment() {
         sponsorStore.loadingState.changed(viewLifecycleOwner) {
             progressTimeLatch.loading = it == LoadingState.LOADING
         }
-        sponsorStore.sponsors.changed(viewLifecycleOwner) { sponsorCategories ->
-            sponsorCategories.map {
-                Section().apply {
-                    setHeader(HeaderItem(it.category.title))
-                    addAll(
-                        it.sponsors.map { sponsor ->
-                            val spanSize = when (it.category) {
-                                SponsorCategory.Category.PLATINUM -> 2
-                                else -> 1
-                            }
-                            when (it.category) {
-                                SponsorCategory.Category.PLATINUM,
-                                SponsorCategory.Category.GOLD -> {
-                                    TallSponsorItem(sponsor, spanSize) { sponsorUrl ->
-                                        sponsorActionCreator.openSponsorLink(sponsorUrl)
-                                    }
-                                }
-                                else -> {
-                                    SponsorItem(sponsor, spanSize) { sponsorUrl ->
-                                        sponsorActionCreator.openSponsorLink(sponsorUrl)
-                                    }
-                                }
-                            }
-                        }
-                    )
-                    setHideWhenEmpty(true)
-                }
-            }
-                .forEach(groupAdapter::add)
-        }
+        sponsorStore.sponsors.changed(viewLifecycleOwner, this::setupSponsorsLayout)
 
         sponsorStore.clickedSponsorUrl.changed(viewLifecycleOwner) {
             sponsorActionCreator.clearSponsorLink()
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
             startActivity(intent)
         }
-
         sponsorActionCreator.load()
+    }
+
+    private fun setupSponsorsLayout(sponsorCategories: List<SponsorCategory>) {
+        val sponsors = sponsorCategories.map { category ->
+            category.toSection()
+        }
+        groupAdapter.update(sponsors)
+    }
+
+    private fun SponsorCategory.toSection() = Section().apply {
+        setHeader(HeaderItem(category.title))
+        addAll(
+            sponsors.map { sponsor ->
+                sponsor.toItem(category)
+            }
+        )
+        setHideWhenEmpty(true)
+    }
+
+    private fun Sponsor.toItem(category: SponsorCategory.Category): Item<*> {
+        val spanSize = when (category) {
+            SponsorCategory.Category.PLATINUM -> 2
+            else -> 1
+        }
+        return when (category) {
+            SponsorCategory.Category.PLATINUM,
+            SponsorCategory.Category.GOLD -> {
+                TallSponsorItem(this, spanSize) { sponsorUrl ->
+                    sponsorActionCreator.openSponsorLink(sponsorUrl)
+                }
+            }
+            else -> {
+                SponsorItem(this, spanSize) { sponsorUrl ->
+                    sponsorActionCreator.openSponsorLink(sponsorUrl)
+                }
+            }
+        }
     }
 }
 
