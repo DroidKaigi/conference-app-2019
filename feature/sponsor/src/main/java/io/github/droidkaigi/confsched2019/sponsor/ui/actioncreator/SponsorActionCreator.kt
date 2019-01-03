@@ -21,7 +21,11 @@ class SponsorActionCreator @Inject constructor(
     fun load() = launch {
         try {
             dispatcher.dispatch(Action.SponsorLoadingStateChanged(LoadingState.LOADING))
+            // load cache data
+            dispatcher.dispatch(Action.SponsorLoaded(sponsorRepository.sponsors()))
+            // fetch from api
             sponsorRepository.refresh()
+            // load fetched data
             dispatcher.dispatch(Action.SponsorLoaded(sponsorRepository.sponsors()))
             dispatcher.dispatch(Action.SponsorLoadingStateChanged(LoadingState.LOADED))
         } catch (e: Exception) {
