@@ -2,6 +2,5 @@
 <resources>
     <item type="id" name="root_nav_host_fragment"/>
     <item type="id" name="session"/>
-    <item type="id" name="session_detail"/>
     <item type="id" name="nav_host_fragment"/>
 </resources>

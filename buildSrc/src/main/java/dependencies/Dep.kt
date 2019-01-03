@@ -9,6 +9,7 @@ object Dep {
         val playServices = "com.google.gms:google-services:4.1.0"
         val safeArgs =
             "android.arch.navigation:navigation-safe-args-gradle-plugin:${AndroidX.Navigation.version}"
+        val jetifier = "com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta02"
     }
 
     object Test {
@@ -30,12 +31,14 @@ object Dep {
     }
 
     object AndroidX {
+        val jetifier = "com.android.tools.build.jetifier:jetifier-core:1.0.0-beta02"
         val appCompat = "androidx.appcompat:appcompat:1.0.0"
         val recyclerView = "androidx.recyclerview:recyclerview:1.0.0"
         val constraint = "androidx.constraintlayout:constraintlayout:1.1.2"
         val emoji = "androidx.emoji:emoji-appcompat:1.0.0"
         val design = "com.google.android.material:material:1.1.0-alpha02"
         val coreKtx = "androidx.core:core-ktx:1.0.0-alpha1"
+        val preference = "androidx.preference:preference:1.0.0"
 
         val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:2.0.0"
         val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata:2.0.0"
@@ -84,7 +87,7 @@ object Dep {
     }
 
     object Dagger {
-        val version = "2.16"
+        val version = "2.20"
         val core = "com.google.dagger:dagger:$version"
         val compiler = "com.google.dagger:dagger-compiler:$version"
         val androidSupport = "com.google.dagger:dagger-android-support:$version"

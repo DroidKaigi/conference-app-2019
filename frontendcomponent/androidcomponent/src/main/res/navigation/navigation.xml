@@ -38,9 +38,8 @@
         android:name="io.github.droidkaigi.confsched2019.session.ui.BottomSheetFavoriteSessionsFragment"
         android:label="@string/session_label"
         />
-
     <fragment
-        android:id="@id/session_detail"
+        android:id="@+id/session_detail"
         android:name="io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment"
         android:label="@string/session_label"
         >
@@ -50,6 +49,16 @@
             />
         <action
             android:id="@+id/action_session_detail_to_speaker"
+            app:destination="@id/speaker"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/search"
+        android:name="io.github.droidkaigi.confsched2019.session.ui.SearchFragment"
+        android:label="@string/search_label"
+        >
+        <action
+            android:id="@+id/action_search_to_speaker"
             app:destination="@id/speaker"
             />
     </fragment>
@@ -89,6 +98,12 @@
         android:id="@+id/floormap"
         android:name="io.github.droidkaigi.confsched2019.floormap.ui.FloorMapFragment"
         android:label="@string/map_label"
+        >
+    </fragment>
+    <fragment
+        android:id="@+id/setting"
+        android:name="io.github.droidkaigi.confsched2019.settings.ui.SettingsFragment"
+        android:label="@string/setting_label"
         >
     </fragment>
 </navigation>
