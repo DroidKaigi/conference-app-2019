@@ -29,7 +29,7 @@ class SpeechSessionItem @AssistedInject constructor(
     sessionContentsActionCreator: SessionContentsActionCreator,
     val systemStore: SystemStore
 ) : BindableItem<ItemSessionBinding>(
-    session.hashCode().toLong()
+    session.id.hashCode().toLong()
 ), SessionItem {
     val speechSession get() = session
 

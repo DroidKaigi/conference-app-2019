@@ -23,7 +23,7 @@ data class SessionContents(
                 when (it) {
                     is Session.SpeechSession ->
                         find(query, it.title, it.desc)
-                    is Session.SpecialSession ->
+                    is Session.ServiceSession ->
                         find(query, it.title)
                 }
             },
