@@ -8,7 +8,6 @@ import io.github.droidkaigi.confsched2019.ext.android.toLiveData
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.SponsorCategory
 import kotlinx.coroutines.channels.map
-import kotlinx.coroutines.channels.mapNotNull
 import javax.inject.Inject
 
 class SponsorStore @Inject constructor(
