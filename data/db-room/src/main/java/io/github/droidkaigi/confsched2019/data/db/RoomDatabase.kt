@@ -13,7 +13,7 @@ import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionEntitie
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionSpeakerJoinEntities
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSpeakerEntities
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSponsorEntities
-import kotlinx.coroutines.channels.ReceiveChannel
+import io.github.droidkaigi.confsched2019.model.SponsorCategory
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
@@ -60,12 +60,12 @@ class RoomDatabase @Inject constructor(
             database.runInTransaction {
 
                 val sponsors = listOf(
-                    apiResponse.platinum to "platinum",
-                    apiResponse.gold to "gold",
-                    apiResponse.support to "support",
-                    apiResponse.tech to "tech"
+                    SponsorCategory.Category.PLATINUM.id to apiResponse.platinum,
+                    SponsorCategory.Category.GOLD.id to apiResponse.gold,
+                    SponsorCategory.Category.SUPPORT.id to apiResponse.support,
+                    SponsorCategory.Category.TECH.id to apiResponse.tech
                 )
-                    .mapIndexed { categoryIndex, (list, category) ->
+                    .mapIndexed { categoryIndex, (category, list) ->
                         list.toSponsorEntities(category, categoryIndex)
                     }
                     .flatten()

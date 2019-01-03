@@ -6,19 +6,15 @@ data class SponsorCategory(
     val sponsors: List<Sponsor>
 ) {
 
-    enum class Category(val title: String) {
-        PLATINUM("platinum\nsponsors"),
-        GOLD("gold\nsponsors"),
-        SUPPORT("sponsors"),
-        TECH("technical support\nfor network");
+    enum class Category(val id: String, val title: String) {
+        PLATINUM("platinum", "platinum\nsponsors"),
+        GOLD("gold", "gold\nsponsors"),
+        SUPPORT("support", "sponsors"),
+        TECH("tech", "technical support\nfor network");
 
         companion object {
-            fun from(category: String) = when(category) {
-                "platinum" -> PLATINUM
-                "gold" -> GOLD
-                "support" -> SUPPORT
-                "tech" -> TECH
-                else -> null
+            fun from(category: String) = values().firstOrNull {
+                it.id == category
             }
         }
     }
