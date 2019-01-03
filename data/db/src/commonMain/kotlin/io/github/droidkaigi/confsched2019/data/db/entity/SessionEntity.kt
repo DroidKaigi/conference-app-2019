@@ -11,4 +11,5 @@ interface SessionEntity {
     val topic: TopicEntity
     val room: RoomEntity
     val message: MessageEntity?
+    val isServiceSession: Boolean
 }

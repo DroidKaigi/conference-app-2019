@@ -24,7 +24,7 @@ import io.github.droidkaigi.confsched2019.session.databinding.FragmentSearchBind
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SearchActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SearchStore
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeakerItem
-import io.github.droidkaigi.confsched2019.session.ui.item.SpecialSessionItem
+import io.github.droidkaigi.confsched2019.session.ui.item.ServiceSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeechSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
@@ -86,8 +86,8 @@ class SearchFragment : DaggerFragment() {
                     when (session) {
                         is Session.SpeechSession ->
                             speechSessionItemFactory.create(session)
-                        is Session.SpecialSession ->
-                            SpecialSessionItem(session)
+                        is Session.ServiceSession ->
+                            ServiceSessionItem(session)
                     }
                 }
             groupAdapter.update(items)

@@ -12,7 +12,7 @@ class FiltersTest {
     }
 
     @Test fun isPass_WhenSpecialSession() {
-        assertTrue { Filters().isPass(mockk<Session.SpecialSession>()) }
+        assertTrue { Filters().isPass(mockk<Session.ServiceSession>()) }
     }
 
     @Test fun isPass_WhenRoomFiltered() {

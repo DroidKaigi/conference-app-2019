@@ -20,22 +20,19 @@ class DataSessionRepository @Inject constructor(
 ) : SessionRepository {
 
     override suspend fun sessionContents(): SessionContents = coroutineScope {
-        val speakerSessions = speakerSession()
-        val sessions = (speakerSessions + Session.SpecialSession.specialSessions())
+        val sessions = sessions()
             .sortedBy { it.startTime }
+        val speakerSessions = sessions.filterIsInstance<Session.SpeechSession>()
         SessionContents(
             sessions = sessions,
-            speakers = sessions
-                .filterIsInstance<Session.SpeechSession>()
-                .flatMap { it.speakers }
-                .distinct(),
+            speakers = speakerSessions.flatMap { it.speakers }.distinct(),
             langs = Lang.values().toList(),
             rooms = speakerSessions.map { it.room }.distinct(),
             topics = speakerSessions.map { it.topic }.distinct()
         )
     }
 
-    private suspend fun CoroutineScope.speakerSession(): List<Session.SpeechSession> {
+    private suspend fun CoroutineScope.sessions(): List<Session> {
         val sessionsAsync = async { sessionDatabase.sessions() }
         val allSpeakersAsync = async { sessionDatabase.allSpeaker() }
         val fabSessionIdsAsync = async {
