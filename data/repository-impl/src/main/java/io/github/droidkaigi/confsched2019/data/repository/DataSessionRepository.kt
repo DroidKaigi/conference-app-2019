@@ -22,13 +22,13 @@ class DataSessionRepository @Inject constructor(
     override suspend fun sessionContents(): SessionContents = coroutineScope {
         val sessions = sessions()
             .sortedBy { it.startTime }
-        val speakerSessions = sessions.filterIsInstance<Session.SpeechSession>()
+        val speechSessions = sessions.filterIsInstance<Session.SpeechSession>()
         SessionContents(
             sessions = sessions,
-            speakers = speakerSessions.flatMap { it.speakers }.distinct(),
+            speakers = speechSessions.flatMap { it.speakers }.distinct(),
             langs = Lang.values().toList(),
-            rooms = speakerSessions.map { it.room }.distinct(),
-            topics = speakerSessions.map { it.topic }.distinct()
+            rooms = speechSessions.map { it.room }.distinct(),
+            topics = speechSessions.map { it.topic }.distinct()
         )
     }
 
@@ -44,12 +44,6 @@ class DataSessionRepository @Inject constructor(
         val speakerEntities = allSpeakersAsync.await()
         val fabSessionIds = fabSessionIdsAsync.await()
         val firstDay = DateTime(sessionEntities.first().session.stime)
-        val speakerSessions = sessionEntities
-            .map { it.toSession(speakerEntities, fabSessionIds, firstDay) }
-            .sortedWith(compareBy(
-                { it.startTime.unixMillisLong },
-                { it.room.id }
-            ))
         return sessionEntities
             .map { it.toSession(speakerEntities, fabSessionIds, firstDay) }
             .sortedWith(compareBy(

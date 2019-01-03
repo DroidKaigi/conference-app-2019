@@ -14,17 +14,16 @@ fun SessionWithSpeakers.toSession(
     favList: List<Int>?,
     firstDay: DateTime
 ): Session {
-    val sessionEntity = session
-    if (sessionEntity.isServiceSession) {
-        return Session.ServiceSession(
-            id = sessionEntity.id,
+    return if (session.isServiceSession) {
+        Session.ServiceSession(
+            id = session.id,
             // dayNumber is starts with 1.
             // Example: First day = 1, Second day = 2. So I plus 1 to period days
-            dayNumber = DateTime(sessionEntity.stime).dayOfYear - firstDay.dayOfYear + 1,
-            startTime = DateTime.fromUnix(sessionEntity.stime),
-            endTime = DateTime.fromUnix(sessionEntity.etime),
-            title = sessionEntity.title,
-            room = Room(sessionEntity.room.id, sessionEntity.room.name)
+            dayNumber = DateTime(session.stime).dayOfYear - firstDay.dayOfYear + 1,
+            startTime = DateTime.fromUnix(session.stime),
+            endTime = DateTime.fromUnix(session.etime),
+            title = session.title,
+            room = Room(session.room.id, session.room.name)
         )
     } else {
         require(speakerIdList.isNotEmpty())
@@ -33,22 +32,22 @@ fun SessionWithSpeakers.toSession(
             speakerEntity.toSpeaker()
         }
         require(speakers.isNotEmpty())
-        return Session.SpeechSession(
-            id = sessionEntity.id,
+        Session.SpeechSession(
+            id = session.id,
             // dayNumber is starts with 1.
             // Example: First day = 1, Second day = 2. So I plus 1 to period days
-            dayNumber = DateTime(sessionEntity.stime).dayOfYear - firstDay.dayOfYear + 1,
-            startTime = DateTime.fromUnix(sessionEntity.stime),
-            endTime = DateTime.fromUnix(sessionEntity.etime),
-            title = sessionEntity.title,
-            desc = sessionEntity.desc,
-            room = Room(sessionEntity.room.id, sessionEntity.room.name),
-            format = sessionEntity.sessionFormat,
-            language = sessionEntity.language,
-            topic = Topic(sessionEntity.topic.id, sessionEntity.topic.name),
-            isFavorited = favList!!.map { it.toString() }.contains(sessionEntity.id),
+            dayNumber = DateTime(session.stime).dayOfYear - firstDay.dayOfYear + 1,
+            startTime = DateTime.fromUnix(session.stime),
+            endTime = DateTime.fromUnix(session.etime),
+            title = session.title,
+            desc = session.desc,
+            room = Room(session.room.id, session.room.name),
+            format = session.sessionFormat,
+            language = session.language,
+            topic = Topic(session.topic.id, session.topic.name),
+            isFavorited = favList!!.map { it.toString() }.contains(session.id),
             speakers = speakers,
-            message = sessionEntity.message?.let {
+            message = session.message?.let {
                 SessionMessage(it.ja, it.en)
             }
         )
