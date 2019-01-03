@@ -8,7 +8,7 @@ import io.github.droidkaigi.confsched2019.session.databinding.ItemSpecialSession
 class SpecialSessionItem(
     override val session: Session.SpecialSession
 ) : BindableItem<ItemSpecialSessionBinding>(
-    session.id.toLong()
+    session.hashCode().toLong()
 ), SessionItem {
     val specialSession get() = session
 
