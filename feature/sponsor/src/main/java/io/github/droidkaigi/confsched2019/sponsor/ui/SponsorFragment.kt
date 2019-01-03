@@ -24,6 +24,7 @@ import io.github.droidkaigi.confsched2019.sponsor.databinding.FragmentSponsorBin
 import io.github.droidkaigi.confsched2019.sponsor.ui.actioncreator.SponsorActionCreator
 import io.github.droidkaigi.confsched2019.sponsor.ui.item.HeaderItem
 import io.github.droidkaigi.confsched2019.sponsor.ui.item.SponsorItem
+import io.github.droidkaigi.confsched2019.sponsor.ui.item.TallSponsorItem
 import io.github.droidkaigi.confsched2019.sponsor.ui.store.SponsorStore
 import io.github.droidkaigi.confsched2019.sponsor.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
@@ -91,12 +92,12 @@ class SponsorFragment : DaggerFragment() {
                             when (it.category) {
                                 SponsorCategory.Category.PLATINUM,
                                 SponsorCategory.Category.GOLD -> {
-                                    SponsorItem.create(sponsor, spanSize) { sponsorUrl ->
+                                    TallSponsorItem(sponsor, spanSize) { sponsorUrl ->
                                         sponsorActionCreator.openSponsorLink(sponsorUrl)
                                     }
                                 }
                                 else -> {
-                                    SponsorItem.createShort(sponsor, spanSize) { sponsorUrl ->
+                                    SponsorItem(sponsor, spanSize) { sponsorUrl ->
                                         sponsorActionCreator.openSponsorLink(sponsorUrl)
                                     }
                                 }
