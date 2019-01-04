@@ -85,7 +85,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="12dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintTop_toBottomOf="@id/time_and_room"
             >
@@ -128,12 +127,33 @@
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:maxLines="3"
-            android:paddingBottom="2dp"
             android:textAlignment="viewStart"
             android:visibility="@{session.message == null ? View.GONE : View.VISIBLE}"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/time_and_room"
+            app:layout_constraintTop_toBottomOf="@id/chip_group"
+            tools:visibility="visible"
+            tools:text="セッションフロアがHallからRoom1に変更になりました"
+            />
+
+        <TextView
+            android:id="@+id/survey"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:drawablePadding="6dp"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:drawableStart="@drawable/ic_rate_review_border_orange_18dp"
+            android:text="@string/session_go_to_survey"
+            android:textAlignment="viewStart"
+            android:textAppearance="@style/TextAppearance.App.Caption"
+            android:textColor="@color/colorSecondary"
+            android:visibility="@{session.isFinished ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="@id/title"
+            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/message"
+            tools:visibility="visible"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
