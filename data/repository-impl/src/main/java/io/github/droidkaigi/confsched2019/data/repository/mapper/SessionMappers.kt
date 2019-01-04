@@ -7,7 +7,7 @@ import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionMessage
 import io.github.droidkaigi.confsched2019.model.Speaker
-import io.github.droidkaigi.confsched2019.model.Topic
+import io.github.droidkaigi.confsched2019.model.Category
 
 fun SessionWithSpeakers.toSession(
     speakerEntities: List<SpeakerEntity>,
@@ -44,7 +44,8 @@ fun SessionWithSpeakers.toSession(
             room = Room(session.room.id, session.room.name),
             format = session.sessionFormat,
             language = session.language,
-            topic = Topic(session.topic.id, session.topic.name),
+            category = Category(session.category.id, session.category.name),
+            intendedAudience = session.intendedAudience,
             isFavorited = favList!!.map { it.toString() }.contains(session.id),
             speakers = speakers,
             message = session.message?.let {

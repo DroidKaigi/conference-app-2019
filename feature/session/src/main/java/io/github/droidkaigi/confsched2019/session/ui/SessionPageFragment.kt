@@ -20,7 +20,7 @@ import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.SessionPage
-import io.github.droidkaigi.confsched2019.model.Topic
+import io.github.droidkaigi.confsched2019.model.Category
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionPageBinding
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
@@ -94,9 +94,9 @@ class SessionPageFragment : DaggerFragment() {
                 contents.rooms,
                 Room::name
             )
-            binding.sessionsFilterTopicChip.setupFilter(
-                contents.topics
-            ) { topic -> topic.getNameByLang(systemStore.lang) }
+            binding.sessionsFilterCategoryChip.setupFilter(
+                contents.category
+            ) { category -> category.getNameByLang(systemStore.lang) }
             binding.sessionsFilterLangChip.setupFilter(
                 contents.langs,
                 Lang::toString
@@ -201,18 +201,18 @@ class SessionPageFragment : DaggerFragment() {
                 sessionPagesActionCreator.changeFilter(room, isChecked)
             }
         }
-        val filterTopics = sessionPagesStore.filtersValue.topics
-        binding.sessionsFilterTopicChip.forEach {
+        val filterCategorys = sessionPagesStore.filtersValue.categories
+        binding.sessionsFilterCategoryChip.forEach {
             val chip = it as? Chip ?: return@forEach
-            val topic = it.tag as? Topic ?: return@forEach
+            val category = it.tag as? Category ?: return@forEach
             chip.setOnCheckedChangeListener(null)
-            if (filterTopics.isNotEmpty()) {
-                chip.isChecked = filterTopics.contains(topic)
+            if (filterCategorys.isNotEmpty()) {
+                chip.isChecked = filterCategorys.contains(category)
             } else {
                 chip.isChecked = false
             }
             chip.setOnCheckedChangeListener { _, isChecked ->
-                sessionPagesActionCreator.changeFilter(topic, isChecked)
+                sessionPagesActionCreator.changeFilter(category, isChecked)
             }
         }
         val filterLangs = sessionPagesStore.filtersValue.langs

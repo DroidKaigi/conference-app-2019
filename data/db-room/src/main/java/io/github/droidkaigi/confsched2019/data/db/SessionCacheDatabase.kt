@@ -16,7 +16,7 @@ import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntityImpl
         (SpeakerEntityImpl::class),
         (SessionSpeakerJoinEntityImpl::class)
     ],
-    version = 1
+    version = 2
 )
 abstract class SessionCacheDatabase : RoomDatabase() {
     abstract fun sessionDao(): SessionDao

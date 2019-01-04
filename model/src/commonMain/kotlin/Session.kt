@@ -20,7 +20,8 @@ sealed class Session(
         override val room: Room,
         val format: String,
         val language: String,
-        val topic: Topic,
+        val category: Category,
+        val intendedAudience: String?,
         val isFavorited: Boolean,
         val speakers: List<Speaker>,
         val message: SessionMessage?

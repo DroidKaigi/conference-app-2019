@@ -13,7 +13,7 @@ class KtorDroidKaigiApi @Inject constructor(
 
     override suspend fun getSessions(): Response {
         return httpClient.get<ResponseImpl> {
-            url("https://sessionize.com/api/v2/xtj7shk8/view/all")
+            url("https://sessionize.com/api/v2/xc8zp3xu/view/all")
         }
     }
 }

@@ -32,21 +32,21 @@ class FiltersTest {
         assertFalse { Filters(rooms = mutableSetOf(room2)).isPass(speechSession) }
     }
 
-    @Test fun isPass_WhenTopicFiltered() {
-        val topic = Topic(10, "topic1")
+    @Test fun isPass_WhenCategoryFiltered() {
+        val category = Category(10, "category1")
         val speechSession = mockk<Session.SpeechSession>()
-        every { speechSession.topic } returns topic
+        every { speechSession.category } returns category
 
-        assertTrue { Filters(topics = mutableSetOf(topic)).isPass(speechSession) }
+        assertTrue { Filters(categories = mutableSetOf(category)).isPass(speechSession) }
     }
 
-    @Test fun isPass_WhenTopicFilteredDifferentTopic() {
-        val topic1 = Topic(10, "topic1")
-        val topic2 = Topic(11, "topic2")
+    @Test fun isPass_WhenCategoryFilteredDifferentCategory() {
+        val category1 = Category(10, "category1")
+        val category2 = Category(11, "category2")
         val speechSession = mockk<Session.SpeechSession>()
-        every { speechSession.topic } returns topic1
+        every { speechSession.category } returns category1
 
-        assertFalse { Filters(topics = mutableSetOf(topic2)).isPass(speechSession) }
+        assertFalse { Filters(categories = mutableSetOf(category2)).isPass(speechSession) }
     }
 
     @Test fun isPass_WhenLangFiltered() {

@@ -15,6 +15,6 @@ data class SessionResponseImpl(
     override val endsAt: String,
     override val roomId: Int,
     override val categoryItems: List<Int>,
-    @Optional
-    override val message: SessionMessageResponseImpl? = null
+    override val questionAnswers: List<QuestionAnswerResponseImpl>,
+    @Optional override val message: SessionMessageResponseImpl? = null
 ) : SessionResponse

@@ -11,5 +11,6 @@ interface SessionResponse {
     val endsAt: String
     val roomId: Int
     val categoryItems: List<Int>
+    val questionAnswers: List<QuestionAnswerResponse>
     val message: SessionMessageResponse?
 }

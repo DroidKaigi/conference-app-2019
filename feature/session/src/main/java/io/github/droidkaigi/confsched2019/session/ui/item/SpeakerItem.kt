@@ -28,10 +28,12 @@ class SpeakerItem @AssistedInject constructor(
 
     override fun bind(itemBinding: ItemSpeakerBinding, position: Int) {
         itemBinding.speakerText.text = speaker.name
-        Picasso.get()
-            .load(speaker.imageUrl)
-            .transform(CropCircleTransformation())
-            .into(itemBinding.speakerImage)
+        speaker.imageUrl?.let { imageUrl ->
+            Picasso.get()
+                .load(imageUrl)
+                .transform(CropCircleTransformation())
+                .into(itemBinding.speakerImage)
+        }
 
         itemBinding.speakerText.setOnClickListener {
             navController.navigate(clickNavDirection)
