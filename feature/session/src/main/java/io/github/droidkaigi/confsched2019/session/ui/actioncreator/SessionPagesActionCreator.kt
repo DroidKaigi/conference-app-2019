@@ -9,7 +9,7 @@ import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionPage
-import io.github.droidkaigi.confsched2019.model.Topic
+import io.github.droidkaigi.confsched2019.model.Category
 import io.github.droidkaigi.confsched2019.system.actioncreator.ErrorHandler
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
@@ -32,8 +32,8 @@ class SessionPagesActionCreator @Inject constructor(
         dispatcher.launchAndDispatch(Action.RoomFilterChanged(room, checked))
     }
 
-    fun changeFilter(topic: Topic, checked: Boolean) {
-        dispatcher.launchAndDispatch(Action.TopicFilterChanged(topic, checked))
+    fun changeFilter(category: Category, checked: Boolean) {
+        dispatcher.launchAndDispatch(Action.CategoryFilterChanged(category, checked))
     }
 
     fun changeFilter(lang: Lang, checked: Boolean) {

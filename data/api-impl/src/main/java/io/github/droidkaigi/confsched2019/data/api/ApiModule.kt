@@ -22,7 +22,7 @@ internal abstract class ApiModule {
                 engine {
                     if (BuildConfig.DEBUG) {
                         val loggingInterceptor = HttpLoggingInterceptor()
-                        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+                        loggingInterceptor.level = HttpLoggingInterceptor.Level.HEADERS
                         addInterceptor(loggingInterceptor)
                     }
                 }

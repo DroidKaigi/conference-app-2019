@@ -98,7 +98,7 @@ class SessionDetailFragment : DaggerFragment() {
             session.timeInMinutes,
             session.room.name
         )
-        binding.topicChip.text = session.topic.getNameByLang(systemStore.lang)
+        binding.categoryChip.text = session.category.getNameByLang(systemStore.lang)
 
         val sessionItems = session
             .speakers

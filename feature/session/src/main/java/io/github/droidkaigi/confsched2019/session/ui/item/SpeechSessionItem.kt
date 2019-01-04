@@ -68,7 +68,7 @@ class SpeechSessionItem @AssistedInject constructor(
                 speechSession.timeInMinutes,
                 speechSession.room.name
             )
-            topicChip.text = speechSession.topic.getNameByLang(systemStore.lang)
+            categoryChip.text = speechSession.category.getNameByLang(systemStore.lang)
 
             bindSpeaker()
 
@@ -125,10 +125,12 @@ class SpeechSessionItem @AssistedInject constructor(
         imageView: ImageView
     ) {
         textView.text = speaker.name
-        Picasso.get()
-            .load(speaker.imageUrl)
-            .transform(CropCircleTransformation())
-            .into(imageView)
+        speaker.imageUrl?.let { imageUrl ->
+            Picasso.get()
+                .load(imageUrl)
+                .transform(CropCircleTransformation())
+                .into(imageView)
+        }
     }
 
     override fun getLayout(): Int = R.layout.item_session

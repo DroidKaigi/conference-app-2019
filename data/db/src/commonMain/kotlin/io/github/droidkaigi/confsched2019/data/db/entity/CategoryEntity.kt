@@ -1,6 +1,6 @@
 package io.github.droidkaigi.confsched2019.data.db.entity
 
-interface TopicEntity {
+interface CategoryEntity {
     var id: Int
     var name: String
 }

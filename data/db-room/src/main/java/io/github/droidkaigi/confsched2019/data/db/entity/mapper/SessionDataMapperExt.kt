@@ -12,7 +12,7 @@ import io.github.droidkaigi.confsched2019.data.db.entity.RoomEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionSpeakerJoinEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntityImpl
-import io.github.droidkaigi.confsched2019.data.db.entity.TopicEntityImpl
+import io.github.droidkaigi.confsched2019.data.db.entity.CategoryEntityImpl
 
 fun List<SessionResponse>?.toSessionSpeakerJoinEntities(): List<SessionSpeakerJoinEntityImpl> {
     val sessionSpeakerJoinEntity: MutableList<SessionSpeakerJoinEntityImpl> = arrayListOf()
@@ -46,9 +46,10 @@ fun SessionResponse.toSessionEntityImpl(
     val language = categoryItems.getOrNull(1)?.let {
         categories.category(1, it)
     }
-    val topic = categoryItems.getOrNull(2)?.let {
+    val category = categoryItems.getOrNull(2)?.let {
         categories.category(2, it)
     }
+    val intendedAudience = questionAnswers.getOrNull(0)?.answerValue
     return SessionEntityImpl(
         id = id,
         isServiceSession = isServiceSession,
@@ -61,7 +62,8 @@ fun SessionResponse.toSessionEntityImpl(
         message = message?.let {
             MessageEntityImpl(it.ja!!, it.en!!)
         },
-        topic = TopicEntityImpl(topic?.id ?: 0, topic?.name ?: ""),
+        category = CategoryEntityImpl(category?.id ?: 0, category?.name ?: ""),
+        intendedAudience = intendedAudience,
         room = RoomEntityImpl(roomId, rooms.roomName(roomId))
     )
 }
@@ -70,8 +72,8 @@ fun List<SpeakerResponse>.toSpeakerEntities(): List<SpeakerEntityImpl> =
     map { responseSpeaker ->
         SpeakerEntityImpl(id = responseSpeaker.id!!,
             name = responseSpeaker.fullName!!,
-            tagLine = responseSpeaker.tagLine!!,
-            imageUrl = responseSpeaker.profilePicture.orEmpty(),
+            tagLine = responseSpeaker.tagLine,
+            imageUrl = responseSpeaker.profilePicture,
             twitterUrl = responseSpeaker.links
                 ?.firstOrNull { "Twitter" == it?.linkType }
                 ?.url,
