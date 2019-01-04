@@ -13,33 +13,45 @@ fun SessionWithSpeakers.toSession(
     speakerEntities: List<SpeakerEntity>,
     favList: List<Int>?,
     firstDay: DateTime
-): Session.SpeechSession {
-    val sessionEntity = session
-    //require(speakerIdList.isNotEmpty())
-    val speakers = speakerIdList.map { speakerId ->
-        val speakerEntity = speakerEntities.first { it.id == speakerId }
-        speakerEntity.toSpeaker()
-    }
-    //require(speakers.isNotEmpty())
-    return Session.SpeechSession(
-        id = sessionEntity.id,
-        // dayNumber is starts with 1.
-        // Example: First day = 1, Second day = 2. So I plus 1 to period days
-        dayNumber = DateTime(sessionEntity.stime).dayOfYear - firstDay.dayOfYear + 1,
-        startTime = DateTime.fromUnix(sessionEntity.stime),
-        endTime = DateTime.fromUnix(sessionEntity.etime),
-        title = sessionEntity.title,
-        desc = sessionEntity.desc,
-        room = Room(sessionEntity.room.id, sessionEntity.room.name),
-        format = sessionEntity.sessionFormat,
-        language = sessionEntity.language,
-        topic = Topic(sessionEntity.topic.id, sessionEntity.topic.name),
-        isFavorited = favList!!.map { it.toString() }.contains(sessionEntity.id),
-        speakers = speakers,
-        message = sessionEntity.message?.let {
-            SessionMessage(it.ja, it.en)
+): Session {
+    return if (session.isServiceSession) {
+        Session.ServiceSession(
+            id = session.id,
+            // dayNumber is starts with 1.
+            // Example: First day = 1, Second day = 2. So I plus 1 to period days
+            dayNumber = DateTime(session.stime).dayOfYear - firstDay.dayOfYear + 1,
+            startTime = DateTime.fromUnix(session.stime),
+            endTime = DateTime.fromUnix(session.etime),
+            title = session.title,
+            room = Room(session.room.id, session.room.name)
+        )
+    } else {
+        require(speakerIdList.isNotEmpty())
+        val speakers = speakerIdList.map { speakerId ->
+            val speakerEntity = speakerEntities.first { it.id == speakerId }
+            speakerEntity.toSpeaker()
         }
-    )
+        require(speakers.isNotEmpty())
+        Session.SpeechSession(
+            id = session.id,
+            // dayNumber is starts with 1.
+            // Example: First day = 1, Second day = 2. So I plus 1 to period days
+            dayNumber = DateTime(session.stime).dayOfYear - firstDay.dayOfYear + 1,
+            startTime = DateTime.fromUnix(session.stime),
+            endTime = DateTime.fromUnix(session.etime),
+            title = session.title,
+            desc = session.desc,
+            room = Room(session.room.id, session.room.name),
+            format = session.sessionFormat,
+            language = session.language,
+            topic = Topic(session.topic.id, session.topic.name),
+            isFavorited = favList!!.map { it.toString() }.contains(session.id),
+            speakers = speakers,
+            message = session.message?.let {
+                SessionMessage(it.ja, it.en)
+            }
+        )
+    }
 }
 
 fun SpeakerEntity.toSpeaker(): Speaker = Speaker(

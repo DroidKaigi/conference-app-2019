@@ -51,6 +51,7 @@ fun SessionResponse.toSessionEntityImpl(
     }
     return SessionEntityImpl(
         id = id,
+        isServiceSession = isServiceSession,
         title = title,
         desc = description,
         stime = dateFormat.parse(startsAt).utc.unixMillisLong,

@@ -10,7 +10,7 @@ import io.github.droidkaigi.confsched2019.model.Topic
 private val startTime = DateTime.createAdjusted(2019, 2, 7, 10, 0)
 fun dummySessionData(): List<Session> {
     return listOf(
-        Session.SpecialSession(
+        Session.ServiceSession(
             "0",
             1,
             startTime,
