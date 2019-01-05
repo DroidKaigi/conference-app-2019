@@ -2,15 +2,15 @@ package io.github.droidkaigi.confsched2019
 
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.minutes
+import io.github.droidkaigi.confsched2019.model.Category
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionMessage
-import io.github.droidkaigi.confsched2019.model.Topic
 
 private val startTime = DateTime.createAdjusted(2019, 2, 7, 10, 0)
 fun dummySessionData(): List<Session> {
     return listOf(
-        Session.SpecialSession(
+        Session.ServiceSession(
             "0",
             1,
             startTime,
@@ -29,7 +29,8 @@ fun dummySessionData(): List<Session> {
             room = Room(2, "Room 2"),
             format = "this is format2",
             language = "English",
-            topic = Topic(10, "Tool"),
+            category = Category(10, "Tool"),
+            intendedAudience = "extream",
             isFavorited = true,
             speakers = listOf(),
             message = SessionMessage("部屋移動", "room moved")
@@ -48,7 +49,8 @@ fun firstDummySpeechSession(): Session.SpeechSession {
         room = Room(1, "Room 1"),
         format = "this is format",
         language = "日本語",
-        topic = Topic(id = 10, name = "App Architecture"),
+        category = Category(id = 10, name = "App Architecture"),
+        intendedAudience = "intermediate",
         isFavorited = false,
         speakers = listOf(),
         message = null

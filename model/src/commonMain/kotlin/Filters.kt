@@ -2,7 +2,7 @@ package io.github.droidkaigi.confsched2019.model
 
 data class Filters(
     val rooms: Set<Room> = mutableSetOf(),
-    val topics: Set<Topic> = mutableSetOf(),
+    val categories: Set<Category> = mutableSetOf(),
     val langs: Set<Lang> = mutableSetOf()
 ) {
     fun isPass(
@@ -13,14 +13,14 @@ data class Filters(
             if (rooms.isEmpty()) return@run true
             return@run rooms.contains(session.room)
         }
-        val topicFilterOk = run {
-            if (topics.isEmpty()) return@run true
-            return@run topics.contains(session.topic)
+        val categoryFilterOk = run {
+            if (categories.isEmpty()) return@run true
+            return@run categories.contains(session.category)
         }
         val langFilterOk = run {
             if (langs.isEmpty()) return@run true
             return@run langs.map { it.toString() }.contains(session.language)
         }
-        return roomFilterOk && topicFilterOk && langFilterOk
+        return roomFilterOk && categoryFilterOk && langFilterOk
     }
 }

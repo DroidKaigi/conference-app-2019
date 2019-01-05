@@ -12,7 +12,7 @@ import io.github.droidkaigi.confsched2019.data.db.entity.RoomEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionSpeakerJoinEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntityImpl
-import io.github.droidkaigi.confsched2019.data.db.entity.TopicEntityImpl
+import io.github.droidkaigi.confsched2019.data.db.entity.CategoryEntityImpl
 
 fun List<SessionResponse>?.toSessionSpeakerJoinEntities(): List<SessionSpeakerJoinEntityImpl> {
     val sessionSpeakerJoinEntity: MutableList<SessionSpeakerJoinEntityImpl> = arrayListOf()
@@ -40,21 +40,30 @@ fun SessionResponse.toSessionEntityImpl(
     categories: List<CategoryResponse>,
     rooms: List<RoomResponse>
 ): SessionEntityImpl {
-    val sessionFormat = categories.category(0, categoryItems[0])
-    val language = categories.category(1, categoryItems[1])
-    val topic = categories.category(2, categoryItems[2])
+    val sessionFormat = categoryItems.getOrNull(0)?.let {
+        categories.category(0, it)
+    }
+    val language = categoryItems.getOrNull(1)?.let {
+        categories.category(1, it)
+    }
+    val category = categoryItems.getOrNull(2)?.let {
+        categories.category(2, it)
+    }
+    val intendedAudience = questionAnswers.getOrNull(0)?.answerValue
     return SessionEntityImpl(
         id = id,
+        isServiceSession = isServiceSession,
         title = title,
         desc = description,
         stime = dateFormat.parse(startsAt).utc.unixMillisLong,
         etime = dateFormat.parse(endsAt).utc.unixMillisLong,
-        sessionFormat = sessionFormat.name!!,
-        language = language.name!!,
+        sessionFormat = sessionFormat?.name ?: "",
+        language = language?.name ?: "",
         message = message?.let {
             MessageEntityImpl(it.ja!!, it.en!!)
         },
-        topic = TopicEntityImpl(topic.id!!, topic.name!!),
+        category = CategoryEntityImpl(category?.id ?: 0, category?.name ?: ""),
+        intendedAudience = intendedAudience,
         room = RoomEntityImpl(roomId, rooms.roomName(roomId))
     )
 }
@@ -63,8 +72,8 @@ fun List<SpeakerResponse>.toSpeakerEntities(): List<SpeakerEntityImpl> =
     map { responseSpeaker ->
         SpeakerEntityImpl(id = responseSpeaker.id!!,
             name = responseSpeaker.fullName!!,
-            tagLine = responseSpeaker.tagLine!!,
-            imageUrl = responseSpeaker.profilePicture.orEmpty(),
+            tagLine = responseSpeaker.tagLine,
+            imageUrl = responseSpeaker.profilePicture,
             twitterUrl = responseSpeaker.links
                 ?.firstOrNull { "Twitter" == it?.linkType }
                 ?.url,

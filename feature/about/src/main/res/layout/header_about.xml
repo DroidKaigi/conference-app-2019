@@ -10,17 +10,18 @@
         android:layout_height="wrap_content"
         android:paddingBottom="24dp">
 
-        <!--TODO: Need background and logo content -->
-
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="0dp"
-            android:layout_height="150dp"
-            android:background="@color/gray3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_about"
             android:contentDescription="@null"
+            android:src="@drawable/bg_about_logo"
+            android:scaleType="centerInside"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintDimensionRatio="h,9:5" />
 
         <TextView
             android:id="@+id/what_is_droidkaigi_text"

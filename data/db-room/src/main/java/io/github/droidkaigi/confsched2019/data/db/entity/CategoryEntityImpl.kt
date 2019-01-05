@@ -2,9 +2,9 @@ package io.github.droidkaigi.confsched2019.data.db.entity
 
 import androidx.room.ColumnInfo
 
-data class TopicEntityImpl(
-    @ColumnInfo(name = "topic_id")
+data class CategoryEntityImpl(
+    @ColumnInfo(name = "category_id")
     override var id: Int,
-    @ColumnInfo(name = "topic_name")
+    @ColumnInfo(name = "category_name")
     override var name: String
-) : TopicEntity
+) : CategoryEntity

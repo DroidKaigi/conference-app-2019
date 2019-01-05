@@ -5,7 +5,7 @@ data class SessionContents(
     val speakers: List<Speaker>,
     val rooms: List<Room>,
     val langs: List<Lang>,
-    val topics: List<Topic>
+    val category: List<Category>
 ) {
     companion object {
         val EMPTY = SessionContents(
@@ -23,7 +23,7 @@ data class SessionContents(
                 when (it) {
                     is Session.SpeechSession ->
                         find(query, it.title, it.desc)
-                    is Session.SpecialSession ->
+                    is Session.ServiceSession ->
                         find(query, it.title)
                 }
             },

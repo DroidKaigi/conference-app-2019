@@ -11,7 +11,7 @@ import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.model.SponsorCategory
 import io.github.droidkaigi.confsched2019.model.SystemProperty
-import io.github.droidkaigi.confsched2019.model.Topic
+import io.github.droidkaigi.confsched2019.model.Category
 
 sealed class Action {
     class Error(val msg: ErrorMessage) : Action()
@@ -34,10 +34,10 @@ sealed class Action {
         override val checked: Boolean
     ) : FilterChange<Room>(room, checked)
 
-    data class TopicFilterChanged(
-        val topic: Topic,
+    data class CategoryFilterChanged(
+        val category: Category,
         override val checked: Boolean
-    ) : FilterChange<Topic>(topic, checked)
+    ) : FilterChange<Category>(category, checked)
 
     data class LangFilterChanged(
         val lang: Lang,

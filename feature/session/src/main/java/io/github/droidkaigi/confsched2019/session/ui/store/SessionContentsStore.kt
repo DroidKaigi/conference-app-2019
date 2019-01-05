@@ -32,7 +32,7 @@ class SessionContentsStore @Inject constructor(
         .toLiveData(SessionContents.EMPTY)
     val sessions get() = sessionContents.requireValue().sessions
     val langs get() = sessionContents.requireValue().langs
-    val topics get() = sessionContents.requireValue().topics
+    val categorys get() = sessionContents.requireValue().category
     val rooms get() = sessionContents.requireValue().rooms
 
     fun speechSession(sessionId: String): LiveData<Session.SpeechSession> =

@@ -181,7 +181,7 @@
                         />
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/topic_chip"
+                        android:id="@+id/category_chip"
                         style="@style/Widget.MaterialComponents.Chip.Action"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -200,6 +200,7 @@
                     android:contentDescription="@null"
                     android:layerType="software"
                     android:src="@drawable/shape_dashed_line"
+                    android:visibility="@{session.isFinished ? View.VISIBLE : View.GONE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_tags"
@@ -207,27 +208,40 @@
 
 
                 <TextView
-                    android:id="@+id/session_survery_title"
+                    android:id="@+id/session_survey_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="26dp"
                     android:text="@string/session_detail_survey"
                     android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    android:visibility="@{session.isFinished ? View.VISIBLE : View.GONE}"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider3"
+                    />
+
+                <TextView
+                    android:id="@+id/session_go_to_survey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/session_detail_go_to_survey"
+                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    android:textColor="@color/colorSecondary"
+                    android:visibility="@{session.isFinished ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/session_survey_title"
+                    app:layout_constraintEnd_toEndOf="@id/session_title"
                     />
 
                 <ImageView
                     android:id="@+id/divider4"
                     android:layout_width="0dp"
                     android:layout_height="4dp"
-                    android:layout_marginTop="28dp"
+                    android:layout_marginTop="26dp"
                     android:contentDescription="@null"
                     android:layerType="software"
                     android:src="@drawable/shape_dashed_line"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/session_survery_title"
+                    app:layout_constraintTop_toBottomOf="@id/session_survey_title"
                     />
 
                 <TextView

@@ -8,7 +8,9 @@ interface SessionEntity {
     var etime: Long
     var sessionFormat: String
     var language: String
-    val topic: TopicEntity
+    val category: CategoryEntity
+    val intendedAudience: String?
     val room: RoomEntity
     val message: MessageEntity?
+    val isServiceSession: Boolean
 }

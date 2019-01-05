@@ -5,10 +5,10 @@ import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSpecialSessionBinding
 
-class SpecialSessionItem(
-    override val session: Session.SpecialSession
+class ServiceSessionItem(
+    override val session: Session.ServiceSession
 ) : BindableItem<ItemSpecialSessionBinding>(
-    session.id.toLong()
+    session.id.hashCode().toLong()
 ), SessionItem {
     val specialSession get() = session
 
@@ -31,7 +31,7 @@ class SpecialSessionItem(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as SpecialSessionItem
+        other as ServiceSessionItem
 
         if (session != other.session) return false
 

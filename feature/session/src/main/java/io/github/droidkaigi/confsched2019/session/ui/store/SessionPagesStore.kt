@@ -27,8 +27,8 @@ class SessionPagesStore @Inject constructor(
         .subscribe<Action.RoomFilterChanged>()
         .toLiveData()
 
-    private val topicFilterChanged = dispatcher
-        .subscribe<Action.TopicFilterChanged>()
+    private val categoryFilterChanged = dispatcher
+        .subscribe<Action.CategoryFilterChanged>()
         .toLiveData()
 
     private val langFilterChanged = dispatcher
@@ -50,12 +50,12 @@ class SessionPagesStore @Inject constructor(
                 }
             }
         }
-        addSource(topicFilterChanged) { topicFilterChanged ->
-            topicFilterChanged?.let {
-                value = if (topicFilterChanged.checked) {
-                    filtersValue.copy(topics = filtersValue.topics + it.topic)
+        addSource(categoryFilterChanged) { categoryFilterChanged ->
+            categoryFilterChanged?.let {
+                value = if (categoryFilterChanged.checked) {
+                    filtersValue.copy(categories = filtersValue.categories + it.category)
                 } else {
-                    filtersValue.copy(topics = filtersValue.topics - it.topic)
+                    filtersValue.copy(categories = filtersValue.categories - it.category)
                 }
             }
         }

@@ -20,22 +20,19 @@ class DataSessionRepository @Inject constructor(
 ) : SessionRepository {
 
     override suspend fun sessionContents(): SessionContents = coroutineScope {
-        val speakerSessions = speakerSession()
-        val sessions = (speakerSessions + Session.SpecialSession.specialSessions())
+        val sessions = sessions()
             .sortedBy { it.startTime }
+        val speechSessions = sessions.filterIsInstance<Session.SpeechSession>()
         SessionContents(
             sessions = sessions,
-            speakers = sessions
-                .filterIsInstance<Session.SpeechSession>()
-                .flatMap { it.speakers }
-                .distinct(),
+            speakers = speechSessions.flatMap { it.speakers }.distinct(),
             langs = Lang.values().toList(),
-            rooms = speakerSessions.map { it.room }.distinct(),
-            topics = speakerSessions.map { it.topic }.distinct()
+            rooms = speechSessions.map { it.room }.distinct(),
+            category = speechSessions.map { it.category }.distinct()
         )
     }
 
-    private suspend fun CoroutineScope.speakerSession(): List<Session.SpeechSession> {
+    private suspend fun CoroutineScope.sessions(): List<Session> {
         val sessionsAsync = async { sessionDatabase.sessions() }
         val allSpeakersAsync = async { sessionDatabase.allSpeaker() }
         val fabSessionIdsAsync = async {
@@ -47,12 +44,6 @@ class DataSessionRepository @Inject constructor(
         val speakerEntities = allSpeakersAsync.await()
         val fabSessionIds = fabSessionIdsAsync.await()
         val firstDay = DateTime(sessionEntities.first().session.stime)
-        val speakerSessions = sessionEntities
-            .map { it.toSession(speakerEntities, fabSessionIds, firstDay) }
-            .sortedWith(compareBy(
-                { it.startTime.unixMillisLong },
-                { it.room.id }
-            ))
         return sessionEntities
             .map { it.toSession(speakerEntities, fabSessionIds, firstDay) }
             .sortedWith(compareBy(

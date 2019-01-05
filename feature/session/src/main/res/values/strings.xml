@@ -9,12 +9,14 @@
     <string name="session_filter_reset">Reset</string>
     <string name="session_filter_room" translatable="false">Room</string>
     <string name="session_filter_language" translatable="false">Language</string>
-    <string name="session_filter_topic" translatable="false">Topic</string>
+    <string name="session_filter_category" translatable="false">Category</string>
     <string name="session_detail_tag" translatable="false">Tags</string>
     <string name="session_detail_survey">Survey</string>
+    <string name="session_detail_go_to_survey">Go to survey</string>
     <string name="session_detail_speaker" translatable="false">Speaker</string>
     <string name="session_speaker_sessions" translatable="false">Session</string>
     <string name="session_share" translatable="false">Share</string>
     <string name="session_place" translatable="false">Place</string>
     <string name="session_search_hint">Search…</string>
+    <string name="session_go_to_survey">Go to survey</string>
 </resources>

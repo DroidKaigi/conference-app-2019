@@ -19,7 +19,7 @@ import io.github.droidkaigi.confsched2019.session.databinding.FragmentBottomShee
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPageActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
-import io.github.droidkaigi.confsched2019.session.ui.item.SpecialSessionItem
+import io.github.droidkaigi.confsched2019.session.ui.item.ServiceSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeechSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPageStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
@@ -87,8 +87,8 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                     when (session) {
                         is Session.SpeechSession ->
                             speechSessionItemFactory.create(session)
-                        is Session.SpecialSession ->
-                            SpecialSessionItem(session)
+                        is Session.ServiceSession ->
+                            ServiceSessionItem(session)
                     }
                 }
             groupAdapter.update(items)
