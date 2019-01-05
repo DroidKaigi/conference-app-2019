@@ -11,6 +11,8 @@ class SpeakerEntityImpl(
     override var name: String,
     @ColumnInfo(name = "speaker_tag_line")
     override var tagLine: String?,
+    @ColumnInfo(name = "speaker_bio")
+    override var bio: String?,
     @ColumnInfo(name = "speaker_image_url")
     override var imageUrl: String?,
     @ColumnInfo(name = "speaker_twitter_url")

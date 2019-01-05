@@ -59,6 +59,7 @@ fun SpeakerEntity.toSpeaker(): Speaker = Speaker(
     id = id,
     name = name,
     tagLine = tagLine,
+    bio = bio,
     imageUrl = imageUrl,
     twitterUrl = twitterUrl,
     companyUrl = companyUrl,

@@ -73,6 +73,7 @@ fun List<SpeakerResponse>.toSpeakerEntities(): List<SpeakerEntityImpl> =
         SpeakerEntityImpl(id = responseSpeaker.id!!,
             name = responseSpeaker.fullName!!,
             tagLine = responseSpeaker.tagLine,
+            bio = responseSpeaker.bio,
             imageUrl = responseSpeaker.profilePicture,
             twitterUrl = responseSpeaker.links
                 ?.firstOrNull { "Twitter" == it?.linkType }
