@@ -25,7 +25,7 @@ class RoomDatabase @Inject constructor(
     private val sessionSpeakerJoinDao: SessionSpeakerJoinDao,
     private val coroutineContext: CoroutineContext,
     private val sponsorDao: SponsorDao
-) : SessionDatabase, SponsorDatabase  {
+) : SessionDatabase, SponsorDatabase {
     override suspend fun sessions(): List<SessionWithSpeakers> {
         return sessionSpeakerJoinDao.getAllSessions()
     }
