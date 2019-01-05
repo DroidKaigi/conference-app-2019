@@ -20,7 +20,7 @@ class KtorDroidKaigiApi @Inject constructor(
 
     override suspend fun getSessions(): Response {
         return httpClient.get<ResponseImpl> {
-            url("https://sessionize.com/api/v2/xc8zp3xu/view/all")
+            url("https://droidkaigi2019-dev.appspot.com/api/timetable")
         }
     }
 }
