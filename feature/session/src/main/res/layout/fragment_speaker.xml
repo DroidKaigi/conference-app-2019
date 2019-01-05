@@ -110,7 +110,7 @@
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:paddingBottom="2dp"
-                    android:text="@{speaker.tagLine}"
+                    android:text="@{speaker.bio}"
                     android:textAlignment="viewStart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/speaker_name"
