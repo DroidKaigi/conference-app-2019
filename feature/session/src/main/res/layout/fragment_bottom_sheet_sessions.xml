@@ -15,7 +15,8 @@
         <TextView
             android:id="@+id/sessions_bottom_sheet_title"
             android:layout_width="wrap_content"
-            android:layout_height="64dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/lekton"
             android:gravity="center_vertical"
@@ -36,9 +37,8 @@
             app:chipBackgroundColor="@color/gray4"
             app:chipIcon="@drawable/ic_filter_list_black_24dp"
             app:chipIconTint="@color/gray3"
-            app:layout_constraintBottom_toBottomOf="@id/sessions_bottom_sheet_title"
+            app:layout_constraintBaseline_toBaselineOf="@id/sessions_bottom_sheet_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/sessions_bottom_sheet_title"
             />
 
         <com.google.android.material.chip.Chip
@@ -55,9 +55,8 @@
             app:chipIconTint="@color/gray3"
             app:iconEndPadding="@dimen/session_bottom_sheet_filter_icon_padding"
             app:iconStartPadding="@dimen/session_bottom_sheet_filter_icon_padding"
-            app:layout_constraintBottom_toBottomOf="@id/sessions_bottom_sheet_title"
+            app:layout_constraintBaseline_toBaselineOf="@id/sessions_bottom_sheet_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/sessions_bottom_sheet_title"
             app:textEndPadding="@dimen/session_bottom_sheet_filter_text_padding"
             app:textStartPadding="@dimen/session_bottom_sheet_filter_text_padding"
             />
@@ -67,6 +66,7 @@
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="16dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

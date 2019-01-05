@@ -3,7 +3,7 @@ package io.github.droidkaigi.confsched2019.model
 sealed class SessionPage {
 
     object Favorite : SessionPage() {
-        override val title = "Favorite"
+        override val title = "MyPlan"
     }
 
     open class Day(
