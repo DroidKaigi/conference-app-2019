@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
     >
 
-    <ImageView
-        android:id="@+id/navigation_header"
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:adjustViewBounds="true"
-        android:src="@drawable/bg_logo_black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/session_description_header_image"
+    <View
+        android:id="@+id/offset_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         />
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginTop="20dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/session_description_header_image"
+        android:src="@drawable/bg_logo_black"
+        />
+
+</LinearLayout>
+

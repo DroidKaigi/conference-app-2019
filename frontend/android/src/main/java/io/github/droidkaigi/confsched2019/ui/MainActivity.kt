@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
@@ -115,6 +116,17 @@ class MainActivity : DaggerAppCompatActivity() {
                 PorterDuff.Mode.SRC_ATOP
             )
             binding.toolbar.setTitleTextColor(toolbarContentsColor)
+
+            // Support display cutouts
+            val navHeaderOffsetView =
+                binding.navView.getHeaderView(0).findViewById<View>(R.id.offset_view)
+            ViewCompat.setOnApplyWindowInsetsListener(navHeaderOffsetView) { view, windowInsets ->
+                view.layoutParams.apply {
+                    height = windowInsets.systemWindowInsetTop
+                }
+
+                windowInsets
+            }
         }
     }
 
