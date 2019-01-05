@@ -3,11 +3,12 @@ package io.github.droidkaigi.confsched2019.data.repository.mapper
 import com.soywiz.klock.DateTime
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionWithSpeakers
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntity
+import io.github.droidkaigi.confsched2019.model.Category
+import io.github.droidkaigi.confsched2019.model.LocaledString
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionMessage
 import io.github.droidkaigi.confsched2019.model.Speaker
-import io.github.droidkaigi.confsched2019.model.Category
 
 fun SessionWithSpeakers.toSession(
     speakerEntities: List<SpeakerEntity>,
@@ -44,7 +45,12 @@ fun SessionWithSpeakers.toSession(
             room = Room(session.room.id, session.room.name),
             format = session.sessionFormat,
             language = session.language,
-            category = Category(session.category.id, session.category.name),
+            category = Category(
+                session.category.id, LocaledString(
+                    ja = session.category.jaName,
+                    en = session.category.enName
+                )
+            ),
             intendedAudience = session.intendedAudience,
             isFavorited = favList!!.map { it.toString() }.contains(session.id),
             speakers = speakers,

@@ -17,10 +17,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.model.Category
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.SessionPage
-import io.github.droidkaigi.confsched2019.model.Category
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionPageBinding
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
@@ -96,7 +96,7 @@ class SessionPageFragment : DaggerFragment() {
             )
             binding.sessionsFilterCategoryChip.setupFilter(
                 contents.category
-            ) { category -> category.getNameByLang(systemStore.lang) }
+            ) { category -> category.name.getByLang(systemStore.lang) }
             binding.sessionsFilterLangChip.setupFilter(
                 contents.langs,
                 Lang::toString

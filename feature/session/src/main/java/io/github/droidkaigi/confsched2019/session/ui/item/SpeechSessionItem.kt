@@ -68,7 +68,7 @@ class SpeechSessionItem @AssistedInject constructor(
                 speechSession.timeInMinutes,
                 speechSession.room.name
             )
-            categoryChip.text = speechSession.category.getNameByLang(systemStore.lang)
+            categoryChip.text = speechSession.category.name.getByLang(systemStore.lang)
 
             bindSpeaker()
 
