@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupAdapter
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
-import io.github.droidkaigi.confsched2019.session.ui.item.SpeechSessionItem
 import io.github.droidkaigi.confsched2019.util.logd
 
 class SessionsItemDecoration(
@@ -18,17 +17,19 @@ class SessionsItemDecoration(
     val groupAdapter: GroupAdapter<*>
 ) : RecyclerView.ItemDecoration() {
     private val resources = context.resources
-    val textLeftSpace = resources.getDimensionPixelSize(
+    private val textSize = resources.getDimensionPixelSize(
+        R.dimen.session_bottom_sheet_left_time_text_size
+    )
+    private val textLeftSpace = resources.getDimensionPixelSize(
         R.dimen.session_bottom_sheet_left_time_text_left
     )
-    val textMinTop = resources.getDimensionPixelSize(
+    private val textMinTop = resources.getDimensionPixelSize(
         R.dimen.session_bottom_sheet_left_time_text_top_min
     )
+
     val paint = Paint().apply {
         style = Paint.Style.FILL
-        textSize = resources.getDimensionPixelSize(
-            R.dimen.session_bottom_sheet_left_time_text_size
-        ).toFloat()
+        textSize = this@SessionsItemDecoration.textSize.toFloat()
         color = Color.BLACK
         isAntiAlias = true
         try {
@@ -52,26 +53,28 @@ class SessionsItemDecoration(
             }
             if (item is SessionItem) {
                 val time = item.session.startTime.toString("HH:mm")
-                val previousTime = if (previousItem is SpeechSessionItem) {
+                val previousTime = if (previousItem is SessionItem) {
                     previousItem.session.startTime.toString("HH:mm")
                 } else {
                     null
                 }
-                if (lastTime != time) {
-                    val viewCenterY = (view.top + view.bottom) / 2
-                    val yPosition = if (viewCenterY < textMinTop || time == previousTime) {
-                        textMinTop
-                    } else {
-                        viewCenterY
-                    }
-                    c.drawText(
-                        time,
-                        textLeftSpace.toFloat(),
-                        yPosition.toFloat(),
-                        paint
-                    )
-                }
+
+                if (lastTime == time) continue
+
                 lastTime = time
+
+                val yPosition = if (view.top < 0 || time == previousTime) {
+                    textSize
+                } else {
+                    view.top + textSize
+                }
+
+                c.drawText(
+                    time,
+                    textLeftSpace.toFloat(),
+                    yPosition.toFloat(),
+                    paint
+                )
             }
         }
     }
