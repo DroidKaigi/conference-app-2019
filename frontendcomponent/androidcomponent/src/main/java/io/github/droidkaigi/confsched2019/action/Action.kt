@@ -9,7 +9,7 @@ import io.github.droidkaigi.confsched2019.model.SearchResult
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.model.SessionPage
-import io.github.droidkaigi.confsched2019.model.Sponsor
+import io.github.droidkaigi.confsched2019.model.SponsorCategory
 import io.github.droidkaigi.confsched2019.model.SystemProperty
 import io.github.droidkaigi.confsched2019.model.Category
 
@@ -55,8 +55,8 @@ sealed class Action {
     class AnnouncementLoadingStateChanged(val loadingState: LoadingState) : Action()
     class AnnouncementLoaded(val announcements: List<Announcement>) : Action()
 
-    class SponsorLoadingStateChanged(val loadingState: LoadingState) : Action()
-    class SponsorLoaded(val sponsors: List<Sponsor>) : Action()
+    data class SponsorLoadingStateChanged(val loadingState: LoadingState) : Action()
+    data class SponsorLoaded(val sponsors: List<SponsorCategory>) : Action()
 
     class FloorMapLoadingStateChanged(val loadingState: LoadingState) : Action()
 }

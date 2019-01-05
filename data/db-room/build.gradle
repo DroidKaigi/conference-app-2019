@@ -9,6 +9,7 @@ apply from: rootProject.file('gradle/android.gradle')
 
 dependencies {
     api project(":data:db")
+    api project(":model")
     api project(":data:api")
     api project(":ext:android-extension")
 

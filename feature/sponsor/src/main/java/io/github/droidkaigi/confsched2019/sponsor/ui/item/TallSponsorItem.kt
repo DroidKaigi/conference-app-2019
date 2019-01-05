@@ -4,15 +4,15 @@ import com.squareup.picasso.Picasso
 import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.model.Sponsor
 import io.github.droidkaigi.confsched2019.sponsor.R
-import io.github.droidkaigi.confsched2019.sponsor.databinding.ItemSponsorBinding
+import io.github.droidkaigi.confsched2019.sponsor.databinding.ItemSponsorTallBinding
 
-class SponsorItem(
+class TallSponsorItem(
     private val sponsor: Sponsor,
     private val spanSize: Int,
     private val onClick: (url: String) -> Unit
-) : BindableItem<ItemSponsorBinding>() {
+) : BindableItem<ItemSponsorTallBinding>() {
 
-    override fun bind(viewBinding: ItemSponsorBinding, position: Int) {
+    override fun bind(viewBinding: ItemSponsorTallBinding, position: Int) {
         viewBinding.sponsor = sponsor
 
         Picasso.get()
@@ -24,7 +24,7 @@ class SponsorItem(
         }
     }
 
-    override fun getLayout(): Int = R.layout.item_sponsor
+    override fun getLayout(): Int = R.layout.item_sponsor_tall
 
     override fun getSpanSize(spanCount: Int, position: Int): Int {
         return spanSize
