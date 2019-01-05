@@ -73,11 +73,7 @@ class SpeechSessionItem @AssistedInject constructor(
             bindSpeaker()
 
             speechSession.message?.let { message ->
-                this@with.message.text = if (true) {
-                    message.jaMessage
-                } else {
-                    message.enMessage
-                }
+                this@with.message.text = message.getBodyByLang(systemStore.lang)
             }
         }
     }
