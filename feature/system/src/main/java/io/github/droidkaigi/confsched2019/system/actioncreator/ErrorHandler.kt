@@ -19,6 +19,12 @@ import java.net.UnknownHostException
 interface ErrorHandler {
     val dispatcher: Dispatcher
     fun onError(e: Throwable, msg: String? = null) {
+        if (e.cause is CancellationException) {
+            logd(e = e) {
+                "coroutine canceled"
+            }
+            return
+        }
         when (e) {
             is CancellationException ->
                 logd(e = e) {
