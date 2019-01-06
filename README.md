@@ -20,7 +20,7 @@
 We are always welcome your contribution!
 
 ## How to find the tasks
-We use [waffle.io](https://waffle.io/DroidKaigi/conference-app-2019) to manage the tasks.
+We use [GitHub issues](https://github.com/DroidKaigi/conference-app-2019/issues?q=is%3Aissue+is%3Aopen+label%3A%22welcome+contribute%22) to manage the tasks.
 Please find the issues you'd like to contribute in it.
 [welcome contribute](https://github.com/DroidKaigi/conference-app-2019/labels/welcome%20contribute) and [easy](https://github.com/DroidKaigi/conference-app-2019/labels/easy) are good for first contribution.
 
