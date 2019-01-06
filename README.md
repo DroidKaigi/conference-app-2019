@@ -9,7 +9,7 @@
 
 | top | detail |
 |---|---|
-| ![image](https://user-images.githubusercontent.com/1386930/50731911-9dc07f00-11b2-11e9-89a8-e2b9b3d123c2.png) | ![image](https://user-images.githubusercontent.com/1386930/50731924-ccd6f080-11b2-11e9-8f15-3e09833f2072.png) |
+| ![image](https://user-images.githubusercontent.com/1386930/50733191-7080ca80-11cc-11e9-8631-0a032c7b6430.png) | ![image](https://user-images.githubusercontent.com/1386930/50731924-ccd6f080-11b2-11e9-8f15-3e09833f2072.png) |
 
 * View conference schedule and details of each session
 * Set notification for upcoming sessions on your preference
