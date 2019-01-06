@@ -10,7 +10,8 @@ import io.github.droidkaigi.confsched2019.data.db.entity.SessionFeedbackImpl
 @Dao
 abstract class SessionFeedbackDao {
     @Query(
-        "SELECT session_feedback.*, session.title as session_title FROM session_feedback INNER JOIN session ON session.id = session_feedback.session_id"
+        "SELECT session_feedback.*, session.title as session_title " +
+            "FROM session_feedback INNER JOIN session ON session.id = session_feedback.session_id"
     )
     abstract fun sessionFeedbacksLiveData(): LiveData<List<SessionFeedbackImpl>>
 

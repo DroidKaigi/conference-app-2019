@@ -60,7 +60,8 @@ class DataSessionRepository @Inject constructor(
     }
 
     override suspend fun submitSessionFeedback(
-        session: Session.SpeechSession, sessionFeedback: SessionFeedback
+        session: Session.SpeechSession,
+        sessionFeedback: SessionFeedback
     ) {
         val response = googleFormApi.submitSessionFeedback(
             sessionId = session.id,

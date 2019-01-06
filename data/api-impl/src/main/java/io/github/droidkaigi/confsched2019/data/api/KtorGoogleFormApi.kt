@@ -10,6 +10,19 @@ class KtorGoogleFormApi @Inject constructor(
     val httpClient: HttpClient
 ) : GoogleFormApi {
 
+    companion object {
+        const val FORM_URL = "https://docs.google.com/forms/" +
+            "d/e/1FAIpQLScM2l7A2fRI1bidNKsswkHO6CIJ_bqwiWmncjyTRLP9JyPnUA/formResponse"
+        const val KEY_SESSION_ID = "entry.587733619"
+        const val KEY_SESSION_TITLE = "entry.893997240"
+        const val KEY_TOTAL_EVALUATION = "entry.2026763339"
+        const val KEY_RELEVANCY = "entry.499312343"
+        const val KEY_AS_EXPECTED = "entry.715223183"
+        const val KEY_DIFFICULTY = "entry.851615750"
+        const val KEY_KNOWLEDGEABLE = "entry.1371898664"
+        const val KEY_COMMENT = "entry.1819923854"
+    }
+
     override suspend fun submitSessionFeedback(
         sessionId: String,
         sessionTitle: String,
@@ -22,17 +35,17 @@ class KtorGoogleFormApi @Inject constructor(
     ): String {
         return httpClient.submitForm(
             formData = parametersOf(
-                "entry.587733619" to listOf(sessionId),
-                "entry.893997240" to listOf(sessionTitle),
-                "entry.2026763339" to listOf(totalEvaluation.toString()),
-                "entry.499312343" to listOf(relevancy.toString()),
-                "entry.715223183" to listOf(asExpected.toString()),
-                "entry.851615750" to listOf(difficulty.toString()),
-                "entry.1371898664" to listOf(knowledgeable.toString()),
-                "entry.1819923854" to listOf(comment)
+                KEY_SESSION_ID to listOf(sessionId),
+                KEY_SESSION_TITLE to listOf(sessionTitle),
+                KEY_TOTAL_EVALUATION to listOf(totalEvaluation.toString()),
+                KEY_RELEVANCY to listOf(relevancy.toString()),
+                KEY_AS_EXPECTED to listOf(asExpected.toString()),
+                KEY_DIFFICULTY to listOf(difficulty.toString()),
+                KEY_KNOWLEDGEABLE to listOf(knowledgeable.toString()),
+                KEY_COMMENT to listOf(comment)
             )
         ) {
-            url("https://docs.google.com/forms/d/e/1FAIpQLScM2l7A2fRI1bidNKsswkHO6CIJ_bqwiWmncjyTRLP9JyPnUA/formResponse")
+            url(FORM_URL)
         }
     }
 }
