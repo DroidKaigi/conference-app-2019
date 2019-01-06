@@ -19,7 +19,7 @@ data class Filters(
         }
         val langFilterOk = run {
             if (langs.isEmpty()) return@run true
-            return@run langs.map { it.toString() }.contains(session.language)
+            return@run langs.map { it.text }.contains(session.language)
         }
         return roomFilterOk && categoryFilterOk && langFilterOk
     }

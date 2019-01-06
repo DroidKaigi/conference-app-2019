@@ -21,6 +21,7 @@ import io.github.droidkaigi.confsched2019.model.Category
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.SessionPage
+import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionPageBinding
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
@@ -98,9 +99,9 @@ class SessionPageFragment : DaggerFragment() {
                 contents.category
             ) { category -> category.name.getByLang(systemStore.lang) }
             binding.sessionsFilterLangChip.setupFilter(
-                contents.langs,
-                Lang::toString
-            )
+                contents.langs
+
+            ) { lang -> lang.text.getByLang(defaultLang()) }
         }
         sessionPagesStore.selectedTab.changed(viewLifecycleOwner) {
             if (SessionPage.pages[args.tabIndex] == it) {
