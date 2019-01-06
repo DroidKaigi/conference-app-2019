@@ -42,6 +42,7 @@
             android:layout_marginStart="8dp"
             android:gravity="start|center_vertical"
             android:text="@{speaker.name}"
+            android:textColor="@color/gray1"
             app:layout_constraintBottom_toBottomOf="@id/speaker_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/speaker_image"
