@@ -65,7 +65,7 @@ class DataSessionRepository @Inject constructor(
     ) {
         val response = googleFormApi.submitSessionFeedback(
             sessionId = session.id,
-            sessionTitle = session.title,
+            sessionTitle = session.title.ja,
             totalEvaluation = sessionFeedback.totalEvaluation,
             relevancy = sessionFeedback.relevancy,
             asExpected = sessionFeedback.asExpected,
