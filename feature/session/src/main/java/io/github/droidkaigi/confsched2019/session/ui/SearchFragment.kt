@@ -89,7 +89,8 @@ class SearchFragment : DaggerFragment() {
                                 session,
                                 SearchFragmentDirections.actionSearchToSessionDetail(
                                     session.id
-                                )
+                                ),
+                                false
                             )
                         is Session.ServiceSession ->
                             ServiceSessionItem(session)
