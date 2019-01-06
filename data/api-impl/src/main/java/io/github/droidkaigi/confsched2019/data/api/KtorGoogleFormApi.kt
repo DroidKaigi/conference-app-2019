@@ -1,6 +1,5 @@
 package io.github.droidkaigi.confsched2019.data.api
 
-import io.github.droidkaigi.confsched2019.model.LocaledString
 import io.ktor.client.HttpClient
 import io.ktor.client.request.forms.submitForm
 import io.ktor.client.request.url
@@ -26,7 +25,7 @@ class KtorGoogleFormApi @Inject constructor(
 
     override suspend fun submitSessionFeedback(
         sessionId: String,
-        sessionTitle: LocaledString,
+        sessionTitle: String,
         totalEvaluation: Int,
         relevancy: Int,
         asExpected: Int,
@@ -37,7 +36,7 @@ class KtorGoogleFormApi @Inject constructor(
         return httpClient.submitForm(
             formData = parametersOf(
                 KEY_SESSION_ID to listOf(sessionId),
-                KEY_SESSION_TITLE to listOf(sessionTitle.ja),
+                KEY_SESSION_TITLE to listOf(sessionTitle),
                 KEY_TOTAL_EVALUATION to listOf(totalEvaluation.toString()),
                 KEY_RELEVANCY to listOf(relevancy.toString()),
                 KEY_AS_EXPECTED to listOf(asExpected.toString()),
