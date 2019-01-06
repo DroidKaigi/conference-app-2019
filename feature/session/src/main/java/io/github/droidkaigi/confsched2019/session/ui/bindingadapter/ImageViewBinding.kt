@@ -19,7 +19,14 @@ fun loadImage(imageView: ImageView, imageUrl: String?) {
     )
 }
 
-@BindingAdapter(value = ["app:imageUrl", "app:circleCrop", "app:placeHolder", "app:placeHolderTint"])
+@BindingAdapter(
+    value = [
+        "app:imageUrl",
+        "app:circleCrop",
+        "app:placeHolder",
+        "app:placeHolderTint"
+    ]
+)
 fun loadImage(
     imageView: ImageView,
     imageUrl: String?,
