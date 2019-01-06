@@ -7,9 +7,9 @@
 
 # Features
 
-| top | filter |
+| top | detail |
 |---|---|
-| ![top](https://user-images.githubusercontent.com/3901275/47566499-ea900a00-d966-11e8-9d45-09198b408a1c.png) | ![filter](https://user-images.githubusercontent.com/3901275/47566497-e9f77380-d966-11e8-9f7b-1dc8ec10cc69.png) |
+| ![image](https://user-images.githubusercontent.com/1386930/50731911-9dc07f00-11b2-11e9-89a8-e2b9b3d123c2.png) | ![image](https://user-images.githubusercontent.com/1386930/50731924-ccd6f080-11b2-11e9-8f15-3e09833f2072.png) |
 
 * View conference schedule and details of each session
 * Set notification for upcoming sessions on your preference
