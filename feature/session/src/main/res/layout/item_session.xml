@@ -13,9 +13,15 @@
             name="session"
             type="io.github.droidkaigi.confsched2019.model.Session.SpeechSession"
             />
+
         <variable
             name="lang"
             type="io.github.droidkaigi.confsched2019.model.Lang"
+            />
+
+        <variable
+            name="addPaddingForTime"
+            type="boolean"
             />
     </data>
 
@@ -23,10 +29,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="?android:attr/selectableItemBackground"
-        android:paddingTop="@dimen/session_item_top_padding"
         android:paddingBottom="@dimen/session_item_bottom_padding"
         android:paddingEnd="0dp"
-        android:paddingStart="@dimen/session_bottom_sheet_left_time_space"
+        android:paddingStart="@{addPaddingForTime ? @dimen/session_bottom_sheet_left_time_space : 0}"
+        android:paddingTop="@dimen/session_item_top_padding"
         >
 
         <androidx.emoji.widget.EmojiTextView
@@ -86,8 +92,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:chipSpacing="4dp"
-            app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintEnd_toEndOf="@id/favorite"
+            app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintTop_toBottomOf="@id/time_and_room"
             >
 
@@ -97,11 +103,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="false"
+                android:ellipsize="end"
                 android:enabled="false"
                 android:text="@{session.language.getByLang(lang)}"
                 android:textAppearance="@style/TextAppearance.App.Caption"
                 android:textColor="@color/white"
-                android:ellipsize="end"
                 app:chipBackgroundColor="#7982e1"
                 app:chipMinTouchTargetSize="0dp"
                 tools:text="Japanese"
@@ -113,10 +119,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="false"
+                android:ellipsize="end"
                 android:enabled="false"
                 android:textAppearance="@style/TextAppearance.App.Caption"
                 android:textColor="@color/white"
-                android:ellipsize="end"
                 app:chipBackgroundColor="#95959c"
                 app:chipMinTouchTargetSize="0dp"
                 tools:text="ソフトウェアアーキテクチャ"
@@ -130,19 +136,19 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:drawablePadding="6dp"
+            android:drawableStart="@drawable/ic_bug_report_border_orange_18dp"
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:maxLines="3"
-            android:drawableStart="@drawable/ic_bug_report_border_orange_18dp"
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.App.Caption"
             android:textColor="@color/colorPrimary"
             android:visibility="@{session.message == null ? View.GONE : View.VISIBLE}"
-            app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintEnd_toEndOf="@id/title"
+            app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintTop_toBottomOf="@id/chip_group"
-            tools:visibility="visible"
             tools:text="セッションフロアがHallからRoom1に変更になりました"
+            tools:visibility="visible"
             />
 
         <TextView
@@ -151,17 +157,17 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:drawablePadding="6dp"
+            android:drawableStart="@drawable/ic_rate_review_border_orange_18dp"
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:drawableStart="@drawable/ic_rate_review_border_orange_18dp"
             android:text="@string/session_go_to_survey"
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.App.Caption"
             android:textColor="@color/colorSecondary"
             android:visibility="@{session.isFinished ? View.VISIBLE : View.GONE}"
-            app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintEnd_toEndOf="@id/title"
+            app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintTop_toBottomOf="@id/message"
             tools:visibility="visible"
             />

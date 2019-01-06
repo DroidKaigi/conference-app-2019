@@ -94,7 +94,8 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
                         session,
                         SessionPagesFragmentDirections.actionSessionToSessionDetail(
                             session.id
-                        )
+                        ),
+                        true
                     )
                 }
 

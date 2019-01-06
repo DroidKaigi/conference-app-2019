@@ -56,7 +56,7 @@ class SpeakerItem @AssistedInject constructor(
             itemBinding.speakerImage.setImageDrawable(placeHolder)
         }
 
-        itemBinding.speakerText.setOnClickListener {
+        itemBinding.root.setOnClickListener {
             navController.navigate(clickNavDirection)
         }
     }
