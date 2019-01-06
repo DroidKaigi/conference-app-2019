@@ -85,6 +85,8 @@
                     app:imageUrl="@{speaker.imageUrl}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:placeHolder="@{@drawable/ic_person_outline_black_24dp}"
+                    app:placeHolderTint="@{@color/gray2}"
                     tools:src="@tools:sample/avatars"
                     />
 
@@ -155,10 +157,10 @@
                     android:text="@{session.title}"
                     android:textAppearance="@style/TextAppearance.App.Subtitle2"
                     android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toStartOf="@id/speaker_name"
                     app:layout_constraintTop_toBottomOf="@id/speaker_session_head"
-                    app:layout_constraintEnd_toEndOf="parent"
                     tools:text="How to create DroidKaigi App long title test long title test"
                     />
 

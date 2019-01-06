@@ -4,6 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
+    <data>
+
+        <variable
+            name="speaker"
+            type="io.github.droidkaigi.confsched2019.model.Speaker"
+            />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -14,13 +22,17 @@
             android:id="@+id/speaker_image"
             android:layout_width="64dp"
             android:layout_height="64dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:contentDescription="@string/session_detail_speaker"
+            app:circleCrop="@{true}"
+            app:imageUrl="@{speaker.imageUrl}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:contentDescription="@string/session_detail_speaker"
+            app:placeHolder="@{@drawable/ic_person_outline_black_24dp}"
+            app:placeHolderTint="@{@color/gray2}"
             />
 
         <TextView
@@ -29,6 +41,7 @@
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:gravity="start|center_vertical"
+            android:text="@{speaker.name}"
             app:layout_constraintBottom_toBottomOf="@id/speaker_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/speaker_image"
