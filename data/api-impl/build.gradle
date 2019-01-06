@@ -13,6 +13,7 @@ android.libraryVariants.all {
 
 dependencies {
     api project(":data:api")
+    api project(":model")
 
     implementation Dep.Kotlin.stdlibJvm
     implementation Dep.Kotlin.serialization
