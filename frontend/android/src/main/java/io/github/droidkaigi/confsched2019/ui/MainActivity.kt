@@ -64,6 +64,10 @@ class MainActivity : DaggerAppCompatActivity() {
     @Inject lateinit var systemStore: SystemStore
     @Inject lateinit var userStore: UserStore
 
+    private val navController: NavController by lazy {
+        findNavController(R.id.root_nav_host_fragment)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.toolbar)
@@ -81,10 +85,6 @@ class MainActivity : DaggerAppCompatActivity() {
                 userActionCreator.load()
             }
         }
-    }
-
-    private val navController: NavController by lazy {
-        findNavController(R.id.root_nav_host_fragment)
     }
 
     private fun setupNavigation() {
