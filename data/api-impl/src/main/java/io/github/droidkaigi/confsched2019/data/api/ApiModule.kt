@@ -14,6 +14,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 @Module(includes = [ApiModule.Providers::class])
 internal abstract class ApiModule {
     @Binds abstract fun DroidKaigiApi(impl: KtorDroidKaigiApi): DroidKaigiApi
+    @Binds abstract fun GoogleFormApi(impl: KtorGoogleFormApi): GoogleFormApi
 
     @Module
     internal object Providers {

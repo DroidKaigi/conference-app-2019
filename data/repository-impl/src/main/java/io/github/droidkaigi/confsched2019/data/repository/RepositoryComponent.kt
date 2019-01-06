@@ -3,6 +3,7 @@ package io.github.droidkaigi.confsched2019.data.repository
 import dagger.BindsInstance
 import dagger.Component
 import io.github.droidkaigi.confsched2019.data.api.DroidKaigiApi
+import io.github.droidkaigi.confsched2019.data.api.GoogleFormApi
 import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.db.SponsorDatabase
 import io.github.droidkaigi.confsched2019.data.firestore.FireStore
@@ -20,7 +21,9 @@ interface RepositoryComponent {
 
     @Component.Builder
     interface Builder {
-        @BindsInstance fun api(api: DroidKaigiApi): Builder
+        @BindsInstance fun droidKaigiApi(api: DroidKaigiApi): Builder
+
+        @BindsInstance fun googleFormApi(api: GoogleFormApi): Builder
 
         @BindsInstance fun database(database: SessionDatabase): Builder
         @BindsInstance fun sponsorDatabase(database: SponsorDatabase): Builder
