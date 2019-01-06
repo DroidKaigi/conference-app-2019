@@ -24,7 +24,9 @@ fun SessionWithSpeakers.toSession(
             startTime = DateTime.fromUnix(session.stime),
             endTime = DateTime.fromUnix(session.etime),
             title = session.title,
-            room = Room(session.room.id, session.room.name)
+            room = requireNotNull(session.room).let { room ->
+                Room(room.id, room.name)
+            }
         )
     } else {
         require(speakerIdList.isNotEmpty())
@@ -42,15 +44,23 @@ fun SessionWithSpeakers.toSession(
             endTime = DateTime.fromUnix(session.etime),
             title = session.title,
             desc = session.desc,
-            room = Room(session.room.id, session.room.name),
-            format = session.sessionFormat,
-            language = session.language,
-            category = Category(
-                session.category.id, LocaledString(
-                    ja = session.category.jaName,
-                    en = session.category.enName
+            room = Room(requireNotNull(session.room?.id), requireNotNull(session.room?.name)),
+            format = requireNotNull(session.sessionFormat),
+            language = requireNotNull(session.language).let { language ->
+                LocaledString(
+                    language.jaName,
+                    language.enName
                 )
-            ),
+            },
+            category = requireNotNull(session.category).let { category ->
+                Category(
+                    category.id,
+                    LocaledString(
+                        ja = category.jaName,
+                        en = category.enName
+                    )
+                )
+            },
             intendedAudience = session.intendedAudience,
             isFavorited = favList!!.map { it.toString() }.contains(session.id),
             speakers = speakers,

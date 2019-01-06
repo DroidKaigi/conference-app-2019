@@ -19,7 +19,7 @@ import io.github.droidkaigi.confsched2019.data.db.entity.SponsorEntityImpl
         (SessionSpeakerJoinEntityImpl::class),
         (SponsorEntityImpl::class)
     ],
-    version = 3
+    version = 4
 )
 abstract class CacheDatabase : RoomDatabase() {
     abstract fun sessionDao(): SessionDao

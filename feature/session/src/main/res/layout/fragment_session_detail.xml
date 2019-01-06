@@ -173,7 +173,7 @@
                         style="@style/Widget.MaterialComponents.Chip.Action"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{session.language}"
+                        android:text="@{session.language.getByLang(lang)}"
                         android:textAppearance="?textAppearanceCaption"
                         android:textColor="@color/white"
                         app:chipBackgroundColor="#7982e1"

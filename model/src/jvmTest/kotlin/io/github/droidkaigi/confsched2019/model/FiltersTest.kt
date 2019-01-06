@@ -33,7 +33,7 @@ class FiltersTest {
     }
 
     @Test fun isPass_WhenCategoryFiltered() {
-        val category = Category(10, "category1")
+        val category = Category(10, LocaledString("ツール", "Tool"))
         val speechSession = mockk<Session.SpeechSession>()
         every { speechSession.category } returns category
 
@@ -41,8 +41,8 @@ class FiltersTest {
     }
 
     @Test fun isPass_WhenCategoryFilteredDifferentCategory() {
-        val category1 = Category(10, "category1")
-        val category2 = Category(11, "category2")
+        val category1 = Category(10, LocaledString("ツール1", "Tool1"))
+        val category2 = Category(11, LocaledString("ツール2", "Tool2"))
         val speechSession = mockk<Session.SpeechSession>()
         every { speechSession.category } returns category1
 

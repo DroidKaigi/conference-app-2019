@@ -15,6 +15,7 @@ import com.squareup.inject.assisted.AssistedInject
 import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.Speaker
+import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSessionBinding
 import io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragmentDirections
@@ -60,6 +61,7 @@ class SpeechSessionItem @AssistedInject constructor(
         with(viewBinding) {
             root.setOnClickListener { onClickListener(speechSession) }
             session = speechSession
+            lang = defaultLang()
             favorite.setOnClickListener {
                 onFavoriteClickListener(speechSession)
             }

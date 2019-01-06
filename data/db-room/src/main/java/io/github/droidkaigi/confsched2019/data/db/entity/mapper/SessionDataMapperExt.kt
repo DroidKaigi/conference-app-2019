@@ -8,6 +8,7 @@ import io.github.droidkaigi.confsched2019.data.api.response.RoomResponse
 import io.github.droidkaigi.confsched2019.data.api.response.SessionResponse
 import io.github.droidkaigi.confsched2019.data.api.response.SpeakerResponse
 import io.github.droidkaigi.confsched2019.data.db.entity.CategoryEntityImpl
+import io.github.droidkaigi.confsched2019.data.db.entity.LanguageEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.MessageEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.RoomEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionEntityImpl
@@ -40,37 +41,61 @@ fun SessionResponse.toSessionEntityImpl(
     categories: List<CategoryResponse>,
     rooms: List<RoomResponse>
 ): SessionEntityImpl {
-    val sessionFormat = categoryItems.getOrNull(0)?.let {
-        categories.category(0, it)
+    if (!isServiceSession) {
+        val sessionFormat = categoryItems[0].let {
+            categories.category(0, it)
+        }
+        val language = categoryItems[1].let {
+            categories.category(1, it)
+        }
+        val category = categoryItems[2].let {
+            categories.category(2, it)
+        }
+        val intendedAudience = questionAnswers[0].answerValue
+        return SessionEntityImpl(
+            id = id,
+            isServiceSession = isServiceSession,
+            title = title,
+            desc = description,
+            stime = dateFormat.parse(startsAt).utc.unixMillisLong,
+            etime = dateFormat.parse(endsAt).utc.unixMillisLong,
+            sessionFormat = requireNotNull(sessionFormat.name),
+            language = LanguageEntityImpl(
+                requireNotNull(language.id),
+                requireNotNull(language.name),
+                requireNotNull(language.translatedName?.ja),
+                requireNotNull(language.translatedName?.en)
+            ),
+            message = message?.let {
+                MessageEntityImpl(it.ja!!, it.en!!)
+            },
+            category = CategoryEntityImpl(
+                requireNotNull(category.id),
+                requireNotNull(category.name),
+                requireNotNull(category.translatedName?.ja),
+                requireNotNull(category.translatedName?.en)
+            ),
+            intendedAudience = intendedAudience,
+            room = RoomEntityImpl(roomId, rooms.roomName(roomId))
+        )
+    } else {
+        return SessionEntityImpl(
+            id = id,
+            isServiceSession = isServiceSession,
+            title = title,
+            desc = description,
+            stime = dateFormat.parse(startsAt).utc.unixMillisLong,
+            etime = dateFormat.parse(endsAt).utc.unixMillisLong,
+            sessionFormat = null,
+            language = null,
+            message = message?.let {
+                MessageEntityImpl(it.ja!!, it.en!!)
+            },
+            category = null,
+            intendedAudience = null,
+            room = RoomEntityImpl(roomId, rooms.roomName(roomId))
+        )
     }
-    val language = categoryItems.getOrNull(1)?.let {
-        categories.category(1, it)
-    }
-    val category = categoryItems.getOrNull(2)?.let {
-        categories.category(2, it)
-    }
-    val intendedAudience = questionAnswers.getOrNull(0)?.answerValue
-    return SessionEntityImpl(
-        id = id,
-        isServiceSession = isServiceSession,
-        title = title,
-        desc = description,
-        stime = dateFormat.parse(startsAt).utc.unixMillisLong,
-        etime = dateFormat.parse(endsAt).utc.unixMillisLong,
-        sessionFormat = sessionFormat?.name ?: "",
-        language = language?.name ?: "",
-        message = message?.let {
-            MessageEntityImpl(it.ja!!, it.en!!)
-        },
-        category = CategoryEntityImpl(
-            category?.id ?: 0,
-            category?.name ?: "",
-            category?.translatedName?.ja ?: "",
-            category?.translatedName?.en ?: ""
-        ),
-        intendedAudience = intendedAudience,
-        room = RoomEntityImpl(roomId, rooms.roomName(roomId))
-    )
 }
 
 fun List<SpeakerResponse>.toSpeakerEntities(): List<SpeakerEntityImpl> =

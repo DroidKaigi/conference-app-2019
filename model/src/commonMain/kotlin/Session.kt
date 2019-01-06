@@ -19,7 +19,7 @@ sealed class Session(
         val desc: String,
         override val room: Room,
         val format: String,
-        val language: String,
+        val language: LocaledString,
         val category: Category,
         val intendedAudience: String?,
         val isFavorited: Boolean,
