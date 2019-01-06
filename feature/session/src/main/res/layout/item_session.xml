@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/notosans_medium"
-            android:text="@{session.title}"
+            android:text="@{session.title.getByLang(lang)}"
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.App.Subtitle1"
             app:layout_constraintEnd_toStartOf="@id/favorite"

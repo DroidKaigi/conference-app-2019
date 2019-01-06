@@ -25,11 +25,14 @@ fun dummySessionData(): List<Session> {
             dayNumber = 1,
             startTime = startTime + 100.minutes,
             endTime = startTime + 120.minutes,
-            title = "How to create DroidKaigi App2",
+            title = LocaledString(
+                "How to create DroidKaigi App",
+                "How to create DroidKaigi English"
+            ),
             desc = "2 Please tell me",
             room = Room(2, "Room 2"),
             format = "this is format2",
-            language = LocaledString("英語","English"),
+            language = LocaledString("英語", "English"),
             category = Category(10, LocaledString("ツール", "Tool")),
             intendedAudience = "extream",
             isFavorited = true,
@@ -45,11 +48,14 @@ fun firstDummySpeechSession(): Session.SpeechSession {
         dayNumber = 1,
         startTime = startTime + 60.minutes,
         endTime = startTime + 90.minutes,
-        title = "How to create DroidKaigi App",
+        title = LocaledString(
+            "How to create DroidKaigi App2",
+            "How to create DroidKaigi English 2"
+        ),
         desc = "Please tell me",
         room = Room(1, "Room 1"),
         format = "this is format",
-        language = LocaledString("日本語","Japanese"),
+        language = LocaledString("日本語", "Japanese"),
         category = Category(id = 10, name = LocaledString("アーキテクチャ", "App Architecture")),
         intendedAudience = "intermediate",
         isFavorited = false,

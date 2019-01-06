@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 data class SessionEntityImpl(
     @PrimaryKey override var id: String,
     override val isServiceSession: Boolean,
+    override var englishTitle: String?,
     override var title: String,
     override var desc: String,
     override var stime: Long,

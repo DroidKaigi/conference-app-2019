@@ -22,13 +22,19 @@ data class SessionContents(
             sessions.filter {
                 when (it) {
                     is Session.SpeechSession ->
-                        find(query, it.title, it.desc)
+                        find(
+                            query,
+                            it.title.en,
+                            it.title.ja,
+                            it.desc,
+                            *it.speakers.map { it.name }.toTypedArray()
+                        )
                     is Session.ServiceSession ->
                         find(query, it.title)
                 }
             },
             speakers.filter {
-                find(query, it.name, it.tagLine, it.githubUrl, it.twitterUrl)
+                find(query, it.name, it.tagLine, it.bio, it.githubUrl, it.twitterUrl)
             }
         )
     }

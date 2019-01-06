@@ -7,14 +7,15 @@ import kotlinx.serialization.Serializable
 data class SessionResponseImpl(
     override val id: String,
     override val isServiceSession: Boolean,
-    override val isPlenumSession: Boolean,
+    override val title: String,
+    @Optional override val englishTitle: String? = null,
     override val speakers: List<String>,
     override val description: String,
     override val startsAt: String,
-    override val title: String,
     override val endsAt: String,
     override val roomId: Int,
     override val categoryItems: List<Int>,
     override val questionAnswers: List<QuestionAnswerResponseImpl>,
-    @Optional override val message: SessionMessageResponseImpl? = null
+    @Optional override val message: SessionMessageResponseImpl? = null,
+    override val isPlenumSession: Boolean
 ) : SessionResponse
