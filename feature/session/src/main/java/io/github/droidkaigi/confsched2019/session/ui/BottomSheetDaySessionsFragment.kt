@@ -16,13 +16,13 @@ import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentBottomSheetSessionsBinding
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPageActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPageActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.item.ServiceSessionItem
+import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeechSessionItem
-import io.github.droidkaigi.confsched2019.session.ui.store.SessionPageStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionPageStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.session.ui.widget.SessionsItemDecoration
@@ -86,7 +86,12 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                 .map<Session, Item<*>> { session ->
                     when (session) {
                         is Session.SpeechSession ->
-                            speechSessionItemFactory.create(session)
+                            speechSessionItemFactory.create(
+                                session,
+                                SessionPagesFragmentDirections.actionSessionToSessionDetail(
+                                    session.id
+                                )
+                            )
                         is Session.ServiceSession ->
                             ServiceSessionItem(session)
                     }

@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.view.size
 import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
@@ -27,6 +28,7 @@ import kotlin.math.max
 
 class SpeechSessionItem @AssistedInject constructor(
     @Assisted override val session: Session.SpeechSession,
+    @Assisted val navDirections: NavDirections,
     navController: NavController,
     sessionContentsActionCreator: SessionContentsActionCreator,
     val systemStore: SystemStore
@@ -38,7 +40,8 @@ class SpeechSessionItem @AssistedInject constructor(
     @AssistedInject.Factory
     interface Factory {
         fun create(
-            session: Session.SpeechSession
+            session: Session.SpeechSession,
+            navDirections: NavDirections
         ): SpeechSessionItem
     }
 
@@ -48,9 +51,7 @@ class SpeechSessionItem @AssistedInject constructor(
     private val onClickListener: (Session.SpeechSession) -> Unit = { session ->
         navController
             .navigate(
-                SessionPagesFragmentDirections.actionSessionToSessionDetail(
-                    session.id
-                )
+                navDirections
             )
     }
     val layoutInflater by lazyWithParam<Context, LayoutInflater> { context ->

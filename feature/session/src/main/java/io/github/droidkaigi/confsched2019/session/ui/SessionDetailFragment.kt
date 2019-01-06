@@ -34,6 +34,9 @@ class SessionDetailFragment : DaggerFragment() {
     @Inject lateinit var sessionContentsStore: SessionContentsStore
     @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
 
+    private lateinit var sessionDetailFragmentArgs: SessionDetailFragmentArgs
+    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,10 +50,6 @@ class SessionDetailFragment : DaggerFragment() {
         )
         return binding.root
     }
-
-    private lateinit var sessionDetailFragmentArgs: SessionDetailFragmentArgs
-
-    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

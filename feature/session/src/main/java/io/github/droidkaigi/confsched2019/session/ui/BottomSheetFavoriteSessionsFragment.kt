@@ -19,11 +19,11 @@ import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentBottomSheetSessionsBinding
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPageActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPageActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeechSessionItem
-import io.github.droidkaigi.confsched2019.session.ui.store.SessionPageStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionPageStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.session.ui.widget.SessionsItemDecoration
@@ -90,7 +90,12 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
         sessionPagesStore.filteredFavoritedSessions().changed(viewLifecycleOwner) { sessions ->
             val items = sessions
                 .map { session ->
-                    speechSessionItemFactory.create(session)
+                    speechSessionItemFactory.create(
+                        session,
+                        SessionPagesFragmentDirections.actionSessionToSessionDetail(
+                            session.id
+                        )
+                    )
                 }
 
             groupAdapter.update(items)
