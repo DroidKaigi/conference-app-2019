@@ -154,7 +154,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="12dp"
                     android:paddingTop="12dp"
-                    android:text="@{session.title}"
+                    android:text="@{session.title.getByLang(lang)}"
                     android:textAppearance="@style/TextAppearance.App.Subtitle2"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
