@@ -8,6 +8,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
+import javax.inject.Named
 import kotlinx.serialization.json.JSON
 import okhttp3.logging.HttpLoggingInterceptor
 
@@ -31,6 +32,10 @@ internal abstract class ApiModule {
                     serializer = KotlinxSerializer(JSON.nonstrict)
                 }
             }
+        }
+
+        @JvmStatic @Provides @Named("apiEndpoint") fun apiEndpoint(): String {
+            return BuildConfig.API_ENDPOINT
         }
     }
 }
