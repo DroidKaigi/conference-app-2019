@@ -75,7 +75,7 @@ class SessionsItemDecoration(
             return null
         }
 
-        val item = groupAdapter.getItem(position) as? SessionItem
-        return item?.session?.startTime?.toString("HH:mm")
+        val item = groupAdapter.getItem(position) as? SessionItem ?: return null
+        return item.session.startTime.toString("HH:mm")
     }
 }
