@@ -125,6 +125,7 @@
                     android:paddingBottom="2dp"
                     android:text="@{session.desc}"
                     android:textAlignment="viewStart"
+                    android:textIsSelectable="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider1"
