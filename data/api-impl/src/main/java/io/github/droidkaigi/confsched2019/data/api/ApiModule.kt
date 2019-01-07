@@ -27,6 +27,8 @@ internal abstract class ApiModule {
                         loggingInterceptor.level = HttpLoggingInterceptor.Level.HEADERS
                         addInterceptor(loggingInterceptor)
                     }
+
+                    addInterceptor(UserAgentInterceptor())
                 }
                 install(JsonFeature) {
                     serializer = KotlinxSerializer(JSON.nonstrict)
