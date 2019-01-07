@@ -12,7 +12,7 @@ export PRODUCTION_BRANCH="master" # assume master is a production build
 CIRCLECI_API_URL="https://circleci.com/api/v1.1/project/github/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}"
 
 latest_build_num() {
-  curl -u "${CIRCLECI_API_URL}?filter=completed" | \
+  curl "${CIRCLECI_API_URL}?filter=completed" | \
       ruby -rjson -e 'puts JSON.parse(STDIN.read).find { |j| j["branch"] == ENV.fetch("PRODUCTION_BRANCH") && j["build_parameters"]["CIRCLE_JOB"] == ENV.fetch("ASSEMBLE_APK_JOB_NAME") }["build_num"]'
 }
 
