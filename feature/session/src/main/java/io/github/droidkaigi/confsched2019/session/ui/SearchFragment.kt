@@ -68,8 +68,8 @@ class SearchFragment : DaggerFragment() {
 
         sessionContentsStore.sessionContents.changed(viewLifecycleOwner) { contents ->
             searchActionCreator.search(
-                searchView?.query?.toString(),
-                sessionContentsStore.sessionContents.requireValue()
+                searchStore.searchResult.value?.query,
+                contents
             )
         }
         // TODO apply design
@@ -105,6 +105,7 @@ class SearchFragment : DaggerFragment() {
         inflater.inflate(R.menu.menu_toolbar_search, menu)
         searchView = menu.findItem(R.id.menu_search).actionView as SearchView
         searchView?.let { searchView ->
+            searchView.setQuery(searchStore.searchResult.value?.query, false)
             searchView.isIconified = false
             searchView.clearFocus()
             searchView.queryHint = getString(R.string.session_search_hint)
