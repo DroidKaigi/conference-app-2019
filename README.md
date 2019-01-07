@@ -233,7 +233,7 @@ This project uses some modern Android libraries and source codes.
 * [Ktor](https://ktor.io/) (Jetbrains)
   * Android Client
   * Json
-* [OkHttp](http://square.github.io/okhttp/) (Jetbrains)
+* [OkHttp](http://square.github.io/okhttp/) (Square)
   * Client
   * LoggingInterceptor
 * [livedata-ktx](https://github.com/Shopify/livedata-ktx) (Shopify)
