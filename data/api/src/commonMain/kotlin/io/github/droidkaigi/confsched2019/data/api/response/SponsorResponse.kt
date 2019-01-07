@@ -5,5 +5,4 @@ interface SponsorResponse {
     val gold: List<SponsorItemResponse>
     val support: List<SponsorItemResponse>
     val tech: List<SponsorItemResponse>
-
 }
