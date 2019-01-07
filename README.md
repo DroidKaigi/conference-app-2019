@@ -1,4 +1,4 @@
-# DroidKaigi 2019 official Android app
+# ![](frontend/android/src/main/res/mipmap-hdpi/ic_launcher.png)DroidKaigi 2019 official Android app
 
 [DroidKaigi 2019](https://droidkaigi.jp/2019/en/) is a conference tailored for developers on 7th and 8th February 2019.
 
