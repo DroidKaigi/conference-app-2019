@@ -14,4 +14,5 @@ interface SessionResponse {
     val questionAnswers: List<QuestionAnswerResponse>
     val message: SessionMessageResponse?
     val isPlenumSession: Boolean
+    val sessionType: String?
 }

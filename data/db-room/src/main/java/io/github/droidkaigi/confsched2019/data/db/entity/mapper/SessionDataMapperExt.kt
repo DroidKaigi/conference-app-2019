@@ -68,7 +68,7 @@ fun SessionResponse.toSessionEntityImpl(
                 requireNotNull(language.translatedName?.en)
             ),
             message = message?.let {
-                MessageEntityImpl(it.ja!!, it.en!!)
+                MessageEntityImpl(requireNotNull(it.ja), requireNotNull(it.en))
             },
             category = CategoryEntityImpl(
                 requireNotNull(category.id),
@@ -77,25 +77,27 @@ fun SessionResponse.toSessionEntityImpl(
                 requireNotNull(category.translatedName?.en)
             ),
             intendedAudience = intendedAudience,
-            room = RoomEntityImpl(roomId, rooms.roomName(roomId))
+            room = RoomEntityImpl(roomId, rooms.roomName(roomId)),
+            sessionType = sessionType
         )
     } else {
         return SessionEntityImpl(
             id = id,
             isServiceSession = isServiceSession,
-            title = title,
             englishTitle = englishTitle,
+            title = title,
             desc = description,
             stime = dateFormat.parse(startsAt).utc.unixMillisLong,
             etime = dateFormat.parse(endsAt).utc.unixMillisLong,
             sessionFormat = null,
             language = null,
-            message = message?.let {
-                MessageEntityImpl(it.ja!!, it.en!!)
-            },
             category = null,
+            room = RoomEntityImpl(roomId, rooms.roomName(roomId)),
             intendedAudience = null,
-            room = RoomEntityImpl(roomId, rooms.roomName(roomId))
+            message = message?.let {
+                MessageEntityImpl(requireNotNull(it.ja), requireNotNull(it.en))
+            },
+            sessionType = sessionType
         )
     }
 }
