@@ -1,6 +1,6 @@
 # DroidKaigi 2019 official Android app
 
-[DroidKaigi 2019](https://droidkaigi.jp/2019/en/) is a conference tailored for developers on 8th and 9th February 2019.
+[DroidKaigi 2019](https://droidkaigi.jp/2019/en/) is a conference tailored for developers on 7th and 8th February 2019.
 
 [<img src="https://dply.me/b9riom/button/large" alt="Try it on your device via DeployGate">](https://dply.me/b9riom#install)
 
