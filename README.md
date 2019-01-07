@@ -2,7 +2,7 @@
 
 [DroidKaigi 2019](https://droidkaigi.jp/2019/en/) is a conference tailored for developers on 7th and 8th February 2019.
 
-[<img src="https://dply.me/b9riom/button/large" alt="Try it on your device via DeployGate">](https://dply.me/b9riom#install)
+You can download the binary built on master branch from [<img src="https://dply.me/ivqdhj/button/large" alt="Try it on your device via DeployGate">](https://dply.me/ivqdhj#install)
 
 
 # Features
@@ -197,6 +197,8 @@ Thank you for contributing!
 * Designer  
   * [Chihokotaro / Chihoko Watanabe](https://twitter.com/chihokotaro)
   * [mutoatu / Atsushi Muto](https://mutoatu.com/)
+* App Distribution
+  * DeployGate (https://deploygate.com)
 
 ## Credit
 This project uses some modern Android libraries and source codes.
