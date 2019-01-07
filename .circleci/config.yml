@@ -75,7 +75,7 @@ jobs:
           name: Upload an apk and create a distribution by app-manage procedure.
           command: |
             apk_path=$(find frontend/android/build/outputs/apk -name "*.apk" | head -1)
-            dpg procedure app-manage on-feature-branch --app "$apk_path" --android
+            dpg procedure app-manage on-feature-branch --app "$apk_path" --android | parse_dg_response
       - restore_cache: &restore_danger_cache
           keys: *all_keys_of_danger_cache
       - run: &bundle_install_for_danger

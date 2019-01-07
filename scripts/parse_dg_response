@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+set -eu
+set -o pipefail
+
+comment_to_github() {
+    local -r message_fd="$1" pr_number=$(basename $CI_PULL_REQUEST)
+
+
+    curl -sL -X POST \
+        -H "Content-type: application/json" \
+        -H "Accept: application/vnd.github.v3+json" \
+        -u "${DANGER_GITHUB_API_TOKEN}:x-oauth-basic" \
+        -d "$(cat $message_fd)" \
+            "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$pr_number/comments"
+}
+
+parse_response() {
+    local -r response="$(cat -)"
+
+    if [[ $(echo $response | jq ".error") != "false" ]]; then
+        // any error happened so it should be out as it is but to stderr
+        echo $response >2
+    else
+        distribution_url=$(echo $response | jq -r ".results.distribution.url")
+
+        comment_to_github <(jq -n --arg body "Your app is deployed! Try it via $distribution_url" '{ "body": $body }')
+
+        echo $response
+    fi
+}
+
+cat - | parse_response
