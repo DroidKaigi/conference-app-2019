@@ -15,11 +15,11 @@ comment_to_github() {
 
 parse_response() {
     local -r response="$(cat -)"
-    if [[ $(cat $response | jq ".error") != "false" ]]; then
+    if [[ $(echo $response | jq ".error") != "false" ]]; then
         // any error happened so it should be out as it is but to stderr
-        cat $response >2
+        echo $response >2
     else
-        distribution_url=$(cat $response | jq ".results.distribution.url")
+        distribution_url=$(echo $response | jq ".results.distribution.url")
 
         comment_to_github <(
 cat<EOF
@@ -27,7 +27,7 @@ Your app is deployed! Try it via $distribution_url
 EOF
         )
 
-        cat $response
+        echo $response
     fi
 }
 
