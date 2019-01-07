@@ -21,8 +21,7 @@ parse_response() {
     else
         distribution_url=$(echo $response | jq ".results.distribution.url")
 
-        comment_to_github <(
-cat<EOF
+        comment_to_github <(cat<<EOF
 Your app is deployed! Try it via $distribution_url
 EOF
         )
