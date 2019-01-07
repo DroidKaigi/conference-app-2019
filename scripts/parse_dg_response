@@ -4,13 +4,15 @@ set -eu
 set -o pipefail
 
 comment_to_github() {
-    local message_fd="$1"
+    local -r message_fd="$1" pr_number=$(basename $CI_PULL_REQUEST)
+
+
     curl -sL -X POST \
         -H "Content-type: application/json" \
-        -H "Accept: application/json" \
+        -H "Accept: application/vnd.github.v3+json" \
         -u "${DANGER_GITHUB_API_TOKEN}:x-oauth-basic" \
         -d "{ \"body\": \"$(cat $message_fd)\" }" \
-            "$CI_PULL_REQUEST"
+            "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$pr_number/comments"
 }
 
 parse_response() {
