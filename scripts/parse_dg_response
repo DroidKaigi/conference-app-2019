@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+set -eu
+set -o pipefail
+
+comment_to_github() {
+    local message_fd="$1"
+    curl -sL -X POST \
+        -H "Content-type: application/json" \
+        -H "Accept: application/json" \
+        -u "${DANGER_GITHUB_API_TOKEN}:x-oauth-basic" \
+        -d "{ \"body\": \"$(cat $message_fd)\" }" \
+            "$CI_PULL_REQUEST"
+}
+
+parse_response() {
+    local -r response="$(cat -)"
+    if [[ $(cat $response | jq ".error") != "false" ]]; then
+        // any error happened so it should be out as it is but to stderr
+        cat $response >2
+    else
+        distribution_url=$(cat $response | jq ".results.distribution.url")
+
+        comment_to_github <(
+cat<EOF
+Your app is deployed! Try it via $distribution_url
+EOF
+        )
+
+        cat $response
+    fi
+}
+
+cat - | parse_response
