@@ -108,9 +108,16 @@ jobs:
       - checkout
       - run: *init_bash
       - restore_cache: *restore_gradle_cache
-      - run: ./gradlew testDebugUnitTest --continue
-      - run: ./gradlew lintDebug --continue
-      - run: ./gradlew ktlint --continue
+      - run: ./gradlew testDebugUnitTest lintDebug ktlint --continue
+      - run:
+          name: Merge junit report files
+          command: |
+            merge_all_junit_files
+            cp "$MERGED_JUNIT_RESULT_FILE" build/all-junit.xml
+          when: always
+      - store_test_results:
+          path: build/all-junit.xml
+          when: always
       - restore_cache: *restore_danger_cache
       - run: *bundle_install_for_danger
       - run:
