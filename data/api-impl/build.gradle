@@ -40,6 +40,7 @@ dependencies {
     kapt Dep.Dagger.androidProcessor
 
     testImplementation Dep.Test.junit
+    testImplementation Dep.Test.slf4j
 }
 
 
