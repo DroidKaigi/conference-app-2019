@@ -31,5 +31,6 @@ dependencies {
 
     testImplementation Dep.Test.junit
     androidTestImplementation Dep.Test.testRunner
+    testImplementation Dep.Test.slf4j
 }
 

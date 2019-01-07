@@ -28,6 +28,8 @@ object Dep {
             val commonModuleTest = "org.jetbrains.kotlin:kotlin-test-common"
             val commonModuleTestAnnotations = "org.jetbrains.kotlin:kotlin-test-annotations-common"
         }
+
+        val slf4j = "org.slf4j:slf4j-simple:1.7.25"
     }
 
     object AndroidX {
