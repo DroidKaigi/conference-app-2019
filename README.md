@@ -195,7 +195,8 @@ Thank you for contributing!
 * Contributors
   * [GitHub : Contributors](https://github.com/DroidKaigi/conference-app-2019/graphs/contributors)
 * Designer  
-  * TBW
+  * [Chihokotaro / Chihoko Watanabe](https://twitter.com/chihokotaro)
+  * [mutoatu / Atsushi Muto](https://mutoatu.com/)
 
 ## Credit
 This project uses some modern Android libraries and source codes.
