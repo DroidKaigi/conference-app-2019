@@ -1,2 +1,3 @@
 export PATH="${REPOSITORY_ROOT}/scripts:$PATH"
 export PATH="${REPOSITORY_ROOT}/.circleci/scripts:$PATH"
+export MERGED_JUNIT_RESULT_FILE="$REPOSITORY_ROOT/merged_junit.xml"
