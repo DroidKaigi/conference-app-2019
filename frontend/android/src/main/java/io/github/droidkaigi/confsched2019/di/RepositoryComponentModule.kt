@@ -33,12 +33,14 @@ object RepositoryComponentModule {
 
     @JvmStatic @Provides @Singleton fun provideSponsorRepository(
         droidKaigiApi: DroidKaigiApi,
+        googleFormApi: GoogleFormApi,
         database: SessionDatabase,
         sponsorDatabase: SponsorDatabase,
         fireStore: FireStore
     ): SponsorRepository {
         return RepositoryComponent.builder()
             .droidKaigiApi(droidKaigiApi)
+            .googleFormApi(googleFormApi)
             .database(database)
             .sponsorDatabase(sponsorDatabase)
             .fireStore(fireStore)
