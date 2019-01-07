@@ -7,6 +7,7 @@ import io.github.droidkaigi.confsched2019.model.LocaledString
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionMessage
+import io.github.droidkaigi.confsched2019.model.SessionType
 
 private val startTime = DateTime.createAdjusted(2019, 2, 7, 10, 0)
 fun dummySessionData(): List<Session> {
@@ -17,7 +18,8 @@ fun dummySessionData(): List<Session> {
             startTime,
             startTime + 30.minutes,
             "session",
-            Room(0, "Hall")
+            Room(0, "Hall"),
+            SessionType.WelcomeTalk
         ),
         firstDummySpeechSession(),
         Session.SpeechSession(

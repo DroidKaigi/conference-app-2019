@@ -8,6 +8,7 @@ import io.github.droidkaigi.confsched2019.model.LocaledString
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionMessage
+import io.github.droidkaigi.confsched2019.model.SessionType
 import io.github.droidkaigi.confsched2019.model.Speaker
 
 fun SessionWithSpeakers.toSession(
@@ -26,7 +27,8 @@ fun SessionWithSpeakers.toSession(
             title = session.title,
             room = requireNotNull(session.room).let { room ->
                 Room(room.id, room.name)
-            }
+            },
+            sessionType = SessionType.of(session.sessionType)
         )
     } else {
         require(speakerIdList.isNotEmpty())

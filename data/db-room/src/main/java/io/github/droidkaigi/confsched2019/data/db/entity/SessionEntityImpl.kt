@@ -14,9 +14,10 @@ data class SessionEntityImpl(
     override var stime: Long,
     override var etime: Long,
     override var sessionFormat: String?,
+    override val sessionType: String?,
+    override val intendedAudience: String?,
     @Embedded override var language: LanguageEntityImpl?,
     @Embedded override val category: CategoryEntityImpl?,
     @Embedded override val room: RoomEntityImpl?,
-    override val intendedAudience: String?,
     @Embedded override val message: MessageEntityImpl?
 ) : SessionEntity

@@ -33,7 +33,8 @@ sealed class Session(
         override val startTime: DateTime,
         override val endTime: DateTime,
         val title: String,
-        override val room: Room
+        override val room: Room,
+        val sessionType: SessionType
     ) : Session(id, dayNumber, startTime, endTime, room)
 
     val startDayText by lazy { startTime.format("yyyy.M.d") }
