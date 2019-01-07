@@ -11,6 +11,19 @@ android.libraryVariants.all {
     it.generateBuildConfig.enabled = true
 }
 
+android {
+    defaultConfig {
+        buildConfigField "String", "API_ENDPOINT", "\"https://droidkaigi2019-dev.appspot.com/api\""
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "API_ENDPOINT", "\"https://droidkaigi-api.appspot.com/2019/api\""
+        }
+    }
+}
+
 dependencies {
     api project(":data:api")
 
