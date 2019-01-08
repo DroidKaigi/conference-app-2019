@@ -133,12 +133,7 @@ jobs:
       - run:
           name: Destroy the associated distribution by app-manage procedure.
           command: |
-            source <(dpg procedure app-manage expose)
-
-            # The env var cannot be fetched if a job is triggered by direct push.
-            if [[ -n "$DPG_DISTRIBUTION_NAME" ]] && [[ "$DPG_DISTRIBUTION_NAME" != "release" ]] && [[ "$DPG_DISTRIBUTION_NAME" != "master" ]]; then
-              dpg procedure app-manage on-deploy-branch --android --app-id io.github.droidkaigi.confsched2019.debug
-            fi
+            ./scripts/destroy_distribution
   placeholder:
     <<: *go_defaults
     steps:
