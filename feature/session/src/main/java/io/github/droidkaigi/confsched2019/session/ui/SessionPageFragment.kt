@@ -35,6 +35,7 @@ import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.widget.BottomSheetBehavior
+import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import me.tatarka.injectedvmprovider.ktx.injectedViewModelProvider
 import javax.inject.Inject
 import javax.inject.Provider
@@ -50,7 +51,7 @@ class SessionPageFragment : DaggerFragment() {
     @Inject lateinit var sessionPageStoreFactory: SessionPageStore.Factory
     @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
     val sessionPagesStore: SessionPagesStore by lazy {
-        injectedViewModelProvider[sessionPagesStoreProvider]
+        InjectedViewModelProviders.of(requireActivity())[sessionPagesStoreProvider]
     }
 
     private val sessionPageStore: SessionPageStore by lazy {
