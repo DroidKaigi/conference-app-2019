@@ -10,6 +10,7 @@ object Dep {
         val safeArgs =
             "android.arch.navigation:navigation-safe-args-gradle-plugin:${AndroidX.Navigation.version}"
         val jetifier = "com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta02"
+        val licensesPlugin = "com.google.android.gms:oss-licenses-plugin:0.9.4"
     }
 
     object Test {
@@ -86,6 +87,7 @@ object Dep {
 
     object PlayServices {
         val auth = "com.google.android.gms:play-services-auth:16.0.1"
+        val licensesPlugin = "com.google.android.gms:play-services-oss-licenses:16.0.1"
     }
 
     object Dagger {

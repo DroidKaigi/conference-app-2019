@@ -1,6 +1,8 @@
 package io.github.droidkaigi.confsched2019.about.ui.item
 
+import android.content.Intent
 import android.widget.Toast
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.xwray.groupie.Section
 import io.github.droidkaigi.confsched2019.about.R
 
@@ -32,7 +34,7 @@ class AboutSection : Section() {
                     R.string.about_license,
                     R.string.about_check
                 ) {
-                    Toast.makeText(it, "FIXME!!", Toast.LENGTH_SHORT).show()
+                    it.startActivity(Intent(it, OssLicensesMenuActivity::class.java))
                 },
                 AboutItem(
                     R.string.about_app_version,
