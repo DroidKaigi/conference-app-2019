@@ -13,7 +13,6 @@ dependencies {
     implementation project(':ext:android-extension')
     implementation project(':feature:system')
     implementation project(':model')
-    implementation project(':feature:system')
 
     implementation Dep.Kotlin.stdlibJvm
     api Dep.Kotlin.coroutines
