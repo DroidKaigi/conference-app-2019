@@ -1,11 +1,17 @@
 package io.github.droidkaigi.confsched2019.session.ui
 
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.emoji.widget.EmojiTextView
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import com.xwray.groupie.GroupAdapter
@@ -90,6 +96,9 @@ class SessionDetailFragment : DaggerFragment() {
 
     private fun applySessionLayout(session: Session.SpeechSession) {
         binding.session = session
+        // ５行以内に収まっているのならそのまま表示、6行以上だったら5行に収める
+        // 「続きを読む」を押下したら全部表示する
+        setEllipsisIfNeeded(binding.sessionDescription)
         binding.lang = defaultLang()
         @Suppress("StringFormatMatches") // FIXME
         binding.sessionTimeAndRoom.text = getString(
@@ -109,6 +118,21 @@ class SessionDetailFragment : DaggerFragment() {
             }
         groupAdapter.update(sessionItems)
     }
+
+    private fun setEllipsisIfNeeded(textView: EmojiTextView) {
+        textView.viewTreeObserver.addOnDrawListener {
+            if (textView.lineCount < 6) {
+                return@addOnDrawListener
+            }
+            val end = textView.layout.getLineStart(5)
+            val ellipsis = "…続きを読む"
+            val text = textView.text.subSequence(0, end-ellipsis.length).toString().plus(ellipsis)
+            val spannable = SpannableString(text)
+            spannable.setSpan(ForegroundColorSpan(Color.BLUE), text.lastIndex-ellipsis.length+1, text.lastIndex+1, Spannable.SPAN_COMPOSING)
+            binding.sessionDescription.setText(spannable, TextView.BufferType.SPANNABLE)
+        }
+    }
+
 }
 
 @Module
