@@ -122,6 +122,7 @@ class SearchFragment : DaggerFragment() {
                     return false
                 }
             })
+            searchView.maxWidth = Int.MAX_VALUE
             searchView.setOnCloseListener { false }
         }
     }
