@@ -43,4 +43,4 @@ main() {
 
 main || : # suppress an error
 
-echo "Tried to delete $DPG_DISTRIBUTION_NAME" >&2
+echo "Tried to delete ${DPG_DISTRIBUTION_NAME:-could not retrieve}" >&2
