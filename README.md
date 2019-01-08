@@ -20,8 +20,11 @@ You can download the binary built on master branch from [<img src="https://dply.
 We are always welcome your contribution!
 
 ## Requirements
-Android Studio 3.2.1
+Android Studio 3.2.1  
 Android Studio Kotlin Plugin 1.3.11-release-Studio3.2-1
+
+**Check out following status.**  
+`Preference` > `Languages & Frameworks` > `Kotlin Updates`
 
 ## How to find the tasks
 We use [GitHub issues](https://github.com/DroidKaigi/conference-app-2019/issues?q=is%3Aissue+is%3Aopen+label%3A%22welcome+contribute%22) to manage the tasks.
