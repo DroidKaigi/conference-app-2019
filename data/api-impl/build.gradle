@@ -25,6 +25,7 @@ kotlin {
         commonMain.dependencies {
             api project(":data:api")
             implementation Dep.Ktor.clientCommon
+            implementation Dep.Kotlin.serialization
         }
     }
 }
@@ -45,7 +46,6 @@ android {
 dependencies {
 
     implementation Dep.Kotlin.stdlibJvm
-    implementation Dep.Kotlin.serialization
     implementation Dep.Ktor.clientAndroid
     implementation Dep.Ktor.jsonJvm
     implementation Dep.OkHttp.client
