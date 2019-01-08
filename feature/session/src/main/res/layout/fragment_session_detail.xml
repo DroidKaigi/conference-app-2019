@@ -6,7 +6,7 @@
     >
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="session"
             type="io.github.droidkaigi.confsched2019.model.Session.SpeechSession"
@@ -177,6 +177,18 @@
                         android:textColor="@color/white"
                         app:chipBackgroundColor="#7982e1"
                         tools:text="Japanese"
+                        />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/simultaneous_interpretation_chip"
+                        style="@style/Widget.MaterialComponents.Chip.Action"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{session.isInterpretationTarget ? View.VISIBLE : View.GONE}"
+                        android:text="@string/session_simultaneous_interpretation"
+                        android:textAppearance="?textAppearanceCaption"
+                        android:textColor="@color/white"
+                        app:chipBackgroundColor="#7982e1"
                         />
 
                     <com.google.android.material.chip.Chip

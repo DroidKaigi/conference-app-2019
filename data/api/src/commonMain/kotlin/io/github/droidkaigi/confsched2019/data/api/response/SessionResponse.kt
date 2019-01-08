@@ -15,4 +15,5 @@ interface SessionResponse {
     val message: SessionMessageResponse?
     val isPlenumSession: Boolean
     val sessionType: String?
+    val interpretationTarget: Boolean
 }
