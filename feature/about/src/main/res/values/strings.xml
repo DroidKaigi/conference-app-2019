@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="about_what_is_droidkaigi">About DroidKaigi</string>
-    <string name="about_description_droidkaigi">DroidKaigi is a conference tailored for Android developers. It\'s schedule to take place on the 7th and 8th of February 2019.</string>
+    <string name="about_what_is_droidkaigi">What is DroidKaigi?</string>
+    <string name="about_description_droidkaigi">DroidKaigi is a conference tailored for Android developers. It\'s scheduled to take place on the 7th and 8th of February 2019.</string>
     <string name="about_access_to_place">Directions</string>
     <string name="about_check_map">Open with Maps</string>
     <string name="about_staff_list">Operation Team</string>
