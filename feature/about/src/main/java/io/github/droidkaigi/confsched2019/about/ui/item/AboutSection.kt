@@ -5,22 +5,24 @@ import androidx.fragment.app.FragmentActivity
 import androidx.navigation.Navigation
 import com.xwray.groupie.Section
 import io.github.droidkaigi.confsched2019.about.R
+import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
 import javax.inject.Inject
 
 class AboutSection @Inject constructor(val activity: FragmentActivity) : Section() {
 
-    fun setupAboutThisApps(
-        openUrl: ((String) -> Unit)
-    ) {
+    @Inject lateinit var activityActionCreator: ActivityActionCreator
+
+    fun setupAboutThisApps() {
         update(
             listOf(
                 AboutHeaderItem(
                     "https://twitter.com/droidkaigi",
                     "https://github.com/DroidKaigi/conference-app-2018",
                     "https://www.youtube.com/channel/UCgK6L-PKx2OZBuhrQ6mmQZw",
-                    "https://medium.com/droidkaigi",
-                    openUrl
-                ),
+                    "https://medium.com/droidkaigi"
+                ) {
+                    activityActionCreator.openUrl(it)
+                },
                 AboutItem(
                     R.string.about_access_to_place,
                     R.string.about_check_map

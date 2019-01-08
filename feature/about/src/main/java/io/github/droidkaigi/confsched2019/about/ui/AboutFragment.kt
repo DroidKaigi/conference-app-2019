@@ -26,8 +26,6 @@ class AboutFragment : DaggerFragment() {
     private lateinit var binding: FragmentAboutBinding
     @Inject lateinit var aboutSection: AboutSection
 
-    @Inject lateinit var activityActionCreator: ActivityActionCreator
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -67,9 +65,7 @@ class AboutFragment : DaggerFragment() {
             )
             (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         }
-        aboutSection.setupAboutThisApps() {
-            activityActionCreator.openUrl(it)
-        }
+        aboutSection.setupAboutThisApps()
     }
 }
 
