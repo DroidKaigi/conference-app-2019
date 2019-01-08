@@ -82,13 +82,20 @@ class FilterChip @JvmOverloads constructor(
             }
         }
 
+    var onCheckedChangeListener: OnCheckedChangeListener? = null
+
     private var progress = 0f
         set(value) {
             if (field != value) {
+                val prevChecked = isChecked
                 field = value
+                val newChecked = isChecked
                 postInvalidateOnAnimation()
                 if (value == 0f || value == 1f) {
                     updateContentDescription()
+                }
+                if (newChecked != prevChecked) {
+                    onCheckedChangeListener?.onCheckedChanged(this, newChecked)
                 }
             }
         }
@@ -147,6 +154,7 @@ class FilterChip @JvmOverloads constructor(
         showIcons = a.getBoolean(R.styleable.FilterChip_showIcons, true)
         a.recycle()
         clipToOutline = true
+        setOnClickListener { toggleWithAnimation() }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -275,11 +283,19 @@ class FilterChip @JvmOverloads constructor(
     override fun isChecked() = progress == 1f
 
     override fun toggle() {
-        progress = if (progress == 0f) 1f else 0f
+        progress = if (isChecked) 0f else 1f
     }
 
     override fun setChecked(checked: Boolean) {
         progress = if (checked) 1f else 0f
+    }
+
+    fun toggleWithAnimation() {
+        setCheckedWithAnimation(!isChecked)
+    }
+
+    fun setCheckedWithAnimation(checked: Boolean) {
+        animateCheckedAndInvoke(checked, null)
     }
 
     override fun verifyDrawable(who: Drawable): Boolean {
@@ -330,8 +346,20 @@ class FilterChip @JvmOverloads constructor(
         return width.toInt()
     }
 
+    interface OnCheckedChangeListener {
+        fun onCheckedChanged(chip: FilterChip, isChecked: Boolean)
+    }
+
     companion object {
         private const val SELECTING_DURATION = 350L
         private const val DESELECTING_DURATION = 200L
+    }
+}
+
+fun FilterChip.onCheckedChanged(action: (FilterChip, Boolean) -> Unit) {
+    onCheckedChangeListener = object : FilterChip.OnCheckedChangeListener {
+        override fun onCheckedChanged(chip: FilterChip, isChecked: Boolean) {
+            action(chip, isChecked)
+        }
     }
 }
