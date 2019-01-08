@@ -148,9 +148,9 @@ class SpeechSessionItem @AssistedInject constructor(
     private fun loadImage(
         textView: TextView,
         imageUrl: String?,
-        circleCrop: Boolean?,
+        circleCrop: Boolean,
         rawPlaceHolder: Drawable?,
-        placeHolderTint: Int?,
+        placeHolderTint: Int,
         widthDp: Int = 16,
         heightDp: Int = 16
     ) {
@@ -166,7 +166,7 @@ class SpeechSessionItem @AssistedInject constructor(
             DrawableCompat.wrap(
                 rawPlaceHolder ?: return@run null
             )?.apply {
-                setTint(placeHolderTint ?: return@run this)
+                setTint(placeHolderTint)
             }
         }
         imageUrl ?: run {
@@ -179,7 +179,7 @@ class SpeechSessionItem @AssistedInject constructor(
             .get()
             .load(imageUrl)
             .apply {
-                if (circleCrop == true) {
+                if (circleCrop) {
                     transform(CropCircleTransformation())
                 }
                 if (placeHolder != null) {
