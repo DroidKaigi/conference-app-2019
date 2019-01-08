@@ -6,9 +6,9 @@ enum class SessionType(val id: String) {
     Reserved("reserved"),
     Codelabs("codelabs"),
     FiresideChat("fireside_chat"),
-    Lunch("fireside_chat"),
-    Break("fireside_chat"),
-    AfterParty("fireside_chat"),
+    Lunch("lunch"),
+    Break("break"),
+    AfterParty("after_party"),
     Unknown("unknown");
 
     companion object {
