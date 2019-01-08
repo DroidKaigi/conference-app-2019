@@ -9,24 +9,22 @@ get_prs() {
 }
 
 get_pr_meta() {
-    local branch_name="$1"
-    cat - | jq -r  --arg branch_name "$branch_name" '.[] | select(.head.label == $branch_name and .head.repo.fork == true) | .number'
+    local author_name="$1" ref="$2"
+    cat - | jq -r --arg author_name "$author_name" --arg ref "$ref" '.[] | select(.head.ref == $ref and .head.user.login == $author_name and .head.repo.fork == true) | .number'
 }
 
 main() {
     local -r branch_base=$(git log --oneline -1 --format="%s" | grep "Merge pull request" | awk '$0=$NF')
 
     if [[ -z "$branch_base" ]]; then
-        echo "It may not be a pull request. exit with zero." >2
+        echo "It may not be a pull request. exit with zero." >&2
         exit 0
     fi
 
     local -r username=$(echo $branch_base | tr '/' ' ' | awk '$0=$1');
-    local branch_name=$(echo $branch_base | sed "s/$branch_name\///")
+    local branch_name=$(echo $branch_base | sed "s/$username\///")
 
-    local -r label="$username:$branch_name"
-
-    local -r pr_num=$(get_prs | get_pr_meta)
+    local -r pr_num=$(get_prs | get_pr_meta "$username" "$branch_name")
 
     if [[ -n "$pr_num" ]]; then
         branch_name="pull/$pr_num"
@@ -39,3 +37,5 @@ main() {
 }
 
 main || : # suppress an error
+
+echo "Tried to delete $DPG_DISTRIBUTION_NAME" >&2
