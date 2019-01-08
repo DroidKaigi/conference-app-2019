@@ -5,7 +5,9 @@ import io.github.droidkaigi.confsched2019.about.R
 import io.github.droidkaigi.confsched2019.about.databinding.HeaderAboutBinding
 import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
 
-class AboutHeaderItem(val activityActionCreator: ActivityActionCreator) : BindableItem<HeaderAboutBinding>() {
+class AboutHeaderItem(
+    val activityActionCreator: ActivityActionCreator
+) : BindableItem<HeaderAboutBinding>() {
 
     override fun getLayout(): Int = R.layout.header_about
 

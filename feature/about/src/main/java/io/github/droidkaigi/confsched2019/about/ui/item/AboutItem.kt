@@ -1,12 +1,9 @@
 package io.github.droidkaigi.confsched2019.about.ui.item
 
 import android.content.Context
-import android.view.View
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import com.xwray.groupie.databinding.BindableItem
-import com.xwray.groupie.databinding.ViewHolder
 import io.github.droidkaigi.confsched2019.about.R
 import io.github.droidkaigi.confsched2019.about.databinding.ItemAboutBinding
 
