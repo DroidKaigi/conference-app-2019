@@ -303,8 +303,8 @@
             android:id="@+id/session_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
             android:src="@{session.isFavorited? @drawable/ic_bookmark_black_24dp : @drawable/ic_bookmark_border_black_24dp}"
+            app:backgroundTint="@color/colorPrimary"
             app:layout_anchor="@id/bottom_app_bar"
             app:tint="@color/white"
             />
