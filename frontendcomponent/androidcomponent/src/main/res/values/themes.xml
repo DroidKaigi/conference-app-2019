@@ -21,5 +21,10 @@
         <item name="textAppearanceBody1">@style/TextAppearance.App.Body1</item>
         <item name="textAppearanceBody2">@style/TextAppearance.App.Body2</item>
         <item name="textAppearanceCaption">@style/TextAppearance.App.Caption</item>
+        <item name="searchViewStyle">@style/SearchViewStyle</item>
+    </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="searchHintIcon">@null</item>
     </style>
 </resources>
