@@ -44,7 +44,7 @@ You can check [generated module dependency diagram](project.dot.png)
 
 ## Unidirectional data flow(Flux-based) Architecture
 
-Unidirectional data flow(Flux-based) Architecture with `Kotlin Coroutines` and `AndroidX` Libraries(`LiveData`, `ViewModel`, `Room`) `DataBinding`, `Dagger` and `AssistedInejct`, `Firebase` etc.
+Unidirectional data flow(Flux-based) Architecture with `Kotlin Coroutines` and `AndroidX` Libraries(`LiveData`, `ViewModel`, `Room`) `DataBinding`, `Dagger` and `AssistedInject`, `Firebase` etc.
 
 ![](images/architecture.png)
 
