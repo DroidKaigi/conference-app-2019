@@ -103,6 +103,7 @@ class SearchFragment : DaggerFragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_toolbar_search, menu)
+        menu.findItem(R.id.search)?.isVisible = false
         searchView = menu.findItem(R.id.menu_search).actionView as SearchView
         searchView?.let { searchView ->
             searchView.setQuery(searchStore.query, false)
@@ -122,6 +123,7 @@ class SearchFragment : DaggerFragment() {
                     return false
                 }
             })
+            searchView.maxWidth = Int.MAX_VALUE
             searchView.setOnCloseListener { false }
         }
     }
