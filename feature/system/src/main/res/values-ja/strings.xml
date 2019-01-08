@@ -3,4 +3,5 @@
     <string name="system_error_network">インターネット接続を確認して後ほど再度お試しください。</string>
     <string name="system_error_server">サーバーエラーです。後ほど再度お試しください。</string>
     <string name="system_error_unknown">不明なエラーです。後ほど再度お試しください。</string>
+    <string name="venue_place_name">ベルサール新宿グランドコンファレンスセンター</string>
 </resources>

@@ -8,9 +8,10 @@ import io.github.droidkaigi.confsched2019.about.R
 import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
 import javax.inject.Inject
 
-class AboutSection @Inject constructor(val activity: FragmentActivity) : Section() {
-
-    @Inject lateinit var activityActionCreator: ActivityActionCreator
+class AboutSection @Inject constructor(
+    val activity: FragmentActivity,
+    val activityActionCreator: ActivityActionCreator
+) : Section() {
 
     fun setupAboutThisApps() {
         update(
@@ -20,7 +21,7 @@ class AboutSection @Inject constructor(val activity: FragmentActivity) : Section
                     R.string.about_access_to_place,
                     R.string.about_check_map
                 ) {
-                    Toast.makeText(it, "FIXME!!", Toast.LENGTH_SHORT).show()
+                    activityActionCreator.openVenueOnGoogleMap()
                 },
                 AboutItem(
                     R.string.about_staff_list,
