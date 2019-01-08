@@ -1,5 +1,8 @@
 package io.github.droidkaigi.confsched2019.about.ui.item
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
 import com.xwray.groupie.Section
 import io.github.droidkaigi.confsched2019.about.R
@@ -14,7 +17,7 @@ class AboutSection : Section() {
                     R.string.about_access_to_place,
                     R.string.about_check_map
                 ) {
-                    Toast.makeText(it, "FIXME!!", Toast.LENGTH_SHORT).show()
+                    openVenueOnGoogleMap(it)
                 },
                 AboutItem(
                     R.string.about_staff_list,
@@ -40,5 +43,22 @@ class AboutSection : Section() {
                 )
             )
         )
+    }
+
+    private fun openVenueOnGoogleMap(context: Context) {
+        val venueName = context.getString(R.string.venue_place_name)
+        Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("geo:0,0?q=$LATITUDE_LOCATION+$LONGITUDE_LOCATION($venueName)")
+        ).apply {
+            setPackage("com.google.android.apps.maps")
+        }.let { intent ->
+            context.startActivity(intent)
+        }
+    }
+
+    companion object {
+        const val LATITUDE_LOCATION = "35.696065"
+        const val LONGITUDE_LOCATION = "139.690426"
     }
 }
