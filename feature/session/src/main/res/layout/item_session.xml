@@ -7,8 +7,6 @@
 
     <data>
 
-        <import type="android.view.View"/>
-
         <variable
             name="session"
             type="io.github.droidkaigi.confsched2019.model.Session.SpeechSession"
@@ -143,7 +141,7 @@
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.App.Caption"
             android:textColor="@color/colorPrimary"
-            android:visibility="@{session.message == null ? View.GONE : View.VISIBLE}"
+            app:visibleGone="@{session.message != null}"
             app:layout_constraintEnd_toEndOf="@id/title"
             app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintTop_toBottomOf="@id/chip_group"
@@ -165,7 +163,7 @@
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.App.Caption"
             android:textColor="@color/colorSecondary"
-            android:visibility="@{session.isFinished ? View.VISIBLE : View.GONE}"
+            app:visibleGone="@{session.isFinished}"
             app:layout_constraintEnd_toEndOf="@id/title"
             app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintTop_toBottomOf="@id/message"
