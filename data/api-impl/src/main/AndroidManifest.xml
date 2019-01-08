@@ -1,6 +1,6 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.github.droidkaigi.confsched2019"
+    package="io.github.droidkaigi.confsched2019.api"
     >
 
     <uses-permission android:name="android.permission.INTERNET"/>
