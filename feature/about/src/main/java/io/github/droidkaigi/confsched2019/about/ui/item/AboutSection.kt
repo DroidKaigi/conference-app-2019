@@ -1,16 +1,17 @@
 package io.github.droidkaigi.confsched2019.about.ui.item
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.Navigation
 import com.xwray.groupie.Section
 import io.github.droidkaigi.confsched2019.about.R
+import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
 import javax.inject.Inject
 
-class AboutSection @Inject constructor(val activity: FragmentActivity) : Section() {
+class AboutSection @Inject constructor(
+    val activity: FragmentActivity,
+    val activityActionCreator: ActivityActionCreator
+) : Section() {
 
     fun setupAboutThisApps() {
         update(
@@ -20,7 +21,7 @@ class AboutSection @Inject constructor(val activity: FragmentActivity) : Section
                     R.string.about_access_to_place,
                     R.string.about_check_map
                 ) {
-                    openVenueOnGoogleMap(it)
+                    activityActionCreator.openVenueOnGoogleMap()
                 },
                 AboutItem(
                     R.string.about_staff_list,
@@ -47,22 +48,5 @@ class AboutSection @Inject constructor(val activity: FragmentActivity) : Section
                 )
             )
         )
-    }
-
-    private fun openVenueOnGoogleMap(context: Context) {
-        val venueName = context.getString(R.string.venue_place_name)
-        Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse("geo:0,0?q=$LATITUDE_LOCATION+$LONGITUDE_LOCATION($venueName)")
-        ).apply {
-            setPackage("com.google.android.apps.maps")
-        }.let { intent ->
-            context.startActivity(intent)
-        }
-    }
-
-    companion object {
-        const val LATITUDE_LOCATION = "35.696065"
-        const val LONGITUDE_LOCATION = "139.690426"
     }
 }
