@@ -1,6 +1,6 @@
 package io.github.droidkaigi.confsched2019.data.api
 
-import io.github.droidkaigi.confsched2019.BuildConfig
+import io.github.droidkaigi.confsched2019.api.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
 

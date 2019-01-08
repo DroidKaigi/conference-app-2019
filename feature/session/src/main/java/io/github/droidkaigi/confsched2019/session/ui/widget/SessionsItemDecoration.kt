@@ -23,8 +23,11 @@ class SessionsItemDecoration(
     private val textLeftSpace = resources.getDimensionPixelSize(
         R.dimen.session_bottom_sheet_left_time_text_left
     )
-    private val textMinTop = resources.getDimensionPixelSize(
-        R.dimen.session_bottom_sheet_left_time_text_top_min
+    private val textPaddingTop = resources.getDimensionPixelSize(
+        R.dimen.session_bottom_sheet_left_time_text_padding_top
+    )
+    private val textPaddingBottom = resources.getDimensionPixelSize(
+        R.dimen.session_bottom_sheet_left_time_text_padding_bottom
     )
 
     val paint = Paint().apply {
@@ -45,37 +48,34 @@ class SessionsItemDecoration(
             val view = parent.getChildAt(i)
             val position = parent.getChildAdapterPosition(view)
             if (position == -1 || position >= groupAdapter.itemCount) return
-            val item = groupAdapter.getItem(position)
-            val previousItem = if (position - 1 < 0) {
-                null
-            } else {
-                groupAdapter.getItem(position - 1)
+
+            val time = getSessionTime(position) ?: continue
+
+            if (lastTime == time) continue
+            lastTime = time
+
+            val nextTime = getSessionTime(position + 1)
+
+            var textY = view.top.coerceAtLeast(0) + textPaddingTop + textSize
+            if (time != nextTime) {
+                textY = textY.coerceAtMost(view.bottom - textPaddingBottom)
             }
-            if (item is SessionItem) {
-                val time = item.session.startTime.toString("HH:mm")
-                val previousTime = if (previousItem is SessionItem) {
-                    previousItem.session.startTime.toString("HH:mm")
-                } else {
-                    null
-                }
 
-                if (lastTime == time) continue
-
-                lastTime = time
-
-                val yPosition = if (view.top < 0 || time == previousTime) {
-                    textSize
-                } else {
-                    view.top + textSize
-                }
-
-                c.drawText(
-                    time,
-                    textLeftSpace.toFloat(),
-                    yPosition.toFloat(),
-                    paint
-                )
-            }
+            c.drawText(
+                time,
+                textLeftSpace.toFloat(),
+                textY.toFloat(),
+                paint
+            )
         }
+    }
+
+    private fun getSessionTime(position: Int): String? {
+        if (position < 0 || position >= groupAdapter.itemCount) {
+            return null
+        }
+
+        val item = groupAdapter.getItem(position) as? SessionItem ?: return null
+        return item.session.startTime.toString("HH:mm")
     }
 }

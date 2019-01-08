@@ -7,8 +7,6 @@
 
     <data>
 
-        <import type="android.view.View"/>
-
         <variable
             name="session"
             type="io.github.droidkaigi.confsched2019.model.Session.SpeechSession"
@@ -125,6 +123,7 @@
                     android:paddingBottom="2dp"
                     android:text="@{session.desc}"
                     android:textAlignment="viewStart"
+                    android:textIsSelectable="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider1"
@@ -200,7 +199,7 @@
                     android:contentDescription="@null"
                     android:layerType="software"
                     android:src="@drawable/shape_dashed_line"
-                    android:visibility="@{session.isFinished ? View.VISIBLE : View.GONE}"
+                    app:visibleGone="@{session.isFinished}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_tags"
@@ -214,7 +213,7 @@
                     android:layout_marginTop="26dp"
                     android:text="@string/session_detail_survey"
                     android:textAppearance="@style/TextAppearance.App.Subtitle1"
-                    android:visibility="@{session.isFinished ? View.VISIBLE : View.GONE}"
+                    app:visibleGone="@{session.isFinished}"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider3"
                     />
@@ -226,7 +225,7 @@
                     android:text="@string/session_detail_go_to_survey"
                     android:textAppearance="@style/TextAppearance.App.Subtitle1"
                     android:textColor="@color/colorSecondary"
-                    android:visibility="@{session.isFinished ? View.VISIBLE : View.GONE}"
+                    app:visibleGone="@{session.isFinished}"
                     app:layout_constraintBaseline_toBaselineOf="@id/session_survey_title"
                     app:layout_constraintEnd_toEndOf="@id/session_title"
                     />
@@ -279,7 +278,7 @@
                     android:maxLines="3"
                     android:paddingBottom="2dp"
                     android:textAlignment="viewStart"
-                    android:visibility="@{session.message == null ? View.GONE : View.VISIBLE}"
+                    app:visibleGone="@{session.message != null}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/session_speakers"
@@ -302,8 +301,8 @@
             android:id="@+id/session_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
             android:src="@{session.isFavorited? @drawable/ic_bookmark_black_24dp : @drawable/ic_bookmark_border_black_24dp}"
+            app:backgroundTint="@color/colorPrimary"
             app:layout_anchor="@id/bottom_app_bar"
             app:tint="@color/white"
             />

@@ -7,7 +7,7 @@
     <string name="venue_place_name">ベルサール新宿グランドコンファレンスセンター</string>
     <string name="about_staff_list">スタッフリスト</string>
     <string name="about_check">見てみる</string>
-    <string name="about_privacy_policy">プライバシーポシリー</string>
+    <string name="about_privacy_policy">プライバシーポリシー</string>
     <string name="about_license">ライセンス</string>
     <string name="about_app_version">アプリバージョン</string>
 </resources>
