@@ -13,8 +13,6 @@ class AboutSection @Inject constructor(
     val activityActionCreator: ActivityActionCreator
 ) : Section() {
 
-    @Inject lateinit var activityActionCreator: ActivityActionCreator
-
     fun setupAboutThisApps() {
         update(
             listOf(
