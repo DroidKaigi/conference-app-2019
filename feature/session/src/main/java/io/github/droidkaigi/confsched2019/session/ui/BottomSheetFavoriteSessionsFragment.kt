@@ -101,6 +101,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
 
             groupAdapter.update(items)
             applyTitleText()
+            binding.shouldShowEmptyStateView = items.isEmpty()
         }
         sessionPageStore.filterSheetState.changed(viewLifecycleOwner) { newState ->
             if (newState == BottomSheetBehavior.STATE_EXPANDED ||

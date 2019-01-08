@@ -11,78 +11,104 @@
                 name="isCollapsed"
                 type="Boolean"
         />
-
+        <variable
+                name="shouldShowEmptyStateView"
+                type="Boolean"
+        />
     </data>
 
     <!-- TODO: rename ids -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg_bottom_sheet_dialog_fragment"
-        tools:context="io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment"
-        >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_bottom_sheet_dialog_fragment"
+            tools:context="io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment"
+    >
 
         <TextView
-            android:id="@+id/sessions_bottom_sheet_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:fontFamily="@font/lekton"
-            android:gravity="center_vertical"
-            android:textAppearance="@style/TextAppearance.App.Headline5"
-            android:textColor="@color/gray3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+                android:id="@+id/sessions_bottom_sheet_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/lekton"
+                android:gravity="center_vertical"
+                android:textAppearance="@style/TextAppearance.App.Headline5"
+                android:textColor="@color/gray3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+        />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/sessions_bottom_sheet_show_filter_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:gravity="center_vertical"
-            android:text="@string/session_filter_button"
-            android:textColor="@color/gray2"
-            app:visibleGone="@{!isCollapsed}"
-            app:chipBackgroundColor="@color/gray4"
-            app:chipIcon="@drawable/ic_filter_list_black_24dp"
-            app:chipIconTint="@color/gray3"
-            app:layout_constraintBaseline_toBaselineOf="@id/sessions_bottom_sheet_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+                android:id="@+id/sessions_bottom_sheet_show_filter_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_vertical"
+                android:text="@string/session_filter_button"
+                android:textColor="@color/gray2"
+                app:visibleGone="@{!isCollapsed}"
+                app:chipBackgroundColor="@color/gray4"
+                app:chipIcon="@drawable/ic_filter_list_black_24dp"
+                app:chipIconTint="@color/gray3"
+                app:layout_constraintBaseline_toBaselineOf="@id/sessions_bottom_sheet_title"
+                app:layout_constraintEnd_toEndOf="parent"
+        />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/sessions_bottom_sheet_hide_filter_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:gravity="center_vertical"
-            android:paddingEnd="@dimen/session_bottom_sheet_filter_text_padding"
-            android:paddingStart="@dimen/session_bottom_sheet_filter_text_padding"
-            app:visibleGone="@{isCollapsed}"
-            app:chipBackgroundColor="@color/gray4"
-            app:chipIcon="@drawable/ic_arrow_upward_black_24dp"
-            app:chipIconTint="@color/gray3"
-            app:iconEndPadding="@dimen/session_bottom_sheet_filter_icon_padding"
-            app:iconStartPadding="@dimen/session_bottom_sheet_filter_icon_padding"
-            app:layout_constraintBaseline_toBaselineOf="@id/sessions_bottom_sheet_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:textEndPadding="@dimen/session_bottom_sheet_filter_text_padding"
-            app:textStartPadding="@dimen/session_bottom_sheet_filter_text_padding"
-            />
+                android:id="@+id/sessions_bottom_sheet_hide_filter_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_vertical"
+                android:paddingEnd="@dimen/session_bottom_sheet_filter_text_padding"
+                android:paddingStart="@dimen/session_bottom_sheet_filter_text_padding"
+                app:visibleGone="@{isCollapsed}"
+                app:chipBackgroundColor="@color/gray4"
+                app:chipIcon="@drawable/ic_arrow_upward_black_24dp"
+                app:chipIconTint="@color/gray3"
+                app:iconEndPadding="@dimen/session_bottom_sheet_filter_icon_padding"
+                app:iconStartPadding="@dimen/session_bottom_sheet_filter_icon_padding"
+                app:layout_constraintBaseline_toBaselineOf="@id/sessions_bottom_sheet_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:textEndPadding="@dimen/session_bottom_sheet_filter_text_padding"
+                app:textStartPadding="@dimen/session_bottom_sheet_filter_text_padding"
+        />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/sessions_recycler"
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="16dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sessions_bottom_sheet_title"
+                android:id="@+id/sessions_recycler"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                app:visibleGone="@{!shouldShowEmptyStateView}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sessions_bottom_sheet_title"
+        />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/sessions_empty_state_view"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                app:visibleGone="@{shouldShowEmptyStateView}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sessions_bottom_sheet_title">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      app:layout_constraintBottom_toBottomOf="parent"
+                      app:layout_constraintEnd_toEndOf="parent"
+                      app:layout_constraintStart_toStartOf="parent"
+                      app:layout_constraintTop_toTopOf="parent"
+                      android:text="@string/session_favorite_empty"
+                      android:textSize="20sp"
             />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
