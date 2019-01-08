@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.ui.schedule.filters
+package io.github.droidkaigi.confsched2019.widget
 
 import android.animation.ValueAnimator
 import android.content.Context
@@ -43,21 +43,20 @@ import androidx.core.content.res.getDrawableOrThrow
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.withScale
 import androidx.core.graphics.withTranslation
-import com.google.samples.apps.iosched.R
-import com.google.samples.apps.iosched.util.lerp
-import com.google.samples.apps.iosched.util.textWidth
+import com.google.android.material.math.MathUtils.lerp
+import io.github.droidkaigi.confsched2019.widget.component.R
 
 /**
  * A custom view for displaying filters. Allows a custom presentation of the tag color and selection
  * state.
  */
-class EventFilterView @JvmOverloads constructor(
+class FilterChip @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr), Checkable {
 
-    var color: Int = 0xffff00ff.toInt()
+    var color: Int = 0
         set(value) {
             if (field != value) {
                 field = value
@@ -68,7 +67,7 @@ class EventFilterView @JvmOverloads constructor(
 
     var selectedTextColor: Int? = null
 
-    var text: CharSequence? = null
+    var text: CharSequence = ""
         set(value) {
             field = value
             updateContentDescription()
@@ -118,32 +117,34 @@ class EventFilterView @JvmOverloads constructor(
     init {
         val a = context.obtainStyledAttributes(
             attrs,
-            R.styleable.EventFilterView,
-            R.attr.eventFilterViewStyle,
-            R.style.Widget_IOSched_EventFilters
+            R.styleable.FilterChip,
+            R.attr.filterChipStyle,
+            0
         )
         outlinePaint = Paint(ANTI_ALIAS_FLAG).apply {
-            color = a.getColorOrThrow(R.styleable.EventFilterView_android_strokeColor)
-            strokeWidth = a.getDimensionOrThrow(R.styleable.EventFilterView_outlineWidth)
+            color = a.getColorOrThrow(R.styleable.FilterChip_strokeColor)
+            strokeWidth = a.getDimensionOrThrow(R.styleable.FilterChip_strokeWidth)
             style = STROKE
         }
-        defaultTextColor = a.getColorOrThrow(R.styleable.EventFilterView_android_textColor)
+        defaultTextColor = a.getColorOrThrow(R.styleable.FilterChip_android_textColor)
+        selectedTextColor = a.getColor(R.styleable.FilterChip_selectedTextColor, 0)
         textPaint = TextPaint(ANTI_ALIAS_FLAG).apply {
             color = defaultTextColor
-            textSize = a.getDimensionOrThrow(R.styleable.EventFilterView_android_textSize)
+            textSize = a.getDimensionOrThrow(R.styleable.FilterChip_android_textSize)
         }
         dotPaint = Paint(ANTI_ALIAS_FLAG)
-        clear = a.getDrawableOrThrow(R.styleable.EventFilterView_clearIcon).apply {
+        color = a.getColor(R.styleable.FilterChip_android_color, 0)
+        clear = a.getDrawableOrThrow(R.styleable.FilterChip_clearIcon).apply {
             setBounds(
                 -intrinsicWidth / 2, -intrinsicHeight / 2, intrinsicWidth / 2, intrinsicHeight / 2
             )
         }
-        touchFeedback = a.getDrawableOrThrow(R.styleable.EventFilterView_foreground).apply {
-            callback = this@EventFilterView
+        touchFeedback = a.getDrawableOrThrow(R.styleable.FilterChip_foreground).apply {
+            callback = this@FilterChip
         }
-        padding = a.getDimensionPixelSizeOrThrow(R.styleable.EventFilterView_android_padding)
-        isChecked = a.getBoolean(R.styleable.EventFilterView_android_checked, false)
-        showIcons = a.getBoolean(R.styleable.EventFilterView_showIcons, true)
+        padding = a.getDimensionPixelSizeOrThrow(R.styleable.FilterChip_android_padding)
+        isChecked = a.getBoolean(R.styleable.FilterChip_android_checked, false)
+        showIcons = a.getBoolean(R.styleable.FilterChip_showIcons, true)
         a.recycle()
         clipToOutline = true
     }
@@ -281,7 +282,7 @@ class EventFilterView @JvmOverloads constructor(
         progress = if (checked) 1f else 0f
     }
 
-    override fun verifyDrawable(who: Drawable?): Boolean {
+    override fun verifyDrawable(who: Drawable): Boolean {
         return super.verifyDrawable(who) || who == touchFeedback
     }
 
@@ -302,15 +303,31 @@ class EventFilterView @JvmOverloads constructor(
 
     private fun createLayout(textWidth: Int) {
         textLayout = if (SDK_INT >= M) {
-            StaticLayout.Builder.obtain(text, 0, text?.length!!, textPaint, textWidth).build()
+            StaticLayout.Builder.obtain(text, 0, text.length, textPaint, textWidth).build()
         } else {
+            @Suppress("DEPRECATION")
             StaticLayout(text, textPaint, textWidth, ALIGN_NORMAL, 1f, 0f, true)
         }
     }
 
     private fun updateContentDescription() {
-        val desc = if (isChecked) R.string.a11y_filter_applied else R.string.a11y_filter_not_applied
+        val desc = if (isChecked) {
+            R.string.description_filter_applied
+        } else {
+            R.string.description_filter_not_applied
+        }
         contentDescription = resources.getString(desc, text)
+    }
+
+    /**
+     * Calculated the widest line in a [StaticLayout].
+     */
+    private fun StaticLayout.textWidth(): Int {
+        var width = 0f
+        for (i in 0 until lineCount) {
+            width = width.coerceAtLeast(getLineWidth(i))
+        }
+        return width.toInt()
     }
 
     companion object {

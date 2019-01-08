@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="eventFilterViewStyle" format="reference"/>
+    <attr name="filterChipStyle" format="reference"/>
 
-    <declare-styleable name="EventFilterView">
+    <declare-styleable name="FilterChip">
         <attr name="android:checked"/>
         <attr name="android:text"/>
         <attr name="android:textColor"/>
         <attr name="android:textSize"/>
         <attr name="android:color"/>
         <attr name="android:padding"/>
-        <attr name="android:strokeColor"/>
-        <attr name="outlineWidth" format="dimension"/>
+        <attr name="strokeColor"/>
+        <attr name="strokeWidth"/>
+        <attr name="selectedTextColor" format="color"/>
         <attr name="clearIcon" format="reference"/>
         <attr name="foreground" format="reference"/>
         <attr name="showIcons" format="boolean"/>

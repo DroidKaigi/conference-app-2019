@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Widget.IOSched.EventFilters">
-        <item name="android:padding">@dimen/spacing_normal</item>
-        <item name="android:strokeColor">?android:textColorTertiary</item>
+
+    <style name="Widget.App.FilterChip" parent="">
+        <item name="android:padding">8dp</item>
         <item name="android:textColor">?android:textColorPrimary</item>
         <item name="android:textSize">14sp</item>
-        <item name="outlineWidth">1dp</item>
+        <item name="strokeColor">?android:textColorTertiary</item>
+        <item name="strokeWidth">1dp</item>
         <item name="clearIcon">@drawable/tag_clear</item>
         <item name="foreground">?selectableItemBackground</item>
         <item name="showIcons">true</item>
