@@ -13,7 +13,7 @@ class AboutHeaderItem(
     private val youtubeUrl: String,
     private val mediumUrl: String,
     private val openUrl: ((String) -> Unit)
-)  : BindableItem<HeaderAboutBinding>() {
+) : BindableItem<HeaderAboutBinding>() {
 
     override fun createViewHolder(itemView: View): ViewHolder<HeaderAboutBinding> {
         return ViewHolder(DataBindingUtil.bind(itemView)!!)
