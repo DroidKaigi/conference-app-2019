@@ -162,6 +162,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="12dp"
+                    app:chipSpacing="4dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/session_tag_title"
@@ -176,6 +177,7 @@
                         android:textAppearance="?textAppearanceCaption"
                         android:textColor="@color/white"
                         app:chipBackgroundColor="#7982e1"
+                        app:chipMinTouchTargetSize="0dp"
                         tools:text="Japanese"
                         />
 
@@ -187,6 +189,7 @@
                         android:textAppearance="?textAppearanceCaption"
                         android:textColor="@color/white"
                         app:chipBackgroundColor="#95959c"
+                        app:chipMinTouchTargetSize="0dp"
                         tools:text="ソフトウェアアーキテクチャ"
                         />
                 </com.google.android.material.chip.ChipGroup>
