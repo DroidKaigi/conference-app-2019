@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -113,8 +112,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
                         excludeChildren(binding.sessionsRecycler, true)
                     })
                 val isCollapsed = newState == BottomSheetBehavior.STATE_COLLAPSED
-                binding.sessionsBottomSheetShowFilterButton.isVisible = !isCollapsed
-                binding.sessionsBottomSheetHideFilterButton.isVisible = isCollapsed
+                binding.isCollapsed = isCollapsed
             }
         }
     }
