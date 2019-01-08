@@ -4,10 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
+import androidx.navigation.Navigation
 import com.xwray.groupie.Section
 import io.github.droidkaigi.confsched2019.about.R
+import javax.inject.Inject
 
-class AboutSection : Section() {
+class AboutSection @Inject constructor(val activity: FragmentActivity) : Section() {
 
     fun setupAboutThisApps() {
         update(
@@ -35,7 +38,8 @@ class AboutSection : Section() {
                     R.string.about_license,
                     R.string.about_check
                 ) {
-                    Toast.makeText(it, "FIXME!!", Toast.LENGTH_SHORT).show()
+                    Navigation.findNavController(activity, R.id.root_nav_host_fragment)
+                        .navigate(R.id.licenses)
                 },
                 AboutItem(
                     R.string.about_app_version,

@@ -5,6 +5,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
+apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
 android {
     compileSdkVersion Versions.androidCompileSdkVersion
