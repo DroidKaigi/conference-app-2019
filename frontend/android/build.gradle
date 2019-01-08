@@ -9,6 +9,14 @@ apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
 android {
     compileSdkVersion Versions.androidCompileSdkVersion
+    signingConfigs {
+        debug {
+            keyAlias 'droidkaigi_debug'
+            keyPassword 'droidkaigi'
+            storeFile file('debug.keystore')
+            storePassword 'droidkaigi'
+        }
+    }
     defaultConfig {
         applicationId "io.github.droidkaigi.confsched2019"
         minSdkVersion Versions.androidMinSdkVersion
