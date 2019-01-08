@@ -15,14 +15,7 @@ class AboutSection @Inject constructor(val activity: FragmentActivity) : Section
     fun setupAboutThisApps() {
         update(
             listOf(
-                AboutHeaderItem(
-                    "https://twitter.com/droidkaigi",
-                    "https://github.com/DroidKaigi/conference-app-2018",
-                    "https://www.youtube.com/channel/UCgK6L-PKx2OZBuhrQ6mmQZw",
-                    "https://medium.com/droidkaigi"
-                ) {
-                    activityActionCreator.openUrl(it)
-                },
+                AboutHeaderItem(activityActionCreator),
                 AboutItem(
                     R.string.about_access_to_place,
                     R.string.about_check_map
