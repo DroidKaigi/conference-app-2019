@@ -35,6 +35,8 @@ import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.widget.BottomSheetBehavior
+import io.github.droidkaigi.confsched2019.widget.FilterChip
+import io.github.droidkaigi.confsched2019.widget.onCheckedChanged
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import me.tatarka.injectedvmprovider.ktx.injectedViewModelProvider
 import javax.inject.Inject
@@ -176,7 +178,7 @@ class SessionPageFragment : DaggerFragment() {
                     R.layout.layout_chip,
                     this,
                     false
-                ) as Chip
+                ) as FilterChip
                 chip.apply {
                     text = chipText(item)
                     tag = item
@@ -191,43 +193,43 @@ class SessionPageFragment : DaggerFragment() {
     private fun applyFilters() {
         val filterRooms = sessionPagesStore.filtersValue.rooms
         binding.sessionsFilterRoomChip.forEach {
-            val chip = it as? Chip ?: return@forEach
+            val chip = it as? FilterChip ?: return@forEach
             val room = it.tag as? Room ?: return@forEach
-            chip.setOnCheckedChangeListener(null)
+            chip.onCheckedChangeListener = null
             if (filterRooms.isNotEmpty()) {
                 chip.isChecked = filterRooms.contains(room)
             } else {
                 chip.isChecked = false
             }
-            chip.setOnCheckedChangeListener { _, isChecked ->
+            chip.onCheckedChanged { _, isChecked ->
                 sessionPagesActionCreator.changeFilter(room, isChecked)
             }
         }
         val filterCategorys = sessionPagesStore.filtersValue.categories
         binding.sessionsFilterCategoryChip.forEach {
-            val chip = it as? Chip ?: return@forEach
+            val chip = it as? FilterChip ?: return@forEach
             val category = it.tag as? Category ?: return@forEach
-            chip.setOnCheckedChangeListener(null)
+            chip.onCheckedChangeListener = null
             if (filterCategorys.isNotEmpty()) {
                 chip.isChecked = filterCategorys.contains(category)
             } else {
                 chip.isChecked = false
             }
-            chip.setOnCheckedChangeListener { _, isChecked ->
+            chip.onCheckedChanged { _, isChecked ->
                 sessionPagesActionCreator.changeFilter(category, isChecked)
             }
         }
         val filterLangs = sessionPagesStore.filtersValue.langs
         binding.sessionsFilterLangChip.forEach {
-            val chip = it as? Chip ?: return@forEach
+            val chip = it as? FilterChip ?: return@forEach
             val lang = it.tag as? Lang ?: return@forEach
-            chip.setOnCheckedChangeListener(null)
+            chip.onCheckedChangeListener = null
             if (filterLangs.isNotEmpty()) {
                 chip.isChecked = filterLangs.contains(lang)
             } else {
                 chip.isChecked = false
             }
-            chip.setOnCheckedChangeListener { _, isChecked ->
+            chip.onCheckedChanged { _, isChecked ->
                 sessionPagesActionCreator.changeFilter(lang, isChecked)
             }
         }
