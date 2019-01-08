@@ -35,6 +35,7 @@
                 android:gravity="center_vertical"
                 android:textAppearance="@style/TextAppearance.App.Headline5"
                 android:textColor="@color/gray3"
+                app:visibleGone="@{!shouldShowEmptyStateView}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
         />
@@ -47,7 +48,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/session_filter_button"
                 android:textColor="@color/gray2"
-                app:visibleGone="@{!isCollapsed}"
+                app:visibleGone="@{!isCollapsed &amp;&amp; !shouldShowEmptyStateView}"
                 app:chipBackgroundColor="@color/gray4"
                 app:chipIcon="@drawable/ic_filter_list_black_24dp"
                 app:chipIconTint="@color/gray3"
@@ -63,7 +64,7 @@
                 android:gravity="center_vertical"
                 android:paddingEnd="@dimen/session_bottom_sheet_filter_text_padding"
                 android:paddingStart="@dimen/session_bottom_sheet_filter_text_padding"
-                app:visibleGone="@{isCollapsed}"
+                app:visibleGone="@{isCollapsed &amp;&amp; !shouldShowEmptyStateView}"
                 app:chipBackgroundColor="@color/gray4"
                 app:chipIcon="@drawable/ic_arrow_upward_black_24dp"
                 app:chipIconTint="@color/gray3"
@@ -100,15 +101,35 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/sessions_bottom_sheet_title">
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      app:layout_constraintBottom_toBottomOf="parent"
-                      app:layout_constraintEnd_toEndOf="parent"
-                      app:layout_constraintStart_toStartOf="parent"
-                      app:layout_constraintTop_toTopOf="parent"
-                      android:text="@string/session_favorite_empty"
-                      android:textSize="20sp"
-            />
+
+            <ImageView
+                    android:id="@+id/sessions_favorite_image"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:contentDescription="@string/session_description_favorite_image"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_bookmark_black_24dp"
+                    android:tint="@color/gray3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:layout_constraintBottom_toTopOf="@+id/sessions_empty_state_text"
+                    android:layout_marginBottom="10dp"
+                    app:layout_constraintVertical_bias="0.42"/>
+
+            <TextView
+                    android:id="@+id/sessions_empty_state_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/session_favorite_empty"
+                    android:textColor="@color/gray1"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/sessions_favorite_image"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
