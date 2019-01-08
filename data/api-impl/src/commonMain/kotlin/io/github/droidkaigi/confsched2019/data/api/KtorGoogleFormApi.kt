@@ -4,9 +4,8 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.forms.submitForm
 import io.ktor.client.request.url
 import io.ktor.http.parametersOf
-import javax.inject.Inject
 
-class KtorGoogleFormApi @Inject constructor(
+open class KtorGoogleFormApi constructor(
     val httpClient: HttpClient
 ) : GoogleFormApi {
 

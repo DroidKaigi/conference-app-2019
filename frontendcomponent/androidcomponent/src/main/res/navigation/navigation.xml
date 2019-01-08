@@ -110,4 +110,9 @@
         android:label="@string/setting_label"
         >
     </fragment>
+    <activity
+        android:id="@+id/licenses"
+        android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+        >
+    </activity>
 </navigation>

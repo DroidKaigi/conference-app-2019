@@ -24,7 +24,8 @@ class SearchActionCreator @Inject constructor(
                 Action.SearchResultLoaded(
                     SearchResult(
                         listOf(),
-                        sessionContents.speakers
+                        sessionContents.speakers,
+                        query
                     )
                 )
             )

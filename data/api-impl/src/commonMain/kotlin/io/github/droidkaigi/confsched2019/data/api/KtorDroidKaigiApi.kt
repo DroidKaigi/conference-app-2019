@@ -9,12 +9,10 @@ import io.ktor.client.request.accept
 import io.ktor.client.request.get
 import io.ktor.client.request.url
 import io.ktor.http.ContentType
-import javax.inject.Inject
-import javax.inject.Named
 
-class KtorDroidKaigiApi @Inject constructor(
+open class KtorDroidKaigiApi constructor(
     val httpClient: HttpClient,
-    @Named("apiEndpoint") val apiEndpoint: String
+    val apiEndpoint: String
 ) : DroidKaigiApi {
     override suspend fun getSponsors(): SponsorResponse {
         return httpClient.get<SponsorResponseImpl> {

@@ -5,6 +5,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
+apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
 android {
     compileSdkVersion Versions.androidCompileSdkVersion
@@ -37,6 +38,14 @@ android {
 
         xmlOutput file("lint-results.xml")
         htmlOutput file("lint-results.html")
+    }
+    packagingOptions {
+        exclude 'META-INF/ktor-http.kotlin_module'
+        exclude 'META-INF/kotlinx-io.kotlin_module'
+        exclude 'META-INF/atomicfu.kotlin_module'
+        exclude 'META-INF/ktor-utils.kotlin_module'
+        exclude 'META-INF/kotlinx-coroutines-io.kotlin_module'
+        exclude 'META-INF/ktor-client-core.kotlin_module'
     }
 }
 

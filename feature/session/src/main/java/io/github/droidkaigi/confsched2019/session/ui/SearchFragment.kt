@@ -68,8 +68,8 @@ class SearchFragment : DaggerFragment() {
 
         sessionContentsStore.sessionContents.changed(viewLifecycleOwner) { contents ->
             searchActionCreator.search(
-                searchView?.query?.toString(),
-                sessionContentsStore.sessionContents.requireValue()
+                searchStore.query,
+                contents
             )
         }
         // TODO apply design
@@ -103,8 +103,10 @@ class SearchFragment : DaggerFragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_toolbar_search, menu)
+        menu.findItem(R.id.search)?.isVisible = false
         searchView = menu.findItem(R.id.menu_search).actionView as SearchView
         searchView?.let { searchView ->
+            searchView.setQuery(searchStore.query, false)
             searchView.isIconified = false
             searchView.clearFocus()
             searchView.queryHint = getString(R.string.session_search_hint)
@@ -121,6 +123,7 @@ class SearchFragment : DaggerFragment() {
                     return false
                 }
             })
+            searchView.maxWidth = Int.MAX_VALUE
             searchView.setOnCloseListener { false }
         }
     }

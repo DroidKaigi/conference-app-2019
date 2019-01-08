@@ -11,6 +11,8 @@ import javax.inject.Inject
 class SearchStore @Inject constructor(
     dispatcher: Dispatcher
 ) : ViewModel() {
+    val query get() = searchResult.value?.query
+
     val searchResult = dispatcher
         .subscribe<Action.SearchResultLoaded>()
         .map { it.searchResult }

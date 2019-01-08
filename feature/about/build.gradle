@@ -39,8 +39,10 @@ dependencies {
     compileOnly Dep.Dagger.assistedInjectAnnotations
     kapt Dep.Dagger.assistedInjectProcessor
 
-    implementation Dep.Groupie.groupie
+    api Dep.Groupie.groupie
     implementation Dep.Groupie.databinding
+
+    implementation Dep.PlayServices.licensesPlugin
 
     testImplementation Dep.Test.junit
     androidTestImplementation Dep.Test.testRunner
