@@ -5,14 +5,17 @@ import androidx.fragment.app.FragmentActivity
 import androidx.navigation.Navigation
 import com.xwray.groupie.Section
 import io.github.droidkaigi.confsched2019.about.R
+import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
 import javax.inject.Inject
 
 class AboutSection @Inject constructor(val activity: FragmentActivity) : Section() {
 
+    @Inject lateinit var activityActionCreator: ActivityActionCreator
+
     fun setupAboutThisApps() {
         update(
             listOf(
-                AboutHeaderItem(),
+                AboutHeaderItem(activityActionCreator),
                 AboutItem(
                     R.string.about_access_to_place,
                     R.string.about_check_map
