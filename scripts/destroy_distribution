@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+set -eu
+set -o pipefail
+
+get_prs() {
+    curl -H "Authorization: token $DANGER_GITHUB_API_TOKEN" \
+        "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?state=closed"
+}
+
+get_pr_meta() {
+    local branch_name="$1"
+    cat - | jq -r  --arg branch_name "$branch_name" '.[] | select(.head.label == $branch_name and .head.repo.fork == true) | .number'
+}
+
+main() {
+    local -r branch_base=$(git log --oneline -1 --format="%s" | grep "Merge pull request" | awk '$0=$NF')
+
+    if [[ -z "$branch_base" ]]; then
+        echo "It may not be a pull request. exit with zero." >2
+        exit 0
+    fi
+
+    local -r username=$(echo $branch_base | tr '/' ' ' | awk '$0=$1');
+    local branch_name=$(echo $branch_base | sed "s/$branch_name\///")
+
+    local -r label="$username:$branch_name"
+
+    local -r pr_num=$(get_prs | get_pr_meta)
+
+    if [[ -n "$pr_num" ]]; then
+        branch_name="pull/$pr_num"
+    fi
+
+    source <(dpg procedure app-manage expose)
+    export DPG_DISTRIBUTION_NAME="$branch_name"
+
+    dpg procedure app-manage on-deploy-branch --android --app-id io.github.droidkaigi.confsched2019.debug
+}
+
+main || : # suppress an error
