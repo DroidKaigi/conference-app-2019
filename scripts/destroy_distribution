@@ -24,6 +24,11 @@ main() {
     local -r username=$(echo $branch_base | tr '/' ' ' | awk '$0=$1');
     local branch_name=$(echo $branch_base | sed "s/$username\///")
 
+    if [[ "$username" == "$CIRCLE_PROJECT_USERNAME" ]] && [[ "$branch_name" == "master" || "$branch_name" == "release" ]]; then
+        echo "Never destroy these distributions"
+        exit 0
+    fi
+
     local -r pr_num=$(get_prs | get_pr_meta "$username" "$branch_name")
 
     if [[ -n "$pr_num" ]]; then
