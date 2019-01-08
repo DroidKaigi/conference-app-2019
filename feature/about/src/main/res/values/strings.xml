@@ -4,10 +4,10 @@
     <string name="about_description_droidkaigi">DroidKaigi is a conference tailored for Android developers. It\'s scheduled to take place on the 7th and 8th of February 2019.</string>
     <string name="about_access_to_place">Directions</string>
     <string name="about_check_map">Open with Maps</string>
-    <string name="about_staff_list">Operation Team</string>
+    <string name="about_staff_list">Committee Members</string>
     <string name="about_check">See Details</string>
     <string name="about_privacy_policy">Privacy Policy</string>
-    <string name="about_license">Open Sources Licenses</string>
+    <string name="about_license">Open Source Licenses</string>
     <string name="about_app_version">Version</string>
     <string name="about_version_name" translatable="false">1.0.0</string>
 </resources>
