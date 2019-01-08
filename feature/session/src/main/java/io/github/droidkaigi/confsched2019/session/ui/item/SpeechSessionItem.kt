@@ -1,10 +1,14 @@
 package io.github.droidkaigi.confsched2019.session.ui.item
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.isVisible
 import androidx.core.view.size
 import androidx.navigation.NavController
@@ -12,6 +16,8 @@ import androidx.navigation.NavDirections
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
+import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
 import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.Speaker
@@ -19,9 +25,9 @@ import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSessionBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.bindingadapter.loadImage
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.util.lazyWithParam
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlin.math.max
 
 class SpeechSessionItem @AssistedInject constructor(
@@ -137,6 +143,65 @@ class SpeechSessionItem @AssistedInject constructor(
             rawPlaceHolder = placeHolder,
             placeHolderTint = placeHolderColor
         )
+    }
+
+    private fun loadImage(
+        textView: TextView,
+        imageUrl: String?,
+        circleCrop: Boolean?,
+        rawPlaceHolder: Drawable?,
+        placeHolderTint: Int?,
+        widthDp: Int = 16,
+        heightDp: Int = 16
+    ) {
+        fun setDrawable(drawable: Drawable) {
+            val res = textView.context.resources
+            val widthPx = (widthDp * res.displayMetrics.density).toInt()
+            val heightPx = (heightDp * res.displayMetrics.density).toInt()
+            drawable.setBounds(0, 0, widthPx, heightPx)
+            textView.setCompoundDrawables(drawable, null, null, null)
+        }
+
+        val placeHolder = run {
+            DrawableCompat.wrap(
+                rawPlaceHolder ?: return@run null
+            )?.apply {
+                setTint(placeHolderTint ?: return@run this)
+            }
+        }
+        imageUrl ?: run {
+            placeHolder?.let {
+                setDrawable(it)
+            }
+        }
+
+        Picasso
+            .get()
+            .load(imageUrl)
+            .apply {
+                if (circleCrop == true) {
+                    transform(CropCircleTransformation())
+                }
+                if (placeHolder != null) {
+                    placeholder(placeHolder)
+                }
+            }
+            .into(object : Target {
+                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+                    placeHolderDrawable?.let {
+                        setDrawable(it)
+                    }
+                }
+
+                override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+                }
+
+                override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+                    val res = textView.context.resources
+                    val drawable = BitmapDrawable(res, bitmap)
+                    setDrawable(drawable)
+                }
+            })
     }
 
     override fun getLayout(): Int = R.layout.item_session
