@@ -7,7 +7,7 @@
         >
         <item
             android:id="@id/main"
-            android:icon="@drawable/ic_event_black_24dp"
+            android:icon="@drawable/ic_event_outline_black_24dp"
             android:title="@string/session_label"
             />
     </group>
@@ -17,18 +17,18 @@
         >
         <item
             android:id="@id/about"
+            android:icon="@drawable/ic_android_outline_black_24dp"
             android:title="@string/about_label"
-            android:icon="@drawable/ic_android_black_24dp"
             />
         <item
             android:id="@id/announce"
-            android:title="@string/announce_label"
             android:icon="@drawable/ic_info_outline_black_24dp"
+            android:title="@string/announce_label"
             />
         <item
             android:id="@id/floormap"
+            android:icon="@drawable/ic_room_outline_black_24dp"
             android:title="@string/map_label"
-            android:icon="@drawable/ic_room_black_24dp"
             />
     </group>
     <group
@@ -37,14 +37,14 @@
         >
         <item
             android:id="@id/sponsor"
+            android:icon="@drawable/ic_domain_outline_black_24dp"
             android:title="@string/sponsor_label"
-            android:icon="@drawable/ic_domain_black_24dp"
             />
         <item
             android:id="@id/setting"
-            android:title="@string/setting_label"
             android:icon="@drawable/ic_settings_outline_black_24px"
-        />
+            android:title="@string/setting_label"
+            />
     </group>
     <group
         android:id="@+id/survey"
@@ -52,8 +52,8 @@
         >
         <item
             android:id="@id/survey"
+            android:icon="@drawable/ic_android_outline_black_24dp"
             android:title="@string/survey_label"
-            android:icon="@drawable/ic_android_black_24dp"
             />
     </group>
 </menu>
