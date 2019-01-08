@@ -3,7 +3,6 @@ package io.github.droidkaigi.confsched2019.session.ui.item
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -102,11 +101,8 @@ class SpeechSessionItem @AssistedInject constructor(
                 val speakerView = layoutInflater.get(root.context).inflate(
                     R.layout.layout_speaker, speakers, false
                 ) as ViewGroup
-                val imageView: ImageView = speakerView.findViewById(
-                    R.id.speaker_image
-                )
                 val textView: TextView = speakerView.findViewById(R.id.speaker)
-                bindSpeakerData(speaker, textView, imageView)
+                bindSpeakerData(speaker, textView)
 
                 speakers.addView(speakerView)
                 return@forEach
@@ -114,19 +110,17 @@ class SpeechSessionItem @AssistedInject constructor(
             if (existSpeakerView != null && speaker != null) {
                 val textView: TextView = existSpeakerView.findViewById(R.id.speaker)
                 textView.text = speaker.name
-                val imageView = existSpeakerView.findViewById<ImageView>(R.id.speaker_image)
-                bindSpeakerData(speaker, textView, imageView)
+                bindSpeakerData(speaker, textView)
             }
         }
     }
 
     private fun bindSpeakerData(
         speaker: Speaker,
-        textView: TextView,
-        imageView: ImageView
+        textView: TextView
     ) {
         textView.text = speaker.name
-        val context = imageView.context
+        val context = textView.context
         val placeHolder = VectorDrawableCompat.create(
             context.resources,
             R.drawable.ic_person_outline_black_24dp,
@@ -137,7 +131,7 @@ class SpeechSessionItem @AssistedInject constructor(
             R.color.gray2
         )
         loadImage(
-            imageView = imageView,
+            textView = textView,
             imageUrl = speaker.imageUrl,
             circleCrop = true,
             rawPlaceHolder = placeHolder,
