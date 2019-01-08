@@ -6,10 +6,18 @@ import io.github.droidkaigi.confsched2019.about.R
 
 class AboutSection : Section() {
 
-    fun setupAboutThisApps() {
+    fun setupAboutThisApps(
+        openUrl: ((String) -> Unit)
+    ) {
         update(
             listOf(
-                AboutHeaderItem(),
+                AboutHeaderItem(
+                    "https://twitter.com/droidkaigi",
+                    "https://github.com/DroidKaigi/conference-app-2018",
+                    "https://www.youtube.com/channel/UCgK6L-PKx2OZBuhrQ6mmQZw",
+                    "https://medium.com/droidkaigi",
+                    openUrl
+                ),
                 AboutItem(
                     R.string.about_access_to_place,
                     R.string.about_check_map
