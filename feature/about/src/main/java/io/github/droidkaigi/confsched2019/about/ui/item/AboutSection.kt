@@ -1,8 +1,8 @@
 package io.github.droidkaigi.confsched2019.about.ui.item
 
-import android.content.Intent
+import android.app.Activity
 import android.widget.Toast
-import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import androidx.navigation.Navigation
 import com.xwray.groupie.Section
 import io.github.droidkaigi.confsched2019.about.R
 
@@ -34,7 +34,9 @@ class AboutSection : Section() {
                     R.string.about_license,
                     R.string.about_check
                 ) {
-                    it.startActivity(Intent(it, OssLicensesMenuActivity::class.java))
+                    if (it is Activity) {
+                        Navigation.findNavController(it, R.id.root_nav_host_fragment).navigate(R.id.licenses)
+                    }
                 },
                 AboutItem(
                     R.string.about_app_version,
