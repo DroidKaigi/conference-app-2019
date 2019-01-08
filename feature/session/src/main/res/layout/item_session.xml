@@ -118,12 +118,12 @@
                 android:clickable="false"
                 android:ellipsize="end"
                 android:enabled="false"
-                android:visibility="@{session.isInterpretationTarget ? View.VISIBLE : View.GONE}"
                 android:text="@string/session_simultaneous_interpretation"
                 android:textAppearance="@style/TextAppearance.App.Caption"
                 android:textColor="@color/white"
                 app:chipBackgroundColor="#7982e1"
                 app:chipMinTouchTargetSize="0dp"
+                app:visibleGone="@{session.isInterpretationTarget}"
                 />
 
             <com.google.android.material.chip.Chip
