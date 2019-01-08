@@ -15,10 +15,6 @@ class AboutHeaderItem(
     private val openUrl: ((String) -> Unit)
 ) : BindableItem<HeaderAboutBinding>() {
 
-    override fun createViewHolder(itemView: View): ViewHolder<HeaderAboutBinding> {
-        return ViewHolder(DataBindingUtil.bind(itemView)!!)
-    }
-
     override fun getLayout(): Int = R.layout.header_about
 
     // TODO: Set banner image/background

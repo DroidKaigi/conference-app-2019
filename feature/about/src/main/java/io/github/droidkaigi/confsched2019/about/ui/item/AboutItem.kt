@@ -16,10 +16,6 @@ class AboutItem(
     private val clickListener: ((Context) -> Unit)? = null
 ) : BindableItem<ItemAboutBinding>() {
 
-    override fun createViewHolder(itemView: View): ViewHolder<ItemAboutBinding> {
-        return ViewHolder(DataBindingUtil.bind(itemView)!!)
-    }
-
     override fun getLayout(): Int = R.layout.item_about
 
     override fun bind(binding: ItemAboutBinding, position: Int) {
