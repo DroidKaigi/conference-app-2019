@@ -13,10 +13,12 @@ class AboutSection @Inject constructor(
     val activityActionCreator: ActivityActionCreator
 ) : Section() {
 
+    @Inject lateinit var activityActionCreator: ActivityActionCreator
+
     fun setupAboutThisApps() {
         update(
             listOf(
-                AboutHeaderItem(),
+                AboutHeaderItem(activityActionCreator),
                 AboutItem(
                     R.string.about_access_to_place,
                     R.string.about_check_map

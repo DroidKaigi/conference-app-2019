@@ -130,7 +130,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="4dp"
             app:behavior_hideable="false"
             app:behavior_peekHeight="64dp"
             app:behavior_skipCollapsed="false"
