@@ -1,9 +1,6 @@
 package io.github.droidkaigi.confsched2019.about.ui.item
 
-import android.view.View
-import androidx.databinding.DataBindingUtil
 import com.xwray.groupie.databinding.BindableItem
-import com.xwray.groupie.databinding.ViewHolder
 import io.github.droidkaigi.confsched2019.about.R
 import io.github.droidkaigi.confsched2019.about.databinding.HeaderAboutBinding
 import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
@@ -21,7 +18,9 @@ class AboutHeaderItem(val activityActionCreator: ActivityActionCreator) : Bindab
             activityActionCreator.openUrl("https://github.com/DroidKaigi/conference-app-2018")
         }
         binding.aboutThisAppYoutube.setOnClickListener {
-            activityActionCreator.openUrl("https://www.youtube.com/channel/UCgK6L-PKx2OZBuhrQ6mmQZw")
+            activityActionCreator.openUrl(
+                "https://www.youtube.com/channel/UCgK6L-PKx2OZBuhrQ6mmQZw"
+            )
         }
         binding.aboutThisAppMedium.setOnClickListener {
             activityActionCreator.openUrl("https://medium.com/droidkaigi")
