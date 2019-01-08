@@ -179,6 +179,9 @@
                         android:textColor="@color/white"
                         app:chipBackgroundColor="#7982e1"
                         tools:text="Japanese"
+                        android:clickable="false"
+                        android:enabled="false"
+                        android:focusable="false"
                         />
 
                     <com.google.android.material.chip.Chip
@@ -190,6 +193,9 @@
                         android:textColor="@color/white"
                         app:chipBackgroundColor="#95959c"
                         tools:text="ソフトウェアアーキテクチャ"
+                        android:clickable="false"
+                        android:enabled="false"
+                        android:focusable="false"
                         />
                 </com.google.android.material.chip.ChipGroup>
 
