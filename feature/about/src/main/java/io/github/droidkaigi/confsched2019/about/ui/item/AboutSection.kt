@@ -35,7 +35,8 @@ class AboutSection : Section() {
                     R.string.about_check
                 ) {
                     if (it is Activity) {
-                        Navigation.findNavController(it, R.id.root_nav_host_fragment).navigate(R.id.licenses)
+                        Navigation.findNavController(it, R.id.root_nav_host_fragment)
+                            .navigate(R.id.licenses)
                     }
                 },
                 AboutItem(
