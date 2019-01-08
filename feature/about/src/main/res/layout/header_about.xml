@@ -52,46 +52,50 @@
 
         <!--TODO: Need links to video libraries -->
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/video_library_image_1"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_video_library_gray2_24dp"
+            android:src="@drawable/ic_video_library_outline_black_24dp"
             android:contentDescription="@null"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            app:tint="@color/gray2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/description_droidkaigi_text"/>
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/video_library_image_2"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="16dp"
-            android:src="@drawable/ic_video_library_gray2_24dp"
+            android:src="@drawable/ic_video_library_outline_black_24dp"
             android:contentDescription="@null"
+            app:tint="@color/gray2"
             app:layout_constraintStart_toEndOf="@+id/video_library_image_1"
             app:layout_constraintTop_toTopOf="@+id/video_library_image_1"
             />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/video_library_image_3"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="16dp"
-            android:src="@drawable/ic_video_library_gray2_24dp"
+            android:src="@drawable/ic_video_library_outline_black_24dp"
             android:contentDescription="@null"
+            app:tint="@color/gray2"
             app:layout_constraintStart_toEndOf="@+id/video_library_image_2"
             app:layout_constraintTop_toTopOf="@+id/video_library_image_1"
             />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/video_library_image_4"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="16dp"
-            android:src="@drawable/ic_video_library_gray2_24dp"
+            android:src="@drawable/ic_video_library_outline_black_24dp"
             android:contentDescription="@null"
+            app:tint="@color/gray2"
             app:layout_constraintStart_toEndOf="@+id/video_library_image_3"
             app:layout_constraintTop_toTopOf="@+id/video_library_image_1"
             />
