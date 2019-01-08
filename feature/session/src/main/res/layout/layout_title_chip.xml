@@ -19,6 +19,7 @@
         android:textColor="@color/white"
         app:chipBackgroundColor="@color/colorPrimary"
         app:chipStrokeColor="@color/selector_tab_title"
+        app:chipSurfaceColor="@android:color/transparent"
         app:chipStrokeWidth="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
