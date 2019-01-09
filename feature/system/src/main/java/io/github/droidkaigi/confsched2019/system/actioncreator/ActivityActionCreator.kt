@@ -2,14 +2,20 @@ package io.github.droidkaigi.confsched2019.system.actioncreator
 
 import android.content.Intent
 import android.net.Uri
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import io.github.droidkaigi.confsched2019.system.R
 import javax.inject.Inject
 
 class ActivityActionCreator @Inject constructor(val activity: FragmentActivity) {
     fun openUrl(url: String) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        activity.startActivity(intent)
+        val customTabsIntent = CustomTabsIntent.Builder()
+            .setShowTitle(true)
+            .enableUrlBarHiding()
+            .setToolbarColor(ContextCompat.getColor(activity, R.color.colorPrimary))
+            .build()
+        customTabsIntent.launchUrl(activity, Uri.parse(url))
     }
 
     fun openVenueOnGoogleMap() {
