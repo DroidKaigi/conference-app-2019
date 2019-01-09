@@ -6,7 +6,7 @@
     >
 
     <data>
-        <import type="android.view.View"/>
+
         <variable
             name="session"
             type="io.github.droidkaigi.confsched2019.model.Session.SpeechSession"
