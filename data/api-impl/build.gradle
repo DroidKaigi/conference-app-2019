@@ -15,9 +15,10 @@ kotlin {
     targets {
         fromPreset(presets.android, 'android')
 
-        final def buildForDevice = project.findProperty("device")?.toBoolean() ?: false
-        final def iosPreset = (buildForDevice) ? presets.iosArm64 : presets.iosX64
-        fromPreset(iosPreset, 'ios') {
+        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") \
+                              ? presets.iosArm64 : presets.iosX64
+
+        fromPreset(iOSTarget, 'iOS') {
             compilations.main.outputKinds('FRAMEWORK')
         }
     }
