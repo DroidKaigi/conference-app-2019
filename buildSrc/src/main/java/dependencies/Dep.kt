@@ -173,4 +173,10 @@ object Dep {
         val picasso = "com.squareup.picasso:picasso:2.71828"
         val picassoTransformation = "jp.wasabeef:picasso-transformations:2.2.1"
     }
+
+    object Timber {
+        val common = "com.jakewharton.timber:timber-common:5.0.0-SNAPSHOT"
+        val jdk = "com.jakewharton.timber:timber-jdk:5.0.0-SNAPSHOT"
+        val android = "com.jakewharton.timber:timber-android:5.0.0-SNAPSHOT"
+    }
 }

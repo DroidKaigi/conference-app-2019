@@ -29,6 +29,8 @@ dependencies {
     kapt Dep.Dagger.compiler
     kapt Dep.Dagger.androidProcessor
 
+    implementation Dep.Timber.android
+
     testImplementation Dep.Test.junit
     androidTestImplementation Dep.Test.testRunner
     testImplementation Dep.Test.slf4j

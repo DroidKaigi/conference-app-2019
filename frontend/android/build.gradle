@@ -107,6 +107,8 @@ dependencies {
     compileOnly Dep.Dagger.assistedInjectAnnotations
     kapt Dep.Dagger.assistedInjectProcessor
 
+    implementation Dep.Timber.android
+
     testImplementation Dep.Test.junit
 
     androidTestImplementation Dep.Test.testRunner
