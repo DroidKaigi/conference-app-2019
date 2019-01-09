@@ -70,7 +70,9 @@ class SessionPageFragment : DaggerFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupSessionsFragment(savedInstanceState)
+        if (savedInstanceState == null) {
+            setupSessionsFragment()
+        }
     }
 
     override fun onCreateView(
@@ -125,11 +127,7 @@ class SessionPageFragment : DaggerFragment() {
         }
     }
 
-    private fun setupSessionsFragment(savedInstanceState: Bundle?) {
-        if (savedInstanceState != null) {
-            return
-        }
-
+    private fun setupSessionsFragment() {
         val tab = SessionPage.pages[args.tabIndex]
         val fragment: Fragment = when (tab) {
             is SessionPage.Day -> {
