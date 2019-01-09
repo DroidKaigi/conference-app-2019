@@ -133,11 +133,5 @@ abstract class SessionDetailFragmentModule {
         fun providesLifecycle(sessionsFragment: SessionDetailFragment): Lifecycle {
             return sessionsFragment.viewLifecycleOwner.lifecycle
         }
-
-//        @JvmStatic @Provides fun provideActivity(
-//            sessionsFragment: SessionDetailFragment
-//        ): FragmentActivity {
-//            return sessionsFragment.requireActivity()
-//        }
     }
 }
