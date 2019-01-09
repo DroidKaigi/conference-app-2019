@@ -397,6 +397,7 @@
             android:layout_gravity="bottom"
             app:fabAlignmentMode="end"
             app:hideOnScroll="true"
+            app:layout_behavior="@string/session_bottom_appbar_behavior"
             />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
