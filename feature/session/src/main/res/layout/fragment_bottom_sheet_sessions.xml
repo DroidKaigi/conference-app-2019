@@ -109,12 +109,12 @@
             app:visibleGone="@{!shouldShowEmptyStateView}"
             />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/sessions_empty_state_view"
             android:orientation="vertical"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -131,11 +131,6 @@
                 android:src="@drawable/ic_bookmark_black_24dp"
                 android:tint="@color/gray3"
                 app:layout_constraintBottom_toTopOf="@+id/sessions_empty_state_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.42"
-                app:layout_constraintVertical_chainStyle="packed"
                 />
 
             <TextView
@@ -146,11 +141,7 @@
                 android:text="@string/session_favorite_empty"
                 android:textColor="@color/gray1"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/sessions_favorite_image"
                 />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
