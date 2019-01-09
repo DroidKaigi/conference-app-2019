@@ -24,9 +24,9 @@ begin
   if File.exists?(ENV.fetch('MERGED_JUNIT_RESULT_FILE'))
     # junit report
     junit.parse ENV.fetch('MERGED_JUNIT_RESULT_FILE')
-    fail("Failed tests found") unless junit.failures.empty?
+    fail("Failed tests found. Please fix test failures.") unless junit.failures.empty?
   else
-    fail("Test results not found")
+    fail("The previous test step failed. Please check the CI log.")
   end
 end
 
