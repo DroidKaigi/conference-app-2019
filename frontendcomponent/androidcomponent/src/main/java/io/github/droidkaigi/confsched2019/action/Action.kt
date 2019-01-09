@@ -52,8 +52,8 @@ sealed class Action {
 
     object UserRegistered : Action()
 
-    class AnnouncementLoadingStateChanged(val loadingState: LoadingState) : Action()
-    class AnnouncementLoaded(val announcements: List<Announcement>) : Action()
+    data class AnnouncementLoadingStateChanged(val loadingState: LoadingState) : Action()
+    data class AnnouncementLoaded(val announcements: List<Announcement>) : Action()
 
     data class SponsorLoadingStateChanged(val loadingState: LoadingState) : Action()
     data class SponsorLoaded(val sponsors: List<SponsorCategory>) : Action()

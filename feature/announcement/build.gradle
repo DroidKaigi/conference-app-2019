@@ -45,6 +45,9 @@ dependencies {
     implementation Dep.Groupie.databinding
 
     testImplementation Dep.Test.junit
+    testImplementation Dep.Test.kotlinTestAssertions
+    testImplementation Dep.MockK.jvm
+    testImplementation project(':frontendcomponent:androidtestcomponent')
     androidTestImplementation Dep.Test.testRunner
     androidTestImplementation Dep.Test.espressoCore
 }
