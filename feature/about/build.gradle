@@ -11,6 +11,7 @@ android.dataBinding.enabled = true
 dependencies {
     implementation project(':frontendcomponent:androidcomponent')
     implementation project(':ext:android-extension')
+    implementation project(':feature:system')
     implementation project(':model')
 
     implementation Dep.Kotlin.stdlibJvm
@@ -38,8 +39,10 @@ dependencies {
     compileOnly Dep.Dagger.assistedInjectAnnotations
     kapt Dep.Dagger.assistedInjectProcessor
 
-    implementation Dep.Groupie.groupie
+    api Dep.Groupie.groupie
     implementation Dep.Groupie.databinding
+
+    implementation Dep.PlayServices.licensesPlugin
 
     testImplementation Dep.Test.junit
     androidTestImplementation Dep.Test.testRunner

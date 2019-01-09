@@ -10,6 +10,7 @@ object Dep {
         val safeArgs =
             "android.arch.navigation:navigation-safe-args-gradle-plugin:${AndroidX.Navigation.version}"
         val jetifier = "com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta02"
+        val licensesPlugin = "com.google.android.gms:oss-licenses-plugin:0.9.4"
     }
 
     object Test {
@@ -41,6 +42,7 @@ object Dep {
         val design = "com.google.android.material:material:1.1.0-alpha02"
         val coreKtx = "androidx.core:core-ktx:1.0.0-alpha1"
         val preference = "androidx.preference:preference:1.0.0"
+        val browser = "androidx.browser:browser:1.0.0"
 
         val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:2.0.0"
         val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata:2.0.0"
@@ -86,6 +88,7 @@ object Dep {
 
     object PlayServices {
         val auth = "com.google.android.gms:play-services-auth:16.0.1"
+        val licensesPlugin = "com.google.android.gms:play-services-oss-licenses:16.0.1"
     }
 
     object Dagger {
@@ -102,7 +105,9 @@ object Dep {
 
     object Ktor {
         val version = "1.0.1"
+        val clientCommon = "io.ktor:ktor-client-core:$version"
         val clientAndroid = "io.ktor:ktor-client-okhttp:$version"
+        val clientIos = "io.ktor:ktor-client-ios:$version"
         val jsonJvm = "io.ktor:ktor-client-json-jvm:$version"
     }
 

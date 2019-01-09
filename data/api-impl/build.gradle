@@ -1,7 +1,7 @@
 import dependencies.Dep
 
+apply plugin: 'kotlin-multiplatform'
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
 apply plugin: 'kotlinx-serialization'
 apply plugin: 'kotlin-kapt'
 
@@ -9,6 +9,26 @@ apply from: rootProject.file('gradle/android.gradle')
 android.libraryVariants.all {
     // TODO replace with https://issuetracker.google.com/issues/72050365 once released.
     it.generateBuildConfig.enabled = true
+}
+
+kotlin {
+    targets {
+        fromPreset(presets.android, 'android')
+
+        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") \
+                              ? presets.iosArm64 : presets.iosX64
+
+        fromPreset(iOSTarget, 'iOS') {
+            compilations.main.outputKinds('FRAMEWORK')
+        }
+    }
+    sourceSets {
+        commonMain.dependencies {
+            api project(":data:api")
+            implementation Dep.Ktor.clientCommon
+            implementation Dep.Kotlin.serialization
+        }
+    }
 }
 
 android {
@@ -25,10 +45,8 @@ android {
 }
 
 dependencies {
-    api project(":data:api")
 
     implementation Dep.Kotlin.stdlibJvm
-    implementation Dep.Kotlin.serialization
     implementation Dep.Ktor.clientAndroid
     implementation Dep.Ktor.jsonJvm
     implementation Dep.OkHttp.client

@@ -14,9 +14,15 @@
     <string name="session_detail_survey">Survey</string>
     <string name="session_detail_go_to_survey">Go to survey</string>
     <string name="session_detail_speaker" translatable="false">Speaker</string>
+    <string name="session_detail_resource">Resources</string>
+    <string name="session_detail_resource_video">Video</string>
+    <string name="session_detail_resource_slide">Slides</string>
     <string name="session_speaker_sessions" translatable="false">Session</string>
     <string name="session_share" translatable="false">Share</string>
     <string name="session_place" translatable="false">Place</string>
     <string name="session_search_hint">Search…</string>
     <string name="session_go_to_survey">Go to survey</string>
+    <string name="session_live" translatable="false">Live</string>
+    <string name="session_simultaneous_interpretation">simultaneous interpretation</string>
+    <string name="session_bottom_appbar_behavior" translatable="false">io.github.droidkaigi.confsched2019.session.ui.widget.SessionBottomAppBarBehavior</string>
 </resources>

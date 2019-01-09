@@ -3,6 +3,7 @@
 /local.properties
 /.idea/*
 !/.idea/codeStyles/
+!/.idea/dictionaries/
 .DS_Store
 lint-results.*
 build/

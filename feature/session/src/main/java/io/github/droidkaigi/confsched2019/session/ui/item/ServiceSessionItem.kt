@@ -20,7 +20,7 @@ class ServiceSessionItem(
             timeAndRoom.text = root.context.getString(
                 R.string.session_duration_room_format,
                 specialSession.timeInMinutes,
-                specialSession.room?.name ?: ""
+                specialSession.room.name
             )
         }
     }

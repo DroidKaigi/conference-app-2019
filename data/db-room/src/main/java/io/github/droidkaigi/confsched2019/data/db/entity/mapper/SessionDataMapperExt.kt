@@ -77,6 +77,9 @@ fun SessionResponse.toSessionEntityImpl(
                 requireNotNull(category.translatedName?.en)
             ),
             intendedAudience = intendedAudience,
+            videoUrl = videoUrl,
+            slideUrl = slideUrl,
+            isInterpretationTarget = interpretationTarget,
             room = RoomEntityImpl(roomId, rooms.roomName(roomId)),
             sessionType = sessionType
         )
@@ -94,6 +97,9 @@ fun SessionResponse.toSessionEntityImpl(
             category = null,
             room = RoomEntityImpl(roomId, rooms.roomName(roomId)),
             intendedAudience = null,
+            videoUrl = videoUrl,
+            slideUrl = slideUrl,
+            isInterpretationTarget = interpretationTarget,
             message = message?.let {
                 MessageEntityImpl(requireNotNull(it.ja), requireNotNull(it.en))
             },

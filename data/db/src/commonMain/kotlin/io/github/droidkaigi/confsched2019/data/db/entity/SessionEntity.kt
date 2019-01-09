@@ -11,6 +11,9 @@ interface SessionEntity {
     val language: LanguageEntity?
     val category: CategoryEntity?
     val intendedAudience: String?
+    val videoUrl: String?
+    val slideUrl: String?
+    val isInterpretationTarget: Boolean
     val room: RoomEntity?
     val message: MessageEntity?
     val isServiceSession: Boolean
