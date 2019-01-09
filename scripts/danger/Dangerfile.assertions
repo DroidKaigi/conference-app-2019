@@ -44,6 +44,6 @@ end
 # LGTM
 begin
   if status_report[:errors].length.zero? && status_report[:warnings].length.zero?
-    markdown("ALL GREEN :100:")
+    markdown("Asserted successfully. :100:")
   end
 end
