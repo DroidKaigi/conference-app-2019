@@ -20,7 +20,7 @@ parse_response() {
 
     if [[ $(echo $response | jq ".error") != "false" ]]; then
         // any error happened so it should be out as it is but to stderr
-        echo $response >2
+        echo $response >&2
     else
         distribution_url=$(echo $response | jq -r ".results.distribution.url")
 

@@ -33,12 +33,13 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="0dp"
-                android:layout_height="64dp"
+                android:layout_height="wrap_content"
                 android:background="@{isWhiteTheme ? Converters.convertColorToDrawable(@color/white) : Converters.convertColorToDrawable(@color/colorPrimary)}"
                 android:elevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:contentInsetStartWithNavigation="0dp"
                 >
 
                 <ImageView

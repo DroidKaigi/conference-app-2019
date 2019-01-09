@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
@@ -117,8 +116,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                         excludeChildren(binding.sessionsRecycler, true)
                     })
                 val isCollapsed = newState == BottomSheetBehavior.STATE_COLLAPSED
-                binding.sessionsBottomSheetShowFilterButton.isVisible = !isCollapsed
-                binding.sessionsBottomSheetHideFilterButton.isVisible = isCollapsed
+                binding.isCollapsed = isCollapsed
             }
         }
     }

@@ -64,6 +64,7 @@ fun SessionWithSpeakers.toSession(
                 )
             },
             intendedAudience = session.intendedAudience,
+            isInterpretationTarget = session.isInterpretationTarget,
             isFavorited = favList!!.map { it.toString() }.contains(session.id),
             speakers = speakers,
             message = session.message?.let {

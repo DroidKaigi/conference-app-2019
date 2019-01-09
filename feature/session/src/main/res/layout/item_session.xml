@@ -7,8 +7,6 @@
 
     <data>
 
-        <import type="android.view.View"/>
-
         <variable
             name="session"
             type="io.github.droidkaigi.confsched2019.model.Session.SpeechSession"
@@ -35,6 +33,27 @@
         android:paddingTop="@dimen/session_item_top_padding"
         >
 
+        <TextView
+            android:id="@+id/live"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/robotomono_medium"
+            android:text="@string/session_live"
+            android:textAllCaps="true"
+            android:background="@drawable/shape_live"
+            android:textColor="@color/white"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:textSize="10sp"
+            app:visibleGone="@{session.isOnGoing}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SmallSp"
+            />
+
         <androidx.emoji.widget.EmojiTextView
             android:id="@+id/title"
             android:layout_width="0dp"
@@ -46,8 +65,7 @@
             android:textAppearance="@style/TextAppearance.App.Subtitle1"
             app:layout_constraintEnd_toStartOf="@id/favorite"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_goneMarginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/live"
             tools:text="テストセッション"
             />
 
@@ -114,6 +132,22 @@
                 />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/simultaneous_interpretation_chip"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:ellipsize="end"
+                android:enabled="false"
+                android:text="@string/session_simultaneous_interpretation"
+                android:textAppearance="@style/TextAppearance.App.Caption"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="#7982e1"
+                app:chipMinTouchTargetSize="0dp"
+                app:visibleGone="@{session.isInterpretationTarget}"
+                />
+
+            <com.google.android.material.chip.Chip
                 android:id="@+id/category_chip"
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
@@ -143,7 +177,7 @@
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.App.Caption"
             android:textColor="@color/colorPrimary"
-            android:visibility="@{session.message == null ? View.GONE : View.VISIBLE}"
+            app:visibleGone="@{session.message != null}"
             app:layout_constraintEnd_toEndOf="@id/title"
             app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintTop_toBottomOf="@id/chip_group"
@@ -165,7 +199,7 @@
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.App.Caption"
             android:textColor="@color/colorSecondary"
-            android:visibility="@{session.isFinished ? View.VISIBLE : View.GONE}"
+            app:visibleGone="@{session.isFinished}"
             app:layout_constraintEnd_toEndOf="@id/title"
             app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintTop_toBottomOf="@id/message"
