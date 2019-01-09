@@ -135,11 +135,14 @@ class SessionPageFragment : DaggerFragment() {
                 }
             }
 
-            childFragmentManager
-                .beginTransaction()
-                .replace(R.id.sessions_sheet, fragment)
-                .disallowAddToBackStack()
-                .commit()
+            // suppress fragment replacement
+            if (childFragmentManager.findFragmentByTag(fragment::javaClass.name) == null) {
+                childFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.sessions_sheet, fragment, fragment::javaClass.name)
+                    .disallowAddToBackStack()
+                    .commit()
+            }
         }
         bottomSheetBehavior.isHideable = false
         binding.sessionsSheet.viewTreeObserver.addOnPreDrawListener(
