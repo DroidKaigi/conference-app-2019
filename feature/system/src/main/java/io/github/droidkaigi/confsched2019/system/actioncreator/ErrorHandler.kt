@@ -8,6 +8,7 @@ import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.model.ErrorMessage
 import io.github.droidkaigi.confsched2019.system.BuildConfig
 import io.github.droidkaigi.confsched2019.system.R
+import io.github.droidkaigi.confsched2019.timber.error
 import io.ktor.client.features.BadResponseStatusException
 import kotlinx.coroutines.CancellationException
 import timber.log.Timber
@@ -38,12 +39,12 @@ interface ErrorHandler {
             is FirebaseApiNotAvailableException,
             is FirebaseNetworkException -> {
                 val message = ErrorMessage.of(R.string.system_error_network, e)
-                Timber.log(Timber.ERROR, null, e, null)
+                Timber.error(e)
                 dispatcher.launchAndDispatch(Action.Error(message))
             }
             is BadResponseStatusException -> {
                 val message = ErrorMessage.of(R.string.system_error_server, e)
-                Timber.log(Timber.ERROR, null, e, null)
+                Timber.error(e)
                 dispatcher.launchAndDispatch(Action.Error(message))
             }
             else -> {

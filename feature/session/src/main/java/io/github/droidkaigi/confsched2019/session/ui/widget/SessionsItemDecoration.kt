@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupAdapter
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
+import io.github.droidkaigi.confsched2019.timber.debug
 import timber.log.Timber
 
 class SessionsItemDecoration(
@@ -38,7 +39,7 @@ class SessionsItemDecoration(
         try {
             typeface = ResourcesCompat.getFont(context, R.font.lekton)
         } catch (e: Resources.NotFoundException) {
-            Timber.log(Timber.DEBUG, null, e, null)
+            Timber.debug(e)
         }
     }
 
