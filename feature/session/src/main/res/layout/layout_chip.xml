@@ -9,6 +9,7 @@
     android:layout_height="wrap_content"
     android:textColor="@color/white"
     app:chipBackgroundColor="@color/colorPrimary"
+    app:chipMinTouchTargetSize="0dp"
     app:chipStrokeColor="@color/white"
     app:chipStrokeWidth="1dp"
     tools:text="hoge"
