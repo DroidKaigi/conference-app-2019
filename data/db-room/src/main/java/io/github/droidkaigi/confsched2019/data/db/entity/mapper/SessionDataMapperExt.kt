@@ -77,6 +77,7 @@ fun SessionResponse.toSessionEntityImpl(
                 requireNotNull(category.translatedName?.en)
             ),
             intendedAudience = intendedAudience,
+            isInterpretationTarget = interpretationTarget,
             room = RoomEntityImpl(roomId, rooms.roomName(roomId)),
             sessionType = sessionType
         )
@@ -94,6 +95,7 @@ fun SessionResponse.toSessionEntityImpl(
             category = null,
             room = RoomEntityImpl(roomId, rooms.roomName(roomId)),
             intendedAudience = null,
+            isInterpretationTarget = interpretationTarget,
             message = message?.let {
                 MessageEntityImpl(requireNotNull(it.ja), requireNotNull(it.en))
             },

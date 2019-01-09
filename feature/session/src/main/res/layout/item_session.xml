@@ -33,7 +33,7 @@
         android:paddingTop="@dimen/session_item_top_padding"
         >
 
-        <androidx.emoji.widget.EmojiTextView
+        <TextView
             android:id="@+id/live"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -129,6 +129,22 @@
                 app:chipBackgroundColor="#7982e1"
                 app:chipMinTouchTargetSize="0dp"
                 tools:text="Japanese"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/simultaneous_interpretation_chip"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:ellipsize="end"
+                android:enabled="false"
+                android:text="@string/session_simultaneous_interpretation"
+                android:textAppearance="@style/TextAppearance.App.Caption"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="#7982e1"
+                app:chipMinTouchTargetSize="0dp"
+                app:visibleGone="@{session.isInterpretationTarget}"
                 />
 
             <com.google.android.material.chip.Chip

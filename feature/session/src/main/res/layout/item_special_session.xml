@@ -7,8 +7,6 @@
 
     <data>
 
-        <import type="android.view.View"/>
-
         <variable
             name="session"
             type="io.github.droidkaigi.confsched2019.model.Session.ServiceSession"
@@ -25,7 +23,7 @@
         android:paddingStart="@dimen/session_bottom_sheet_left_time_space"
         >
 
-        <androidx.emoji.widget.EmojiTextView
+        <TextView
             android:id="@+id/live"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

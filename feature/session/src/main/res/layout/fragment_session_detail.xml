@@ -162,6 +162,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="12dp"
+                    app:chipSpacing="4dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/session_tag_title"
@@ -176,7 +177,20 @@
                         android:textAppearance="?textAppearanceCaption"
                         android:textColor="@color/white"
                         app:chipBackgroundColor="#7982e1"
+                        app:chipMinTouchTargetSize="0dp"
                         tools:text="Japanese"
+                        />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/simultaneous_interpretation_chip"
+                        style="@style/Widget.MaterialComponents.Chip.Action"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/session_simultaneous_interpretation"
+                        android:textAppearance="?textAppearanceCaption"
+                        android:textColor="@color/white"
+                        app:chipBackgroundColor="#7982e1"
+                        app:visibleGone="@{session.isInterpretationTarget}"
                         />
 
                     <com.google.android.material.chip.Chip
@@ -187,6 +201,7 @@
                         android:textAppearance="?textAppearanceCaption"
                         android:textColor="@color/white"
                         app:chipBackgroundColor="#95959c"
+                        app:chipMinTouchTargetSize="0dp"
                         tools:text="ソフトウェアアーキテクチャ"
                         />
                 </com.google.android.material.chip.ChipGroup>
