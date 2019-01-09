@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:foreground="?android:attr/selectableItemBackground"
         android:paddingTop="@dimen/session_item_top_padding"
-        android:paddingBottom="@dimen/session_item_bottom_padding"
+        android:paddingBottom="34dp"
         android:paddingEnd="0dp"
         android:paddingStart="@dimen/session_bottom_sheet_left_time_space"
         >
