@@ -31,15 +31,15 @@ class ActivityActionCreator @Inject constructor(val activity: FragmentActivity) 
         }
     }
 
-    companion object {
-        const val LATITUDE_LOCATION = "35.696065"
-        const val LONGITUDE_LOCATION = "139.690426"
-    }
-
     fun shareUrl(url: String) {
         val builder: ShareCompat.IntentBuilder = ShareCompat.IntentBuilder.from(activity)
         builder.setText(url)
             .setType("text/plain")
             .startChooser()
+    }
+
+    companion object {
+        const val LATITUDE_LOCATION = "35.696065"
+        const val LONGITUDE_LOCATION = "139.690426"
     }
 }
