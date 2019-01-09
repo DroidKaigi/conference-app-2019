@@ -11,11 +11,15 @@ import com.google.android.material.bottomappbar.BottomAppBar
 class SessionBottomAppBarBehavior(
     context: Context? = null,
     attrs: AttributeSet? = null
-    ) : BottomAppBar.Behavior(context, attrs) {
+) : BottomAppBar.Behavior(context, attrs) {
 
     private var state: Int = STATE_SCROLLED_UP
 
-    override fun onInterceptTouchEvent(parent: CoordinatorLayout, child: BottomAppBar, ev: MotionEvent): Boolean {
+    override fun onInterceptTouchEvent(
+        parent: CoordinatorLayout,
+        child: BottomAppBar,
+        ev: MotionEvent
+    ): Boolean {
         if (child.isShown.not() || ev.action != MotionEvent.ACTION_DOWN) {
             return super.onInterceptTouchEvent(parent, child, ev)
         }
