@@ -312,6 +312,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_message"
+                    app:visibleGone="@{session.hasVideo &amp;&amp; session.hasSlide}"
                     />
 
                 <TextView
@@ -323,6 +324,7 @@
                     android:textAppearance="?attr/textAppearanceSubtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider5"
+                    app:visibleGone="@{session.hasVideo &amp;&amp; session.hasSlide}"
                     />
 
                 <androidx.appcompat.widget.AppCompatTextView
