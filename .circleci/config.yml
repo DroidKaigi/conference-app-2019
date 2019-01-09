@@ -1,5 +1,5 @@
 cache_version_keys: &cache_version_keys
-  CACHE_VERSION_OF_PROJECT_DEPS: v1.1
+  CACHE_VERSION_OF_PROJECT_DEPS: v1.5
   CACHE_VERSION_OF_DANGER_CACHE: v1
 
 cache_keys:
@@ -8,13 +8,11 @@ cache_keys:
     keys: &all_keys_of_gradle_cache
       - *primary_key_of_gradle_cache
       - gradle-cache-{{ checksum "~/CACHE_VERSION_OF_PROJECT_DEPS" }}-
-      - gradle-cache-
   danger_cache:
     primary: &primary_key_of_danger_cache danger-cache-{{ checksum "~/CACHE_VERSION_OF_DANGER_CACHE" }}-{{ checksum "~/danger_cache" }}
     keys: &all_keys_of_danger_cache
       - *primary_key_of_danger_cache
       - danger-cache-{{ checksum "~/CACHE_VERSION_OF_DANGER_CACHE" }}-
-      - danger-cache-
 
 docker_env:
   android_defaults: &android_defaults
@@ -56,7 +54,7 @@ jobs:
           keys: *all_keys_of_gradle_cache
       - run:
           name: Download Dependencies
-          command: ./gradlew downloadAllDependencies
+          command: ./gradlew androidDependenciesExtracs getDependencies
       - save_cache: &save_gradle_cache
           paths:
             - ~/.android
@@ -66,7 +64,7 @@ jobs:
       - run:
           name: Assemble apk
           command: |
-            ./gradlew assembleDebug --offline # build with online-mode for now
+            ./gradlew clean assembleDebug --offline # build with online-mode for now
       - store_artifacts:
           path: frontend/android/build/outputs/apk
       - run: *download_dpg

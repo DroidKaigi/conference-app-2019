@@ -69,10 +69,11 @@ allprojects {
                     args "--android", '-F', 'src/main/**/*.kt', 'src/debug/**/*.kt', 'src/release/**/*.kt'
                 }
 
-                task downloadAllDependencies(dependsOn: 'androidDependencies') {
+                task androidDependenciesExtracs(dependsOn: 'androidDependencies') {
                     description 'Download extra dependencies for the CI Gradle Cache'
                     doLast {
-                        configurations.findAll { it.name.matches(/(ktlint|kapt|_internal_aapt2_binary)/) && it.canBeResolved }.files
+                        // androidDependencies do not touch some configurations
+                        configurations.findAll { it.name.matches(/(ktlint|kapt|_internal_aapt2_binary|lintClassPath)/) && it.canBeResolved }.files
                     }
                 }
             }
