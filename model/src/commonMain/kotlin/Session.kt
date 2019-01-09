@@ -27,7 +27,7 @@ sealed class Session(
         val isInterpretationTarget: Boolean,
         val isFavorited: Boolean,
         val speakers: List<Speaker>,
-        val message: SessionMessage?
+        val message: LocaledString?
     ) : Session(id, dayNumber, startTime, endTime, room) {
         val hasVideo: Boolean = videoUrl.isNullOrEmpty().not()
         val hasSlide: Boolean = slideUrl.isNullOrEmpty().not()
