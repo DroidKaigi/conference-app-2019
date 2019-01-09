@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.isVisible
 import androidx.core.view.size
 import androidx.navigation.NavController
@@ -126,62 +125,34 @@ class SpeechSessionItem @AssistedInject constructor(
         textView: TextView
     ) {
         textView.text = speaker.name
+        val imageUrl = speaker.imageUrl
         val context = textView.context
-        val placeHolder = VectorDrawableCompat.create(
-            context.resources,
-            R.drawable.ic_person_outline_black_24dp,
-            null
-        )
-        val placeHolderColor = ContextCompat.getColor(
-            context,
-            R.color.gray2
-        )
-        loadImage(
-            textView = textView,
-            imageUrl = speaker.imageUrl,
-            circleCrop = true,
-            rawPlaceHolder = placeHolder,
-            placeHolderTint = placeHolderColor
-        )
-    }
-
-    private fun loadImage(
-        textView: TextView,
-        imageUrl: String?,
-        circleCrop: Boolean,
-        rawPlaceHolder: Drawable?,
-        placeHolderTint: Int,
-        widthDp: Int = 16,
-        heightDp: Int = 16
-    ) {
-        fun setDrawable(drawable: Drawable) {
-            val res = textView.context.resources
-            val widthPx = (widthDp * res.displayMetrics.density).toInt()
-            val heightPx = (heightDp * res.displayMetrics.density).toInt()
-            drawable.setBounds(0, 0, widthPx, heightPx)
-            textView.setCompoundDrawables(drawable, null, null, null)
-        }
-
         val placeHolder = run {
-            DrawableCompat.wrap(
-                rawPlaceHolder ?: return@run null
+            VectorDrawableCompat.create(
+                context.resources,
+                R.drawable.ic_person_outline_black_24dp,
+                null
             )?.apply {
-                setTint(placeHolderTint)
+                setTint(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.gray2
+                    )
+                )
             }
         }
+
         imageUrl ?: run {
             placeHolder?.let {
-                setDrawable(it)
+                textView.setLeftDrawable(it)
             }
         }
 
         Picasso
             .get()
             .load(imageUrl)
+            .transform(CropCircleTransformation())
             .apply {
-                if (circleCrop) {
-                    transform(CropCircleTransformation())
-                }
                 if (placeHolder != null) {
                     placeholder(placeHolder)
                 }
@@ -189,7 +160,7 @@ class SpeechSessionItem @AssistedInject constructor(
             .into(object : Target {
                 override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
                     placeHolderDrawable?.let {
-                        setDrawable(it)
+                        textView.setLeftDrawable(it)
                     }
                 }
 
@@ -199,9 +170,19 @@ class SpeechSessionItem @AssistedInject constructor(
                 override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
                     val res = textView.context.resources
                     val drawable = BitmapDrawable(res, bitmap)
-                    setDrawable(drawable)
+                    textView.setLeftDrawable(drawable)
                 }
             })
+    }
+
+    fun TextView.setLeftDrawable(drawable: Drawable) {
+        val res = context.resources
+        val widthDp = 16
+        val heightDp = 16
+        val widthPx = (widthDp * res.displayMetrics.density).toInt()
+        val heightPx = (heightDp * res.displayMetrics.density).toInt()
+        drawable.setBounds(0, 0, widthPx, heightPx)
+        setCompoundDrawables(drawable, null, null, null)
     }
 
     override fun getLayout(): Int = R.layout.item_session
