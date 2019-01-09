@@ -13,6 +13,10 @@
         android:theme="@style/AppTheme"
         >
         <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false"
+            />
+        <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts"
             />
@@ -23,6 +27,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:theme="@style/AppTheme.WithActionBar"
+            />
     </application>
 
 </manifest>

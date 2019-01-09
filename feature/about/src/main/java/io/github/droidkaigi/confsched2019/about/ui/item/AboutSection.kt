@@ -3,6 +3,7 @@ package io.github.droidkaigi.confsched2019.about.ui.item
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.Navigation
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.xwray.groupie.Section
 import io.github.droidkaigi.confsched2019.about.R
 import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
@@ -41,6 +42,7 @@ class AboutSection @Inject constructor(
                 ) {
                     Navigation.findNavController(activity, R.id.root_nav_host_fragment)
                         .navigate(R.id.licenses)
+                    OssLicensesMenuActivity.setActivityTitle(it.getString(R.string.about_license))
                 },
                 AboutItem(
                     R.string.about_app_version,

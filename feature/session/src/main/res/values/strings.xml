@@ -22,5 +22,6 @@
     <string name="session_place" translatable="false">Place</string>
     <string name="session_search_hint">Search…</string>
     <string name="session_go_to_survey">Go to survey</string>
+    <string name="session_live" translatable="false">Live</string>
     <string name="session_simultaneous_interpretation">simultaneous interpretation</string>
 </resources>
