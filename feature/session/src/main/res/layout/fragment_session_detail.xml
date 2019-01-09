@@ -7,6 +7,8 @@
 
     <data>
 
+        <import type="android.view.View"/>
+
         <variable
             name="session"
             type="io.github.droidkaigi.confsched2019.model.Session.SpeechSession"
@@ -42,6 +44,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingBottom="24dp"
                 >
 
                 <androidx.emoji.widget.EmojiTextView
@@ -91,8 +94,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
                     android:text="@{session.timeSummary(lang)}"
+                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
                     app:layout_constraintBottom_toBottomOf="@id/session_time_image"
                     app:layout_constraintStart_toEndOf="@id/session_time_image"
                     app:layout_constraintTop_toTopOf="@id/session_time_image"
@@ -223,10 +226,10 @@
                     android:contentDescription="@null"
                     android:layerType="software"
                     android:src="@drawable/shape_dashed_line"
-                    app:visibleGone="@{session.isFinished}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_tags"
+                    app:visibleGone="@{session.isFinished}"
                     />
 
 
@@ -237,9 +240,9 @@
                     android:layout_marginTop="26dp"
                     android:text="@string/session_detail_survey"
                     android:textAppearance="@style/TextAppearance.App.Subtitle1"
-                    app:visibleGone="@{session.isFinished}"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider3"
+                    app:visibleGone="@{session.isFinished}"
                     />
 
                 <TextView
@@ -249,9 +252,9 @@
                     android:text="@string/session_detail_go_to_survey"
                     android:textAppearance="@style/TextAppearance.App.Subtitle1"
                     android:textColor="@color/colorSecondary"
-                    app:visibleGone="@{session.isFinished}"
                     app:layout_constraintBaseline_toBaselineOf="@id/session_survey_title"
                     app:layout_constraintEnd_toEndOf="@id/session_title"
+                    app:visibleGone="@{session.isFinished}"
                     />
 
                 <ImageView
@@ -285,7 +288,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_speaker_title"
@@ -302,10 +304,85 @@
                     android:maxLines="3"
                     android:paddingBottom="2dp"
                     android:textAlignment="viewStart"
-                    app:visibleGone="@{session.message != null}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/session_speakers"
+                    app:visibleGone="@{session.message != null}"
+                    />
+
+                <ImageView
+                    android:id="@+id/divider5"
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_marginTop="26dp"
+                    android:contentDescription="@null"
+                    android:layerType="software"
+                    android:src="@drawable/shape_dashed_line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/session_message"
+                    app:visibleGone="@{session.hasVideo &amp;&amp; session.hasSlide}"
+                    />
+
+                <TextView
+                    android:id="@+id/session_resource_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/session_detail_resource"
+                    android:textAppearance="?attr/textAppearanceSubtitle1"
+                    app:layout_constraintStart_toStartOf="@id/session_title"
+                    app:layout_constraintTop_toBottomOf="@id/divider5"
+                    app:visibleGone="@{session.hasVideo &amp;&amp; session.hasSlide}"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/session_video_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:drawablePadding="8dp"
+                    android:drawableStart="@drawable/ic_local_movies_outline_gray2_24dp"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="8dp"
+                    android:text="@string/session_detail_resource_video"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/session_resource_title"
+                    app:visibleGone="@{session.hasVideo}"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/session_slide_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:drawablePadding="8dp"
+                    android:drawableStart="@drawable/ic_file_copy_outline_gray2_24dp"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="8dp"
+                    android:text="@string/session_detail_resource_slide"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/session_video_button"
+                    app:layout_goneMarginTop="8dp"
+                    app:visibleGone="@{session.hasSlide}"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

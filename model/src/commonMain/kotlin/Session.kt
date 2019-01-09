@@ -22,11 +22,16 @@ sealed class Session(
         val language: LocaledString,
         val category: Category,
         val intendedAudience: String?,
+        val videoUrl: String?,
+        val slideUrl: String?,
         val isInterpretationTarget: Boolean,
         val isFavorited: Boolean,
         val speakers: List<Speaker>,
         val message: SessionMessage?
-    ) : Session(id, dayNumber, startTime, endTime, room)
+    ) : Session(id, dayNumber, startTime, endTime, room) {
+        val hasVideo: Boolean = videoUrl.isNullOrEmpty().not()
+        val hasSlide: Boolean = slideUrl.isNullOrEmpty().not()
+    }
 
     data class ServiceSession(
         override val id: String,

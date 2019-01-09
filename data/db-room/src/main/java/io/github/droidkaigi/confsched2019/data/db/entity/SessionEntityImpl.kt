@@ -16,6 +16,8 @@ data class SessionEntityImpl(
     override var sessionFormat: String?,
     override val sessionType: String?,
     override val intendedAudience: String?,
+    override val videoUrl: String?,
+    override val slideUrl: String?,
     override val isInterpretationTarget: Boolean,
     @Embedded override var language: LanguageEntityImpl?,
     @Embedded override val category: CategoryEntityImpl?,

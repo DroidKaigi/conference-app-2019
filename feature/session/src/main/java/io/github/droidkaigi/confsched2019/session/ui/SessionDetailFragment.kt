@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
@@ -23,6 +22,7 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionConten
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeakerItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
+import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import javax.inject.Inject
 
@@ -33,6 +33,7 @@ class SessionDetailFragment : DaggerFragment() {
     @Inject lateinit var systemStore: SystemStore
     @Inject lateinit var sessionContentsStore: SessionContentsStore
     @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
+    @Inject lateinit var activityActionCreator: ActivityActionCreator
 
     private lateinit var sessionDetailFragmentArgs: SessionDetailFragmentArgs
     private val groupAdapter = GroupAdapter<ViewHolder<*>>()
@@ -108,6 +109,17 @@ class SessionDetailFragment : DaggerFragment() {
                 )
             }
         groupAdapter.update(sessionItems)
+
+        binding.sessionVideoButton.setOnClickListener {
+            session.videoUrl?.let { urlString ->
+                activityActionCreator.openUrl(urlString)
+            }
+        }
+        binding.sessionSlideButton.setOnClickListener {
+            session.slideUrl?.let { urlString ->
+                activityActionCreator.openUrl(urlString)
+            }
+        }
     }
 }
 
@@ -120,12 +132,6 @@ abstract class SessionDetailFragmentModule {
         @PageScope
         fun providesLifecycle(sessionsFragment: SessionDetailFragment): Lifecycle {
             return sessionsFragment.viewLifecycleOwner.lifecycle
-        }
-
-        @JvmStatic @Provides fun provideActivity(
-            sessionsFragment: SessionDetailFragment
-        ): FragmentActivity {
-            return sessionsFragment.requireActivity()
         }
     }
 }
