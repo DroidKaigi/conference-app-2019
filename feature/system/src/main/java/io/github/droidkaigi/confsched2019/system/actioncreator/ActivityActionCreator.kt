@@ -3,6 +3,7 @@ package io.github.droidkaigi.confsched2019.system.actioncreator
 import android.content.Intent
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import io.github.droidkaigi.confsched2019.system.R
@@ -33,5 +34,13 @@ class ActivityActionCreator @Inject constructor(val activity: FragmentActivity) 
     companion object {
         const val LATITUDE_LOCATION = "35.696065"
         const val LONGITUDE_LOCATION = "139.690426"
+    }
+
+    fun shareUrl(url: String) {
+        val builder: ShareCompat.IntentBuilder = ShareCompat.IntentBuilder.from(activity)
+        builder.setChooserTitle("share via")
+            .setText(url)
+            .setType("text/plain")
+            .startChooser()
     }
 }
