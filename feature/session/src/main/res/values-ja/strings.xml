@@ -6,6 +6,8 @@
     <string name="session_detail_survey">アンケート</string>
     <string name="session_detail_go_to_survey">回答する</string>
     <string name="session_detail_document">資料</string>
+    <string name="session_detail_document_video">動画</string>
+    <string name="session_detail_document_slide">スライド</string>
     <string name="session_search_hint">検索する…</string>
     <string name="session_go_to_survey">アンケートに回答する</string>
     <string name="session_simultaneous_interpretation">同時通訳</string>

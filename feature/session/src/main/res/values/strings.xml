@@ -15,6 +15,8 @@
     <string name="session_detail_go_to_survey">Go to survey</string>
     <string name="session_detail_speaker" translatable="false">Speaker</string>
     <string name="session_detail_document">資料</string>
+    <string name="session_detail_document_video">動画</string>
+    <string name="session_detail_document_slide">スライド</string>
     <string name="session_speaker_sessions" translatable="false">Session</string>
     <string name="session_share" translatable="false">Share</string>
     <string name="session_place" translatable="false">Place</string>
