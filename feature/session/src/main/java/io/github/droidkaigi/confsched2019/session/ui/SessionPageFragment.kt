@@ -123,7 +123,9 @@ class SessionPageFragment : DaggerFragment() {
     private fun setupBottomSheet(savedInstanceState: Bundle?) {
         // suppress fragment replacement
         val tab = SessionPage.pages[args.tabIndex]
-        if (savedInstanceState == null && childFragmentManager.findFragmentByTag(tab.title) == null) {
+        if (savedInstanceState == null &&
+            childFragmentManager.findFragmentByTag(tab.title) == null
+        ) {
             val fragment: Fragment = when (tab) {
                 is SessionPage.Day -> {
                     BottomSheetDaySessionsFragment.newInstance(
