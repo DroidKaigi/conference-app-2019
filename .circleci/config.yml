@@ -54,7 +54,7 @@ jobs:
           keys: *all_keys_of_gradle_cache
       - run:
           name: Download Dependencies
-          command: ./gradlew androidDependenciesExtracs getDependencies
+          command: retry_command ./gradlew androidDependenciesExtracs getDependencies
       - save_cache: &save_gradle_cache
           paths:
             - ~/.android
