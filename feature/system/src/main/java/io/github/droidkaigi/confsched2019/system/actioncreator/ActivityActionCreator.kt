@@ -38,8 +38,7 @@ class ActivityActionCreator @Inject constructor(val activity: FragmentActivity) 
 
     fun shareUrl(url: String) {
         val builder: ShareCompat.IntentBuilder = ShareCompat.IntentBuilder.from(activity)
-        builder.setChooserTitle("share via")
-            .setText(url)
+        builder.setText(url)
             .setType("text/plain")
             .startChooser()
     }
