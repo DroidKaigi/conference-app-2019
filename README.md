@@ -17,7 +17,7 @@ You can download the binary built on master branch from [<img src="https://dply.
 * Show Information Feed
 
 # Contributing
-We are always welcome your contribution!
+We always welcome your contribution!
 
 ## Requirements
 Android Studio 3.2.1  
