@@ -121,8 +121,10 @@ class SessionPageFragment : DaggerFragment() {
     }
 
     private fun setupBottomSheet(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            val fragment: Fragment = when (val tab = SessionPage.pages[args.tabIndex]) {
+        // suppress fragment replacement
+        val tab = SessionPage.pages[args.tabIndex]
+        if (savedInstanceState == null && childFragmentManager.findFragmentByTag(tab.title) == null) {
+            val fragment: Fragment = when (tab) {
                 is SessionPage.Day -> {
                     BottomSheetDaySessionsFragment.newInstance(
                         BottomSheetDaySessionsFragmentArgs
@@ -135,15 +137,11 @@ class SessionPageFragment : DaggerFragment() {
                 }
             }
 
-            // suppress fragment replacement
-            val title = SessionPage.pages[args.tabIndex].title
-            if (childFragmentManager.findFragmentByTag(title) == null) {
-                childFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.sessions_sheet, fragment, title)
-                    .disallowAddToBackStack()
-                    .commit()
-            }
+            childFragmentManager
+                .beginTransaction()
+                .replace(R.id.sessions_sheet, fragment, tab.title)
+                .disallowAddToBackStack()
+                .commit()
         }
         bottomSheetBehavior.isHideable = false
         binding.sessionsSheet.viewTreeObserver.addOnPreDrawListener(
