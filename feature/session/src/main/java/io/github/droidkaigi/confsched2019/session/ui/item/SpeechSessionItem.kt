@@ -1,9 +1,11 @@
 package io.github.droidkaigi.confsched2019.session.ui.item
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -13,6 +15,8 @@ import androidx.navigation.NavDirections
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
+import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
 import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.Speaker
@@ -20,9 +24,9 @@ import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSessionBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.bindingadapter.loadImage
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.util.lazyWithParam
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlin.math.max
 
 class SpeechSessionItem @AssistedInject constructor(
@@ -102,11 +106,8 @@ class SpeechSessionItem @AssistedInject constructor(
                 val speakerView = layoutInflater.get(root.context).inflate(
                     R.layout.layout_speaker, speakers, false
                 ) as ViewGroup
-                val imageView: ImageView = speakerView.findViewById(
-                    R.id.speaker_image
-                )
                 val textView: TextView = speakerView.findViewById(R.id.speaker)
-                bindSpeakerData(speaker, textView, imageView)
+                bindSpeakerData(speaker, textView)
 
                 speakers.addView(speakerView)
                 return@forEach
@@ -114,35 +115,74 @@ class SpeechSessionItem @AssistedInject constructor(
             if (existSpeakerView != null && speaker != null) {
                 val textView: TextView = existSpeakerView.findViewById(R.id.speaker)
                 textView.text = speaker.name
-                val imageView = existSpeakerView.findViewById<ImageView>(R.id.speaker_image)
-                bindSpeakerData(speaker, textView, imageView)
+                bindSpeakerData(speaker, textView)
             }
         }
     }
 
     private fun bindSpeakerData(
         speaker: Speaker,
-        textView: TextView,
-        imageView: ImageView
+        textView: TextView
     ) {
         textView.text = speaker.name
-        val context = imageView.context
-        val placeHolder = VectorDrawableCompat.create(
-            context.resources,
-            R.drawable.ic_person_outline_black_24dp,
-            null
-        )
-        val placeHolderColor = ContextCompat.getColor(
-            context,
-            R.color.gray2
-        )
-        loadImage(
-            imageView = imageView,
-            imageUrl = speaker.imageUrl,
-            circleCrop = true,
-            rawPlaceHolder = placeHolder,
-            placeHolderTint = placeHolderColor
-        )
+        val imageUrl = speaker.imageUrl
+        val context = textView.context
+        val placeHolder = run {
+            VectorDrawableCompat.create(
+                context.resources,
+                R.drawable.ic_person_outline_black_24dp,
+                null
+            )?.apply {
+                setTint(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.gray2
+                    )
+                )
+            }
+        }
+
+        imageUrl ?: run {
+            placeHolder?.let {
+                textView.setLeftDrawable(it)
+            }
+        }
+
+        Picasso
+            .get()
+            .load(imageUrl)
+            .transform(CropCircleTransformation())
+            .apply {
+                if (placeHolder != null) {
+                    placeholder(placeHolder)
+                }
+            }
+            .into(object : Target {
+                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+                    placeHolderDrawable?.let {
+                        textView.setLeftDrawable(it)
+                    }
+                }
+
+                override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+                }
+
+                override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+                    val res = textView.context.resources
+                    val drawable = BitmapDrawable(res, bitmap)
+                    textView.setLeftDrawable(drawable)
+                }
+            })
+    }
+
+    fun TextView.setLeftDrawable(drawable: Drawable) {
+        val res = context.resources
+        val widthDp = 16
+        val heightDp = 16
+        val widthPx = (widthDp * res.displayMetrics.density).toInt()
+        val heightPx = (heightDp * res.displayMetrics.density).toInt()
+        drawable.setBounds(0, 0, widthPx, heightPx)
+        setCompoundDrawables(drawable, null, null, null)
     }
 
     override fun getLayout(): Int = R.layout.item_session
