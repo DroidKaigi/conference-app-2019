@@ -1,5 +1,5 @@
 cache_version_keys: &cache_version_keys
-  CACHE_VERSION_OF_PROJECT_DEPS: v1
+  CACHE_VERSION_OF_PROJECT_DEPS: v1.1
   CACHE_VERSION_OF_DANGER_CACHE: v1
 
 cache_keys:
@@ -56,18 +56,17 @@ jobs:
           keys: *all_keys_of_gradle_cache
       - run:
           name: Download Dependencies
-          command: ./gradlew androidDependencies
+          command: ./gradlew downloadAllDependencies
       - save_cache: &save_gradle_cache
           paths:
             - ~/.android
             - ~/.gradle
             - .gradle
-            - ~/.m2
           key: *primary_key_of_gradle_cache
       - run:
           name: Assemble apk
           command: |
-            ./gradlew assembleDebug # --offline # build with online-mode for now
+            ./gradlew assembleDebug --offline # build with online-mode for now
       - store_artifacts:
           path: frontend/android/build/outputs/apk
       - run: *download_dpg
@@ -108,7 +107,7 @@ jobs:
       - checkout
       - run: *init_bash
       - restore_cache: *restore_gradle_cache
-      - run: ./gradlew testDebugUnitTest lintDebug ktlint --continue
+      - run: ./gradlew testDebugUnitTest lintDebug ktlint --continue --offline
       - run:
           name: Merge junit report files
           command: |
