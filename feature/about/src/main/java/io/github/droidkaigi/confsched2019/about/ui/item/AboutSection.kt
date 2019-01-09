@@ -34,7 +34,7 @@ class AboutSection @Inject constructor(
                     R.string.about_privacy_policy,
                     R.string.about_check
                 ) {
-                    Toast.makeText(it, "FIXME!!", Toast.LENGTH_SHORT).show()
+                    activityActionCreator.openUrl("http://www.association.droidkaigi.jp/privacy")
                 },
                 AboutItem(
                     R.string.about_license,
