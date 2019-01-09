@@ -2,7 +2,7 @@ package io.github.droidkaigi.confsched2019.announcement.ui.actioncreator
 
 import androidx.lifecycle.Lifecycle
 import io.github.droidkaigi.confsched2019.action.Action
-import io.github.droidkaigi.confsched2019.data.firestore.FireStore
+import io.github.droidkaigi.confsched2019.data.firestore.Firestore
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.dummyAnnouncementsData
 import io.github.droidkaigi.confsched2019.ext.android.CoroutinePlugin
@@ -20,7 +20,7 @@ import org.junit.Test
 
 class AnnouncementActionCreatorTest {
     @RelaxedMockK lateinit var dispatcher: Dispatcher
-    @RelaxedMockK lateinit var fireStore: FireStore
+    @RelaxedMockK lateinit var firestore: Firestore
 
     @Before fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
@@ -29,10 +29,10 @@ class AnnouncementActionCreatorTest {
 
     @Test fun load() = runBlocking {
         val lifecycleOwner = TestLifecycleOwner().handleEvent(Lifecycle.Event.ON_RESUME)
-        coEvery { fireStore.getAnnouncements() } returns dummyAnnouncementsData()
+        coEvery { firestore.getAnnouncements() } returns dummyAnnouncementsData()
         val announcementActionCreator = AnnouncementActionCreator(
             dispatcher,
-            fireStore,
+            firestore,
             lifecycleOwner.lifecycle
         )
 
@@ -40,7 +40,7 @@ class AnnouncementActionCreatorTest {
 
         coVerify(ordering = Ordering.SEQUENCE) {
             dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADING))
-            fireStore.getAnnouncements()
+            firestore.getAnnouncements()
             dispatcher.dispatch(Action.AnnouncementLoaded(dummyAnnouncementsData()))
             dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADED))
         }
