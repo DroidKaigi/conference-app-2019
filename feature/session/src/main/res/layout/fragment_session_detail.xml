@@ -316,11 +316,11 @@
                     />
 
                 <TextView
-                    android:id="@+id/session_document_title"
+                    android:id="@+id/session_resource_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="@string/session_detail_document"
+                    android:text="@string/session_detail_resource"
                     android:textAppearance="?attr/textAppearanceSubtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider5"
@@ -342,12 +342,12 @@
                     android:paddingEnd="16dp"
                     android:paddingStart="16dp"
                     android:paddingTop="8dp"
-                    android:text="@string/session_detail_document_video"
+                    android:text="@string/session_detail_resource_video"
                     android:textColor="@color/colorSecondary"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/session_document_title"
+                    app:layout_constraintTop_toBottomOf="@id/session_resource_title"
                     app:visibleGone="@{session.hasVideo}"
                     />
 
@@ -366,7 +366,7 @@
                     android:paddingEnd="16dp"
                     android:paddingStart="16dp"
                     android:paddingTop="8dp"
-                    android:text="@string/session_detail_document_slide"
+                    android:text="@string/session_detail_resource_slide"
                     android:textColor="@color/colorSecondary"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
