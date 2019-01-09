@@ -1,11 +1,9 @@
 package io.github.droidkaigi.confsched2019.session.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
@@ -122,9 +120,6 @@ class SessionDetailFragment : DaggerFragment() {
                 activityActionCreator.openUrl(urlString)
             }
         }
-
-        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-        imm?.hideSoftInputFromWindow(binding.root.windowToken, 0)
     }
 }
 

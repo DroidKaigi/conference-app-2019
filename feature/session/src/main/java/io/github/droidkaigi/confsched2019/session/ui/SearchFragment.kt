@@ -1,12 +1,16 @@
 package io.github.droidkaigi.confsched2019.session.ui
 
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.systemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
@@ -126,6 +130,18 @@ class SearchFragment : DaggerFragment() {
             searchView.maxWidth = Int.MAX_VALUE
             searchView.setOnCloseListener { false }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        android.util.Log.e("hoge", "hoge")
+        val imm = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            context?.systemService<InputMethodManager>()
+        } else {
+            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        }
+        imm?.hideSoftInputFromWindow(binding.root.windowToken, 0)
     }
 }
 
