@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
