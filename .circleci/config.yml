@@ -1,5 +1,5 @@
 cache_version_keys: &cache_version_keys
-  CACHE_VERSION_OF_PROJECT_DEPS: v1.5
+  CACHE_VERSION_OF_PROJECT_DEPS: v2
   CACHE_VERSION_OF_DANGER_CACHE: v1
 
 cache_keys:
