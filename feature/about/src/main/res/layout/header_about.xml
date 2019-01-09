@@ -58,7 +58,7 @@
             android:contentDescription="@null"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:background="@null"
+            android:background="?attr/selectableItemBackgroundBorderless"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/description_droidkaigi_text"/>
 
@@ -69,7 +69,7 @@
             android:layout_marginStart="16dp"
             android:src="@drawable/ic_github_black_24dp"
             android:contentDescription="@null"
-            android:background="@null"
+            android:background="?attr/selectableItemBackgroundBorderless"
             app:layout_constraintStart_toEndOf="@+id/about_this_app_twitter"
             app:layout_constraintTop_toTopOf="@+id/about_this_app_twitter"
             />
@@ -81,7 +81,7 @@
             android:layout_marginStart="16dp"
             android:src="@drawable/ic_youtube_24dp"
             android:contentDescription="@null"
-            android:background="@null"
+            android:background="?attr/selectableItemBackgroundBorderless"
             app:layout_constraintStart_toEndOf="@+id/about_this_app_github"
             app:layout_constraintTop_toTopOf="@+id/about_this_app_twitter"
             />
@@ -93,7 +93,7 @@
             android:layout_marginStart="16dp"
             android:src="@drawable/ic_medium_24dp"
             android:contentDescription="@null"
-            android:background="@null"
+            android:background="?attr/selectableItemBackgroundBorderless"
             app:layout_constraintStart_toEndOf="@+id/about_this_app_youtube"
             app:layout_constraintTop_toTopOf="@+id/about_this_app_twitter"
             />
