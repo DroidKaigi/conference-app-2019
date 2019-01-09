@@ -70,6 +70,7 @@ class SessionDetailFragment : DaggerFragment() {
             when (item.itemId) {
                 R.id.session_share -> {
                     val session = binding.session ?: return@setOnMenuItemClickListener false
+                    @Suppress("StringFormatMatches") // FIXME
                     activityActionCreator.shareUrl(getString(
                         R.string.session_detail_share_url,
                         session.id.toInt()
