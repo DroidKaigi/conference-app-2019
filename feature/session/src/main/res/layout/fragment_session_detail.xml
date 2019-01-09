@@ -190,6 +190,7 @@
                         android:textAppearance="?textAppearanceCaption"
                         android:textColor="@color/white"
                         app:chipBackgroundColor="#7982e1"
+                        app:chipMinTouchTargetSize="0dp"
                         app:visibleGone="@{session.isInterpretationTarget}"
                         />
 
