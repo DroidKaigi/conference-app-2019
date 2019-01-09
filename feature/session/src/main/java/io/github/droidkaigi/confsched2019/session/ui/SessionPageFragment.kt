@@ -136,10 +136,11 @@ class SessionPageFragment : DaggerFragment() {
             }
 
             // suppress fragment replacement
-            if (childFragmentManager.findFragmentByTag(fragment::javaClass.name) == null) {
+            val title = SessionPage.pages[args.tabIndex].title
+            if (childFragmentManager.findFragmentByTag(title) == null) {
                 childFragmentManager
                     .beginTransaction()
-                    .replace(R.id.sessions_sheet, fragment, fragment::javaClass.name)
+                    .replace(R.id.sessions_sheet, fragment, title)
                     .disallowAddToBackStack()
                     .commit()
             }
