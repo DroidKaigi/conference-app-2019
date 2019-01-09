@@ -25,8 +25,36 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api project(":data:api")
+            implementation Dep.Kotlin.stdlibCommon
             implementation Dep.Ktor.clientCommon
-            implementation Dep.Kotlin.serialization
+            implementation Dep.Kotlin.serializationCommon
+        }
+        androidMain {
+            dependsOn commonMain
+            dependencies {
+                implementation Dep.Kotlin.stdlibJvm
+                implementation Dep.Ktor.clientAndroid
+                implementation Dep.Ktor.jsonJvm
+                implementation Dep.OkHttp.client
+                implementation Dep.Stetho.stetho
+                implementation Dep.Dagger.core
+                implementation Dep.Dagger.androidSupport
+                implementation Dep.OkHttp.loggingInterceptor
+            }
+        }
+        androidTest {
+            dependsOn commonMain
+            dependencies {
+                implementation Dep.Test.junit
+                implementation Dep.Test.slf4j
+            }
+        }
+        iOSMain {
+            dependsOn commonMain
+            dependencies {
+                implementation Dep.Ktor.clientIos
+                implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.9.1"
+            }
         }
     }
 }
@@ -45,20 +73,10 @@ android {
 }
 
 dependencies {
-
-    implementation Dep.Kotlin.stdlibJvm
-    implementation Dep.Ktor.clientAndroid
-    implementation Dep.Ktor.jsonJvm
-    implementation Dep.OkHttp.client
-    implementation Dep.Stetho.stetho
-    implementation Dep.Dagger.core
-    implementation Dep.Dagger.androidSupport
-    implementation Dep.OkHttp.loggingInterceptor
     kapt Dep.Dagger.compiler
     kapt Dep.Dagger.androidProcessor
-
-    testImplementation Dep.Test.junit
-    testImplementation Dep.Test.slf4j
 }
 
-
+configurations {
+    compileClasspath
+}
