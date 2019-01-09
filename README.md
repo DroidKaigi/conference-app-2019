@@ -17,27 +17,19 @@ You can download the binary built on master branch from [<img src="https://dply.
 * Show Information Feed
 
 # Contributing
-We are always welcome your contribution!
+
+We are always welcome your contribution! See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## Requirements
-Android Studio 3.2.1  
-Android Studio Kotlin Plugin 1.3.11-release-Studio3.2-1
+
+- Android Studio 3.2.1 and more.
+- Android Studio Kotlin Plugin 1.3.11-release-Studio<AS version>
 
 **Check out following status.**  
 `Preference` > `Languages & Frameworks` > `Kotlin Updates`
 
-## How to find the tasks
-We use [GitHub issues](https://github.com/DroidKaigi/conference-app-2019/issues?q=is%3Aissue+is%3Aopen+label%3A%22welcome+contribute%22) to manage the tasks.
-Please find the issues you'd like to contribute in it.
-[welcome contribute](https://github.com/DroidKaigi/conference-app-2019/labels/welcome%20contribute) and [easy](https://github.com/DroidKaigi/conference-app-2019/labels/easy) are good for first contribution.
-
-Of course, it would be great to send PullRequest which has no issue!
-
-## How to contribute
-If you find the tasks you want to contribute, please comment in the issue like [this](https://github.com/DroidKaigi/conference-app-2018/issues/73#issuecomment-357410022) to prevent to conflict contribution.
-We'll reply as soon as possible, but it's unnecessary to wait for our reaction. It's okay to start contribution and send PullRequest!
-
-We've designated these issues as good candidates for easy contribution. You can always fork the repository and send a pull request (on a branch other than `master`).
+Older Kotlin plugin may cause a build failure. 
+If you still have a trouble after upgrading the plugin, please try using AndroidStudio 3.3 or 3.4 instead.
 
 # Development Environment
 
