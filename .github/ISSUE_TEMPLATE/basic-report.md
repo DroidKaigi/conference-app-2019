@@ -11,7 +11,7 @@ assignees: ''
 
 Choose the suitable template if exists.
 
-- Bug report (please use another template)
+- Bug report (please use the other template)
 - Proposal / Discussion
 - Other
 

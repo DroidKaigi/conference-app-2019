@@ -10,7 +10,7 @@ assignees: ''
 **Overview (Required)**
 - 
 
-**To Reproduce**
+**Steps To Reproduce**
 
 1. Go to '...'
 2. Click on '....'
@@ -20,7 +20,7 @@ assignees: ''
 If it's clear
 
 **Screenshots**
-If you have
+If applicable
 
 **Env:**
  - Device: [e.g. Pixel3]
