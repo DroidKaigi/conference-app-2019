@@ -3,7 +3,6 @@ package io.github.droidkaigi.confsched2019.ui
 import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
