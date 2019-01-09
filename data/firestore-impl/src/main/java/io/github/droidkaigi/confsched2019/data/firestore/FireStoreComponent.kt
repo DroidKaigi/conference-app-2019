@@ -13,7 +13,7 @@ import kotlin.coroutines.CoroutineContext
         FirestoreModule::class
     ]
 )
-interface FireStoreComponent {
+interface FirestoreComponent {
     fun firestore(): Firestore
 
     @Component.Builder
@@ -21,10 +21,10 @@ interface FireStoreComponent {
 
         @BindsInstance fun coroutineContext(coroutineContext: CoroutineContext): Builder
 
-        fun build(): FireStoreComponent
+        fun build(): FirestoreComponent
     }
 
     companion object {
-        fun builder(): Builder = DaggerFireStoreComponent.builder()
+        fun builder(): Builder = DaggerFirestoreComponent.builder()
     }
 }
