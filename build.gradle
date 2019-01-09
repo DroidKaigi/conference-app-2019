@@ -7,6 +7,7 @@ apply from: file('gradle/dependencyGraph.gradle')
 buildscript {
     repositories {
         google()
+        maven { url "https://maven-central-asia.storage-download.googleapis.com/repos/central/data/" }
         jcenter()
         maven { url "https://kotlin.bintray.com/kotlinx" }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
@@ -28,6 +29,7 @@ buildscript {
 allprojects {
     repositories {
         google()
+        maven { url "https://maven-central-asia.storage-download.googleapis.com/repos/central/data/" }
         jcenter()
         maven { url "https://kotlin.bintray.com/kotlinx" }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
