@@ -72,7 +72,7 @@ allprojects {
                 task downloadAllDependencies(dependsOn: 'androidDependencies') {
                     description 'Download extra dependencies for the CI Gradle Cache'
                     doLast {
-                        configurations.findAll { it.name.matches(/(ktlint|kapt)/) && it.canBeResolved }.files
+                        configurations.findAll { it.name.matches(/(ktlint|kapt|_internal_aapt2_binary)/) && it.canBeResolved }.files
                     }
                 }
             }
