@@ -13,7 +13,7 @@ class ActivityActionCreator @Inject constructor(val activity: FragmentActivity) 
         val customTabsIntent = CustomTabsIntent.Builder()
             .setShowTitle(true)
             .enableUrlBarHiding()
-            .setToolbarColor(ContextCompat.getColor(activity, R.color.colorPrimary))
+            .setToolbarColor(ContextCompat.getColor(activity, R.color.white))
             .build()
         customTabsIntent.launchUrl(activity, Uri.parse(url))
     }
