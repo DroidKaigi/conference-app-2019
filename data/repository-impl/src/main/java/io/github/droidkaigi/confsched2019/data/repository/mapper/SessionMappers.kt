@@ -64,6 +64,8 @@ fun SessionWithSpeakers.toSession(
                 )
             },
             intendedAudience = session.intendedAudience,
+            videoUrl = session.videoUrl,
+            slideUrl = session.slideUrl,
             isInterpretationTarget = session.isInterpretationTarget,
             isFavorited = favList!!.map { it.toString() }.contains(session.id),
             speakers = speakers,
