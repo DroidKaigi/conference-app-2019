@@ -69,7 +69,7 @@ allprojects {
                     args "--android", '-F', 'src/main/**/*.kt', 'src/debug/**/*.kt', 'src/release/**/*.kt'
                 }
 
-                task androidDependenciesExtracs(dependsOn: 'androidDependencies') {
+                task androidDependenciesExtra(dependsOn: 'androidDependencies') {
                     description 'Download extra dependencies for the CI Gradle Cache'
                     doLast {
                         // androidDependencies do not touch some configurations

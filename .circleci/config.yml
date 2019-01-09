@@ -54,7 +54,7 @@ jobs:
           keys: *all_keys_of_gradle_cache
       - run:
           name: Download Dependencies
-          command: retry_command ./gradlew androidDependenciesExtracs getDependencies
+          command: retry_command ./gradlew androidDependenciesExtra getDependencies
       - save_cache: &save_gradle_cache
           paths:
             - ~/.android
@@ -64,7 +64,7 @@ jobs:
       - run:
           name: Assemble apk
           command: |
-            ./gradlew clean assembleDebug --offline # build with online-mode for now
+            ./gradlew clean assembleDebug --offline
       - store_artifacts:
           path: frontend/android/build/outputs/apk
       - run: *download_dpg
