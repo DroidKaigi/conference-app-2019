@@ -7,8 +7,6 @@
 
     <data>
 
-        <import type="android.view.View"/>
-
         <variable
             name="session"
             type="io.github.droidkaigi.confsched2019.model.Session.SpeechSession"
@@ -332,7 +330,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_message"
-                    app:visibleGone="@{session.hasVideo &amp;&amp; session.hasSlide}"
+                    app:visibleGone="@{session.hasVideo || session.hasSlide}"
                     />
 
                 <TextView
@@ -344,7 +342,7 @@
                     android:textAppearance="?attr/textAppearanceSubtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider5"
-                    app:visibleGone="@{session.hasVideo &amp;&amp; session.hasSlide}"
+                    app:visibleGone="@{session.hasVideo || session.hasSlide}"
                     />
 
                 <androidx.appcompat.widget.AppCompatTextView
