@@ -31,6 +31,6 @@ For non-English speakers, some of DroidKaigi Committee members are not fluent En
 
 ## NOTE
 
-Please don't hastate to ask questions. 
+Please don't hesitate to ask questions. 
 
-We would like you to enjoy contributions,  learn many things, share your knowledge and enjoy DroidKaigi. Thanks.
+We would like you to enjoy contributions, learn many things, share your knowledge and enjoy DroidKaigi. Thanks.
