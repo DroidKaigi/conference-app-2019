@@ -135,7 +135,6 @@ class SearchFragment : DaggerFragment() {
     override fun onPause() {
         super.onPause()
 
-        android.util.Log.e("hoge", "hoge")
         val imm = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             context?.systemService<InputMethodManager>()
         } else {
