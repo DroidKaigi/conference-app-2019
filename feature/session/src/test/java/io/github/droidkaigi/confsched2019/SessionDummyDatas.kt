@@ -37,6 +37,7 @@ fun dummySessionData(): List<Session> {
             language = LocaledString("英語", "English"),
             category = Category(10, LocaledString("ツール", "Tool")),
             intendedAudience = "extream",
+            isInterpretationTarget = true,
             isFavorited = true,
             speakers = listOf(),
             message = SessionMessage("部屋移動", "room moved")
@@ -60,6 +61,7 @@ fun firstDummySpeechSession(): Session.SpeechSession {
         language = LocaledString("日本語", "Japanese"),
         category = Category(id = 10, name = LocaledString("アーキテクチャ", "App Architecture")),
         intendedAudience = "intermediate",
+        isInterpretationTarget = false,
         isFavorited = false,
         speakers = listOf(),
         message = null
