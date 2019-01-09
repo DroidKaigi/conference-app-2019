@@ -55,8 +55,16 @@ allprojects {
                 }
 
                 task ktlint(type: JavaExec, group: "verification") {
+                    def parameters = ["--android", '--editorconfig', "${rootProject.projectDir}/.editorconfig", "--reporter=checkstyle,output=${buildDir}/ktlint/checkstyle.xml"]
+
+                    if (System.getenv("CI") != "true") {
+                        parameters += "--reporter=html,artifact=me.cassiano:ktlint-html-reporter:0.2.0,output=${buildDir}/ktlint/checkstyle.html"
+                    }
+
+                    parameters += ['src/main/**/*.kt', 'src/debug/**/*.kt', 'src/release/**/*.kt']
+
                     description = 'Check Kotlin code style.'
-                    args "--android", '--editorconfig', "${rootProject.projectDir}/.editorconfig", "--reporter=html,artifact=me.cassiano:ktlint-html-reporter:0.2.0,output=${buildDir}/ktlint/checkstyle.html", "--reporter=checkstyle,output=${buildDir}/ktlint/checkstyle.xml", 'src/main/**/*.kt', 'src/debug/**/*.kt', 'src/release/**/*.kt'
+                    args = parameters
                     // https://github.com/shyiko/ktlint/blob/5fe8d0e203275a1a3337dc9777b50ec2a34a58df/ktlint/src/main/kotlin/com/github/shyiko/ktlint/Main.kt
                     main = 'com.github.shyiko.ktlint.Main'
                     classpath = configurations.ktlint
@@ -67,6 +75,14 @@ allprojects {
                     classpath = configurations.ktlint
                     main = "com.github.shyiko.ktlint.Main"
                     args "--android", '-F', 'src/main/**/*.kt', 'src/debug/**/*.kt', 'src/release/**/*.kt'
+                }
+
+                task androidDependenciesExtra(dependsOn: 'androidDependencies') {
+                    description 'Download extra dependencies for the CI Gradle Cache'
+                    doLast {
+                        // androidDependencies do not touch some configurations
+                        configurations.findAll { it.name.matches(/(ktlint|kapt|_internal_aapt2_binary|lintClassPath)/) && it.canBeResolved }.files
+                    }
                 }
             }
         }
@@ -81,7 +97,6 @@ allprojects {
             }
         }
     }
-
 }
 
 task clean(type: Delete) {
