@@ -20,12 +20,12 @@ class SessionBottomAppBarBehavior(
         child: BottomAppBar,
         ev: MotionEvent
     ): Boolean {
-        if (child.isShown.not() || ev.action != MotionEvent.ACTION_DOWN) {
+        if (!child.isShown || ev.action != MotionEvent.ACTION_DOWN) {
             return super.onInterceptTouchEvent(parent, child, ev)
         }
 
         // If screen be able not to scrolled, it makes to slide the bottom app bar.
-        if (canScroll(parent).not()) {
+        if (!canScroll(parent)) {
             state = if (state == STATE_SCROLLED_UP) {
                 super.slideDown(child)
                 STATE_SCROLLED_DOWN
