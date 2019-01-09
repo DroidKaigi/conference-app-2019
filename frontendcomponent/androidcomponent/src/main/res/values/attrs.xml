@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="filterChipStyle" format="reference"/>
+
+    <declare-styleable name="FilterChip">
+        <attr name="android:checked"/>
+        <attr name="android:text"/>
+        <attr name="android:textColor"/>
+        <attr name="android:textSize"/>
+        <attr name="android:color"/>
+        <attr name="android:padding"/>
+        <attr name="strokeColor"/>
+        <attr name="strokeWidth"/>
+        <attr name="selectedTextColor" format="color"/>
+        <attr name="clearIcon" format="reference"/>
+        <attr name="foreground" format="reference"/>
+        <attr name="showIcons" format="boolean"/>
+    </declare-styleable>
+</resources>

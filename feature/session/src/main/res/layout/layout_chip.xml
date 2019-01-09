@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- TODO Use: https://github.com/google/iosched/blob/2696fc7e06826ba2db72de243f0d63f83f4a29b5/mobile/src/main/java/com/google/samples/apps/iosched/ui/schedule/filters/EventFilterView.kt -->
-<com.google.android.material.chip.Chip
+<io.github.droidkaigi.confsched2019.widget.FilterChip
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Widget.MaterialComponents.Chip.Filter"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:color="@color/white"
     android:textColor="@color/white"
-    app:chipBackgroundColor="@color/colorPrimary"
-    app:chipMinTouchTargetSize="0dp"
-    app:chipStrokeColor="@color/white"
-    app:chipStrokeWidth="1dp"
+    app:selectedTextColor="@color/gray1"
+    app:strokeColor="@color/white"
     tools:text="hoge"
     />
