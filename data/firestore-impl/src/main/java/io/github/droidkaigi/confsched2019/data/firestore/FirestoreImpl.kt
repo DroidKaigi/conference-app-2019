@@ -13,7 +13,7 @@ import io.github.droidkaigi.confsched2019.model.Announcement
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class FirestoreImpl @Inject constructor() : FireStore {
+class FirestoreImpl @Inject constructor() : Firestore {
 
     override suspend fun getFavoriteSessionIds(): List<Int> {
         if (FirebaseAuth.getInstance().currentUser?.uid == null) return listOf()
