@@ -17,6 +17,7 @@
     <string name="session_detail_resource">Resources</string>
     <string name="session_detail_resource_video">Video</string>
     <string name="session_detail_resource_slide">Slides</string>
+    <string name="session_detail_share_url">https://droidkaigi.jp/2019/en/timetable/%d</string>
     <string name="session_speaker_sessions" translatable="false">Session</string>
     <string name="session_share" translatable="false">Share</string>
     <string name="session_place" translatable="false">Place</string>
