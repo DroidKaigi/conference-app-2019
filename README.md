@@ -233,8 +233,8 @@ This project uses some modern Android libraries and source codes.
   * Coroutines
   * Serialization
 * [Firebase](https://firebase.google.com/) (Google)
-  * Auth
-  * Firestore
+  * Authentication
+  * Cloud Firestore
 * [Dagger 2](https://google.github.io/dagger/)
   * Core (Google)
   * AndroidSupport (Google)
