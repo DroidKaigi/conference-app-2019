@@ -49,6 +49,7 @@ class SpeakerFragment : DaggerFragment() {
 
         val speakerId = speakerFragmentArgs.speaker
         binding.lang = defaultLang()
+        binding.timeZoneOffsetHours = 9 // FIXME Get from device setting
         sessionContentsStore.speaker(speakerId).changed(
             this
         ) { speaker ->

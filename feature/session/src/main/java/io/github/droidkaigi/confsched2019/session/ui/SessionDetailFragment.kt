@@ -107,6 +107,7 @@ class SessionDetailFragment : DaggerFragment() {
     private fun applySessionLayout(session: Session.SpeechSession) {
         binding.session = session
         binding.lang = defaultLang()
+        binding.timeZoneOffsetHours = 9 // FIXME Get from device setting
         @Suppress("StringFormatMatches") // FIXME
         binding.sessionTimeAndRoom.text = getString(
             R.string.session_duration_room_format,

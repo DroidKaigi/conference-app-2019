@@ -26,6 +26,11 @@
             name="lang"
             type="io.github.droidkaigi.confsched2019.model.Lang"
             />
+
+        <variable
+            name="timeZoneOffsetHours"
+            type="Integer"
+            />
     </data>
 
 
@@ -100,7 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="@{session.timeSummary(lang)}"
+                    android:text="@{session.timeSummary(lang, timeZoneOffsetHours)}"
                     android:textAppearance="@style/TextAppearance.App.Subtitle1"
                     app:layout_constraintBottom_toBottomOf="@id/session_time_image"
                     app:layout_constraintStart_toEndOf="@id/session_time_image"
