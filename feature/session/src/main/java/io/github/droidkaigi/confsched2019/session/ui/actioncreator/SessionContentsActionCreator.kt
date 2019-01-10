@@ -9,9 +9,10 @@ import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.system.actioncreator.ErrorHandler
-import io.github.droidkaigi.confsched2019.util.logd
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import timber.log.debug
 import javax.inject.Inject
 
 @PageScope
@@ -23,22 +24,22 @@ class SessionContentsActionCreator @Inject constructor(
     ErrorHandler {
     fun refresh() = launch {
         try {
-            logd { "SessionContentsActionCreator: refresh start" }
+            Timber.debug { "SessionContentsActionCreator: refresh start" }
             dispatcher.dispatchLoadingState(LoadingState.LOADING)
-            logd { "SessionContentsActionCreator: At first, load db data" }
+            Timber.debug { "SessionContentsActionCreator: At first, load db data" }
             // At first, load db data
             val sessionContents = sessionRepository.sessionContents()
             dispatcher.dispatch(Action.SessionContentsLoaded(sessionContents))
 
             // fetch api data
-            logd { "SessionContentsActionCreator: fetch api data" }
+            Timber.debug { "SessionContentsActionCreator: fetch api data" }
             sessionRepository.refresh()
 
             // reload db data
-            logd { "SessionContentsActionCreator: reload db data" }
+            Timber.debug { "SessionContentsActionCreator: reload db data" }
             val refreshedSessionContents = sessionRepository.sessionContents()
             dispatcher.dispatch(Action.SessionContentsLoaded(refreshedSessionContents))
-            logd { "SessionContentsActionCreator: refresh end" }
+            Timber.debug { "SessionContentsActionCreator: refresh end" }
             dispatcher.dispatchLoadingState(LoadingState.LOADED)
         } catch (e: Exception) {
             onError(e)
