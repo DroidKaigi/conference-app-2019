@@ -15,7 +15,8 @@ import io.github.droidkaigi.confsched2019.di.createAppComponent
 import io.github.droidkaigi.confsched2019.ext.android.changedForever
 import io.github.droidkaigi.confsched2019.system.actioncreator.SystemActionCreator
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
-import io.github.droidkaigi.confsched2019.util.logd
+import timber.log.Timber
+import timber.log.debug
 import javax.inject.Inject
 
 open class App : DaggerApplication() {
@@ -38,7 +39,7 @@ open class App : DaggerApplication() {
         // fetch font for cache
         ResourcesCompat.getFont(this, R.font.lekton, object : ResourcesCompat.FontCallback() {
             override fun onFontRetrievalFailed(reason: Int) {
-                logd { "onFontRetrievalFailed$reason" }
+                Timber.debug { "onFontRetrievalFailed$reason" }
             }
 
             override fun onFontRetrieved(typeface: Typeface) {

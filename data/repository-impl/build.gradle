@@ -11,7 +11,6 @@ dependencies {
     implementation project(":data:api")
     implementation project(":data:db")
     implementation project(":data:firestore")
-    implementation project(":ext:log")
     api project(":model")
 
     implementation Dep.Kotlin.stdlibJvm
