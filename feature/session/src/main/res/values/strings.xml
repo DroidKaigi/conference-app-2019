@@ -28,4 +28,5 @@
     <string name="session_live" translatable="false">Live</string>
     <string name="session_simultaneous_interpretation">simultaneous interpretation</string>
     <string name="session_bottom_appbar_behavior" translatable="false">io.github.droidkaigi.confsched2019.session.ui.widget.SessionBottomAppBarBehavior</string>
+    <string name="session_favorite_empty">Add sessions to your plan\nby tapping the bookmark button.</string>
 </resources>

@@ -98,6 +98,8 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                 }
             groupAdapter.update(items)
 
+            binding.shouldShowEmptyStateView = false
+
             val titleText = items
                 .asSequence()
                 .filterIsInstance<SessionItem>()

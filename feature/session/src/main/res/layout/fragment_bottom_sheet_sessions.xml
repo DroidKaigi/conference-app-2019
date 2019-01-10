@@ -8,9 +8,14 @@
     <data>
 
         <variable
-                name="isCollapsed"
-                type="Boolean"
-        />
+            name="isCollapsed"
+            type="Boolean"
+            />
+
+        <variable
+            name="shouldShowEmptyStateView"
+            type="Boolean"
+            />
 
         <variable
             name="isFiltered"
@@ -27,12 +32,29 @@
         tools:context="io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment"
         >
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/emptyStateViewGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="sessions_empty_state_view"
+            app:visibleGone="@{shouldShowEmptyStateView}"
+            />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/nonEmptyStateViewGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="sessions_bottom_sheet_title,
+            sessions_recycler"
+            app:visibleGone="@{!shouldShowEmptyStateView}"
+            />
+
         <TextView
             android:id="@+id/sessions_bottom_sheet_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/lekton"
             android:gravity="center_vertical"
             android:textAppearance="@style/TextAppearance.App.Headline5"
@@ -49,12 +71,12 @@
             android:gravity="center_vertical"
             android:text="@{isFiltered ? @string/session_filter_button_filtered : @string/session_filter_button }"
             android:textColor="@color/gray2"
-            app:visibleGone="@{!isCollapsed}"
             app:chipBackgroundColor="@color/gray4"
             app:chipIcon="@drawable/ic_filter_list_black_24dp"
             app:chipIconTint="@color/gray3"
             app:layout_constraintBaseline_toBaselineOf="@id/sessions_bottom_sheet_title"
             app:layout_constraintEnd_toEndOf="parent"
+            app:visibleGone="@{!isCollapsed &amp;&amp; !shouldShowEmptyStateView}"
             />
 
         <com.google.android.material.chip.Chip
@@ -65,7 +87,6 @@
             android:gravity="center_vertical"
             android:paddingEnd="@dimen/session_bottom_sheet_filter_text_padding"
             android:paddingStart="@dimen/session_bottom_sheet_filter_text_padding"
-            app:visibleGone="@{isCollapsed}"
             app:chipBackgroundColor="@color/gray4"
             app:chipIcon="@drawable/ic_arrow_upward_black_24dp"
             app:chipIconTint="@color/gray3"
@@ -75,6 +96,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:textEndPadding="@dimen/session_bottom_sheet_filter_text_padding"
             app:textStartPadding="@dimen/session_bottom_sheet_filter_text_padding"
+            app:visibleGone="@{isCollapsed &amp;&amp; !shouldShowEmptyStateView}"
             />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -89,5 +111,40 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/sessions_bottom_sheet_title"
             />
+
+        <LinearLayout
+            android:id="@+id/sessions_empty_state_view"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sessions_bottom_sheet_title"
+            >
+
+            <ImageView
+                android:id="@+id/sessions_favorite_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginBottom="10dp"
+                android:contentDescription="@string/session_description_favorite_image"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_bookmark_black_24dp"
+                android:tint="@color/gray3"
+                app:layout_constraintBottom_toTopOf="@+id/sessions_empty_state_text"
+                />
+
+            <TextView
+                android:id="@+id/sessions_empty_state_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/session_favorite_empty"
+                android:textColor="@color/gray1"
+                android:textSize="14sp"
+                />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

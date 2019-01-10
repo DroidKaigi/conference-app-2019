@@ -14,4 +14,5 @@
     <string name="session_search_hint">検索する…</string>
     <string name="session_go_to_survey">アンケートに回答する</string>
     <string name="session_simultaneous_interpretation">同時通訳</string>
+    <string name="session_favorite_empty">お気に入りのセッションを登録すると\nあなた専用のプランを作ることが\nできます。</string>
 </resources>
