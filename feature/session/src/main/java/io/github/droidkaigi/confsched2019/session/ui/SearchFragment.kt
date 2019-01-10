@@ -1,6 +1,7 @@
 package io.github.droidkaigi.confsched2019.session.ui
 
 import android.content.Context
+import android.inputmethodservice.InputMethodService
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.core.content.systemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
@@ -135,12 +137,9 @@ class SearchFragment : DaggerFragment() {
     override fun onPause() {
         super.onPause()
 
-        val imm = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            context?.systemService<InputMethodManager>()
-        } else {
-            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-        }
-        imm?.hideSoftInputFromWindow(binding.root.windowToken, 0)
+        val imm = ContextCompat.getSystemService(requireContext(), InputMethodManager::class.java)
+        val view = activity?.currentFocus
+        imm?.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 }
 
