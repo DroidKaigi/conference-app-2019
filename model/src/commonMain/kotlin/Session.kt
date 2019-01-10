@@ -58,9 +58,9 @@ sealed class Session(
             append("日")
         }
         append(" ")
-        append(startTime.format("hh:mm"))
+        append(startTime.format("HH:mm"))
         append(" - ")
-        append(endTime.format("hh:mm"))
+        append(endTime.format("HH:mm"))
     }
 
     fun summary(lang: Lang) = buildString {
