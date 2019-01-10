@@ -1,6 +1,7 @@
 package io.github.droidkaigi.confsched2019.data.db.entity.mapper
 
 import com.soywiz.klock.DateFormat
+import com.soywiz.klock.DateTimeTz
 import com.soywiz.klock.parse
 import io.github.droidkaigi.confsched2019.data.api.response.CategoryItemResponse
 import io.github.droidkaigi.confsched2019.data.api.response.CategoryResponse
@@ -35,7 +36,12 @@ fun List<SessionResponse>.toSessionEntities(
     }
 
 private val dateFormat: DateFormat =
-    DateFormat("yyyy-MM-dd'T'HH:mm:ss")
+    DateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
+
+private fun parseDateTime(dateText: String): DateTimeTz {
+    val tz = "+09:00" // FIXME Should replace to timezone from API
+    return dateFormat.parse("${dateText}${tz}")
+}
 
 fun SessionResponse.toSessionEntityImpl(
     categories: List<CategoryResponse>,
@@ -58,8 +64,8 @@ fun SessionResponse.toSessionEntityImpl(
             title = title,
             englishTitle = requireNotNull(englishTitle),
             desc = description,
-            stime = dateFormat.parse(startsAt).utc.unixMillisLong,
-            etime = dateFormat.parse(endsAt).utc.unixMillisLong,
+            stime = parseDateTime(startsAt ).utc.unixMillisLong,
+            etime = parseDateTime(endsAt).utc.unixMillisLong,
             sessionFormat = requireNotNull(sessionFormat.name),
             language = LanguageEntityImpl(
                 requireNotNull(language.id),
@@ -90,8 +96,8 @@ fun SessionResponse.toSessionEntityImpl(
             englishTitle = englishTitle,
             title = title,
             desc = description,
-            stime = dateFormat.parse(startsAt).utc.unixMillisLong,
-            etime = dateFormat.parse(endsAt).utc.unixMillisLong,
+            stime = parseDateTime(startsAt).utc.unixMillisLong,
+            etime = parseDateTime(endsAt).utc.unixMillisLong,
             sessionFormat = null,
             language = null,
             category = null,
