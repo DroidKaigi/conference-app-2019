@@ -3,7 +3,7 @@
 [DroidKaigi 2019](https://droidkaigi.jp/2019/en/) is a conference tailored for developers on 7th and 8th February 2019.
 
 You can download the binary built on master branch from [<img src="https://dply.me/t6sc7f/button/large" alt="Try it on your device via DeployGate">](https://dply.me/t6sc7f#install)
-NOTE: PlayProtect will show a warning on some of devices when installing the current apk. The detailed specification of PlayProtect is not public so we cannot address this matter. Please ignore the dialog for now. If you cannot install this apk without any error message, please disable PlayProtect from PlayStore's menus. Sorry for the inconvenience.
+NOTE: Google PlayProtect will show a warning on some of devices when installing the current apk. The detailed specification of Google PlayProtect is not public so we cannot address this matter. Please ignore the dialog for now. If you cannot install this apk without any error message, please disable Google PlayProtect from Google PlayStore's menus. Sorry for the inconvenience.
 
 # Features
 
