@@ -23,4 +23,8 @@ data class Filters(
         }
         return roomFilterOk && categoryFilterOk && langFilterOk
     }
+
+    fun isFiltered(): Boolean {
+        return rooms.isNotEmpty() || categories.isNotEmpty() || langs.isNotEmpty()
+    }
 }

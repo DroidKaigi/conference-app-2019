@@ -97,6 +97,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                     }
                 }
             groupAdapter.update(items)
+            binding.isFiltered = sessionPagesStore.filtersValue.isFiltered()
 
             val titleText = items
                 .asSequence()
