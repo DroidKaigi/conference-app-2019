@@ -32,7 +32,22 @@ buildscript {
 allprojects {
     repositories {
         google()
-        if (!isCi) { maven { url "https://maven-central-asia.storage-download.googleapis.com/repos/central/data/" } }
+
+        // to know your region, please have a look at scripts/bash.source
+        // https://storage-download.googleapis.com/maven-central/index.html
+        switch(System.getenv("CURRENT_REGION") ?: "") {
+            case "EU":
+            maven { url "https://maven-central-eu.storage-download.googleapis.com/repos/central/data/" }
+            break;
+            case "NA":
+            maven { url "https://maven-central.storage-download.googleapis.com/repos/central/data/" }
+            break;
+            case "AS":
+            default:
+            maven { url "https://maven-central-asia.storage-download.googleapis.com/repos/central/data/" }
+            break;
+        }
+
         jcenter()
         maven { url "https://kotlin.bintray.com/kotlinx" }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
