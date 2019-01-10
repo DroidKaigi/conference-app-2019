@@ -32,6 +32,7 @@ dependencies {
     androidTestImplementation Dep.Test.espressoCore
 }
 repositories {
+    if (!isCi) { maven { url "https://maven-central-asia.storage-download.googleapis.com/repos/central/data/" } }
     mavenCentral()
 }
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {

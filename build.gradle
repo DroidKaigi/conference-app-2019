@@ -5,8 +5,12 @@ import dependencies.Dep
 apply from: file('gradle/dependencyGraph.gradle')
 
 buildscript {
+    ext {
+        isCi = System.getenv("CI") == "true"
+    }
     repositories {
         google()
+        if (!isCi) { maven { url "https://maven-central-asia.storage-download.googleapis.com/repos/central/data/" } }
         jcenter()
         maven { url "https://kotlin.bintray.com/kotlinx" }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
@@ -28,6 +32,7 @@ buildscript {
 allprojects {
     repositories {
         google()
+        if (!isCi) { maven { url "https://maven-central-asia.storage-download.googleapis.com/repos/central/data/" } }
         jcenter()
         maven { url "https://kotlin.bintray.com/kotlinx" }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
@@ -57,7 +62,7 @@ allprojects {
                 task ktlint(type: JavaExec, group: "verification") {
                     def parameters = ["--android", '--editorconfig', "${rootProject.projectDir}/.editorconfig", "--reporter=checkstyle,output=${buildDir}/ktlint/checkstyle.xml"]
 
-                    if (System.getenv("CI") != "true") {
+                    if (!isCi) {
                         parameters += "--reporter=html,artifact=me.cassiano:ktlint-html-reporter:0.2.0,output=${buildDir}/ktlint/checkstyle.html"
                     }
 
