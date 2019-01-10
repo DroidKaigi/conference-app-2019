@@ -171,6 +171,48 @@
                     tools:text="Material is the metaphor A material metaphor is the unifying theory of a rationalized space and a system of motion. The material is grounded in tactile reality, inspired by the study of paper and ink, yet technologically advanced and open to imagination and magic."
                     />
 
+                <ImageView
+                    android:id="@+id/divider6"
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    android:contentDescription="@null"
+                    android:layerType="software"
+                    android:src="@drawable/shape_dashed_line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/session_description"
+                    />
+
+                <TextView
+                    android:id="@+id/session_intended_audience_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/session_detail_intended_audience"
+                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    app:layout_constraintStart_toStartOf="@id/session_title"
+                    app:layout_constraintTop_toBottomOf="@id/divider6"
+                    />
+
+                <androidx.emoji.widget.EmojiTextView
+                    android:id="@+id/session_intended_audience_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    android:ellipsize="end"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="2dp"
+                    android:textAlignment="viewStart"
+                    android:textIsSelectable="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/session_title"
+                    app:layout_constraintTop_toBottomOf="@id/session_intended_audience_title"
+                    tools:text="Kotlinでの実装経験者で、業務でばりばりKotlinでコードを書きまくっている人向け。"
+                    />
 
                 <ImageView
                     android:id="@+id/divider2"
@@ -178,13 +220,13 @@
                     android:layout_height="4dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="28dp"
+                    android:layout_marginTop="20dp"
                     android:contentDescription="@null"
                     android:layerType="software"
                     android:src="@drawable/shape_dashed_line"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/session_description"
+                    app:layout_constraintTop_toBottomOf="@id/session_intended_audience_description"
                     />
 
                 <TextView

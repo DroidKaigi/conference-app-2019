@@ -112,6 +112,7 @@ class SessionDetailFragment : DaggerFragment() {
             session.timeInMinutes,
             session.room.name
         )
+        binding.sessionIntendedAudienceDescription.text = session.intendedAudience
         binding.categoryChip.text = session.category.name.getByLang(systemStore.lang)
 
         session.message?.let { message ->
