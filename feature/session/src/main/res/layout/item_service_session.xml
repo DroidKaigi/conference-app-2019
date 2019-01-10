@@ -7,6 +7,10 @@
 
     <data>
 
+        <import type="io.github.droidkaigi.confsched2019.model.SessionType"/>
+
+        <import type="android.view.View"/>
+
         <variable
             name="session"
             type="io.github.droidkaigi.confsched2019.model.Session.ServiceSession"
@@ -54,10 +58,24 @@
             android:text="@{session.title}"
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.App.Subtitle1"
+            app:layout_constraintEnd_toEndOf="@id/favorite"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/live"
             tools:text="テストセッション"
+            />
+
+        <ImageView
+            android:id="@+id/favorite"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="4dp"
+            android:contentDescription="@string/session_description_favorite_image"
+            android:scaleType="centerInside"
+            android:src="@{session.isFavorited ? @drawable/ic_bookmark_black_24dp : @drawable/ic_bookmark_border_black_24dp}"
+            android:tint="@{session.isFavorited ? @color/colorPrimary : @color/gray1}"
+            app:visibleGone="@{session.sessionType.isFavoritable}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/title"
             />
 
         <TextView

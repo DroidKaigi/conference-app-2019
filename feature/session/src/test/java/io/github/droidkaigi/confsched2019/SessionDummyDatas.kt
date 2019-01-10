@@ -18,7 +18,8 @@ fun dummySessionData(): List<Session> {
             startTime + 30.minutes,
             "session",
             Room(0, "Hall"),
-            SessionType.WelcomeTalk
+            SessionType.WelcomeTalk,
+            true
         ),
         firstDummySpeechSession(),
         Session.SpeechSession(

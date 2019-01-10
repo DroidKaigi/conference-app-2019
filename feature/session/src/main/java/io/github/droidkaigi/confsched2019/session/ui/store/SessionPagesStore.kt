@@ -94,10 +94,10 @@ class SessionPagesStore @Inject constructor(
             }
     }
 
-    fun filteredFavoritedSessions(): LiveData<List<Session.SpeechSession>> {
+    fun filteredFavoritedSessions(): LiveData<List<Session>> {
         return filteredSessions
             .map { sessions ->
-                sessions.orEmpty().filterIsInstance<Session.SpeechSession>()
+                sessions.orEmpty()
                     .filter { session -> session.isFavorited }
             }
     }

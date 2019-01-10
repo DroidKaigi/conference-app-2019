@@ -39,6 +39,7 @@ class SearchFragment : DaggerFragment() {
 
     @Inject lateinit var searchActionCreator: SearchActionCreator
     @Inject lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
+    @Inject lateinit var serviceSessionItemFactory: ServiceSessionItem.Factory
     @Inject lateinit var sessionContentsStore: SessionContentsStore
     private var searchView: SearchView? = null
     @Inject lateinit var searchStoreProvider: Provider<SearchStore>
@@ -95,7 +96,7 @@ class SearchFragment : DaggerFragment() {
                                 false
                             )
                         is Session.ServiceSession ->
-                            ServiceSessionItem(session)
+                            serviceSessionItemFactory.create(session)
                     }
                 }
             groupAdapter.update(items)

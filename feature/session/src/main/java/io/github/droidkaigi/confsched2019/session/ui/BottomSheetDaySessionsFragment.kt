@@ -40,6 +40,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
     @Inject lateinit var sessionPageFragmentProvider: Provider<SessionPageFragment>
     @Inject lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
     @Inject lateinit var sessionPageStoreFactory: SessionPageStore.Factory
+    @Inject lateinit var serviceSessionItemFactory: ServiceSessionItem.Factory
     private val sessionPageStore: SessionPageStore by lazy {
         sessionPageFragmentProvider.get().injectedViewModelProvider
             .get(SessionPageStore::class.java.name) {
@@ -93,7 +94,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                                 true
                             )
                         is Session.ServiceSession ->
-                            ServiceSessionItem(session)
+                            serviceSessionItemFactory.create(session)
                     }
                 }
             groupAdapter.update(items)

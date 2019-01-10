@@ -1,16 +1,31 @@
 package io.github.droidkaigi.confsched2019.session.ui.item
 
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemServiceSessionBinding
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
 
-class ServiceSessionItem(
-    override val session: Session.ServiceSession
+class ServiceSessionItem @AssistedInject constructor(
+    @Assisted override val session: Session.ServiceSession,
+    sessionContentsActionCreator: SessionContentsActionCreator
 ) : BindableItem<ItemServiceSessionBinding>(
     session.id.hashCode().toLong()
 ), SessionItem {
     val serviceSession get() = session
+
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(
+            session: Session.ServiceSession
+        ): ServiceSessionItem
+    }
+
+    private val onFavoriteClickListener: (Session.ServiceSession) -> Unit = { session ->
+        sessionContentsActionCreator.toggleFavorite(session)
+    }
 
     override fun bind(viewBinding: ItemServiceSessionBinding, position: Int) {
         with(viewBinding) {
@@ -22,6 +37,9 @@ class ServiceSessionItem(
                 serviceSession.timeInMinutes,
                 serviceSession.room.name
             )
+            favorite.setOnClickListener {
+                onFavoriteClickListener(serviceSession)
+            }
         }
     }
 
