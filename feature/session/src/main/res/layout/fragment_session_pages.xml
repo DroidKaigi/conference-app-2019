@@ -16,13 +16,14 @@
             style="@style/Widget.MaterialComponents.TabLayout.Colored"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="?colorPrimary"
             android:tabStripEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tabIndicatorColor="@android:color/transparent"
-            app:tabRippleColor="@null"
+            app:tabIndicator="@drawable/shape_pill_indicator"
+            app:tabIndicatorGravity="stretch"
+            app:tabTextAppearance="@style/TabTextAppearance"
+            app:tabTextColor="@color/white"
             />
 
         <androidx.viewpager.widget.ViewPager

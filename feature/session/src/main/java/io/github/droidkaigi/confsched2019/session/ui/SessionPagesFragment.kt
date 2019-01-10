@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager.widget.ViewPager
-import com.google.android.material.chip.Chip
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -110,18 +109,6 @@ class SessionPagesFragment : DaggerFragment() {
                 }
             }
         )
-
-        (0 until binding.sessionsTabLayout.tabCount).forEach {
-            val view = layoutInflater.inflate(
-                R.layout.layout_title_chip, binding.sessionsTabLayout, false
-            ) as ViewGroup
-            val chip = view.getChildAt(0) as Chip
-            val tab = binding.sessionsTabLayout.getTabAt(it)
-            tab?.let {
-                chip.text = tab.text
-                tab.setCustomView(view)
-            }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
