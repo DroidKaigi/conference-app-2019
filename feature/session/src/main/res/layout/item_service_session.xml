@@ -73,7 +73,7 @@
             android:scaleType="centerInside"
             android:src="@{session.isFavorited ? @drawable/ic_bookmark_black_24dp : @drawable/ic_bookmark_border_black_24dp}"
             android:tint="@{session.isFavorited ? @color/colorPrimary : @color/gray1}"
-            android:visibility="@{session.sessionType.isFavoritable ? View.VISIBLE : View.GONE}"
+            app:visibleGone="@{session.sessionType.isFavoritable}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/title"
             />
