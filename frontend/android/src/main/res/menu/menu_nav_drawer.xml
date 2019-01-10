@@ -45,15 +45,14 @@
             android:icon="@drawable/ic_settings_outline_black_24px"
             android:title="@string/setting_label"
             />
-    </group>
-    <group
-        android:id="@+id/survey"
-        android:checkableBehavior="none"
-        >
+        <!-- Below items are just placeholder to avoid hidden under nav footer -->
         <item
-            android:id="@id/survey"
-            android:icon="@drawable/ic_android_outline_black_24dp"
-            android:title="@string/survey_label"
+            android:title=""
+            android:enabled="false"
+            />
+        <item
+            android:title=""
+            android:enabled="false"
             />
     </group>
 </menu>

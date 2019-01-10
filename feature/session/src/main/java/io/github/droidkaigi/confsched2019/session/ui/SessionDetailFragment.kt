@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import com.xwray.groupie.GroupAdapter
@@ -14,6 +15,7 @@ import dagger.Provides
 import dagger.android.support.AndroidSupportInjection
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
@@ -24,6 +26,7 @@ import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
+import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import javax.inject.Inject
 
 class SessionDetailFragment : DaggerFragment() {
@@ -34,6 +37,8 @@ class SessionDetailFragment : DaggerFragment() {
     @Inject lateinit var sessionContentsStore: SessionContentsStore
     @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
     @Inject lateinit var activityActionCreator: ActivityActionCreator
+
+    private lateinit var progressTimeLatch: ProgressTimeLatch
 
     private lateinit var sessionDetailFragmentArgs: SessionDetailFragmentArgs
     private val groupAdapter = GroupAdapter<ViewHolder<*>>()
@@ -63,12 +68,13 @@ class SessionDetailFragment : DaggerFragment() {
         binding.bottomAppBar.replaceMenu(R.menu.menu_session_detail_bottomappbar)
         binding.bottomAppBar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.session_share ->
-                    Toast.makeText(
-                        requireContext(),
-                        "not implemented yet",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                R.id.session_share -> {
+                    val session = binding.session ?: return@setOnMenuItemClickListener false
+                    activityActionCreator.shareUrl(getString(
+                        R.string.session_detail_share_url,
+                        session.id
+                    ))
+                }
                 R.id.session_place ->
                     Toast.makeText(
                         requireContext(),
@@ -83,8 +89,17 @@ class SessionDetailFragment : DaggerFragment() {
             .changed(viewLifecycleOwner) { session ->
                 applySessionLayout(session)
             }
+
+        progressTimeLatch = ProgressTimeLatch { showProgress ->
+            binding.progressBar.isVisible = showProgress
+        }
+        sessionContentsStore.loadingState.changed(viewLifecycleOwner) {
+            progressTimeLatch.loading = it == LoadingState.LOADING
+        }
+
         binding.sessionFavorite.setOnClickListener {
             val session = binding.session ?: return@setOnClickListener
+            progressTimeLatch.loading = true
             sessionContentsActionCreator.toggleFavorite(session)
         }
     }
@@ -98,7 +113,12 @@ class SessionDetailFragment : DaggerFragment() {
             session.timeInMinutes,
             session.room.name
         )
+        binding.sessionIntendedAudienceDescription.text = session.intendedAudience
         binding.categoryChip.text = session.category.name.getByLang(systemStore.lang)
+
+        session.message?.let { message ->
+            binding.sessionMessage.text = message.getByLang(systemStore.lang)
+        }
 
         val sessionItems = session
             .speakers

@@ -52,7 +52,7 @@ jobs:
       - run: *init_bash
       - restore_cache: &restore_gradle_cache
           keys: *all_keys_of_gradle_cache
-      - run:
+      - run: &download_all_dependencies
           name: Download Dependencies
           command: retry_command ./gradlew androidDependenciesExtra getDependencies
       - save_cache: &save_gradle_cache
@@ -105,6 +105,8 @@ jobs:
       - checkout
       - run: *init_bash
       - restore_cache: *restore_gradle_cache
+      - run: *download_all_dependencies
+      - save_cache: *save_gradle_cache
       - run: ./gradlew testDebugUnitTest lintDebug ktlint --continue --offline
       - run:
           name: Merge junit report files

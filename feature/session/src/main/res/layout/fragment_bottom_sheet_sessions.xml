@@ -16,6 +16,12 @@
             name="shouldShowEmptyStateView"
             type="Boolean"
             />
+
+        <variable
+            name="isFiltered"
+            type="Boolean"
+            />
+
     </data>
 
     <!-- TODO: rename ids -->
@@ -65,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:gravity="center_vertical"
-            android:text="@string/session_filter_button"
+            android:text="@{isFiltered ? @string/session_filter_button_filtered : @string/session_filter_button }"
             android:textColor="@color/gray2"
             app:chipBackgroundColor="@color/gray4"
             app:chipIcon="@drawable/ic_filter_list_black_24dp"

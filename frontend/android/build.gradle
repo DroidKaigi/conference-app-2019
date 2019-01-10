@@ -25,6 +25,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        resConfigs "ja"
         // For Android Studio Gradle sync
         applicationIdSuffix ".debug"
     }
@@ -106,6 +107,8 @@ dependencies {
     kapt Dep.Dagger.androidProcessor
     compileOnly Dep.Dagger.assistedInjectAnnotations
     kapt Dep.Dagger.assistedInjectProcessor
+
+    implementation Dep.Timber.android
 
     testImplementation Dep.Test.junit
 
