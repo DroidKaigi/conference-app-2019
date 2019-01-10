@@ -10,15 +10,12 @@ import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.util.forEach
 import androidx.recyclerview.widget.RecyclerView
-import com.soywiz.klock.DateTime
 import com.soywiz.klock.DateTimeSpan
-import com.soywiz.klock.TimeSpan
 import com.xwray.groupie.GroupAdapter
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.timber.debug
 import timber.log.Timber
-import java.util.*
 
 class SessionsItemDecoration(
     val context: Context,
