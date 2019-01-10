@@ -114,6 +114,10 @@ class SessionDetailFragment : DaggerFragment() {
         )
         binding.categoryChip.text = session.category.name.getByLang(systemStore.lang)
 
+        session.message?.let { message ->
+            binding.sessionMessage.text = message.getByLang(systemStore.lang)
+        }
+
         val sessionItems = session
             .speakers
             .map {
