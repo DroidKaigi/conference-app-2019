@@ -14,7 +14,7 @@ dependencies {
     api project(":model")
 
     implementation Dep.Kotlin.stdlibJvm
-    implementation Dep.Kotlin.serialization
+    implementation Dep.Kotlin.serializationCommon
     api Dep.Kotlin.coroutines
     implementation Dep.AndroidX.lifecycleLiveData
     kapt Dep.AndroidX.Room.compiler

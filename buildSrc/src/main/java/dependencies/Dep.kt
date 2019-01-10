@@ -77,7 +77,8 @@ object Dep {
             "org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$coroutinesVersion"
         val coroutinesPlayServices =
             "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesVersion"
-        val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.8.1-rc13"
+        val serializationCommon = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.9.1"
+        val serializationIos = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.9.1"
     }
 
     object Firebase {

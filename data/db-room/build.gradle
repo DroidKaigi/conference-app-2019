@@ -14,7 +14,7 @@ dependencies {
     api project(":ext:android-extension")
 
     implementation Dep.Kotlin.stdlibJvm
-    implementation Dep.Kotlin.serialization
+    implementation Dep.Kotlin.serializationCommon
     api Dep.Kotlin.coroutines
     api Dep.AndroidX.Room.runtime
     api Dep.AndroidX.Room.coroutine
