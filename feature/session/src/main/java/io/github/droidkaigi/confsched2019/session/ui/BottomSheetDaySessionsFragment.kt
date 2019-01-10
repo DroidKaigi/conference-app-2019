@@ -97,7 +97,6 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                     }
                 }
             groupAdapter.update(items)
-            binding.isFiltered = sessionPagesStore.filtersValue.isFiltered()
 
             val titleText = items
                 .asSequence()
@@ -106,6 +105,9 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                 ?.session
                 ?.startDayText ?: return@changed
             binding.sessionsBottomSheetTitle.text = titleText
+        }
+        sessionPagesStore.filters.changed(viewLifecycleOwner) {
+            binding.isFiltered = it.isFiltered()
         }
         sessionPageStore.filterSheetState.changed(viewLifecycleOwner) { newState ->
             if (newState == BottomSheetBehavior.STATE_EXPANDED ||

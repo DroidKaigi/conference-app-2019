@@ -100,8 +100,10 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
                 }
 
             groupAdapter.update(items)
-            binding.isFiltered = sessionPagesStore.filtersValue.isFiltered()
             applyTitleText()
+        }
+        sessionPagesStore.filters.changed(viewLifecycleOwner) {
+            binding.isFiltered = it.isFiltered()
         }
         sessionPageStore.filterSheetState.changed(viewLifecycleOwner) { newState ->
             if (newState == BottomSheetBehavior.STATE_EXPANDED ||
