@@ -102,7 +102,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
                                 SearchFragmentDirections.actionSearchToSessionDetail(
                                     session.id
                                 ),
-                                false
+                                true
                             )
                         is Session.ServiceSession ->
                             serviceSessionItemFactory.create(session)
