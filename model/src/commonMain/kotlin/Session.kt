@@ -8,7 +8,8 @@ sealed class Session(
     open val dayNumber: Int,
     open val startTime: DateTime,
     open val endTime: DateTime,
-    open val room: Room
+    open val room: Room,
+    open val isFavorited: Boolean
 ) {
     data class SpeechSession(
         override val id: String,
@@ -25,10 +26,10 @@ sealed class Session(
         val videoUrl: String?,
         val slideUrl: String?,
         val isInterpretationTarget: Boolean,
-        val isFavorited: Boolean,
+        override val isFavorited: Boolean,
         val speakers: List<Speaker>,
         val message: LocaledString?
-    ) : Session(id, dayNumber, startTime, endTime, room) {
+    ) : Session(id, dayNumber, startTime, endTime, room, isFavorited) {
         val hasVideo: Boolean = videoUrl.isNullOrEmpty().not()
         val hasSlide: Boolean = slideUrl.isNullOrEmpty().not()
     }
@@ -40,8 +41,9 @@ sealed class Session(
         override val endTime: DateTime,
         val title: String,
         override val room: Room,
-        val sessionType: SessionType
-    ) : Session(id, dayNumber, startTime, endTime, room)
+        val sessionType: SessionType,
+        override val isFavorited: Boolean = true
+    ) : Session(id, dayNumber, startTime, endTime, room, isFavorited)
 
     val startDayText by lazy { startTime.format("yyyy.M.d") }
 

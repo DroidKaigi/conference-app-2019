@@ -61,7 +61,7 @@ class SessionContentsActionCreator @Inject constructor(
         }
     }
 
-    fun toggleFavorite(session: Session.SpeechSession) {
+    fun toggleFavorite(session: Session) {
         launch {
             try {
                 dispatcher.dispatchLoadingState(LoadingState.LOADING)

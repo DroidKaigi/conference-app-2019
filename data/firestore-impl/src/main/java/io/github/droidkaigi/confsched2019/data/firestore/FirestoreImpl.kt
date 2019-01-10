@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class FirestoreImpl @Inject constructor() : Firestore {
 
-    override suspend fun getFavoriteSessionIds(): List<Int> {
+    override suspend fun getFavoriteSessionIds(): List<String> {
         if (FirebaseAuth.getInstance().currentUser?.uid == null) return listOf()
         val favoritesRef = getFavoritesRef()
         val snapshot = favoritesRef
@@ -25,7 +25,7 @@ class FirestoreImpl @Inject constructor() : Firestore {
         }
 
         val favorites = favoritesRef.whereEqualTo("favorite", true).fastGet()
-        return favorites.documents.mapNotNull { it.id.toIntOrNull() }
+        return favorites.documents.mapNotNull { it.id }
     }
 
     override suspend fun toggleFavorite(sessionId: String) {

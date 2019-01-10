@@ -55,7 +55,7 @@ class DataSessionRepository @Inject constructor(
             ))
     }
 
-    override suspend fun toggleFavorite(session: Session.SpeechSession) {
+    override suspend fun toggleFavorite(session: Session) {
         firestore.toggleFavorite(session.id)
     }
 
