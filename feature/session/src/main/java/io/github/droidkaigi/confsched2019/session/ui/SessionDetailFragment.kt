@@ -73,7 +73,7 @@ class SessionDetailFragment : DaggerFragment() {
                     @Suppress("StringFormatMatches") // FIXME
                     activityActionCreator.shareUrl(getString(
                         R.string.session_detail_share_url,
-                        session.id.toInt()
+                        session.id
                     ))
                 }
                 R.id.session_place ->
