@@ -106,6 +106,9 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                 ?.startDayText ?: return@changed
             binding.sessionsBottomSheetTitle.text = titleText
         }
+        sessionPagesStore.filters.changed(viewLifecycleOwner) {
+            binding.isFiltered = it.isFiltered()
+        }
         sessionPageStore.filterSheetState.changed(viewLifecycleOwner) { newState ->
             if (newState == BottomSheetBehavior.STATE_EXPANDED ||
                 newState == BottomSheetBehavior.STATE_COLLAPSED

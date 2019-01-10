@@ -102,6 +102,9 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
             groupAdapter.update(items)
             applyTitleText()
         }
+        sessionPagesStore.filters.changed(viewLifecycleOwner) {
+            binding.isFiltered = it.isFiltered()
+        }
         sessionPageStore.filterSheetState.changed(viewLifecycleOwner) { newState ->
             if (newState == BottomSheetBehavior.STATE_EXPANDED ||
                 newState == BottomSheetBehavior.STATE_COLLAPSED

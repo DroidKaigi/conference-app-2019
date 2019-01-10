@@ -3,6 +3,7 @@
     <string name="session_filter_title">フィルター</string>
     <string name="session_filter_reset">リセット</string>
     <string name="session_filter_button">絞り込む</string>
+    <string name="session_filter_button_filtered">絞り込み中</string>
     <string name="session_detail_survey">アンケート</string>
     <string name="session_detail_go_to_survey">回答する</string>
     <string name="session_detail_resource">資料</string>
