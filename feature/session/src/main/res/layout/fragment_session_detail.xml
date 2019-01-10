@@ -138,7 +138,7 @@
                     />
 
                 <ImageView
-                    android:id="@+id/divider1"
+                    android:id="@+id/divider_top_description"
                     android:layout_width="0dp"
                     android:layout_height="4dp"
                     android:layout_marginEnd="16dp"
@@ -167,24 +167,66 @@
                     android:textIsSelectable="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/session_title"
-                    app:layout_constraintTop_toBottomOf="@id/divider1"
+                    app:layout_constraintTop_toBottomOf="@id/divider_top_description"
                     tools:text="Material is the metaphor A material metaphor is the unifying theory of a rationalized space and a system of motion. The material is grounded in tactile reality, inspired by the study of paper and ink, yet technologically advanced and open to imagination and magic."
                     />
 
-
                 <ImageView
-                    android:id="@+id/divider2"
+                    android:id="@+id/divider_top_intended_audience"
                     android:layout_width="0dp"
                     android:layout_height="4dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="28dp"
+                    android:layout_marginTop="20dp"
                     android:contentDescription="@null"
                     android:layerType="software"
                     android:src="@drawable/shape_dashed_line"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_description"
+                    />
+
+                <TextView
+                    android:id="@+id/session_intended_audience_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/session_detail_intended_audience"
+                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    app:layout_constraintStart_toStartOf="@id/session_title"
+                    app:layout_constraintTop_toBottomOf="@id/divider_top_intended_audience"
+                    />
+
+                <androidx.emoji.widget.EmojiTextView
+                    android:id="@+id/session_intended_audience_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    android:ellipsize="end"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="2dp"
+                    android:textAlignment="viewStart"
+                    android:textIsSelectable="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/session_title"
+                    app:layout_constraintTop_toBottomOf="@id/session_intended_audience_title"
+                    tools:text="Kotlinでの実装経験者で、業務でばりばりKotlinでコードを書きまくっている人向け。"
+                    />
+
+                <ImageView
+                    android:id="@+id/divider_top_tags"
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    android:contentDescription="@null"
+                    android:layerType="software"
+                    android:src="@drawable/shape_dashed_line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/session_intended_audience_description"
                     />
 
                 <TextView
@@ -195,7 +237,7 @@
                     android:text="@string/session_detail_tag"
                     android:textAppearance="@style/TextAppearance.App.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_title"
-                    app:layout_constraintTop_toBottomOf="@id/divider2"
+                    app:layout_constraintTop_toBottomOf="@id/divider_top_tags"
                     />
 
 
@@ -260,7 +302,7 @@
                 </com.google.android.material.chip.ChipGroup>
 
                 <ImageView
-                    android:id="@+id/divider3"
+                    android:id="@+id/divider_top_survey"
                     android:layout_width="0dp"
                     android:layout_height="4dp"
                     android:layout_marginEnd="16dp"
@@ -284,7 +326,7 @@
                     android:text="@string/session_detail_survey"
                     android:textAppearance="@style/TextAppearance.App.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_title"
-                    app:layout_constraintTop_toBottomOf="@id/divider3"
+                    app:layout_constraintTop_toBottomOf="@id/divider_top_survey"
                     app:visibleGone="@{session.isFinished}"
                     />
 
@@ -301,7 +343,7 @@
                     />
 
                 <ImageView
-                    android:id="@+id/divider4"
+                    android:id="@+id/divider_top_speakers"
                     android:layout_width="0dp"
                     android:layout_height="4dp"
                     android:layout_marginEnd="16dp"
@@ -323,7 +365,7 @@
                     android:text="@string/session_detail_speaker"
                     android:textAppearance="@style/TextAppearance.App.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_title"
-                    app:layout_constraintTop_toBottomOf="@id/divider4"
+                    app:layout_constraintTop_toBottomOf="@id/divider_top_speakers"
                     />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -338,7 +380,7 @@
                     />
 
                 <ImageView
-                    android:id="@+id/divider5"
+                    android:id="@+id/divider_top_resource"
                     android:layout_width="0dp"
                     android:layout_height="4dp"
                     android:layout_marginEnd="16dp"
@@ -361,7 +403,7 @@
                     android:text="@string/session_detail_resource"
                     android:textAppearance="?attr/textAppearanceSubtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_title"
-                    app:layout_constraintTop_toBottomOf="@id/divider5"
+                    app:layout_constraintTop_toBottomOf="@id/divider_top_resource"
                     app:visibleGone="@{session.hasVideo || session.hasSlide}"
                     />
 
