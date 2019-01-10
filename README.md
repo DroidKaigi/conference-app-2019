@@ -18,7 +18,7 @@ You can download the binary built on master branch from [<img src="https://dply.
 
 # Contributing
 
-We welcome any and all contributions! See CONTRIBUTING.md for more information
+We welcome any and all contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information
 
 ## Requirements
 
