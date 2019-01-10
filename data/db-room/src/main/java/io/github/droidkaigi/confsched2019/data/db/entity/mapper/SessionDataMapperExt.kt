@@ -40,7 +40,7 @@ private val dateFormat: DateFormat =
 
 private fun parseDateTime(dateText: String): DateTimeTz {
     val tz = "+09:00" // FIXME Should replace to timezone from API
-    return dateFormat.parse("${dateText}${tz}")
+    return dateFormat.parse("$dateText$tz")
 }
 
 fun SessionResponse.toSessionEntityImpl(
@@ -64,7 +64,7 @@ fun SessionResponse.toSessionEntityImpl(
             title = title,
             englishTitle = requireNotNull(englishTitle),
             desc = description,
-            stime = parseDateTime(startsAt ).utc.unixMillisLong,
+            stime = parseDateTime(startsAt).utc.unixMillisLong,
             etime = parseDateTime(endsAt).utc.unixMillisLong,
             sessionFormat = requireNotNull(sessionFormat.name),
             language = LanguageEntityImpl(
