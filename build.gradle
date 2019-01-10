@@ -43,8 +43,10 @@ allprojects {
             maven { url "https://maven-central.storage-download.googleapis.com/repos/central/data/" }
             break;
             case "AS":
-            default:
             maven { url "https://maven-central-asia.storage-download.googleapis.com/repos/central/data/" }
+            break;
+            default:
+            if (!isCi) { maven { url "https://maven-central-asia.storage-download.googleapis.com/repos/central/data/" } }
             break;
         }
 

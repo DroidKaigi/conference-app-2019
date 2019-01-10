@@ -2,6 +2,8 @@ export PATH="${REPOSITORY_ROOT}/scripts:$PATH"
 export PATH="${REPOSITORY_ROOT}/.circleci/scripts:$PATH"
 export MERGED_JUNIT_RESULT_FILE="$REPOSITORY_ROOT/merged_junit.xml"
 
-
 export CURRENT_COUNTRY=$(curl 'https://ipinfo.io/country')
 export CURRENT_REGION=$(cat .circleci/continent.json | jq -r --arg COUNTRY "$CURRENT_COUNTRY" 'to_entries | map(select(.key == $COUNTRY)) | first | .value')
+
+echo $CURRENT_COUNTRY
+echo $CURRENT_REGION
