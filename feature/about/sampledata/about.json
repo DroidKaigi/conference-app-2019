@@ -1,0 +1,25 @@
+{
+  "comment": "Sample data for an about module",
+  "data": [
+    {
+      "label": "会場アクセス",
+      "check": "Mapを開く"
+    },
+    {
+      "label": "スタッフリスト",
+      "check": "見てみる"
+    },
+    {
+      "label": "プライバシーポリシー",
+      "check": "見てみる"
+    },
+    {
+      "label": "ライセンス",
+      "check": "見てみる"
+    },
+    {
+      "label": "アプリバージョン",
+      "check": "1.0.0"
+    }
+  ]
+}
