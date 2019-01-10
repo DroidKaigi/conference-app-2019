@@ -99,7 +99,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
                         is Session.SpeechSession ->
                             speechSessionItemFactory.create(
                                 session,
-                                SearchFragmentDirections.actionSearchToSessionDetail(
+                                SessionPagesFragmentDirections.actionSessionToSessionDetail(
                                     session.id
                                 ),
                                 true
