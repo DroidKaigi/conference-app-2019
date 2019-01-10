@@ -68,12 +68,13 @@ class SessionDetailFragment : DaggerFragment() {
         binding.bottomAppBar.replaceMenu(R.menu.menu_session_detail_bottomappbar)
         binding.bottomAppBar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.session_share ->
-                    Toast.makeText(
-                        requireContext(),
-                        "not implemented yet",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                R.id.session_share -> {
+                    val session = binding.session ?: return@setOnMenuItemClickListener false
+                    activityActionCreator.shareUrl(getString(
+                        R.string.session_detail_share_url,
+                        session.id
+                    ))
+                }
                 R.id.session_place ->
                     Toast.makeText(
                         requireContext(),

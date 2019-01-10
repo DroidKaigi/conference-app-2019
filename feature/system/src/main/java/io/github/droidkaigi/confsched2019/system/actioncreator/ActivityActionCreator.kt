@@ -3,6 +3,7 @@ package io.github.droidkaigi.confsched2019.system.actioncreator
 import android.content.Intent
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import io.github.droidkaigi.confsched2019.system.R
@@ -28,6 +29,13 @@ class ActivityActionCreator @Inject constructor(val activity: FragmentActivity) 
         }.let { intent ->
             activity.startActivity(intent)
         }
+    }
+
+    fun shareUrl(url: String) {
+        val builder: ShareCompat.IntentBuilder = ShareCompat.IntentBuilder.from(activity)
+        builder.setText(url)
+            .setType("text/plain")
+            .startChooser()
     }
 
     companion object {
