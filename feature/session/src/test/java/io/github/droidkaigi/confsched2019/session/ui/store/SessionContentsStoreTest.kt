@@ -7,7 +7,6 @@ import io.github.droidkaigi.confsched2019.dummySessionData
 import io.github.droidkaigi.confsched2019.ext.android.CoroutinePlugin
 import io.github.droidkaigi.confsched2019.ext.android.changedForever
 import io.github.droidkaigi.confsched2019.model.LoadingState
-import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.kotlintest.shouldBe
 import io.mockk.MockKAnnotations
