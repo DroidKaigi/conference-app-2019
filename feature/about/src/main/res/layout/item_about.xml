@@ -38,7 +38,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/about_access_to_place"
+            tools:text="@sample/about.json/data/label"
             />
 
         <TextView
@@ -51,7 +51,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/about_check_map"
+            tools:text="@sample/about.json/data/check"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

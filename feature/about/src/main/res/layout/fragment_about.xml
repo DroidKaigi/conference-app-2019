@@ -17,6 +17,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/item_about"
+            tools:itemCount="5"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

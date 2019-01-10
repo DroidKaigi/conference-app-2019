@@ -21,7 +21,7 @@
             android:textAppearance="@style/TextAppearance.App.Caption"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="01.25 12:01"
+            tools:text="@sample/announcement.json/data/date"
             />
 
         <ImageView
@@ -32,6 +32,7 @@
             android:contentDescription="@string/announcement_description_category_icon"
             app:layout_constraintStart_toStartOf="@id/date_text"
             app:layout_constraintTop_toBottomOf="@id/date_text"
+            tools:src="@drawable/ic_feed_alert_amber_20dp"
             />
 
         <androidx.emoji.widget.EmojiTextView
@@ -49,7 +50,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/category_icon"
             app:layout_constraintTop_toTopOf="@id/category_icon"
-            tools:text="Day2のセッションについて"
+            tools:text="@sample/announcement.json/data/title"
             />
 
         <androidx.emoji.widget.EmojiTextView
@@ -65,7 +66,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/title_text"
             app:layout_constraintTop_toBottomOf="@id/title_text"
-            tools:text="aaaaaaaaaaaaaああああああああああああああああああああああああああああaaaaaaaaaaaaaああああああああああああああああああああああああああああaaaaaaaaaaaaaああああああああああああああああああああああああああああ"
+            tools:text="@sample/announcement.json/data/content"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
