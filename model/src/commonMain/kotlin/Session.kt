@@ -42,7 +42,7 @@ sealed class Session(
         val title: String,
         override val room: Room,
         val sessionType: SessionType,
-        override val isFavorited: Boolean = true
+        override val isFavorited: Boolean
     ) : Session(id, dayNumber, startTime, endTime, room, isFavorited)
 
     val startDayText by lazy { startTime.format("yyyy.M.d") }
