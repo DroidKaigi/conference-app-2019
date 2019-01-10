@@ -21,6 +21,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:tabGravity="fill"
             app:tabIndicator="@drawable/shape_pill_indicator"
             app:tabIndicatorGravity="stretch"
             app:tabTextAppearance="@style/TabTextAppearance"
