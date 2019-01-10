@@ -112,7 +112,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/sessions_bottom_sheet_title"
-            app:visibleGone="@{!shouldShowEmptyStateView}"
             />
 
         <LinearLayout
