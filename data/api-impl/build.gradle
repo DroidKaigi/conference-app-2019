@@ -43,7 +43,7 @@ kotlin {
             }
         }
         androidTest {
-            dependsOn commonMain
+            dependsOn androidMain
             dependencies {
                 implementation Dep.Test.junit
                 implementation Dep.Test.slf4j
