@@ -1,5 +1,5 @@
 cache_version_keys: &cache_version_keys
-  CACHE_VERSION_OF_PROJECT_DEPS: v1
+  CACHE_VERSION_OF_PROJECT_DEPS: v2
   CACHE_VERSION_OF_DANGER_CACHE: v1
 
 cache_keys:
@@ -8,13 +8,11 @@ cache_keys:
     keys: &all_keys_of_gradle_cache
       - *primary_key_of_gradle_cache
       - gradle-cache-{{ checksum "~/CACHE_VERSION_OF_PROJECT_DEPS" }}-
-      - gradle-cache-
   danger_cache:
     primary: &primary_key_of_danger_cache danger-cache-{{ checksum "~/CACHE_VERSION_OF_DANGER_CACHE" }}-{{ checksum "~/danger_cache" }}
     keys: &all_keys_of_danger_cache
       - *primary_key_of_danger_cache
       - danger-cache-{{ checksum "~/CACHE_VERSION_OF_DANGER_CACHE" }}-
-      - danger-cache-
 
 docker_env:
   android_defaults: &android_defaults
@@ -54,20 +52,19 @@ jobs:
       - run: *init_bash
       - restore_cache: &restore_gradle_cache
           keys: *all_keys_of_gradle_cache
-      - run:
+      - run: &download_all_dependencies
           name: Download Dependencies
-          command: ./gradlew androidDependencies
+          command: retry_command ./gradlew androidDependenciesExtra getDependencies
       - save_cache: &save_gradle_cache
           paths:
             - ~/.android
             - ~/.gradle
             - .gradle
-            - ~/.m2
           key: *primary_key_of_gradle_cache
       - run:
           name: Assemble apk
           command: |
-            ./gradlew assembleDebug # --offline # build with online-mode for now
+            ./gradlew clean assembleDebug --offline
       - store_artifacts:
           path: frontend/android/build/outputs/apk
       - run: *download_dpg
@@ -108,7 +105,9 @@ jobs:
       - checkout
       - run: *init_bash
       - restore_cache: *restore_gradle_cache
-      - run: ./gradlew testDebugUnitTest lintDebug ktlint --continue
+      - run: *download_all_dependencies
+      - save_cache: *save_gradle_cache
+      - run: ./gradlew testDebugUnitTest lintDebug ktlint --continue --offline
       - run:
           name: Merge junit report files
           command: |

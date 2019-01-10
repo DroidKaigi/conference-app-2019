@@ -2,6 +2,8 @@ package io.github.droidkaigi.confsched2019.session.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -10,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager.widget.ViewPager
-import com.google.android.material.chip.Chip
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -51,6 +52,7 @@ class SessionPagesFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_session_pages,
@@ -107,18 +109,11 @@ class SessionPagesFragment : DaggerFragment() {
                 }
             }
         )
+    }
 
-        (0 until binding.sessionsTabLayout.tabCount).forEach {
-            val view = layoutInflater.inflate(
-                R.layout.layout_title_chip, binding.sessionsTabLayout, false
-            ) as ViewGroup
-            val chip = view.getChildAt(0) as Chip
-            val tab = binding.sessionsTabLayout.getTabAt(it)
-            tab?.let {
-                chip.text = tab.text
-                tab.setCustomView(view)
-            }
-        }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_toolbar, menu)
     }
 }
 

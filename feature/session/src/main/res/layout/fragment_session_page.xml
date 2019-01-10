@@ -69,12 +69,11 @@
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/sessions_filter_room_chip"
+                    style="@style/Widget.App.ChipGroup.SessionFilter"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    app:chipSpacingHorizontal="4dp"
-                    app:chipSpacingVertical="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/sessions_filter_reset"
                     app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
                     app:layout_constraintTop_toBottomOf="@id/sessions_filter_room_title"
                     />
@@ -93,12 +92,11 @@
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/sessions_filter_lang_chip"
+                    style="@style/Widget.App.ChipGroup.SessionFilter"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    app:chipSpacingHorizontal="4dp"
-                    app:chipSpacingVertical="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/sessions_filter_reset"
                     app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
                     app:layout_constraintTop_toBottomOf="@id/sessions_filter_lang_title"
                     />
@@ -118,12 +116,11 @@
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/sessions_filter_category_chip"
+                    style="@style/Widget.App.ChipGroup.SessionFilter"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    app:chipSpacingHorizontal="4dp"
-                    app:chipSpacingVertical="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/sessions_filter_reset"
                     app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
                     app:layout_constraintTop_toBottomOf="@id/sessions_filter_category_title"
                     />

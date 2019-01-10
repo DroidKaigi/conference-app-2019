@@ -25,6 +25,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        resConfigs "ja"
         // For Android Studio Gradle sync
         applicationIdSuffix ".debug"
     }
@@ -41,8 +42,8 @@ android {
     lintOptions {
         lintConfig file("${project.projectDir}/lint.xml")
 
-        xmlReport System.getenv("CI") == "true"
-        htmlReport System.getenv("CI") != "true"
+        xmlReport isCi
+        htmlReport !isCi
 
         xmlOutput file("lint-results.xml")
         htmlOutput file("lint-results.html")
@@ -76,6 +77,8 @@ dependencies {
 
     implementation Dep.Kotlin.stdlibJvm
     api Dep.Kotlin.coroutines
+    implementation Dep.Kotlin.androidCoroutinesDispatcher
+    implementation Dep.OkHttp.okio
 
     implementation Dep.Firebase.fireStore
 
@@ -106,6 +109,8 @@ dependencies {
     kapt Dep.Dagger.androidProcessor
     compileOnly Dep.Dagger.assistedInjectAnnotations
     kapt Dep.Dagger.assistedInjectProcessor
+
+    implementation Dep.Timber.android
 
     testImplementation Dep.Test.junit
 

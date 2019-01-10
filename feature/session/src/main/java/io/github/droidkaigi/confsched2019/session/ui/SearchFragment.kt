@@ -6,7 +6,9 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
@@ -37,6 +39,7 @@ class SearchFragment : DaggerFragment() {
 
     @Inject lateinit var searchActionCreator: SearchActionCreator
     @Inject lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
+    @Inject lateinit var serviceSessionItemFactory: ServiceSessionItem.Factory
     @Inject lateinit var sessionContentsStore: SessionContentsStore
     private var searchView: SearchView? = null
     @Inject lateinit var searchStoreProvider: Provider<SearchStore>
@@ -93,7 +96,7 @@ class SearchFragment : DaggerFragment() {
                                 false
                             )
                         is Session.ServiceSession ->
-                            ServiceSessionItem(session)
+                            serviceSessionItemFactory.create(session)
                     }
                 }
             groupAdapter.update(items)
@@ -126,6 +129,14 @@ class SearchFragment : DaggerFragment() {
             searchView.maxWidth = Int.MAX_VALUE
             searchView.setOnCloseListener { false }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        val imm = ContextCompat.getSystemService(requireContext(), InputMethodManager::class.java)
+        val view = activity?.currentFocus
+        imm?.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 }
 

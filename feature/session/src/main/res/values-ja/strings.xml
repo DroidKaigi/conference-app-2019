@@ -3,9 +3,16 @@
     <string name="session_filter_title">フィルター</string>
     <string name="session_filter_reset">リセット</string>
     <string name="session_filter_button">絞り込む</string>
+    <string name="session_filter_button_filtered">絞り込み中</string>
+    <string name="session_detail_intended_audience">対象者</string>
     <string name="session_detail_survey">アンケート</string>
     <string name="session_detail_go_to_survey">回答する</string>
+    <string name="session_detail_resource">資料</string>
+    <string name="session_detail_resource_video">動画</string>
+    <string name="session_detail_resource_slide">スライド</string>
+    <string name="session_detail_share_url">https://droidkaigi.jp/2019/timetable/%s</string>
     <string name="session_search_hint">検索する…</string>
     <string name="session_go_to_survey">アンケートに回答する</string>
     <string name="session_simultaneous_interpretation">同時通訳</string>
+    <string name="session_favorite_empty">お気に入りのセッションを登録すると\nあなた専用のプランを作ることが\nできます。</string>
 </resources>

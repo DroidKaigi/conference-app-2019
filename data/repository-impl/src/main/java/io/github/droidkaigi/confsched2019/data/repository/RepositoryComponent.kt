@@ -6,7 +6,7 @@ import io.github.droidkaigi.confsched2019.data.api.DroidKaigiApi
 import io.github.droidkaigi.confsched2019.data.api.GoogleFormApi
 import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.db.SponsorDatabase
-import io.github.droidkaigi.confsched2019.data.firestore.FireStore
+import io.github.droidkaigi.confsched2019.data.firestore.Firestore
 import javax.inject.Singleton
 
 @Singleton
@@ -28,7 +28,7 @@ interface RepositoryComponent {
         @BindsInstance fun database(database: SessionDatabase): Builder
         @BindsInstance fun sponsorDatabase(database: SponsorDatabase): Builder
 
-        @BindsInstance fun fireStore(fireStore: FireStore): Builder
+        @BindsInstance fun firestore(firestore: Firestore): Builder
 
         fun build(): RepositoryComponent
     }

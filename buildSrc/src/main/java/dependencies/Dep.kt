@@ -42,6 +42,7 @@ object Dep {
         val design = "com.google.android.material:material:1.1.0-alpha02"
         val coreKtx = "androidx.core:core-ktx:1.0.0-alpha1"
         val preference = "androidx.preference:preference:1.0.0"
+        val browser = "androidx.browser:browser:1.0.0"
 
         val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:2.0.0"
         val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata:2.0.0"
@@ -76,7 +77,8 @@ object Dep {
             "org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$coroutinesVersion"
         val coroutinesPlayServices =
             "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesVersion"
-        val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.8.1-rc13"
+        val serializationCommon = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.9.1"
+        val serializationIos = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.9.1"
     }
 
     object Firebase {
@@ -114,6 +116,7 @@ object Dep {
         val version = "3.11.0"
         val client = "com.squareup.okhttp3:okhttp:$version"
         val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$version"
+        val okio = "com.squareup.okio:okio:1.14.0"
     }
 
     val liveDataKtx = "com.shopify:livedata-ktx:2.0.1"
@@ -172,5 +175,11 @@ object Dep {
     object Picasso {
         val picasso = "com.squareup.picasso:picasso:2.71828"
         val picassoTransformation = "jp.wasabeef:picasso-transformations:2.2.1"
+    }
+
+    object Timber {
+        val common = "com.jakewharton.timber:timber-common:5.0.0-SNAPSHOT"
+        val jdk = "com.jakewharton.timber:timber-jdk:5.0.0-SNAPSHOT"
+        val android = "com.jakewharton.timber:timber-android:5.0.0-SNAPSHOT"
     }
 }

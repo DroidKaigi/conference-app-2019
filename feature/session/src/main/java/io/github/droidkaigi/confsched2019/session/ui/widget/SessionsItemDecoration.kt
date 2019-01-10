@@ -5,12 +5,16 @@ import android.content.res.Resources
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.util.SparseArray
+import android.view.View
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.util.forEach
 import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupAdapter
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
-import io.github.droidkaigi.confsched2019.util.logd
+import io.github.droidkaigi.confsched2019.timber.debug
+import timber.log.Timber
 
 class SessionsItemDecoration(
     val context: Context,
@@ -29,6 +33,8 @@ class SessionsItemDecoration(
     private val textPaddingBottom = resources.getDimensionPixelSize(
         R.dimen.session_bottom_sheet_left_time_text_padding_bottom
     )
+    // Keep SparseArray instance on property to avoid object creation in every onDrawOver()
+    private val adapterPositionToViews = SparseArray<View>()
 
     val paint = Paint().apply {
         style = Paint.Style.FILL
@@ -38,20 +44,25 @@ class SessionsItemDecoration(
         try {
             typeface = ResourcesCompat.getFont(context, R.font.lekton)
         } catch (e: Resources.NotFoundException) {
-            logd(e = e)
+            Timber.debug(e)
         }
     }
 
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        var lastTime: String? = null
+        // Sort child views by adapter position
         for (i in 0 until parent.childCount) {
             val view = parent.getChildAt(i)
             val position = parent.getChildAdapterPosition(view)
-            if (position == -1 || position >= groupAdapter.itemCount) return
+            if (position != RecyclerView.NO_POSITION && position < groupAdapter.itemCount) {
+                adapterPositionToViews.put(position, view)
+            }
+        }
 
-            val time = getSessionTime(position) ?: continue
+        var lastTime: String? = null
+        adapterPositionToViews.forEach { position, view ->
+            val time = getSessionTime(position) ?: return@forEach
 
-            if (lastTime == time) continue
+            if (lastTime == time) return@forEach
             lastTime = time
 
             val nextTime = getSessionTime(position + 1)
@@ -68,6 +79,8 @@ class SessionsItemDecoration(
                 paint
             )
         }
+
+        adapterPositionToViews.clear()
     }
 
     private fun getSessionTime(position: Int): String? {
