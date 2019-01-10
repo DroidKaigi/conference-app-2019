@@ -115,6 +115,7 @@ object Dep {
         val version = "3.11.0"
         val client = "com.squareup.okhttp3:okhttp:$version"
         val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$version"
+        val okio = "com.squareup.okio:okio:1.14.0"
     }
 
     val liveDataKtx = "com.shopify:livedata-ktx:2.0.1"

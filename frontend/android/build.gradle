@@ -77,6 +77,8 @@ dependencies {
 
     implementation Dep.Kotlin.stdlibJvm
     api Dep.Kotlin.coroutines
+    implementation Dep.Kotlin.androidCoroutinesDispatcher
+    implementation Dep.OkHttp.okio
 
     implementation Dep.Firebase.fireStore
 
