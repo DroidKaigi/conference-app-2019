@@ -32,6 +32,8 @@ class SessionsItemDecoration(
     private val textPaddingBottom = resources.getDimensionPixelSize(
         R.dimen.session_bottom_sheet_left_time_text_padding_bottom
     )
+    // Keep SparseArray instance on property to avoid object creation in every onDrawOver()
+    private val adapterPositionToViews = SparseArray<View>()
 
     val paint = Paint().apply {
         style = Paint.Style.FILL
@@ -45,21 +47,18 @@ class SessionsItemDecoration(
         }
     }
 
-    // Keep SparseArray instance on property to avoid object creation in every onDrawOver()
-    private val positionToViews = SparseArray<View>()
-
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         // Sort child views by adapter position
         for (i in 0 until parent.childCount) {
             val view = parent.getChildAt(i)
             val position = parent.getChildAdapterPosition(view)
-            if (position != -1 && position < groupAdapter.itemCount) {
-                positionToViews.put(position, view)
+            if (position != RecyclerView.NO_POSITION && position < groupAdapter.itemCount) {
+                adapterPositionToViews.put(position, view)
             }
         }
 
         var lastTime: String? = null
-        positionToViews.forEach { position, view ->
+        adapterPositionToViews.forEach { position, view ->
             val time = getSessionTime(position) ?: return@forEach
 
             if (lastTime == time) return@forEach
@@ -80,7 +79,7 @@ class SessionsItemDecoration(
             )
         }
 
-        positionToViews.clear()
+        adapterPositionToViews.clear()
     }
 
     private fun getSessionTime(position: Int): String? {
