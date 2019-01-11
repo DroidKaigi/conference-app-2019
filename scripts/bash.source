@@ -1,7 +1,12 @@
 export PATH="${REPOSITORY_ROOT}/scripts:$PATH"
 export PATH="${REPOSITORY_ROOT}/.circleci/scripts:$PATH"
-export MERGED_JUNIT_RESULT_DIR="$REPOSITORY_ROOT/test-results"
+export AGGREGATED_TEST_RESULT_DIR="$REPOSITORY_ROOT/test-results"
+export AGGREGATED_REPORT_RESULT_DIR="$REPOSITORY_ROOT/reports"
 
-if [[ ! -d "$MERGED_JUNIT_RESULT_DIR" ]]; then
-    mkdir -p "$MERGED_JUNIT_RESULT_DIR"
+if [[ ! -d "$AGGREGATED_TEST_RESULT_DIR" ]]; then
+    mkdir -p "$AGGREGATED_TEST_RESULT_DIR"
+fi
+
+if [[ ! -d "$AGGREGATED_REPORT_RESULT_DIR" ]]; then
+    mkdir -p "$AGGREGATED_REPORT_RESULT_DIR"
 fi
