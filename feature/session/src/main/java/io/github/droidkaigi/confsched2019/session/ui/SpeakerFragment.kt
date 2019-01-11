@@ -1,6 +1,7 @@
 package io.github.droidkaigi.confsched2019.session.ui
 
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,7 +54,7 @@ class SpeakerFragment : DaggerFragment() {
         ) { speaker ->
             binding.speaker = speaker
         }
-
+        binding.speakerDescription.movementMethod = LinkMovementMethod.getInstance()
         sessionContentsStore.speechSessionBySpeakerName(speakerId)
             .changed(viewLifecycleOwner) { session ->
                 binding.session = session

@@ -8,25 +8,20 @@ object CoroutinePlugin {
 
     private val defaultIoDispatcher: CoroutineContext = Dispatchers.IO
     val ioDispatcher: CoroutineContext
-        get() = ioDispatcherHandler?.let { handler ->
-            handler(defaultIoDispatcher)
-        } ?: defaultIoDispatcher
+        get() = ioDispatcherHandler?.invoke(defaultIoDispatcher) ?: defaultIoDispatcher
     @set:VisibleForTesting
     var ioDispatcherHandler: ((CoroutineContext) -> CoroutineContext)? = null
 
     private val defaultComputationDispatcher: CoroutineContext = Dispatchers.Default
     val defaultDispatcher: CoroutineContext
-        get() = computationDispatcherHandler?.let { handler ->
-            handler(defaultComputationDispatcher)
-        } ?: defaultComputationDispatcher
+        get() = computationDispatcherHandler?.invoke(defaultComputationDispatcher)
+            ?: defaultComputationDispatcher
     @set:VisibleForTesting
     var computationDispatcherHandler: ((CoroutineContext) -> CoroutineContext)? = null
 
     private val defaultMainDispatcher: CoroutineContext = Dispatchers.Main
     val mainDispatcher: CoroutineContext
-        get() = mainDispatcherHandler?.let { handler ->
-            handler(defaultMainDispatcher)
-        } ?: defaultMainDispatcher
+        get() = mainDispatcherHandler?.invoke(defaultMainDispatcher) ?: defaultMainDispatcher
     @set:VisibleForTesting
     var mainDispatcherHandler: ((CoroutineContext) -> CoroutineContext)? = null
 

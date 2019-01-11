@@ -1,9 +1,10 @@
-# ![](frontend/android/src/main/res/mipmap-hdpi/ic_launcher.png)DroidKaigi 2019 official Android app
+# ![](frontend/android/src/main/res/mipmap-hdpi/ic_launcher.png)DroidKaigi 2019 official Android app [![CircleCI](https://circleci.com/gh/DroidKaigi/conference-app-2019.svg?style=svg)](https://circleci.com/gh/DroidKaigi/conference-app-2019)
 
 [DroidKaigi 2019](https://droidkaigi.jp/2019/en/) is a conference tailored for developers on 7th and 8th February 2019.
 
-You can download the binary built on master branch from [<img src="https://dply.me/ivqdhj/button/large" alt="Try it on your device via DeployGate">](https://dply.me/ivqdhj#install)
+You can download the binary built on master branch from [<img src="https://dply.me/t6sc7f/button/large" alt="Try it on your device via DeployGate">](https://dply.me/t6sc7f#install)
 
+NOTE: Google Play Protect will show a warning dialog on some of devices when installing the current apk. The detailed specification of Google Play Protect is not public so we cannot address this matter. Please ignore the dialog for now. If you cannot install this apk without any error message, please disable Google Play Protect from Google Play Store's menus. Sorry for the inconvenience.
 
 # Features
 
@@ -17,7 +18,14 @@ You can download the binary built on master branch from [<img src="https://dply.
 * Show Information Feed
 
 # Contributing
-We are always welcome your contribution!
+We always welcome your contribution!
+
+## Requirements
+Android Studio 3.2.1  
+Android Studio Kotlin Plugin 1.3.11-release-Studio3.2-1
+
+**Check out following status.**  
+`Preference` > `Languages & Frameworks` > `Kotlin Updates`
 
 ## How to find the tasks
 We use [GitHub issues](https://github.com/DroidKaigi/conference-app-2019/issues?q=is%3Aissue+is%3Aopen+label%3A%22welcome+contribute%22) to manage the tasks.
@@ -44,7 +52,7 @@ You can check [generated module dependency diagram](project.dot.png)
 
 ## Unidirectional data flow(Flux-based) Architecture
 
-Unidirectional data flow(Flux-based) Architecture with `Kotlin Coroutines` and `AndroidX` Libraries(`LiveData`, `ViewModel`, `Room`) `DataBinding`, `Dagger` and `AssistedInejct`, `Firebase` etc.
+Unidirectional data flow(Flux-based) Architecture with `Kotlin Coroutines` and `AndroidX` Libraries(`LiveData`, `ViewModel`, `Room`) `DataBinding`, `Dagger` and `AssistedInject`, `Firebase` etc.
 
 ![](images/architecture.png)
 
@@ -226,8 +234,8 @@ This project uses some modern Android libraries and source codes.
   * Coroutines
   * Serialization
 * [Firebase](https://firebase.google.com/) (Google)
-  * Auth
-  * Firestore
+  * Authentication
+  * Cloud Firestore
 * [Dagger 2](https://google.github.io/dagger/)
   * Core (Google)
   * AndroidSupport (Google)

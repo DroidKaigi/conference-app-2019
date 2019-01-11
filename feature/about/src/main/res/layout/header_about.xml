@@ -8,7 +8,7 @@
         android:id="@+id/about_header_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="24dp">
+        android:paddingBottom="20dp">
 
         <ImageView
             android:id="@+id/logo"
@@ -50,50 +50,56 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/what_is_droidkaigi_text" />
 
-        <!--TODO: Need links to video libraries -->
-
-        <ImageView
-            android:id="@+id/video_library_image_1"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_video_library_gray2_24dp"
+        <ImageButton
+            android:id="@+id/about_this_app_twitter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_twitter_blue_36dp"
             android:contentDescription="@null"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:padding="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/description_droidkaigi_text"/>
 
-        <ImageView
-            android:id="@+id/video_library_image_2"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="16dp"
-            android:src="@drawable/ic_video_library_gray2_24dp"
+        <ImageButton
+            android:id="@+id/about_this_app_github"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_github_black_36dp"
             android:contentDescription="@null"
-            app:layout_constraintStart_toEndOf="@+id/video_library_image_1"
-            app:layout_constraintTop_toTopOf="@+id/video_library_image_1"
+            android:layout_marginStart="16dp"
+            android:padding="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintStart_toEndOf="@+id/about_this_app_twitter"
+            app:layout_constraintTop_toTopOf="@+id/about_this_app_twitter"
             />
 
-        <ImageView
-            android:id="@+id/video_library_image_3"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="16dp"
-            android:src="@drawable/ic_video_library_gray2_24dp"
+        <ImageButton
+            android:id="@+id/about_this_app_youtube"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_youtube_36dp"
             android:contentDescription="@null"
-            app:layout_constraintStart_toEndOf="@+id/video_library_image_2"
-            app:layout_constraintTop_toTopOf="@+id/video_library_image_1"
+            android:layout_marginStart="16dp"
+            android:padding="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintStart_toEndOf="@+id/about_this_app_github"
+            app:layout_constraintTop_toTopOf="@+id/about_this_app_twitter"
             />
 
-        <ImageView
-            android:id="@+id/video_library_image_4"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="16dp"
-            android:src="@drawable/ic_video_library_gray2_24dp"
+        <ImageButton
+            android:id="@+id/about_this_app_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_medium_36dp"
             android:contentDescription="@null"
-            app:layout_constraintStart_toEndOf="@+id/video_library_image_3"
-            app:layout_constraintTop_toTopOf="@+id/video_library_image_1"
+            android:layout_marginStart="16dp"
+            android:padding="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintStart_toEndOf="@+id/about_this_app_youtube"
+            app:layout_constraintTop_toTopOf="@+id/about_this_app_twitter"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

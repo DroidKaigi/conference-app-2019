@@ -3,7 +3,7 @@ package io.github.droidkaigi.confsched2019.data.api
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import io.github.droidkaigi.confsched2019.BuildConfig
+import io.github.droidkaigi.confsched2019.api.BuildConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.features.json.JsonFeature
@@ -14,8 +14,8 @@ import okhttp3.logging.HttpLoggingInterceptor
 
 @Module(includes = [ApiModule.Providers::class])
 internal abstract class ApiModule {
-    @Binds abstract fun DroidKaigiApi(impl: KtorDroidKaigiApi): DroidKaigiApi
-    @Binds abstract fun GoogleFormApi(impl: KtorGoogleFormApi): GoogleFormApi
+    @Binds abstract fun DroidKaigiApi(impl: InjectableKtorDroidKaigiApi): DroidKaigiApi
+    @Binds abstract fun GoogleFormApi(impl: InjectableKtorGoogleFormApi): GoogleFormApi
 
     @Module
     internal object Providers {
@@ -37,7 +37,7 @@ internal abstract class ApiModule {
         }
 
         @JvmStatic @Provides @Named("apiEndpoint") fun apiEndpoint(): String {
-            return BuildConfig.API_ENDPOINT
+            return io.github.droidkaigi.confsched2019.data.api.apiEndpoint()
         }
     }
 }

@@ -5,12 +5,16 @@ import android.content.res.Resources
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.util.SparseArray
+import android.view.View
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.util.forEach
 import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupAdapter
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
-import io.github.droidkaigi.confsched2019.util.logd
+import io.github.droidkaigi.confsched2019.timber.debug
+import timber.log.Timber
 
 class SessionsItemDecoration(
     val context: Context,
@@ -23,9 +27,14 @@ class SessionsItemDecoration(
     private val textLeftSpace = resources.getDimensionPixelSize(
         R.dimen.session_bottom_sheet_left_time_text_left
     )
-    private val textMinTop = resources.getDimensionPixelSize(
-        R.dimen.session_bottom_sheet_left_time_text_top_min
+    private val textPaddingTop = resources.getDimensionPixelSize(
+        R.dimen.session_bottom_sheet_left_time_text_padding_top
     )
+    private val textPaddingBottom = resources.getDimensionPixelSize(
+        R.dimen.session_bottom_sheet_left_time_text_padding_bottom
+    )
+    // Keep SparseArray instance on property to avoid object creation in every onDrawOver()
+    private val adapterPositionToViews = SparseArray<View>()
 
     val paint = Paint().apply {
         style = Paint.Style.FILL
@@ -35,47 +44,51 @@ class SessionsItemDecoration(
         try {
             typeface = ResourcesCompat.getFont(context, R.font.lekton)
         } catch (e: Resources.NotFoundException) {
-            logd(e = e)
+            Timber.debug(e)
         }
     }
 
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        var lastTime: String? = null
+        // Sort child views by adapter position
         for (i in 0 until parent.childCount) {
             val view = parent.getChildAt(i)
             val position = parent.getChildAdapterPosition(view)
-            if (position == -1 || position >= groupAdapter.itemCount) return
-            val item = groupAdapter.getItem(position)
-            val previousItem = if (position - 1 < 0) {
-                null
-            } else {
-                groupAdapter.getItem(position - 1)
-            }
-            if (item is SessionItem) {
-                val time = item.session.startTime.toString("HH:mm")
-                val previousTime = if (previousItem is SessionItem) {
-                    previousItem.session.startTime.toString("HH:mm")
-                } else {
-                    null
-                }
-
-                if (lastTime == time) continue
-
-                lastTime = time
-
-                val yPosition = if (view.top < 0 || time == previousTime) {
-                    textSize
-                } else {
-                    view.top + textSize
-                }
-
-                c.drawText(
-                    time,
-                    textLeftSpace.toFloat(),
-                    yPosition.toFloat(),
-                    paint
-                )
+            if (position != RecyclerView.NO_POSITION && position < groupAdapter.itemCount) {
+                adapterPositionToViews.put(position, view)
             }
         }
+
+        var lastTime: String? = null
+        adapterPositionToViews.forEach { position, view ->
+            val time = getSessionTime(position) ?: return@forEach
+
+            if (lastTime == time) return@forEach
+            lastTime = time
+
+            val nextTime = getSessionTime(position + 1)
+
+            var textY = view.top.coerceAtLeast(0) + textPaddingTop + textSize
+            if (time != nextTime) {
+                textY = textY.coerceAtMost(view.bottom - textPaddingBottom)
+            }
+
+            c.drawText(
+                time,
+                textLeftSpace.toFloat(),
+                textY.toFloat(),
+                paint
+            )
+        }
+
+        adapterPositionToViews.clear()
+    }
+
+    private fun getSessionTime(position: Int): String? {
+        if (position < 0 || position >= groupAdapter.itemCount) {
+            return null
+        }
+
+        val item = groupAdapter.getItem(position) as? SessionItem ?: return null
+        return item.session.startTime.toString("HH:mm")
     }
 }

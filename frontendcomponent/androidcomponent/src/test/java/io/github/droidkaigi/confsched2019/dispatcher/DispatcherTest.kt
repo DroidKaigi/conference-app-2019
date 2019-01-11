@@ -1,6 +1,7 @@
 package io.github.droidkaigi.confsched2019.dispatcher
 
 import io.github.droidkaigi.confsched2019.action.Action
+import io.github.droidkaigi.confsched2019.ext.android.CoroutinePlugin
 import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.mockk.mockk
 import kotlinx.coroutines.async
@@ -8,13 +9,20 @@ import kotlinx.coroutines.channels.map
 import kotlinx.coroutines.channels.take
 import kotlinx.coroutines.channels.toList
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.hasItems
 import org.hamcrest.core.Is.`is`
 import org.junit.Assert.assertThat
+import org.junit.Before
 import org.junit.Test
 
 class DispatcherTest {
+    @Before fun setUp() {
+        val pseudoMainDispatcher = newSingleThreadContext("DispatcherTest")
+        CoroutinePlugin.mainDispatcherHandler = { pseudoMainDispatcher }
+    }
+
     @Test fun sendAndReceive() {
         val sessionContents: SessionContents = mockk()
         val dispatcher = Dispatcher()

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
@@ -41,6 +40,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
     @Inject lateinit var sessionPageFragmentProvider: Provider<SessionPageFragment>
     @Inject lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
     @Inject lateinit var sessionPageStoreFactory: SessionPageStore.Factory
+    @Inject lateinit var serviceSessionItemFactory: ServiceSessionItem.Factory
     private val sessionPageStore: SessionPageStore by lazy {
         sessionPageFragmentProvider.get().injectedViewModelProvider
             .get(SessionPageStore::class.java.name) {
@@ -94,10 +94,12 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                                 true
                             )
                         is Session.ServiceSession ->
-                            ServiceSessionItem(session)
+                            serviceSessionItemFactory.create(session)
                     }
                 }
             groupAdapter.update(items)
+
+            binding.shouldShowEmptyStateView = false
 
             val titleText = items
                 .asSequence()
@@ -106,6 +108,9 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                 ?.session
                 ?.startDayText ?: return@changed
             binding.sessionsBottomSheetTitle.text = titleText
+        }
+        sessionPagesStore.filters.changed(viewLifecycleOwner) {
+            binding.isFiltered = it.isFiltered()
         }
         sessionPageStore.filterSheetState.changed(viewLifecycleOwner) { newState ->
             if (newState == BottomSheetBehavior.STATE_EXPANDED ||
@@ -117,8 +122,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                         excludeChildren(binding.sessionsRecycler, true)
                     })
                 val isCollapsed = newState == BottomSheetBehavior.STATE_COLLAPSED
-                binding.sessionsBottomSheetShowFilterButton.isVisible = !isCollapsed
-                binding.sessionsBottomSheetHideFilterButton.isVisible = isCollapsed
+                binding.isCollapsed = isCollapsed
             }
         }
     }

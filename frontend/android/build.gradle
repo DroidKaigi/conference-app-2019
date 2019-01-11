@@ -5,9 +5,18 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
+apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
 android {
     compileSdkVersion Versions.androidCompileSdkVersion
+    signingConfigs {
+        debug {
+            keyAlias 'droidkaigi_debug'
+            keyPassword 'droidkaigi'
+            storeFile file('debug.keystore')
+            storePassword 'droidkaigi'
+        }
+    }
     defaultConfig {
         applicationId "io.github.droidkaigi.confsched2019"
         minSdkVersion Versions.androidMinSdkVersion
@@ -16,6 +25,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        resConfigs "ja"
         // For Android Studio Gradle sync
         applicationIdSuffix ".debug"
     }
@@ -32,11 +42,19 @@ android {
     lintOptions {
         lintConfig file("${project.projectDir}/lint.xml")
 
-        xmlReport System.getenv("CI") == "true"
-        htmlReport System.getenv("CI") != "true"
+        xmlReport isCi
+        htmlReport !isCi
 
         xmlOutput file("lint-results.xml")
         htmlOutput file("lint-results.html")
+    }
+    packagingOptions {
+        exclude 'META-INF/ktor-http.kotlin_module'
+        exclude 'META-INF/kotlinx-io.kotlin_module'
+        exclude 'META-INF/atomicfu.kotlin_module'
+        exclude 'META-INF/ktor-utils.kotlin_module'
+        exclude 'META-INF/kotlinx-coroutines-io.kotlin_module'
+        exclude 'META-INF/ktor-client-core.kotlin_module'
     }
 }
 
@@ -59,6 +77,8 @@ dependencies {
 
     implementation Dep.Kotlin.stdlibJvm
     api Dep.Kotlin.coroutines
+    implementation Dep.Kotlin.androidCoroutinesDispatcher
+    implementation Dep.OkHttp.okio
 
     implementation Dep.Firebase.fireStore
 
@@ -89,6 +109,8 @@ dependencies {
     kapt Dep.Dagger.androidProcessor
     compileOnly Dep.Dagger.assistedInjectAnnotations
     kapt Dep.Dagger.assistedInjectProcessor
+
+    implementation Dep.Timber.android
 
     testImplementation Dep.Test.junit
 

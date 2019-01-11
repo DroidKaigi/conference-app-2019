@@ -11,7 +11,7 @@ class FiltersTest {
         assertTrue { Filters().isPass(mockk<Session.SpeechSession>()) }
     }
 
-    @Test fun isPass_WhenSpecialSession() {
+    @Test fun isPass_WhenServiceSession() {
         assertTrue { Filters().isPass(mockk<Session.ServiceSession>()) }
     }
 

@@ -8,7 +8,8 @@ sealed class Session(
     open val dayNumber: Int,
     open val startTime: DateTime,
     open val endTime: DateTime,
-    open val room: Room
+    open val room: Room,
+    open val isFavorited: Boolean
 ) {
     data class SpeechSession(
         override val id: String,
@@ -22,10 +23,16 @@ sealed class Session(
         val language: LocaledString,
         val category: Category,
         val intendedAudience: String?,
-        val isFavorited: Boolean,
+        val videoUrl: String?,
+        val slideUrl: String?,
+        val isInterpretationTarget: Boolean,
+        override val isFavorited: Boolean,
         val speakers: List<Speaker>,
-        val message: SessionMessage?
-    ) : Session(id, dayNumber, startTime, endTime, room)
+        val message: LocaledString?
+    ) : Session(id, dayNumber, startTime, endTime, room, isFavorited) {
+        val hasVideo: Boolean = videoUrl.isNullOrEmpty().not()
+        val hasSlide: Boolean = slideUrl.isNullOrEmpty().not()
+    }
 
     data class ServiceSession(
         override val id: String,
@@ -34,8 +41,9 @@ sealed class Session(
         override val endTime: DateTime,
         val title: String,
         override val room: Room,
-        val sessionType: SessionType
-    ) : Session(id, dayNumber, startTime, endTime, room)
+        val sessionType: SessionType,
+        override val isFavorited: Boolean
+    ) : Session(id, dayNumber, startTime, endTime, room, isFavorited)
 
     val startDayText by lazy { startTime.format("yyyy.M.d") }
 
@@ -52,9 +60,9 @@ sealed class Session(
             append("日")
         }
         append(" ")
-        append(startTime.format("hh:mm"))
+        append(startTime.format("HH:mm"))
         append(" - ")
-        append(endTime.format("hh:mm"))
+        append(endTime.format("HH:mm"))
     }
 
     fun summary(lang: Lang) = buildString {

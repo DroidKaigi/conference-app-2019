@@ -4,16 +4,15 @@ import com.soywiz.klock.DateTime
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionWithSpeakers
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntity
 import io.github.droidkaigi.confsched2019.model.Category
-import io.github.droidkaigi.confsched2019.model.LocaledString
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
-import io.github.droidkaigi.confsched2019.model.SessionMessage
 import io.github.droidkaigi.confsched2019.model.SessionType
 import io.github.droidkaigi.confsched2019.model.Speaker
+import io.github.droidkaigi.confsched2019.model.LocaledString
 
 fun SessionWithSpeakers.toSession(
     speakerEntities: List<SpeakerEntity>,
-    favList: List<Int>?,
+    favList: List<String>?,
     firstDay: DateTime
 ): Session {
     return if (session.isServiceSession) {
@@ -28,7 +27,8 @@ fun SessionWithSpeakers.toSession(
             room = requireNotNull(session.room).let { room ->
                 Room(room.id, room.name)
             },
-            sessionType = SessionType.of(session.sessionType)
+            sessionType = SessionType.of(session.sessionType),
+            isFavorited = favList!!.contains(session.id)
         )
     } else {
         require(speakerIdList.isNotEmpty())
@@ -64,10 +64,13 @@ fun SessionWithSpeakers.toSession(
                 )
             },
             intendedAudience = session.intendedAudience,
-            isFavorited = favList!!.map { it.toString() }.contains(session.id),
+            videoUrl = session.videoUrl,
+            slideUrl = session.slideUrl,
+            isInterpretationTarget = session.isInterpretationTarget,
+            isFavorited = favList!!.contains(session.id),
             speakers = speakers,
             message = session.message?.let {
-                SessionMessage(it.ja, it.en)
+                LocaledString(it.ja, it.en)
             }
         )
     }
