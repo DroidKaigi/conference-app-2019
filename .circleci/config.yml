@@ -112,10 +112,12 @@ jobs:
           name: Aggregate junit report files into one dir
           command: aggregate_junit_results
           when: always
-      - store_test_results: &test_results_store_definitions
+      - store_test_results:
           path: test-results # see scripts/bash.source
           when: always
-      - store_artifacts: *test_results_store_definitions
+      - store_artifacts:
+          path: reports # see scripts/bash.source
+          when: always
       - restore_cache: *restore_danger_cache
       - run: *bundle_install_for_danger
       - run:
