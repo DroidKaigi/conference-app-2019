@@ -59,7 +59,9 @@ class SessionsItemDecoration(
     private val dashLinePaint = Paint().apply {
         style = Paint.Style.STROKE
         color = ContextCompat.getColor(context, R.color.gray3)
-        strokeWidth = resources.getDimensionPixelSize(R.dimen.session_bottom_sheet_left_time_line_width).toFloat()
+        strokeWidth = resources.getDimensionPixelSize(
+            R.dimen.session_bottom_sheet_left_time_line_width
+        ).toFloat()
         pathEffect = DashPathEffect(floatArrayOf(10F, 10F), 0F)
         isAntiAlias = true
     }
@@ -148,7 +150,6 @@ class SessionsItemDecoration(
             ?: return null
         return calcTimeText(position, view)
     }
-
 
     private fun getSessionTime(position: Int): String? {
         if (position < 0 || position >= groupAdapter.itemCount) {
