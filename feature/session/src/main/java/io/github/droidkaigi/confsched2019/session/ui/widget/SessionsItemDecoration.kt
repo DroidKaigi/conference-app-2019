@@ -10,6 +10,7 @@ import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.util.forEach
 import androidx.recyclerview.widget.RecyclerView
+import com.soywiz.klock.DateTimeSpan
 import com.xwray.groupie.GroupAdapter
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
@@ -83,12 +84,17 @@ class SessionsItemDecoration(
         adapterPositionToViews.clear()
     }
 
+    private val displayTimezoneOffset = lazy {
+        DateTimeSpan(hours = 9) // FIXME Get from device setting
+    }
+
     private fun getSessionTime(position: Int): String? {
         if (position < 0 || position >= groupAdapter.itemCount) {
             return null
         }
 
         val item = groupAdapter.getItem(position) as? SessionItem ?: return null
-        return item.session.startTime.toString("HH:mm")
+        return item.session.startTime
+            .plus(displayTimezoneOffset.value).toString("HH:mm")
     }
 }

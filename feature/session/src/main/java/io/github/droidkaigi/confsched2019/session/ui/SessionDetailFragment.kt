@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
+import com.soywiz.klock.DateTimeSpan
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
@@ -124,6 +125,8 @@ class SessionDetailFragment : DaggerFragment() {
     private fun applySessionLayout(session: Session.SpeechSession) {
         binding.session = session
         binding.lang = defaultLang()
+        binding.timeZoneOffset = DateTimeSpan(hours = 9) // FIXME Get from device setting
+
         @Suppress("StringFormatMatches") // FIXME
         binding.sessionTimeAndRoom.text = getString(
             R.string.session_duration_room_format,

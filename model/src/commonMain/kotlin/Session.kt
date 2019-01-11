@@ -1,7 +1,9 @@
 package io.github.droidkaigi.confsched2019.model
 
 import com.soywiz.klock.DateTime
+import com.soywiz.klock.DateTimeSpan
 import com.soywiz.klock.TimeSpan
+import com.soywiz.klock.TimezoneOffset
 
 sealed class Session(
     open val id: String,
@@ -47,7 +49,7 @@ sealed class Session(
 
     val startDayText by lazy { startTime.format("yyyy.M.d") }
 
-    fun timeSummary(lang: Lang) = buildString {
+    fun timeSummary(lang: Lang, timezoneOffset: DateTimeSpan) = buildString {
         // ex: 2月2日 10:20-10:40
         if (lang == Lang.EN) {
             append(startTime.format("M"))
@@ -60,13 +62,13 @@ sealed class Session(
             append("日")
         }
         append(" ")
-        append(startTime.format("HH:mm"))
+        append(startTime.plus(timezoneOffset).format("HH:mm"))
         append(" - ")
-        append(endTime.format("HH:mm"))
+        append(endTime.plus(timezoneOffset).format("HH:mm"))
     }
 
-    fun summary(lang: Lang) = buildString {
-        append(timeSummary(lang))
+    fun summary(lang: Lang, timezoneOffset: DateTimeSpan) = buildString {
+        append(timeSummary(lang, timezoneOffset))
         append(" / ")
         append(timeInMinutes)
         append("min")

@@ -35,7 +35,7 @@ fun List<SessionResponse>.toSessionEntities(
     }
 
 private val dateFormat: DateFormat =
-    DateFormat("yyyy-MM-dd'T'HH:mm:ss")
+    DateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
 
 fun SessionResponse.toSessionEntityImpl(
     categories: List<CategoryResponse>,
@@ -58,8 +58,8 @@ fun SessionResponse.toSessionEntityImpl(
             title = title,
             englishTitle = requireNotNull(englishTitle),
             desc = description,
-            stime = dateFormat.parse(startsAt).utc.unixMillisLong,
-            etime = dateFormat.parse(endsAt).utc.unixMillisLong,
+            stime = dateFormat.parse(startsAtWithTZ).utc.unixMillisLong,
+            etime = dateFormat.parse(endsAtWithTZ).utc.unixMillisLong,
             sessionFormat = requireNotNull(sessionFormat.name),
             language = LanguageEntityImpl(
                 requireNotNull(language.id),
@@ -90,8 +90,8 @@ fun SessionResponse.toSessionEntityImpl(
             englishTitle = englishTitle,
             title = title,
             desc = description,
-            stime = dateFormat.parse(startsAt).utc.unixMillisLong,
-            etime = dateFormat.parse(endsAt).utc.unixMillisLong,
+            stime = dateFormat.parse(startsAtWithTZ).utc.unixMillisLong,
+            etime = dateFormat.parse(endsAtWithTZ).utc.unixMillisLong,
             sessionFormat = null,
             language = null,
             category = null,
