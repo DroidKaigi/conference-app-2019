@@ -8,7 +8,7 @@ import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
 // waiting https://stackoverflow.com/questions/53975575/databinding-bindingadapter-in-library-project-is-not-applied
-@BindingAdapter(value = ["app:imageUrl"])
+@BindingAdapter(value = ["imageUrl"])
 fun loadImage(imageView: ImageView, imageUrl: String?) {
     loadImage(
         imageView = imageView,
@@ -21,10 +21,10 @@ fun loadImage(imageView: ImageView, imageUrl: String?) {
 
 @BindingAdapter(
     value = [
-        "app:imageUrl",
-        "app:circleCrop",
-        "app:placeHolder",
-        "app:placeHolderTint"
+        "imageUrl",
+        "circleCrop",
+        "placeHolder",
+        "placeHolderTint"
     ]
 )
 fun loadImage(
