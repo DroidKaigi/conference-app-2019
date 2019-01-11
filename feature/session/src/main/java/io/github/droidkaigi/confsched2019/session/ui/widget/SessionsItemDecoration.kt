@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.DashPathEffect
 import android.graphics.Paint
 import android.util.SparseArray
 import android.view.View
@@ -37,7 +38,12 @@ class SessionsItemDecoration(
     // Keep SparseArray instance on property to avoid object creation in every onDrawOver()
     private val adapterPositionToViews = SparseArray<View>()
 
-    val paint = Paint().apply {
+    private data class TimeText(
+        val text: String,
+        val y: Float
+    )
+
+    private val paint = Paint().apply {
         style = Paint.Style.FILL
         textSize = this@SessionsItemDecoration.textSize.toFloat()
         color = Color.BLACK
@@ -49,6 +55,17 @@ class SessionsItemDecoration(
         }
     }
 
+    private val dashLinePaint = Paint().apply {
+        style = Paint.Style.STROKE
+        color = 0xff888888.toInt()
+        pathEffect = DashPathEffect(floatArrayOf(10F, 10F), 0F)
+        isAntiAlias = true
+    }
+
+    private val fontMetrics = paint.fontMetrics
+    private val textX = textLeftSpace.toFloat()
+    private val lineX = textX + (paint.measureText("00:00") / 2F)
+
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         // Sort child views by adapter position
         for (i in 0 until parent.childCount) {
@@ -59,26 +76,51 @@ class SessionsItemDecoration(
             }
         }
 
-        var lastTime: String? = null
+        var lastTimeText: TimeText? = null
         adapterPositionToViews.forEach { position, view ->
-            val time = getSessionTime(position) ?: return@forEach
+            val timeText = calcTimeText(position, view) ?: return@forEach
 
-            if (lastTime == time) return@forEach
-            lastTime = time
-
-            val nextTime = getSessionTime(position + 1)
-
-            var textY = view.top.coerceAtLeast(0) + textPaddingTop + textSize
-            if (time != nextTime) {
-                textY = textY.coerceAtMost(view.bottom - textPaddingBottom)
-            }
+            if (timeText.text == lastTimeText?.text) return@forEach
+            lastTimeText = timeText
 
             c.drawText(
-                time,
-                textLeftSpace.toFloat(),
-                textY.toFloat(),
+                timeText.text,
+                textX,
+                timeText.y,
                 paint
             )
+
+            // find next time session from all sessions
+            var nextTimePosition = -1
+            for (pos in position until groupAdapter.itemCount) {
+                val time = getSessionTime(pos)
+                if (time != timeText.text) {
+                    nextTimePosition = pos
+                    break
+                }
+            }
+
+            // no more different time sessions below, no need to draw line
+            if (nextTimePosition < 0) return@forEach
+
+            // draw line to next time text if exists, otherwise draw line to the bottom
+            calcTimeText(parent, nextTimePosition)?.let { nextTimeText ->
+                c.drawLine(
+                    lineX,
+                    timeText.y + fontMetrics.bottom,
+                    lineX,
+                    nextTimeText.y + fontMetrics.top,
+                    dashLinePaint
+                )
+            } ?: run {
+                c.drawLine(
+                    lineX,
+                    timeText.y + fontMetrics.bottom,
+                    lineX,
+                    c.height.toFloat(),
+                    dashLinePaint
+                )
+            }
         }
 
         adapterPositionToViews.clear()
@@ -87,6 +129,24 @@ class SessionsItemDecoration(
     private val displayTimezoneOffset = lazy {
         DateTimeSpan(hours = 9) // FIXME Get from device setting
     }
+
+    private fun calcTimeText(position: Int, view: View): TimeText? {
+        val time = getSessionTime(position) ?: return null
+        val nextTime = getSessionTime(position + 1)
+
+        var y = view.top.coerceAtLeast(0) + textPaddingTop + textSize
+        if (time != nextTime) {
+            y = y.coerceAtMost(view.bottom - textPaddingBottom)
+        }
+        return TimeText(time, y.toFloat())
+    }
+
+    private fun calcTimeText(parent: RecyclerView, position: Int): TimeText? {
+        val view = parent.findViewHolderForAdapterPosition(position)?.itemView
+            ?: return null
+        return calcTimeText(position, view)
+    }
+
 
     private fun getSessionTime(position: Int): String? {
         if (position < 0 || position >= groupAdapter.itemCount) {
