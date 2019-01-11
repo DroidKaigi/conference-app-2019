@@ -21,10 +21,13 @@ end
 
 # JUnit
 begin
-  if File.exists?(ENV.fetch('MERGED_JUNIT_RESULT_FILE'))
+  dir=ENV.fetch('AGGREGATED_TEST_RESULT_DIR')
+
+  if File.exist?(dir)
     # junit report
-    junit.parse ENV.fetch('MERGED_JUNIT_RESULT_FILE')
-    fail("Failed tests found. Please fix test failures.") unless junit.failures.empty?
+    junit.parse_files Dir.glob("#{dir}/*.xml")
+    junit.report
+    fail("Please check the artifacts of CircleCI. Test reports would be avaialable there.") unless junit.failures.empty?
   else
     fail("The previous test step failed. Please check the CI log.")
   end
