@@ -110,23 +110,25 @@ class SearchFragment : DaggerFragment() {
             groupAdapter.update(items)
         }
         context?.let {
-            binding.searchRecycler.addItemDecoration(StickyHeaderItemDecoration(it,
-                getGroupId = { position ->
-                    val item = groupAdapter.getItem(position)
-                    when(item) {
-                        is SpeakerItem -> item.speaker.name[0].toUpperCase().toLong()
-                        //FIXME add sessionsItem logic
-                        else ->StickyHeaderItemDecoration.EMPTY_ID
-                    }
-                },
-                getInitial = { position ->
-                    val item = groupAdapter.getItem(position)
-                    when(item) {
-                        is SpeakerItem ->item.speaker.name[0].toUpperCase().toString()
-                        //FIXME add serssionsItem logic
-                        else ->StickyHeaderItemDecoration.DEFAULT_INITIAL
-                    }
-                }))
+            binding.searchRecycler.addItemDecoration(
+                StickyHeaderItemDecoration(it,
+                    getGroupId = { position ->
+                        val item = groupAdapter.getItem(position)
+                        when (item) {
+                            is SpeakerItem -> item.speaker.name[0].toUpperCase().toLong()
+                            // FIXME add sessionsItem logic
+                            else -> StickyHeaderItemDecoration.EMPTY_ID
+                        }
+                    },
+                    getInitial = { position ->
+                        val item = groupAdapter.getItem(position)
+                        when (item) {
+                            is SpeakerItem -> item.speaker.name[0].toUpperCase().toString()
+                            // FIXME add serssionsItem logic
+                            else -> StickyHeaderItemDecoration.DEFAULT_INITIAL
+                        }
+                    })
+            )
         }
     }
 
@@ -167,9 +169,10 @@ class SearchFragment : DaggerFragment() {
     }
 }
 
-class StickyHeaderItemDecoration (context: Context,
-    private val getGroupId: (Int)->Long,
-    private val getInitial:(Int)->String
+class StickyHeaderItemDecoration(
+    context: Context,
+    private val getGroupId: (Int) -> Long,
+    private val getInitial: (Int) -> String
 ) : RecyclerView.ItemDecoration() {
 
     private val textPaint = TextPaint()
@@ -194,8 +197,10 @@ class StickyHeaderItemDecoration (context: Context,
         contentMargin = resource.getDimensionPixelSize(R.dimen.sticky_label_content_margin)
     }
 
-    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView,
-                                state: RecyclerView.State) {
+    override fun getItemOffsets(
+        outRect: Rect, view: View, parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
         super.getItemOffsets(outRect, view, parent, state)
         if (view.layoutDirection == View.LAYOUT_DIRECTION_RTL) {
             outRect.right = contentMargin
@@ -225,7 +230,7 @@ class StickyHeaderItemDecoration (context: Context,
             // there is nothing (if it differs from the previous element, proceed next)
             if (groupId == EMPTY_ID || previousGroupId == groupId) return@forEach
 
-            //Get Initial and check if it is empty character
+            // Get Initial and check if it is empty character
             val initial = getInitial(position)
             if (TextUtils.isEmpty(initial)) return@forEach
 
