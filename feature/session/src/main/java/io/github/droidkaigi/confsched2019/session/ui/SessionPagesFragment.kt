@@ -89,6 +89,11 @@ class SessionPagesFragment : DaggerFragment() {
         }
     }
 
+    override fun onDestroyView(){
+        binding.sessionsTabLayout.setupWithViewPager(null)
+        super.onDestroyView()
+    }
+
     private fun setupSessionPager() {
         binding.sessionsTabLayout.setupWithViewPager(binding.sessionsViewpager)
         binding.sessionsViewpager.pageMargin =
