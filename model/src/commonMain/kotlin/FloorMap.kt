@@ -2,17 +2,14 @@ package io.github.droidkaigi.confsched2019.model
 
 sealed class FloorMap {
 
-    abstract val name: String
-    abstract val drawableResName: String
+    abstract val title: String
 
     object Floor1 : FloorMap() {
-        override val name = "1F"
-        override val drawableResName = "ic_floor1"
+        override val title = "1F"
     }
 
     object Floor5 : FloorMap() {
-        override val name = "5F"
-        override val drawableResName = "ic_floor2"
+        override val title = "5F"
     }
 
     companion object {

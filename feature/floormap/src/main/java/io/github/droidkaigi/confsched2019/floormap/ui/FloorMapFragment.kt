@@ -77,16 +77,16 @@ class FloorMapFragment : DaggerFragment() {
                     container,
                     true
                 )
-                val resId = resources.getIdentifier(
-                    FloorMap.floorList[position].drawableResName,
-                    RESOURCE_TYPE_DRAWABLE,
-                    activity?.packageName
-                )
-                itemBinding.floorMapImage.setImageResource(resId)
+                val resId = when (FloorMap.floorList[position]) {
+                    is FloorMap.Floor1 -> R.drawable.ic_floor1
+                    is FloorMap.Floor5 -> R.drawable.ic_floor2
+                    else -> null
+                }
+                resId?.let { itemBinding.floorMapImage.setImageResource(resId) }
                 return itemBinding.root
             }
 
-            override fun getPageTitle(position: Int) = FloorMap.floorList[position].name
+            override fun getPageTitle(position: Int) = FloorMap.floorList[position].title
 
             override fun getCount() = FloorMap.floorList.size
 
@@ -94,10 +94,6 @@ class FloorMapFragment : DaggerFragment() {
                 return view == `object`
             }
         }
-    }
-
-    companion object {
-        private const val RESOURCE_TYPE_DRAWABLE = "drawable"
     }
 }
 
