@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -eu
+
+while read test_dir; do
+  find $test_dir -type f -name "*.xml" -print0|xargs -0 -I{} cp {} "$MERGED_JUNIT_RESULT_DIR/"
+done < <(find . -path "*/build/test-results/*" -type d -name "*UnitTest")

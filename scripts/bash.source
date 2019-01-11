@@ -1,3 +1,7 @@
 export PATH="${REPOSITORY_ROOT}/scripts:$PATH"
 export PATH="${REPOSITORY_ROOT}/.circleci/scripts:$PATH"
-export MERGED_JUNIT_RESULT_FILE="$REPOSITORY_ROOT/merged_junit.xml"
+export MERGED_JUNIT_RESULT_DIR="$REPOSITORY_ROOT/test-results"
+
+if [[ ! -d "$MERGED_JUNIT_RESULT_DIR" ]]; then
+    mkdir -p "$MERGED_JUNIT_RESULT_DIR"
+fi

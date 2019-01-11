@@ -21,9 +21,11 @@ end
 
 # JUnit
 begin
-  if File.exists?(ENV.fetch('MERGED_JUNIT_RESULT_FILE'))
+  dir=ENV.fetch('MERGED_JUNIT_RESULT_DIR')
+
+  if File.exist?(dir)
     # junit report
-    junit.parse ENV.fetch('MERGED_JUNIT_RESULT_FILE')
+    junit.parse_files Dir.glob("#{dir}/*.xml")
     fail("Failed tests found. Please fix test failures.") unless junit.failures.empty?
   else
     fail("The previous test step failed. Please check the CI log.")
