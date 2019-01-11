@@ -8,7 +8,7 @@ import io.github.droidkaigi.confsched2019.data.db.entity.SponsorEntityImpl
 
 @Dao
 abstract class SponsorDao {
-    @Query("SELECT * FROM sponsor")
+    @Query("SELECT * FROM sponsor ORDER BY categoryIndex, displayOrder ASC")
     abstract suspend fun allSponsors(): List<SponsorEntityImpl>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
