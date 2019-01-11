@@ -37,7 +37,7 @@ object Dep {
         val jetifier = "com.android.tools.build.jetifier:jetifier-core:1.0.0-beta02"
         val appCompat = "androidx.appcompat:appcompat:1.0.0"
         val recyclerView = "androidx.recyclerview:recyclerview:1.0.0"
-        val constraint = "androidx.constraintlayout:constraintlayout:1.1.2"
+        val constraint = "androidx.constraintlayout:constraintlayout:1.1.3"
         val emoji = "androidx.emoji:emoji-appcompat:1.0.0"
         val design = "com.google.android.material:material:1.1.0-alpha02"
         val coreKtx = "androidx.core:core-ktx:1.0.0-alpha1"
