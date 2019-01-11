@@ -6,4 +6,7 @@ while read test_dir; do
   find $test_dir -type f -name "*.xml" -print0|xargs -0 -I{} cp {} "$AGGREGATED_TEST_RESULT_DIR/"
 done < <(find . -path "*/build/test-results/*" -type d -name "*UnitTest")
 
-find . -path "*/build/reports/*" -type d -name "*UnitTest" -print0|xargs -0 -I{} cp -r {} "$AGGREGATED_REPORT_RESULT_DIR/"
+while read report_dir; do
+  mkdir -p "$AGGREGATED_REPORT_RESULT_DIR/$report_dir"
+  cp -fr $report_dir/* "$AGGREGATED_REPORT_RESULT_DIR/$report_dir/"
+done < <(find . -path "*/build/reports/*" -type d -name "*UnitTest")
