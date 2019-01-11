@@ -67,7 +67,7 @@
             app:layout_constraintEnd_toStartOf="@id/favorite"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/live"
-            tools:text="テストセッション"
+            tools:text="@sample/service_session.json/data/session_name"
             />
 
         <ImageView
@@ -81,6 +81,7 @@
             android:tint="@{session.isFavorited ? @color/colorPrimary : @color/gray1}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/title"
+            tools:src="@drawable/ic_bookmark_border_black_24dp"
             />
 
         <LinearLayout
@@ -102,7 +103,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintTop_toBottomOf="@id/speakers"
-            tools:text="30min / Room A"
+            tools:text="@sample/service_session.json/data/time_room"
             />
 
         <com.google.android.material.chip.ChipGroup
@@ -129,7 +130,7 @@
                 android:textColor="@color/white"
                 app:chipBackgroundColor="#7982e1"
                 app:chipMinTouchTargetSize="0dp"
-                tools:text="Japanese"
+                tools:text="@sample/service_session.json/data/language"
                 />
 
             <com.google.android.material.chip.Chip
@@ -146,6 +147,7 @@
                 app:chipBackgroundColor="#7982e1"
                 app:chipMinTouchTargetSize="0dp"
                 app:visibleGone="@{session.isInterpretationTarget}"
+                tools:text="@sample/service_session.json/data/simultaneous_interpretation"
                 />
 
             <com.google.android.material.chip.Chip
@@ -160,7 +162,7 @@
                 android:textColor="@color/white"
                 app:chipBackgroundColor="#95959c"
                 app:chipMinTouchTargetSize="0dp"
-                tools:text="ソフトウェアアーキテクチャ"
+                tools:text="@sample/service_session.json/data/category"
                 />
         </com.google.android.material.chip.ChipGroup>
 
