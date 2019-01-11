@@ -21,7 +21,7 @@ end
 
 # JUnit
 begin
-  dir=ENV.fetch('MERGED_JUNIT_RESULT_DIR')
+  dir=ENV.fetch('AGGREGATED_TEST_RESULT_DIR')
 
   if File.exist?(dir)
     # junit report
