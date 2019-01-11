@@ -88,8 +88,9 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     private fun setupNavigation() {
+        val topLevelDestinationIds = setOf(R.id.main, R.id.about, R.id.announce, R.id.setting)
         val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.main, R.id.about, R.id.announce, R.id.setting),
+            topLevelDestinationIds,
             binding.drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -107,6 +108,11 @@ class MainActivity : DaggerAppCompatActivity() {
                 } else {
                     0
                 }
+            }
+            if (destination.id in topLevelDestinationIds) {
+                binding.toolbar.setNavigationIcon(R.drawable.ic_hamburger)
+            } else {
+                binding.toolbar.setNavigationIcon(R.drawable.ic_back_arrow)
             }
             val toolbarContentsColor = ContextCompat.getColor(
                 this, if (config.isWhiteTheme) android.R.color.black else R.color.white
