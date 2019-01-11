@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
+import androidx.viewpager.widget.PagerAdapter
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.model.FloorMap
 import io.github.droidkaigi.confsched2019.floormap.R
 import io.github.droidkaigi.confsched2019.floormap.databinding.FragmentFloorMapBinding
+import io.github.droidkaigi.confsched2019.floormap.databinding.ItemFloorMapBinding
 import io.github.droidkaigi.confsched2019.floormap.ui.actioncreator.FloorMapActionCreator
 import io.github.droidkaigi.confsched2019.floormap.ui.store.FloorMapStore
 import io.github.droidkaigi.confsched2019.floormap.ui.widget.DaggerFragment
@@ -51,6 +54,8 @@ class FloorMapFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        setupFloorMapPager()
+
         progressTimeLatch = ProgressTimeLatch { showProgress ->
             binding.progressBar.isVisible = showProgress
         }.apply {
@@ -60,6 +65,39 @@ class FloorMapFragment : DaggerFragment() {
             progressTimeLatch.loading = it == LoadingState.LOADING
         }
         floorMapActionCreator.load()
+    }
+
+    private fun setupFloorMapPager() {
+        binding.floorMapTabLayout.setupWithViewPager(binding.floorMapViewPager)
+        binding.floorMapViewPager.adapter = object : PagerAdapter() {
+            override fun instantiateItem(container: ViewGroup, position: Int): Any {
+                val itemBinding = DataBindingUtil.inflate<ItemFloorMapBinding>(
+                    LayoutInflater.from(context),
+                    R.layout.item_floor_map,
+                    container,
+                    true
+                )
+                val resId = resources.getIdentifier(
+                    FloorMap.floorList[position].drawableResName,
+                    RESOURCE_TYPE_DRAWABLE,
+                    activity?.packageName
+                )
+                itemBinding.floorMapImage.setImageResource(resId)
+                return itemBinding.root
+            }
+
+            override fun getPageTitle(position: Int) = FloorMap.floorList[position].name
+
+            override fun getCount() = FloorMap.floorList.size
+
+            override fun isViewFromObject(view: View, `object`: Any): Boolean {
+                return view == `object`
+            }
+        }
+    }
+
+    companion object {
+        private const val RESOURCE_TYPE_DRAWABLE = "drawable"
     }
 }
 
