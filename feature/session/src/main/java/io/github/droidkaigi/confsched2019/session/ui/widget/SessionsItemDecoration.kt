@@ -8,6 +8,7 @@ import android.graphics.DashPathEffect
 import android.graphics.Paint
 import android.util.SparseArray
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.util.forEach
 import androidx.recyclerview.widget.RecyclerView
@@ -57,7 +58,8 @@ class SessionsItemDecoration(
 
     private val dashLinePaint = Paint().apply {
         style = Paint.Style.STROKE
-        color = 0xff888888.toInt()
+        color = ContextCompat.getColor(context, R.color.gray3)
+        strokeWidth = resources.getDimensionPixelSize(R.dimen.session_bottom_sheet_left_time_line_width).toFloat()
         pathEffect = DashPathEffect(floatArrayOf(10F, 10F), 0F)
         isAntiAlias = true
     }
