@@ -49,18 +49,18 @@ class FloorMapFragment : DaggerFragment() {
                     container,
                     true
                 )
-                val resId = when (FloorMap.floorList[position]) {
-                    is FloorMap.Floor1 -> R.drawable.ic_floor1
-                    is FloorMap.Floor5 -> R.drawable.ic_floor2
+                val resId = when (FloorMap.values()[position]) {
+                    FloorMap.FLOOR_1 -> R.drawable.ic_floor1
+                    FloorMap.FLOOR_5 -> R.drawable.ic_floor2
                     else -> null
                 }
                 resId?.let { itemBinding.floorMapImage.setImageResource(resId) }
                 return itemBinding.root
             }
 
-            override fun getPageTitle(position: Int) = FloorMap.floorList[position].title
+            override fun getPageTitle(position: Int) = FloorMap.values()[position].title
 
-            override fun getCount() = FloorMap.floorList.size
+            override fun getCount() = FloorMap.values().size
 
             override fun isViewFromObject(view: View, `object`: Any): Boolean {
                 return view == `object`
