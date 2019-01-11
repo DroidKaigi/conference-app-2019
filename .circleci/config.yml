@@ -112,10 +112,14 @@ jobs:
           name: Merge junit report files
           command: |
             merge_all_junit_files
-            cp "$MERGED_JUNIT_RESULT_FILE" build/all-junit.xml
+            mkdir -p test-results
+            cp "$MERGED_JUNIT_RESULT_FILE" test-results/all-junit.xml
           when: always
       - store_test_results:
-          path: build/all-junit.xml
+          path: test-results
+          when: always
+      - store_artifacts:
+          path: test-results
           when: always
       - restore_cache: *restore_danger_cache
       - run: *bundle_install_for_danger
