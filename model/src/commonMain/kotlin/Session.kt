@@ -49,7 +49,7 @@ sealed class Session(
 
     val startDayText by lazy { startTime.format("yyyy.M.d") }
 
-    fun timeSummary(lang: Lang, timezoneOffsetHours: Int) = buildString {
+    fun timeSummary(lang: Lang, timezoneOffset: DateTimeSpan) = buildString {
         // ex: 2月2日 10:20-10:40
         if (lang == Lang.EN) {
             append(startTime.format("M"))
@@ -61,15 +61,14 @@ sealed class Session(
             append(startTime.format("d"))
             append("日")
         }
-        val tzSpan = DateTimeSpan(hours = timezoneOffsetHours)
         append(" ")
-        append(startTime.plus(tzSpan).format("HH:mm"))
+        append(startTime.plus(timezoneOffset).format("HH:mm"))
         append(" - ")
-        append(endTime.plus(tzSpan).format("HH:mm"))
+        append(endTime.plus(timezoneOffset).format("HH:mm"))
     }
 
-    fun summary(lang: Lang, timezoneOffsetHours: Int) = buildString {
-        append(timeSummary(lang, timezoneOffsetHours))
+    fun summary(lang: Lang, timezoneOffset: DateTimeSpan) = buildString {
+        append(timeSummary(lang, timezoneOffset))
         append(" / ")
         append(timeInMinutes)
         append("min")

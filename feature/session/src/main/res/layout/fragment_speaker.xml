@@ -23,8 +23,8 @@
             />
 
         <variable
-                name="timeZoneOffsetHours"
-                type="Integer"
+                name="timeZoneOffset"
+                type="com.soywiz.klock.DateTimeSpan"
         />
     </data>
 
@@ -178,7 +178,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="4dp"
                     android:paddingBottom="12dp"
-                    android:text="@{session.summary(lang, timeZoneOffsetHours)}"
+                    android:text="@{session.summary(lang, timeZoneOffset)}"
                     android:textAppearance="@style/TextAppearance.App.Caption"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toStartOf="@id/speaker_name"

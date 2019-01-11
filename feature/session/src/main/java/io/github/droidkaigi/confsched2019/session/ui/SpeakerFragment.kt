@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
+import com.soywiz.klock.DateTimeSpan
 import dagger.Module
 import dagger.Provides
 import dagger.android.support.AndroidSupportInjection
@@ -49,7 +50,7 @@ class SpeakerFragment : DaggerFragment() {
 
         val speakerId = speakerFragmentArgs.speaker
         binding.lang = defaultLang()
-        binding.timeZoneOffsetHours = 9 // FIXME Get from device setting
+        binding.timeZoneOffset = DateTimeSpan(hours = 9) // FIXME Get from device setting
         sessionContentsStore.speaker(speakerId).changed(
             this
         ) { speaker ->
