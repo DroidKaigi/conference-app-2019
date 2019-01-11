@@ -122,7 +122,7 @@ object Dep {
     val liveDataKtx = "com.shopify:livedata-ktx:2.0.1"
 
     object LeakCanary {
-        val version = "1.6.2"
+        val version = "1.6.3"
         val leakCanary = "com.squareup.leakcanary:leakcanary-android:$version"
         val leakCanaryNoOp = "com.squareup.leakcanary:leakcanary-android-no-op:$version"
         val leakCanaryFragment = "com.squareup.leakcanary:leakcanary-support-fragment:$version"
