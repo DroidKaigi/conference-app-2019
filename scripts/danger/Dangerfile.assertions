@@ -26,6 +26,7 @@ begin
   if File.exist?(dir)
     # junit report
     junit.parse_files Dir.glob("#{dir}/*.xml")
+    junit.report
     fail("Failed tests found. Please fix test failures.") unless junit.failures.empty?
   else
     fail("The previous test step failed. Please check the CI log.")
