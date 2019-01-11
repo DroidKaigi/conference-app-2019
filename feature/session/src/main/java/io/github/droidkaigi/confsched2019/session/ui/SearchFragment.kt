@@ -198,7 +198,9 @@ class StickyHeaderItemDecoration(
     }
 
     override fun getItemOffsets(
-        outRect: Rect, view: View, parent: RecyclerView,
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
         state: RecyclerView.State
     ) {
         super.getItemOffsets(outRect, view, parent, state)
@@ -209,7 +211,11 @@ class StickyHeaderItemDecoration(
         }
     }
 
-    override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+    override fun onDraw(
+        c: Canvas,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
         super.onDraw(c, parent, state)
 
         val totalItemCount = state.itemCount
