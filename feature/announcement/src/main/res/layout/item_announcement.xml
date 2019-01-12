@@ -18,7 +18,7 @@
             android:layout_marginTop="8dp"
             android:gravity="start|center_vertical"
             android:textAlignment="viewStart"
-            android:textAppearance="@style/TextAppearance.App.Caption"
+            android:textAppearance="@style/TextAppearance.Lekton.Caption"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@sample/announcement.json/data/date"
@@ -35,7 +35,7 @@
             tools:src="@drawable/ic_feed_alert_amber_20dp"
             />
 
-        <androidx.emoji.widget.EmojiTextView
+        <androidx.emoji.widget.EmojiAppCompatTextView
             android:id="@+id/title_text"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -45,7 +45,7 @@
             android:gravity="start|center_vertical"
             android:maxLines="2"
             android:textAlignment="viewStart"
-            android:textAppearance="@style/TextAppearance.App.Subtitle1"
+            android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
             app:layout_constraintBottom_toBottomOf="@id/category_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/category_icon"
@@ -53,11 +53,12 @@
             tools:text="@sample/announcement.json/data/title"
             />
 
-        <androidx.emoji.widget.EmojiTextView
+        <androidx.emoji.widget.EmojiAppCompatTextView
             android:id="@+id/content_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="27dp"
+            android:layout_marginTop="8dp"
             android:autoLink="web"
             android:gravity="start"
             android:paddingBottom="16dp"

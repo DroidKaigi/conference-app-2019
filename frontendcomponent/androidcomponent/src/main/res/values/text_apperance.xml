@@ -66,4 +66,11 @@
         <item name="android:textColor">@color/gray1</item>
     </style>
 
+    <!-- Lekton 12sp -->
+    <style name="TextAppearance.Lekton.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:fontFamily">@font/lekton</item>
+        <item name="fontFamily">@font/lekton</item>
+        <item name="android:textColor">@color/gray1</item>
+    </style>
+
 </resources>
