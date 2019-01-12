@@ -50,10 +50,10 @@ class SpeechSessionItem @AssistedInject constructor(
         ): SpeechSessionItem
     }
 
-    private val onFavoriteClickListener: (Session.SpeechSession) -> Unit = { session ->
+    private val onFavoriteClickListener: () -> Unit = {
         sessionContentsActionCreator.toggleFavorite(session)
     }
-    private val onClickListener: (Session.SpeechSession) -> Unit = { session ->
+    private val onClickListener: () -> Unit = {
         navController
             .navigate(
                 navDirections
@@ -65,13 +65,11 @@ class SpeechSessionItem @AssistedInject constructor(
 
     override fun bind(viewBinding: ItemSessionBinding, position: Int) {
         with(viewBinding) {
-            root.setOnClickListener { onClickListener(speechSession) }
+            root.setOnClickListener { onClickListener() }
             session = speechSession
             lang = defaultLang()
             addPaddingForTime = this@SpeechSessionItem.addPaddingForTime
-            favorite.setOnClickListener {
-                onFavoriteClickListener(speechSession)
-            }
+            favorite.setOnClickListener { onFavoriteClickListener() }
             @Suppress("StringFormatMatches") // FIXME
             timeAndRoom.text = root.context.getString(
                 R.string.session_duration_room_format,
