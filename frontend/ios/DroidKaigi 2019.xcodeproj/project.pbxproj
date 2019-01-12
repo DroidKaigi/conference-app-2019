@@ -10,11 +10,14 @@
 		01578EC121E5E75A002B2033 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01578EC021E5E75A002B2033 /* AppDelegate.swift */; };
 		01578EC321E5E75A002B2033 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01578EC221E5E75A002B2033 /* ViewController.swift */; };
 		01578EC621E5E75A002B2033 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01578EC421E5E75A002B2033 /* Main.storyboard */; };
-		01578EC921E5E75A002B2033 /* DroidKaigi_2019.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 01578EC721E5E75A002B2033 /* DroidKaigi_2019.xcdatamodeld */; };
 		01578ECB21E5E75D002B2033 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01578ECA21E5E75D002B2033 /* Assets.xcassets */; };
 		01578ECE21E5E75D002B2033 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01578ECC21E5E75D002B2033 /* LaunchScreen.storyboard */; };
 		01578ED921E5E75D002B2033 /* DroidKaigi_2019Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01578ED821E5E75D002B2033 /* DroidKaigi_2019Tests.swift */; };
 		01578EE421E5E75D002B2033 /* DroidKaigi_2019UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01578EE321E5E75D002B2033 /* DroidKaigi_2019UITests.swift */; };
+		0161170C21E9A89D009CBB8D /* model.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0161170B21E9A89D009CBB8D /* model.framework */; };
+		0161170F21E9AC6F009CBB8D /* model.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0161170B21E9A89D009CBB8D /* model.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		01E119AA21E9C5DA00971500 /* api_impl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E119A821E9C5D500971500 /* api_impl.framework */; };
+		01E119AB21E9C5DA00971500 /* api_impl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01E119A821E9C5D500971500 /* api_impl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,12 +37,26 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		0161171021E9AC6F009CBB8D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0161170F21E9AC6F009CBB8D /* model.framework in Embed Frameworks */,
+				01E119AB21E9C5DA00971500 /* api_impl.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		01578EBD21E5E75A002B2033 /* DroidKaigi 2019.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DroidKaigi 2019.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		01578EC021E5E75A002B2033 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01578EC221E5E75A002B2033 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		01578EC521E5E75A002B2033 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		01578EC821E5E75A002B2033 /* DroidKaigi_2019.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DroidKaigi_2019.xcdatamodel; sourceTree = "<group>"; };
 		01578ECA21E5E75D002B2033 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		01578ECD21E5E75D002B2033 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		01578ECF21E5E75D002B2033 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,6 +66,8 @@
 		01578EDF21E5E75D002B2033 /* DroidKaigi 2019UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DroidKaigi 2019UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		01578EE321E5E75D002B2033 /* DroidKaigi_2019UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroidKaigi_2019UITests.swift; sourceTree = "<group>"; };
 		01578EE521E5E75D002B2033 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0161170B21E9A89D009CBB8D /* model.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = model.framework; path = "../../model/build/xcode-frameworks/model.framework"; sourceTree = "<group>"; };
+		01E119A821E9C5D500971500 /* api_impl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = api_impl.framework; path = "../../data/api-impl/build/xcode-frameworks/api_impl.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +75,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0161170C21E9A89D009CBB8D /* model.framework in Frameworks */,
+				01E119AA21E9C5DA00971500 /* api_impl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +104,7 @@
 				01578ED721E5E75D002B2033 /* DroidKaigi 2019Tests */,
 				01578EE221E5E75D002B2033 /* DroidKaigi 2019UITests */,
 				01578EBE21E5E75A002B2033 /* Products */,
+				0161170A21E9A89C009CBB8D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,7 +127,6 @@
 				01578ECA21E5E75D002B2033 /* Assets.xcassets */,
 				01578ECC21E5E75D002B2033 /* LaunchScreen.storyboard */,
 				01578ECF21E5E75D002B2033 /* Info.plist */,
-				01578EC721E5E75A002B2033 /* DroidKaigi_2019.xcdatamodeld */,
 			);
 			path = "DroidKaigi 2019";
 			sourceTree = "<group>";
@@ -128,6 +149,15 @@
 			path = "DroidKaigi 2019UITests";
 			sourceTree = "<group>";
 		};
+		0161170A21E9A89C009CBB8D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				01E119A821E9C5D500971500 /* api_impl.framework */,
+				0161170B21E9A89D009CBB8D /* model.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,9 +165,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 01578EE821E5E75D002B2033 /* Build configuration list for PBXNativeTarget "DroidKaigi 2019" */;
 			buildPhases = (
+				0161170D21E9A95A009CBB8D /* Build Kotlin Modules */,
 				01578EB921E5E75A002B2033 /* Sources */,
 				01578EBA21E5E75A002B2033 /* Frameworks */,
 				01578EBB21E5E75A002B2033 /* Resources */,
+				0161171021E9AC6F009CBB8D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -253,13 +285,33 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0161170D21E9A95A009CBB8D /* Build Kotlin Modules */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build Kotlin Modules";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "modules=(\n\":model\"\n\":data:api-impl\"\n)\ncd \"$SRCROOT/../..\"\n./gradlew \"${modules[@]/%/:packForXcode}\" -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		01578EB921E5E75A002B2033 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				01578EC321E5E75A002B2033 /* ViewController.swift in Sources */,
-				01578EC921E5E75A002B2033 /* DroidKaigi_2019.xcdatamodeld in Sources */,
 				01578EC121E5E75A002B2033 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -436,6 +488,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/../../model/build/xcode-frameworks",
+					"$(SRCROOT)/../../data/api-impl/build/xcode-frameworks",
+				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "DroidKaigi 2019/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -453,6 +511,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/../../model/build/xcode-frameworks",
+					"$(SRCROOT)/../../data/api-impl/build/xcode-frameworks",
+				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "DroidKaigi 2019/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -583,19 +647,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		01578EC721E5E75A002B2033 /* DroidKaigi_2019.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				01578EC821E5E75A002B2033 /* DroidKaigi_2019.xcdatamodel */,
-			);
-			currentVersion = 01578EC821E5E75A002B2033 /* DroidKaigi_2019.xcdatamodel */;
-			path = DroidKaigi_2019.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 01578EB521E5E75A002B2033 /* Project object */;
 }
