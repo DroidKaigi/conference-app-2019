@@ -11,8 +11,13 @@ class FiltersTest {
         assertTrue { Filters().isPass(mockk<Session.SpeechSession>()) }
     }
 
-    @Test fun isPass_WhenServiceSession() {
-        assertTrue { Filters().isPass(mockk<Session.ServiceSession>()) }
+    @Test fun isPass_WhenServiceSessionAndIsNotFilterable() {
+        val serviceSession = mockk<Session.ServiceSession>()
+        every { serviceSession.sessionType } returns SessionType.AfterParty
+        assertTrue { Filters().isPass(serviceSession) }
+
+        every { serviceSession.sessionType } returns SessionType.Lunch
+        assertTrue { Filters().isPass(serviceSession) }
     }
 
     @Test fun isPass_WhenRoomFiltered() {
@@ -30,6 +35,15 @@ class FiltersTest {
         every { speechSession.room } returns room1
 
         assertFalse { Filters(rooms = mutableSetOf(room2)).isPass(speechSession) }
+    }
+
+    @Test fun isPass_WhenFilterableServiceSessionAndRoomFiltered() {
+        val room = Room(10, "room1")
+        val serviceSession = mockk<Session.ServiceSession>()
+        every { serviceSession.room } returns room
+        every { serviceSession.sessionType } returns SessionType.Codelabs
+
+        assertTrue { Filters(rooms = mutableSetOf(room)).isPass(serviceSession) }
     }
 
     @Test fun isPass_WhenCategoryFiltered() {
