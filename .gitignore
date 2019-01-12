@@ -15,3 +15,4 @@ build/
 *.apks
 
 **/vendor/bundle/
+**/xcuserdata/
