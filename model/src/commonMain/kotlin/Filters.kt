@@ -8,11 +8,12 @@ data class Filters(
     fun isPass(
         session: Session
     ): Boolean {
-        if (session !is Session.SpeechSession) return true
+        if (session.isNotFilterableServiceSession()) return true
         val roomFilterOk = run {
             if (rooms.isEmpty()) return@run true
             return@run rooms.contains(session.room)
         }
+        if (session !is Session.SpeechSession) return roomFilterOk
         val categoryFilterOk = run {
             if (categories.isEmpty()) return@run true
             return@run categories.contains(session.category)
@@ -27,4 +28,7 @@ data class Filters(
     fun isFiltered(): Boolean {
         return rooms.isNotEmpty() || categories.isNotEmpty() || langs.isNotEmpty()
     }
+
+    private fun Session.isNotFilterableServiceSession()
+        = this is Session.ServiceSession && !sessionType.isFilterable
 }
