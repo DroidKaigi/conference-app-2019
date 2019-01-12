@@ -17,7 +17,7 @@ class AboutItem(
     override fun getLayout(): Int = R.layout.item_about
 
     override fun bind(binding: ItemAboutBinding, position: Int) {
-        // It is null when it is version item
+        // clickListener is null when this item is version item
         val isVersionItem = clickListener == null
 
         binding.name = name
