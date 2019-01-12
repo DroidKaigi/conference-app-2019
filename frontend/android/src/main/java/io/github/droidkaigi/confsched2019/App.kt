@@ -28,10 +28,10 @@ open class App : DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
 
+        setupCrashlytics()
         setupFont()
         setupEmojiCompat()
         setupFirestore()
-        setupCrashlytics()
         systemStore.systemProperty.changedForever {
             // listening
         }
