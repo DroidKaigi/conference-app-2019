@@ -36,12 +36,16 @@ class SessionsItemDecoration(
     private val textPaddingBottom = resources.getDimensionPixelSize(
         R.dimen.session_bottom_sheet_left_time_text_padding_bottom
     )
+    private val lineInterval = resources.getDimensionPixelSize(
+        R.dimen.session_bottom_sheet_left_time_line_interval
+    ).toFloat()
     // Keep SparseArray instance on property to avoid object creation in every onDrawOver()
     private val adapterPositionToViews = SparseArray<View>()
 
     private data class TimeText(
         val text: String,
-        val y: Float
+        val y: Float,
+        val fixed: Boolean
     )
 
     private val paint = Paint().apply {
@@ -62,7 +66,6 @@ class SessionsItemDecoration(
         strokeWidth = resources.getDimensionPixelSize(
             R.dimen.session_bottom_sheet_left_time_line_width
         ).toFloat()
-        pathEffect = DashPathEffect(floatArrayOf(10F, 10F), 0F)
         isAntiAlias = true
     }
 
@@ -107,6 +110,9 @@ class SessionsItemDecoration(
             // no more different time sessions below, no need to draw line
             if (nextTimePosition < 0) return@forEach
 
+            val offset = if (timeText.fixed) -view.top.toFloat() else 0F
+            dashLinePaint.pathEffect = DashPathEffect(floatArrayOf(lineInterval, lineInterval), offset)
+
             // draw line to next time text if exists, otherwise draw line to the bottom
             calcTimeText(parent, nextTimePosition)?.let { nextTimeText ->
                 c.drawLine(
@@ -142,7 +148,8 @@ class SessionsItemDecoration(
         if (time != nextTime) {
             y = y.coerceAtMost(view.bottom - textPaddingBottom)
         }
-        return TimeText(time, y.toFloat())
+        val fixed = y == textPaddingTop + textSize
+        return TimeText(time, y.toFloat(), fixed)
     }
 
     private fun calcTimeText(parent: RecyclerView, position: Int): TimeText? {
