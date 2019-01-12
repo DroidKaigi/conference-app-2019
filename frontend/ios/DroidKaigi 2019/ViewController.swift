@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import model
+import api_impl
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+//        KtorDroidKaigiApi.init(httpClient: <#T##Ktor_client_core_iosHttpClient#>, apiEndpoint: <#T##String#>)
     }
 
 

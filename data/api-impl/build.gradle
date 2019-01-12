@@ -81,8 +81,8 @@ configurations {
     compileClasspath
 }
 
-task packForXCode(type: Sync) {
-    final File frameworkDir = new File(buildDir, "xcode-frameworks")
+task packForXCode(type: Copy) {
+    final File frameworkDir = new File(project(":model").buildDir, "xcode-frameworks")
     final String mode = project.findProperty("XCODE_CONFIGURATION")?.toUpperCase() ?: 'DEBUG'
 
     inputs.property "mode", mode

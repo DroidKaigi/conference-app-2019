@@ -16,8 +16,6 @@
 		01578EE421E5E75D002B2033 /* DroidKaigi_2019UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01578EE321E5E75D002B2033 /* DroidKaigi_2019UITests.swift */; };
 		0161170C21E9A89D009CBB8D /* model.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0161170B21E9A89D009CBB8D /* model.framework */; };
 		0161170F21E9AC6F009CBB8D /* model.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0161170B21E9A89D009CBB8D /* model.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		01E119AA21E9C5DA00971500 /* api_impl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E119A821E9C5D500971500 /* api_impl.framework */; };
-		01E119AB21E9C5DA00971500 /* api_impl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01E119A821E9C5D500971500 /* api_impl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,7 +43,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				0161170F21E9AC6F009CBB8D /* model.framework in Embed Frameworks */,
-				01E119AB21E9C5DA00971500 /* api_impl.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -76,7 +73,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0161170C21E9A89D009CBB8D /* model.framework in Frameworks */,
-				01E119AA21E9C5DA00971500 /* api_impl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,10 +485,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/../../model/build/xcode-frameworks",
-					"$(SRCROOT)/../../data/api-impl/build/xcode-frameworks",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../model/build/xcode-frameworks";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "DroidKaigi 2019/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -512,10 +505,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/../../model/build/xcode-frameworks",
-					"$(SRCROOT)/../../data/api-impl/build/xcode-frameworks",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../model/build/xcode-frameworks";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "DroidKaigi 2019/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
