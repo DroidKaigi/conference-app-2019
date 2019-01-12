@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:bottom="14dp"
+        android:drawable="@drawable/abc_ic_ab_back_material"
+        android:left="14dp"
+        android:right="14dp"
+        android:top="14dp"
+        />
+</layer-list>
