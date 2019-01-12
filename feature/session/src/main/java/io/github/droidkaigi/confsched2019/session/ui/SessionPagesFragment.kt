@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -111,6 +112,19 @@ class SessionPagesFragment : DaggerFragment() {
                 }
             }
         )
+
+        (0 until binding.sessionsTabLayout.tabCount).forEach { tabIndex ->
+            val tab = binding.sessionsTabLayout.getTabAt(tabIndex)
+            tab?.let {
+                val view = layoutInflater.inflate(
+                    R.layout.layout_tab_item, binding.sessionsTabLayout, false
+                ) as? TextView
+                view?.let { textView ->
+                    textView.text = tab.text
+                    it.customView = textView
+                }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

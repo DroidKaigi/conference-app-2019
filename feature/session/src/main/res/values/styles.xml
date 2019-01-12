@@ -9,5 +9,7 @@
         <item name="android:fontFamily">@font/notosans_medium</item>
         <item name="fontFamily">@font/notosans_medium</item>
         <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAlignment">center</item>
     </style>
 </resources>
