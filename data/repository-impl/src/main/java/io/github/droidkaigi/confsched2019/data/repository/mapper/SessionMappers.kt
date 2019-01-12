@@ -24,6 +24,7 @@ fun SessionWithSpeakers.toSession(
             startTime = DateTime.fromUnix(session.stime),
             endTime = DateTime.fromUnix(session.etime),
             title = session.title,
+            desc = session.desc,
             room = requireNotNull(session.room).let { room ->
                 Room(room.id, room.name)
             },
