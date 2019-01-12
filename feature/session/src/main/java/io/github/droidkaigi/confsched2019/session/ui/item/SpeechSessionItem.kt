@@ -57,10 +57,7 @@ class SpeechSessionItem @AssistedInject constructor(
     override fun bind(viewBinding: ItemSessionBinding, position: Int) {
         with(viewBinding) {
             root.setOnClickListener {
-                navController
-                    .navigate(
-                        navDirections
-                    )
+                navController.navigate(navDirections)
             }
             session = speechSession
             lang = defaultLang()
