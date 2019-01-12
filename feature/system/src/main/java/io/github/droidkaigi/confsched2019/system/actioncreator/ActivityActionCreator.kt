@@ -16,7 +16,7 @@ class ActivityActionCreator @Inject constructor(val activity: FragmentActivity) 
             .enableUrlBarHiding()
             .setToolbarColor(ContextCompat.getColor(activity, R.color.white))
             .build()
-        customTabsIntent.intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        customTabsIntent.intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         customTabsIntent.launchUrl(activity, Uri.parse(url))
     }
 
