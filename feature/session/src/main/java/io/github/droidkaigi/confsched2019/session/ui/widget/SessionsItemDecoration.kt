@@ -111,7 +111,10 @@ class SessionsItemDecoration(
             if (nextTimePosition < 0) return@forEach
 
             val offset = if (timeText.fixed) -view.top.toFloat() else 0F
-            dashLinePaint.pathEffect = DashPathEffect(floatArrayOf(lineInterval, lineInterval), offset)
+            dashLinePaint.pathEffect = DashPathEffect(
+                floatArrayOf(lineInterval, lineInterval),
+                offset
+            )
 
             // draw line to next time text if exists, otherwise draw line to the bottom
             calcTimeText(parent, nextTimePosition)?.let { nextTimeText ->
