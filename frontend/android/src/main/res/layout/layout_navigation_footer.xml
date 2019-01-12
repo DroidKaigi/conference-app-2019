@@ -29,7 +29,7 @@
 
     <TextView
         android:id="@+id/footer_text"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginEnd="20dp"
@@ -39,10 +39,10 @@
         android:text="@string/entire_survey_request"
         android:textColor="@color/colorSecondary"
         android:textSize="14sp"
+        app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/footer_logo"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_default="wrap"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
