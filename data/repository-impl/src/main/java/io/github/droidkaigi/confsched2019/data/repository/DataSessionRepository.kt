@@ -30,7 +30,7 @@ class DataSessionRepository @Inject constructor(
             sessions = sessions,
             speakers = speechSessions.flatMap { it.speakers }.distinct(),
             langs = Lang.values().toList(),
-            rooms = speechSessions.map { it.room }.distinct(),
+            rooms = sessions.map { it.room }.sortedBy { it.name }.distinct(),
             category = speechSessions.map { it.category }.distinct()
         )
     }
