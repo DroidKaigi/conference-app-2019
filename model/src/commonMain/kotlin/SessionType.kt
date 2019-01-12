@@ -7,7 +7,7 @@ enum class SessionType(val id: String, val isFavoritable: Boolean) {
     Codelabs("codelabs", true),
     FiresideChat("fireside_chat", false),
     Lunch("lunch", false),
-    Break("break", false),
+    BreakTime("break", false),
     AfterParty("after_party", false),
     Unknown("unknown", false);
 
