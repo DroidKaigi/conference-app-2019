@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
+import com.soywiz.klock.DateTimeSpan
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
@@ -100,6 +102,22 @@ class SessionDetailFragment : DaggerFragment() {
         binding.sessionFavorite.setOnClickListener {
             val session = binding.session ?: return@setOnClickListener
             progressTimeLatch.loading = true
+
+            // Immediate reflection on view to avoid time lag
+            binding.sessionFavorite.setImageResource(
+                if (session.isFavorited) {
+                    R.drawable.ic_bookmark_border_black_24dp
+                } else {
+                    R.drawable.ic_bookmark_black_24dp
+                }
+            )
+
+            // Animation
+            it.scaleX = 0.8f
+            it.scaleY = 0.8f
+            it.animate().scaleX(1.0f).scaleY(1.0f).setDuration(300)
+                .interpolator = OvershootInterpolator()
+
             sessionContentsActionCreator.toggleFavorite(session)
         }
     }
@@ -107,6 +125,8 @@ class SessionDetailFragment : DaggerFragment() {
     private fun applySessionLayout(session: Session.SpeechSession) {
         binding.session = session
         binding.lang = defaultLang()
+        binding.timeZoneOffset = DateTimeSpan(hours = 9) // FIXME Get from device setting
+
         @Suppress("StringFormatMatches") // FIXME
         binding.sessionTimeAndRoom.text = getString(
             R.string.session_duration_room_format,

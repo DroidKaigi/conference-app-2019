@@ -5,7 +5,7 @@ source "https://rubygems.org"
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
 gem 'danger'
-gem 'danger-junit'
+gem 'danger-junit', git: 'https://github.com/orta/danger-junit', ref: '32fc5d2c026604a0880a3901783628dab06e4877'
 gem 'danger-android_lint'
 gem 'danger-apkstats'
 gem 'danger-checkstyle_reports'

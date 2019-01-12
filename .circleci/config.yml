@@ -109,13 +109,14 @@ jobs:
       - save_cache: *save_gradle_cache
       - run: ./gradlew testDebugUnitTest lintDebug ktlint --continue --offline
       - run:
-          name: Merge junit report files
-          command: |
-            merge_all_junit_files
-            cp "$MERGED_JUNIT_RESULT_FILE" build/all-junit.xml
+          name: Aggregate junit report files into one dir
+          command: aggregate_junit_results
           when: always
       - store_test_results:
-          path: build/all-junit.xml
+          path: test-results # see scripts/bash.source
+          when: always
+      - store_artifacts:
+          path: reports # see scripts/bash.source
           when: always
       - restore_cache: *restore_danger_cache
       - run: *bundle_install_for_danger

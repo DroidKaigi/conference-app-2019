@@ -9,8 +9,4 @@ danger_path="$PWD/scripts/danger"
 export BUNDLE_PATH="$danger_path/vendor/bundle"
 export BUNDLE_GEMFILE="$danger_path/Gemfile"
 
-if [[ ! -f "$MERGED_JUNIT_RESULT_FILE" ]]; then
-  merge_all_junit_files
-fi
-
 bundle exec danger --dangerfile="$danger_path/Dangerfile.assertions" --danger_id='assertions' --remove-previous-comments

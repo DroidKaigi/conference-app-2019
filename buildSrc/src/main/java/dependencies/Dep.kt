@@ -37,7 +37,7 @@ object Dep {
         val jetifier = "com.android.tools.build.jetifier:jetifier-core:1.0.0-beta02"
         val appCompat = "androidx.appcompat:appcompat:1.0.0"
         val recyclerView = "androidx.recyclerview:recyclerview:1.0.0"
-        val constraint = "androidx.constraintlayout:constraintlayout:1.1.2"
+        val constraint = "androidx.constraintlayout:constraintlayout:1.1.3"
         val emoji = "androidx.emoji:emoji-appcompat:1.0.0"
         val design = "com.google.android.material:material:1.1.0-alpha02"
         val coreKtx = "androidx.core:core-ktx:1.0.0-alpha1"
@@ -122,7 +122,7 @@ object Dep {
     val liveDataKtx = "com.shopify:livedata-ktx:2.0.1"
 
     object LeakCanary {
-        val version = "1.6.2"
+        val version = "1.6.3"
         val leakCanary = "com.squareup.leakcanary:leakcanary-android:$version"
         val leakCanaryNoOp = "com.squareup.leakcanary:leakcanary-android-no-op:$version"
         val leakCanaryFragment = "com.squareup.leakcanary:leakcanary-support-fragment:$version"

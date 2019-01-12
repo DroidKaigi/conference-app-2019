@@ -8,7 +8,6 @@ import io.github.droidkaigi.confsched2019.ext.android.CoroutinePlugin
 import io.github.droidkaigi.confsched2019.ext.android.changedForever
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.SessionContents
-import io.kotlintest.shouldBe
 import io.mockk.MockKAnnotations
 import io.mockk.mockk
 import io.mockk.verifySequence
@@ -36,7 +35,6 @@ class SessionContentsStoreTest {
         dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
         dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
 
-        sessionsStore.isLoading shouldBe false
         verifySequence {
             observer(LoadingState.INITIALIZED)
             observer(LoadingState.LOADING)
