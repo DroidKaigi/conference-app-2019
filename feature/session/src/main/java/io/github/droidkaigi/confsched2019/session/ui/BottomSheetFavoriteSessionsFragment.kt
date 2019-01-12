@@ -147,6 +147,11 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
         }
     }
 
+    override fun onDestroyView() {
+        binding.sessionsRecycler.adapter = null
+        super.onDestroyView()
+    }
+
     private fun applyTitleText() {
         val linearLayoutManager = binding.sessionsRecycler.layoutManager as LinearLayoutManager
         val firstPosition = linearLayoutManager.findFirstVisibleItemPosition()
