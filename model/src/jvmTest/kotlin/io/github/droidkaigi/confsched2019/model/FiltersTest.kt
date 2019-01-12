@@ -13,10 +13,10 @@ class FiltersTest {
 
     @Test fun isPass_WhenServiceSessionAndIsNotFilterable() {
         val serviceSession = mockk<Session.ServiceSession>()
-        every { serviceSession.sessionType } returns SessionType.AfterParty
+        every { serviceSession.sessionType } returns SessionType.AFTER_PARTY
         assertTrue { Filters().isPass(serviceSession) }
 
-        every { serviceSession.sessionType } returns SessionType.Lunch
+        every { serviceSession.sessionType } returns SessionType.LUNCH
         assertTrue { Filters().isPass(serviceSession) }
     }
 
@@ -41,7 +41,7 @@ class FiltersTest {
         val room = Room(10, "room1")
         val serviceSession = mockk<Session.ServiceSession>()
         every { serviceSession.room } returns room
-        every { serviceSession.sessionType } returns SessionType.Codelabs
+        every { serviceSession.sessionType } returns SessionType.CODELABS
 
         assertTrue { Filters(rooms = mutableSetOf(room)).isPass(serviceSession) }
     }
