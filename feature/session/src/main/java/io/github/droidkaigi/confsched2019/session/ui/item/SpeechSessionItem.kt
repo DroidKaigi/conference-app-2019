@@ -33,8 +33,8 @@ class SpeechSessionItem @AssistedInject constructor(
     @Assisted override val session: Session.SpeechSession,
     @Assisted val navDirections: NavDirections,
     @Assisted val addPaddingForTime: Boolean,
-    navController: NavController,
-    sessionContentsActionCreator: SessionContentsActionCreator,
+    val navController: NavController,
+    val sessionContentsActionCreator: SessionContentsActionCreator,
     val systemStore: SystemStore
 ) : BindableItem<ItemSessionBinding>(
     session.id.hashCode().toLong()
