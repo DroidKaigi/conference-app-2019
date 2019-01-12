@@ -6,6 +6,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion Versions.androidCompileSdkVersion
@@ -101,6 +102,7 @@ dependencies {
 
     implementation Dep.Firebase.core
     implementation Dep.Firebase.auth
+    implementation Dep.Firebase.crashlytics
 
     api Dep.Dagger.core
     api Dep.Dagger.androidSupport
