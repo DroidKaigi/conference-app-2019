@@ -46,7 +46,8 @@ class AboutSection @Inject constructor(
                 },
                 AboutItem(
                     R.string.about_app_version,
-                    R.string.about_version_name
+                    R.string.about_version_name,
+                    true
                 )
             )
         )

@@ -11,19 +11,17 @@ import io.github.droidkaigi.confsched2019.about.databinding.ItemAboutBinding
 class AboutItem(
     @StringRes private val name: Int,
     @StringRes private val description: Int,
+    private val isLektonCheckText: Boolean = false,
     private val clickListener: ((Context) -> Unit)? = null
 ) : BindableItem<ItemAboutBinding>() {
 
     override fun getLayout(): Int = R.layout.item_about
 
     override fun bind(binding: ItemAboutBinding, position: Int) {
-        // clickListener is null when this item is version item
-        val isVersionItem = clickListener == null
-
         binding.name = name
         binding.description = description
         TextViewCompat.setTextAppearance(
-            binding.checkText, if (isVersionItem) {
+            binding.checkText, if (isLektonCheckText) {
                 R.style.TextAppearance_Lekton_Body1
             } else {
                 // Because use Lekton only for version item
@@ -33,7 +31,7 @@ class AboutItem(
         binding.checkText.setTextColor(
             ContextCompat.getColor(
                 binding.root.context,
-                if (isVersionItem) {
+                if (clickListener == null) {
                     R.color.gray2
                 } else {
                     R.color.colorSecondary
