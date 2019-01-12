@@ -88,6 +88,8 @@ class SessionPagesFragment : DaggerFragment() {
 
     private fun setupSessionPager() {
         binding.sessionsTabLayout.setupWithViewPager(binding.sessionsViewpager)
+        binding.sessionsViewpager.pageMargin =
+            resources.getDimensionPixelSize(R.dimen.session_pager_horizontal_padding)
         binding.sessionsViewpager.adapter = object : FragmentStatePagerAdapter(
             childFragmentManager
         ) {

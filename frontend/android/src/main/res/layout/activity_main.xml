@@ -36,18 +36,19 @@
                 android:layout_height="wrap_content"
                 android:background="@{isWhiteTheme ? Converters.convertColorToDrawable(@color/white) : Converters.convertColorToDrawable(@color/colorPrimary)}"
                 android:elevation="0dp"
+                android:theme="@style/Widget.App.Toolbar"
+                app:contentInsetStartWithNavigation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:contentInsetStartWithNavigation="0dp"
                 >
 
                 <ImageView
                     android:id="@+id/logo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/bg_logo"
                     android:contentDescription="@string/app_logo_description"
+                    app:srcCompat="@drawable/bg_logo"
                     />
             </androidx.appcompat.widget.Toolbar>
 
