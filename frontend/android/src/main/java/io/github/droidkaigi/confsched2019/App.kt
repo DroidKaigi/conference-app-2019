@@ -6,11 +6,13 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
+import com.crashlytics.android.Crashlytics
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
+import io.fabric.sdk.android.Fabric
 import io.github.droidkaigi.confsched2019.di.createAppComponent
 import io.github.droidkaigi.confsched2019.ext.android.changedForever
 import io.github.droidkaigi.confsched2019.system.actioncreator.SystemActionCreator
@@ -29,6 +31,7 @@ open class App : DaggerApplication() {
         setupFont()
         setupEmojiCompat()
         setupFirestore()
+        setupCrashlytics()
         systemStore.systemProperty.changedForever {
             // listening
         }
@@ -75,6 +78,10 @@ open class App : DaggerApplication() {
                 }
             })
         EmojiCompat.init(config)
+    }
+
+    private fun setupCrashlytics() {
+        Fabric.with(this, Crashlytics())
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
