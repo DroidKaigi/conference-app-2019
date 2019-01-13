@@ -78,7 +78,8 @@ fun SessionResponse.toSessionEntityImpl(
             ),
             intendedAudience = intendedAudience,
             room = RoomEntityImpl(roomId, rooms.roomName(roomId)),
-            sessionType = sessionType
+            sessionType = sessionType,
+            forBeginners = forBeginners
         )
     } else {
         return SessionEntityImpl(
@@ -97,7 +98,8 @@ fun SessionResponse.toSessionEntityImpl(
             message = message?.let {
                 MessageEntityImpl(requireNotNull(it.ja), requireNotNull(it.en))
             },
-            sessionType = sessionType
+            sessionType = sessionType,
+            forBeginners = forBeginners
         )
     }
 }

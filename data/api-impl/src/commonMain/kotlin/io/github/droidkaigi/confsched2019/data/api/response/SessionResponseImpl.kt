@@ -18,5 +18,6 @@ data class SessionResponseImpl(
     override val questionAnswers: List<QuestionAnswerResponseImpl>,
     override val sessionType: String?,
     @Optional override val message: SessionMessageResponseImpl? = null,
-    override val isPlenumSession: Boolean
+    override val isPlenumSession: Boolean,
+    override val forBeginners: Boolean
 ) : SessionResponse

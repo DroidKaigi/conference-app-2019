@@ -39,7 +39,8 @@ fun dummySessionData(): List<Session> {
             intendedAudience = "extream",
             isFavorited = true,
             speakers = listOf(),
-            message = SessionMessage("部屋移動", "room moved")
+            message = SessionMessage("部屋移動", "room moved"),
+            forBeginners = true
         )
     )
 }
@@ -62,7 +63,8 @@ fun firstDummySpeechSession(): Session.SpeechSession {
         intendedAudience = "intermediate",
         isFavorited = false,
         speakers = listOf(),
-        message = null
+        message = null,
+        forBeginners = false
     )
 }
 

@@ -68,7 +68,8 @@ fun SessionWithSpeakers.toSession(
             speakers = speakers,
             message = session.message?.let {
                 SessionMessage(it.ja, it.en)
-            }
+            },
+            forBeginners = session.forBeginners
         )
     }
 }

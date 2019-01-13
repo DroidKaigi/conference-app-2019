@@ -24,7 +24,8 @@ sealed class Session(
         val intendedAudience: String?,
         val isFavorited: Boolean,
         val speakers: List<Speaker>,
-        val message: SessionMessage?
+        val message: SessionMessage?,
+        val forBeginners: Boolean
     ) : Session(id, dayNumber, startTime, endTime, room)
 
     data class ServiceSession(
