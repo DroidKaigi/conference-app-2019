@@ -1,0 +1,103 @@
+apply plugin: 'kotlin-multiplatform'
+apply plugin: 'kotlinx-serialization'
+
+kotlin {
+    targets {
+        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") ? presets.iosArm64 : presets.iosX64
+
+        fromPreset(iOSTarget, 'iOS') {
+            compilations.main.outputKinds('FRAMEWORK')
+        }
+    }
+    sourceSets {
+        final List<String> projectsList = [
+                ":model",
+                ":data:api",
+                ":data:api-impl",
+                ":data:db",
+                ":data:firestore",
+                ":data:repository",
+        ]
+        commonMain {
+            projectsList.forEach {
+                kotlin.srcDirs += "${project(it).projectDir}/src/commonMain/kotlin"
+            }
+            languageSettings {
+                languageVersion = '1.3'
+                apiVersion = '1.3'
+                progressiveMode = true
+            }
+            dependencies {
+                projectsList.forEach {
+                    project(it).configurations.all { c ->
+                        if (c.name == "commonMainApi") {
+                            c.dependencies.all {
+                                // note: Avoid dependencies for this project's modules like a `api project(":model")`.
+                                //       Already these classes are included via `srcDir`,
+                                //       so adding dependencies for projects causes compile error by double declaration.
+                                if (!it.group.startsWith("conference-app-2019")) {
+                                    api it
+                                }
+                            }
+                        } else if (c.name == "commonMainImplementation") {
+                            c.dependencies.all {
+                                if (!it.group.startsWith("conference-app-2019")) {
+                                    implementation it
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        iOSMain {
+            projectsList.forEach {
+                kotlin.srcDirs += "${project(it).projectDir}/src/iosMain/kotlin"
+            }
+            dependencies {
+                projectsList.forEach {
+                    project(it).configurations.all { c ->
+                        if (c.name == "iOSMainApi") {
+                            c.dependencies.all {
+                                if (!it.group.startsWith("conference-app-2019")) {
+                                    api it
+                                }
+                            }
+                        } else if (c.name == "iOSMainImplementation") {
+                            c.dependencies.all {
+                                if (!it.group.startsWith("conference-app-2019")) {
+                                    implementation it
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+configurations {
+    compileClasspath
+}
+
+task packForXCode(type: Sync) {
+    final File frameworkDir = new File(buildDir, "xcode-frameworks")
+    final String mode = project.findProperty("XCODE_CONFIGURATION")?.toUpperCase() ?: 'DEBUG'
+
+    inputs.property "mode", mode
+    dependsOn kotlin.targets.iOS.compilations.main.linkTaskName("FRAMEWORK", mode)
+
+    from { kotlin.targets.iOS.compilations.main.getBinary("FRAMEWORK", mode).parentFile }
+    into frameworkDir
+
+    doLast {
+        new File(frameworkDir, 'gradlew').with {
+            text = "#!/bin/bash\nexport 'JAVA_HOME=${System.getProperty("java.home")}'\ncd '${rootProject.rootDir}'\n./gradlew \$@\n"
+            setExecutable(true)
+        }
+    }
+}
+
+tasks.build.dependsOn packForXCode

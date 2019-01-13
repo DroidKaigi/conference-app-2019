@@ -24,7 +24,6 @@ import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSessionBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
-import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.util.lazyWithParam
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlin.math.max
@@ -33,9 +32,8 @@ class SpeechSessionItem @AssistedInject constructor(
     @Assisted override val session: Session.SpeechSession,
     @Assisted val navDirections: NavDirections,
     @Assisted val addPaddingForTime: Boolean,
-    navController: NavController,
-    sessionContentsActionCreator: SessionContentsActionCreator,
-    val systemStore: SystemStore
+    val navController: NavController,
+    val sessionContentsActionCreator: SessionContentsActionCreator
 ) : BindableItem<ItemSessionBinding>(
     session.id.hashCode().toLong()
 ), SessionItem {
@@ -50,27 +48,20 @@ class SpeechSessionItem @AssistedInject constructor(
         ): SpeechSessionItem
     }
 
-    private val onFavoriteClickListener: (Session.SpeechSession) -> Unit = { session ->
-        sessionContentsActionCreator.toggleFavorite(session)
-    }
-    private val onClickListener: (Session.SpeechSession) -> Unit = { session ->
-        navController
-            .navigate(
-                navDirections
-            )
-    }
     val layoutInflater by lazyWithParam<Context, LayoutInflater> { context ->
         LayoutInflater.from(context)
     }
 
     override fun bind(viewBinding: ItemSessionBinding, position: Int) {
         with(viewBinding) {
-            root.setOnClickListener { onClickListener(speechSession) }
+            root.setOnClickListener {
+                navController.navigate(navDirections)
+            }
             session = speechSession
             lang = defaultLang()
             addPaddingForTime = this@SpeechSessionItem.addPaddingForTime
             favorite.setOnClickListener {
-                onFavoriteClickListener(speechSession)
+                sessionContentsActionCreator.toggleFavorite(speechSession)
             }
             @Suppress("StringFormatMatches") // FIXME
             timeAndRoom.text = root.context.getString(
@@ -78,12 +69,12 @@ class SpeechSessionItem @AssistedInject constructor(
                 speechSession.timeInMinutes,
                 speechSession.room.name
             )
-            categoryChip.text = speechSession.category.name.getByLang(systemStore.lang)
+            categoryChip.text = speechSession.category.name.getByLang(defaultLang())
 
             bindSpeaker()
 
             speechSession.message?.let { message ->
-                this@with.message.text = message.getByLang(systemStore.lang)
+                this@with.message.text = message.getByLang(defaultLang())
             }
         }
     }

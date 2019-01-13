@@ -58,16 +58,17 @@
                 android:paddingBottom="24dp"
                 >
 
-                <androidx.emoji.widget.EmojiTextView
+                <androidx.emoji.widget.EmojiAppCompatTextView
                     android:id="@+id/session_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
+                    android:includeFontPadding="false"
                     android:text="@{session.title.getByLang(lang)}"
                     android:textAlignment="viewStart"
-                    android:textAppearance="@style/TextAppearance.App.Headline5"
+                    android:textAppearance="@style/TextAppearance.Lekton.Headline5"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -80,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:textAppearance="@style/TextAppearance.App.Subtitle2"
+                    android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/session_title"
@@ -106,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@{session.timeSummary(lang, timeZoneOffset)}"
-                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    android:textAppearance="@style/TextAppearance.Lekton.Body1"
                     app:layout_constraintBottom_toBottomOf="@id/session_time_image"
                     app:layout_constraintStart_toEndOf="@id/session_time_image"
                     app:layout_constraintTop_toTopOf="@id/session_time_image"
@@ -125,15 +126,14 @@
                     app:visibleGone="@{session.message != null}"
                     />
 
-                <androidx.emoji.widget.EmojiTextView
+                <androidx.emoji.widget.EmojiAppCompatTextView
                     android:id="@+id/session_message"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="12dp"
-                    android:includeFontPadding="false"
-                    android:textAppearance="?attr/textAppearanceSubtitle1"
+                    android:textAppearance="@style/TextAppearance.Lekton.Body1"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/session_message_image"
@@ -158,7 +158,7 @@
                     app:layout_goneMarginTop="32dp"
                     />
 
-                <androidx.emoji.widget.EmojiTextView
+                <androidx.emoji.widget.EmojiAppCompatTextView
                     android:id="@+id/session_description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -166,9 +166,11 @@
                     android:layout_marginTop="16dp"
                     android:ellipsize="end"
                     android:includeFontPadding="false"
+                    android:lineSpacingExtra="4dp"
                     android:paddingBottom="2dp"
                     android:text="@{session.desc}"
                     android:textAlignment="viewStart"
+                    android:textAppearance="@style/TextAppearance.Lekton.Body1"
                     android:textIsSelectable="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/session_title"
@@ -197,21 +199,22 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/session_detail_intended_audience"
-                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider_top_intended_audience"
                     />
 
-                <androidx.emoji.widget.EmojiTextView
+                <androidx.emoji.widget.EmojiAppCompatTextView
                     android:id="@+id/session_intended_audience_description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="16dp"
-                    android:ellipsize="end"
                     android:includeFontPadding="false"
+                    android:lineSpacingExtra="4dp"
                     android:paddingBottom="2dp"
                     android:textAlignment="viewStart"
+                    android:textAppearance="@style/TextAppearance.Lekton.Body1"
                     android:textIsSelectable="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/session_title"
@@ -240,7 +243,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/session_detail_tag"
-                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider_top_tags"
                     />
@@ -291,6 +294,22 @@
                         />
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/for_beginners_chip"
+                        style="@style/Widget.MaterialComponents.Chip.Action"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:enabled="false"
+                        android:focusable="false"
+                        android:text="@string/session_for_beginners"
+                        android:textAppearance="?textAppearanceCaption"
+                        android:textColor="@color/white"
+                        app:chipBackgroundColor="#7982e1"
+                        app:chipMinTouchTargetSize="0dp"
+                        app:visibleGone="@{session.forBeginners}"
+                        />
+
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/category_chip"
                         style="@style/Widget.MaterialComponents.Chip.Action"
                         android:layout_width="wrap_content"
@@ -329,7 +348,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="26dp"
                     android:text="@string/session_detail_survey"
-                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider_top_survey"
                     app:visibleGone="@{session.isFinished}"
@@ -340,7 +359,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/session_detail_go_to_survey"
-                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    android:textAppearance="@style/TextAppearance.Lekton.Body1"
                     android:textColor="@color/colorSecondary"
                     app:layout_constraintBaseline_toBaselineOf="@id/session_survey_title"
                     app:layout_constraintEnd_toEndOf="@id/session_title"
@@ -368,7 +387,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/session_detail_speaker"
-                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider_top_speakers"
                     />
@@ -382,6 +401,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_speaker_title"
+                    tools:listitem="@layout/item_speaker"
                     />
 
                 <ImageView
@@ -406,7 +426,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/session_detail_resource"
-                    android:textAppearance="?attr/textAppearanceSubtitle1"
+                    android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider_top_resource"
                     app:visibleGone="@{session.hasVideo || session.hasSlide}"
@@ -428,8 +448,8 @@
                     android:paddingStart="16dp"
                     android:paddingTop="8dp"
                     android:text="@string/session_detail_resource_video"
+                    android:textAppearance="@style/TextAppearance.Lekton.Body1"
                     android:textColor="@color/colorSecondary"
-                    android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_resource_title"
@@ -452,8 +472,8 @@
                     android:paddingStart="16dp"
                     android:paddingTop="8dp"
                     android:text="@string/session_detail_resource_slide"
+                    android:textAppearance="@style/TextAppearance.Lekton.Body1"
                     android:textColor="@color/colorSecondary"
-                    android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_video_button"

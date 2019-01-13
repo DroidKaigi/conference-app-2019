@@ -8,10 +8,10 @@ import io.github.droidkaigi.confsched2019.ext.android.CoroutinePlugin
 import io.github.droidkaigi.confsched2019.ext.android.changedForever
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.SessionContents
+import io.github.droidkaigi.confsched2019.widget.component.DirectDispatcher
 import io.mockk.MockKAnnotations
 import io.mockk.mockk
-import io.mockk.verifySequence
-import kotlinx.coroutines.Dispatchers
+import io.mockk.verify
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
@@ -22,7 +22,7 @@ class SessionContentsStoreTest {
 
     @Before fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        CoroutinePlugin.mainDispatcherHandler = { Dispatchers.Default }
+        CoroutinePlugin.mainDispatcherHandler = { DirectDispatcher }
     }
 
     @Test fun loadingState() = runBlocking<Unit> {
@@ -31,31 +31,26 @@ class SessionContentsStoreTest {
         val observer = mockk<(LoadingState?) -> Unit>(relaxed = true)
 
         sessionsStore.loadingState.changedForever(observer)
+        verify { observer(LoadingState.INITIALIZED) }
 
         dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
+        verify { observer(LoadingState.LOADING) }
         dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
-
-        verifySequence {
-            observer(LoadingState.INITIALIZED)
-            observer(LoadingState.LOADING)
-            observer(LoadingState.LOADED)
-        }
+        verify { observer(LoadingState.LOADED) }
     }
 
     @Test fun sessions() = runBlocking<Unit> {
         val dispatcher = Dispatcher()
         val sessionsStore = SessionContentsStore(dispatcher)
         val observer: (SessionContents) -> Unit = mockk(relaxed = true)
-        sessionsStore.sessionContents.changedForever(observer)
-        val dummySessionContents = SessionContents.EMPTY.copy(sessions = dummySessionData())
 
+        sessionsStore.sessionContents.changedForever(observer)
+        verify { observer(SessionContents.EMPTY) }
+
+        val dummySessionContents = SessionContents.EMPTY.copy(sessions = dummySessionData())
         dispatcher.dispatch(
             Action.SessionContentsLoaded(dummySessionContents)
         )
-
-        verifySequence {
-            observer(SessionContents.EMPTY)
-            observer(dummySessionContents)
-        }
+        verify { observer(dummySessionContents) }
     }
 }

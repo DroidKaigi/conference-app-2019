@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     >
+
     <data>
+
         <variable
             name="name"
             type="int"
@@ -32,9 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{name}"
-            android:textColor="@color/gray1"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

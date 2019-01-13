@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="sessions_empty_state_view"
-            app:visibleGone="@{shouldShowEmptyStateView}"
+            app:visibleGone="@{safeUnbox(shouldShowEmptyStateView)}"
             />
 
         <androidx.constraintlayout.widget.Group
@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="sessionsListHeader, sessions_recycler"
-            app:visibleGone="@{!shouldShowEmptyStateView}"
+            app:visibleGone="@{!safeUnbox(shouldShowEmptyStateView)}"
             />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:gravity="center_vertical"
-                android:text="@{isFiltered ? @string/session_filter_button_filtered : @string/session_filter_button }"
+                android:text="@{safeUnbox(isFiltered) ? @string/session_filter_button_filtered : @string/session_filter_button }"
                 android:textColor="@color/gray2"
                 app:chipBackgroundColor="@color/gray4"
                 app:chipIcon="@drawable/ic_filter_list_black_24dp"
@@ -82,7 +82,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:visibleGone="@{!isCollapsed &amp;&amp; !shouldShowEmptyStateView}"
+                app:visibleGone="@{!safeUnbox(isCollapsed) &amp;&amp; !safeUnbox(shouldShowEmptyStateView)}"
                 />
 
             <com.google.android.material.chip.Chip
@@ -103,7 +103,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:textEndPadding="@dimen/session_bottom_sheet_filter_text_padding"
                 app:textStartPadding="@dimen/session_bottom_sheet_filter_text_padding"
-                app:visibleGone="@{isCollapsed &amp;&amp; !shouldShowEmptyStateView}"
+                app:visibleGone="@{safeUnbox(isCollapsed) &amp;&amp; !safeUnbox(shouldShowEmptyStateView)}"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
