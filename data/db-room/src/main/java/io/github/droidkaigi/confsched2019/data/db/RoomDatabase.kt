@@ -86,7 +86,6 @@ class RoomDatabase @Inject constructor(
     override suspend fun save(apiResponse: List<AnnouncementResponse>) {
         withContext(coroutineContext) {
             database.runInTransaction {
-
                 val announcements = apiResponse.toAnnouncementEntities()
 
                 announcementDao.insert(announcements)
