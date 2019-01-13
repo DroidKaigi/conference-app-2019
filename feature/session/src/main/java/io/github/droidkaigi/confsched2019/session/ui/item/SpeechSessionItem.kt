@@ -24,7 +24,6 @@ import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSessionBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
-import io.github.droidkaigi.confsched2019.util.SessionAlarm
 import io.github.droidkaigi.confsched2019.util.lazyWithParam
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlin.math.max
@@ -33,7 +32,6 @@ class SpeechSessionItem @AssistedInject constructor(
     @Assisted override val session: Session.SpeechSession,
     @Assisted val navDirections: NavDirections,
     @Assisted val addPaddingForTime: Boolean,
-    @Assisted val sessionAlarm: SessionAlarm,
     val navController: NavController,
     val sessionContentsActionCreator: SessionContentsActionCreator
 ) : BindableItem<ItemSessionBinding>(
@@ -46,8 +44,7 @@ class SpeechSessionItem @AssistedInject constructor(
         fun create(
             session: Session.SpeechSession,
             navDirections: NavDirections,
-            addPaddingForTime: Boolean,
-            sessionAlarm: SessionAlarm
+            addPaddingForTime: Boolean
         ): SpeechSessionItem
     }
 
@@ -65,7 +62,6 @@ class SpeechSessionItem @AssistedInject constructor(
             addPaddingForTime = this@SpeechSessionItem.addPaddingForTime
             favorite.setOnClickListener {
                 sessionContentsActionCreator.toggleFavorite(speechSession)
-                sessionAlarm.toggleRegister(speechSession)
             }
             @Suppress("StringFormatMatches") // FIXME
             timeAndRoom.text = root.context.getString(

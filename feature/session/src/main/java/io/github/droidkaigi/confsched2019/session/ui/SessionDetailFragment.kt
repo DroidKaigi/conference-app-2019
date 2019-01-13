@@ -28,7 +28,6 @@ import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
-import io.github.droidkaigi.confsched2019.util.SessionAlarm
 import javax.inject.Inject
 
 class SessionDetailFragment : DaggerFragment() {
@@ -36,7 +35,6 @@ class SessionDetailFragment : DaggerFragment() {
 
     @Inject lateinit var sessionContentsActionCreator: SessionContentsActionCreator
     @Inject lateinit var sessionContentsStore: SessionContentsStore
-    @Inject lateinit var sessionAlarm: SessionAlarm
     @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
     @Inject lateinit var activityActionCreator: ActivityActionCreator
 
@@ -121,7 +119,6 @@ class SessionDetailFragment : DaggerFragment() {
                 .interpolator = OvershootInterpolator()
 
             sessionContentsActionCreator.toggleFavorite(session)
-            sessionAlarm.toggleRegister(session)
         }
     }
 

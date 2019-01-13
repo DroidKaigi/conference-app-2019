@@ -30,7 +30,6 @@ import io.github.droidkaigi.confsched2019.session.ui.store.SessionPageStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.session.ui.widget.SessionsItemDecoration
-import io.github.droidkaigi.confsched2019.util.SessionAlarm
 import io.github.droidkaigi.confsched2019.widget.BottomSheetBehavior
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import me.tatarka.injectedvmprovider.ktx.injectedViewModelProvider
@@ -44,7 +43,6 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
     @Inject lateinit var sessionContentsStore: SessionContentsStore
     @Inject lateinit var sessionPageActionCreator: SessionPageActionCreator
     @Inject lateinit var sessionPageFragmentProvider: Provider<SessionPageFragment>
-    @Inject lateinit var sessionAlarm: SessionAlarm
     @Inject lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
     @Inject lateinit var serviceSessionItemFactory: ServiceSessionItem.Factory
 
@@ -103,13 +101,11 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
                                 SessionPagesFragmentDirections.actionSessionToSessionDetail(
                                     session.id
                                 ),
-                                true,
-                                sessionAlarm
+                                true
                             )
                         is Session.ServiceSession ->
                             serviceSessionItemFactory.create(
-                                session,
-                                sessionAlarm
+                                session
                             )
                     }
                 }
