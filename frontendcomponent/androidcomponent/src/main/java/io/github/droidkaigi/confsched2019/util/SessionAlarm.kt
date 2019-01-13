@@ -67,6 +67,8 @@ class SessionAlarm @Inject constructor(private val app: Application) {
         )
         val title: String
         val text: String
+        // If you make this notification under Android N, the time and location will not be displayed.
+        // So, under Android N, the session title is displayed in the title, the time and location are displayed in the text.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             title = app.getString(R.string.notification_title_session_start)
             text = sessionTitle + "\n" + sessionStartTime
