@@ -39,6 +39,10 @@ class SessionPagesStore @Inject constructor(
         .subscribe<Action.LangSupportFilterChanged>()
         .toLiveData()
 
+    private val audienceCategoryFilterChanged = dispatcher
+        .subscribe<Action.AudienceCategoryFilterChanged>()
+        .toLiveData()
+
     private val filterCleared = dispatcher
         .subscribe<Action.FilterCleared>()
         .toLiveData()
@@ -78,6 +82,19 @@ class SessionPagesStore @Inject constructor(
                     filtersValue.copy(langSupports = filtersValue.langSupports + it.langSupport)
                 } else {
                     filtersValue.copy(langSupports = filtersValue.langSupports - it.langSupport)
+                }
+            }
+        }
+        addSource(audienceCategoryFilterChanged) { audienceCategoryFilterChanged ->
+            audienceCategoryFilterChanged?.let {
+                value = if (audienceCategoryFilterChanged.checked) {
+                    filtersValue.copy(
+                        audienceCategories = filtersValue.audienceCategories + it.audienceCategory
+                    )
+                } else {
+                    filtersValue.copy(
+                        audienceCategories = filtersValue.audienceCategories - it.audienceCategory
+                    )
                 }
             }
         }
