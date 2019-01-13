@@ -25,8 +25,7 @@ fun SessionWithSpeakers.toSession(
             endTime = DateTime.fromUnix(session.etime),
             title = LocaledString(
                 ja = session.title,
-                // if there is no englishTitle, use Japanese title instead.
-                en = session.englishTitle ?: session.title
+                en = requireNotNull(session.englishTitle)
                 ),
             room = requireNotNull(session.room).let { room ->
                 Room(room.id, room.name)
