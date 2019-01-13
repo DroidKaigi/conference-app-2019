@@ -16,7 +16,7 @@ class AnnouncementStore @Inject constructor(
     val loadingState: LiveData<LoadingState> = dispatcher
         .subscribe<Action.AnnouncementLoadingStateChanged>()
         .map { it.loadingState }
-        .toLiveData(LoadingState.LOADING)
+        .toLiveData(LoadingState.INITIALIZED)
     val announcements: LiveData<List<Announcement>> = dispatcher
         .subscribe<Action.AnnouncementLoaded>()
         .map { it.announcements }
