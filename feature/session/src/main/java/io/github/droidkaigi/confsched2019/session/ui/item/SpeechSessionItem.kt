@@ -36,8 +36,8 @@ class SpeechSessionItem @AssistedInject constructor(
     @Assisted val navDirections: NavDirections,
     @Assisted val addPaddingForTime: Boolean,
     @Assisted val sessionAlarm: SessionAlarm,
-    navController: NavController,
-    sessionContentsActionCreator: SessionContentsActionCreator,
+    val navController: NavController,
+    val sessionContentsActionCreator: SessionContentsActionCreator,
     val systemStore: SystemStore
 ) : BindableItem<ItemSessionBinding>(
     session.id.hashCode().toLong()
@@ -54,28 +54,21 @@ class SpeechSessionItem @AssistedInject constructor(
         ): SpeechSessionItem
     }
 
-    private val onFavoriteClickListener: (Session.SpeechSession) -> Unit = { session ->
-        sessionContentsActionCreator.toggleFavorite(session)
-        sessionAlarm.toggleRegister(session, systemStore.lang)
-    }
-    private val onClickListener: (Session.SpeechSession) -> Unit = { session ->
-        navController
-            .navigate(
-                navDirections
-            )
-    }
     val layoutInflater by lazyWithParam<Context, LayoutInflater> { context ->
         LayoutInflater.from(context)
     }
 
     override fun bind(viewBinding: ItemSessionBinding, position: Int) {
         with(viewBinding) {
-            root.setOnClickListener { onClickListener(speechSession) }
+            root.setOnClickListener {
+                navController.navigate(navDirections)
+            }
             session = speechSession
             lang = defaultLang()
             addPaddingForTime = this@SpeechSessionItem.addPaddingForTime
             favorite.setOnClickListener {
-                onFavoriteClickListener(speechSession)
+                sessionContentsActionCreator.toggleFavorite(speechSession)
+                sessionAlarm.toggleRegister(speechSession, systemStore.lang)
             }
             @Suppress("StringFormatMatches") // FIXME
             timeAndRoom.text = root.context.getString(
@@ -83,12 +76,12 @@ class SpeechSessionItem @AssistedInject constructor(
                 speechSession.timeInMinutes,
                 speechSession.room.name
             )
-            categoryChip.text = speechSession.category.name.getByLang(systemStore.lang)
+            categoryChip.text = speechSession.category.name.getByLang(defaultLang())
 
             bindSpeaker()
 
             speechSession.message?.let { message ->
-                this@with.message.text = message.getByLang(systemStore.lang)
+                this@with.message.text = message.getByLang(defaultLang())
             }
         }
     }

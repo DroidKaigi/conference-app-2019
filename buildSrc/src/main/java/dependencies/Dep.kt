@@ -3,7 +3,7 @@ package dependencies
 @Suppress("unused")
 object Dep {
     object GradlePlugin {
-        val android = "com.android.tools.build:gradle:3.2.0"
+        val android = "com.android.tools.build:gradle:3.2.1"
         val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Kotlin.version}"
         val kotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Kotlin.version}"
         val playServices = "com.google.gms:google-services:4.1.0"
@@ -11,6 +11,7 @@ object Dep {
             "android.arch.navigation:navigation-safe-args-gradle-plugin:${AndroidX.Navigation.version}"
         val jetifier = "com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta02"
         val licensesPlugin = "com.google.android.gms:oss-licenses-plugin:0.9.4"
+        val crashlytics = "io.fabric.tools:gradle:1.26.1"
     }
 
     object Test {
@@ -85,6 +86,7 @@ object Dep {
         val core = "com.google.firebase:firebase-core:16.0.4"
         val fireStore = "com.google.firebase:firebase-firestore:17.1.3"
         val auth = "com.google.firebase:firebase-auth:16.0.5"
+        val crashlytics = "com.crashlytics.sdk.android:crashlytics:2.9.8"
     }
 
     object PlayServices {

@@ -27,7 +27,6 @@ import io.github.droidkaigi.confsched2019.session.ui.item.SpeakerItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
-import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import io.github.droidkaigi.confsched2019.util.SessionAlarm
 import javax.inject.Inject
@@ -36,7 +35,6 @@ class SessionDetailFragment : DaggerFragment() {
     private lateinit var binding: FragmentSessionDetailBinding
 
     @Inject lateinit var sessionContentsActionCreator: SessionContentsActionCreator
-    @Inject lateinit var systemStore: SystemStore
     @Inject lateinit var sessionContentsStore: SessionContentsStore
     @Inject lateinit var sessionAlarm: SessionAlarm
     @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
@@ -139,10 +137,10 @@ class SessionDetailFragment : DaggerFragment() {
             session.room.name
         )
         binding.sessionIntendedAudienceDescription.text = session.intendedAudience
-        binding.categoryChip.text = session.category.name.getByLang(systemStore.lang)
+        binding.categoryChip.text = session.category.name.getByLang(defaultLang())
 
         session.message?.let { message ->
-            binding.sessionMessage.text = message.getByLang(systemStore.lang)
+            binding.sessionMessage.text = message.getByLang(defaultLang())
         }
 
         val sessionItems = session
