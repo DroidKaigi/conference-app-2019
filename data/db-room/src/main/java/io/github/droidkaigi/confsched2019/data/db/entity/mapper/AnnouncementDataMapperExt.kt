@@ -4,6 +4,7 @@ import com.soywiz.klock.DateFormat
 import com.soywiz.klock.parse
 import io.github.droidkaigi.confsched2019.data.api.response.AnnouncementResponse
 import io.github.droidkaigi.confsched2019.data.db.entity.AnnouncementEntityImpl
+import java.util.Locale
 
 private val dateFormat: DateFormat =
     DateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
@@ -19,6 +20,6 @@ fun AnnouncementResponse.toAnnouncementEntityImpl(): AnnouncementEntityImpl {
         publishedAt = dateFormat.parse(publishedAt).utc.unixMillisLong,
         lang = lang,
         title = title,
-        type = type
+        type = type.toLowerCase(Locale.US)
     )
 }
