@@ -76,7 +76,9 @@
             app:menu="@menu/menu_nav_drawer"
             >
 
-            <include layout="@layout/layout_navigation_footer"/>
+            <include
+                android:id="@+id/nav_view_footer"
+                layout="@layout/layout_navigation_footer"/>
 
         </com.google.android.material.navigation.NavigationView>
     </androidx.drawerlayout.widget.DrawerLayout>
