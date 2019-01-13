@@ -94,9 +94,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                                 true
                             )
                         is Session.ServiceSession ->
-                            serviceSessionItemFactory.create(
-                                session
-                            )
+                            serviceSessionItemFactory.create(session)
                     }
                 }
             groupAdapter.update(items)
