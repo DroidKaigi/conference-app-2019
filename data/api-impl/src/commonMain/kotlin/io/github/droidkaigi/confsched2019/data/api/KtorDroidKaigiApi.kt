@@ -1,5 +1,8 @@
 package io.github.droidkaigi.confsched2019.data.api
 
+import io.github.droidkaigi.confsched2019.data.api.parameter.LangParameter
+import io.github.droidkaigi.confsched2019.data.api.response.AnnouncementResponse
+import io.github.droidkaigi.confsched2019.data.api.response.AnnouncementResponseImpl
 import io.github.droidkaigi.confsched2019.data.api.response.Response
 import io.github.droidkaigi.confsched2019.data.api.response.ResponseImpl
 import io.github.droidkaigi.confsched2019.data.api.response.SponsorResponse
@@ -24,6 +27,13 @@ open class KtorDroidKaigiApi constructor(
     override suspend fun getSessions(): Response {
         return httpClient.get<ResponseImpl> {
             url("$apiEndpoint/timetable")
+            accept(ContentType.Application.Json)
+        }
+    }
+
+    override suspend fun getAnnouncements(lang: LangParameter): List<AnnouncementResponse> {
+        return httpClient.get<List<AnnouncementResponseImpl>> {
+            url("$apiEndpoint/announcements?language=${lang.name}")
             accept(ContentType.Application.Json)
         }
     }
