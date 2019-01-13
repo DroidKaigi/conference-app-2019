@@ -33,7 +33,6 @@ import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPageStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
-import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.widget.BottomSheetBehavior
 import io.github.droidkaigi.confsched2019.widget.FilterChip
 import io.github.droidkaigi.confsched2019.widget.onCheckedChanged
@@ -48,7 +47,6 @@ class SessionPageFragment : DaggerFragment() {
     @Inject lateinit var sessionContentsActionCreator: SessionContentsActionCreator
     @Inject lateinit var sessionPagesActionCreator: SessionPagesActionCreator
     @Inject lateinit var sessionPageActionCreator: SessionPageActionCreator
-    @Inject lateinit var systemStore: SystemStore
     @Inject lateinit var sessionStore: SessionContentsStore
     @Inject lateinit var sessionPageStoreFactory: SessionPageStore.Factory
     @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
@@ -107,7 +105,7 @@ class SessionPageFragment : DaggerFragment() {
             )
             binding.sessionsFilterCategoryChip.setupFilter(
                 contents.category
-            ) { category -> category.name.getByLang(systemStore.lang) }
+            ) { category -> category.name.getByLang(defaultLang()) }
             binding.sessionsFilterLangChip.setupFilter(
                 contents.langs
 
