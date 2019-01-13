@@ -125,7 +125,7 @@ class SessionDetailFragment : DaggerFragment() {
                 return@addOnDrawListener
             }
             val end = textView.layout.getLineStart(5)
-            val ellipsis = "…続きを読む"
+            val ellipsis = getString(R.string.ellipsis_label)
             val text = textView.text.subSequence(0, end-ellipsis.length).toString().plus(ellipsis)
             val spannable = SpannableString(text)
             spannable.setSpan(ForegroundColorSpan(Color.BLUE), text.lastIndex-ellipsis.length+1, text.lastIndex+1, Spannable.SPAN_COMPOSING)

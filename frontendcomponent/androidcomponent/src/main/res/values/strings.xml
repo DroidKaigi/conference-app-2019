@@ -15,6 +15,7 @@
     <string name="map_label">Floormap</string>
     <!-- Survey -->
     <string name="survey_label">Entire survey</string>
+    <string name="ellipsis_label">…続きを読む</string>
     <!-- Search -->
     <string name="search_label" translatable="false">Search</string>
     <!-- Setting -->
