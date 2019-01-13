@@ -9,9 +9,9 @@ enum class PageConfiguration(
     val hasTitle: Boolean = true,
     val isShowLogoImage: Boolean = false
 ) {
-    Main(R.id.main, isWhiteTheme = false, hasTitle = false, isShowLogoImage = true),
-    Detail(R.id.session_detail, hasTitle = false),
-    Other(0);
+    MAIN(R.id.main, isWhiteTheme = false, hasTitle = false, isShowLogoImage = true),
+    DETAIL(R.id.session_detail, hasTitle = false),
+    OTHER(0);
 
     operator fun component1() = id
     operator fun component2() = isWhiteTheme
@@ -22,7 +22,7 @@ enum class PageConfiguration(
         fun getConfiguration(@IdRes id: Int): PageConfiguration {
             return PageConfiguration
                 .values()
-                .firstOrNull { it.id == id } ?: Other
+                .firstOrNull { it.id == id } ?: OTHER
         }
     }
 }

@@ -5,7 +5,10 @@
     <dimen name="session_bottom_sheet_left_time_text_left">16dp</dimen>
     <dimen name="session_bottom_sheet_left_time_text_padding_top">0dp</dimen>
     <dimen name="session_bottom_sheet_left_time_text_padding_bottom">8dp</dimen>
+    <dimen name="session_bottom_sheet_left_time_line_width">1dp</dimen>
+    <dimen name="session_bottom_sheet_left_time_line_interval">4dp</dimen>
     <dimen name="session_bottom_sheet_filter_icon_padding">8dp</dimen>
     <dimen name="session_bottom_sheet_filter_text_padding">0dp</dimen>
     <dimen name="session_item_top_padding">4dp</dimen>
+    <dimen name="session_pager_horizontal_padding">16dp</dimen>
 </resources>

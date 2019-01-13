@@ -1,45 +1,75 @@
 <resources>
     <!-- see https://github.com/material-components/material-components-android/blob/2997b6995f32bbd7f7a4f24f4030278a50c15e6f/docs/theming/Typography.md -->
 
-    <!-- Regular 24sp -->
+    <!-- Notosans Regular 24sp -->
     <style name="TextAppearance.App.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
         <item name="android:fontFamily">@font/notosans_regular</item>
         <item name="android:textColor">@color/gray1</item>
     </style>
 
-    <!-- Medium 20sp -->
+    <!-- Notosans Medium 20sp -->
     <style name="TextAppearance.App.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:fontFamily">@font/notosans_medium</item>
         <item name="android:textColor">@color/gray1</item>
     </style>
 
-    <!-- Regular 16sp -->
+    <!-- Notosans Regular 16sp -->
     <style name="TextAppearance.App.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="android:fontFamily">@font/notosans_regular</item>
         <item name="android:textColor">@color/gray1</item>
     </style>
 
-    <!-- Medium 14sp -->
+    <!-- Notosans Medium 14sp -->
     <style name="TextAppearance.App.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
         <item name="android:fontFamily">@font/notosans_medium</item>
         <item name="android:textColor">@color/gray1</item>
     </style>
 
-    <!-- Regular 16sp -->
+    <!-- Notosans Regular 16sp -->
     <style name="TextAppearance.App.Body1" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:fontFamily">@font/notosans_regular</item>
         <item name="android:textColor">@color/gray1</item>
     </style>
 
-    <!-- Regular 14sp -->
+    <!-- Notosans Regular 14sp -->
     <style name="TextAppearance.App.Body2" parent="TextAppearance.MaterialComponents.Body2">
         <item name="android:fontFamily">@font/notosans_regular</item>
         <item name="android:textColor">@color/gray1</item>
     </style>
 
-    <!-- Regular 12sp -->
+    <!-- Notosans Regular 12sp -->
     <style name="TextAppearance.App.Caption" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:fontFamily">@font/notosans_regular</item>
+        <item name="android:textColor">@color/gray1</item>
+    </style>
+
+    <!-- Lekton-Bold 24sp -->
+    <style name="TextAppearance.Lekton.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:fontFamily">@font/lekton</item>
+        <item name="fontFamily">@font/lekton</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/gray1</item>
+    </style>
+
+    <!-- Lekton-Bold 16sp -->
+    <style name="TextAppearance.Lekton.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:fontFamily">@font/lekton</item>
+        <item name="fontFamily">@font/lekton</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/gray1</item>
+    </style>
+
+    <!-- Lekton 16sp -->
+    <style name="TextAppearance.Lekton.Body1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:fontFamily">@font/lekton</item>
+        <item name="fontFamily">@font/lekton</item>
+        <item name="android:textColor">@color/gray1</item>
+    </style>
+
+    <!-- Lekton 12sp -->
+    <style name="TextAppearance.Lekton.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:fontFamily">@font/lekton</item>
+        <item name="fontFamily">@font/lekton</item>
         <item name="android:textColor">@color/gray1</item>
     </style>
 
