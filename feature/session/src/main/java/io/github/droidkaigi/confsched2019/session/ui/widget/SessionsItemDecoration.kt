@@ -10,6 +10,7 @@ import android.util.SparseArray
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.util.contains
 import androidx.core.util.forEach
 import androidx.recyclerview.widget.RecyclerView
 import com.soywiz.klock.DateTimeSpan
@@ -41,6 +42,7 @@ class SessionsItemDecoration(
     ).toFloat()
     // Keep SparseArray instance on property to avoid object creation in every onDrawOver()
     private val adapterPositionToViews = SparseArray<View>()
+    private val sessionTimeByAdapterPosition = SparseArray<String>()
 
     private data class TimeText(
         val text: String,
@@ -166,8 +168,14 @@ class SessionsItemDecoration(
             return null
         }
 
-        val item = groupAdapter.getItem(position) as? SessionItem ?: return null
-        return item.session.startTime
-            .plus(displayTimezoneOffset.value).toString("HH:mm")
+        return if (sessionTimeByAdapterPosition.contains(position)) {
+            sessionTimeByAdapterPosition.get(position)
+        } else {
+            val item = groupAdapter.getItem(position) as? SessionItem ?: return null
+            item.session.startTime.plus(displayTimezoneOffset.value)
+                .toString("HH:mm").also {
+                    sessionTimeByAdapterPosition.put(position, it)
+                }
+        }
     }
 }
