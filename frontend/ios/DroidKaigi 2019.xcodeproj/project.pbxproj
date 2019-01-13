@@ -14,10 +14,8 @@
 		01578ECE21E5E75D002B2033 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01578ECC21E5E75D002B2033 /* LaunchScreen.storyboard */; };
 		01578ED921E5E75D002B2033 /* DroidKaigi_2019Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01578ED821E5E75D002B2033 /* DroidKaigi_2019Tests.swift */; };
 		01578EE421E5E75D002B2033 /* DroidKaigi_2019UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01578EE321E5E75D002B2033 /* DroidKaigi_2019UITests.swift */; };
-		0161170C21E9A89D009CBB8D /* model.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0161170B21E9A89D009CBB8D /* model.framework */; };
-		0161170F21E9AC6F009CBB8D /* model.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0161170B21E9A89D009CBB8D /* model.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		01E119AA21E9C5DA00971500 /* api_impl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E119A821E9C5D500971500 /* api_impl.framework */; };
-		01E119AB21E9C5DA00971500 /* api_impl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01E119A821E9C5D500971500 /* api_impl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		01E0C3D021E9ED450014DA7E /* ios_combined.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E0C3CF21E9ED450014DA7E /* ios_combined.framework */; };
+		01E0C3D221E9ED4B0014DA7E /* ios_combined.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01E0C3CF21E9ED450014DA7E /* ios_combined.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,14 +36,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		0161171021E9AC6F009CBB8D /* Embed Frameworks */ = {
+		01E0C3D321E9ED4B0014DA7E /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				0161170F21E9AC6F009CBB8D /* model.framework in Embed Frameworks */,
-				01E119AB21E9C5DA00971500 /* api_impl.framework in Embed Frameworks */,
+				01E0C3D221E9ED4B0014DA7E /* ios_combined.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -66,8 +63,7 @@
 		01578EDF21E5E75D002B2033 /* DroidKaigi 2019UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DroidKaigi 2019UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		01578EE321E5E75D002B2033 /* DroidKaigi_2019UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroidKaigi_2019UITests.swift; sourceTree = "<group>"; };
 		01578EE521E5E75D002B2033 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0161170B21E9A89D009CBB8D /* model.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = model.framework; path = "../../model/build/xcode-frameworks/model.framework"; sourceTree = "<group>"; };
-		01E119A821E9C5D500971500 /* api_impl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = api_impl.framework; path = "../../data/api-impl/build/xcode-frameworks/api_impl.framework"; sourceTree = "<group>"; };
+		01E0C3CF21E9ED450014DA7E /* ios_combined.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ios_combined.framework; path = "../ios-combined/build/xcode-frameworks/ios_combined.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,8 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0161170C21E9A89D009CBB8D /* model.framework in Frameworks */,
-				01E119AA21E9C5DA00971500 /* api_impl.framework in Frameworks */,
+				01E0C3D021E9ED450014DA7E /* ios_combined.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,8 +147,7 @@
 		0161170A21E9A89C009CBB8D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				01E119A821E9C5D500971500 /* api_impl.framework */,
-				0161170B21E9A89D009CBB8D /* model.framework */,
+				01E0C3CF21E9ED450014DA7E /* ios_combined.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -169,7 +163,7 @@
 				01578EB921E5E75A002B2033 /* Sources */,
 				01578EBA21E5E75A002B2033 /* Frameworks */,
 				01578EBB21E5E75A002B2033 /* Resources */,
-				0161171021E9AC6F009CBB8D /* Embed Frameworks */,
+				01E0C3D321E9ED4B0014DA7E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -302,7 +296,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "modules=(\n\":model\"\n\":data:api-impl\"\n)\ncd \"$SRCROOT/../..\"\n./gradlew \"${modules[@]/%/:packForXcode}\" -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
+			shellScript = "modules=(\n\":frontend:ios-combined\"\n)\ncd \"$SRCROOT/../..\"\n./gradlew \"${modules[@]/%/:packForXcode}\" -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -490,8 +484,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/../../model/build/xcode-frameworks",
-					"$(SRCROOT)/../../data/api-impl/build/xcode-frameworks",
+					"$(SRCROOT)/../ios-combined/build/xcode-frameworks",
+					"$(PROJECT_DIR)-combined/build/xcode-frameworks",
 				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "DroidKaigi 2019/Info.plist";
@@ -513,8 +507,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/../../model/build/xcode-frameworks",
-					"$(SRCROOT)/../../data/api-impl/build/xcode-frameworks",
+					"$(SRCROOT)/../ios-combined/build/xcode-frameworks",
+					"$(PROJECT_DIR)-combined/build/xcode-frameworks",
 				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "DroidKaigi 2019/Info.plist";
