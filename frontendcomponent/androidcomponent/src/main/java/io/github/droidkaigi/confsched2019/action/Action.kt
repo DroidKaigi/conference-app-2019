@@ -1,8 +1,10 @@
 package io.github.droidkaigi.confsched2019.action
 
 import io.github.droidkaigi.confsched2019.model.Announcement
+import io.github.droidkaigi.confsched2019.model.Category
 import io.github.droidkaigi.confsched2019.model.ErrorMessage
 import io.github.droidkaigi.confsched2019.model.Lang
+import io.github.droidkaigi.confsched2019.model.LangSupport
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.SearchResult
@@ -11,7 +13,6 @@ import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.model.SponsorCategory
 import io.github.droidkaigi.confsched2019.model.SystemProperty
-import io.github.droidkaigi.confsched2019.model.Category
 
 sealed class Action {
     class Error(val msg: ErrorMessage) : Action()
@@ -43,6 +44,11 @@ sealed class Action {
         val lang: Lang,
         override val checked: Boolean
     ) : FilterChange<Lang>(lang, checked)
+
+    data class LangSupportFilterChanged(
+        val langSupport: LangSupport,
+        override val checked: Boolean
+    ) : FilterChange<LangSupport>(langSupport, checked)
 
     class FilterCleared : Action()
     class BottomSheetFilterToggled(val page: SessionPage) : Action()

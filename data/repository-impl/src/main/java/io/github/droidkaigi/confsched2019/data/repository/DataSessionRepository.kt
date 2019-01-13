@@ -7,6 +7,7 @@ import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.firestore.Firestore
 import io.github.droidkaigi.confsched2019.data.repository.mapper.toSession
 import io.github.droidkaigi.confsched2019.model.Lang
+import io.github.droidkaigi.confsched2019.model.LangSupport
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.model.SessionFeedback
@@ -30,6 +31,7 @@ class DataSessionRepository @Inject constructor(
             sessions = sessions,
             speakers = speechSessions.flatMap { it.speakers }.distinct(),
             langs = Lang.values().toList(),
+            langSupports = LangSupport.values().toList(),
             rooms = sessions.map { it.room }.sortedBy { it.name }.distinct(),
             category = speechSessions.map { it.category }.distinct()
         )

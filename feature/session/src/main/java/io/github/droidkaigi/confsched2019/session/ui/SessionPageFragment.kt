@@ -19,6 +19,7 @@ import dagger.android.ContributesAndroidInjector
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.Category
 import io.github.droidkaigi.confsched2019.model.Lang
+import io.github.droidkaigi.confsched2019.model.LangSupport
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.model.defaultLang
@@ -108,8 +109,10 @@ class SessionPageFragment : DaggerFragment() {
             ) { category -> category.name.getByLang(defaultLang()) }
             binding.sessionsFilterLangChip.setupFilter(
                 contents.langs
-
             ) { lang -> lang.text.getByLang(defaultLang()) }
+            binding.sessionsFilterLangSupportChip.setupFilter(
+                contents.langSupports
+            ) { langSupport -> langSupport.text.getByLang(defaultLang()) }
         }
         sessionPagesStore.selectedTab.changed(viewLifecycleOwner) {
             if (SessionPage.pages[args.tabIndex] == it) {
@@ -238,6 +241,20 @@ class SessionPageFragment : DaggerFragment() {
             }
             chip.onCheckedChanged { _, isChecked ->
                 sessionPagesActionCreator.changeFilter(lang, isChecked)
+            }
+        }
+        val filterLangSupports = sessionPagesStore.filtersValue.langSupports
+        binding.sessionsFilterLangSupportChip.forEach {
+            val chip = it as? FilterChip ?: return@forEach
+            val langSupport = it.tag as? LangSupport ?: return@forEach
+            chip.onCheckedChangeListener = null
+            if (filterLangSupports.isNotEmpty()) {
+                chip.isChecked = filterLangSupports.contains(langSupport)
+            } else {
+                chip.isChecked = false
+            }
+            chip.onCheckedChanged { _, isChecked ->
+                sessionPagesActionCreator.changeFilter(langSupport, isChecked)
             }
         }
     }
