@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -73,10 +74,18 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding.sessionsRecycler.adapter = groupAdapter
-        binding.sessionsRecycler.addItemDecoration(
-            SessionsItemDecoration(requireContext(), groupAdapter)
-        )
+        binding.sessionsRecycler.apply {
+            adapter = groupAdapter
+            addItemDecoration(
+                SessionsItemDecoration(requireContext(), groupAdapter)
+            )
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    binding.sessionsListHeaderShadow.isVisible =
+                        recyclerView.canScrollVertically(-1)
+                }
+            })
+        }
 
         val onFilterButtonClick: (View) -> Unit = {
             sessionPageActionCreator.toggleFilterExpanded(SessionPage.Favorite)
