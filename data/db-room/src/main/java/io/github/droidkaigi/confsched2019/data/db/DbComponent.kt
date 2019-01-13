@@ -15,6 +15,7 @@ import kotlin.coroutines.CoroutineContext
 interface DbComponent {
     fun sessionDatabase(): SessionDatabase
     fun sponsorDatabase(): SponsorDatabase
+    fun announcementDatabase(): AnnouncementDatabase
 
     @Component.Builder
     interface Builder {
