@@ -15,6 +15,11 @@
             name="session"
             type="io.github.droidkaigi.confsched2019.model.Session.ServiceSession"
             />
+
+        <variable
+            name="lang"
+            type="io.github.droidkaigi.confsched2019.model.Lang"
+            />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,7 +60,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/notosans_medium"
-            android:text="@{session.title}"
+            android:text="@{session.title.getByLang(lang)}"
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.App.Subtitle1"
             app:layout_constraintEnd_toEndOf="@id/favorite"

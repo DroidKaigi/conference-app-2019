@@ -42,7 +42,7 @@ sealed class Session(
         override val dayNumber: Int,
         override val startTime: DateTime,
         override val endTime: DateTime,
-        val title: String,
+        val title: LocaledString,
         override val room: Room,
         val sessionType: SessionType,
         override val isFavorited: Boolean
