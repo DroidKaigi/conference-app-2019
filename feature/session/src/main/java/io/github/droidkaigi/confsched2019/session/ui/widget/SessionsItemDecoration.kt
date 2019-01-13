@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.util.forEach
 import androidx.recyclerview.widget.RecyclerView
+import com.soywiz.klock.DateTime
 import com.soywiz.klock.DateTimeSpan
 import com.xwray.groupie.GroupAdapter
 import io.github.droidkaigi.confsched2019.session.R
@@ -41,6 +42,7 @@ class SessionsItemDecoration(
     ).toFloat()
     // Keep SparseArray instance on property to avoid object creation in every onDrawOver()
     private val adapterPositionToViews = SparseArray<View>()
+    private val cachedDateTimeText = HashMap<DateTime, String>()
 
     private data class TimeText(
         val text: String,
@@ -167,7 +169,10 @@ class SessionsItemDecoration(
         }
 
         val item = groupAdapter.getItem(position) as? SessionItem ?: return null
-        return item.session.startTime
-            .plus(displayTimezoneOffset.value).toString("HH:mm")
+        return cachedDateTimeText[item.session.startTime]
+            ?: item.session.startTime.plus(displayTimezoneOffset.value)
+                .toString("HH:mm").also {
+                    cachedDateTimeText[item.session.startTime] = it
+                }
     }
 }
