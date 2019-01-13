@@ -44,12 +44,12 @@
             android:id="@+id/nonEmptyStateViewGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="sessionsListHeader, sessions_recycler"
+            app:constraint_referenced_ids="sessions_list_header, sessions_recycler"
             app:visibleGone="@{!safeUnbox(shouldShowEmptyStateView)}"
             />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/sessionsListHeader"
+            android:id="@+id/sessions_list_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="8dp"
@@ -110,12 +110,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
-            android:id="@+id/sessionsListHeaderShadow"
+            android:id="@+id/sessions_list_header_shadow"
             android:layout_width="match_parent"
             android:layout_height="4dp"
             android:background="@drawable/shape_drop_down_shadow"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/sessionsListHeader"
+            app:layout_constraintTop_toBottomOf="@id/sessions_list_header"
             />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -127,7 +127,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sessionsListHeader"
+            app:layout_constraintTop_toBottomOf="@id/sessions_list_header"
             tools:listitem="@layout/item_session"
             />
 
@@ -140,7 +140,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sessionsListHeader"
+            app:layout_constraintTop_toBottomOf="@id/sessions_list_header"
             >
 
             <ImageView
