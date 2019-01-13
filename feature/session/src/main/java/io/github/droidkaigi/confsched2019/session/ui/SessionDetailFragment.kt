@@ -89,7 +89,12 @@ class SessionDetailFragment : DaggerFragment() {
 
         sessionContentsStore.speechSession(sessionDetailFragmentArgs.session)
             .changed(viewLifecycleOwner) { session ->
-                applySessionLayout(session)
+                applySpeechSessionLayout(session)
+            }
+
+        sessionContentsStore.serviceSession(sessionDetailFragmentArgs.session)
+            .changed(viewLifecycleOwner) { serviceSession ->
+                applyServiceSessionLayout(serviceSession)
             }
 
         progressTimeLatch = ProgressTimeLatch { showProgress ->
@@ -122,10 +127,14 @@ class SessionDetailFragment : DaggerFragment() {
         }
     }
 
-    private fun applySessionLayout(session: Session.SpeechSession) {
+    private fun applySpeechSessionLayout(session: Session.SpeechSession) {
         binding.session = session
-        binding.lang = defaultLang()
+        binding.speechSession = session
+        val lang = defaultLang()
+        binding.lang = lang
         binding.timeZoneOffset = DateTimeSpan(hours = 9) // FIXME Get from device setting
+
+        binding.sessionTitle.text = session.title.getByLang(lang)
 
         @Suppress("StringFormatMatches") // FIXME
         binding.sessionTimeAndRoom.text = getString(
@@ -134,13 +143,15 @@ class SessionDetailFragment : DaggerFragment() {
             session.room.name
         )
         binding.sessionIntendedAudienceDescription.text = session.intendedAudience
-        binding.categoryChip.text = session.category.name.getByLang(systemStore.lang)
+        binding.categoryChip.text = session.category?.name?.getByLang(systemStore.lang)
 
         session.message?.let { message ->
             binding.sessionMessage.text = message.getByLang(systemStore.lang)
         }
 
-        val sessionItems = session
+        binding.sessionDescription.text = session.desc
+
+        val speakerItems = session
             .speakers
             .map {
                 speakerItemFactory.create(
@@ -148,7 +159,8 @@ class SessionDetailFragment : DaggerFragment() {
                     SessionDetailFragmentDirections.actionSessionDetailToSpeaker(it.id)
                 )
             }
-        groupAdapter.update(sessionItems)
+
+        groupAdapter.update(speakerItems)
 
         binding.sessionVideoButton.setOnClickListener {
             session.videoUrl?.let { urlString ->
@@ -160,6 +172,26 @@ class SessionDetailFragment : DaggerFragment() {
                 activityActionCreator.openUrl(urlString)
             }
         }
+    }
+
+    private fun applyServiceSessionLayout(session: Session.ServiceSession) {
+        binding.session = session
+        binding.serviceSession = session
+
+        val lang = defaultLang()
+        binding.lang = lang
+        binding.timeZoneOffset = DateTimeSpan(hours = 9) // FIXME Get from device setting
+
+        binding.sessionTitle.text = session.title
+
+        @Suppress("StringFormatMatches") // FIXME
+        binding.sessionTimeAndRoom.text = getString(
+            R.string.session_duration_room_format,
+            session.timeInMinutes,
+            session.room.name
+        )
+
+        binding.sessionDescription.text = session.desc
     }
 }
 
