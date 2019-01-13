@@ -70,10 +70,12 @@ class SessionDetailFragment : DaggerFragment() {
             when (item.itemId) {
                 R.id.session_share -> {
                     val session = binding.session ?: return@setOnMenuItemClickListener false
-                    activityActionCreator.shareUrl(getString(
-                        R.string.session_detail_share_url,
-                        session.id
-                    ))
+                    activityActionCreator.shareUrl(
+                        getString(
+                            R.string.session_detail_share_url,
+                            session.id
+                        )
+                    )
                 }
                 R.id.session_place ->
                     Toast.makeText(
