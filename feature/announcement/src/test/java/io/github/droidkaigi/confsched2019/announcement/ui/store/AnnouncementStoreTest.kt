@@ -10,8 +10,8 @@ import io.github.droidkaigi.confsched2019.model.Announcement
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.widget.component.DirectDispatcher
 import io.mockk.MockKAnnotations
-import io.mockk.coVerify
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
@@ -31,13 +31,13 @@ class AnnouncementStoreTest {
         val observer = mockk<(LoadingState?) -> Unit>(relaxed = true)
 
         announcementStore.loadingState.changedForever(observer)
-        coVerify { observer(LoadingState.INITIALIZED) }
+        verify { observer(LoadingState.INITIALIZED) }
 
         dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADING))
-        coVerify { observer(LoadingState.LOADING) }
+        verify { observer(LoadingState.LOADING) }
 
         dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADED))
-        coVerify { observer(LoadingState.LOADED) }
+        verify { observer(LoadingState.LOADED) }
     }
 
     @Test fun announcements() = runBlocking {
@@ -45,12 +45,12 @@ class AnnouncementStoreTest {
         val announcementStore = AnnouncementStore(dispatcher)
         val observer: (List<Announcement>) -> Unit = mockk(relaxed = true)
         announcementStore.announcements.changedForever(observer)
-        coVerify { observer(emptyList()) }
+        verify { observer(emptyList()) }
 
         val dummyAnnouncements = dummyAnnouncementsData()
         dispatcher.dispatch(
             Action.AnnouncementLoaded(dummyAnnouncements)
         )
-        coVerify { observer(dummyAnnouncements) }
+        verify { observer(dummyAnnouncements) }
     }
 }

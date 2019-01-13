@@ -10,8 +10,8 @@ import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.widget.component.DirectDispatcher
 import io.mockk.MockKAnnotations
-import io.mockk.coVerify
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
@@ -31,12 +31,12 @@ class SessionContentsStoreTest {
         val observer = mockk<(LoadingState?) -> Unit>(relaxed = true)
 
         sessionsStore.loadingState.changedForever(observer)
-        coVerify { observer(LoadingState.INITIALIZED) }
+        verify { observer(LoadingState.INITIALIZED) }
 
         dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
-        coVerify { observer(LoadingState.LOADING) }
+        verify { observer(LoadingState.LOADING) }
         dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
-        coVerify { observer(LoadingState.LOADED) }
+        verify { observer(LoadingState.LOADED) }
     }
 
     @Test fun sessions() = runBlocking<Unit> {
@@ -45,12 +45,12 @@ class SessionContentsStoreTest {
         val observer: (SessionContents) -> Unit = mockk(relaxed = true)
 
         sessionsStore.sessionContents.changedForever(observer)
-        coVerify { observer(SessionContents.EMPTY) }
+        verify { observer(SessionContents.EMPTY) }
 
         val dummySessionContents = SessionContents.EMPTY.copy(sessions = dummySessionData())
         dispatcher.dispatch(
             Action.SessionContentsLoaded(dummySessionContents)
         )
-        coVerify { observer(dummySessionContents) }
+        verify { observer(dummySessionContents) }
     }
 }
