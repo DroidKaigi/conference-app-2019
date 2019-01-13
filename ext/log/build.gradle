@@ -8,14 +8,23 @@ apply from: rootProject.file('gradle/android.gradle')
 kotlin {
     targets {
         fromPreset(presets.android, 'android')
+
+        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") \
+                              ? presets.iosArm64 : presets.iosX64
+
+        fromPreset(iOSTarget, 'iOS') {
+            compilations.main.outputKinds('FRAMEWORK')
+        }
     }
     sourceSets {
         commonMain.dependencies {
             api Dep.Kotlin.stdlibCommon
+            api Dep.Timber.common
         }
         androidMain {
             dependencies {
                 api Dep.Kotlin.stdlibJvm
+                api Dep.Timber.jdk
             }
         }
         commonTest.dependencies {

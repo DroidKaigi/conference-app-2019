@@ -2,15 +2,17 @@ package io.github.droidkaigi.confsched2019.session.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager.widget.ViewPager
-import com.google.android.material.chip.Chip
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -51,6 +53,7 @@ class SessionPagesFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_session_pages,
@@ -86,6 +89,8 @@ class SessionPagesFragment : DaggerFragment() {
 
     private fun setupSessionPager() {
         binding.sessionsTabLayout.setupWithViewPager(binding.sessionsViewpager)
+        binding.sessionsViewpager.pageMargin =
+            resources.getDimensionPixelSize(R.dimen.session_pager_horizontal_padding)
         binding.sessionsViewpager.adapter = object : FragmentStatePagerAdapter(
             childFragmentManager
         ) {
@@ -108,17 +113,23 @@ class SessionPagesFragment : DaggerFragment() {
             }
         )
 
-        (0 until binding.sessionsTabLayout.tabCount).forEach {
-            val view = layoutInflater.inflate(
-                R.layout.layout_title_chip, binding.sessionsTabLayout, false
-            ) as ViewGroup
-            val chip = view.getChildAt(0) as Chip
-            val tab = binding.sessionsTabLayout.getTabAt(it)
+        (0 until binding.sessionsTabLayout.tabCount).forEach { tabIndex ->
+            val tab = binding.sessionsTabLayout.getTabAt(tabIndex)
             tab?.let {
-                chip.text = tab.text
-                tab.setCustomView(view)
+                val view = layoutInflater.inflate(
+                    R.layout.layout_tab_item, binding.sessionsTabLayout, false
+                ) as? TextView
+                view?.let { textView ->
+                    textView.text = tab.text
+                    it.customView = textView
+                }
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_toolbar, menu)
     }
 }
 

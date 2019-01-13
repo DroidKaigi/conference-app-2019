@@ -4,7 +4,7 @@ import com.soywiz.klock.DateTime
 import io.github.droidkaigi.confsched2019.data.api.DroidKaigiApi
 import io.github.droidkaigi.confsched2019.data.api.GoogleFormApi
 import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
-import io.github.droidkaigi.confsched2019.data.firestore.FireStore
+import io.github.droidkaigi.confsched2019.data.firestore.Firestore
 import io.github.droidkaigi.confsched2019.data.repository.mapper.toSession
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.Session
@@ -19,7 +19,7 @@ class DataSessionRepository @Inject constructor(
     private val droidKaigiApi: DroidKaigiApi,
     private val googleFormApi: GoogleFormApi,
     private val sessionDatabase: SessionDatabase,
-    private val fireStore: FireStore
+    private val firestore: Firestore
 ) : SessionRepository {
 
     override suspend fun sessionContents(): SessionContents = coroutineScope {
@@ -30,7 +30,7 @@ class DataSessionRepository @Inject constructor(
             sessions = sessions,
             speakers = speechSessions.flatMap { it.speakers }.distinct(),
             langs = Lang.values().toList(),
-            rooms = speechSessions.map { it.room }.distinct(),
+            rooms = sessions.map { it.room }.sortedBy { it.name }.distinct(),
             category = speechSessions.map { it.category }.distinct()
         )
     }
@@ -39,7 +39,7 @@ class DataSessionRepository @Inject constructor(
         val sessionsAsync = async { sessionDatabase.sessions() }
         val allSpeakersAsync = async { sessionDatabase.allSpeaker() }
         val fabSessionIdsAsync = async {
-            fireStore.getFavoriteSessionIds()
+            firestore.getFavoriteSessionIds()
         }
 
         val sessionEntities = sessionsAsync.await()
@@ -55,8 +55,8 @@ class DataSessionRepository @Inject constructor(
             ))
     }
 
-    override suspend fun toggleFavorite(session: Session.SpeechSession) {
-        fireStore.toggleFavorite(session.id)
+    override suspend fun toggleFavorite(session: Session) {
+        firestore.toggleFavorite(session.id)
     }
 
     override suspend fun submitSessionFeedback(

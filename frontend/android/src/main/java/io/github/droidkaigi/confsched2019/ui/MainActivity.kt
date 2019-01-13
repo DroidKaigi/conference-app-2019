@@ -1,15 +1,15 @@
 package io.github.droidkaigi.confsched2019.ui
 
 import android.graphics.PorterDuff
-import android.os.Build
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -47,6 +47,7 @@ import io.github.droidkaigi.confsched2019.session.ui.SpeakerFragmentModule
 import io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragment
 import io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragmentModule
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
+import io.github.droidkaigi.confsched2019.ui.widget.StatusBarColorManager
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
 import io.github.droidkaigi.confsched2019.user.store.UserStore
 import javax.inject.Inject
@@ -67,11 +68,15 @@ class MainActivity : DaggerAppCompatActivity() {
     private val navController: NavController by lazy {
         findNavController(R.id.root_nav_host_fragment)
     }
+    private val statusBarColors: StatusBarColorManager by lazy {
+        StatusBarColorManager()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.toolbar)
         setupNavigation()
+        setupStatusBarColors()
 
         systemStore.errorMsg.changed(this) { message ->
             val messageStr = when (message) {
@@ -88,8 +93,9 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     private fun setupNavigation() {
+        val topLevelDestinationIds = setOf(R.id.main, R.id.about, R.id.announce, R.id.setting)
         val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.main, R.id.about, R.id.announce, R.id.setting),
+            topLevelDestinationIds,
             binding.drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -101,12 +107,11 @@ class MainActivity : DaggerAppCompatActivity() {
             if (!config.hasTitle) supportActionBar?.title = ""
 
             binding.isWhiteTheme = config.isWhiteTheme
-            if (23 <= Build.VERSION.SDK_INT) {
-                window.decorView.systemUiVisibility = if (config.isWhiteTheme) {
-                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                } else {
-                    0
-                }
+            statusBarColors.isWhiteTheme = config.isWhiteTheme
+            if (destination.id in topLevelDestinationIds) {
+                binding.toolbar.setNavigationIcon(R.drawable.ic_hamburger)
+            } else {
+                binding.toolbar.setNavigationIcon(R.drawable.ic_back_arrow)
             }
             val toolbarContentsColor = ContextCompat.getColor(
                 this, if (config.isWhiteTheme) android.R.color.black else R.color.white
@@ -130,14 +135,32 @@ class MainActivity : DaggerAppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_toolbar, menu)
-        return true
+    private fun setupStatusBarColors() {
+        binding.drawerLayout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+                statusBarColors.drawerSlideOffset = slideOffset
+            }
+        })
+
+        statusBarColors.systemUiVisibility.changed(this) { visibility ->
+            window.decorView.systemUiVisibility = visibility
+        }
+        statusBarColors.statusBarColor.changed(this) { color ->
+            window.statusBarColor = color
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return NavigationUI.onNavDestinationSelected(item, navController) ||
             super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+            return
+        }
+        super.onBackPressed()
     }
 }
 

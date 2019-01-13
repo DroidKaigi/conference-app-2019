@@ -19,11 +19,12 @@ import io.github.droidkaigi.confsched2019.about.ui.item.AboutSection
 import io.github.droidkaigi.confsched2019.about.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.about.ui.widget.DottedItemDecoration
 import io.github.droidkaigi.confsched2019.di.PageScope
+import javax.inject.Inject
 
 class AboutFragment : DaggerFragment() {
 
     private lateinit var binding: FragmentAboutBinding
-    private val aboutSection = AboutSection()
+    @Inject lateinit var aboutSection: AboutSection
 
     override fun onCreateView(
         inflater: LayoutInflater,

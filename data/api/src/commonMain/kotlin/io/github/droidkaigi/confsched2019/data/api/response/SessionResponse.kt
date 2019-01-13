@@ -7,8 +7,8 @@ interface SessionResponse {
     val englishTitle: String?
     val speakers: List<String>
     val description: String
-    val startsAt: String
-    val endsAt: String
+    val startsAtWithTZ: String
+    val endsAtWithTZ: String
     val roomId: Int
     val categoryItems: List<Int>
     val questionAnswers: List<QuestionAnswerResponse>
@@ -16,4 +16,7 @@ interface SessionResponse {
     val isPlenumSession: Boolean
     val sessionType: String?
     val forBeginners: Boolean
+    val videoUrl: String?
+    val slideUrl: String?
+    val interpretationTarget: Boolean
 }

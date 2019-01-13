@@ -37,7 +37,7 @@ internal abstract class ApiModule {
         }
 
         @JvmStatic @Provides @Named("apiEndpoint") fun apiEndpoint(): String {
-            return BuildConfig.API_ENDPOINT
+            return io.github.droidkaigi.confsched2019.data.api.apiEndpoint()
         }
     }
 }

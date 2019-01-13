@@ -2,6 +2,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     >
 
     <data>
@@ -34,6 +35,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:placeHolder="@{@drawable/ic_person_outline_black_24dp}"
             app:placeHolderTint="@{@color/gray2}"
+            tools:src="@tools:sample/avatars"
             />
 
         <TextView
@@ -43,11 +45,13 @@
             android:layout_marginStart="8dp"
             android:gravity="start|center_vertical"
             android:text="@{speaker.name}"
+            android:textAppearance="@style/TextAppearance.Lekton.Body1"
             android:textColor="@color/gray1"
             app:layout_constraintBottom_toBottomOf="@id/speaker_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/speaker_image"
             app:layout_constraintTop_toTopOf="@id/speaker_image"
+            tools:text="@tools:sample/full_names"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

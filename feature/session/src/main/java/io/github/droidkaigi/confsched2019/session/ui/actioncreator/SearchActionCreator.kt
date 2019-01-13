@@ -18,12 +18,12 @@ class SearchActionCreator @Inject constructor(
 ) : CoroutineScope by lifecycle.coroutineScope,
     ErrorHandler {
     fun search(query: String?, sessionContents: SessionContents) {
-        // if we do not have query, we should show speakers
+        // if we do not have query, we should show speakers and sessions
         if (query.isNullOrBlank()) {
             dispatcher.launchAndDispatch(
                 Action.SearchResultLoaded(
                     SearchResult(
-                        listOf(),
+                        sessionContents.sessions,
                         sessionContents.speakers,
                         query
                     )

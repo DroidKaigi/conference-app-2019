@@ -1,6 +1,7 @@
 package io.github.droidkaigi.confsched2019.session.ui
 
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
+import com.soywiz.klock.DateTimeSpan
 import dagger.Module
 import dagger.Provides
 import dagger.android.support.AndroidSupportInjection
@@ -48,12 +50,13 @@ class SpeakerFragment : DaggerFragment() {
 
         val speakerId = speakerFragmentArgs.speaker
         binding.lang = defaultLang()
+        binding.timeZoneOffset = DateTimeSpan(hours = 9) // FIXME Get from device setting
         sessionContentsStore.speaker(speakerId).changed(
             this
         ) { speaker ->
             binding.speaker = speaker
         }
-
+        binding.speakerDescription.movementMethod = LinkMovementMethod.getInstance()
         sessionContentsStore.speechSessionBySpeakerName(speakerId)
             .changed(viewLifecycleOwner) { session ->
                 binding.session = session
