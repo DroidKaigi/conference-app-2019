@@ -4,6 +4,7 @@ import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
@@ -132,6 +133,9 @@ class MainActivity : DaggerAppCompatActivity() {
 
                 windowInsets
             }
+        }
+        binding.navViewFooter.setOnClickListener {
+            Toast.makeText(this, "not url decided", Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -18,7 +18,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api Dep.Kotlin.stdlibCommon
-            api project(":model")
+            implementation project(":model")
         }
         androidMain {
             dependsOn commonMain

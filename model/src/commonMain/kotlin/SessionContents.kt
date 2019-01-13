@@ -5,10 +5,14 @@ data class SessionContents(
     val speakers: List<Speaker>,
     val rooms: List<Room>,
     val langs: List<Lang>,
-    val category: List<Category>
+    val langSupports: List<LangSupport>,
+    val category: List<Category>,
+    val audienceCategories: List<AudienceCategory>
 ) {
     companion object {
         val EMPTY = SessionContents(
+            listOf(),
+            listOf(),
             listOf(),
             listOf(),
             listOf(),

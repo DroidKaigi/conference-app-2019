@@ -31,7 +31,7 @@ enum class SessionType(val id: String, val isFavoritable: Boolean, val supportDe
         isFavoritable = false,
         supportDetail = false,
         isFilterable = false),
-    BREAK(
+    BREAKTIME(
         id = "break",
         isFavoritable = false,
         supportDetail = false,

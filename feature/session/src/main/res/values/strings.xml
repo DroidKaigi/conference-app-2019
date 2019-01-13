@@ -10,6 +10,8 @@
     <string name="session_filter_reset">Reset</string>
     <string name="session_filter_room" translatable="false">Room</string>
     <string name="session_filter_language" translatable="false">Language</string>
+    <string name="session_filter_language_support" translatable="false">Language Support</string>
+    <string name="session_filter_audience_category" translatable="false">Audience Category</string>
     <string name="session_filter_category" translatable="false">Category</string>
     <string name="session_detail_intended_audience">Intended Audience</string>
     <string name="session_detail_tag" translatable="false">Tags</string>
@@ -26,7 +28,8 @@
     <string name="session_search_hint">Search…</string>
     <string name="session_go_to_survey">Go to survey</string>
     <string name="session_live" translatable="false">Live</string>
-    <string name="session_simultaneous_interpretation">simultaneous interpretation</string>
+    <string name="session_simultaneous_interpretation">Simultaneous Interpretation</string>
+    <string name="session_for_beginners">For Beginners</string>
     <string name="session_bottom_appbar_behavior" translatable="false">io.github.droidkaigi.confsched2019.session.ui.widget.SessionBottomAppBarBehavior</string>
     <string name="session_favorite_empty">Add sessions to your plan\nby tapping the bookmark button.</string>
 </resources>

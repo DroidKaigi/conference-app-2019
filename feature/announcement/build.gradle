@@ -12,7 +12,7 @@ dependencies {
     implementation project(":feature:user")
     implementation project(":feature:system")
     implementation project(':frontendcomponent:androidcomponent')
-    implementation project(":data:firestore")
+    implementation project(":data:repository")
     implementation project(':ext:android-extension')
 
     implementation Dep.Kotlin.stdlibJvm

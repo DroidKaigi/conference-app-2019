@@ -72,7 +72,8 @@ fun SessionWithSpeakers.toSession(
             speakers = speakers,
             message = session.message?.let {
                 LocaledString(it.ja, it.en)
-            }
+            },
+            forBeginners = session.forBeginners
         )
     }
 }

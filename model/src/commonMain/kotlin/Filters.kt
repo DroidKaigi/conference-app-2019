@@ -3,7 +3,9 @@ package io.github.droidkaigi.confsched2019.model
 data class Filters(
     val rooms: Set<Room> = mutableSetOf(),
     val categories: Set<Category> = mutableSetOf(),
-    val langs: Set<Lang> = mutableSetOf()
+    val langs: Set<Lang> = mutableSetOf(),
+    val langSupports: Set<LangSupport> = mutableSetOf(),
+    val audienceCategories: Set<AudienceCategory> = mutableSetOf()
 ) {
     fun isPass(
         session: Session
@@ -22,11 +24,17 @@ data class Filters(
             if (langs.isEmpty()) return@run true
             return@run langs.map { it.text }.contains(session.language)
         }
-        return roomFilterOk && categoryFilterOk && langFilterOk
+        val langSupportFilterOk = run {
+            return@run if (langSupports.contains(LangSupport.INTERPRETATION)) session.isInterpretationTarget else true
+        }
+        val audienceCategoryFilterOk = run {
+            return@run if (audienceCategories.contains(AudienceCategory.BEGINNERS)) session.forBeginners else true
+        }
+        return roomFilterOk && categoryFilterOk && langFilterOk && langSupportFilterOk && audienceCategoryFilterOk
     }
 
     fun isFiltered(): Boolean {
-        return rooms.isNotEmpty() || categories.isNotEmpty() || langs.isNotEmpty()
+        return rooms.isNotEmpty() || categories.isNotEmpty() || langs.isNotEmpty() || langSupports.isNotEmpty() || return audienceCategories.isNotEmpty()
     }
 
     private fun Session.isNotFilterableServiceSession()

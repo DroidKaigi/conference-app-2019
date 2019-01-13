@@ -43,7 +43,8 @@ fun dummySessionData(): List<Session> {
             isInterpretationTarget = true,
             isFavorited = true,
             speakers = listOf(),
-            message = LocaledString("部屋移動", "room moved")
+            message = LocaledString("部屋移動", "room moved"),
+            forBeginners = true
         )
     )
 }
@@ -69,7 +70,8 @@ fun firstDummySpeechSession(): Session.SpeechSession {
         isInterpretationTarget = false,
         isFavorited = false,
         speakers = listOf(),
-        message = null
+        message = null,
+        forBeginners = false
     )
 }
 

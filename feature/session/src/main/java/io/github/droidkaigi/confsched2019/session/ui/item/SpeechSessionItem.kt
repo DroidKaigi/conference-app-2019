@@ -24,7 +24,6 @@ import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSessionBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
-import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.util.lazyWithParam
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlin.math.max
@@ -34,8 +33,7 @@ class SpeechSessionItem @AssistedInject constructor(
     @Assisted val navDirections: NavDirections,
     @Assisted val addPaddingForTime: Boolean,
     val navController: NavController,
-    val sessionContentsActionCreator: SessionContentsActionCreator,
-    val systemStore: SystemStore
+    val sessionContentsActionCreator: SessionContentsActionCreator
 ) : BindableItem<ItemSessionBinding>(
     session.id.hashCode().toLong()
 ), SessionItem {
@@ -71,12 +69,12 @@ class SpeechSessionItem @AssistedInject constructor(
                 speechSession.timeInMinutes,
                 speechSession.room.name
             )
-            categoryChip.text = speechSession.category.name.getByLang(systemStore.lang)
+            categoryChip.text = speechSession.category.name.getByLang(defaultLang())
 
             bindSpeaker()
 
             speechSession.message?.let { message ->
-                this@with.message.text = message.getByLang(systemStore.lang)
+                this@with.message.text = message.getByLang(defaultLang())
             }
         }
     }

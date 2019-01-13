@@ -21,7 +21,8 @@ docker_env:
       - image: circleci/android:api-28-alpha
     environment:
       <<: *cache_version_keys
-      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError" -Dorg.gradle.daemon=false'
+      JAVA_OPTS: "-Xms512m -Xmx2048m"
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError" -Dorg.gradle.daemon=false -Dorg.gradle.parallel=false'
 
   go_defaults: &go_defaults
     working_directory: ~/conference-app-2019

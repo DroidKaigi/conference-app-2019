@@ -22,5 +22,6 @@ data class SessionEntityImpl(
     @Embedded override var language: LanguageEntityImpl?,
     @Embedded override val category: CategoryEntityImpl?,
     @Embedded override val room: RoomEntityImpl?,
-    @Embedded override val message: MessageEntityImpl?
+    @Embedded override val message: MessageEntityImpl?,
+    override val forBeginners: Boolean
 ) : SessionEntity
