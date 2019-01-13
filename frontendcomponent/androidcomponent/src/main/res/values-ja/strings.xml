@@ -3,7 +3,7 @@
     <string name="announce_label">お知らせ</string>
     <string name="map_label">フロアマップ</string>
     <string name="session_label">タイムライン</string>
-    <string name="about_label">Droidkaigiとは</string>
+    <string name="about_label">DroidKaigi とは</string>
     <string name="sponsor_label">スポンサーページ</string>
     <string name="survey_label">全体アンケート</string>
     <string name="description_filter_applied">フィルター%1$sを適用</string>
