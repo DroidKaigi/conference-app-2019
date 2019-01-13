@@ -101,7 +101,7 @@ class SponsorFragment : DaggerFragment() {
                 sponsor.toItem(category)
             }
         )
-        if (isLastItem.not()) {
+        if (!isLastItem) {
             setFooter(DividerItem())
         }
         setHideWhenEmpty(true)
