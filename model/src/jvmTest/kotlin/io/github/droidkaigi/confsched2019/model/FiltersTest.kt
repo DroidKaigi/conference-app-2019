@@ -79,4 +79,20 @@ class FiltersTest {
 
         assertFalse { Filters(langs = mutableSetOf(lang2)).isPass(speechSession) }
     }
+
+    @Test fun isPass_WhenLangSupportFiltered() {
+        val langSupport = LangSupport.INTERPRETATION
+        val speechSession = mockk<Session.SpeechSession>()
+        every { speechSession.isInterpretationTarget } returns true
+
+        assertTrue { Filters(langSupports = mutableSetOf(langSupport)).isPass(speechSession) }
+    }
+
+    @Test fun isPass_WhenLangSupportFilteredWithoutInterpretationTarget() {
+        val langSupport = LangSupport.INTERPRETATION
+        val speechSession = mockk<Session.SpeechSession>()
+        every { speechSession.isInterpretationTarget } returns false
+
+        assertFalse { Filters(langSupports = mutableSetOf(langSupport)).isPass(speechSession) }
+    }
 }
