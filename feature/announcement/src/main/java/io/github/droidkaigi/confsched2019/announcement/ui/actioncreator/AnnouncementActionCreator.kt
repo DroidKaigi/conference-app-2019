@@ -22,7 +22,13 @@ class AnnouncementActionCreator @Inject constructor(
     fun load() = launch {
         try {
             dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADING))
+            // read the cache first
             dispatcher.dispatch(Action.AnnouncementLoaded(announcementRepository.announcements()))
+
+            // use api response
+            announcementRepository.refresh()
+            dispatcher.dispatch(Action.AnnouncementLoaded(announcementRepository.announcements()))
+
             dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADED))
         } catch (e: Exception) {
             onError(e)

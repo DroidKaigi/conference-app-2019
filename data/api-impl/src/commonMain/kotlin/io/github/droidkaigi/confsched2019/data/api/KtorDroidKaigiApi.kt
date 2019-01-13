@@ -1,7 +1,7 @@
 package io.github.droidkaigi.confsched2019.data.api
 
 import io.github.droidkaigi.confsched2019.data.api.parameter.LangParameter
-import io.github.droidkaigi.confsched2019.data.api.response.AnnouncementResponse
+import io.github.droidkaigi.confsched2019.data.api.response.AnnouncementListResponse
 import io.github.droidkaigi.confsched2019.data.api.response.AnnouncementResponseImpl
 import io.github.droidkaigi.confsched2019.data.api.response.Response
 import io.github.droidkaigi.confsched2019.data.api.response.ResponseImpl
@@ -12,6 +12,8 @@ import io.ktor.client.request.accept
 import io.ktor.client.request.get
 import io.ktor.client.request.url
 import io.ktor.http.ContentType
+import kotlinx.serialization.json.JSON
+import kotlinx.serialization.list
 
 open class KtorDroidKaigiApi constructor(
     val httpClient: HttpClient,
@@ -31,10 +33,12 @@ open class KtorDroidKaigiApi constructor(
         }
     }
 
-    override suspend fun getAnnouncements(lang: LangParameter): List<AnnouncementResponse> {
-        return httpClient.get<List<AnnouncementResponseImpl>> {
+    override suspend fun getAnnouncements(lang: LangParameter): AnnouncementListResponse {
+        val rawResponse = httpClient.get<String> {
             url("$apiEndpoint/announcements?language=${lang.name}")
             accept(ContentType.Application.Json)
         }
+
+        return JSON.parse(AnnouncementResponseImpl.serializer().list, rawResponse)
     }
 }

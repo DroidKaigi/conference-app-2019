@@ -1,5 +1,8 @@
 package io.github.droidkaigi.confsched2019.data.api.response
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class AnnouncementResponseImpl(
     override val id: Long,
     override val title: String,

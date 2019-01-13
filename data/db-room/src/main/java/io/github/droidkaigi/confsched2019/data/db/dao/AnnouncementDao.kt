@@ -1,6 +1,5 @@
 package io.github.droidkaigi.confsched2019.data.db.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -9,14 +8,8 @@ import io.github.droidkaigi.confsched2019.data.db.entity.AnnouncementEntityImpl
 
 @Dao
 abstract class AnnouncementDao {
-    @Query("SELECT * FROM announcement WHERE lang = lower(:lang)")
-    abstract fun announcementsByLangLiveData(lang: String): LiveData<List<AnnouncementEntityImpl>>
-
-    @Query("SELECT * FROM announcement WHERE lang = lower(:lang)")
-    abstract fun announcementsByLang(lang: String): List<AnnouncementEntityImpl>
-
-    @Query("DELETE FROM announcement")
-    abstract fun deleteAll()
+    @Query("SELECT * FROM announcement WHERE lower(lang) = lower(:lang)")
+    abstract suspend fun announcementsByLang(lang: String): List<AnnouncementEntityImpl>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insert(announcements: List<AnnouncementEntityImpl>)

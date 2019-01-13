@@ -17,7 +17,7 @@ class DataAnnouncementRepository @Inject constructor(
 ) : AnnouncementRepository {
     override suspend fun announcements(): List<Announcement> = coroutineScope {
         announcementDatabase.announcementsByLang(defaultLang().toParameter().name)
-            .sortedBy { it.publishedAt }
+            .sortedByDescending { it.publishedAt }
             .map {
                 Announcement(
                     id = it.id,
