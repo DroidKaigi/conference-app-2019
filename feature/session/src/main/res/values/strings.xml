@@ -11,6 +11,7 @@
     <string name="session_filter_room" translatable="false">Room</string>
     <string name="session_filter_language" translatable="false">Language</string>
     <string name="session_filter_language_support" translatable="false">Language Support</string>
+    <string name="session_filter_level" translatable="false">Level</string>
     <string name="session_filter_category" translatable="false">Category</string>
     <string name="session_detail_intended_audience">Intended Audience</string>
     <string name="session_detail_tag" translatable="false">Tags</string>
