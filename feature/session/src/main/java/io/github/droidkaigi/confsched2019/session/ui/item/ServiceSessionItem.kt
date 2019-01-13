@@ -7,14 +7,12 @@ import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemServiceSessionBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
-import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.util.SessionAlarm
 
 class ServiceSessionItem @AssistedInject constructor(
     @Assisted override val session: Session.ServiceSession,
     @Assisted sessionAlarm: SessionAlarm,
-    sessionContentsActionCreator: SessionContentsActionCreator,
-    val systemStore: SystemStore
+    sessionContentsActionCreator: SessionContentsActionCreator
 ) : BindableItem<ItemServiceSessionBinding>(
     session.id.hashCode().toLong()
 ), SessionItem {
@@ -30,7 +28,7 @@ class ServiceSessionItem @AssistedInject constructor(
 
     private val onFavoriteClickListener: (Session.ServiceSession) -> Unit = { session ->
         sessionContentsActionCreator.toggleFavorite(session)
-        sessionAlarm.toggleRegister(session, systemStore.lang)
+        sessionAlarm.toggleRegister(session)
     }
 
     override fun bind(viewBinding: ItemServiceSessionBinding, position: Int) {

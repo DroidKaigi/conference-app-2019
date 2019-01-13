@@ -18,14 +18,12 @@ import com.squareup.inject.assisted.AssistedInject
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import com.xwray.groupie.databinding.BindableItem
-import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSessionBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
-import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.util.SessionAlarm
 import io.github.droidkaigi.confsched2019.util.lazyWithParam
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
@@ -37,8 +35,7 @@ class SpeechSessionItem @AssistedInject constructor(
     @Assisted val addPaddingForTime: Boolean,
     @Assisted val sessionAlarm: SessionAlarm,
     val navController: NavController,
-    val sessionContentsActionCreator: SessionContentsActionCreator,
-    val systemStore: SystemStore
+    val sessionContentsActionCreator: SessionContentsActionCreator
 ) : BindableItem<ItemSessionBinding>(
     session.id.hashCode().toLong()
 ), SessionItem {
@@ -68,7 +65,7 @@ class SpeechSessionItem @AssistedInject constructor(
             addPaddingForTime = this@SpeechSessionItem.addPaddingForTime
             favorite.setOnClickListener {
                 sessionContentsActionCreator.toggleFavorite(speechSession)
-                sessionAlarm.toggleRegister(speechSession, systemStore.lang)
+                sessionAlarm.toggleRegister(speechSession)
             }
             @Suppress("StringFormatMatches") // FIXME
             timeAndRoom.text = root.context.getString(

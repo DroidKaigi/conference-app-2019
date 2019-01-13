@@ -121,7 +121,7 @@ class SessionDetailFragment : DaggerFragment() {
                 .interpolator = OvershootInterpolator()
 
             sessionContentsActionCreator.toggleFavorite(session)
-            sessionAlarm.toggleRegister(session, systemStore.lang)
+            sessionAlarm.toggleRegister(session)
         }
     }
 

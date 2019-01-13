@@ -20,7 +20,6 @@ import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSpeakerBinding
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
-import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import javax.inject.Inject
 
 class SpeakerFragment : DaggerFragment() {
@@ -28,7 +27,6 @@ class SpeakerFragment : DaggerFragment() {
 
     @Inject lateinit var sessionContentsStore: SessionContentsStore
     @Inject lateinit var navController: NavController
-    @Inject lateinit var systemStore: SystemStore
 
     override fun onCreateView(
         inflater: LayoutInflater,

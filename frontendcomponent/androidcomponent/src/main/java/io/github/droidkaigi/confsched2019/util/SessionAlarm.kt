@@ -8,21 +8,21 @@ import android.os.Build
 import com.soywiz.klock.DateTimeSpan
 import com.soywiz.klock.minutes
 import io.github.droidkaigi.confsched2019.broadcastreceiver.NotificationBroadcastReceiver
-import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.widget.component.R
 import javax.inject.Inject
 
 class SessionAlarm @Inject constructor(private val app: Application) {
-    fun toggleRegister(session: Session, lang: Lang) {
+    fun toggleRegister(session: Session) {
         if (session.isFavorited) {
-            unregister(session, lang)
+            unregister(session)
         } else {
-            register(session, lang)
+            register(session)
         }
     }
 
-    private fun register(session: Session, lang: Lang) {
+    private fun register(session: Session) {
         val time = session.startTime.unixMillisLong.minus(NOTIFICATION_TIME_BEFORE_START_MILLS)
 
         if (System.currentTimeMillis() < time) {
@@ -31,31 +31,31 @@ class SessionAlarm @Inject constructor(private val app: Application) {
                 alarmManager.setAndAllowWhileIdle(
                     AlarmManager.RTC_WAKEUP,
                     time,
-                    createAlarmIntent(session, lang)
+                    createAlarmIntent(session)
                 )
             } else {
                 alarmManager.set(
                     AlarmManager.RTC_WAKEUP,
                     time,
-                    createAlarmIntent(session, lang)
+                    createAlarmIntent(session)
                 )
             }
         }
     }
 
-    private fun unregister(session: Session, lang: Lang) {
+    private fun unregister(session: Session) {
         val alarmManager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.cancel(createAlarmIntent(session, lang))
+        alarmManager.cancel(createAlarmIntent(session))
     }
 
-    private fun createAlarmIntent(session: Session, lang: Lang): PendingIntent {
+    private fun createAlarmIntent(session: Session): PendingIntent {
         val timezoneOffset = DateTimeSpan(hours = 9)
         val displaySTime = session.startTime.plus(timezoneOffset).format("HH:mm")
         val displayETime = session.endTime.plus(timezoneOffset).format("HH:mm")
         val sessionTitle = app.getString(
             R.string.notification_message_session_title,
             when (session) {
-                is Session.SpeechSession -> session.title.getByLang(lang)
+                is Session.SpeechSession -> session.title.getByLang(defaultLang())
                 is Session.ServiceSession -> session.title
             }
         )
