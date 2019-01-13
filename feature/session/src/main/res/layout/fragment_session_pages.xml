@@ -23,9 +23,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:tabGravity="fill"
             app:tabIndicator="@drawable/shape_pill_indicator"
+            app:tabRippleColor="@null"
             app:tabIndicatorGravity="stretch"
-            app:tabTextAppearance="@style/TabTextAppearance"
-            app:tabTextColor="@color/white"
             />
 
         <androidx.viewpager.widget.ViewPager

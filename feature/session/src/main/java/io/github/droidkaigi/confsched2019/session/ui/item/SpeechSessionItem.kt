@@ -33,8 +33,8 @@ class SpeechSessionItem @AssistedInject constructor(
     @Assisted override val session: Session.SpeechSession,
     @Assisted val navDirections: NavDirections,
     @Assisted val addPaddingForTime: Boolean,
-    navController: NavController,
-    sessionContentsActionCreator: SessionContentsActionCreator,
+    val navController: NavController,
+    val sessionContentsActionCreator: SessionContentsActionCreator,
     val systemStore: SystemStore
 ) : BindableItem<ItemSessionBinding>(
     session.id.hashCode().toLong()
@@ -50,27 +50,20 @@ class SpeechSessionItem @AssistedInject constructor(
         ): SpeechSessionItem
     }
 
-    private val onFavoriteClickListener: (Session.SpeechSession) -> Unit = { session ->
-        sessionContentsActionCreator.toggleFavorite(session)
-    }
-    private val onClickListener: (Session.SpeechSession) -> Unit = { session ->
-        navController
-            .navigate(
-                navDirections
-            )
-    }
     val layoutInflater by lazyWithParam<Context, LayoutInflater> { context ->
         LayoutInflater.from(context)
     }
 
     override fun bind(viewBinding: ItemSessionBinding, position: Int) {
         with(viewBinding) {
-            root.setOnClickListener { onClickListener(speechSession) }
+            root.setOnClickListener {
+                navController.navigate(navDirections)
+            }
             session = speechSession
             lang = defaultLang()
             addPaddingForTime = this@SpeechSessionItem.addPaddingForTime
             favorite.setOnClickListener {
-                onFavoriteClickListener(speechSession)
+                sessionContentsActionCreator.toggleFavorite(speechSession)
             }
             @Suppress("StringFormatMatches") // FIXME
             timeAndRoom.text = root.context.getString(
