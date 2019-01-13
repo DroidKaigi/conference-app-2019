@@ -26,7 +26,8 @@ class AnnouncementItem(
             }
         )
 
-        itemBinding.dateText.text = dateFormatter.format(announcement.publishedAt.toOffset(jstOffset))
+        itemBinding.dateText.text =
+            dateFormatter.format(announcement.publishedAt.toOffset(jstOffset))
 
         itemBinding.titleText.text = announcement.title
         itemBinding.contentText.text = announcement.content
