@@ -7,7 +7,7 @@ enum class SessionType(val id: String, val isFavoritable: Boolean, val isFiltera
     CODELABS(id = "codelabs", isFavoritable = false, isFilterable = true),
     FIRESIDE_CHAT(id = "fireside_chat", isFavoritable = false, isFilterable = false),
     LUNCH(id = "lunch", isFavoritable = false, isFilterable = false),
-    BREAK(id = "break", isFavoritable = false, isFilterable = false),
+    BREAKTIME(id = "break", isFavoritable = false, isFilterable = false),
     AFTER_PARTY(id = "after_party", isFavoritable = false, isFilterable = false),
     UNKNOWN(id = "unknown", isFavoritable = false, isFilterable = false);
 
