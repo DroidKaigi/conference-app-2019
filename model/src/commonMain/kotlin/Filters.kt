@@ -5,7 +5,7 @@ data class Filters(
     val categories: Set<Category> = mutableSetOf(),
     val langs: Set<Lang> = mutableSetOf(),
     val langSupports: Set<LangSupport> = mutableSetOf(),
-    val audienceCategory: Set<AudienceCategory> = mutableSetOf()
+    val audienceCategories: Set<AudienceCategory> = mutableSetOf()
 ) {
     fun isPass(
         session: Session
@@ -28,13 +28,13 @@ data class Filters(
             return@run if (langSupports.contains(LangSupport.INTERPRETATION)) session.isInterpretationTarget else true
         }
         val audienceCategoryFilterOk = run {
-            return@run if (audienceCategory.contains(AudienceCategory.BEGINNERS)) session.forBeginners else true
+            return@run if (audienceCategories.contains(AudienceCategory.BEGINNERS)) session.forBeginners else true
         }
         return roomFilterOk && categoryFilterOk && langFilterOk && langSupportFilterOk && audienceCategoryFilterOk
     }
 
     fun isFiltered(): Boolean {
-        return rooms.isNotEmpty() || categories.isNotEmpty() || langs.isNotEmpty() || langSupports.isNotEmpty() || return audienceCategory.isNotEmpty()
+        return rooms.isNotEmpty() || categories.isNotEmpty() || langs.isNotEmpty() || langSupports.isNotEmpty() || return audienceCategories.isNotEmpty()
     }
 
     private fun Session.isNotFilterableServiceSession()

@@ -89,11 +89,11 @@ class SessionPagesStore @Inject constructor(
             audienceCategoryFilterChanged?.let {
                 value = if (audienceCategoryFilterChanged.checked) {
                     filtersValue.copy(
-                        audienceCategory = filtersValue.audienceCategory + it.audienceCategory
+                        audienceCategories = filtersValue.audienceCategories + it.audienceCategory
                     )
                 } else {
                     filtersValue.copy(
-                        audienceCategory = filtersValue.audienceCategory - it.audienceCategory
+                        audienceCategories = filtersValue.audienceCategories - it.audienceCategory
                     )
                 }
             }

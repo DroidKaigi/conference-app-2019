@@ -35,7 +35,7 @@ class DataSessionRepository @Inject constructor(
             langSupports = LangSupport.values().toList(),
             rooms = sessions.map { it.room }.sortedBy { it.name }.distinct(),
             category = speechSessions.map { it.category }.distinct(),
-            audienceCategory = AudienceCategory.values().toList()
+            audienceCategories = AudienceCategory.values().toList()
         )
     }
 

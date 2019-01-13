@@ -115,7 +115,7 @@ class SessionPageFragment : DaggerFragment() {
                 contents.langSupports
             ) { langSupport -> langSupport.text.getByLang(defaultLang()) }
             binding.sessionsFilterAudienceCategoryChip.setupFilter(
-                contents.audienceCategory
+                contents.audienceCategories
             ) { audienceCategory -> audienceCategory.text.getByLang(defaultLang()) }
         }
         sessionPagesStore.selectedTab.changed(viewLifecycleOwner) {
@@ -261,7 +261,7 @@ class SessionPageFragment : DaggerFragment() {
                 sessionPagesActionCreator.changeFilter(langSupport, isChecked)
             }
         }
-        val filterAudienceCategories = sessionPagesStore.filtersValue.audienceCategory
+        val filterAudienceCategories = sessionPagesStore.filtersValue.audienceCategories
         binding.sessionsFilterAudienceCategoryChip.forEach {
             val chip = it as? FilterChip ?: return@forEach
             val audienceCategory = it.tag as? AudienceCategory ?: return@forEach

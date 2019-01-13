@@ -7,7 +7,7 @@ data class SessionContents(
     val langs: List<Lang>,
     val langSupports: List<LangSupport>,
     val category: List<Category>,
-    val audienceCategory: List<AudienceCategory>
+    val audienceCategories: List<AudienceCategory>
 ) {
     companion object {
         val EMPTY = SessionContents(
