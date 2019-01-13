@@ -29,7 +29,7 @@ android {
         resConfigs "ja"
         // For Android Studio Gradle sync
         applicationIdSuffix ".debug"
-        buildConfigField "boolean", "IS_BUILT_ON_CI", String.valueOf(isCi)
+        manifestPlaceholders = [isCi: String.valueOf(isCi)]
     }
     buildTypes {
         release {
