@@ -296,7 +296,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "modules=(\n\":frontend:ios-combined\"\n)\ncd \"$SRCROOT/../..\"\n./gradlew \"${modules[@]/%/:packForXcode}\" -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
+			shellScript = "cd \"$SRCROOT/../..\"\n./gradlew \":frontend:ios-combined:packForXCode\" -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
