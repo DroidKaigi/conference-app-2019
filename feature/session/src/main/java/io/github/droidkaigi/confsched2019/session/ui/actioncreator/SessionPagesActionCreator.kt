@@ -47,7 +47,9 @@ class SessionPagesActionCreator @Inject constructor(
     }
 
     fun changeFilter(audienceCategory: AudienceCategory, checked: Boolean) {
-        dispatcher.launchAndDispatch(Action.AudienceCategoryFilterChanged(audienceCategory, checked))
+        dispatcher.launchAndDispatch(
+            Action.AudienceCategoryFilterChanged(audienceCategory, checked)
+        )
     }
 
     fun clearFilters() {

@@ -88,9 +88,13 @@ class SessionPagesStore @Inject constructor(
         addSource(audienceCategoryFilterChanged) { audienceCategoryFilterChanged ->
             audienceCategoryFilterChanged?.let {
                 value = if (audienceCategoryFilterChanged.checked) {
-                    filtersValue.copy(audienceCategory = filtersValue.audienceCategory + it.audienceCategory)
+                    filtersValue.copy(
+                        audienceCategory = filtersValue.audienceCategory + it.audienceCategory
+                    )
                 } else {
-                    filtersValue.copy(audienceCategory = filtersValue.audienceCategory - it.audienceCategory)
+                    filtersValue.copy(
+                        audienceCategory = filtersValue.audienceCategory - it.audienceCategory
+                    )
                 }
             }
         }
