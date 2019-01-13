@@ -22,6 +22,7 @@ import io.github.droidkaigi.confsched2019.model.SponsorCategory
 import io.github.droidkaigi.confsched2019.sponsor.R
 import io.github.droidkaigi.confsched2019.sponsor.databinding.FragmentSponsorBinding
 import io.github.droidkaigi.confsched2019.sponsor.ui.actioncreator.SponsorActionCreator
+import io.github.droidkaigi.confsched2019.sponsor.ui.item.DividerItem
 import io.github.droidkaigi.confsched2019.sponsor.ui.item.HeaderItem
 import io.github.droidkaigi.confsched2019.sponsor.ui.item.SponsorItem
 import io.github.droidkaigi.confsched2019.sponsor.ui.item.TallSponsorItem
@@ -88,18 +89,21 @@ class SponsorFragment : DaggerFragment() {
 
     private fun setupSponsorsLayout(sponsorCategories: List<SponsorCategory>) {
         val sponsors = sponsorCategories.map { category ->
-            category.toSection()
+            category.toSection(sponsorCategories.last() == category)
         }
         groupAdapter.update(sponsors)
     }
 
-    private fun SponsorCategory.toSection() = Section().apply {
+    private fun SponsorCategory.toSection(isLastItem: Boolean) = Section().apply {
         setHeader(HeaderItem(category.title))
         addAll(
             sponsors.map { sponsor ->
                 sponsor.toItem(category)
             }
         )
+        if (!isLastItem) {
+            setFooter(DividerItem())
+        }
         setHideWhenEmpty(true)
     }
 
