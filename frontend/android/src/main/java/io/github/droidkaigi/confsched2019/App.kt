@@ -81,6 +81,9 @@ open class App : DaggerApplication() {
     }
 
     private fun setupCrashlytics() {
+        if (!BuildConfig.IS_BUILT_ON_CI) {
+            return
+        }
         Fabric.with(this, Crashlytics())
     }
 
