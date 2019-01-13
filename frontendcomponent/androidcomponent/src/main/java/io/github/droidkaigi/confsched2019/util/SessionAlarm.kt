@@ -49,7 +49,7 @@ class SessionAlarm @Inject constructor(private val app: Application) {
     }
 
     private fun createAlarmIntent(session: Session): PendingIntent {
-        val timezoneOffset = DateTimeSpan(hours = 9)
+        val timezoneOffset = DateTimeSpan(hours = 9) // FIXME Get from device setting
         val displaySTime = session.startTime.plus(timezoneOffset).format("HH:mm")
         val displayETime = session.endTime.plus(timezoneOffset).format("HH:mm")
         val sessionTitle = app.getString(
