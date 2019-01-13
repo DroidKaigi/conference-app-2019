@@ -6,6 +6,7 @@
       "time_room": "30min / Room A",
       "language": "英語",
       "simultaneous_interpretation": "同時通訳",
+      "for_beginners": "初心者向け",
       "category": "保守・運用・テスト"
     },
     {
@@ -13,6 +14,7 @@
       "time_room": "20min / Room B",
       "language": "日本語",
       "simultaneous_interpretation": "同時通訳",
+      "for_beginners": "初心者向け",
       "category": "アプリアーキテクチャ"
     },
     {
@@ -20,6 +22,7 @@
       "time_room": "25min / Room C",
       "language": "日本語",
       "simultaneous_interpretation": "同時通訳",
+      "for_beginners": "初心者向け",
       "category": "開発ツール"
     }
   ]
