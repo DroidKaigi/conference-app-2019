@@ -5,5 +5,6 @@ interface AnnouncementResponse {
     val title: String
     val content: String
     val type: String
-    val date: String
+    val publishedAt: String
+    val lang: String
 }

@@ -1,14 +1,18 @@
 package io.github.droidkaigi.confsched2019.data.db
 
+import io.github.droidkaigi.confsched2019.data.api.response.AnnouncementResponse
 import io.github.droidkaigi.confsched2019.data.api.response.Response
 import io.github.droidkaigi.confsched2019.data.api.response.SponsorResponse
+import io.github.droidkaigi.confsched2019.data.db.dao.AnnouncementDao
 import io.github.droidkaigi.confsched2019.data.db.dao.SessionDao
 import io.github.droidkaigi.confsched2019.data.db.dao.SessionSpeakerJoinDao
 import io.github.droidkaigi.confsched2019.data.db.dao.SpeakerDao
 import io.github.droidkaigi.confsched2019.data.db.dao.SponsorDao
+import io.github.droidkaigi.confsched2019.data.db.entity.AnnouncementEntity
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionWithSpeakers
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntity
 import io.github.droidkaigi.confsched2019.data.db.entity.SponsorEntity
+import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toAnnouncementEntities
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionEntities
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionSpeakerJoinEntities
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSpeakerEntities
@@ -24,8 +28,9 @@ class RoomDatabase @Inject constructor(
     private val speakerDao: SpeakerDao,
     private val sessionSpeakerJoinDao: SessionSpeakerJoinDao,
     private val coroutineContext: CoroutineContext,
-    private val sponsorDao: SponsorDao
-) : SessionDatabase, SponsorDatabase {
+    private val sponsorDao: SponsorDao,
+    private val announcementDao: AnnouncementDao
+) : SessionDatabase, SponsorDatabase, AnnouncementDatabase {
     override suspend fun sessions(): List<SessionWithSpeakers> {
         return sessionSpeakerJoinDao.getAllSessions()
     }
@@ -71,6 +76,20 @@ class RoomDatabase @Inject constructor(
                     .flatten()
 
                 sponsorDao.insert(sponsors)
+            }
+        }
+    }
+
+    override suspend fun announcementsByLang(lang: String): List<AnnouncementEntity> =
+        announcementDao.announcementsByLang(lang)
+
+    override suspend fun save(apiResponse: List<AnnouncementResponse>) {
+        withContext(coroutineContext) {
+            database.runInTransaction {
+
+                val announcements = apiResponse.toAnnouncementEntities()
+
+                announcementDao.insert(announcements)
             }
         }
     }

@@ -5,5 +5,6 @@ data class AnnouncementResponseImpl(
     override val title: String,
     override val content: String,
     override val type: String,
-    override val date: String
+    override val publishedAt: String,
+    override val lang: String
 ) : AnnouncementResponse
