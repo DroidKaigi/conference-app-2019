@@ -8,4 +8,9 @@
     <string name="survey_label">全体アンケート</string>
     <string name="description_filter_applied">フィルター%1$sを適用</string>
     <string name="description_filter_not_applied">フィルター%1$sを解除</string>
+    <!-- Notification -->
+    <string name="notification_title_session_start">マイセッション開始のお知らせ</string>
+    <string name="notification_message_session_title">%1$s がもうすぐ始まります。</string>
+    <string name="notification_message_session_start_time">%1$s ~ %2$s @ %3$s</string>
+    <string name="notification_channel_name_start_favorite_session">マイセッションの開始</string>
 </resources>

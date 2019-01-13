@@ -18,6 +18,7 @@ import com.squareup.inject.assisted.AssistedInject
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import com.xwray.groupie.databinding.BindableItem
+import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.model.defaultLang
@@ -25,6 +26,7 @@ import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSessionBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
+import io.github.droidkaigi.confsched2019.util.SessionAlarm
 import io.github.droidkaigi.confsched2019.util.lazyWithParam
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlin.math.max
@@ -33,6 +35,7 @@ class SpeechSessionItem @AssistedInject constructor(
     @Assisted override val session: Session.SpeechSession,
     @Assisted val navDirections: NavDirections,
     @Assisted val addPaddingForTime: Boolean,
+    @Assisted val sessionAlarm: SessionAlarm,
     navController: NavController,
     sessionContentsActionCreator: SessionContentsActionCreator,
     val systemStore: SystemStore
@@ -46,12 +49,14 @@ class SpeechSessionItem @AssistedInject constructor(
         fun create(
             session: Session.SpeechSession,
             navDirections: NavDirections,
-            addPaddingForTime: Boolean
+            addPaddingForTime: Boolean,
+            sessionAlarm: SessionAlarm
         ): SpeechSessionItem
     }
 
     private val onFavoriteClickListener: (Session.SpeechSession) -> Unit = { session ->
         sessionContentsActionCreator.toggleFavorite(session)
+        sessionAlarm.toggleRegister(session, systemStore.lang)
     }
     private val onClickListener: (Session.SpeechSession) -> Unit = { session ->
         navController

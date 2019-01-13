@@ -29,6 +29,7 @@ import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
+import io.github.droidkaigi.confsched2019.util.SessionAlarm
 import javax.inject.Inject
 
 class SessionDetailFragment : DaggerFragment() {
@@ -37,6 +38,7 @@ class SessionDetailFragment : DaggerFragment() {
     @Inject lateinit var sessionContentsActionCreator: SessionContentsActionCreator
     @Inject lateinit var systemStore: SystemStore
     @Inject lateinit var sessionContentsStore: SessionContentsStore
+    @Inject lateinit var sessionAlarm: SessionAlarm
     @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
     @Inject lateinit var activityActionCreator: ActivityActionCreator
 
@@ -72,10 +74,12 @@ class SessionDetailFragment : DaggerFragment() {
             when (item.itemId) {
                 R.id.session_share -> {
                     val session = binding.session ?: return@setOnMenuItemClickListener false
-                    activityActionCreator.shareUrl(getString(
-                        R.string.session_detail_share_url,
-                        session.id
-                    ))
+                    activityActionCreator.shareUrl(
+                        getString(
+                            R.string.session_detail_share_url,
+                            session.id
+                        )
+                    )
                 }
                 R.id.session_place ->
                     Toast.makeText(
@@ -119,6 +123,7 @@ class SessionDetailFragment : DaggerFragment() {
                 .interpolator = OvershootInterpolator()
 
             sessionContentsActionCreator.toggleFavorite(session)
+            sessionAlarm.toggleRegister(session, systemStore.lang)
         }
     }
 

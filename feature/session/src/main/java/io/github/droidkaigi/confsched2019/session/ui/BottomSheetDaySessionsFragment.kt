@@ -25,6 +25,7 @@ import io.github.droidkaigi.confsched2019.session.ui.store.SessionPageStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.session.ui.widget.SessionsItemDecoration
+import io.github.droidkaigi.confsched2019.util.SessionAlarm
 import io.github.droidkaigi.confsched2019.widget.BottomSheetBehavior
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import me.tatarka.injectedvmprovider.ktx.injectedViewModelProvider
@@ -40,6 +41,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
     @Inject lateinit var sessionPageFragmentProvider: Provider<SessionPageFragment>
     @Inject lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
     @Inject lateinit var sessionPageStoreFactory: SessionPageStore.Factory
+    @Inject lateinit var sessionAlarm: SessionAlarm
     @Inject lateinit var serviceSessionItemFactory: ServiceSessionItem.Factory
     private val sessionPageStore: SessionPageStore by lazy {
         sessionPageFragmentProvider.get().injectedViewModelProvider
@@ -91,10 +93,14 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                                 SessionPagesFragmentDirections.actionSessionToSessionDetail(
                                     session.id
                                 ),
-                                true
+                                true,
+                                sessionAlarm
                             )
                         is Session.ServiceSession ->
-                            serviceSessionItemFactory.create(session)
+                            serviceSessionItemFactory.create(
+                                session,
+                                sessionAlarm
+                            )
                     }
                 }
             groupAdapter.update(items)

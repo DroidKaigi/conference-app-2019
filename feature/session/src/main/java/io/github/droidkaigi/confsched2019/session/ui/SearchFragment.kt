@@ -30,6 +30,7 @@ import io.github.droidkaigi.confsched2019.session.ui.item.SpeakerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeechSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
+import io.github.droidkaigi.confsched2019.util.SessionAlarm
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
 import javax.inject.Provider
@@ -41,6 +42,7 @@ class SearchFragment : DaggerFragment() {
     @Inject lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
     @Inject lateinit var serviceSessionItemFactory: ServiceSessionItem.Factory
     @Inject lateinit var sessionContentsStore: SessionContentsStore
+    @Inject lateinit var sessionAlarm: SessionAlarm
     private var searchView: SearchView? = null
     @Inject lateinit var searchStoreProvider: Provider<SearchStore>
     private val searchStore: SearchStore by lazy {
@@ -93,10 +95,14 @@ class SearchFragment : DaggerFragment() {
                                 SearchFragmentDirections.actionSearchToSessionDetail(
                                     session.id
                                 ),
-                                false
+                                false,
+                                sessionAlarm
                             )
                         is Session.ServiceSession ->
-                            serviceSessionItemFactory.create(session)
+                            serviceSessionItemFactory.create(
+                                session,
+                                sessionAlarm
+                            )
                     }
                 }
             groupAdapter.update(items)
