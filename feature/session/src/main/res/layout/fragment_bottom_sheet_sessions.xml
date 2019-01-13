@@ -60,7 +60,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/lekton"
-                android:gravity="center_vertical"
                 android:textAppearance="@style/TextAppearance.App.Headline5"
                 android:textColor="@color/gray3"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -80,8 +79,9 @@
                 app:chipBackgroundColor="@color/gray4"
                 app:chipIcon="@drawable/ic_filter_list_black_24dp"
                 app:chipIconTint="@color/gray3"
-                app:layout_constraintBaseline_toBaselineOf="@id/sessions_bottom_sheet_title"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:visibleGone="@{!isCollapsed &amp;&amp; !shouldShowEmptyStateView}"
                 />
 
@@ -98,8 +98,9 @@
                 app:chipIconTint="@color/gray3"
                 app:iconEndPadding="@dimen/session_bottom_sheet_filter_icon_padding"
                 app:iconStartPadding="@dimen/session_bottom_sheet_filter_icon_padding"
-                app:layout_constraintBaseline_toBaselineOf="@id/sessions_bottom_sheet_title"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:textEndPadding="@dimen/session_bottom_sheet_filter_text_padding"
                 app:textStartPadding="@dimen/session_bottom_sheet_filter_text_padding"
                 app:visibleGone="@{isCollapsed &amp;&amp; !shouldShowEmptyStateView}"
@@ -112,6 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="4dp"
             android:background="@drawable/shape_drop_down_shadow"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/sessionsListHeader"
             />
 
