@@ -5,6 +5,7 @@ import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
+import io.github.droidkaigi.confsched2019.model.AudienceCategory
 import io.github.droidkaigi.confsched2019.model.Category
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LangSupport
@@ -43,6 +44,10 @@ class SessionPagesActionCreator @Inject constructor(
 
     fun changeFilter(langSupport: LangSupport, checked: Boolean) {
         dispatcher.launchAndDispatch(Action.LangSupportFilterChanged(langSupport, checked))
+    }
+
+    fun changeFilter(audienceCategory: AudienceCategory, checked: Boolean) {
+        dispatcher.launchAndDispatch(Action.AudienceCategoryFilterChanged(audienceCategory, checked))
     }
 
     fun clearFilters() {

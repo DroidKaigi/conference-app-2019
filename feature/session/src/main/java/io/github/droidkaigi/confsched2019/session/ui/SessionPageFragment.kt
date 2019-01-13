@@ -17,6 +17,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.model.AudienceCategory
 import io.github.droidkaigi.confsched2019.model.Category
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LangSupport
@@ -113,6 +114,9 @@ class SessionPageFragment : DaggerFragment() {
             binding.sessionsFilterLangSupportChip.setupFilter(
                 contents.langSupports
             ) { langSupport -> langSupport.text.getByLang(defaultLang()) }
+            binding.sessionsFilterAudienceCategoryChip.setupFilter(
+                contents.audienceCategory
+            ) { audienceCategory -> audienceCategory.text.getByLang(defaultLang()) }
         }
         sessionPagesStore.selectedTab.changed(viewLifecycleOwner) {
             if (SessionPage.pages[args.tabIndex] == it) {
@@ -255,6 +259,20 @@ class SessionPageFragment : DaggerFragment() {
             }
             chip.onCheckedChanged { _, isChecked ->
                 sessionPagesActionCreator.changeFilter(langSupport, isChecked)
+            }
+        }
+        val filterAudienceCategories = sessionPagesStore.filtersValue.audienceCategory
+        binding.sessionsFilterAudienceCategoryChip.forEach {
+            val chip = it as? FilterChip ?: return@forEach
+            val audienceCategory = it.tag as? AudienceCategory ?: return@forEach
+            chip.onCheckedChangeListener = null
+            if (filterAudienceCategories.isNotEmpty()) {
+                chip.isChecked = filterAudienceCategories.contains(audienceCategory)
+            } else {
+                chip.isChecked = false
+            }
+            chip.onCheckedChanged { _, isChecked ->
+                sessionPagesActionCreator.changeFilter(audienceCategory, isChecked)
             }
         }
     }

@@ -1,6 +1,7 @@
 package io.github.droidkaigi.confsched2019.action
 
 import io.github.droidkaigi.confsched2019.model.Announcement
+import io.github.droidkaigi.confsched2019.model.AudienceCategory
 import io.github.droidkaigi.confsched2019.model.Category
 import io.github.droidkaigi.confsched2019.model.ErrorMessage
 import io.github.droidkaigi.confsched2019.model.Lang
@@ -49,6 +50,11 @@ sealed class Action {
         val langSupport: LangSupport,
         override val checked: Boolean
     ) : FilterChange<LangSupport>(langSupport, checked)
+
+    data class AudienceCategoryFilterChanged(
+        val audienceCategory: AudienceCategory,
+        override val checked: Boolean
+    ) : FilterChange<AudienceCategory>(audienceCategory, checked)
 
     class FilterCleared : Action()
     class BottomSheetFilterToggled(val page: SessionPage) : Action()
