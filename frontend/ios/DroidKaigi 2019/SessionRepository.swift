@@ -12,7 +12,7 @@ class SessionRepository {
     func fetchSessions(callback:@escaping (SessionContents) -> Void){
         ApiComponentKt.generateDroidKaigiApi().getSessions(callback: { (response) -> KotlinUnit in
             callback(ResponseToModelMapperKt.toModel(response))
-            return KotlinUnit.init()
+            return KotlinUnit()
             }
         )
     }

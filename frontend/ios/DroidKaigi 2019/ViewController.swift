@@ -13,7 +13,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         SessionRepository().fetchSessions { (sessionContents) in
-            print((sessionContents.sessions[0] as! Session.ServiceSession).title.ja)
+            let firstSession = sessionContents.sessions[0] as! Session.ServiceSession
+            let title = firstSession.title.getByLang(lang: LangKt.defaultLang())
+            print("session title: " + title)
         }
     }
 }
