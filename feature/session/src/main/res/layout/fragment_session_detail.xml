@@ -13,12 +13,12 @@
             />
 
         <variable
-            name="speech_session"
+            name="speechSession"
             type="io.github.droidkaigi.confsched2019.model.Session.SpeechSession"
             />
 
         <variable
-            name="service_session"
+            name="serviceSession"
             type="io.github.droidkaigi.confsched2019.model.Session.ServiceSession"
             />
 
@@ -132,7 +132,7 @@
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toTopOf="@id/session_message"
                     app:srcCompat="@drawable/ic_bug_report_border_orange_18dp"
-                    app:visibleGone="@{speech_session.message != null}"
+                    app:visibleGone="@{speechSession.message != null}"
                     />
 
                 <androidx.emoji.widget.EmojiAppCompatTextView
@@ -147,7 +147,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/session_message_image"
                     app:layout_constraintTop_toBottomOf="@id/session_time_image"
-                    app:visibleGone="@{speech_session.message != null}"
+                    app:visibleGone="@{speechSession.message != null}"
                     tools:text="セッションフロアがHallからRoom1に変更になりました"
                     />
 
@@ -199,7 +199,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_description"
-                    app:visibleGone="@{speech_session != null}"
+                    app:visibleGone="@{speechSession != null}"
                     />
 
                 <TextView
@@ -211,7 +211,7 @@
                     android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider_top_intended_audience"
-                    app:visibleGone="@{speech_session != null}"
+                    app:visibleGone="@{speechSession != null}"
                     />
 
                 <androidx.emoji.widget.EmojiAppCompatTextView
@@ -230,7 +230,7 @@
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/session_intended_audience_title"
                     tools:text="Kotlinでの実装経験者で、業務でばりばりKotlinでコードを書きまくっている人向け。"
-                    app:visibleGone="@{speech_session != null}"
+                    app:visibleGone="@{speechSession != null}"
                     />
 
                 <ImageView
@@ -246,7 +246,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_intended_audience_description"
-                    app:visibleGone="@{speech_session != null}"
+                    app:visibleGone="@{speechSession != null}"
                     />
 
                 <TextView
@@ -258,7 +258,7 @@
                     android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider_top_tags"
-                    app:visibleGone="@{speech_session != null}"
+                    app:visibleGone="@{speechSession != null}"
                     />
 
 
@@ -272,7 +272,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/session_tag_title"
-                    app:visibleGone="@{speech_session != null}"
+                    app:visibleGone="@{speechSession != null}"
                     >
 
                     <com.google.android.material.chip.Chip
@@ -283,13 +283,13 @@
                         android:clickable="false"
                         android:enabled="false"
                         android:focusable="false"
-                        android:text="@{speech_session.language.getByLang(lang)}"
+                        android:text="@{speechSession.language.getByLang(lang)}"
                         android:textAppearance="?textAppearanceCaption"
                         android:textColor="@color/white"
                         app:chipBackgroundColor="#7982e1"
                         app:chipMinTouchTargetSize="0dp"
                         tools:text="Japanese"
-                        app:visibleGone="@{speech_session != null}"
+                        app:visibleGone="@{speechSession != null}"
                         />
 
                     <com.google.android.material.chip.Chip
@@ -305,7 +305,7 @@
                         android:textColor="@color/white"
                         app:chipBackgroundColor="#7982e1"
                         app:chipMinTouchTargetSize="0dp"
-                        app:visibleGone="@{speech_session.isInterpretationTarget}"
+                        app:visibleGone="@{speechSession.isInterpretationTarget}"
                         />
 
                     <com.google.android.material.chip.Chip
@@ -321,7 +321,7 @@
                         android:textColor="@color/white"
                         app:chipBackgroundColor="#7982e1"
                         app:chipMinTouchTargetSize="0dp"
-                        app:visibleGone="@{speech_session.forBeginners}"
+                        app:visibleGone="@{speechSession.forBeginners}"
                         />
 
                     <com.google.android.material.chip.Chip
@@ -337,7 +337,7 @@
                         app:chipBackgroundColor="#95959c"
                         app:chipMinTouchTargetSize="0dp"
                         tools:text="ソフトウェアアーキテクチャ"
-                        app:visibleGone="@{speech_session != null}"
+                        app:visibleGone="@{speechSession != null}"
                         />
                 </com.google.android.material.chip.ChipGroup>
 
@@ -395,7 +395,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_survey_title"
-                    app:visibleGone="@{speech_session != null}"
+                    app:visibleGone="@{speechSession != null}"
                     />
 
                 <TextView
@@ -407,7 +407,7 @@
                     android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider_top_speakers"
-                    app:visibleGone="@{speech_session != null}"
+                    app:visibleGone="@{speechSession != null}"
                     />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -420,7 +420,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_speaker_title"
                     tools:listitem="@layout/item_speaker"
-                    app:visibleGone="@{speech_session != null}"
+                    app:visibleGone="@{speechSession != null}"
                     />
 
                 <ImageView
@@ -436,7 +436,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_speakers"
-                    app:visibleGone="@{speech_session.hasVideo || speech_session.hasSlide}"
+                    app:visibleGone="@{speechSession.hasVideo || speechSession.hasSlide}"
                     />
 
                 <TextView
@@ -448,7 +448,7 @@
                     android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider_top_resource"
-                    app:visibleGone="@{speech_session.hasVideo || speech_session.hasSlide}"
+                    app:visibleGone="@{speechSession.hasVideo || speechSession.hasSlide}"
                     />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -472,7 +472,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_resource_title"
-                    app:visibleGone="@{speech_session.hasVideo}"
+                    app:visibleGone="@{speechSession.hasVideo}"
                     />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -497,7 +497,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_video_button"
                     app:layout_goneMarginTop="8dp"
-                    app:visibleGone="@{speech_session.hasSlide}"
+                    app:visibleGone="@{speechSession.hasSlide}"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
