@@ -14,7 +14,6 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
-import dagger.android.support.AndroidSupportInjection
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.LoadingState
@@ -59,7 +58,6 @@ class SessionDetailFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        AndroidSupportInjection.inject(this)
 
         sessionDetailFragmentArgs = SessionDetailFragmentArgs.fromBundle(arguments)
 
