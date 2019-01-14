@@ -120,6 +120,9 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
             groupAdapter.update(items)
             applyTitleText()
             binding.shouldShowEmptyStateView = items.isEmpty()
+            if (items.isEmpty()) {
+                binding.sessionsListHeaderShadow.isVisible = false
+            }
         }
         sessionPagesStore.filters.changed(viewLifecycleOwner) {
             binding.isFiltered = it.isFiltered()
