@@ -1,0 +1,38 @@
+import dependencies.Dep
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+apply from: rootProject.file('gradle/android.gradle')
+
+dependencies {
+    implementation project(':feature:system')
+    implementation project(':ext:android-extension')
+    implementation project(':ext:log')
+
+    implementation Dep.Kotlin.stdlibJvm
+    api Dep.Kotlin.coroutines
+    implementation Dep.Kotlin.androidCoroutinesDispatcher
+
+    implementation Dep.AndroidX.coreKtx
+
+    implementation Dep.Timber.android
+
+    implementation Dep.Firebase.messaging
+
+    testImplementation Dep.Test.junit
+    testImplementation Dep.Test.kotlinTestAssertions
+    testImplementation Dep.MockK.jvm
+    testImplementation project(':frontendcomponent:androidtestcomponent')
+    androidTestImplementation Dep.Test.testRunner
+    androidTestImplementation Dep.Test.espressoCore
+}
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        freeCompilerArgs = [
+                '-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi',
+                '-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi'
+        ]
+    }
+}

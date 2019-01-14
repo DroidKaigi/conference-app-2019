@@ -95,6 +95,10 @@ enum class NotificationChannelInfo(
     FAVORITE_SESSION_START(
         "favorite_session_start_channel",
         R.string.notification_channel_name_start_favorite_session
+    ),
+    SUBSCRIBE_TOPIC(
+        "subscribe_topic",
+        R.string.notification_channel_name_start_favorite_session // FIXME
     );
 
     fun channelName(context: Context): String = context.getString(channelNameResId)
