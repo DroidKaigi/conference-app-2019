@@ -10,28 +10,38 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
+fun Context.notificationBuilder(
+    channelInfo: NotificationChannelInfo
+): NotificationCompat.Builder {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        NotificationUtil.createDefaultNotificationChannel(
+            this,
+            channelInfo
+        )
+    }
+
+    return NotificationCompat.Builder(this, channelInfo.channelId)
+}
+
 object NotificationUtil {
     fun showNotification(
         context: Context,
         title: String,
         text: String,
         pendingIntent: PendingIntent,
-        channelId: String,
-        @DrawableRes iconRes: Int,
+        channelInfo: NotificationChannelInfo = NotificationChannelInfo.DEFAULT,
+        @DrawableRes iconRes: Int = R.mipmap.notification_icon,
         builder: NotificationCompat.Builder.() -> Unit = {}
     ) {
-        val notificationBuilder = notificationBuilder(
-            context,
-            channelId
-        ).apply {
+        val notificationBuilder = context.notificationBuilder(channelInfo).apply {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 showBundleNotification(
                     context,
                     title,
-                    channelId,
+                    channelInfo,
                     iconRes
                 )
-                setGroup(channelId)
+                setGroup(channelInfo.channelId)
             } else {
                 setContentTitle(title)
             }
@@ -51,44 +61,28 @@ object NotificationUtil {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun showBundleNotification(
-        context: Context, title: String, channelId: String, @DrawableRes iconRes: Int
+        context: Context,
+        title: String,
+        channelInfo: NotificationChannelInfo,
+        @DrawableRes
+        iconRes: Int
     ) {
         val notificationManager = context.getSystemService(NotificationManager::class.java)
-        val notification = notificationBuilder(
-            context,
-            channelId
-        )
+        val notification = context.notificationBuilder(channelInfo)
             .setStyle(
                 NotificationCompat.BigTextStyle()
                     .setSummaryText(title)
             )
             .setSmallIcon(iconRes)
-            .setGroup(channelId)
+            .setGroup(channelInfo.channelId)
             .setGroupSummary(true)
             .setAutoCancel(true)
             .build()
-        notificationManager.notify(channelId.hashCode(), notification)
-    }
-
-    private fun notificationBuilder(
-        context: Context,
-        channelId: String
-    ): NotificationCompat.Builder {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createDefaultNotificationChannel(
-                context,
-                NotificationChannelInfo.of(
-                    channelId
-                )
-            )
-        }
-        val builder = NotificationCompat.Builder(context, channelId)
-        builder.setChannelId(channelId)
-        return builder
+        notificationManager.notify(channelInfo.channelId.hashCode(), notification)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createDefaultNotificationChannel(
+    internal fun createDefaultNotificationChannel(
         context: Context,
         notificationChannelInfo: NotificationChannelInfo
     ) {
@@ -102,30 +96,3 @@ object NotificationUtil {
     }
 }
 
-enum class NotificationChannelInfo(
-    val channelId: String,
-    private val channelNameResId: Int
-) {
-    DEFAULT(
-        "default_channel",
-        R.string.app_name
-    ),
-    FAVORITE_SESSION_START(
-        "favorite_session_start_channel",
-        R.string.notification_channel_name_start_favorite_session
-    ),
-    SUBSCRIBE_TOPIC(
-        "subscribe_topic",
-        R.string.notification_channel_name_subscribe_topic // FIXME
-    );
-
-    fun channelName(context: Context): String = context.getString(channelNameResId)
-
-    companion object {
-        fun of(channelId: String): NotificationChannelInfo {
-            return values().find {
-                it.channelId == channelId
-            } ?: DEFAULT
-        }
-    }
-}

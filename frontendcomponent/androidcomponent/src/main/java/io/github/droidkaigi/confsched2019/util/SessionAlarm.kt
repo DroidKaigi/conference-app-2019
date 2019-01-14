@@ -10,7 +10,6 @@ import com.soywiz.klock.minutes
 import io.github.droidkaigi.confsched2019.broadcastreceiver.NotificationBroadcastReceiver
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.defaultLang
-import io.github.droidkaigi.confsched2019.notification.NotificationChannelInfo
 import io.github.droidkaigi.confsched2019.widget.component.R
 import javax.inject.Inject
 
@@ -77,12 +76,11 @@ class SessionAlarm @Inject constructor(private val app: Application) {
             title = sessionTitle
             text = sessionStartTime
         }
-        val intent = NotificationBroadcastReceiver.createIntent(
+        val intent = NotificationBroadcastReceiver.createForFavoritedSessionStart(
             app,
             session.id,
             title,
-            text,
-            NotificationChannelInfo.FAVORITE_SESSION_START
+            text
         )
         return PendingIntent.getBroadcast(
             app,
