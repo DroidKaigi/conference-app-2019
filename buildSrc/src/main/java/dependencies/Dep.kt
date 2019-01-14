@@ -108,12 +108,13 @@ object Dep {
 
     object Ktor {
         val version = "1.0.1"
+        val iosVersion = "1.1.1"
         val clientCommon = "io.ktor:ktor-client-core:$version"
         val clientAndroid = "io.ktor:ktor-client-okhttp:$version"
-        val common = "io.ktor:ktor-client-json:1.1.1"
-        val clientIos = "io.ktor:ktor-client-ios:1.1.1"
-        val jsonJvm = "io.ktor:ktor-client-json-jvm:1.1.1"
-        val jsonNative = "io.ktor:ktor-client-json-native:1.1.1"
+        val clientIos = "io.ktor:ktor-client-ios:$iosVersion"
+        val jsonCommon = "io.ktor:ktor-client-json:$version"
+        val jsonJvm = "io.ktor:ktor-client-json-jvm:$version"
+        val jsonNative = "io.ktor:ktor-client-json-native:$iosVersion"
     }
 
     object OkHttp {
