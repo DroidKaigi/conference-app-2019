@@ -1,6 +1,5 @@
 package io.github.droidkaigi.confsched2019.session.ui
 
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -10,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.emoji.widget.EmojiTextView
 import androidx.fragment.app.FragmentActivity
@@ -128,7 +128,7 @@ class SessionDetailFragment : DaggerFragment() {
             val ellipsis = getString(R.string.ellipsis_label)
             val text = textView.text.subSequence(0, end-ellipsis.length).toString().plus(ellipsis)
             val spannable = SpannableString(text)
-            spannable.setSpan(ForegroundColorSpan(Color.BLUE), text.lastIndex-ellipsis.length+1, text.lastIndex+1, Spannable.SPAN_COMPOSING)
+            spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.colorSecondary)), text.lastIndex-ellipsis.length+1, text.lastIndex+1, Spannable.SPAN_COMPOSING)
             binding.sessionDescription.setText(spannable, TextView.BufferType.SPANNABLE)
         }
     }
