@@ -53,7 +53,10 @@ kotlin {
             dependsOn commonMain
             dependencies {
                 implementation Dep.Ktor.clientIos
-                implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.9.1"
+                implementation Dep.Kotlin.serializationIos
+                implementation Dep.Ktor.jsonNative
+                implementation Dep.Ktor.common
+                implementation Dep.Timber.common
             }
         }
     }

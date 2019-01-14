@@ -12,24 +12,31 @@ import io.ktor.client.request.accept
 import io.ktor.client.request.get
 import io.ktor.client.request.url
 import io.ktor.http.ContentType
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.JSON
 import kotlinx.serialization.list
+import kotlin.coroutines.CoroutineContext
 
 open class KtorDroidKaigiApi constructor(
     val httpClient: HttpClient,
-    val apiEndpoint: String
+    val apiEndpoint: String,
+    val coroutineDispatcherForCallback: CoroutineContext?
 ) : DroidKaigiApi {
-    override suspend fun getSponsors(): SponsorResponse {
-        return httpClient.get<SponsorResponseImpl> {
-            url("$apiEndpoint/sponsors")
-            accept(ContentType.Application.Json)
-        }
-    }
 
     override suspend fun getSessions(): Response {
-        return httpClient.get<ResponseImpl> {
+        // We are separate getting response string and parsing for Kotlin Native
+        val rawResponse = httpClient.get<String> {
             url("$apiEndpoint/timetable")
             accept(ContentType.Application.Json)
+        }
+        return JSON.nonstrict.parse(ResponseImpl.serializer(), rawResponse)
+    }
+
+    override fun getSessions(callback: (response: Response) -> Unit) {
+        GlobalScope.launch(requireNotNull(coroutineDispatcherForCallback)) {
+            val response = getSessions()
+            callback(response)
         }
     }
 
@@ -40,5 +47,12 @@ open class KtorDroidKaigiApi constructor(
         }
 
         return JSON.parse(AnnouncementResponseImpl.serializer().list, rawResponse)
+    }
+
+    override suspend fun getSponsors(): SponsorResponse {
+        return httpClient.get<SponsorResponseImpl> {
+            url("$apiEndpoint/sponsors")
+            accept(ContentType.Application.Json)
+        }
     }
 }

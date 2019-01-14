@@ -7,4 +7,4 @@ import javax.inject.Named
 class InjectableKtorDroidKaigiApi @Inject constructor(
     httpClient: HttpClient,
     @Named("apiEndpoint") apiEndpoint: String
-) : KtorDroidKaigiApi(httpClient, apiEndpoint)
+) : KtorDroidKaigiApi(httpClient, apiEndpoint, null)
