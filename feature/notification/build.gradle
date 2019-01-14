@@ -7,7 +7,6 @@ apply plugin: 'kotlin-kapt'
 apply from: rootProject.file('gradle/android.gradle')
 
 dependencies {
-    implementation project(':feature:system')
     implementation project(':ext:android-extension')
     implementation project(':ext:log')
 

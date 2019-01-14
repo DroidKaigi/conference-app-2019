@@ -5,11 +5,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.navigation.NavDeepLinkBuilder
+import io.github.droidkaigi.confsched2019.notification.NotificationChannelInfo
+import io.github.droidkaigi.confsched2019.notification.NotificationUtil.showNotification
 import io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragmentArgs
-import io.github.droidkaigi.confsched2019.util.NotificationChannelInfo
-import io.github.droidkaigi.confsched2019.util.NotificationUtil.showNotification
 import io.github.droidkaigi.confsched2019.widget.component.R
 
+// FIXME rename this
 class NotificationBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         context ?: return
@@ -28,7 +29,7 @@ class NotificationBroadcastReceiver : BroadcastReceiver() {
             )
             .createTaskStackBuilder()
             .getPendingIntent(sessionId.hashCode(), PendingIntent.FLAG_UPDATE_CURRENT) ?: return
-        showNotification(context, title, text, pendingIntent, channelId)
+        showNotification(context, title, text, pendingIntent, channelId, R.mipmap.notification_icon)
     }
 
     companion object {

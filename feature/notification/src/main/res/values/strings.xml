@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">notification</string>
+    <string name="notification_channel_name_start_favorite_session">start favorite session</string>
+    <string name="notification_channel_name_subscribe_topic">Update topic to receive</string>
 </resources>

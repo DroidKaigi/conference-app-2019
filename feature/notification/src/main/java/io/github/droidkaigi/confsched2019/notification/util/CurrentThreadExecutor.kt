@@ -1,4 +1,4 @@
-package io.github.droidkaigi.confsched2019.notification.service
+package io.github.droidkaigi.confsched2019.notification.util
 
 import java.util.concurrent.Executor
 

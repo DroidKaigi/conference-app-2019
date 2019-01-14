@@ -8,6 +8,7 @@ apply from: rootProject.file('gradle/android.gradle')
 
 dependencies {
     api project(":model")
+    api project(":feature:notification")
     api project(":ext:android-extension")
     api Dep.AndroidX.design
     api Dep.AndroidX.coreKtx

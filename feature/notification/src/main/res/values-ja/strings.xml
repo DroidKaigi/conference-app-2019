@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_channel_name_start_favorite_session">マイセッションの開始</string>
+    <string name="notification_channel_name_subscribe_topic">通知設定の更新</string>
+</resources>

@@ -1,14 +1,14 @@
-package io.github.droidkaigi.confsched2019.util
+package io.github.droidkaigi.confsched2019.notification
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.os.Build
+import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import io.github.droidkaigi.confsched2019.widget.component.R
 
 object NotificationUtil {
     fun showNotification(
@@ -16,11 +16,21 @@ object NotificationUtil {
         title: String,
         text: String,
         pendingIntent: PendingIntent,
-        channelId: String
+        channelId: String,
+        @DrawableRes iconRes: Int,
+        builder: NotificationCompat.Builder.() -> Unit = {}
     ) {
-        val notificationBuilder = notificationBuilder(context, channelId).apply {
+        val notificationBuilder = notificationBuilder(
+            context,
+            channelId
+        ).apply {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                showBundleNotification(context, title, channelId)
+                showBundleNotification(
+                    context,
+                    title,
+                    channelId,
+                    iconRes
+                )
                 setGroup(channelId)
             } else {
                 setContentTitle(title)
@@ -32,24 +42,27 @@ object NotificationUtil {
             )
             setContentIntent(pendingIntent)
             setAutoCancel(true)
-            // FIXME: Please replace with transparent icon
-            setSmallIcon(R.mipmap.notification_icon)
-        }
+            setSmallIcon(iconRes)
+        }.apply(builder)
 
         val notificationManagerCompat = NotificationManagerCompat.from(context)
         notificationManagerCompat.notify(text.hashCode(), notificationBuilder.build())
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun showBundleNotification(context: Context, title: String, channelId: String) {
+    private fun showBundleNotification(
+        context: Context, title: String, channelId: String, @DrawableRes iconRes: Int
+    ) {
         val notificationManager = context.getSystemService(NotificationManager::class.java)
-        val notification = notificationBuilder(context, channelId)
+        val notification = notificationBuilder(
+            context,
+            channelId
+        )
             .setStyle(
                 NotificationCompat.BigTextStyle()
                     .setSummaryText(title)
             )
-            // FIXME: Please replace with transparent icon
-            .setSmallIcon(R.mipmap.notification_icon)
+            .setSmallIcon(iconRes)
             .setGroup(channelId)
             .setGroupSummary(true)
             .setAutoCancel(true)
@@ -62,7 +75,12 @@ object NotificationUtil {
         channelId: String
     ): NotificationCompat.Builder {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createDefaultNotificationChannel(context, NotificationChannelInfo.of(channelId))
+            createDefaultNotificationChannel(
+                context,
+                NotificationChannelInfo.of(
+                    channelId
+                )
+            )
         }
         val builder = NotificationCompat.Builder(context, channelId)
         builder.setChannelId(channelId)
@@ -98,7 +116,7 @@ enum class NotificationChannelInfo(
     ),
     SUBSCRIBE_TOPIC(
         "subscribe_topic",
-        R.string.notification_channel_name_start_favorite_session // FIXME
+        R.string.notification_channel_name_subscribe_topic // FIXME
     );
 
     fun channelName(context: Context): String = context.getString(channelNameResId)

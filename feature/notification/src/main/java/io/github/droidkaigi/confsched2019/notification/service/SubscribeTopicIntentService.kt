@@ -10,6 +10,8 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.messaging.FirebaseMessaging
+import io.github.droidkaigi.confsched2019.notification.Topic
+import io.github.droidkaigi.confsched2019.notification.util.currentThreadExecutor
 import io.github.droidkaigi.confsched2019.timber.error
 import timber.log.Timber
 import timber.log.debug
@@ -23,9 +25,10 @@ class SubscribeTopicIntentService : IntentService(NAME) {
 
             intent ?: return
 
-            val topicName = "test_topic"
+            val topicName = "test_topic" ?: intent.getStringExtra(KEY_TOPIC_NAME) ?: return
 
-            val currentThreadExecutor = currentThreadExecutor
+            val currentThreadExecutor =
+                currentThreadExecutor
 
             FirebaseMessaging.getInstance().subscribeToTopic(topicName)
                 .addOnSuccessListener(currentThreadExecutor, OnSuccessListener {
@@ -56,14 +59,16 @@ class SubscribeTopicIntentService : IntentService(NAME) {
 
     companion object {
         private const val NAME = "SubscribeTopicIntentService"
+        private const val KEY_TOPIC_NAME = "key.topicName"
 
         private val NEED_FOREGROUND: Boolean
             get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 
-        fun start(context: Context) {
+        fun start(context: Context, topic: Topic) {
             ContextCompat.startForegroundService(
                 context,
                 Intent(context, SubscribeTopicIntentService::class.java)
+                    .putExtra(KEY_TOPIC_NAME, topic.name)
             )
         }
     }
