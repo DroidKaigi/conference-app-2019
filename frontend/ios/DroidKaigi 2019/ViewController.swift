@@ -12,10 +12,9 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        print(LangKt.defaultLang())
+        SessionRepository().fetchSessions { (sessionContents) in
+            print((sessionContents.sessions[0] as! Session.ServiceSession).title.ja)
+        }
     }
-
-
 }
 

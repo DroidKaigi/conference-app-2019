@@ -67,7 +67,7 @@ object Dep {
     }
 
     object Kotlin {
-        val version = "1.3.11"
+        val version = "1.3.10"
         val stdlibCommon = "org.jetbrains.kotlin:kotlin-stdlib-common:$version"
         val stdlibJvm = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version"
         val coroutinesVersion = "1.0.1"
@@ -107,11 +107,13 @@ object Dep {
     }
 
     object Ktor {
-        val version = "1.0.1"
+        val version = "1.1.1"
         val clientCommon = "io.ktor:ktor-client-core:$version"
         val clientAndroid = "io.ktor:ktor-client-okhttp:$version"
+        val common = "io.ktor:ktor-client-json:$version"
         val clientIos = "io.ktor:ktor-client-ios:$version"
         val jsonJvm = "io.ktor:ktor-client-json-jvm:$version"
+        val jsonNative = "io.ktor:ktor-client-json-native:$version"
     }
 
     object OkHttp {
