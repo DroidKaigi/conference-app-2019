@@ -5,6 +5,7 @@ import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
 import android.os.Build
+import androidx.core.app.AlarmManagerCompat
 import com.soywiz.klock.DateTimeSpan
 import com.soywiz.klock.minutes
 import io.github.droidkaigi.confsched2019.broadcastreceiver.NotificationBroadcastReceiver
@@ -27,19 +28,12 @@ class SessionAlarm @Inject constructor(private val app: Application) {
 
         if (System.currentTimeMillis() < time) {
             val alarmManager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                alarmManager.setAndAllowWhileIdle(
-                    AlarmManager.RTC_WAKEUP,
-                    time,
-                    createAlarmIntent(session)
-                )
-            } else {
-                alarmManager.set(
-                    AlarmManager.RTC_WAKEUP,
-                    time,
-                    createAlarmIntent(session)
-                )
-            }
+            AlarmManagerCompat.setAndAllowWhileIdle(
+                alarmManager,
+                AlarmManager.RTC_WAKEUP,
+                time,
+                createAlarmIntent(session)
+            )
         }
     }
 
