@@ -67,7 +67,7 @@ object Dep {
     }
 
     object Kotlin {
-        val version = "1.3.10"
+        val version = "1.3.11"
         val stdlibCommon = "org.jetbrains.kotlin:kotlin-stdlib-common:$version"
         val stdlibJvm = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version"
         val coroutinesVersion = "1.0.1"
