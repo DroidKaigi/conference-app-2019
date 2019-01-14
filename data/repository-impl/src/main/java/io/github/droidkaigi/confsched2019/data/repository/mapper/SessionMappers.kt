@@ -23,7 +23,10 @@ fun SessionWithSpeakers.toSession(
             dayNumber = DateTime(session.stime).dayOfYear - firstDay.dayOfYear + 1,
             startTime = DateTime.fromUnix(session.stime),
             endTime = DateTime.fromUnix(session.etime),
-            title = session.title,
+            title = LocaledString(
+                ja = session.title,
+                en = requireNotNull(session.englishTitle)
+                ),
             room = requireNotNull(session.room).let { room ->
                 Room(room.id, room.name)
             },

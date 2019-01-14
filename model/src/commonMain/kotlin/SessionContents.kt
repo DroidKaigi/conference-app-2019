@@ -34,7 +34,11 @@ data class SessionContents(
                             *it.speakers.map { speaker -> speaker.name }.toTypedArray()
                         )
                     is Session.ServiceSession ->
-                        find(query, it.title)
+                        find(
+                            query,
+                            it.title.en,
+                            it.title.ja
+                        )
                 }
             },
             speakers.filter {
