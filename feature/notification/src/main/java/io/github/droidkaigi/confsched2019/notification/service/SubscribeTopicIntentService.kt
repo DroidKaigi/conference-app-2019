@@ -37,8 +37,8 @@ class SubscribeTopicIntentService : IntentService(NAME) {
                 )
             }
 
-            intent ?: return
-            val topicName = "test_topic" ?: intent.getStringExtra(KEY_TOPIC_NAME) ?: return
+            val topicName =
+                intent?.getStringExtra(KEY_TOPIC_NAME)?.takeIf { intent.isValid } ?: return
 
             runBlocking {
                 FirebaseInstanceId.getInstance().instanceId.await()
@@ -52,7 +52,7 @@ class SubscribeTopicIntentService : IntentService(NAME) {
         } catch (th: Throwable) {
             Timber.error(th)
 
-            if (intent != null) {
+            if (intent?.isValid == true) {
                 retrySelf(intent)
             }
         } finally {
@@ -93,6 +93,9 @@ class SubscribeTopicIntentService : IntentService(NAME) {
             pendingIntent
         )
     }
+
+    private val Intent.isValid: Boolean
+        get() = getStringExtra(KEY_TOPIC_NAME)?.isNotBlank() == true
 
     companion object {
         private const val NAME = "SubscribeTopicIntentService"

@@ -11,13 +11,15 @@
             </intent-filter>
         </service>
 
+        <service android:name=".service.SubscribeTopicIntentService"/>
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@android:drawable/ic_dialog_alert"
             />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="?attr/colorAccent"
+            android:resource="@color/common_google_signin_btn_text_dark"
             />
     </application>
 </manifest>
