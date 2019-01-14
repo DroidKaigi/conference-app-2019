@@ -8,7 +8,6 @@ import android.graphics.Rect
 import android.graphics.Path
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.core.view.forEach
 import androidx.core.view.forEachIndexed
 import androidx.core.view.size
 import androidx.recyclerview.widget.RecyclerView
@@ -54,8 +53,7 @@ class DottedItemDecoration private constructor(
                 this@DottedItemDecoration.gap.toFloat(),
                 this@DottedItemDecoration.gap.toFloat()
             ),
-            0f
-        )
+            0f)
     }
 
     override fun getItemOffsets(
