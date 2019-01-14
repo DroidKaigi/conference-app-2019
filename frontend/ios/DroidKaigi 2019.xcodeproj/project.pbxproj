@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		01578EC121E5E75A002B2033 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01578EC021E5E75A002B2033 /* AppDelegate.swift */; };
-		01578EC321E5E75A002B2033 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01578EC221E5E75A002B2033 /* ViewController.swift */; };
+		01578EC321E5E75A002B2033 /* SessionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01578EC221E5E75A002B2033 /* SessionsViewController.swift */; };
 		01578EC621E5E75A002B2033 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01578EC421E5E75A002B2033 /* Main.storyboard */; };
 		01578ECB21E5E75D002B2033 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01578ECA21E5E75D002B2033 /* Assets.xcassets */; };
 		01578ECE21E5E75D002B2033 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01578ECC21E5E75D002B2033 /* LaunchScreen.storyboard */; };
@@ -60,7 +60,7 @@
 /* Begin PBXFileReference section */
 		01578EBD21E5E75A002B2033 /* DroidKaigi 2019.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DroidKaigi 2019.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		01578EC021E5E75A002B2033 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		01578EC221E5E75A002B2033 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		01578EC221E5E75A002B2033 /* SessionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsViewController.swift; sourceTree = "<group>"; };
 		01578EC521E5E75A002B2033 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		01578ECA21E5E75D002B2033 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		01578ECD21E5E75D002B2033 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -137,7 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				01578EC021E5E75A002B2033 /* AppDelegate.swift */,
-				01578EC221E5E75A002B2033 /* ViewController.swift */,
+				01578EC221E5E75A002B2033 /* SessionsViewController.swift */,
 				E9B4926721ECC7DA000F1072 /* SessionsViewModel.swift */,
 				63F34E1A21EB43CE00B2EC48 /* SessionRepository.swift */,
 				01578EC421E5E75A002B2033 /* Main.storyboard */,
@@ -381,7 +381,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01578EC321E5E75A002B2033 /* ViewController.swift in Sources */,
+				01578EC321E5E75A002B2033 /* SessionsViewController.swift in Sources */,
 				E9B4926821ECC7DA000F1072 /* SessionsViewModel.swift in Sources */,
 				63F34E1B21EB43CE00B2EC48 /* SessionRepository.swift in Sources */,
 				01578EC121E5E75A002B2033 /* AppDelegate.swift in Sources */,
