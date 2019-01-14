@@ -1,9 +1,10 @@
-# ![](frontend/android/src/main/res/mipmap-hdpi/ic_launcher.png)DroidKaigi 2019 official Android app
+# ![](frontend/android/src/main/res/mipmap-hdpi/ic_launcher.png)DroidKaigi 2019 official Android app [![CircleCI](https://circleci.com/gh/DroidKaigi/conference-app-2019.svg?style=svg)](https://circleci.com/gh/DroidKaigi/conference-app-2019)
 
 [DroidKaigi 2019](https://droidkaigi.jp/2019/en/) is a conference tailored for developers on 7th and 8th February 2019.
 
 You can download the binary built on master branch from [<img src="https://dply.me/t6sc7f/button/large" alt="Try it on your device via DeployGate">](https://dply.me/t6sc7f#install)
 
+NOTE: Google Play Protect will show a warning dialog on some of devices when installing the current apk. The detailed specification of Google Play Protect is not public so we cannot address this matter. Please ignore the dialog for now. If you cannot install this apk without any error message, please disable Google Play Protect from Google Play Store's menus. Sorry for the inconvenience.
 
 # Features
 
@@ -17,20 +18,19 @@ You can download the binary built on master branch from [<img src="https://dply.
 * Show Information Feed
 
 # Contributing
-We are always welcome your contribution!
 
-## How to find the tasks
-We use [GitHub issues](https://github.com/DroidKaigi/conference-app-2019/issues?q=is%3Aissue+is%3Aopen+label%3A%22welcome+contribute%22) to manage the tasks.
-Please find the issues you'd like to contribute in it.
-[welcome contribute](https://github.com/DroidKaigi/conference-app-2019/labels/welcome%20contribute) and [easy](https://github.com/DroidKaigi/conference-app-2019/labels/easy) are good for first contribution.
+We always welcome any and all contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information
 
-Of course, it would be great to send PullRequest which has no issue!
+## Requirements
 
-## How to contribute
-If you find the tasks you want to contribute, please comment in the issue like [this](https://github.com/DroidKaigi/conference-app-2018/issues/73#issuecomment-357410022) to prevent to conflict contribution.
-We'll reply as soon as possible, but it's unnecessary to wait for our reaction. It's okay to start contribution and send PullRequest!
+- Android Studio 3.2.1 and higher.
+- Android Studio Kotlin Plugin 1.3.11-release-Studio<AS version>
 
-We've designated these issues as good candidates for easy contribution. You can always fork the repository and send a pull request (on a branch other than `master`).
+**Check out following status.**  
+`Preference` > `Languages & Frameworks` > `Kotlin Updates`
+
+Older versions of the Kotlin plugin may cause build failures.
+If you still have a trouble after upgrading the plugin, please try using AndroidStudio 3.3 or 3.4 instead.
 
 # Development Environment
 
@@ -226,8 +226,8 @@ This project uses some modern Android libraries and source codes.
   * Coroutines
   * Serialization
 * [Firebase](https://firebase.google.com/) (Google)
-  * Auth
-  * Firestore
+  * Authentication
+  * Cloud Firestore
 * [Dagger 2](https://google.github.io/dagger/)
   * Core (Google)
   * AndroidSupport (Google)

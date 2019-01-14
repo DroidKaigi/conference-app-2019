@@ -16,7 +16,7 @@ import javax.inject.Singleton
         MainActivityModule.MainActivityBuilder::class,
         DbComponentModule::class,
         RepositoryComponentModule::class,
-        FireStoreComponentModule::class,
+        FirestoreComponentModule::class,
         ApiComponentModule::class
     ]
 )

@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="64dp"
+            android:scrollbars="none"
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -69,10 +70,11 @@
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/sessions_filter_room_chip"
+                    style="@style/Widget.App.ChipGroup.SessionFilter"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/sessions_filter_reset"
                     app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
                     app:layout_constraintTop_toBottomOf="@id/sessions_filter_room_title"
                     />
@@ -91,14 +93,60 @@
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/sessions_filter_lang_chip"
+                    style="@style/Widget.App.ChipGroup.SessionFilter"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/sessions_filter_reset"
                     app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
                     app:layout_constraintTop_toBottomOf="@id/sessions_filter_lang_title"
                     />
 
+                <TextView
+                    android:id="@+id/sessions_filter_lang_support_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/session_filter_language_support"
+                    android:textAppearance="?textAppearanceSubtitle1"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
+                    app:layout_constraintTop_toBottomOf="@id/sessions_filter_lang_chip"
+                    />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/sessions_filter_lang_support_chip"
+                    style="@style/Widget.App.ChipGroup.SessionFilter"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="@id/sessions_filter_reset"
+                    app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
+                    app:layout_constraintTop_toBottomOf="@id/sessions_filter_lang_support_title"
+                    />
+
+                <TextView
+                    android:id="@+id/sessions_filter_audience_category_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/session_filter_audience_category"
+                    android:textAppearance="?textAppearanceSubtitle1"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
+                    app:layout_constraintTop_toBottomOf="@id/sessions_filter_lang_support_chip"
+                    />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/sessions_filter_audience_category_chip"
+                    style="@style/Widget.App.ChipGroup.SessionFilter"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="@id/sessions_filter_reset"
+                    app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
+                    app:layout_constraintTop_toBottomOf="@id/sessions_filter_audience_category_title"
+                    />
 
                 <TextView
                     android:id="@+id/sessions_filter_category_title"
@@ -109,15 +157,16 @@
                     android:textAppearance="?textAppearanceSubtitle1"
                     android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
-                    app:layout_constraintTop_toBottomOf="@id/sessions_filter_lang_chip"
+                    app:layout_constraintTop_toBottomOf="@id/sessions_filter_audience_category_chip"
                     />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/sessions_filter_category_chip"
+                    style="@style/Widget.App.ChipGroup.SessionFilter"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/sessions_filter_reset"
                     app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
                     app:layout_constraintTop_toBottomOf="@id/sessions_filter_category_title"
                     />
@@ -130,7 +179,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="4dp"
             app:behavior_hideable="false"
             app:behavior_peekHeight="64dp"
             app:behavior_skipCollapsed="false"

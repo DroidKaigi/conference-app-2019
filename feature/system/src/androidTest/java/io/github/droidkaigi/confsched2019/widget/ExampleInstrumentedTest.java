@@ -20,6 +20,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("io.github.droidkaigi.confsched2019.ui.test", appContext.getPackageName());
+        assertEquals("io.github.droidkaigi.confsched2019.system.test", appContext.getPackageName());
     }
 }

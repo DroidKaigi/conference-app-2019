@@ -6,7 +6,6 @@ import io.github.droidkaigi.confsched2019.model.Category
 import io.github.droidkaigi.confsched2019.model.LocaledString
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
-import io.github.droidkaigi.confsched2019.model.SessionMessage
 import io.github.droidkaigi.confsched2019.model.SessionType
 
 private val startTime = DateTime.createAdjusted(2019, 2, 7, 10, 0)
@@ -17,9 +16,10 @@ fun dummySessionData(): List<Session> {
             1,
             startTime,
             startTime + 30.minutes,
-            "session",
+            LocaledString("session", "session English"),
             Room(0, "Hall"),
-            SessionType.WelcomeTalk
+            SessionType.WELCOME_TALK,
+            true
         ),
         firstDummySpeechSession(),
         Session.SpeechSession(
@@ -37,9 +37,13 @@ fun dummySessionData(): List<Session> {
             language = LocaledString("英語", "English"),
             category = Category(10, LocaledString("ツール", "Tool")),
             intendedAudience = "extream",
+            videoUrl = "https://droidkaigi.jp/2019/#might_be_null",
+            slideUrl = "https://droidkaigi.jp/2019/#might_be_null",
+            isInterpretationTarget = true,
             isFavorited = true,
             speakers = listOf(),
-            message = SessionMessage("部屋移動", "room moved")
+            message = LocaledString("部屋移動", "room moved"),
+            forBeginners = true
         )
     )
 }
@@ -60,9 +64,13 @@ fun firstDummySpeechSession(): Session.SpeechSession {
         language = LocaledString("日本語", "Japanese"),
         category = Category(id = 10, name = LocaledString("アーキテクチャ", "App Architecture")),
         intendedAudience = "intermediate",
+        videoUrl = "https://droidkaigi.jp/2019/#might_be_null",
+        slideUrl = "https://droidkaigi.jp/2019/#might_be_null",
+        isInterpretationTarget = false,
         isFavorited = false,
         speakers = listOf(),
-        message = null
+        message = null,
+        forBeginners = false
     )
 }
 

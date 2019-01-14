@@ -6,16 +6,19 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
+import com.crashlytics.android.Crashlytics
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
+import io.fabric.sdk.android.Fabric
 import io.github.droidkaigi.confsched2019.di.createAppComponent
 import io.github.droidkaigi.confsched2019.ext.android.changedForever
 import io.github.droidkaigi.confsched2019.system.actioncreator.SystemActionCreator
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
-import io.github.droidkaigi.confsched2019.util.logd
+import timber.log.Timber
+import timber.log.debug
 import javax.inject.Inject
 
 open class App : DaggerApplication() {
@@ -25,6 +28,7 @@ open class App : DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
 
+        setupCrashlytics()
         setupFont()
         setupEmojiCompat()
         setupFirestore()
@@ -38,7 +42,7 @@ open class App : DaggerApplication() {
         // fetch font for cache
         ResourcesCompat.getFont(this, R.font.lekton, object : ResourcesCompat.FontCallback() {
             override fun onFontRetrievalFailed(reason: Int) {
-                logd { "onFontRetrievalFailed$reason" }
+                Timber.debug { "onFontRetrievalFailed$reason" }
             }
 
             override fun onFontRetrieved(typeface: Typeface) {
@@ -74,6 +78,10 @@ open class App : DaggerApplication() {
                 }
             })
         EmojiCompat.init(config)
+    }
+
+    private fun setupCrashlytics() {
+        Fabric.with(this, Crashlytics())
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {

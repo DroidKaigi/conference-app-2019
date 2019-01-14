@@ -12,7 +12,7 @@ dependencies {
     implementation project(":feature:user")
     implementation project(":feature:system")
     implementation project(':frontendcomponent:androidcomponent')
-    implementation project(":data:firestore")
+    implementation project(":data:repository")
     implementation project(':ext:android-extension')
 
     implementation Dep.Kotlin.stdlibJvm
@@ -45,6 +45,9 @@ dependencies {
     implementation Dep.Groupie.databinding
 
     testImplementation Dep.Test.junit
+    testImplementation Dep.Test.kotlinTestAssertions
+    testImplementation Dep.MockK.jvm
+    testImplementation project(':frontendcomponent:androidtestcomponent')
     androidTestImplementation Dep.Test.testRunner
     androidTestImplementation Dep.Test.espressoCore
 }

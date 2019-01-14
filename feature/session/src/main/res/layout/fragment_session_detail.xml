@@ -26,6 +26,11 @@
             name="lang"
             type="io.github.droidkaigi.confsched2019.model.Lang"
             />
+
+        <variable
+            name="timeZoneOffset"
+            type="com.soywiz.klock.DateTimeSpan"
+            />
     </data>
 
 
@@ -33,6 +38,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -42,18 +55,20 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingBottom="24dp"
                 >
 
-                <androidx.emoji.widget.EmojiTextView
+                <androidx.emoji.widget.EmojiAppCompatTextView
                     android:id="@+id/session_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
+                    android:includeFontPadding="false"
                     android:text="@{session.title.getByLang(lang)}"
                     android:textAlignment="viewStart"
-                    android:textAppearance="@style/TextAppearance.App.Headline5"
+                    android:textAppearance="@style/TextAppearance.Lekton.Headline5"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -66,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:textAppearance="@style/TextAppearance.App.Subtitle2"
+                    android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/session_title"
@@ -91,8 +106,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
-                    android:text="@{session.timeSummary(lang)}"
+                    android:text="@{session.timeSummary(lang, timeZoneOffset)}"
+                    android:textAppearance="@style/TextAppearance.Lekton.Body1"
                     app:layout_constraintBottom_toBottomOf="@id/session_time_image"
                     app:layout_constraintStart_toEndOf="@id/session_time_image"
                     app:layout_constraintTop_toTopOf="@id/session_time_image"
@@ -100,19 +115,50 @@
                     />
 
                 <ImageView
-                    android:id="@+id/divider1"
+                    android:id="@+id/session_message_image"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@null"
+                    app:layout_constraintBottom_toBottomOf="@id/session_message"
+                    app:layout_constraintStart_toStartOf="@id/session_title"
+                    app:layout_constraintTop_toTopOf="@id/session_message"
+                    app:srcCompat="@drawable/ic_bug_report_border_orange_18dp"
+                    app:visibleGone="@{session.message != null}"
+                    />
+
+                <androidx.emoji.widget.EmojiAppCompatTextView
+                    android:id="@+id/session_message"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="12dp"
+                    android:textAppearance="@style/TextAppearance.Lekton.Body1"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/session_message_image"
+                    app:layout_constraintTop_toBottomOf="@id/session_time_image"
+                    app:visibleGone="@{session.message != null}"
+                    tools:text="セッションフロアがHallからRoom1に変更になりました"
+                    />
+
+                <ImageView
+                    android:id="@+id/divider_top_description"
                     android:layout_width="0dp"
                     android:layout_height="4dp"
-                    android:layout_marginTop="48dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
                     android:contentDescription="@null"
                     android:layerType="software"
                     android:src="@drawable/shape_dashed_line"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/session_time_image"
+                    app:layout_constraintTop_toBottomOf="@id/session_message"
+                    app:layout_goneMarginTop="32dp"
                     />
 
-                <androidx.emoji.widget.EmojiTextView
+                <androidx.emoji.widget.EmojiAppCompatTextView
                     android:id="@+id/session_description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -120,22 +166,25 @@
                     android:layout_marginTop="16dp"
                     android:ellipsize="end"
                     android:includeFontPadding="false"
+                    android:lineSpacingExtra="4dp"
                     android:paddingBottom="2dp"
                     android:text="@{session.desc}"
                     android:textAlignment="viewStart"
+                    android:textAppearance="@style/TextAppearance.Lekton.Body1"
                     android:textIsSelectable="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/session_title"
-                    app:layout_constraintTop_toBottomOf="@id/divider1"
+                    app:layout_constraintTop_toBottomOf="@id/divider_top_description"
                     tools:text="Material is the metaphor A material metaphor is the unifying theory of a rationalized space and a system of motion. The material is grounded in tactile reality, inspired by the study of paper and ink, yet technologically advanced and open to imagination and magic."
                     />
 
-
                 <ImageView
-                    android:id="@+id/divider2"
+                    android:id="@+id/divider_top_intended_audience"
                     android:layout_width="0dp"
                     android:layout_height="4dp"
-                    android:layout_marginTop="28dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
                     android:contentDescription="@null"
                     android:layerType="software"
                     android:src="@drawable/shape_dashed_line"
@@ -145,14 +194,58 @@
                     />
 
                 <TextView
+                    android:id="@+id/session_intended_audience_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/session_detail_intended_audience"
+                    android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
+                    app:layout_constraintStart_toStartOf="@id/session_title"
+                    app:layout_constraintTop_toBottomOf="@id/divider_top_intended_audience"
+                    />
+
+                <androidx.emoji.widget.EmojiAppCompatTextView
+                    android:id="@+id/session_intended_audience_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="4dp"
+                    android:paddingBottom="2dp"
+                    android:textAlignment="viewStart"
+                    android:textAppearance="@style/TextAppearance.Lekton.Body1"
+                    android:textIsSelectable="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/session_title"
+                    app:layout_constraintTop_toBottomOf="@id/session_intended_audience_title"
+                    tools:text="Kotlinでの実装経験者で、業務でばりばりKotlinでコードを書きまくっている人向け。"
+                    />
+
+                <ImageView
+                    android:id="@+id/divider_top_tags"
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    android:contentDescription="@null"
+                    android:layerType="software"
+                    android:src="@drawable/shape_dashed_line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/session_intended_audience_description"
+                    />
+
+                <TextView
                     android:id="@+id/session_tag_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/session_detail_tag"
-                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_title"
-                    app:layout_constraintTop_toBottomOf="@id/divider2"
+                    app:layout_constraintTop_toBottomOf="@id/divider_top_tags"
                     />
 
 
@@ -162,6 +255,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="12dp"
+                    app:chipSpacing="4dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/session_tag_title"
@@ -172,11 +266,47 @@
                         style="@style/Widget.MaterialComponents.Chip.Action"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:enabled="false"
+                        android:focusable="false"
                         android:text="@{session.language.getByLang(lang)}"
                         android:textAppearance="?textAppearanceCaption"
                         android:textColor="@color/white"
                         app:chipBackgroundColor="#7982e1"
+                        app:chipMinTouchTargetSize="0dp"
                         tools:text="Japanese"
+                        />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/simultaneous_interpretation_chip"
+                        style="@style/Widget.MaterialComponents.Chip.Action"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:enabled="false"
+                        android:focusable="false"
+                        android:text="@string/session_simultaneous_interpretation"
+                        android:textAppearance="?textAppearanceCaption"
+                        android:textColor="@color/white"
+                        app:chipBackgroundColor="#7982e1"
+                        app:chipMinTouchTargetSize="0dp"
+                        app:visibleGone="@{session.isInterpretationTarget}"
+                        />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/for_beginners_chip"
+                        style="@style/Widget.MaterialComponents.Chip.Action"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:enabled="false"
+                        android:focusable="false"
+                        android:text="@string/session_for_beginners"
+                        android:textAppearance="?textAppearanceCaption"
+                        android:textColor="@color/white"
+                        app:chipBackgroundColor="#7982e1"
+                        app:chipMinTouchTargetSize="0dp"
+                        app:visibleGone="@{session.forBeginners}"
                         />
 
                     <com.google.android.material.chip.Chip
@@ -184,25 +314,31 @@
                         style="@style/Widget.MaterialComponents.Chip.Action"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:enabled="false"
+                        android:focusable="false"
                         android:textAppearance="?textAppearanceCaption"
                         android:textColor="@color/white"
                         app:chipBackgroundColor="#95959c"
+                        app:chipMinTouchTargetSize="0dp"
                         tools:text="ソフトウェアアーキテクチャ"
                         />
                 </com.google.android.material.chip.ChipGroup>
 
                 <ImageView
-                    android:id="@+id/divider3"
+                    android:id="@+id/divider_top_survey"
                     android:layout_width="0dp"
                     android:layout_height="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
                     android:contentDescription="@null"
                     android:layerType="software"
                     android:src="@drawable/shape_dashed_line"
-                    app:visibleGone="@{session.isFinished}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_tags"
+                    app:visibleGone="@{session.isFinished}"
                     />
 
 
@@ -212,10 +348,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="26dp"
                     android:text="@string/session_detail_survey"
-                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
-                    app:visibleGone="@{session.isFinished}"
+                    android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_title"
-                    app:layout_constraintTop_toBottomOf="@id/divider3"
+                    app:layout_constraintTop_toBottomOf="@id/divider_top_survey"
+                    app:visibleGone="@{session.isFinished}"
                     />
 
                 <TextView
@@ -223,17 +359,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/session_detail_go_to_survey"
-                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    android:textAppearance="@style/TextAppearance.Lekton.Body1"
                     android:textColor="@color/colorSecondary"
-                    app:visibleGone="@{session.isFinished}"
                     app:layout_constraintBaseline_toBaselineOf="@id/session_survey_title"
                     app:layout_constraintEnd_toEndOf="@id/session_title"
+                    app:visibleGone="@{session.isFinished}"
                     />
 
                 <ImageView
-                    android:id="@+id/divider4"
+                    android:id="@+id/divider_top_speakers"
                     android:layout_width="0dp"
                     android:layout_height="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="26dp"
                     android:contentDescription="@null"
                     android:layerType="software"
@@ -249,9 +387,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/session_detail_speaker"
-                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_title"
-                    app:layout_constraintTop_toBottomOf="@id/divider4"
+                    app:layout_constraintTop_toBottomOf="@id/divider_top_speakers"
                     />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -259,29 +397,88 @@
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_speaker_title"
+                    tools:listitem="@layout/item_speaker"
                     />
 
-                <androidx.emoji.widget.EmojiTextView
-                    android:id="@+id/session_message"
+                <ImageView
+                    android:id="@+id/divider_top_resource"
+                    android:layout_width="0dp"
+                    android:layout_height="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:contentDescription="@null"
+                    android:layerType="software"
+                    android:src="@drawable/shape_dashed_line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/session_speakers"
+                    app:visibleGone="@{session.hasVideo || session.hasSlide}"
+                    />
+
+                <TextView
+                    android:id="@+id/session_resource_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/session_detail_resource"
+                    android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
+                    app:layout_constraintStart_toStartOf="@id/session_title"
+                    app:layout_constraintTop_toBottomOf="@id/divider_top_resource"
+                    app:visibleGone="@{session.hasVideo || session.hasSlide}"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/session_video_button"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginTop="14dp"
-                    android:ellipsize="end"
-                    android:includeFontPadding="false"
-                    android:maxLines="3"
-                    android:paddingBottom="2dp"
-                    android:textAlignment="viewStart"
-                    app:visibleGone="@{session.message != null}"
+                    android:layout_marginTop="8dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:drawablePadding="8dp"
+                    android:drawableStart="@drawable/ic_local_movies_outline_gray2_24dp"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="8dp"
+                    android:text="@string/session_detail_resource_video"
+                    android:textAppearance="@style/TextAppearance.Lekton.Body1"
+                    android:textColor="@color/colorSecondary"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/session_title"
-                    app:layout_constraintTop_toBottomOf="@id/session_speakers"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/session_resource_title"
+                    app:visibleGone="@{session.hasVideo}"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/session_slide_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:drawablePadding="8dp"
+                    android:drawableStart="@drawable/ic_file_copy_outline_gray2_24dp"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="8dp"
+                    android:text="@string/session_detail_resource_slide"
+                    android:textAppearance="@style/TextAppearance.Lekton.Body1"
+                    android:textColor="@color/colorSecondary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/session_video_button"
+                    app:layout_goneMarginTop="8dp"
+                    app:visibleGone="@{session.hasSlide}"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -295,6 +492,7 @@
             android:layout_gravity="bottom"
             app:fabAlignmentMode="end"
             app:hideOnScroll="true"
+            app:layout_behavior="@string/session_bottom_appbar_behavior"
             />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

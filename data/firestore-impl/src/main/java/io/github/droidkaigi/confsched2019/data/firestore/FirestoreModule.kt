@@ -5,7 +5,7 @@ import dagger.Module
 
 @Module(includes = [FirestoreModule.Providers::class])
 internal abstract class FirestoreModule {
-    @Binds abstract fun fireStore(impl: FirestoreImpl): FireStore
+    @Binds abstract fun firestore(impl: FirestoreImpl): Firestore
 
     @Module
     internal object Providers

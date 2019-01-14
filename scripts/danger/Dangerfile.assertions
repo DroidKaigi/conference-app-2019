@@ -21,12 +21,15 @@ end
 
 # JUnit
 begin
-  if File.exists?(ENV.fetch('MERGED_JUNIT_RESULT_FILE'))
+  dir=ENV.fetch('AGGREGATED_TEST_RESULT_DIR')
+
+  if File.exist?(dir)
     # junit report
-    junit.parse ENV.fetch('MERGED_JUNIT_RESULT_FILE')
-    fail("Failed tests found") unless junit.failures.empty?
+    junit.parse_files Dir.glob("#{dir}/*.xml")
+    junit.report
+    fail("Please check the artifacts of CircleCI. Test reports would be avaialable there.") unless junit.failures.empty?
   else
-    fail("Test results not found")
+    fail("The previous test step failed. Please check the CI log.")
   end
 end
 
@@ -44,6 +47,6 @@ end
 # LGTM
 begin
   if status_report[:errors].length.zero? && status_report[:warnings].length.zero?
-    markdown("ALL GREEN :100:")
+    markdown("Asserted successfully. :100:")
   end
 end

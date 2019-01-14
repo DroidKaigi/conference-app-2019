@@ -13,6 +13,7 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="searchViewStyle">@style/SearchViewStyle</item>
+        <item name="filterChipStyle">@style/Widget.App.FilterChip</item>
 
         <!-- see https://github.com/material-components/material-components-android/blob/2997b6995f32bbd7f7a4f24f4030278a50c15e6f/docs/theming/Typography.md -->
         <item name="textAppearanceHeadline5">@style/TextAppearance.App.Headline5</item>
@@ -22,6 +23,12 @@
         <item name="textAppearanceBody1">@style/TextAppearance.App.Body1</item>
         <item name="textAppearanceBody2">@style/TextAppearance.App.Body2</item>
         <item name="textAppearanceCaption">@style/TextAppearance.App.Caption</item>
+    </style>
+
+    <style name="AppTheme.WithActionBar">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+        <item name="colorPrimary">@android:color/white</item>
     </style>
 
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">

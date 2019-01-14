@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">DroidKaigi 2019</string>
     <string name="app_logo_description" translatable="false">logo image</string>
+    <string name="entire_survey_request">Please fill out the entire survey</string>
 </resources>

@@ -4,6 +4,8 @@
 /.idea/*
 !/.idea/codeStyles/
 !/.idea/dictionaries/
+!.idea/icon.png
+!.idea/icon_dark.png
 .DS_Store
 lint-results.*
 build/
@@ -15,3 +17,4 @@ build/
 *.apks
 
 **/vendor/bundle/
+**/xcuserdata/

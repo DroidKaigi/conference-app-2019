@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+set -eu
+set -o pipefail
+
+user_name="${CIRCLE_PROJECT_USERNAME:-DroidKaigi}"
+repo_name="${CIRCLE_PROJECT_REPONAME:-conference-app-2019}"
+
+get_pr() {
+    local -r pr_number="$1"
+
+    # DANGER_GITHUB_API_TOKEN, GITHUB_API_TOKEN, GITHUB_ACCESS_TOKEN are supported
+    local -r gh_token="${DANGER_GITHUB_API_TOKEN:-${GITHUB_API_TOKEN:-$GITHUB_ACCESS_TOKEN}}"
+
+    curl -H "Authorization: token $gh_token" \
+        "https://api.github.com/repos/$user_name/$repo_name/pulls/$pr_number"
+}
+
+get_pr_meta() {
+    cat - | jq -r '.head | .repo.full_name, .ref'
+}
+
+sync() {
+    local -r remote_name="$1"
+    local full_name= ref=
+
+    read full_name
+    read ref
+
+    git remote add "$remote_name" "git@github.com:$full_name.git" || :
+    git fetch "$remote_name" "$ref"
+    git checkout -b "${remote_name}_${ref}" "$remote_name/$ref"
+}
+
+sync_forked_pr() {
+    local -r pr_number="$1"
+
+    get_pr "$pr_number" | get_pr_meta | sync "pr_$pr_number"
+}
+
+sync_forked_pr "$1"

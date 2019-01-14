@@ -11,8 +11,13 @@ class FiltersTest {
         assertTrue { Filters().isPass(mockk<Session.SpeechSession>()) }
     }
 
-    @Test fun isPass_WhenSpecialSession() {
-        assertTrue { Filters().isPass(mockk<Session.ServiceSession>()) }
+    @Test fun isPass_WhenServiceSessionAndIsNotFilterable() {
+        val serviceSession = mockk<Session.ServiceSession>()
+        every { serviceSession.sessionType } returns SessionType.AFTER_PARTY
+        assertTrue { Filters().isPass(serviceSession) }
+
+        every { serviceSession.sessionType } returns SessionType.LUNCH
+        assertTrue { Filters().isPass(serviceSession) }
     }
 
     @Test fun isPass_WhenRoomFiltered() {
@@ -30,6 +35,15 @@ class FiltersTest {
         every { speechSession.room } returns room1
 
         assertFalse { Filters(rooms = mutableSetOf(room2)).isPass(speechSession) }
+    }
+
+    @Test fun isPass_WhenFilterableServiceSessionAndRoomFiltered() {
+        val room = Room(10, "room1")
+        val serviceSession = mockk<Session.ServiceSession>()
+        every { serviceSession.room } returns room
+        every { serviceSession.sessionType } returns SessionType.CODELABS
+
+        assertTrue { Filters(rooms = mutableSetOf(room)).isPass(serviceSession) }
     }
 
     @Test fun isPass_WhenCategoryFiltered() {
@@ -64,5 +78,37 @@ class FiltersTest {
         every { speechSession.language } returns Lang.JA.text
 
         assertFalse { Filters(langs = mutableSetOf(lang2)).isPass(speechSession) }
+    }
+
+    @Test fun isPass_WhenLangSupportFiltered() {
+        val langSupport = LangSupport.INTERPRETATION
+        val speechSession = mockk<Session.SpeechSession>()
+        every { speechSession.isInterpretationTarget } returns true
+
+        assertTrue { Filters(langSupports = mutableSetOf(langSupport)).isPass(speechSession) }
+    }
+
+    @Test fun isPass_WhenLangSupportFilteredWithoutInterpretationTarget() {
+        val langSupport = LangSupport.INTERPRETATION
+        val speechSession = mockk<Session.SpeechSession>()
+        every { speechSession.isInterpretationTarget } returns false
+
+        assertFalse { Filters(langSupports = mutableSetOf(langSupport)).isPass(speechSession) }
+    }
+
+    @Test fun isPass_WhenAudienceCategoryFiltered() {
+        val audienceCategory = AudienceCategory.BEGINNERS
+        val speechSession = mockk<Session.SpeechSession>()
+        every { speechSession.forBeginners } returns true
+
+        assertTrue { Filters(audienceCategories = mutableSetOf(audienceCategory)).isPass(speechSession) }
+    }
+
+    @Test fun isPass_WhenAudienceCategoryFilteredWithoutForBeginners() {
+        val audienceCategory = AudienceCategory.BEGINNERS
+        val speechSession = mockk<Session.SpeechSession>()
+        every { speechSession.forBeginners } returns false
+
+        assertFalse { Filters(audienceCategories = mutableSetOf(audienceCategory)).isPass(speechSession) }
     }
 }

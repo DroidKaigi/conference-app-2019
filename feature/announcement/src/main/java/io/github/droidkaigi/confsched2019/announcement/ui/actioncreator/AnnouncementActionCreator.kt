@@ -2,7 +2,7 @@ package io.github.droidkaigi.confsched2019.announcement.ui.actioncreator
 
 import androidx.lifecycle.Lifecycle
 import io.github.droidkaigi.confsched2019.action.Action
-import io.github.droidkaigi.confsched2019.data.firestore.FireStore
+import io.github.droidkaigi.confsched2019.data.repository.AnnouncementRepository
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class AnnouncementActionCreator @Inject constructor(
     override val dispatcher: Dispatcher,
-    private val fireStore: FireStore,
+    private val announcementRepository: AnnouncementRepository,
     @PageScope private val lifecycle: Lifecycle
 ) : CoroutineScope by lifecycle.coroutineScope,
     ErrorHandler {
@@ -22,7 +22,13 @@ class AnnouncementActionCreator @Inject constructor(
     fun load() = launch {
         try {
             dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADING))
-            dispatcher.dispatch(Action.AnnouncementLoaded(fireStore.getAnnouncements()))
+            // read the cache first
+            dispatcher.dispatch(Action.AnnouncementLoaded(announcementRepository.announcements()))
+
+            // use api response
+            announcementRepository.refresh()
+            dispatcher.dispatch(Action.AnnouncementLoaded(announcementRepository.announcements()))
+
             dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADED))
         } catch (e: Exception) {
             onError(e)

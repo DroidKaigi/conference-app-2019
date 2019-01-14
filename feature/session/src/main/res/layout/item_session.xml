@@ -27,11 +27,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="?android:attr/selectableItemBackground"
-        android:paddingBottom="@dimen/session_item_bottom_padding"
+        android:layout_marginBottom="30dp"
+        android:paddingBottom="4dp"
         android:paddingEnd="0dp"
         android:paddingStart="@{addPaddingForTime ? @dimen/session_bottom_sheet_left_time_space : 0}"
         android:paddingTop="@dimen/session_item_top_padding"
         >
+
+        <TextView
+            android:id="@+id/live"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/robotomono_medium"
+            android:text="@string/session_live"
+            android:textAllCaps="true"
+            android:background="@drawable/shape_live"
+            android:textColor="@color/white"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:textSize="10sp"
+            app:visibleGone="@{session.isOnGoing}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SmallSp"
+            />
 
         <androidx.emoji.widget.EmojiTextView
             android:id="@+id/title"
@@ -44,9 +66,8 @@
             android:textAppearance="@style/TextAppearance.App.Subtitle1"
             app:layout_constraintEnd_toStartOf="@id/favorite"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_goneMarginTop="12dp"
-            tools:text="テストセッション"
+            app:layout_constraintTop_toBottomOf="@+id/live"
+            tools:text="@sample/service_session.json/data/session_name"
             />
 
         <ImageView
@@ -60,6 +81,7 @@
             android:tint="@{session.isFavorited ? @color/colorPrimary : @color/gray1}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/title"
+            tools:src="@drawable/ic_bookmark_border_black_24dp"
             />
 
         <LinearLayout
@@ -81,7 +103,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintTop_toBottomOf="@id/speakers"
-            tools:text="30min / Room A"
+            tools:text="@sample/service_session.json/data/time_room"
             />
 
         <com.google.android.material.chip.ChipGroup
@@ -108,7 +130,41 @@
                 android:textColor="@color/white"
                 app:chipBackgroundColor="#7982e1"
                 app:chipMinTouchTargetSize="0dp"
-                tools:text="Japanese"
+                tools:text="@sample/service_session.json/data/language"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/simultaneous_interpretation_chip"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:ellipsize="end"
+                android:enabled="false"
+                android:text="@string/session_simultaneous_interpretation"
+                android:textAppearance="@style/TextAppearance.App.Caption"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="#7982e1"
+                app:chipMinTouchTargetSize="0dp"
+                app:visibleGone="@{session.isInterpretationTarget}"
+                tools:text="@sample/service_session.json/data/simultaneous_interpretation"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/for_beginners_chip"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:ellipsize="end"
+                android:enabled="false"
+                android:text="@string/session_for_beginners"
+                android:textAppearance="@style/TextAppearance.App.Caption"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="#7982e1"
+                app:chipMinTouchTargetSize="0dp"
+                app:visibleGone="@{session.forBeginners}"
+                tools:text="@sample/service_session.json/data/for_beginners"
                 />
 
             <com.google.android.material.chip.Chip
@@ -123,7 +179,7 @@
                 android:textColor="@color/white"
                 app:chipBackgroundColor="#95959c"
                 app:chipMinTouchTargetSize="0dp"
-                tools:text="ソフトウェアアーキテクチャ"
+                tools:text="@sample/service_session.json/data/category"
                 />
         </com.google.android.material.chip.ChipGroup>
 

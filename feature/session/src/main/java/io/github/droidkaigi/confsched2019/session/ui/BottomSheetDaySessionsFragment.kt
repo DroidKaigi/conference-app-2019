@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import com.xwray.groupie.GroupAdapter
@@ -40,6 +42,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
     @Inject lateinit var sessionPageFragmentProvider: Provider<SessionPageFragment>
     @Inject lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
     @Inject lateinit var sessionPageStoreFactory: SessionPageStore.Factory
+    @Inject lateinit var serviceSessionItemFactory: ServiceSessionItem.Factory
     private val sessionPageStore: SessionPageStore by lazy {
         sessionPageFragmentProvider.get().injectedViewModelProvider
             .get(SessionPageStore::class.java.name) {
@@ -69,10 +72,18 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding.sessionsRecycler.adapter = groupAdapter
-        binding.sessionsRecycler.addItemDecoration(
-            SessionsItemDecoration(requireContext(), groupAdapter)
-        )
+        binding.sessionsRecycler.apply {
+            adapter = groupAdapter
+            addItemDecoration(
+                SessionsItemDecoration(requireContext(), groupAdapter)
+            )
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    binding.sessionsListHeaderShadow.isVisible =
+                        recyclerView.canScrollVertically(-1)
+                }
+            })
+        }
 
         val onFilterButtonClick: (View) -> Unit = {
             sessionPageActionCreator.toggleFilterExpanded(SessionPage.pageOfDay(args.day))
@@ -93,10 +104,12 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                                 true
                             )
                         is Session.ServiceSession ->
-                            ServiceSessionItem(session)
+                            serviceSessionItemFactory.create(session)
                     }
                 }
             groupAdapter.update(items)
+
+            binding.shouldShowEmptyStateView = false
 
             val titleText = items
                 .asSequence()
@@ -105,6 +118,9 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                 ?.session
                 ?.startDayText ?: return@changed
             binding.sessionsBottomSheetTitle.text = titleText
+        }
+        sessionPagesStore.filters.changed(viewLifecycleOwner) {
+            binding.isFiltered = it.isFiltered()
         }
         sessionPageStore.filterSheetState.changed(viewLifecycleOwner) { newState ->
             if (newState == BottomSheetBehavior.STATE_EXPANDED ||

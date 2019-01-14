@@ -6,18 +6,11 @@
     android:layout_height="wrap_content"
     >
 
-    <ImageView
-        android:id="@+id/speaker_image"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:contentDescription="@string/speaker_label"
-        />
-
     <TextView
         android:id="@+id/speaker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:drawablePadding="4dp"
         android:textAppearance="?textAppearanceCaption"
         tools:text="taka"
         />

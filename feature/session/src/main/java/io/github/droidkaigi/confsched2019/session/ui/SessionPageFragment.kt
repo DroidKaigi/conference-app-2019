@@ -17,8 +17,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.model.AudienceCategory
 import io.github.droidkaigi.confsched2019.model.Category
 import io.github.droidkaigi.confsched2019.model.Lang
+import io.github.droidkaigi.confsched2019.model.LangSupport
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.model.defaultLang
@@ -33,8 +35,9 @@ import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPageStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
-import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.widget.BottomSheetBehavior
+import io.github.droidkaigi.confsched2019.widget.FilterChip
+import io.github.droidkaigi.confsched2019.widget.onCheckedChanged
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import me.tatarka.injectedvmprovider.ktx.injectedViewModelProvider
 import javax.inject.Inject
@@ -46,7 +49,6 @@ class SessionPageFragment : DaggerFragment() {
     @Inject lateinit var sessionContentsActionCreator: SessionContentsActionCreator
     @Inject lateinit var sessionPagesActionCreator: SessionPagesActionCreator
     @Inject lateinit var sessionPageActionCreator: SessionPageActionCreator
-    @Inject lateinit var systemStore: SystemStore
     @Inject lateinit var sessionStore: SessionContentsStore
     @Inject lateinit var sessionPageStoreFactory: SessionPageStore.Factory
     @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
@@ -68,6 +70,13 @@ class SessionPageFragment : DaggerFragment() {
     private val bottomSheetBehavior: BottomSheetBehavior<*>
         get() = BottomSheetBehavior.from(binding.sessionsSheet)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (savedInstanceState == null) {
+            setupSessionsFragment()
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -82,7 +91,7 @@ class SessionPageFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        setupBottomSheet(savedInstanceState)
+        setupBottomSheetBehavior()
 
         binding.sessionsFilterReset.setOnClickListener {
             sessionPagesActionCreator.clearFilters()
@@ -98,11 +107,16 @@ class SessionPageFragment : DaggerFragment() {
             )
             binding.sessionsFilterCategoryChip.setupFilter(
                 contents.category
-            ) { category -> category.name.getByLang(systemStore.lang) }
+            ) { category -> category.name.getByLang(defaultLang()) }
             binding.sessionsFilterLangChip.setupFilter(
                 contents.langs
-
             ) { lang -> lang.text.getByLang(defaultLang()) }
+            binding.sessionsFilterLangSupportChip.setupFilter(
+                contents.langSupports
+            ) { langSupport -> langSupport.text.getByLang(defaultLang()) }
+            binding.sessionsFilterAudienceCategoryChip.setupFilter(
+                contents.audienceCategories
+            ) { audienceCategory -> audienceCategory.text.getByLang(defaultLang()) }
         }
         sessionPagesStore.selectedTab.changed(viewLifecycleOwner) {
             if (SessionPage.pages[args.tabIndex] == it) {
@@ -120,27 +134,29 @@ class SessionPageFragment : DaggerFragment() {
         }
     }
 
-    private fun setupBottomSheet(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            val fragment: Fragment = when (val tab = SessionPage.pages[args.tabIndex]) {
-                is SessionPage.Day -> {
-                    BottomSheetDaySessionsFragment.newInstance(
-                        BottomSheetDaySessionsFragmentArgs
-                            .Builder(tab.day)
-                            .build()
-                    )
-                }
-                SessionPage.Favorite -> {
-                    BottomSheetFavoriteSessionsFragment.newInstance()
-                }
+    private fun setupSessionsFragment() {
+        val tab = SessionPage.pages[args.tabIndex]
+        val fragment: Fragment = when (tab) {
+            is SessionPage.Day -> {
+                BottomSheetDaySessionsFragment.newInstance(
+                    BottomSheetDaySessionsFragmentArgs
+                        .Builder(tab.day)
+                        .build()
+                )
             }
-
-            childFragmentManager
-                .beginTransaction()
-                .replace(R.id.sessions_sheet, fragment)
-                .disallowAddToBackStack()
-                .commit()
+            SessionPage.Favorite -> {
+                BottomSheetFavoriteSessionsFragment.newInstance()
+            }
         }
+
+        childFragmentManager
+            .beginTransaction()
+            .replace(R.id.sessions_sheet, fragment, tab.title)
+            .disallowAddToBackStack()
+            .commit()
+    }
+
+    private fun setupBottomSheetBehavior() {
         bottomSheetBehavior.isHideable = false
         binding.sessionsSheet.viewTreeObserver.addOnPreDrawListener(
             object : ViewTreeObserver.OnPreDrawListener {
@@ -176,7 +192,7 @@ class SessionPageFragment : DaggerFragment() {
                     R.layout.layout_chip,
                     this,
                     false
-                ) as Chip
+                ) as FilterChip
                 chip.apply {
                     text = chipText(item)
                     tag = item
@@ -191,44 +207,72 @@ class SessionPageFragment : DaggerFragment() {
     private fun applyFilters() {
         val filterRooms = sessionPagesStore.filtersValue.rooms
         binding.sessionsFilterRoomChip.forEach {
-            val chip = it as? Chip ?: return@forEach
+            val chip = it as? FilterChip ?: return@forEach
             val room = it.tag as? Room ?: return@forEach
-            chip.setOnCheckedChangeListener(null)
+            chip.onCheckedChangeListener = null
             if (filterRooms.isNotEmpty()) {
                 chip.isChecked = filterRooms.contains(room)
             } else {
                 chip.isChecked = false
             }
-            chip.setOnCheckedChangeListener { _, isChecked ->
+            chip.onCheckedChanged { _, isChecked ->
                 sessionPagesActionCreator.changeFilter(room, isChecked)
             }
         }
         val filterCategorys = sessionPagesStore.filtersValue.categories
         binding.sessionsFilterCategoryChip.forEach {
-            val chip = it as? Chip ?: return@forEach
+            val chip = it as? FilterChip ?: return@forEach
             val category = it.tag as? Category ?: return@forEach
-            chip.setOnCheckedChangeListener(null)
+            chip.onCheckedChangeListener = null
             if (filterCategorys.isNotEmpty()) {
                 chip.isChecked = filterCategorys.contains(category)
             } else {
                 chip.isChecked = false
             }
-            chip.setOnCheckedChangeListener { _, isChecked ->
+            chip.onCheckedChanged { _, isChecked ->
                 sessionPagesActionCreator.changeFilter(category, isChecked)
             }
         }
         val filterLangs = sessionPagesStore.filtersValue.langs
         binding.sessionsFilterLangChip.forEach {
-            val chip = it as? Chip ?: return@forEach
+            val chip = it as? FilterChip ?: return@forEach
             val lang = it.tag as? Lang ?: return@forEach
-            chip.setOnCheckedChangeListener(null)
+            chip.onCheckedChangeListener = null
             if (filterLangs.isNotEmpty()) {
                 chip.isChecked = filterLangs.contains(lang)
             } else {
                 chip.isChecked = false
             }
-            chip.setOnCheckedChangeListener { _, isChecked ->
+            chip.onCheckedChanged { _, isChecked ->
                 sessionPagesActionCreator.changeFilter(lang, isChecked)
+            }
+        }
+        val filterLangSupports = sessionPagesStore.filtersValue.langSupports
+        binding.sessionsFilterLangSupportChip.forEach {
+            val chip = it as? FilterChip ?: return@forEach
+            val langSupport = it.tag as? LangSupport ?: return@forEach
+            chip.onCheckedChangeListener = null
+            if (filterLangSupports.isNotEmpty()) {
+                chip.isChecked = filterLangSupports.contains(langSupport)
+            } else {
+                chip.isChecked = false
+            }
+            chip.onCheckedChanged { _, isChecked ->
+                sessionPagesActionCreator.changeFilter(langSupport, isChecked)
+            }
+        }
+        val filterAudienceCategories = sessionPagesStore.filtersValue.audienceCategories
+        binding.sessionsFilterAudienceCategoryChip.forEach {
+            val chip = it as? FilterChip ?: return@forEach
+            val audienceCategory = it.tag as? AudienceCategory ?: return@forEach
+            chip.onCheckedChangeListener = null
+            if (filterAudienceCategories.isNotEmpty()) {
+                chip.isChecked = filterAudienceCategories.contains(audienceCategory)
+            } else {
+                chip.isChecked = false
+            }
+            chip.onCheckedChanged { _, isChecked ->
+                sessionPagesActionCreator.changeFilter(audienceCategory, isChecked)
             }
         }
     }

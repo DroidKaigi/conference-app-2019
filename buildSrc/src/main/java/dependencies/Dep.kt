@@ -3,7 +3,7 @@ package dependencies
 @Suppress("unused")
 object Dep {
     object GradlePlugin {
-        val android = "com.android.tools.build:gradle:3.2.0"
+        val android = "com.android.tools.build:gradle:3.2.1"
         val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Kotlin.version}"
         val kotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Kotlin.version}"
         val playServices = "com.google.gms:google-services:4.1.0"
@@ -11,6 +11,7 @@ object Dep {
             "android.arch.navigation:navigation-safe-args-gradle-plugin:${AndroidX.Navigation.version}"
         val jetifier = "com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta02"
         val licensesPlugin = "com.google.android.gms:oss-licenses-plugin:0.9.4"
+        val crashlytics = "io.fabric.tools:gradle:1.26.1"
     }
 
     object Test {
@@ -37,11 +38,12 @@ object Dep {
         val jetifier = "com.android.tools.build.jetifier:jetifier-core:1.0.0-beta02"
         val appCompat = "androidx.appcompat:appcompat:1.0.0"
         val recyclerView = "androidx.recyclerview:recyclerview:1.0.0"
-        val constraint = "androidx.constraintlayout:constraintlayout:1.1.2"
+        val constraint = "androidx.constraintlayout:constraintlayout:1.1.3"
         val emoji = "androidx.emoji:emoji-appcompat:1.0.0"
         val design = "com.google.android.material:material:1.1.0-alpha02"
         val coreKtx = "androidx.core:core-ktx:1.0.0-alpha1"
         val preference = "androidx.preference:preference:1.0.0"
+        val browser = "androidx.browser:browser:1.0.0"
 
         val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:2.0.0"
         val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata:2.0.0"
@@ -76,13 +78,15 @@ object Dep {
             "org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$coroutinesVersion"
         val coroutinesPlayServices =
             "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesVersion"
-        val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.8.1-rc13"
+        val serializationCommon = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.9.1"
+        val serializationIos = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.9.1"
     }
 
     object Firebase {
         val core = "com.google.firebase:firebase-core:16.0.4"
         val fireStore = "com.google.firebase:firebase-firestore:17.1.3"
         val auth = "com.google.firebase:firebase-auth:16.0.5"
+        val crashlytics = "com.crashlytics.sdk.android:crashlytics:2.9.8"
     }
 
     object PlayServices {
@@ -114,12 +118,13 @@ object Dep {
         val version = "3.11.0"
         val client = "com.squareup.okhttp3:okhttp:$version"
         val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$version"
+        val okio = "com.squareup.okio:okio:1.14.0"
     }
 
     val liveDataKtx = "com.shopify:livedata-ktx:2.0.1"
 
     object LeakCanary {
-        val version = "1.6.2"
+        val version = "1.6.3"
         val leakCanary = "com.squareup.leakcanary:leakcanary-android:$version"
         val leakCanaryNoOp = "com.squareup.leakcanary:leakcanary-android-no-op:$version"
         val leakCanaryFragment = "com.squareup.leakcanary:leakcanary-support-fragment:$version"
@@ -172,5 +177,11 @@ object Dep {
     object Picasso {
         val picasso = "com.squareup.picasso:picasso:2.71828"
         val picassoTransformation = "jp.wasabeef:picasso-transformations:2.2.1"
+    }
+
+    object Timber {
+        val common = "com.jakewharton.timber:timber-common:5.0.0-SNAPSHOT"
+        val jdk = "com.jakewharton.timber:timber-jdk:5.0.0-SNAPSHOT"
+        val android = "com.jakewharton.timber:timber-android:5.0.0-SNAPSHOT"
     }
 }

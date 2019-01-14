@@ -5,11 +5,13 @@ import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
+import io.github.droidkaigi.confsched2019.model.AudienceCategory
+import io.github.droidkaigi.confsched2019.model.Category
 import io.github.droidkaigi.confsched2019.model.Lang
+import io.github.droidkaigi.confsched2019.model.LangSupport
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionPage
-import io.github.droidkaigi.confsched2019.model.Category
 import io.github.droidkaigi.confsched2019.system.actioncreator.ErrorHandler
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
@@ -38,6 +40,16 @@ class SessionPagesActionCreator @Inject constructor(
 
     fun changeFilter(lang: Lang, checked: Boolean) {
         dispatcher.launchAndDispatch(Action.LangFilterChanged(lang, checked))
+    }
+
+    fun changeFilter(langSupport: LangSupport, checked: Boolean) {
+        dispatcher.launchAndDispatch(Action.LangSupportFilterChanged(langSupport, checked))
+    }
+
+    fun changeFilter(audienceCategory: AudienceCategory, checked: Boolean) {
+        dispatcher.launchAndDispatch(
+            Action.AudienceCategoryFilterChanged(audienceCategory, checked)
+        )
     }
 
     fun clearFilters() {
