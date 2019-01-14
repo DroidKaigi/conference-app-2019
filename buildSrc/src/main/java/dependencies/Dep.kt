@@ -107,7 +107,7 @@ object Dep {
     }
 
     object Ktor {
-        val version = "1.1.1"
+        val version = "1.0.1"
         val clientCommon = "io.ktor:ktor-client-core:$version"
         val clientAndroid = "io.ktor:ktor-client-okhttp:$version"
         val common = "io.ktor:ktor-client-json:$version"
