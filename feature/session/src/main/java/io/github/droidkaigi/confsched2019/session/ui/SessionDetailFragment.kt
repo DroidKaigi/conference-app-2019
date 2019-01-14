@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
@@ -25,12 +28,14 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionConten
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeakerItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
+import io.github.droidkaigi.confsched2019.session.ui.widget.SessionToolbarBehavior
 import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import javax.inject.Inject
 
 class SessionDetailFragment : DaggerFragment() {
     private lateinit var binding: FragmentSessionDetailBinding
+    private lateinit var toolbar: Toolbar
 
     @Inject lateinit var sessionContentsActionCreator: SessionContentsActionCreator
     @Inject lateinit var sessionContentsStore: SessionContentsStore
@@ -62,6 +67,11 @@ class SessionDetailFragment : DaggerFragment() {
         sessionDetailFragmentArgs = SessionDetailFragmentArgs.fromBundle(arguments)
 
         binding.sessionSpeakers.adapter = groupAdapter
+
+        toolbar = binding.root.findViewById(R.id.session_toolbar)
+        toolbar.setNavigationOnClickListener {
+            fragmentManager?.popBackStack()
+        }
 
         binding.bottomAppBar.replaceMenu(R.menu.menu_session_detail_bottomappbar)
         binding.bottomAppBar.setOnMenuItemClickListener { item ->
@@ -170,6 +180,9 @@ class SessionDetailFragment : DaggerFragment() {
                 activityActionCreator.openUrl(urlString)
             }
         }
+        val toolbarParent = binding.root.findViewById<LinearLayout>(R.id.toolbar_parent)
+        (toolbarParent.layoutParams as CoordinatorLayout.LayoutParams).behavior =
+            SessionToolbarBehavior(context, null, session.title.getByLang(defaultLang()))
     }
 
     private fun applyServiceSessionLayout(session: Session.ServiceSession) {
