@@ -136,6 +136,7 @@ private fun SessionResponse.toSession(
             startTime = startTime.utc,
             endTime = endTime.utc,
             title = LocaledString(response.title, requireNotNull(response.englishTitle)),
+            desc = response.description,
             room = Room(response.roomId, requireNotNull(room.name)),
             // TODO
             isFavorited = false,
