@@ -11,7 +11,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.emoji.widget.EmojiTextView
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import com.xwray.groupie.GroupAdapter
@@ -42,6 +41,7 @@ class SessionDetailFragment : DaggerFragment() {
 
     private lateinit var sessionDetailFragmentArgs: SessionDetailFragmentArgs
     private val groupAdapter = GroupAdapter<ViewHolder<*>>()
+    private var showEllipsis = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -96,9 +96,7 @@ class SessionDetailFragment : DaggerFragment() {
 
     private fun applySessionLayout(session: Session.SpeechSession) {
         binding.session = session
-        // ５行以内に収まっているのならそのまま表示、6行以上だったら5行に収める
-        // 「続きを読む」を押下したら全部表示する
-        setEllipsisIfNeeded(binding.sessionDescription)
+        drawSessionDescription()
         binding.lang = defaultLang()
         @Suppress("StringFormatMatches") // FIXME
         binding.sessionTimeAndRoom.text = getString(
@@ -119,17 +117,24 @@ class SessionDetailFragment : DaggerFragment() {
         groupAdapter.update(sessionItems)
     }
 
-    private fun setEllipsisIfNeeded(textView: EmojiTextView) {
+    private fun drawSessionDescription() {
+        val textView = binding.sessionDescription
         textView.viewTreeObserver.addOnDrawListener {
-            if (textView.lineCount < 6) {
-                return@addOnDrawListener
+            if (textView.lineCount > 5) {
+                if (showEllipsis) {
+                    val end = textView.layout.getLineStart(5)
+                    val ellipsis = getString(R.string.ellipsis_label)
+                    val text = textView.text.subSequence(0, end-ellipsis.length).toString().plus(ellipsis)
+                    val spannable = SpannableString(text)
+                    spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.colorSecondary)), text.lastIndex-ellipsis.length+1, text.lastIndex+1, Spannable.SPAN_COMPOSING)
+                    binding.sessionDescription.setText(spannable, TextView.BufferType.SPANNABLE)
+                }
+                textView.setOnClickListener {
+                    val session = binding.session?.desc
+                    binding.sessionDescription.text = session
+                    showEllipsis = !showEllipsis
+                }
             }
-            val end = textView.layout.getLineStart(5)
-            val ellipsis = getString(R.string.ellipsis_label)
-            val text = textView.text.subSequence(0, end-ellipsis.length).toString().plus(ellipsis)
-            val spannable = SpannableString(text)
-            spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.colorSecondary)), text.lastIndex-ellipsis.length+1, text.lastIndex+1, Spannable.SPAN_COMPOSING)
-            binding.sessionDescription.setText(spannable, TextView.BufferType.SPANNABLE)
         }
     }
 
