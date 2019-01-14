@@ -6,6 +6,7 @@ import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemServiceSessionBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
@@ -47,7 +48,7 @@ class ServiceSessionItem @AssistedInject constructor(
                 root.isClickable = false
             }
             session = serviceSession
-
+            lang = defaultLang()
             @Suppress("StringFormatMatches") // FIXME
             timeAndRoom.text = root.context.getString(
                 R.string.session_duration_room_format,
