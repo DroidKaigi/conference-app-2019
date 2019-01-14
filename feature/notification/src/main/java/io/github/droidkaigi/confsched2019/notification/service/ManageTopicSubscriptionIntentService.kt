@@ -22,7 +22,7 @@ import timber.log.Timber
 import timber.log.debug
 import java.util.concurrent.TimeUnit
 
-class SubscribeTopicIntentService : IntentService(NAME) {
+class ManageTopicSubscriptionIntentService : IntentService(NAME) {
     override fun onHandleIntent(intent: Intent?) {
         try {
             if (NEED_FOREGROUND) {
@@ -37,23 +37,37 @@ class SubscribeTopicIntentService : IntentService(NAME) {
                 )
             }
 
-            val topicName =
-                intent?.getStringExtra(KEY_TOPIC_NAME)?.takeIf { intent.isValid } ?: return
+            if (!intent.isValid) {
+                return
+            }
+
+            val topicsToBeSubscribed =
+                intent?.getStringArrayExtra(KEY_TOPIC_NAMES_TO_BE_SUBSCRIBED).orEmpty()
+            val topicsToBeUnsubscribed =
+                intent?.getStringArrayExtra(KEY_TOPIC_NAMES_TO_BE_UNSUBSCRIBED).orEmpty()
 
             runBlocking {
                 FirebaseInstanceId.getInstance().instanceId.await()
 
                 Timber.debug { "Found a token so proceed to subscribe the topic" }
 
-                FirebaseMessaging.getInstance().subscribeToTopic(topicName).await()
+                topicsToBeSubscribed.forEach { topicName ->
+                    FirebaseMessaging.getInstance().subscribeToTopic(topicName).await()
 
-                Timber.debug { "Subscribed $topicName successfully" }
+                    Timber.debug { "Subscribed $topicName successfully" }
+                }
+
+                topicsToBeUnsubscribed.forEach { topicName ->
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic(topicName).await()
+
+                    Timber.debug { "Unsubscribed $topicName successfully" }
+                }
             }
         } catch (th: Throwable) {
             Timber.error(th)
 
-            if (intent?.isValid == true) {
-                retrySelf(intent)
+            if (intent.isValid) {
+                retrySelf(requireNotNull(intent))
             }
         } finally {
             if (NEED_FOREGROUND) {
@@ -79,7 +93,7 @@ class SubscribeTopicIntentService : IntentService(NAME) {
         val currentTry = intent.getIntExtra(KEY_RETRY_COUNT, 0)
 
         if (currentTry > MAX_RETRY_COUNT) {
-            Timber.debug { "Retried $MAX_RETRY_COUNT times but could not subscribe the topic" }
+            Timber.debug { "Retried $MAX_RETRY_COUNT times but could not subscribe/unsubscribe any or all of given topics" }
             alarmManager.cancel(pendingIntent)
             return
         }
@@ -94,12 +108,15 @@ class SubscribeTopicIntentService : IntentService(NAME) {
         )
     }
 
-    private val Intent.isValid: Boolean
-        get() = getStringExtra(KEY_TOPIC_NAME)?.isNotBlank() == true
+    private val Intent?.isValid: Boolean
+        get() = this != null &&
+            (getStringArrayExtra(KEY_TOPIC_NAMES_TO_BE_SUBSCRIBED)?.isNotEmpty() == true ||
+                getStringArrayExtra(KEY_TOPIC_NAMES_TO_BE_UNSUBSCRIBED)?.isNotEmpty() == true)
 
     companion object {
-        private const val NAME = "SubscribeTopicIntentService"
-        private const val KEY_TOPIC_NAME = "KEY_TOPIC_NAME"
+        private const val NAME = "ManageTopicSubscriptionIntentService"
+        private const val KEY_TOPIC_NAMES_TO_BE_SUBSCRIBED = "KEY_TOPIC_NAMES_TO_BE_SUBSCRIBED"
+        private const val KEY_TOPIC_NAMES_TO_BE_UNSUBSCRIBED = "KEY_TOPIC_NAMES_TO_BE_UNSUBSCRIBED"
         private const val KEY_RETRY_COUNT = "KEY_RETRY_COUNT"
         private const val MAX_RETRY_COUNT = 3
 
@@ -108,11 +125,22 @@ class SubscribeTopicIntentService : IntentService(NAME) {
         private inline val NEED_FOREGROUND: Boolean
             get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 
-        fun start(context: Context, topic: Topic) {
+        fun start(
+            context: Context,
+            subscribes: List<Topic> = emptyList(),
+            unsubscribes: List<Topic> = emptyList()
+        ) {
             ContextCompat.startForegroundService(
                 context,
-                Intent(context, SubscribeTopicIntentService::class.java)
-                    .putExtra(KEY_TOPIC_NAME, topic.name)
+                Intent(context, ManageTopicSubscriptionIntentService::class.java)
+                    .putExtra(
+                        KEY_TOPIC_NAMES_TO_BE_SUBSCRIBED,
+                        subscribes.map { it.name }.toTypedArray()
+                    )
+                    .putExtra(
+                        KEY_TOPIC_NAMES_TO_BE_UNSUBSCRIBED,
+                        unsubscribes.map { it.name }.toTypedArray()
+                    )
             )
         }
     }

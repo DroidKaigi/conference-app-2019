@@ -11,7 +11,7 @@
             </intent-filter>
         </service>
 
-        <service android:name=".service.SubscribeTopicIntentService"/>
+        <service android:name=".service.ManageTopicSubscriptionIntentService"/>
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
