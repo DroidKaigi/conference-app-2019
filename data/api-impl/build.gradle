@@ -55,7 +55,7 @@ kotlin {
                 implementation Dep.Ktor.clientIos
                 implementation Dep.Kotlin.serializationIos
                 implementation Dep.Ktor.jsonNative
-                implementation Dep.Ktor.common
+                implementation Dep.Ktor.jsonCommon
                 implementation Dep.Timber.common
             }
         }
