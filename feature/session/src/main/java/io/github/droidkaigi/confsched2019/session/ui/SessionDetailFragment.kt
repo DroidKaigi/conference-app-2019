@@ -180,7 +180,7 @@ class SessionDetailFragment : DaggerFragment() {
         binding.lang = lang
         binding.timeZoneOffset = DateTimeSpan(hours = 9) // FIXME Get from device setting
 
-        binding.sessionTitle.text = session.title
+        binding.sessionTitle.text = session.title.getByLang(lang)
 
         @Suppress("StringFormatMatches") // FIXME
         binding.sessionTimeAndRoom.text = getString(
