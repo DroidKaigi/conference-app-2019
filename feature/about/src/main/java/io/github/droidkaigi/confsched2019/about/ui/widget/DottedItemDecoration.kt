@@ -9,6 +9,8 @@ import android.graphics.Path
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
+import androidx.core.view.forEachIndexed
+import androidx.core.view.size
 import androidx.recyclerview.widget.RecyclerView
 
 class DottedItemDecoration private constructor(
@@ -52,7 +54,8 @@ class DottedItemDecoration private constructor(
                 this@DottedItemDecoration.gap.toFloat(),
                 this@DottedItemDecoration.gap.toFloat()
             ),
-            0f)
+            0f
+        )
     }
 
     override fun getItemOffsets(
@@ -72,11 +75,15 @@ class DottedItemDecoration private constructor(
         val right = (parent.width - paddingRight).toFloat()
 
         val path = Path()
-        parent.forEach { child ->
+        val lastIndex = parent.size - 1
+        parent.forEachIndexed { index, child ->
+
             val top = (child.bottom + width / 2).toFloat()
 
-            path.moveTo(left, top)
-            path.lineTo(right, top)
+            if (lastIndex != index) {
+                path.moveTo(left, top)
+                path.lineTo(right, top)
+            }
         }
         c.drawPath(path, paint)
     }
