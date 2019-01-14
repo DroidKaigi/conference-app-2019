@@ -54,12 +54,12 @@
             />
 
         <androidx.constraintlayout.widget.Barrier
-                android:id="@+id/title_bottom_barrier"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:barrierDirection="bottom"
-                app:constraint_referenced_ids="category_icon,title_text"
-        />
+            android:id="@+id/title_bottom_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="category_icon,title_text"
+            />
 
         <androidx.emoji.widget.EmojiTextView
             android:id="@+id/content_text"
