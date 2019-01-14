@@ -23,6 +23,7 @@
 		E9B4926121ECB782000F1072 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925D21ECB6CE000F1072 /* RxSwift.framework */; };
 		E9B4926421ECB783000F1072 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4926221ECB783000F1072 /* RxBlocking.framework */; };
 		E9B4926521ECB783000F1072 /* RxTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4926321ECB783000F1072 /* RxTest.framework */; };
+		E9B4926821ECC7DA000F1072 /* SessionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B4926721ECC7DA000F1072 /* SessionsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		E9B4925D21ECB6CE000F1072 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		E9B4926221ECB783000F1072 /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
 		E9B4926321ECB783000F1072 /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = Carthage/Build/iOS/RxTest.framework; sourceTree = "<group>"; };
+		E9B4926721ECC7DA000F1072 /* SessionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,11 +138,12 @@
 			children = (
 				01578EC021E5E75A002B2033 /* AppDelegate.swift */,
 				01578EC221E5E75A002B2033 /* ViewController.swift */,
+				E9B4926721ECC7DA000F1072 /* SessionsViewModel.swift */,
+				63F34E1A21EB43CE00B2EC48 /* SessionRepository.swift */,
 				01578EC421E5E75A002B2033 /* Main.storyboard */,
 				01578ECA21E5E75D002B2033 /* Assets.xcassets */,
 				01578ECC21E5E75D002B2033 /* LaunchScreen.storyboard */,
 				01578ECF21E5E75D002B2033 /* Info.plist */,
-				63F34E1A21EB43CE00B2EC48 /* SessionRepository.swift */,
 			);
 			path = "DroidKaigi 2019";
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01578EC321E5E75A002B2033 /* ViewController.swift in Sources */,
+				E9B4926821ECC7DA000F1072 /* SessionsViewModel.swift in Sources */,
 				63F34E1B21EB43CE00B2EC48 /* SessionRepository.swift in Sources */,
 				01578EC121E5E75A002B2033 /* AppDelegate.swift in Sources */,
 			);
