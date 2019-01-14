@@ -58,4 +58,11 @@ class SessionContentsStore @Inject constructor(
                 ?.speakers
                 ?.find { it.id == speakerId }
         }
+
+    fun serviceSession(sessionId: String): LiveData<Session.ServiceSession> =
+        sessionContents.mapNotNull { sessionContents ->
+            sessionContents
+                ?.sessions
+                ?.findLast { it.id == sessionId } as? Session.ServiceSession
+        }
 }
