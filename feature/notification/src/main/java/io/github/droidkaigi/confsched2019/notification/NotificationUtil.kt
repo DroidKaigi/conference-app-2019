@@ -14,13 +14,27 @@ fun Context.notificationBuilder(
     channelInfo: NotificationChannelInfo
 ): NotificationCompat.Builder {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        NotificationUtil.createDefaultNotificationChannel(
+        createDefaultNotificationChannel(
             this,
             channelInfo
         )
     }
 
     return NotificationCompat.Builder(this, channelInfo.channelId)
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+internal fun createDefaultNotificationChannel(
+    context: Context,
+    notificationChannelInfo: NotificationChannelInfo
+) {
+    val notificationManager = context.getSystemService(NotificationManager::class.java)
+    val channel = NotificationChannel(
+        notificationChannelInfo.channelId,
+        notificationChannelInfo.channelName(context),
+        NotificationManager.IMPORTANCE_DEFAULT
+    )
+    notificationManager.createNotificationChannel(channel)
 }
 
 object NotificationUtil {
@@ -82,20 +96,6 @@ object NotificationUtil {
             .setAutoCancel(true)
             .build()
         notificationManager.notify(channelInfo.channelId.hashCode(), notification)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    internal fun createDefaultNotificationChannel(
-        context: Context,
-        notificationChannelInfo: NotificationChannelInfo
-    ) {
-        val notificationManager = context.getSystemService(NotificationManager::class.java)
-        val channel = NotificationChannel(
-            notificationChannelInfo.channelId,
-            notificationChannelInfo.channelName(context),
-            NotificationManager.IMPORTANCE_DEFAULT
-        )
-        notificationManager.createNotificationChannel(channel)
     }
 }
 
