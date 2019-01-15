@@ -22,8 +22,8 @@ android {
         applicationId "io.github.droidkaigi.confsched2019"
         minSdkVersion Versions.androidMinSdkVersion
         targetSdkVersion 28
-        versionCode Versions.androidvVersionCode
-        versionName Versions.androidvVersionName
+        versionCode Versions.androidVersionCode
+        versionName Versions.androidVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         resConfigs "ja"

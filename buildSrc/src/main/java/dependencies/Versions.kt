@@ -7,7 +7,7 @@ private object Versions {
     private val versionMajor = 1
     private val versionMinor = 0
     private val versionPatch = 0
-    val androidvVersionCode = versionMajor * 10000 + versionMinor * 100 + versionPatch
+    val androidVersionCode = versionMajor * 10000 + versionMinor * 100 + versionPatch
 
-    val androidvVersionName = "1.0.0"
+    val androidVersionName = "1.0.0"
 }
