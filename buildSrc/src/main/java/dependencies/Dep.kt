@@ -137,7 +137,7 @@ object Dep {
     }
 
     object Hyperion {
-        val version = "0.9.24"
+        val version = "0.9.25"
         val hyperionPlugins = listOf(
             "com.willowtreeapps.hyperion:hyperion-core:$version",
             "com.willowtreeapps.hyperion:hyperion-attr:$version",
