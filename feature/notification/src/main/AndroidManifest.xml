@@ -19,7 +19,7 @@
             />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/common_google_signin_btn_text_dark"
+            android:resource="@color/notification_color"
             />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
