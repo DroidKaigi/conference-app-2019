@@ -90,7 +90,7 @@ class SearchFragment : DaggerFragment() {
                     it,
                     SearchFragmentDirections.actionSearchToSpeaker(it.id)
                 )
-            }.sortedBy { it.speaker.name }
+            }.sortedBy { it.speaker.name.toUpperCase() }
 
             items += result.sessions
                 .map<Session, Item<*>> { session ->
