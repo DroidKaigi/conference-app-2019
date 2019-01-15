@@ -54,9 +54,7 @@ class FloorMapFragment : DaggerFragment() {
                     FloorMap.FLOOR_5 -> R.drawable.ic_floor2
                     else -> null
                 }
-                resId?.let {
-                    itemBinding.floorMapImage.setImageResource(resId)
-                }
+                resId?.let { itemBinding.floorMapImage.setImageResource(resId) }
                 itemBinding.floorTitle = getPageTitle(position)
                 return itemBinding.root
             }
