@@ -1,11 +1,15 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="io.github.droidkaigi.confsched2019.notification"
     >
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <application>
-        <service android:name=".service.FCMService">
+        <service
+            android:name=".service.FCMService"
+            tools:ignore="ExportedService"
+            >
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
@@ -23,6 +27,7 @@
             />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="default_channel" />
+            android:value="default_channel"
+            />
     </application>
 </manifest>
