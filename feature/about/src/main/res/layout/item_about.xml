@@ -14,7 +14,7 @@
 
         <variable
             name="description"
-            type="int"
+            type="String"
             />
     </data>
 

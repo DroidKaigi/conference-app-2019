@@ -1,5 +1,7 @@
 package io.github.droidkaigi.confsched2019.about.ui.item
 
+import android.content.Context
+import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.Navigation
@@ -46,10 +48,16 @@ class AboutSection @Inject constructor(
                 },
                 AboutItem(
                     name = R.string.about_app_version,
-                    description = R.string.about_version_name,
+                    descriptionString = activity.getVersionName(),
                     isLektonCheckText = true
                 )
             )
         )
     }
+
+    private fun Context.getVersionName() = try {
+        packageManager.getPackageInfo(packageName, 0).versionName
+    } catch (e: PackageManager.NameNotFoundException) {
+        "x.x.x"
+    }!!
 }

@@ -10,7 +10,8 @@ import io.github.droidkaigi.confsched2019.about.databinding.ItemAboutBinding
 
 class AboutItem(
     @StringRes private val name: Int,
-    @StringRes private val description: Int,
+    @StringRes private val description: Int? = null,
+    private val descriptionString: String? = null,
     private val isLektonCheckText: Boolean = false,
     private val clickListener: ((Context) -> Unit)? = null
 ) : BindableItem<ItemAboutBinding>() {
@@ -19,7 +20,8 @@ class AboutItem(
 
     override fun bind(binding: ItemAboutBinding, position: Int) {
         binding.name = name
-        binding.description = description
+        description?.let { binding.description = binding.root.context.getString(it) }
+        descriptionString?.let { binding.description = it }
         TextViewCompat.setTextAppearance(
             binding.checkText, if (isLektonCheckText) {
                 R.style.TextAppearance_Lekton_Body1
