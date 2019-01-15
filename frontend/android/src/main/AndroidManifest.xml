@@ -31,6 +31,7 @@
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:theme="@style/AppTheme.WithActionBar"
             />
+        <receiver android:name=".broadcastreceiver.NotificationBroadcastReceiver" />
     </application>
 
 </manifest>

@@ -16,7 +16,8 @@ fun dummySessionData(): List<Session> {
             1,
             startTime,
             startTime + 30.minutes,
-            "session",
+            LocaledString("session", "session English"),
+            "session desc",
             Room(0, "Hall"),
             SessionType.WELCOME_TALK,
             true

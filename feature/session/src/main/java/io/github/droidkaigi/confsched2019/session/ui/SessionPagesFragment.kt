@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager.widget.ViewPager
+import com.soywiz.klock.DateTime
+import com.soywiz.klock.DateTimeSpan
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -124,6 +126,12 @@ class SessionPagesFragment : DaggerFragment() {
                     it.customView = textView
                 }
             }
+        }
+
+        val timezoneOffset = DateTimeSpan(hours = 9) // to JST
+        val jstNow = DateTime.now().plus(timezoneOffset)
+        if (jstNow.yearInt == 2019 && jstNow.month1 == 2 && jstNow.dayOfMonth == 8) {
+            binding.sessionsViewpager.currentItem = 1
         }
     }
 

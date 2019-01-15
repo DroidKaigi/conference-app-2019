@@ -95,4 +95,20 @@ class FiltersTest {
 
         assertFalse { Filters(langSupports = mutableSetOf(langSupport)).isPass(speechSession) }
     }
+
+    @Test fun isPass_WhenAudienceCategoryFiltered() {
+        val audienceCategory = AudienceCategory.BEGINNERS
+        val speechSession = mockk<Session.SpeechSession>()
+        every { speechSession.forBeginners } returns true
+
+        assertTrue { Filters(audienceCategories = mutableSetOf(audienceCategory)).isPass(speechSession) }
+    }
+
+    @Test fun isPass_WhenAudienceCategoryFilteredWithoutForBeginners() {
+        val audienceCategory = AudienceCategory.BEGINNERS
+        val speechSession = mockk<Session.SpeechSession>()
+        every { speechSession.forBeginners } returns false
+
+        assertFalse { Filters(audienceCategories = mutableSetOf(audienceCategory)).isPass(speechSession) }
+    }
 }

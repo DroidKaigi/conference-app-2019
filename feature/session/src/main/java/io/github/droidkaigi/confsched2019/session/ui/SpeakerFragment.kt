@@ -12,7 +12,6 @@ import androidx.navigation.NavController
 import com.soywiz.klock.DateTimeSpan
 import dagger.Module
 import dagger.Provides
-import dagger.android.support.AndroidSupportInjection
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.defaultLang
@@ -44,7 +43,6 @@ class SpeakerFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        AndroidSupportInjection.inject(this)
 
         speakerFragmentArgs = SpeakerFragmentArgs.fromBundle(arguments)
 

@@ -10,6 +10,7 @@ import io.github.droidkaigi.confsched2019.firstDummySpeechSession
 import io.github.droidkaigi.confsched2019.model.Filters
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.SessionContents
+import io.github.droidkaigi.confsched2019.util.SessionAlarm
 import io.github.droidkaigi.confsched2019.widget.component.TestLifecycleOwner
 import io.mockk.MockKAnnotations
 import io.mockk.Ordering
@@ -24,6 +25,7 @@ import org.junit.Test
 class SessionContentsActionCreatorTest {
     @RelaxedMockK lateinit var dispatcher: Dispatcher
     @RelaxedMockK lateinit var sessionRepository: SessionRepository
+    @RelaxedMockK lateinit var sessionAlarm: SessionAlarm
 
     @Before fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
@@ -36,7 +38,8 @@ class SessionContentsActionCreatorTest {
         val sessionsActionCreator = SessionContentsActionCreator(
             dispatcher,
             sessionRepository,
-            lifecycleOwner.lifecycle
+            lifecycleOwner.lifecycle,
+            sessionAlarm
         )
 
         sessionsActionCreator.load()
@@ -59,7 +62,8 @@ class SessionContentsActionCreatorTest {
         val sessionsActionCreator = SessionContentsActionCreator(
             dispatcher,
             sessionRepository,
-            lifecycleOwner.lifecycle
+            lifecycleOwner.lifecycle,
+            sessionAlarm
         )
 
         sessionsActionCreator.toggleFavorite(
@@ -69,6 +73,7 @@ class SessionContentsActionCreatorTest {
         coVerify(ordering = Ordering.SEQUENCE) {
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
             sessionRepository.toggleFavorite(firstDummySpeechSession())
+            sessionAlarm.toggleRegister(firstDummySpeechSession())
             sessionRepository.sessionContents()
             dispatcher.dispatch(
                 Action.SessionContentsLoaded(dummySessionContents)

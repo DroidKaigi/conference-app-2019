@@ -8,10 +8,10 @@ import io.github.droidkaigi.confsched2019.ext.android.CoroutinePlugin
 import io.github.droidkaigi.confsched2019.ext.android.changedForever
 import io.github.droidkaigi.confsched2019.model.Announcement
 import io.github.droidkaigi.confsched2019.model.LoadingState
+import io.github.droidkaigi.confsched2019.widget.component.DirectDispatcher
 import io.mockk.MockKAnnotations
 import io.mockk.mockk
-import io.mockk.verifySequence
-import kotlinx.coroutines.Dispatchers
+import io.mockk.verify
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
@@ -22,7 +22,7 @@ class AnnouncementStoreTest {
 
     @Before fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        CoroutinePlugin.mainDispatcherHandler = { Dispatchers.Default }
+        CoroutinePlugin.mainDispatcherHandler = { DirectDispatcher }
     }
 
     @Test fun loadingState() = runBlocking {
@@ -31,14 +31,13 @@ class AnnouncementStoreTest {
         val observer = mockk<(LoadingState?) -> Unit>(relaxed = true)
 
         announcementStore.loadingState.changedForever(observer)
+        verify { observer(LoadingState.INITIALIZED) }
 
         dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADING))
-        dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADED))
+        verify { observer(LoadingState.LOADING) }
 
-        verifySequence {
-            observer(LoadingState.LOADING)
-            observer(LoadingState.LOADED)
-        }
+        dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADED))
+        verify { observer(LoadingState.LOADED) }
     }
 
     @Test fun announcements() = runBlocking {
@@ -46,15 +45,12 @@ class AnnouncementStoreTest {
         val announcementStore = AnnouncementStore(dispatcher)
         val observer: (List<Announcement>) -> Unit = mockk(relaxed = true)
         announcementStore.announcements.changedForever(observer)
-        val dummyAnnouncements = dummyAnnouncementsData()
+        verify { observer(emptyList()) }
 
+        val dummyAnnouncements = dummyAnnouncementsData()
         dispatcher.dispatch(
             Action.AnnouncementLoaded(dummyAnnouncements)
         )
-
-        verifySequence {
-            observer(emptyList())
-            observer(dummyAnnouncements)
-        }
+        verify { observer(dummyAnnouncements) }
     }
 }

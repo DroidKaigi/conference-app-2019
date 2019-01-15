@@ -8,6 +8,10 @@ internal abstract class RepositoryModule {
     @Binds abstract fun sessionDatabase(impl: DataSessionRepository): SessionRepository
 
     @Binds abstract fun sponsorDatabase(impl: DataSponsorRepository): SponsorRepository
+
+    @Binds
+    abstract fun announcementDatabase(impl: DataAnnouncementRepository): AnnouncementRepository
+
     @Module
     internal object Providers
 }
