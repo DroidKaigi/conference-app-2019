@@ -60,16 +60,6 @@ android {
     }
 }
 
-easylauncher {
-    buildTypes {
-        debug {
-            filters = [
-                    grayscaleFilter()
-            ]
-        }
-    }
-}
-
 dependencies {
     implementation project(":model")
     implementation project(":feature:session")
