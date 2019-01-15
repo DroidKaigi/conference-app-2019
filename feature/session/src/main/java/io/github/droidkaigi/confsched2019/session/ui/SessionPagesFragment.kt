@@ -14,7 +14,6 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager.widget.ViewPager
 import com.soywiz.klock.DateTime
-import com.soywiz.klock.DateTimeSpan
 import com.soywiz.klock.hours
 import dagger.Module
 import dagger.Provides

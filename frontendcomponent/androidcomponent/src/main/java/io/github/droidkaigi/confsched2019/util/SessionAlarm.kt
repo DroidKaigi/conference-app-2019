@@ -6,7 +6,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.os.Build
 import com.soywiz.klock.DateTimeSpan
-import com.soywiz.klock.TimeSpan
 import com.soywiz.klock.minutes
 import io.github.droidkaigi.confsched2019.broadcastreceiver.NotificationBroadcastReceiver
 import io.github.droidkaigi.confsched2019.model.Session
