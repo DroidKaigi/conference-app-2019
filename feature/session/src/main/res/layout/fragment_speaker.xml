@@ -23,9 +23,9 @@
             />
 
         <variable
-                name="timeZoneOffset"
-                type="com.soywiz.klock.DateTimeSpan"
-        />
+            name="timeZoneOffset"
+            type="com.soywiz.klock.DateTimeSpan"
+            />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -109,12 +109,12 @@
                     />
 
                 <androidx.emoji.widget.EmojiTextView
-                    android:autoLink="web"
                     android:id="@+id/speaker_description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="16dp"
+                    android:autoLink="web"
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:paddingBottom="2dp"
