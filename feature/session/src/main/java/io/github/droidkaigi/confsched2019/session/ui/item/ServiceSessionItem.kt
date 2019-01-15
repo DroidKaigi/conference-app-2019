@@ -1,5 +1,7 @@
 package io.github.droidkaigi.confsched2019.session.ui.item
 
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.xwray.groupie.databinding.BindableItem
@@ -11,6 +13,8 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionConten
 
 class ServiceSessionItem @AssistedInject constructor(
     @Assisted override val session: Session.ServiceSession,
+    @Assisted val navDirections: NavDirections,
+    navController: NavController,
     sessionContentsActionCreator: SessionContentsActionCreator
 ) : BindableItem<ItemServiceSessionBinding>(
     session.id.hashCode().toLong()
@@ -20,16 +24,29 @@ class ServiceSessionItem @AssistedInject constructor(
     @AssistedInject.Factory
     interface Factory {
         fun create(
-            session: Session.ServiceSession
+            session: Session.ServiceSession,
+            navDirections: NavDirections
         ): ServiceSessionItem
     }
 
     private val onFavoriteClickListener: (Session.ServiceSession) -> Unit = { session ->
         sessionContentsActionCreator.toggleFavorite(session)
     }
+    private val onClickListener: (Session.ServiceSession) -> Unit = { session ->
+        navController
+            .navigate(
+                navDirections
+            )
+    }
 
     override fun bind(viewBinding: ItemServiceSessionBinding, position: Int) {
         with(viewBinding) {
+            if (serviceSession.sessionType.supportDetail) {
+                root.setOnClickListener { onClickListener(serviceSession) }
+            } else {
+                root.setOnClickListener(null)
+                root.isClickable = false
+            }
             session = serviceSession
             lang = defaultLang()
             @Suppress("StringFormatMatches") // FIXME

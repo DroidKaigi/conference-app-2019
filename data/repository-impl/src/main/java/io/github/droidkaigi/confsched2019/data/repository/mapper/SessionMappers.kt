@@ -27,6 +27,7 @@ fun SessionWithSpeakers.toSession(
                 ja = session.title,
                 en = requireNotNull(session.englishTitle)
                 ),
+            desc = session.desc,
             room = requireNotNull(session.room).let { room ->
                 Room(room.id, room.name)
             },

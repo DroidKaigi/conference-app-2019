@@ -12,4 +12,7 @@
     <dimen name="session_item_bottom_padding">19dp</dimen>
     <dimen name="session_item_top_padding">19dp</dimen>
     <dimen name="session_pager_horizontal_padding">16dp</dimen>
+    <dimen name="sticky_label_padding">20dp</dimen>
+    <dimen name="sticky_label_font_size">24sp</dimen>
+    <dimen name="sticky_label_content_margin">60dp</dimen>
 </resources>
