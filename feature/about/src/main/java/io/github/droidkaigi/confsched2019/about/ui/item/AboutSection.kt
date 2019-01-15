@@ -1,7 +1,5 @@
 package io.github.droidkaigi.confsched2019.about.ui.item
 
-import android.content.Context
-import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.Navigation
