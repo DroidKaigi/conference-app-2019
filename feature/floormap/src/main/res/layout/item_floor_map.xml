@@ -3,26 +3,28 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     >
 
-    <!--
     <data>
 
-        <import type="android.view.View"/>
+        <variable
+            name="floorTitle"
+            type="String"
+            />
     </data>
-    -->
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="48dp"
-        android:paddingBottom="48dp"
         android:clipToPadding="false"
         android:overScrollMode="never"
+        android:paddingBottom="48dp"
+        android:paddingTop="48dp"
         >
 
         <ImageView
             android:id="@+id/floorMapImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:contentDescription="@{@string/floor_map_image(floorTitle)}"
             android:scaleType="centerInside"
             />
     </androidx.core.widget.NestedScrollView>
