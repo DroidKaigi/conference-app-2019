@@ -46,7 +46,7 @@ class AboutSection @Inject constructor(
                 },
                 AboutItem(
                     name = R.string.about_app_version,
-                    description = R.string.about_version_name,
+                    description = R.string.version_name,
                     isLektonCheckText = true
                 )
             )

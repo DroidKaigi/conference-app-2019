@@ -1,4 +1,5 @@
 import dependencies.Dep
+import dependencies.Versions
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
@@ -7,6 +8,11 @@ apply plugin: 'androidx.navigation.safeargs'
 
 apply from: rootProject.file('gradle/android.gradle')
 android.dataBinding.enabled = true
+android {
+    defaultConfig {
+        resValue "string", "version_name", Versions.androidVersionName
+    }
+}
 
 dependencies {
     implementation project(':frontendcomponent:androidcomponent')
