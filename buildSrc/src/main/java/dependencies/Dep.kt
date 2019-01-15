@@ -70,7 +70,7 @@ object Dep {
         val version = "1.3.11"
         val stdlibCommon = "org.jetbrains.kotlin:kotlin-stdlib-common:$version"
         val stdlibJvm = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version"
-        val coroutinesVersion = "1.0.1"
+        val coroutinesVersion = "1.1.0"
         val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
         val androidCoroutinesDispatcher =
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
@@ -107,11 +107,13 @@ object Dep {
     }
 
     object Ktor {
-        val version = "1.0.1"
+        val version = "1.1.1"
         val clientCommon = "io.ktor:ktor-client-core:$version"
         val clientAndroid = "io.ktor:ktor-client-okhttp:$version"
         val clientIos = "io.ktor:ktor-client-ios:$version"
+        val jsonCommon = "io.ktor:ktor-client-json:$version"
         val jsonJvm = "io.ktor:ktor-client-json-jvm:$version"
+        val jsonNative = "io.ktor:ktor-client-json-native:$version"
     }
 
     object OkHttp {
@@ -135,7 +137,7 @@ object Dep {
     }
 
     object Hyperion {
-        val version = "0.9.24"
+        val version = "0.9.25"
         val hyperionPlugins = listOf(
             "com.willowtreeapps.hyperion:hyperion-core:$version",
             "com.willowtreeapps.hyperion:hyperion-attr:$version",

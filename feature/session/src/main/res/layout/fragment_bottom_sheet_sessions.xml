@@ -33,7 +33,7 @@
         >
 
         <androidx.constraintlayout.widget.Group
-            android:id="@+id/emptyStateViewGroup"
+            android:id="@+id/empty_state_view_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="sessions_empty_state_view"
@@ -41,7 +41,7 @@
             />
 
         <androidx.constraintlayout.widget.Group
-            android:id="@+id/nonEmptyStateViewGroup"
+            android:id="@+id/non_empty_state_view_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="sessions_list_header, sessions_recycler"

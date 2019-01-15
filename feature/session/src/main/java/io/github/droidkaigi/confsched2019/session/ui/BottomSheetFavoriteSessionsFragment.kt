@@ -113,13 +113,21 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
                                 true
                             )
                         is Session.ServiceSession ->
-                            serviceSessionItemFactory.create(session)
+                            serviceSessionItemFactory.create(
+                                session,
+                                SessionPagesFragmentDirections.actionSessionToSessionDetail(
+                                    session.id
+                                )
+                            )
                     }
                 }
 
             groupAdapter.update(items)
             applyTitleText()
             binding.shouldShowEmptyStateView = items.isEmpty()
+            if (items.isEmpty()) {
+                binding.sessionsListHeaderShadow.isVisible = false
+            }
         }
         sessionPagesStore.filters.changed(viewLifecycleOwner) {
             binding.isFiltered = it.isFiltered()

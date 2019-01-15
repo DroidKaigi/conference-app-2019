@@ -38,7 +38,7 @@
         <androidx.emoji.widget.EmojiTextView
             android:id="@+id/title_text"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="27dp"
             android:layout_marginStart="16dp"
             android:ellipsize="end"
@@ -46,11 +46,19 @@
             android:maxLines="2"
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.App.Subtitle1"
-            app:layout_constraintBottom_toBottomOf="@id/category_icon"
+            app:layout_constraintBottom_toBottomOf="@id/title_bottom_barrier"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/category_icon"
             app:layout_constraintTop_toTopOf="@id/category_icon"
             tools:text="@sample/announcement.json/data/title"
+            />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/title_bottom_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="category_icon,title_text"
             />
 
         <androidx.emoji.widget.EmojiTextView

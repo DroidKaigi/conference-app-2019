@@ -8,6 +8,8 @@ import io.github.droidkaigi.confsched2019.data.api.response.SponsorResponse
 interface DroidKaigiApi {
     suspend fun getSessions(): Response
 
+    fun getSessions(callback: (response: Response) -> Unit)
+
     suspend fun getSponsors(): SponsorResponse
 
     suspend fun getAnnouncements(lang: LangParameter): AnnouncementListResponse
