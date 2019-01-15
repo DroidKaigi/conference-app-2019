@@ -1,7 +1,6 @@
 package io.github.droidkaigi.confsched2019.notification.service
 
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.os.bundleOf
@@ -47,7 +46,7 @@ class FCMService : FirebaseMessagingService() {
             this,
             requireNotNull(notification.title),
             requireNotNull(notification.body),
-            getPendingIntent(this, notification, data),
+            getPendingIntent(notification, data),
             // android_channel_id cannot be retrieved from fcm sdk so the server sends it in the data
             NotificationChannelInfo.of((data[KEY_CHANNEL_ID] as? String).orEmpty())
         )
@@ -61,7 +60,6 @@ class FCMService : FirebaseMessagingService() {
     }
 
     private fun getPendingIntent(
-        context: Context,
         notification: RemoteMessage.Notification,
         data: Map<String, Any>
     ): PendingIntent? {
@@ -69,18 +67,11 @@ class FCMService : FirebaseMessagingService() {
             *data.map { it.key to it.value }.toTypedArray()
         )
 
-        if (notification.clickAction != null) {
-            val intent = Intent(notification.clickAction)
-
-            if (context.packageManager.queryIntentAllActivities(intent).isNotEmpty()) {
-                return PendingIntent.getActivity(this, 0, intent, 0, options)
-            }
-        }
-
         if (notification.link != null) {
-            val intent = Intent(Intent.ACTION_VIEW).setData(notification.link)
+            val intent =
+                Intent(Intent.ACTION_VIEW).setPackage(packageName).setData(notification.link)
 
-            if (context.packageManager.queryIntentAllActivities(intent).isNotEmpty()) {
+            if (packageManager.queryIntentAllActivities(intent).isNotEmpty()) {
                 return PendingIntent.getActivity(this, 0, intent, 0, options)
             }
         }
