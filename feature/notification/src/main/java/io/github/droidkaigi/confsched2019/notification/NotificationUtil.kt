@@ -98,4 +98,3 @@ object NotificationUtil {
         notificationManager.notify(channelInfo.channelId.hashCode(), notification)
     }
 }
-
