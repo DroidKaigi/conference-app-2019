@@ -24,6 +24,7 @@ android {
         targetSdkVersion 28
         versionCode Versions.androidVersionCode
         versionName Versions.androidVersionName
+        resValue "string", "version_name", Versions.androidVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         resConfigs "ja"

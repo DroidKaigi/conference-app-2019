@@ -10,7 +10,7 @@ import io.github.droidkaigi.confsched2019.about.databinding.ItemAboutBinding
 
 class AboutItem(
     @StringRes private val name: Int,
-    private val description: String,
+    private val description: Int,
     private val isLektonCheckText: Boolean = false,
     private val clickListener: ((Context) -> Unit)? = null
 ) : BindableItem<ItemAboutBinding>() {

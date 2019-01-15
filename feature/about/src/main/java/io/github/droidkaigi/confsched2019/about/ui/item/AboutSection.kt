@@ -22,25 +22,25 @@ class AboutSection @Inject constructor(
                 AboutHeaderItem(activityActionCreator),
                 AboutItem(
                     name = R.string.about_access_to_place,
-                    description = activity.getString(R.string.about_check_map)
+                    description = R.string.about_check_map
                 ) {
                     activityActionCreator.openVenueOnGoogleMap()
                 },
                 AboutItem(
                     name = R.string.about_staff_list,
-                    description = activity.getString(R.string.about_check)
+                    description = R.string.about_check
                 ) {
                     Toast.makeText(it, "FIXME!!", Toast.LENGTH_SHORT).show()
                 },
                 AboutItem(
                     name = R.string.about_privacy_policy,
-                    description = activity.getString(R.string.about_check)
+                    description = R.string.about_check
                 ) {
                     activityActionCreator.openUrl("http://www.association.droidkaigi.jp/privacy")
                 },
                 AboutItem(
                     name = R.string.about_license,
-                    description = activity.getString(R.string.about_check)
+                    description = R.string.about_check
                 ) {
                     Navigation.findNavController(activity, R.id.root_nav_host_fragment)
                         .navigate(R.id.licenses)
@@ -48,16 +48,10 @@ class AboutSection @Inject constructor(
                 },
                 AboutItem(
                     name = R.string.about_app_version,
-                    description = activity.getVersionName(),
+                    description = R.string.version_name,
                     isLektonCheckText = true
                 )
             )
         )
     }
-
-    private fun Context.getVersionName() = try {
-        packageManager.getPackageInfo(packageName, 0).versionName
-    } catch (e: PackageManager.NameNotFoundException) {
-        "x.x.x"
-    }!!
 }
