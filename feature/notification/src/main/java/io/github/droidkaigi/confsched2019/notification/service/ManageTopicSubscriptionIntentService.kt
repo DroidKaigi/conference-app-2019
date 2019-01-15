@@ -25,12 +25,24 @@ import java.util.concurrent.TimeUnit
 class ManageTopicSubscriptionIntentService : IntentService(NAME) {
     override fun onHandleIntent(intent: Intent?) {
         try {
+            val topicsToBeSubscribed =
+                intent?.getStringArrayExtra(KEY_TOPIC_NAMES_TO_BE_SUBSCRIBED).orEmpty()
+
             if (NEED_FOREGROUND) {
+                // We need to make this foreground surely even if we wanna finish handling the intent immediately
+                val title = getString(R.string.notification_foreground_subscribe_topic_title)
+                val text = getString(
+                    R.string.notification_foreground_subscribe_topic_text,
+                    topicsToBeSubscribed.joinToString(", ")
+                )
+
                 startForeground(
                     NAME.hashCode(),
-                    notificationBuilder(NotificationChannelInfo.SUBSCRIBE_TOPIC).apply {
-                        setContentTitle("Sample title") // FIXME
-                        setContentText("Sample text")
+                    notificationBuilder(
+                        channelInfo = NotificationChannelInfo.SUBSCRIBE_TOPIC
+                    ).apply {
+                        setContentTitle(title)
+                        setContentText(text)
                         setSmallIcon(R.mipmap.notification_icon)
                         setLocalOnly(false)
                     }.build()
@@ -41,8 +53,6 @@ class ManageTopicSubscriptionIntentService : IntentService(NAME) {
                 return
             }
 
-            val topicsToBeSubscribed =
-                intent?.getStringArrayExtra(KEY_TOPIC_NAMES_TO_BE_SUBSCRIBED).orEmpty()
             val topicsToBeUnsubscribed =
                 intent?.getStringArrayExtra(KEY_TOPIC_NAMES_TO_BE_UNSUBSCRIBED).orEmpty()
 
@@ -77,23 +87,20 @@ class ManageTopicSubscriptionIntentService : IntentService(NAME) {
         }
     }
 
-    @SuppressLint("NewApi") // may be fixed by construct of Kotlin
     private fun retrySelf(intent: Intent) {
         val alarmManager = ContextCompat.getSystemService(this, AlarmManager::class.java) ?: let {
             Timber.debug { "Cannot retry myself due to missing alarm manager" }
             return
         }
 
-        val pendingIntent = if (NEED_FOREGROUND) {
-            PendingIntent.getForegroundService(this, REQUEST_CODE_RETRY_SELF, intent, 0)
-        } else {
-            PendingIntent.getService(this, REQUEST_CODE_RETRY_SELF, intent, 0)
-        }
+        val pendingIntent = createRetryPendingIntent(intent)
 
         val currentTry = intent.getIntExtra(KEY_RETRY_COUNT, 0)
 
         if (currentTry > MAX_RETRY_COUNT) {
-            Timber.debug { "Retried $MAX_RETRY_COUNT times but could not subscribe/unsubscribe any or all of given topics" }
+            Timber.debug {
+                "Retried $MAX_RETRY_COUNT times but could not handle any or all of given topics"
+            }
             alarmManager.cancel(pendingIntent)
             return
         }
@@ -108,6 +115,15 @@ class ManageTopicSubscriptionIntentService : IntentService(NAME) {
         )
     }
 
+    @SuppressLint("NewApi") // may be fixed by construct of Kotlin
+    private fun Context.createRetryPendingIntent(intent: Intent): PendingIntent {
+        return if (NEED_FOREGROUND) {
+            PendingIntent.getForegroundService(this, REQUEST_CODE_RETRY, intent, 0)
+        } else {
+            PendingIntent.getService(this, REQUEST_CODE_RETRY, intent, 0)
+        }
+    }
+
     private val Intent?.isValid: Boolean
         get() = this != null &&
             (getStringArrayExtra(KEY_TOPIC_NAMES_TO_BE_SUBSCRIBED)?.isNotEmpty() == true ||
@@ -120,7 +136,7 @@ class ManageTopicSubscriptionIntentService : IntentService(NAME) {
         private const val KEY_RETRY_COUNT = "KEY_RETRY_COUNT"
         private const val MAX_RETRY_COUNT = 3
 
-        private const val REQUEST_CODE_RETRY_SELF = 10_230
+        private const val REQUEST_CODE_RETRY = 10_230
 
         private inline val NEED_FOREGROUND: Boolean
             get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
