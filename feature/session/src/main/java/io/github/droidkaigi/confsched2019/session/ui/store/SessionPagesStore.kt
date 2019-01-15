@@ -35,6 +35,14 @@ class SessionPagesStore @Inject constructor(
         .subscribe<Action.LangFilterChanged>()
         .toLiveData()
 
+    private val langSupportFilterChanged = dispatcher
+        .subscribe<Action.LangSupportFilterChanged>()
+        .toLiveData()
+
+    private val audienceCategoryFilterChanged = dispatcher
+        .subscribe<Action.AudienceCategoryFilterChanged>()
+        .toLiveData()
+
     private val filterCleared = dispatcher
         .subscribe<Action.FilterCleared>()
         .toLiveData()
@@ -68,6 +76,29 @@ class SessionPagesStore @Inject constructor(
                 }
             }
         }
+        addSource(langSupportFilterChanged) { langSupportFilterChanged ->
+            langSupportFilterChanged?.let {
+                value = if (langSupportFilterChanged.checked) {
+                    filtersValue.copy(langSupports = filtersValue.langSupports + it.langSupport)
+                } else {
+                    filtersValue.copy(langSupports = filtersValue.langSupports - it.langSupport)
+                }
+            }
+        }
+        addSource(audienceCategoryFilterChanged) { audienceCategoryFilterChanged ->
+            audienceCategoryFilterChanged?.let {
+                value = if (audienceCategoryFilterChanged.checked) {
+                    filtersValue.copy(
+                        audienceCategories = filtersValue.audienceCategories + it.audienceCategory
+                    )
+                } else {
+                    filtersValue.copy(
+                        audienceCategories = filtersValue.audienceCategories - it.audienceCategory
+                    )
+                }
+            }
+        }
+
         addSource(filterCleared) {
             value = Filters()
         }
@@ -94,10 +125,10 @@ class SessionPagesStore @Inject constructor(
             }
     }
 
-    fun filteredFavoritedSessions(): LiveData<List<Session.SpeechSession>> {
+    fun filteredFavoritedSessions(): LiveData<List<Session>> {
         return filteredSessions
             .map { sessions ->
-                sessions.orEmpty().filterIsInstance<Session.SpeechSession>()
+                sessions.orEmpty()
                     .filter { session -> session.isFavorited }
             }
     }

@@ -8,9 +8,9 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
-import javax.inject.Named
 import kotlinx.serialization.json.JSON
 import okhttp3.logging.HttpLoggingInterceptor
+import javax.inject.Named
 
 @Module(includes = [ApiModule.Providers::class])
 internal abstract class ApiModule {
@@ -37,7 +37,7 @@ internal abstract class ApiModule {
         }
 
         @JvmStatic @Provides @Named("apiEndpoint") fun apiEndpoint(): String {
-            return BuildConfig.API_ENDPOINT
+            return io.github.droidkaigi.confsched2019.data.api.apiEndpoint()
         }
     }
 }

@@ -12,7 +12,7 @@ import io.github.droidkaigi.confsched2019.model.LocaledString
 
 fun SessionWithSpeakers.toSession(
     speakerEntities: List<SpeakerEntity>,
-    favList: List<Int>?,
+    favList: List<String>?,
     firstDay: DateTime
 ): Session {
     return if (session.isServiceSession) {
@@ -23,11 +23,16 @@ fun SessionWithSpeakers.toSession(
             dayNumber = DateTime(session.stime).dayOfYear - firstDay.dayOfYear + 1,
             startTime = DateTime.fromUnix(session.stime),
             endTime = DateTime.fromUnix(session.etime),
-            title = session.title,
+            title = LocaledString(
+                ja = session.title,
+                en = requireNotNull(session.englishTitle)
+                ),
+            desc = session.desc,
             room = requireNotNull(session.room).let { room ->
                 Room(room.id, room.name)
             },
-            sessionType = SessionType.of(session.sessionType)
+            sessionType = SessionType.of(session.sessionType),
+            isFavorited = favList!!.contains(session.id)
         )
     } else {
         require(speakerIdList.isNotEmpty())
@@ -66,11 +71,12 @@ fun SessionWithSpeakers.toSession(
             videoUrl = session.videoUrl,
             slideUrl = session.slideUrl,
             isInterpretationTarget = session.isInterpretationTarget,
-            isFavorited = favList!!.map { it.toString() }.contains(session.id),
+            isFavorited = favList!!.contains(session.id),
             speakers = speakers,
             message = session.message?.let {
                 LocaledString(it.ja, it.en)
-            }
+            },
+            forBeginners = session.forBeginners
         )
     }
 }

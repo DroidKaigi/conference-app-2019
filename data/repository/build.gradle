@@ -8,12 +8,21 @@ apply from: rootProject.file('gradle/android.gradle')
 kotlin {
     targets {
         fromPreset(presets.android, 'android')
+
+        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") \
+                              ? presets.iosArm64 : presets.iosX64
+
+        fromPreset(iOSTarget, 'iOS') {
+            compilations.main.outputKinds('FRAMEWORK')
+        }
     }
     sourceSets {
         commonMain.dependencies {
             api Dep.Kotlin.stdlibCommon
             api project(":model")
+            api project(":data:api")
             api Dep.Kotlin.coroutines
+            api Dep.Klock.common
         }
         androidMain {
             dependsOn commonMain

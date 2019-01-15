@@ -27,7 +27,6 @@ dependencies {
     api Dep.AndroidX.emoji
     implementation Dep.AndroidX.design
 
-
     api Dep.AndroidX.lifecycleExtensions
     api Dep.AndroidX.Navigation.runtime
     api Dep.AndroidX.Navigation.runtimeKtx
@@ -48,6 +47,8 @@ dependencies {
 
     implementation Dep.Picasso.picasso
     implementation Dep.Picasso.picassoTransformation
+
+    implementation Dep.Timber.android
 
     testImplementation Dep.Test.junit
     testImplementation Dep.Test.kotlinTestAssertions

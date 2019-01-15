@@ -8,18 +8,21 @@ private val startTime = DateTime.createAdjusted(2019, 2, 7, 10, 0)
 fun dummyAnnouncementsData(): List<Announcement> {
     return listOf(
         Announcement(
+            1L,
             "title1",
             "content1",
             startTime,
             Announcement.Type.NOTIFICATION
         ),
         Announcement(
+            2L,
             "title2",
             "content2",
             startTime + 30.minutes,
             Announcement.Type.ALERT
         ),
         Announcement(
+            3L,
             "title3",
             "content3",
             startTime + 60.minutes,

@@ -4,15 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
+import com.soywiz.klock.DateTimeSpan
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
-import dagger.android.support.AndroidSupportInjection
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.LoadingState
@@ -25,7 +26,6 @@ import io.github.droidkaigi.confsched2019.session.ui.item.SpeakerItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
-import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import javax.inject.Inject
 
@@ -33,7 +33,6 @@ class SessionDetailFragment : DaggerFragment() {
     private lateinit var binding: FragmentSessionDetailBinding
 
     @Inject lateinit var sessionContentsActionCreator: SessionContentsActionCreator
-    @Inject lateinit var systemStore: SystemStore
     @Inject lateinit var sessionContentsStore: SessionContentsStore
     @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
     @Inject lateinit var activityActionCreator: ActivityActionCreator
@@ -59,7 +58,6 @@ class SessionDetailFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        AndroidSupportInjection.inject(this)
 
         sessionDetailFragmentArgs = SessionDetailFragmentArgs.fromBundle(arguments)
 
@@ -68,12 +66,15 @@ class SessionDetailFragment : DaggerFragment() {
         binding.bottomAppBar.replaceMenu(R.menu.menu_session_detail_bottomappbar)
         binding.bottomAppBar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.session_share ->
-                    Toast.makeText(
-                        requireContext(),
-                        "not implemented yet",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                R.id.session_share -> {
+                    val session = binding.session ?: return@setOnMenuItemClickListener false
+                    activityActionCreator.shareUrl(
+                        getString(
+                            R.string.session_detail_share_url,
+                            session.id
+                        )
+                    )
+                }
                 R.id.session_place ->
                     Toast.makeText(
                         requireContext(),
@@ -86,7 +87,12 @@ class SessionDetailFragment : DaggerFragment() {
 
         sessionContentsStore.speechSession(sessionDetailFragmentArgs.session)
             .changed(viewLifecycleOwner) { session ->
-                applySessionLayout(session)
+                applySpeechSessionLayout(session)
+            }
+
+        sessionContentsStore.serviceSession(sessionDetailFragmentArgs.session)
+            .changed(viewLifecycleOwner) { serviceSession ->
+                applyServiceSessionLayout(serviceSession)
             }
 
         progressTimeLatch = ProgressTimeLatch { showProgress ->
@@ -99,22 +105,51 @@ class SessionDetailFragment : DaggerFragment() {
         binding.sessionFavorite.setOnClickListener {
             val session = binding.session ?: return@setOnClickListener
             progressTimeLatch.loading = true
+
+            // Immediate reflection on view to avoid time lag
+            binding.sessionFavorite.setImageResource(
+                if (session.isFavorited) {
+                    R.drawable.ic_bookmark_border_black_24dp
+                } else {
+                    R.drawable.ic_bookmark_black_24dp
+                }
+            )
+
+            // Animation
+            it.scaleX = 0.8f
+            it.scaleY = 0.8f
+            it.animate().scaleX(1.0f).scaleY(1.0f).setDuration(300)
+                .interpolator = OvershootInterpolator()
+
             sessionContentsActionCreator.toggleFavorite(session)
         }
     }
 
-    private fun applySessionLayout(session: Session.SpeechSession) {
+    private fun applySpeechSessionLayout(session: Session.SpeechSession) {
         binding.session = session
-        binding.lang = defaultLang()
+        binding.speechSession = session
+        val lang = defaultLang()
+        binding.lang = lang
+        binding.timeZoneOffset = DateTimeSpan(hours = 9) // FIXME Get from device setting
+
+        binding.sessionTitle.text = session.title.getByLang(lang)
+
         @Suppress("StringFormatMatches") // FIXME
         binding.sessionTimeAndRoom.text = getString(
             R.string.session_duration_room_format,
             session.timeInMinutes,
             session.room.name
         )
-        binding.categoryChip.text = session.category.name.getByLang(systemStore.lang)
+        binding.sessionIntendedAudienceDescription.text = session.intendedAudience
+        binding.categoryChip.text = session.category.name.getByLang(defaultLang())
 
-        val sessionItems = session
+        session.message?.let { message ->
+            binding.sessionMessage.text = message.getByLang(defaultLang())
+        }
+
+        binding.sessionDescription.text = session.desc
+
+        val speakerItems = session
             .speakers
             .map {
                 speakerItemFactory.create(
@@ -122,7 +157,8 @@ class SessionDetailFragment : DaggerFragment() {
                     SessionDetailFragmentDirections.actionSessionDetailToSpeaker(it.id)
                 )
             }
-        groupAdapter.update(sessionItems)
+
+        groupAdapter.update(speakerItems)
 
         binding.sessionVideoButton.setOnClickListener {
             session.videoUrl?.let { urlString ->
@@ -134,6 +170,26 @@ class SessionDetailFragment : DaggerFragment() {
                 activityActionCreator.openUrl(urlString)
             }
         }
+    }
+
+    private fun applyServiceSessionLayout(session: Session.ServiceSession) {
+        binding.session = session
+        binding.serviceSession = session
+
+        val lang = defaultLang()
+        binding.lang = lang
+        binding.timeZoneOffset = DateTimeSpan(hours = 9) // FIXME Get from device setting
+
+        binding.sessionTitle.text = session.title.getByLang(lang)
+
+        @Suppress("StringFormatMatches") // FIXME
+        binding.sessionTimeAndRoom.text = getString(
+            R.string.session_duration_room_format,
+            session.timeInMinutes,
+            session.room.name
+        )
+
+        binding.sessionDescription.text = session.desc
     }
 }
 

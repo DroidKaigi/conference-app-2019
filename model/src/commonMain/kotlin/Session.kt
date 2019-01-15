@@ -1,14 +1,17 @@
 package io.github.droidkaigi.confsched2019.model
 
 import com.soywiz.klock.DateTime
+import com.soywiz.klock.DateTimeSpan
 import com.soywiz.klock.TimeSpan
+import com.soywiz.klock.TimezoneOffset
 
 sealed class Session(
     open val id: String,
     open val dayNumber: Int,
     open val startTime: DateTime,
     open val endTime: DateTime,
-    open val room: Room
+    open val room: Room,
+    open val isFavorited: Boolean
 ) {
     data class SpeechSession(
         override val id: String,
@@ -25,10 +28,11 @@ sealed class Session(
         val videoUrl: String?,
         val slideUrl: String?,
         val isInterpretationTarget: Boolean,
-        val isFavorited: Boolean,
+        override val isFavorited: Boolean,
         val speakers: List<Speaker>,
+        val forBeginners: Boolean,
         val message: LocaledString?
-    ) : Session(id, dayNumber, startTime, endTime, room) {
+    ) : Session(id, dayNumber, startTime, endTime, room, isFavorited) {
         val hasVideo: Boolean = videoUrl.isNullOrEmpty().not()
         val hasSlide: Boolean = slideUrl.isNullOrEmpty().not()
     }
@@ -38,14 +42,16 @@ sealed class Session(
         override val dayNumber: Int,
         override val startTime: DateTime,
         override val endTime: DateTime,
-        val title: String,
+        val title: LocaledString,
+        val desc: String,
         override val room: Room,
-        val sessionType: SessionType
-    ) : Session(id, dayNumber, startTime, endTime, room)
+        val sessionType: SessionType,
+        override val isFavorited: Boolean
+    ) : Session(id, dayNumber, startTime, endTime, room, isFavorited)
 
     val startDayText by lazy { startTime.format("yyyy.M.d") }
 
-    fun timeSummary(lang: Lang) = buildString {
+    fun timeSummary(lang: Lang, timezoneOffset: DateTimeSpan) = buildString {
         // ex: 2月2日 10:20-10:40
         if (lang == Lang.EN) {
             append(startTime.format("M"))
@@ -58,13 +64,13 @@ sealed class Session(
             append("日")
         }
         append(" ")
-        append(startTime.format("hh:mm"))
+        append(startTime.plus(timezoneOffset).format("HH:mm"))
         append(" - ")
-        append(endTime.format("hh:mm"))
+        append(endTime.plus(timezoneOffset).format("HH:mm"))
     }
 
-    fun summary(lang: Lang) = buildString {
-        append(timeSummary(lang))
+    fun summary(lang: Lang, timezoneOffset: DateTimeSpan) = buildString {
+        append(timeSummary(lang, timezoneOffset))
         append(" / ")
         append(timeInMinutes)
         append("min")

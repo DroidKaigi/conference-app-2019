@@ -7,12 +7,14 @@ fun List<SponsorItemResponse>.toSponsorEntities(
     category: String,
     categoryIndex: Int
 ): List<SponsorEntityImpl> =
-    map { responseSponsor ->
+    mapIndexed { displayOrder, responseSponsor ->
         SponsorEntityImpl(
+            responseSponsor.id,
             responseSponsor.name,
             responseSponsor.url,
             responseSponsor.image,
             category,
-            categoryIndex
+            categoryIndex,
+            displayOrder
         )
     }

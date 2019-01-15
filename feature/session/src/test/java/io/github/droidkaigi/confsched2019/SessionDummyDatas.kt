@@ -16,9 +16,11 @@ fun dummySessionData(): List<Session> {
             1,
             startTime,
             startTime + 30.minutes,
-            "session",
+            LocaledString("session", "session English"),
+            "session desc",
             Room(0, "Hall"),
-            SessionType.WelcomeTalk
+            SessionType.WELCOME_TALK,
+            true
         ),
         firstDummySpeechSession(),
         Session.SpeechSession(
@@ -41,7 +43,8 @@ fun dummySessionData(): List<Session> {
             isInterpretationTarget = true,
             isFavorited = true,
             speakers = listOf(),
-            message = LocaledString("部屋移動", "room moved")
+            message = LocaledString("部屋移動", "room moved"),
+            forBeginners = true
         )
     )
 }
@@ -67,7 +70,8 @@ fun firstDummySpeechSession(): Session.SpeechSession {
         isInterpretationTarget = false,
         isFavorited = false,
         speakers = listOf(),
-        message = null
+        message = null,
+        forBeginners = false
     )
 }
 

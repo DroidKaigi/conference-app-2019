@@ -18,10 +18,10 @@
             android:layout_marginTop="8dp"
             android:gravity="start|center_vertical"
             android:textAlignment="viewStart"
-            android:textAppearance="@style/TextAppearance.App.Caption"
+            android:textAppearance="@style/TextAppearance.Lekton.Caption"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="01.25 12:01"
+            tools:text="@sample/announcement.json/data/date"
             />
 
         <ImageView
@@ -32,12 +32,13 @@
             android:contentDescription="@string/announcement_description_category_icon"
             app:layout_constraintStart_toStartOf="@id/date_text"
             app:layout_constraintTop_toBottomOf="@id/date_text"
+            tools:src="@drawable/ic_feed_alert_amber_20dp"
             />
 
         <androidx.emoji.widget.EmojiTextView
             android:id="@+id/title_text"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="27dp"
             android:layout_marginStart="16dp"
             android:ellipsize="end"
@@ -45,11 +46,19 @@
             android:maxLines="2"
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.App.Subtitle1"
-            app:layout_constraintBottom_toBottomOf="@id/category_icon"
+            app:layout_constraintBottom_toBottomOf="@id/title_bottom_barrier"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/category_icon"
             app:layout_constraintTop_toTopOf="@id/category_icon"
-            tools:text="Day2のセッションについて"
+            tools:text="@sample/announcement.json/data/title"
+            />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/title_bottom_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="category_icon,title_text"
             />
 
         <androidx.emoji.widget.EmojiTextView
@@ -57,6 +66,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="27dp"
+            android:layout_marginTop="8dp"
             android:autoLink="web"
             android:gravity="start"
             android:paddingBottom="16dp"
@@ -65,7 +75,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/title_text"
             app:layout_constraintTop_toBottomOf="@id/title_text"
-            tools:text="aaaaaaaaaaaaaああああああああああああああああああああああああああああaaaaaaaaaaaaaああああああああああああああああああああああああああああaaaaaaaaaaaaaああああああああああああああああああああああああああああ"
+            tools:text="@sample/announcement.json/data/content"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

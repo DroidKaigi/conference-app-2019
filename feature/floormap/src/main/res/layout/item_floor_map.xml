@@ -3,14 +3,27 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     >
 
+    <!--
     <data>
 
         <import type="android.view.View"/>
     </data>
+    -->
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="48dp"
+        android:paddingBottom="48dp"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
         >
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/floorMapImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            />
+    </androidx.core.widget.NestedScrollView>
 </layout>

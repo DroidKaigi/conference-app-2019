@@ -8,14 +8,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.Source
-import com.soywiz.klock.DateTime
-import io.github.droidkaigi.confsched2019.model.Announcement
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class FirestoreImpl @Inject constructor() : Firestore {
 
-    override suspend fun getFavoriteSessionIds(): List<Int> {
+    override suspend fun getFavoriteSessionIds(): List<String> {
         if (FirebaseAuth.getInstance().currentUser?.uid == null) return listOf()
         val favoritesRef = getFavoritesRef()
         val snapshot = favoritesRef
@@ -25,7 +23,7 @@ class FirestoreImpl @Inject constructor() : Firestore {
         }
 
         val favorites = favoritesRef.whereEqualTo("favorite", true).fastGet()
-        return favorites.documents.mapNotNull { it.id.toIntOrNull() }
+        return favorites.documents.mapNotNull { it.id }
     }
 
     override suspend fun toggleFavorite(sessionId: String) {
@@ -52,34 +50,6 @@ class FirestoreImpl @Inject constructor() : Firestore {
             .getInstance()
             .collection("users/$firebaseUserId/favorites")
     }
-
-    override suspend fun getAnnouncements(): List<Announcement> {
-        val snapshot = FirebaseFirestore.getInstance()
-            .collection("posts")
-            .whereEqualTo("published", true)
-            .orderBy("date", Query.Direction.DESCENDING)
-            .get()
-            .await()
-        val announcements = snapshot.toAnnouncements()
-        return announcements
-    }
-}
-
-private fun QuerySnapshot.toAnnouncements(): List<Announcement> {
-    val postEntities: List<PostEntity> = this
-        .map { it.toObject(PostEntity::class.java) }
-    val announcements = postEntities.mapNotNull {
-        if (it.title == null || it.content == null || it.date == null || it.type == null) {
-            return@mapNotNull null
-        }
-        val announcementType = try {
-            Announcement.Type.valueOf(it.type.toUpperCase())
-        } catch (e: IllegalArgumentException) {
-            return@mapNotNull null
-        }
-        Announcement(it.title, it.content, DateTime(it.date.time), announcementType)
-    }
-    return announcements
 }
 
 private suspend fun DocumentReference.fastGet(): DocumentSnapshot {

@@ -34,6 +34,8 @@ class SessionContentsStore @Inject constructor(
     val langs get() = sessionContents.requireValue().langs
     val categorys get() = sessionContents.requireValue().category
     val rooms get() = sessionContents.requireValue().rooms
+    val langSupports get() = sessionContents.requireValue().langSupports
+    val audienceCategories get() = sessionContents.requireValue().audienceCategories
 
     fun speechSession(sessionId: String): LiveData<Session.SpeechSession> =
         sessionContents.mapNotNull { sessionContents ->
@@ -55,5 +57,12 @@ class SessionContentsStore @Inject constructor(
             sessionContents
                 ?.speakers
                 ?.find { it.id == speakerId }
+        }
+
+    fun serviceSession(sessionId: String): LiveData<Session.ServiceSession> =
+        sessionContents.mapNotNull { sessionContents ->
+            sessionContents
+                ?.sessions
+                ?.findLast { it.id == sessionId } as? Session.ServiceSession
         }
 }

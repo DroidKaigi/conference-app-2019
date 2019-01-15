@@ -1,31 +1,67 @@
 package io.github.droidkaigi.confsched2019.session.ui.item
 
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
-import io.github.droidkaigi.confsched2019.session.databinding.ItemSpecialSessionBinding
+import io.github.droidkaigi.confsched2019.session.databinding.ItemServiceSessionBinding
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
 
-class ServiceSessionItem(
-    override val session: Session.ServiceSession
-) : BindableItem<ItemSpecialSessionBinding>(
+class ServiceSessionItem @AssistedInject constructor(
+    @Assisted override val session: Session.ServiceSession,
+    @Assisted val navDirections: NavDirections,
+    navController: NavController,
+    sessionContentsActionCreator: SessionContentsActionCreator
+) : BindableItem<ItemServiceSessionBinding>(
     session.id.hashCode().toLong()
 ), SessionItem {
-    val specialSession get() = session
+    val serviceSession get() = session
 
-    override fun bind(viewBinding: ItemSpecialSessionBinding, position: Int) {
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(
+            session: Session.ServiceSession,
+            navDirections: NavDirections
+        ): ServiceSessionItem
+    }
+
+    private val onFavoriteClickListener: (Session.ServiceSession) -> Unit = { session ->
+        sessionContentsActionCreator.toggleFavorite(session)
+    }
+    private val onClickListener: (Session.ServiceSession) -> Unit = { session ->
+        navController
+            .navigate(
+                navDirections
+            )
+    }
+
+    override fun bind(viewBinding: ItemServiceSessionBinding, position: Int) {
         with(viewBinding) {
-            session = specialSession
-
+            if (serviceSession.sessionType.supportDetail) {
+                root.setOnClickListener { onClickListener(serviceSession) }
+            } else {
+                root.setOnClickListener(null)
+                root.isClickable = false
+            }
+            session = serviceSession
+            lang = defaultLang()
             @Suppress("StringFormatMatches") // FIXME
             timeAndRoom.text = root.context.getString(
                 R.string.session_duration_room_format,
-                specialSession.timeInMinutes,
-                specialSession.room.name
+                serviceSession.timeInMinutes,
+                serviceSession.room.name
             )
+            favorite.setOnClickListener {
+                onFavoriteClickListener(serviceSession)
+            }
         }
     }
 
-    override fun getLayout(): Int = R.layout.item_special_session
+    override fun getLayout(): Int = R.layout.item_service_session
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

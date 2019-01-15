@@ -6,13 +6,15 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager.widget.ViewPager
-import com.google.android.material.chip.Chip
+import com.soywiz.klock.DateTime
+import com.soywiz.klock.DateTimeSpan
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -89,6 +91,8 @@ class SessionPagesFragment : DaggerFragment() {
 
     private fun setupSessionPager() {
         binding.sessionsTabLayout.setupWithViewPager(binding.sessionsViewpager)
+        binding.sessionsViewpager.pageMargin =
+            resources.getDimensionPixelSize(R.dimen.session_pager_horizontal_padding)
         binding.sessionsViewpager.adapter = object : FragmentStatePagerAdapter(
             childFragmentManager
         ) {
@@ -111,16 +115,23 @@ class SessionPagesFragment : DaggerFragment() {
             }
         )
 
-        (0 until binding.sessionsTabLayout.tabCount).forEach {
-            val view = layoutInflater.inflate(
-                R.layout.layout_title_chip, binding.sessionsTabLayout, false
-            ) as ViewGroup
-            val chip = view.getChildAt(0) as Chip
-            val tab = binding.sessionsTabLayout.getTabAt(it)
+        (0 until binding.sessionsTabLayout.tabCount).forEach { tabIndex ->
+            val tab = binding.sessionsTabLayout.getTabAt(tabIndex)
             tab?.let {
-                chip.text = tab.text
-                tab.setCustomView(view)
+                val view = layoutInflater.inflate(
+                    R.layout.layout_tab_item, binding.sessionsTabLayout, false
+                ) as? TextView
+                view?.let { textView ->
+                    textView.text = tab.text
+                    it.customView = textView
+                }
             }
+        }
+
+        val timezoneOffset = DateTimeSpan(hours = 9) // to JST
+        val jstNow = DateTime.now().plus(timezoneOffset)
+        if (jstNow.yearInt == 2019 && jstNow.month1 == 2 && jstNow.dayOfMonth == 8) {
+            binding.sessionsViewpager.currentItem = 1
         }
     }
 
