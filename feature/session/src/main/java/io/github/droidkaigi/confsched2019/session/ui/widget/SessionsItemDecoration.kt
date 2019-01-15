@@ -142,7 +142,7 @@ class SessionsItemDecoration(
     }
 
     private val displayTimezoneOffset = lazy {
-        DateTimeSpan(hours = 9) // FIXME Get from device setting
+        DateTimeSpan(hours = 9).timeSpan // FIXME Get from device setting
     }
 
     private fun calcTimeText(position: Int, view: View): TimeText? {
@@ -170,7 +170,7 @@ class SessionsItemDecoration(
 
         val item = groupAdapter.getItem(position) as? SessionItem ?: return null
         return cachedDateTimeText[item.session.startTime]
-            ?: item.session.startTime.plus(displayTimezoneOffset.value)
+            ?: item.session.startTime.toOffset(displayTimezoneOffset.value)
                 .toString("HH:mm").also {
                     cachedDateTimeText[item.session.startTime] = it
                 }

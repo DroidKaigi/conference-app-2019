@@ -1,10 +1,13 @@
 package io.github.droidkaigi.confsched2019
 
 import com.soywiz.klock.DateTime
+import com.soywiz.klock.hours
 import com.soywiz.klock.minutes
 import io.github.droidkaigi.confsched2019.model.Announcement
 
-private val startTime = DateTime.createAdjusted(2019, 2, 7, 10, 0)
+private val startTime =
+    DateTime.createAdjusted(2019, 2, 7, 10, 0).toOffsetUnadjusted(9.hours).utc
+
 fun dummyAnnouncementsData(): List<Announcement> {
     return listOf(
         Announcement(
