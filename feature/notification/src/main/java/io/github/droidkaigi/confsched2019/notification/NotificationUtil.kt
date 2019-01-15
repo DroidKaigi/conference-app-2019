@@ -44,7 +44,7 @@ object NotificationUtil {
         text: String,
         pendingIntent: PendingIntent?,
         channelInfo: NotificationChannelInfo = NotificationChannelInfo.DEFAULT,
-        @DrawableRes iconRes: Int = R.mipmap.notification_icon,
+        @DrawableRes iconRes: Int = R.drawable.ic_notification,
         builder: NotificationCompat.Builder.() -> Unit = {}
     ) {
         val notificationBuilder = context.notificationBuilder(channelInfo).apply {

@@ -43,7 +43,7 @@ class ManageTopicSubscriptionIntentService : IntentService(NAME) {
                     ).apply {
                         setContentTitle(title)
                         setContentText(text)
-                        setSmallIcon(R.mipmap.notification_icon)
+                        setSmallIcon(R.drawable.ic_notification)
                         setLocalOnly(false)
                     }.build()
                 )
