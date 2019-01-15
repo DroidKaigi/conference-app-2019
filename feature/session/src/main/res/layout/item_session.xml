@@ -81,6 +81,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/title"
             tools:src="@drawable/ic_bookmark_border_black_24dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             />
 
         <LinearLayout
