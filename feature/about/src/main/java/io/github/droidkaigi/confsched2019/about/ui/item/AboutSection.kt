@@ -22,25 +22,25 @@ class AboutSection @Inject constructor(
                 AboutHeaderItem(activityActionCreator),
                 AboutItem(
                     name = R.string.about_access_to_place,
-                    description = R.string.about_check_map
+                    description = activity.getString(R.string.about_check_map)
                 ) {
                     activityActionCreator.openVenueOnGoogleMap()
                 },
                 AboutItem(
                     name = R.string.about_staff_list,
-                    description = R.string.about_check
+                    description = activity.getString(R.string.about_check)
                 ) {
                     Toast.makeText(it, "FIXME!!", Toast.LENGTH_SHORT).show()
                 },
                 AboutItem(
                     name = R.string.about_privacy_policy,
-                    description = R.string.about_check
+                    description = activity.getString(R.string.about_check)
                 ) {
                     activityActionCreator.openUrl("http://www.association.droidkaigi.jp/privacy")
                 },
                 AboutItem(
                     name = R.string.about_license,
-                    description = R.string.about_check
+                    description = activity.getString(R.string.about_check)
                 ) {
                     Navigation.findNavController(activity, R.id.root_nav_host_fragment)
                         .navigate(R.id.licenses)
@@ -48,7 +48,7 @@ class AboutSection @Inject constructor(
                 },
                 AboutItem(
                     name = R.string.about_app_version,
-                    descriptionString = activity.getVersionName(),
+                    description = activity.getVersionName(),
                     isLektonCheckText = true
                 )
             )
