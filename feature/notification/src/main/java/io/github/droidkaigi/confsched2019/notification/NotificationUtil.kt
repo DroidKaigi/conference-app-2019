@@ -28,7 +28,7 @@ object NotificationUtil {
         context: Context,
         title: String,
         text: String,
-        pendingIntent: PendingIntent,
+        pendingIntent: PendingIntent?,
         channelInfo: NotificationChannelInfo = NotificationChannelInfo.DEFAULT,
         @DrawableRes iconRes: Int = R.mipmap.notification_icon,
         builder: NotificationCompat.Builder.() -> Unit = {}
@@ -50,7 +50,10 @@ object NotificationUtil {
                 NotificationCompat.BigTextStyle()
                     .bigText(text)
             )
-            setContentIntent(pendingIntent)
+
+            if (pendingIntent != null) {
+                setContentIntent(pendingIntent)
+            }
             setAutoCancel(true)
             setSmallIcon(iconRes)
         }.apply(builder)

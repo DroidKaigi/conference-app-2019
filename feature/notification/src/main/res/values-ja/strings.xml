@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="notification_channel_name_start_favorite_session">マイセッションの開始</string>
-    <string name="notification_channel_name_subscribe_topic">通知設定の更新</string>
+    <string name="notification_channel_name_announcement">運営からの広報</string>
 
     <string name="notification_foreground_subscribe_topic_title">通知設定を更新中</string>
     <string name="notification_foreground_subscribe_topic_text">%1$s を購読します</string>

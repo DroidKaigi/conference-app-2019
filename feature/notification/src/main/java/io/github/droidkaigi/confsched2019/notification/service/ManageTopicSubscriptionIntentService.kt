@@ -39,7 +39,7 @@ class ManageTopicSubscriptionIntentService : IntentService(NAME) {
                 startForeground(
                     NAME.hashCode(),
                     notificationBuilder(
-                        channelInfo = NotificationChannelInfo.SUBSCRIBE_TOPIC
+                        channelInfo = NotificationChannelInfo.DEFAULT
                     ).apply {
                         setContentTitle(title)
                         setContentText(text)
