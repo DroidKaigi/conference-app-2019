@@ -1,4 +1,5 @@
 <resources>
+    <string name="notification_channel_name_default">Not categorized</string>
     <string name="notification_channel_name_start_favorite_session">start favorite session</string>
     <string name="notification_channel_name_announcement">Announcement</string>
 

@@ -8,7 +8,7 @@ enum class NotificationChannelInfo(
 ) {
     DEFAULT(
         "default_channel",
-        R.string.app_name
+        R.string.notification_channel_name_default
     ),
     FAVORITE_SESSION_START(
         "favorite_session_start_channel",
