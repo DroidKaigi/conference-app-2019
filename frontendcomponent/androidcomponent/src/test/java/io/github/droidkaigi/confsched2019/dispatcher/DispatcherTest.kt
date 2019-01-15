@@ -4,9 +4,11 @@ import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.ext.android.CoroutinePlugin
 import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.mockk.mockk
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.map
 import kotlinx.coroutines.channels.take
+import kotlinx.coroutines.channels.takeWhile
 import kotlinx.coroutines.channels.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
@@ -192,6 +194,60 @@ class DispatcherTest {
             assertThat(
                 allSessionLoaded2.await().map { it.sessionContents },
                 hasItems(sessionContents1, sessionContents2)
+            )
+        }
+    }
+
+    @Test fun parallelMultipleSendAndReceive_dispatch() {
+        val numActions = 64
+        val sessionContentsList = List<SessionContents>(numActions) { mockk() }
+        val terminator: SessionContents = mockk()
+        val dispatcher = Dispatcher()
+
+        runBlocking {
+            val allSessionLoaded1 = async {
+                dispatcher.subscribe<Action.SessionContentsLoaded>()
+                    .takeWhile { it.sessionContents != terminator }
+                    .toList()
+            }
+            yield() // Make sure subscribe() is called before launchAndDispatch()
+            val jobs = sessionContentsList.map { sessionContents ->
+                launch(Dispatchers.IO) {
+                    dispatcher.dispatch(Action.SessionContentsLoaded(sessionContents))
+                }
+            }
+            jobs.forEach { it.join() }
+            dispatcher.dispatch(Action.SessionContentsLoaded(terminator))
+            assertThat(
+                allSessionLoaded1.await().map { it.sessionContents }.toSet(),
+                `is`(sessionContentsList.toSet())
+            )
+        }
+    }
+
+    @Test fun parallelMultipleSendAndReceive_launchAndDispatch() {
+        val numActions = 64
+        val sessionContentsList = List<SessionContents>(numActions) { mockk() }
+        val terminator: SessionContents = mockk()
+        val dispatcher = Dispatcher()
+
+        runBlocking {
+            val allSessionLoaded1 = async {
+                dispatcher.subscribe<Action.SessionContentsLoaded>()
+                    .takeWhile { it.sessionContents != terminator }
+                    .toList()
+            }
+            yield() // Make sure subscribe() is called before launchAndDispatch()
+            val jobs = sessionContentsList.map { sessionContents ->
+                launch(Dispatchers.IO) {
+                    dispatcher.launchAndDispatch(Action.SessionContentsLoaded(sessionContents))
+                }
+            }
+            jobs.forEach { it.join() }
+            dispatcher.dispatch(Action.SessionContentsLoaded(terminator))
+            assertThat(
+                allSessionLoaded1.await().map { it.sessionContents }.toSet(),
+                `is`(sessionContentsList.toSet())
             )
         }
     }
