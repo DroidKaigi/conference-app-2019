@@ -7,13 +7,19 @@
 
 import Foundation
 import ios_combined
+import RxSwift
+import RxCocoa
 
-class SessionRepository {
-    func fetchSessions(callback:@escaping (SessionContents) -> Void){
-        ApiComponentKt.generateDroidKaigiApi().getSessions(callback: { (response) -> KotlinUnit in
-            callback(ResponseToModelMapperKt.toModel(response))
-            return KotlinUnit()
+final class SessionRepository {
+    
+    func fetch() -> Single<SessionContents> {
+        return Single<SessionContents>.create { observer -> Disposable in
+            // TODO: How can we get errors from DroidKaigiApi?
+            ApiComponentKt.generateDroidKaigiApi().getSessions() { response in
+                observer(.success(ResponseToModelMapperKt.toModel(response)))
+                return KotlinUnit()
             }
-        )
+            return Disposables.create()
+        }
     }
 }
