@@ -51,6 +51,10 @@
             android:id="@+id/action_session_detail_to_speaker"
             app:destination="@id/speaker"
             />
+        <action
+            android:id="@+id/action_session_detail_to_session_survey"
+            app:destination="@id/session_survey"
+            />
     </fragment>
     <fragment
         android:id="@+id/search"
@@ -109,6 +113,17 @@
         android:name="io.github.droidkaigi.confsched2019.settings.ui.SettingsFragment"
         android:label="@string/setting_label"
         >
+    </fragment>
+    <fragment
+        android:id="@+id/session_survey"
+        android:name="io.github.droidkaigi.confsched2019.survey.ui.SessionSurveyFragment"
+        android:label="@string/session_survey_label"
+        >
+        <argument
+            android:name="session"
+            app:argType="string"
+            />
+
     </fragment>
     <activity
         android:id="@+id/licenses"
