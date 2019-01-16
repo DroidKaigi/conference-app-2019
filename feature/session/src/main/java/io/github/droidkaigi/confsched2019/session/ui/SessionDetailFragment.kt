@@ -139,7 +139,7 @@ class SessionDetailFragment : DaggerFragment() {
         binding.speechSession = session
         val lang = defaultLang()
         binding.lang = lang
-        drawSessionDescription()
+        setupSessionDescription()
         binding.timeZoneOffset = DateTimeSpan(hours = 9) // FIXME Get from device setting
 
         binding.sessionTitle.text = session.title.getByLang(lang)
@@ -182,7 +182,7 @@ class SessionDetailFragment : DaggerFragment() {
         }
     }
 
-    private fun drawSessionDescription() {
+    private fun setupSessionDescription() {
         val textView = binding.sessionDescription
         textView.viewTreeObserver.addOnDrawListener {
             if (textView.lineCount > 5 && showEllipsis) {
