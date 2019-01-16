@@ -197,7 +197,7 @@ class SessionDetailFragment : DaggerFragment() {
                                 showEllipsis = !showEllipsis
                             }
                             override fun updateDrawState(ds: TextPaint) {
-
+                                // nothing
                             }
                         }
                     ) {
@@ -222,7 +222,6 @@ class SessionDetailFragment : DaggerFragment() {
                     }
                     binding.sessionDescription.setText(text, TextView.BufferType.SPANNABLE)
                     binding.sessionDescription.movementMethod = LinkMovementMethod.getInstance()
-
             }
         }
     }
