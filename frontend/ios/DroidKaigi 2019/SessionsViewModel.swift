@@ -18,20 +18,30 @@ final class SessionsViewModel {
     
     // MARK: Output
     let titles: Observable<[String]>
-    
+
+    // MARK: Output
+    let error: Observable<String?>
+
     // MARK: Self state
     private let _titles = BehaviorRelay<[String]>(value: [])
-    
+
+    // MARK: Self state
+    private let _error = BehaviorRelay<String?>(value: nil)
+
     private let disposeBag = DisposeBag()
     private let repository =  SessionRepository()
     
     init(input: Input) {
         titles = _titles.asObservable()
-        
+        error = _error.asObservable()
+
         input.viewDidLoad
             .asObservable()
             .flatMap { [weak self] (_: Void) -> Observable<SessionContents> in
-                self?.repository.fetch().asObservable() ?? .empty()
+                self?.repository.fetch().asObservable().catchError { err in
+                        self?._error.accept(err.localizedDescription)
+                        return .empty()
+                    } ?? .empty()
             }
             .map { $0.sessions }
             .map { sessions in

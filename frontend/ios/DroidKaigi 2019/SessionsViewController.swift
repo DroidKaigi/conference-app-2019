@@ -27,6 +27,18 @@ final class SessionsViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        viewModel.error
+            .bind {[weak self] (errorMessage) in
+                if let errMsg = errorMessage {
+                    let alert = UIAlertController(title: "ERROR", message: errMsg, preferredStyle: UIAlertController.Style.alert)
+                    let closeButton = UIAlertAction(title: "Close", style: UIAlertAction.Style.cancel, handler: nil)
+                    alert.addAction(closeButton)
+                    
+                    self?.present(alert, animated: true, completion: nil)
+                }
+            }
+            .disposed(by: disposeBag)
+
         self.viewModel = viewModel
     }
 }
