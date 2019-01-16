@@ -1,11 +1,10 @@
 package io.github.droidkaigi.confsched2019.session.ui
 
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableString
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,8 @@ import android.view.animation.OvershootInterpolator
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.text.buildSpannedString
+import androidx.core.text.inSpans
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
@@ -188,27 +189,33 @@ class SessionDetailFragment : DaggerFragment() {
                 if (showEllipsis) {
                     val end = textView.layout.getLineStart(5)
                     val ellipsis = getString(R.string.ellipsis_label)
-                    val text = textView.text.subSequence(0, end-ellipsis.length).toString().plus(ellipsis)
-                    val spannable = SpannableString(text).apply {
-                        setSpan(
+                    val text = buildSpannedString {
+                        inSpans(
                             object : ClickableSpan() {
                                 override fun onClick(widget: View) {
                                     val session = binding.speechSession?.desc
                                     binding.sessionDescription.text = session
                                     showEllipsis = !showEllipsis
                                 }
-
                                 override fun updateDrawState(ds: TextPaint) {
-                                    ds.color = ContextCompat.getColor(requireContext(), R.color.colorSecondary)
-                                    ds.isUnderlineText = false
+
                                 }
-                            },
-                            text.lastIndex-ellipsis.length+1,
-                            text.lastIndex+1,
-                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                        )
+                            }
+                        ) {
+                            append(textView.text.subSequence(0, end - ellipsis.length))
+                            inSpans(
+                                object : ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.colorSecondary)) {
+                                    override fun updateDrawState(textPaint: TextPaint) {
+                                        textPaint.color = ContextCompat.getColor(requireContext(), R.color.colorSecondary)
+                                        textPaint.isUnderlineText = false
+                                    }
+                            }) {
+                                append(ellipsis)
+                            }
+                        }
+
                     }
-                    binding.sessionDescription.setText(spannable, TextView.BufferType.SPANNABLE)
+                    binding.sessionDescription.setText(text, TextView.BufferType.SPANNABLE)
                     binding.sessionDescription.movementMethod = LinkMovementMethod.getInstance()
                 }
             }
