@@ -185,39 +185,44 @@ class SessionDetailFragment : DaggerFragment() {
     private fun drawSessionDescription() {
         val textView = binding.sessionDescription
         textView.viewTreeObserver.addOnDrawListener {
-            if (textView.lineCount > 5) {
-                if (showEllipsis) {
-                    val end = textView.layout.getLineStart(5)
-                    val ellipsis = getString(R.string.ellipsis_label)
-                    val text = buildSpannedString {
-                        inSpans(
-                            object : ClickableSpan() {
-                                override fun onClick(widget: View) {
-                                    val session = binding.speechSession?.desc
-                                    binding.sessionDescription.text = session
-                                    showEllipsis = !showEllipsis
-                                }
-                                override fun updateDrawState(ds: TextPaint) {
-
-                                }
+            if (textView.lineCount > 5 && showEllipsis) {
+                val end = textView.layout.getLineStart(5)
+                val ellipsis = getString(R.string.ellipsis_label)
+                val text = buildSpannedString {
+                    inSpans(
+                        object : ClickableSpan() {
+                            override fun onClick(widget: View) {
+                                val session = binding.speechSession?.desc
+                                binding.sessionDescription.text = session
+                                showEllipsis = !showEllipsis
                             }
-                        ) {
-                            append(textView.text.subSequence(0, end - ellipsis.length))
-                            inSpans(
-                                object : ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.colorSecondary)) {
-                                    override fun updateDrawState(textPaint: TextPaint) {
-                                        textPaint.color = ContextCompat.getColor(requireContext(), R.color.colorSecondary)
-                                        textPaint.isUnderlineText = false
-                                    }
-                            }) {
-                                append(ellipsis)
+                            override fun updateDrawState(ds: TextPaint) {
+
                             }
                         }
-
+                    ) {
+                        append(textView.text.subSequence(0, end - ellipsis.length))
+                        inSpans(
+                            object : ForegroundColorSpan(
+                                ContextCompat.getColor(requireContext(),
+                                    R.color.colorSecondary
+                                )
+                            ) {
+                                override fun updateDrawState(textPaint: TextPaint) {
+                                    textPaint.color = ContextCompat.getColor(
+                                        requireContext(),
+                                        R.color.colorSecondary
+                                    )
+                                    textPaint.isUnderlineText = false
+                                }
+                        }) {
+                            append(ellipsis)
+                        }
+                    }
                     }
                     binding.sessionDescription.setText(text, TextView.BufferType.SPANNABLE)
                     binding.sessionDescription.movementMethod = LinkMovementMethod.getInstance()
-                }
+
             }
         }
     }
