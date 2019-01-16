@@ -89,7 +89,7 @@ class SessionPagesFragment : DaggerFragment() {
         }
     }
 
-    override fun onDestroyView(){
+    override fun onDestroyView() {
         binding.sessionsTabLayout.setupWithViewPager(null)
         super.onDestroyView()
     }
