@@ -134,10 +134,10 @@ class SessionDetailFragment : DaggerFragment() {
 
         binding.sessionTitle.text = session.title.getByLang(lang)
 
-        @Suppress("StringFormatMatches") // FIXME
+        val timeInMinutes: Int = session.timeInMinutes
         binding.sessionTimeAndRoom.text = getString(
             R.string.session_duration_room_format,
-            session.timeInMinutes,
+            timeInMinutes,
             session.room.name
         )
         binding.sessionIntendedAudienceDescription.text = session.intendedAudience
@@ -182,10 +182,10 @@ class SessionDetailFragment : DaggerFragment() {
 
         binding.sessionTitle.text = session.title.getByLang(lang)
 
-        @Suppress("StringFormatMatches") // FIXME
+        val timeInMinutes = session.timeInMinutes
         binding.sessionTimeAndRoom.text = getString(
             R.string.session_duration_room_format,
-            session.timeInMinutes,
+            timeInMinutes,
             session.room.name
         )
 
