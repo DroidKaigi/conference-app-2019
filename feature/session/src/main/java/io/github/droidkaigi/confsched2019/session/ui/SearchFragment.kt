@@ -32,7 +32,7 @@ import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSearchBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SearchActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SearchStore
+import io.github.droidkaigi.confsched2019.session.ui.store.SearchStore
 import io.github.droidkaigi.confsched2019.session.ui.item.ServiceSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeakerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeechSessionItem
