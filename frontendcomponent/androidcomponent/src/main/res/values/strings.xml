@@ -17,6 +17,8 @@
     <string name="survey_label">Entire survey</string>
     <!-- Search -->
     <string name="search_label" translatable="false">Search</string>
+    <!-- Contributor -->
+    <string name="contributor" translatable="false">Contributor</string>
     <!-- Setting -->
     <string name="setting_label" translatable="false">Setting</string>
     <!-- Widgets -->

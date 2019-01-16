@@ -41,6 +41,10 @@
             android:title="@string/sponsor_label"
             />
         <item
+            android:id="@+id/contributor"
+            android:icon="@drawable/ic_contributor_outline_24dp"
+            android:title="@string/contributor"/>
+        <item
             android:id="@id/setting"
             android:icon="@drawable/ic_settings_outline_black_24dp"
             android:title="@string/setting_label"
