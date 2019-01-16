@@ -193,7 +193,7 @@ class SessionDetailFragment : DaggerFragment() {
                         setSpan(
                             object : ClickableSpan() {
                                 override fun onClick(widget: View) {
-                                    val session = binding.session?.desc
+                                    val session = binding.speechSession?.desc
                                     binding.sessionDescription.text = session
                                     showEllipsis = !showEllipsis
                                 }
