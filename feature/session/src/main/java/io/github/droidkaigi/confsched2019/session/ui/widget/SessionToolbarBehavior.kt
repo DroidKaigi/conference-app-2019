@@ -3,11 +3,13 @@ package io.github.droidkaigi.confsched2019.session.ui.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
+import androidx.core.view.ViewPropertyAnimatorListener
 import androidx.core.view.children
 import androidx.core.widget.NestedScrollView
 import io.github.droidkaigi.confsched2019.session.R
@@ -20,6 +22,8 @@ class SessionToolbarBehavior(
     var sessionTitle: String = ""
     var hasSetToolbarTitle = false
     var appCompatTextView: AppCompatTextView? = null
+
+    var mIsAnimation = false
 
     constructor(context: Context?, attrs: AttributeSet?, sessionTitle: String) : this(
         context,
@@ -37,14 +41,13 @@ class SessionToolbarBehavior(
         type: Int
     ): Boolean = axes == ViewCompat.SCROLL_AXIS_VERTICAL
 
-    override fun onNestedScroll(
+    override fun onNestedPreScroll(
         coordinatorLayout: CoordinatorLayout,
         child: LinearLayout,
         target: View,
-        dxConsumed: Int,
-        dyConsumed: Int,
-        dxUnconsumed: Int,
-        dyUnconsumed: Int,
+        dx: Int,
+        dy: Int,
+        consumed: IntArray,
         type: Int
     ) {
         val toolbar = child.findViewById<Toolbar>(R.id.session_toolbar)
@@ -53,11 +56,17 @@ class SessionToolbarBehavior(
         } else {
             null
         }
-        if (nestedScrollView?.canScrollVertically(NEGATIVE_DIRECTION) == false) {
-            appCompatTextView?.let { animateHide(it) }
-        } else {
-            initToolbarTitle(toolbar)
-            appCompatTextView?.let { animateShow(it) }
+        if (!mIsAnimation) {
+            if (nestedScrollView?.canScrollVertically(NEGATIVE_DIRECTION) == false) {
+                appCompatTextView?.let {
+                    animate(0f, 50, it)
+                }
+            } else {
+                initToolbarTitle(toolbar)
+                appCompatTextView?.let {
+                    animate(1f, 50, it)
+                }
+            }
         }
     }
 
@@ -70,12 +79,26 @@ class SessionToolbarBehavior(
         }
     }
 
-    private fun animateShow(child: AppCompatTextView) {
-        ViewCompat.animate(child).alpha(1.0f).duration = 500
-    }
+    private fun animate(
+        alpha: Float,
+        duration: Long,
+        child: AppCompatTextView
+    ) {
+        ViewCompat.animate(child)
+            .alpha(alpha)
+            .setInterpolator(AccelerateDecelerateInterpolator())
+            .setListener(object : ViewPropertyAnimatorListener {
+                override fun onAnimationEnd(view: View?) {
+                    mIsAnimation = false
+                }
 
-    private fun animateHide(child: AppCompatTextView) {
-        ViewCompat.animate(child).alpha(0f).duration = 500
+                override fun onAnimationCancel(view: View?) {
+                }
+
+                override fun onAnimationStart(view: View?) {
+                    mIsAnimation = true
+                }
+            }).duration = duration
     }
 
     companion object {

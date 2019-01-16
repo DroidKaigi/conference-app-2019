@@ -69,6 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:theme="@style/Widget.App.Toolbar"
+                app:contentInsetStartWithNavigation="0dp"
                 app:navigationIcon="@drawable/abc_ic_ab_back_material"
                 tools:ignore="PrivateResource"
                 />
