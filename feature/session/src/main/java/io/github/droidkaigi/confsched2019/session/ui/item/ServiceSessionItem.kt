@@ -49,10 +49,11 @@ class ServiceSessionItem @AssistedInject constructor(
             }
             session = serviceSession
             lang = defaultLang()
-            @Suppress("StringFormatMatches") // FIXME
+
+            val timeInMinutes: Int = serviceSession.timeInMinutes
             timeAndRoom.text = root.context.getString(
                 R.string.session_duration_room_format,
-                serviceSession.timeInMinutes,
+                timeInMinutes,
                 serviceSession.room.name
             )
             favorite.setOnClickListener {
