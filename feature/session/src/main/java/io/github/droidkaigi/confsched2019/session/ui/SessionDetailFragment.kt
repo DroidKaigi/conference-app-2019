@@ -189,42 +189,46 @@ class SessionDetailFragment : DaggerFragment() {
                 val end = textView.layout.getLineStart(5)
                 val ellipsis = getString(R.string.ellipsis_label)
                 val text = buildSpannedString {
-                    inSpans(
-                        object : ClickableSpan() {
-                            override fun onClick(widget: View) {
-                                val session = binding.speechSession?.desc
-                                binding.sessionDescription.text = session
-                                showEllipsis = !showEllipsis
-                            }
-                            override fun updateDrawState(ds: TextPaint) {
-                                // nothing
-                            }
-                        }
-                    ) {
+                    inSpans(makeEllipsisClickableSpan()) {
                         append(textView.text.subSequence(0, end - ellipsis.length))
-                        inSpans(
-                            object : ForegroundColorSpan(
-                                ContextCompat.getColor(requireContext(),
-                                    R.color.colorSecondary
-                                )
-                            ) {
-                                override fun updateDrawState(textPaint: TextPaint) {
-                                    textPaint.color = ContextCompat.getColor(
-                                        requireContext(),
-                                        R.color.colorSecondary
-                                    )
-                                    textPaint.isUnderlineText = false
-                                }
-                        }) {
-                            append(ellipsis)
-                        }
+                        inSpans(makeEllipsisColor()) { append(ellipsis) }
                     }
-                    }
-                    binding.sessionDescription.setText(text, TextView.BufferType.SPANNABLE)
-                    binding.sessionDescription.movementMethod = LinkMovementMethod.getInstance()
+                }
+                binding.sessionDescription.setText(text, TextView.BufferType.SPANNABLE)
+                binding.sessionDescription.movementMethod = LinkMovementMethod.getInstance()
             }
         }
     }
+
+    private fun makeEllipsisClickableSpan(): ClickableSpan {
+        return object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                val session = binding.speechSession?.desc
+                binding.sessionDescription.text = session
+                showEllipsis = !showEllipsis
+            }
+            override fun updateDrawState(ds: TextPaint) {
+                // nothing
+            }
+        }
+    }
+
+    private fun makeEllipsisColor(): ForegroundColorSpan {
+        return  object : ForegroundColorSpan(
+            ContextCompat.getColor(requireContext(),
+                R.color.colorSecondary
+            )
+        ) {
+            override fun updateDrawState(textPaint: TextPaint) {
+                textPaint.color = ContextCompat.getColor(
+                    requireContext(),
+                    R.color.colorSecondary
+                )
+                textPaint.isUnderlineText = false
+            }
+        }
+    }
+
 
     private fun applyServiceSessionLayout(session: Session.ServiceSession) {
         binding.session = session
