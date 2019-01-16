@@ -214,7 +214,7 @@ class SessionDetailFragment : DaggerFragment() {
     }
 
     private fun makeEllipsisColor(): ForegroundColorSpan {
-        return  object : ForegroundColorSpan(
+        return object : ForegroundColorSpan(
             ContextCompat.getColor(requireContext(),
                 R.color.colorSecondary
             )
@@ -228,7 +228,6 @@ class SessionDetailFragment : DaggerFragment() {
             }
         }
     }
-
 
     private fun applyServiceSessionLayout(session: Session.ServiceSession) {
         binding.session = session
