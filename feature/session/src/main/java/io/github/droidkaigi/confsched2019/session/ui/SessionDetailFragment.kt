@@ -182,7 +182,7 @@ class SessionDetailFragment : DaggerFragment() {
 
         binding.sessionTitle.text = session.title.getByLang(lang)
 
-        val timeInMinutes = session.timeInMinutes
+        val timeInMinutes: Int = session.timeInMinutes
         binding.sessionTimeAndRoom.text = getString(
             R.string.session_duration_room_format,
             timeInMinutes,
