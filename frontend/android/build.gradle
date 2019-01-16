@@ -30,6 +30,7 @@ android {
         resConfigs "ja"
         // For Android Studio Gradle sync
         applicationIdSuffix ".debug"
+        manifestPlaceholders = [isCi: String.valueOf(isCi)]
     }
     buildTypes {
         release {
