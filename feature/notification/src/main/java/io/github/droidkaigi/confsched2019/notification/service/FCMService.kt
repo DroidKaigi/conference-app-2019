@@ -11,6 +11,8 @@ import io.github.droidkaigi.confsched2019.ext.android.queryIntentAllActivities
 import io.github.droidkaigi.confsched2019.notification.NotificationChannelInfo
 import io.github.droidkaigi.confsched2019.notification.NotificationUtil
 import io.github.droidkaigi.confsched2019.notification.createDefaultNotificationChannel
+import io.github.droidkaigi.confsched2019.timber.error
+import timber.log.Timber
 
 class FCMService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
@@ -26,13 +28,17 @@ class FCMService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        when (val notification = remoteMessage.notification) {
-            null -> {
-                handleDataNotification(remoteMessage, remoteMessage.data)
+        try {
+            when (val notification = remoteMessage.notification) {
+                null -> {
+                    handleDataNotification(remoteMessage, remoteMessage.data)
+                }
+                else -> {
+                    handleMessageNotification(remoteMessage, notification, remoteMessage.data)
+                }
             }
-            else -> {
-                handleMessageNotification(remoteMessage, notification, remoteMessage.data)
-            }
+        } catch (unexpected: Throwable) {
+            Timber.error(unexpected)
         }
     }
 
