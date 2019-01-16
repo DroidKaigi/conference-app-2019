@@ -28,6 +28,7 @@ buildscript {
         classpath Dep.GradlePlugin.jetifier
         classpath Dep.GradlePlugin.licensesPlugin
         classpath Dep.GradlePlugin.crashlytics
+        classpath Dep.GradlePlugin.iconRibbonPlugin
     }
 }
 
