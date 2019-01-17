@@ -16,6 +16,7 @@
     <!-- Survey -->
     <string name="survey_label">Entire survey</string>
     <string name="ellipsis_label">…続きを読む</string>
+    <string name="session_survey_label">Session survey</string>
     <!-- Search -->
     <string name="search_label" translatable="false">Search</string>
     <!-- Setting -->

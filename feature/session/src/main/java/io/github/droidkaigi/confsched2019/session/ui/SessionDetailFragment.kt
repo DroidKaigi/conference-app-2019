@@ -19,6 +19,7 @@ import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.NavController
 import com.soywiz.klock.DateTimeSpan
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
@@ -46,6 +47,7 @@ class SessionDetailFragment : DaggerFragment() {
     @Inject lateinit var sessionContentsStore: SessionContentsStore
     @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
     @Inject lateinit var activityActionCreator: ActivityActionCreator
+    @Inject lateinit var navController: NavController
 
     private lateinit var progressTimeLatch: ProgressTimeLatch
 
@@ -133,6 +135,15 @@ class SessionDetailFragment : DaggerFragment() {
                 .interpolator = OvershootInterpolator()
 
             sessionContentsActionCreator.toggleFavorite(session)
+        }
+
+        binding.sessionGoToSurvey.setOnClickListener {
+            val session = binding.session ?: return@setOnClickListener
+            navController.navigate(
+                SessionDetailFragmentDirections.actionSessionDetailToSessionSurvey(
+                    session.id
+                )
+            )
         }
     }
 
