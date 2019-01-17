@@ -35,7 +35,6 @@ import javax.inject.Inject
 
 class SessionDetailFragment : DaggerFragment() {
     private lateinit var binding: FragmentSessionDetailBinding
-    private lateinit var toolbar: Toolbar
 
     @Inject lateinit var sessionContentsActionCreator: SessionContentsActionCreator
     @Inject lateinit var sessionContentsStore: SessionContentsStore
@@ -68,8 +67,7 @@ class SessionDetailFragment : DaggerFragment() {
 
         binding.sessionSpeakers.adapter = groupAdapter
 
-        toolbar = binding.root.findViewById(R.id.session_toolbar)
-        toolbar.setNavigationOnClickListener {
+        binding.sessionToolbar.setNavigationOnClickListener {
             fragmentManager?.popBackStack()
         }
 
@@ -180,9 +178,6 @@ class SessionDetailFragment : DaggerFragment() {
                 activityActionCreator.openUrl(urlString)
             }
         }
-        val toolbarParent = binding.root.findViewById<LinearLayout>(R.id.toolbar_parent)
-        (toolbarParent.layoutParams as CoordinatorLayout.LayoutParams).behavior =
-            SessionToolbarBehavior(context, null, session.title.getByLang(defaultLang()))
     }
 
     private fun applyServiceSessionLayout(session: Session.ServiceSession) {

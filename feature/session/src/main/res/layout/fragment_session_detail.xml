@@ -62,19 +62,22 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:setToolbarTitle="@{speechSession.title.getByLang(lang)}"
             >
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/session_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:theme="@style/Widget.App.Toolbar"
-                app:contentInsetStartWithNavigation="0dp"
+                android:background="@android:color/white"
+                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                app:contentInsetStartWithNavigation="12dp"
                 app:navigationIcon="@drawable/abc_ic_ab_back_material"
                 tools:ignore="PrivateResource"
                 />
 
             <androidx.core.widget.NestedScrollView
+                android:id="@+id/scroll_View"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 >
