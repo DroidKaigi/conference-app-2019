@@ -1,10 +1,10 @@
 package io.github.droidkaigi.confsched2019.session.ui
 
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +13,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.text.buildSpannedString
+import androidx.core.text.color
 import androidx.core.text.inSpans
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
@@ -184,15 +186,24 @@ class SessionDetailFragment : DaggerFragment() {
 
     private fun setupSessionDescription() {
         val textView = binding.sessionDescription
-        textView.viewTreeObserver.addOnDrawListener {
+        textView.doOnPreDraw {
             if (textView.lineCount > 5 && showEllipsis) {
                 val end = textView.layout.getLineStart(5)
                 val ellipsis = getString(R.string.ellipsis_label)
+                val ellipsisColor = ContextCompat.getColor(requireContext(), R.color.colorSecondary)
+                val onClickListener = {
+                    val session = binding.speechSession?.desc
+                    binding.sessionDescription.text = session
+                    showEllipsis = !showEllipsis
+                }
+                val detailText = textView.text.subSequence(0, end - ellipsis.length)
                 val text = buildSpannedString {
-                    inSpans(makeEllipsisClickableSpan()) {
-                        append(textView.text.subSequence(0, end - ellipsis.length))
-                        inSpans(makeEllipsisColor()) { append(ellipsis) }
-                    }
+                    clickableSpan(onClickListener, {
+                        append(detailText)
+                        color(ellipsisColor) {
+                            append(ellipsis)
+                        }
+                    })
                 }
                 binding.sessionDescription.setText(text, TextView.BufferType.SPANNABLE)
                 binding.sessionDescription.movementMethod = LinkMovementMethod.getInstance()
@@ -200,33 +211,19 @@ class SessionDetailFragment : DaggerFragment() {
         }
     }
 
-    private fun makeEllipsisClickableSpan(): ClickableSpan {
-        return object : ClickableSpan() {
+    private fun SpannableStringBuilder.clickableSpan(
+        clickListener: () -> Unit,
+        builderAction: SpannableStringBuilder.() -> Unit
+    ) {
+        inSpans(object : ClickableSpan() {
             override fun onClick(widget: View) {
-                val session = binding.speechSession?.desc
-                binding.sessionDescription.text = session
-                showEllipsis = !showEllipsis
+                clickListener()
             }
+
             override fun updateDrawState(ds: TextPaint) {
                 // nothing
             }
-        }
-    }
-
-    private fun makeEllipsisColor(): ForegroundColorSpan {
-        return object : ForegroundColorSpan(
-            ContextCompat.getColor(requireContext(),
-                R.color.colorSecondary
-            )
-        ) {
-            override fun updateDrawState(textPaint: TextPaint) {
-                textPaint.color = ContextCompat.getColor(
-                    requireContext(),
-                    R.color.colorSecondary
-                )
-                textPaint.isUnderlineText = false
-            }
-        }
+        }, builderAction)
     }
 
     private fun applyServiceSessionLayout(session: Session.ServiceSession) {
