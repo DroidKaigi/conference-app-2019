@@ -6,6 +6,7 @@
     <string name="about_label">DroidKaigi とは</string>
     <string name="sponsor_label">スポンサーページ</string>
     <string name="survey_label">全体アンケート</string>
+    <string name="ellipsis_label">…続きを読む</string>
     <string name="description_filter_applied">フィルター%1$sを適用</string>
     <string name="description_filter_not_applied">フィルター%1$sを解除</string>
     <!-- Notification -->
