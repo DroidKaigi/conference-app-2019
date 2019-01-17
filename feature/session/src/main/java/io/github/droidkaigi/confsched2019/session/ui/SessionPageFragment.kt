@@ -64,7 +64,7 @@ class SessionPageFragment : DaggerFragment() {
     }
 
     private val args: SessionPageFragmentArgs by lazy {
-        SessionPageFragmentArgs.fromBundle(arguments)
+        SessionPageFragmentArgs.fromBundle(arguments ?: Bundle())
     }
 
     private val bottomSheetBehavior: BottomSheetBehavior<*>

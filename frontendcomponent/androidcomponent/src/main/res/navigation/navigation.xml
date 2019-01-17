@@ -51,6 +51,10 @@
             android:id="@+id/action_session_detail_to_speaker"
             app:destination="@id/speaker"
             />
+        <deepLink app:uri="droidkaigi.jp/2019/timetable/{session}/"/>
+        <deepLink app:uri="droidkaigi.jp/2019/timetable/{session}"/>
+        <deepLink app:uri="droidkaigi.jp/2019/en/timetable/{session}/"/>
+        <deepLink app:uri="droidkaigi.jp/2019/en/timetable/{session}"/>
     </fragment>
     <fragment
         android:id="@+id/search"

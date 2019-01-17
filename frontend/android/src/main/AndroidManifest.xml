@@ -24,18 +24,31 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts"
             />
+
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data android:scheme="https"/>
+                <data android:host="droidkaigi.jp"/>
+                <data android:pathPrefix="/2019/timetable/"/>
+                <data android:pathPrefix="/2019/en/timetable/"/>
+            </intent-filter>
         </activity>
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:theme="@style/AppTheme.WithActionBar"
             />
-        <receiver android:name=".broadcastreceiver.NotificationBroadcastReceiver" />
+
+        <receiver android:name=".broadcastreceiver.NotificationBroadcastReceiver"/>
     </application>
 
 </manifest>

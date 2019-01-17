@@ -44,7 +44,7 @@ class SpeakerFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        speakerFragmentArgs = SpeakerFragmentArgs.fromBundle(arguments)
+        speakerFragmentArgs = SpeakerFragmentArgs.fromBundle(arguments ?: Bundle())
 
         val speakerId = speakerFragmentArgs.speaker
         binding.lang = defaultLang()
