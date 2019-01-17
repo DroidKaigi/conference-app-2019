@@ -25,16 +25,32 @@ data class Filters(
             return@run langs.map { it.text }.contains(session.language)
         }
         val langSupportFilterOk = run {
-            return@run if (langSupports.contains(LangSupport.INTERPRETATION)) session.isInterpretationTarget else true
+            if (langSupports.contains(LangSupport.INTERPRETATION)) {
+                session.isInterpretationTarget
+            } else {
+                true
+            }
         }
         val audienceCategoryFilterOk = run {
-            return@run if (audienceCategories.contains(AudienceCategory.BEGINNERS)) session.forBeginners else true
+            if (audienceCategories.contains(AudienceCategory.BEGINNERS)) {
+                session.forBeginners
+            } else {
+                true
+            }
         }
-        return roomFilterOk && categoryFilterOk && langFilterOk && langSupportFilterOk && audienceCategoryFilterOk
+        return roomFilterOk &&
+            categoryFilterOk &&
+            langFilterOk &&
+            langSupportFilterOk &&
+            audienceCategoryFilterOk
     }
 
     fun isFiltered(): Boolean {
-        return rooms.isNotEmpty() || categories.isNotEmpty() || langs.isNotEmpty() || langSupports.isNotEmpty() || return audienceCategories.isNotEmpty()
+        return rooms.isNotEmpty() ||
+            categories.isNotEmpty() ||
+            langs.isNotEmpty() ||
+            langSupports.isNotEmpty() ||
+            audienceCategories.isNotEmpty()
     }
 
     private fun Session.isNotFilterableServiceSession() =
