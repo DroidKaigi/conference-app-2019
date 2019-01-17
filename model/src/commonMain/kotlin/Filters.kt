@@ -37,6 +37,6 @@ data class Filters(
         return rooms.isNotEmpty() || categories.isNotEmpty() || langs.isNotEmpty() || langSupports.isNotEmpty() || return audienceCategories.isNotEmpty()
     }
 
-    private fun Session.isNotFilterableServiceSession()
-        = this is Session.ServiceSession && !sessionType.isFilterable
+    private fun Session.isNotFilterableServiceSession() =
+        this is Session.ServiceSession && !sessionType.isFilterable
 }

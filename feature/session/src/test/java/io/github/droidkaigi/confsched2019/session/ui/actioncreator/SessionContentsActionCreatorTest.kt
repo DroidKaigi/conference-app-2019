@@ -7,7 +7,6 @@ import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.dummySessionData
 import io.github.droidkaigi.confsched2019.ext.android.CoroutinePlugin
 import io.github.droidkaigi.confsched2019.firstDummySpeechSession
-import io.github.droidkaigi.confsched2019.model.Filters
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.util.SessionAlarm
