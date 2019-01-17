@@ -5,7 +5,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.BindingAdapter
 
 @BindingAdapter("setToolbarTitle")
-fun LinearLayout.setToolbarTitle(title: String) {
+fun LinearLayout.setToolbarTitle(title: String?) {
     (this.layoutParams as CoordinatorLayout.LayoutParams).behavior =
-        SessionToolbarBehavior(context, null, title)
+        SessionToolbarBehavior(context, null, title ?: "")
 }
