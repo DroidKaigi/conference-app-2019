@@ -81,8 +81,7 @@ private fun SessionResponse.toSession(
             language = LocaledString(
                 requireNotNull(language.translatedName?.ja),
                 requireNotNull(language.translatedName?.en)
-            )
-            ,
+            ),
             category = Category(
                 requireNotNull(category.id),
                 LocaledString(
@@ -151,4 +150,3 @@ private fun List<CategoryResponse>.category(
 ): CategoryItemResponse {
     return this[categoryIndex].items!!.first { it!!.id == categoryId }!!
 }
-

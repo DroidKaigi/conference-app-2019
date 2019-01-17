@@ -33,7 +33,10 @@ open class KtorDroidKaigiApi constructor(
         return JSON.nonstrict.parse(ResponseImpl.serializer(), rawResponse)
     }
 
-    override fun getSessions(callback: (response: Response) -> Unit, onError: (error: Exception) -> Unit) {
+    override fun getSessions(
+        callback: (response: Response) -> Unit,
+        onError: (error: Exception) -> Unit
+    ) {
         GlobalScope.launch(requireNotNull(coroutineDispatcherForCallback)) {
             try {
                 val response = getSessions()

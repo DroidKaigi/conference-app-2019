@@ -69,7 +69,7 @@ allprojects {
                         parameters += "--reporter=html,artifact=me.cassiano:ktlint-html-reporter:0.2.0,output=${buildDir}/ktlint/checkstyle.html"
                     }
 
-                    parameters += ['src/main/**/*.kt', 'src/debug/**/*.kt', 'src/release/**/*.kt']
+                    parameters += ['src/main/**/*.kt', 'src/debug/**/*.kt', 'src/release/**/*.kt', 'src/commonMain/**/*.kt', 'src/test/**/*.kt']
 
                     description = 'Check Kotlin code style.'
                     args = parameters
@@ -82,7 +82,7 @@ allprojects {
                     description = "Format Kotlin files based on code style."
                     classpath = configurations.ktlint
                     main = "com.github.shyiko.ktlint.Main"
-                    args "--android", '-F', 'src/main/**/*.kt', 'src/debug/**/*.kt', 'src/release/**/*.kt'
+                    args "--android", '-F', 'src/main/**/*.kt', 'src/debug/**/*.kt', 'src/release/**/*.kt', 'src/commonMain/**/*.kt', 'src/androidMain/**/*.kt', 'src/iOSMain/**/*.kt', 'src/test/**/*.kt'
                 }
 
                 task androidDependenciesExtra(dependsOn: 'androidDependencies') {

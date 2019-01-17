@@ -77,4 +77,3 @@ fun firstDummySpeechSession(): Session.SpeechSession {
         forBeginners = false
     )
 }
-
