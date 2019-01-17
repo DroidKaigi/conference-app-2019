@@ -37,10 +37,23 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
 
-                <data android:scheme="https"/>
-                <data android:host="droidkaigi.jp"/>
-                <data android:pathPrefix="/2019/timetable/"/>
-                <data android:pathPrefix="/2019/en/timetable/"/>
+                <data
+                    android:host="droidkaigi.jp"
+                    android:pathPrefix="/2019/timetable/"
+                    android:scheme="https"
+                    />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="droidkaigi.jp"
+                    android:pathPrefix="/2019/en/timetable/"
+                    android:scheme="https"
+                    />
             </intent-filter>
         </activity>
         <activity
