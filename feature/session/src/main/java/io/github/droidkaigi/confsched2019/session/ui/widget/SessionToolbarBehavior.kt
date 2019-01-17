@@ -57,6 +57,10 @@ class SessionToolbarBehavior(
         } else {
             null
         }
+        performAnimation(toolbar, nestedScrollView)
+    }
+
+    private fun performAnimation(toolbar: Toolbar, nestedScrollView: NestedScrollView?) {
         if (!mIsAnimation) {
             if (nestedScrollView?.canScrollVertically(NEGATIVE_DIRECTION) == false) {
                 appCompatTextView?.let {
@@ -104,6 +108,7 @@ class SessionToolbarBehavior(
                 }
 
                 override fun onAnimationCancel(view: View?) {
+                    mIsAnimation = false
                 }
 
                 override fun onAnimationStart(view: View?) {
