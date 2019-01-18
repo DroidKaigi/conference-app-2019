@@ -62,9 +62,8 @@ object NotificationUtil {
                     iconRes
                 )
                 setGroup(channelInfo.channelId)
-            } else {
-                setContentTitle(title)
             }
+            setContentTitle(title)
             setContentText(text)
             setStyle(
                 NotificationCompat.BigTextStyle()
