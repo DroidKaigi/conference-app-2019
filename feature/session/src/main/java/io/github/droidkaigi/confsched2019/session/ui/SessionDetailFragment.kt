@@ -20,6 +20,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
+import androidx.transition.TransitionManager
 import com.soywiz.klock.DateTimeSpan
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
@@ -210,6 +211,7 @@ class SessionDetailFragment : DaggerFragment() {
                 val ellipsis = getString(R.string.ellipsis_label)
                 val ellipsisColor = ContextCompat.getColor(requireContext(), R.color.colorSecondary)
                 val onClickListener = {
+                    TransitionManager.beginDelayedTransition(binding.sessionLayout)
                     val session = binding.speechSession?.desc
                     binding.sessionDescription.text = session
                     showEllipsis = !showEllipsis
