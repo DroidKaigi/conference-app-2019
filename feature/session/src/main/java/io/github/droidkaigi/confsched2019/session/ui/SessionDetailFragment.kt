@@ -37,6 +37,7 @@ import io.github.droidkaigi.confsched2019.session.ui.item.SpeakerItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
+import io.github.droidkaigi.confsched2019.user.store.UserStore
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import javax.inject.Inject
 
@@ -45,6 +46,7 @@ class SessionDetailFragment : DaggerFragment() {
 
     @Inject lateinit var sessionContentsActionCreator: SessionContentsActionCreator
     @Inject lateinit var sessionContentsStore: SessionContentsStore
+    @Inject lateinit var userStore: UserStore
     @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
     @Inject lateinit var activityActionCreator: ActivityActionCreator
     @Inject lateinit var navController: NavController
@@ -72,7 +74,7 @@ class SessionDetailFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        sessionDetailFragmentArgs = SessionDetailFragmentArgs.fromBundle(arguments)
+        sessionDetailFragmentArgs = SessionDetailFragmentArgs.fromBundle(arguments ?: Bundle())
 
         binding.sessionSpeakers.adapter = groupAdapter
 
@@ -96,6 +98,12 @@ class SessionDetailFragment : DaggerFragment() {
                     ).show()
             }
             return@setOnMenuItemClickListener true
+        }
+
+        userStore.registered.changed(viewLifecycleOwner) { registered ->
+            if (registered && sessionContentsStore.isInitialized) {
+                sessionContentsActionCreator.refresh()
+            }
         }
 
         sessionContentsStore.speechSession(sessionDetailFragmentArgs.session)

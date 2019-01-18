@@ -34,7 +34,7 @@ class SessionSurveyFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        sessionSurveyFragmentArgs = SessionSurveyFragmentArgs.fromBundle(arguments)
+        sessionSurveyFragmentArgs = SessionSurveyFragmentArgs.fromBundle(arguments ?: Bundle())
     }
 }
 
