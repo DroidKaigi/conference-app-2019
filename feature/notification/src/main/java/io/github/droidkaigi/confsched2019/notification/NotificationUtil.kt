@@ -5,13 +5,16 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.os.Build
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 
 fun Context.notificationBuilder(
-    channelInfo: NotificationChannelInfo
+    channelInfo: NotificationChannelInfo,
+    @ColorRes iconColorRes: Int = R.color.notification_color
 ): NotificationCompat.Builder {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         createDefaultNotificationChannel(
@@ -20,7 +23,9 @@ fun Context.notificationBuilder(
         )
     }
 
-    return NotificationCompat.Builder(this, channelInfo.channelId)
+    return NotificationCompat.Builder(this, channelInfo.channelId).apply {
+        color = ContextCompat.getColor(this@notificationBuilder, iconColorRes)
+    }
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -45,9 +50,10 @@ object NotificationUtil {
         pendingIntent: PendingIntent?,
         channelInfo: NotificationChannelInfo = NotificationChannelInfo.DEFAULT,
         @DrawableRes iconRes: Int = R.drawable.ic_notification,
+        @ColorRes colorRes: Int = R.color.notification_color,
         builder: NotificationCompat.Builder.() -> Unit = {}
     ) {
-        val notificationBuilder = context.notificationBuilder(channelInfo).apply {
+        val notificationBuilder = context.notificationBuilder(channelInfo, colorRes).apply {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 showBundleNotification(
                     context,
@@ -82,10 +88,11 @@ object NotificationUtil {
         title: String,
         channelInfo: NotificationChannelInfo,
         @DrawableRes
-        iconRes: Int
+        iconRes: Int,
+        @ColorRes colorRes: Int
     ) {
         val notificationManager = context.getSystemService(NotificationManager::class.java)
-        val notification = context.notificationBuilder(channelInfo)
+        val notification = context.notificationBuilder(channelInfo, colorRes)
             .setStyle(
                 NotificationCompat.BigTextStyle()
                     .setSummaryText(title)
