@@ -47,8 +47,6 @@ class SponsorFragment : DaggerFragment() {
 
     private lateinit var progressTimeLatch: ProgressTimeLatch
 
-    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -65,6 +63,8 @@ class SponsorFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val groupAdapter = GroupAdapter<ViewHolder<*>>()
+
         groupAdapter.spanCount = 2
 
         binding.sponsorRecycler.layoutManager = GridLayoutManager(
@@ -82,12 +82,17 @@ class SponsorFragment : DaggerFragment() {
         sponsorStore.loadingState.changed(viewLifecycleOwner) {
             progressTimeLatch.loading = it == LoadingState.LOADING
         }
-        sponsorStore.sponsors.changed(viewLifecycleOwner, this::setupSponsorsLayout)
+        sponsorStore.sponsors.changed(viewLifecycleOwner) {
+            setupSponsorsLayout(it, groupAdapter)
+        }
 
         sponsorActionCreator.load()
     }
 
-    private fun setupSponsorsLayout(sponsorCategories: List<SponsorCategory>) {
+    private fun setupSponsorsLayout(
+        sponsorCategories: List<SponsorCategory>,
+        groupAdapter: GroupAdapter<*>
+    ) {
         val sponsors = sponsorCategories.map { category ->
             category.toSection(sponsorCategories.last() == category)
         }

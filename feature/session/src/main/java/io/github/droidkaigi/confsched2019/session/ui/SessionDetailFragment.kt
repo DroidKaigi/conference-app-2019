@@ -55,7 +55,6 @@ class SessionDetailFragment : DaggerFragment() {
     private lateinit var progressTimeLatch: ProgressTimeLatch
 
     private lateinit var sessionDetailFragmentArgs: SessionDetailFragmentArgs
-    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
     private var showEllipsis = true
 
     override fun onCreateView(
@@ -77,6 +76,7 @@ class SessionDetailFragment : DaggerFragment() {
 
         sessionDetailFragmentArgs = SessionDetailFragmentArgs.fromBundle(arguments ?: Bundle())
 
+        val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.sessionSpeakers.adapter = groupAdapter
 
         binding.bottomAppBar.replaceMenu(R.menu.menu_session_detail_bottomappbar)
@@ -109,7 +109,7 @@ class SessionDetailFragment : DaggerFragment() {
 
         sessionContentsStore.speechSession(sessionDetailFragmentArgs.session)
             .changed(viewLifecycleOwner) { session ->
-                applySpeechSessionLayout(session)
+                applySpeechSessionLayout(session, groupAdapter)
             }
 
         sessionContentsStore.serviceSession(sessionDetailFragmentArgs.session)
@@ -155,7 +155,10 @@ class SessionDetailFragment : DaggerFragment() {
         }
     }
 
-    private fun applySpeechSessionLayout(session: Session.SpeechSession) {
+    private fun applySpeechSessionLayout(
+        session: Session.SpeechSession,
+        groupAdapter: GroupAdapter<*>
+    ) {
         binding.session = session
         binding.speechSession = session
         val lang = defaultLang()

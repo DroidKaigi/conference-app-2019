@@ -59,8 +59,6 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
         InjectedViewModelProviders.of(requireActivity()).get(sessionPagesStoreProvider)
     }
 
-    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -74,6 +72,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.sessionsRecycler.apply {
             adapter = groupAdapter
             addItemDecoration(
@@ -96,7 +95,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
         binding.sessionsRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                applyTitleText()
+                applyTitleText(groupAdapter)
             }
         })
 
@@ -123,7 +122,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
                 }
 
             groupAdapter.update(items)
-            applyTitleText()
+            applyTitleText(groupAdapter)
             binding.shouldShowEmptyStateView = items.isEmpty()
             if (items.isEmpty()) {
                 binding.sessionsListHeaderShadow.isVisible = false
@@ -152,7 +151,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
         super.onDestroyView()
     }
 
-    private fun applyTitleText() {
+    private fun applyTitleText(groupAdapter: GroupAdapter<*>) {
         val linearLayoutManager = binding.sessionsRecycler.layoutManager as LinearLayoutManager
         val firstPosition = linearLayoutManager.findFirstVisibleItemPosition()
         if (firstPosition == RecyclerView.NO_POSITION || firstPosition >= groupAdapter.itemCount) {
