@@ -1,6 +1,8 @@
 package io.github.droidkaigi.confsched2019.session.ui
 
 import android.os.Bundle
+import android.util.DisplayMetrics
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
@@ -176,6 +179,20 @@ class SessionDetailFragment : DaggerFragment() {
         binding.sessionSlideButton.setOnClickListener {
             session.slideUrl?.let { urlString ->
                 activityActionCreator.openUrl(urlString)
+            }
+        }
+        binding.scrollView.viewTreeObserver.addOnGlobalLayoutListener {
+            if (binding.scrollView.scrollY != 0) {
+                val displayMetrics = context?.resources?.displayMetrics
+                displayMetrics?.let {
+                    val floatDp = TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP, 4f, it
+                    )
+                    with(binding.sessionToolbar) {
+                        elevation = floatDp
+                        title = session.title.getByLang(lang)
+                    }
+                }
             }
         }
     }
