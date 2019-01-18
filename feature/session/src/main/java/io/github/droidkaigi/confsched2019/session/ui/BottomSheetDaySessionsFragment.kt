@@ -142,6 +142,11 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
         }
     }
 
+    override fun onDestroyView() {
+        binding.sessionsRecycler.adapter = null
+        super.onDestroyView()
+    }
+
     companion object {
         fun newInstance(
             args: BottomSheetDaySessionsFragmentArgs

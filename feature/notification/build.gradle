@@ -2,40 +2,30 @@ import dependencies.Dep
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'androidx.navigation.safeargs'
+apply plugin: 'kotlin-kapt'
 
 apply from: rootProject.file('gradle/android.gradle')
 
 dependencies {
-    api project(":model")
-    api project(":feature:notification")
-    api project(":ext:android-extension")
-    api Dep.AndroidX.design
-    api Dep.AndroidX.coreKtx
-    implementation Dep.Kotlin.stdlibJvm
+    implementation project(':ext:android-extension')
+    implementation project(':ext:log')
 
-    api Dep.Dagger.androidSupport
     implementation Dep.Kotlin.stdlibJvm
     api Dep.Kotlin.coroutines
+    implementation Dep.Kotlin.androidCoroutinesDispatcher
 
-    api Dep.Klock.jvm
+    implementation Dep.AndroidX.coreKtx
 
-    api Dep.AndroidX.Navigation.runtime
-    api Dep.AndroidX.Navigation.runtimeKtx
-    api Dep.AndroidX.Navigation.fragmentKtx
-    api Dep.AndroidX.Navigation.uiKtx
+    implementation Dep.Timber.android
 
-    implementation Dep.Dagger.core
-    implementation Dep.Dagger.androidSupport
+    implementation Dep.Firebase.messaging
 
     testImplementation Dep.Test.junit
+    testImplementation Dep.Test.kotlinTestAssertions
     testImplementation Dep.MockK.jvm
+    testImplementation project(':frontendcomponent:androidtestcomponent')
     androidTestImplementation Dep.Test.testRunner
     androidTestImplementation Dep.Test.espressoCore
-}
-repositories {
-    if (!isCi) { maven { url "https://maven-central-asia.storage-download.googleapis.com/repos/central/data/" } }
-    mavenCentral()
 }
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions {

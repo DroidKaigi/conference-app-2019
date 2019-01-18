@@ -88,6 +88,7 @@ object Dep {
         val fireStore = "com.google.firebase:firebase-firestore:17.1.3"
         val auth = "com.google.firebase:firebase-auth:16.0.5"
         val crashlytics = "com.crashlytics.sdk.android:crashlytics:2.9.8"
+        val messaging = "com.google.firebase:firebase-messaging:17.3.3"
     }
 
     object PlayServices {
