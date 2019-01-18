@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
@@ -25,6 +28,7 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionConten
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeakerItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
+import io.github.droidkaigi.confsched2019.session.ui.widget.SessionToolbarBehavior
 import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import javax.inject.Inject
@@ -136,11 +140,7 @@ class SessionDetailFragment : DaggerFragment() {
         binding.lang = lang
         binding.timeZoneOffset = DateTimeSpan(hours = 9) // FIXME Get from device setting
 
-        if (binding.scrollView.canScrollVertically(1)) {
-            binding.sessionToolbar.title = session.title.getByLang(lang)
-        } else {
-            binding.sessionToolbar.title = session.title.getByLang(lang)
-        }
+        binding.sessionTitle.text = session.title.getByLang(lang)
 
         @Suppress("StringFormatMatches") // FIXME
         binding.sessionTimeAndRoom.text = getString(
