@@ -248,8 +248,9 @@ class StickyHeaderItemDecoration(
             if (TextUtils.isEmpty(initial)) return@forEach
 
             // drawing
+            val viewTop = view.top + labelPadding
             val viewBottom = view.bottom + view.paddingBottom
-            var textY = Math.max(view.height, viewBottom) - lineHeight
+            var textY = Math.max(labelPadding, viewTop) + lineHeight
             if (position + 1 < totalItemCount) {
                 val nextGroupId = getGroupId(position + 1)
                 if (nextGroupId != groupId && viewBottom < textY + lineHeight) {
