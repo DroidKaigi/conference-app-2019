@@ -20,7 +20,7 @@
         android:paddingTop="48dp"
         >
 
-        <ImageView
+        <com.github.chrisbanes.photoview.PhotoView
             android:id="@+id/floorMapImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
