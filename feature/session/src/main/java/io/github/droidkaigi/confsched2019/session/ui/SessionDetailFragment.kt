@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.text.buildSpannedString
 import androidx.core.text.color
@@ -21,6 +20,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import androidx.transition.TransitionManager
+import androidx.navigation.fragment.findNavController
 import com.soywiz.klock.DateTimeSpan
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
@@ -91,12 +91,9 @@ class SessionDetailFragment : DaggerFragment() {
                         )
                     )
                 }
-                R.id.session_place ->
-                    Toast.makeText(
-                        requireContext(),
-                        "not implemented yet",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                R.id.session_place -> {
+                    this.findNavController().navigate(R.id.action_session_detail_to_floormap)
+                }
             }
             return@setOnMenuItemClickListener true
         }
