@@ -59,7 +59,8 @@ object NotificationUtil {
                     context,
                     title,
                     channelInfo,
-                    iconRes
+                    iconRes,
+                    colorRes
                 )
                 setGroup(channelInfo.channelId)
             }
