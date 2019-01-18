@@ -11,7 +11,7 @@
             />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <io.github.droidkaigi.confsched2019.floormap.ui.widget.DisablePinchNestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
@@ -27,5 +27,5 @@
             android:contentDescription="@{@string/floor_map_image(floorTitle)}"
             android:scaleType="centerInside"
             />
-    </androidx.core.widget.NestedScrollView>
+    </io.github.droidkaigi.confsched2019.floormap.ui.widget.DisablePinchNestedScrollView>
 </layout>
