@@ -8,15 +8,16 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
@@ -105,9 +106,12 @@ class MainActivity : DaggerAppCompatActivity() {
             true
         }
         setupActionBarWithNavController(navController, appBarConfiguration)
-        binding.navView.setupWithNavController(navController)
+        setupNavigationView()
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         navController.addOnDestinationChangedListener { _, destination, _ ->
+            // check drawer menu item/ apply when back key pressed
+            checkCurrentDestinationIdInDrawer(destination.id)
+
             val config = PageConfiguration.getConfiguration(destination.id)
             binding.logo.isVisible = config.isShowLogoImage
             if (!config.hasTitle) supportActionBar?.title = ""
@@ -159,9 +163,51 @@ class MainActivity : DaggerAppCompatActivity() {
         }
     }
 
+    private fun setupNavigationView() {
+        binding.navView.setNavigationItemSelectedListener { item ->
+            // drawer close
+            if (binding.drawerLayout.isDrawerOpen(binding.navView)) {
+                binding.drawerLayout.closeDrawer(binding.navView)
+            }
+            // navigate
+            val handled = handleNavigation(item)
+            // check current displayed item in navigation menu / uncheck others
+            checkCurrentDestinationIdInDrawer(item.itemId)
+
+            return@setNavigationItemSelectedListener handled
+        }
+    }
+
+    private fun checkCurrentDestinationIdInDrawer(id: Int) {
+        var contain = false
+        binding.navView.menu.children.forEach {
+            val match = it.itemId == id
+            it.isChecked = match
+            contain = contain or match
+        }
+        // if id dose not exist in menu items, check main instead
+        if (!contain) {
+            binding.navView.menu.findItem(R.id.main).isChecked = true
+        }
+    }
+
+    private fun handleNavigation(item: MenuItem): Boolean {
+        return try {
+            // ignore if current destination is selected
+            if (navController.currentDestination?.id == item.itemId) return false
+            val builder = NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .setPopUpTo(R.id.main, false)
+            val options = builder.build()
+            navController.navigate(item.itemId, null, options)
+            true
+        } catch (e: IllegalArgumentException) {
+            false
+        }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(item, navController) ||
-            super.onOptionsItemSelected(item)
+        return handleNavigation(item) || super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {
