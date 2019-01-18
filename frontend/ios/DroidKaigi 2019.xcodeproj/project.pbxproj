@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		01578EC121E5E75A002B2033 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01578EC021E5E75A002B2033 /* AppDelegate.swift */; };
-		01578EC321E5E75A002B2033 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01578EC221E5E75A002B2033 /* ViewController.swift */; };
+		01578EC321E5E75A002B2033 /* SessionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01578EC221E5E75A002B2033 /* SessionsViewController.swift */; };
 		01578EC621E5E75A002B2033 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01578EC421E5E75A002B2033 /* Main.storyboard */; };
 		01578ECB21E5E75D002B2033 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01578ECA21E5E75D002B2033 /* Assets.xcassets */; };
 		01578ECE21E5E75D002B2033 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01578ECC21E5E75D002B2033 /* LaunchScreen.storyboard */; };
@@ -17,6 +17,13 @@
 		01E0C3D021E9ED450014DA7E /* ios_combined.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E0C3CF21E9ED450014DA7E /* ios_combined.framework */; };
 		01E0C3D221E9ED4B0014DA7E /* ios_combined.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01E0C3CF21E9ED450014DA7E /* ios_combined.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		63F34E1B21EB43CE00B2EC48 /* SessionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F34E1A21EB43CE00B2EC48 /* SessionRepository.swift */; };
+		E9B4925E21ECB6CE000F1072 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925C21ECB6CE000F1072 /* RxCocoa.framework */; };
+		E9B4925F21ECB6CE000F1072 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925D21ECB6CE000F1072 /* RxSwift.framework */; };
+		E9B4926021ECB782000F1072 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925C21ECB6CE000F1072 /* RxCocoa.framework */; };
+		E9B4926121ECB782000F1072 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925D21ECB6CE000F1072 /* RxSwift.framework */; };
+		E9B4926421ECB783000F1072 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4926221ECB783000F1072 /* RxBlocking.framework */; };
+		E9B4926521ECB783000F1072 /* RxTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4926321ECB783000F1072 /* RxTest.framework */; };
+		E9B4926821ECC7DA000F1072 /* SessionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B4926721ECC7DA000F1072 /* SessionsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,7 +60,7 @@
 /* Begin PBXFileReference section */
 		01578EBD21E5E75A002B2033 /* DroidKaigi 2019.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DroidKaigi 2019.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		01578EC021E5E75A002B2033 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		01578EC221E5E75A002B2033 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		01578EC221E5E75A002B2033 /* SessionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsViewController.swift; sourceTree = "<group>"; };
 		01578EC521E5E75A002B2033 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		01578ECA21E5E75D002B2033 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		01578ECD21E5E75D002B2033 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -66,6 +73,11 @@
 		01578EE521E5E75D002B2033 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		01E0C3CF21E9ED450014DA7E /* ios_combined.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ios_combined.framework; path = "../ios-combined/build/xcode-frameworks/ios_combined.framework"; sourceTree = "<group>"; };
 		63F34E1A21EB43CE00B2EC48 /* SessionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRepository.swift; sourceTree = "<group>"; };
+		E9B4925C21ECB6CE000F1072 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
+		E9B4925D21ECB6CE000F1072 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
+		E9B4926221ECB783000F1072 /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
+		E9B4926321ECB783000F1072 /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = Carthage/Build/iOS/RxTest.framework; sourceTree = "<group>"; };
+		E9B4926721ECC7DA000F1072 /* SessionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +85,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9B4925E21ECB6CE000F1072 /* RxCocoa.framework in Frameworks */,
+				E9B4925F21ECB6CE000F1072 /* RxSwift.framework in Frameworks */,
 				01E0C3D021E9ED450014DA7E /* ios_combined.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -81,6 +95,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9B4926421ECB783000F1072 /* RxBlocking.framework in Frameworks */,
+				E9B4926521ECB783000F1072 /* RxTest.framework in Frameworks */,
+				E9B4926021ECB782000F1072 /* RxCocoa.framework in Frameworks */,
+				E9B4926121ECB782000F1072 /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,12 +137,13 @@
 			isa = PBXGroup;
 			children = (
 				01578EC021E5E75A002B2033 /* AppDelegate.swift */,
-				01578EC221E5E75A002B2033 /* ViewController.swift */,
+				01578EC221E5E75A002B2033 /* SessionsViewController.swift */,
+				E9B4926721ECC7DA000F1072 /* SessionsViewModel.swift */,
+				63F34E1A21EB43CE00B2EC48 /* SessionRepository.swift */,
 				01578EC421E5E75A002B2033 /* Main.storyboard */,
 				01578ECA21E5E75D002B2033 /* Assets.xcassets */,
 				01578ECC21E5E75D002B2033 /* LaunchScreen.storyboard */,
 				01578ECF21E5E75D002B2033 /* Info.plist */,
-				63F34E1A21EB43CE00B2EC48 /* SessionRepository.swift */,
 			);
 			path = "DroidKaigi 2019";
 			sourceTree = "<group>";
@@ -150,6 +169,10 @@
 		0161170A21E9A89C009CBB8D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E9B4926221ECB783000F1072 /* RxBlocking.framework */,
+				E9B4926321ECB783000F1072 /* RxTest.framework */,
+				E9B4925C21ECB6CE000F1072 /* RxCocoa.framework */,
+				E9B4925D21ECB6CE000F1072 /* RxSwift.framework */,
 				01E0C3CF21E9ED450014DA7E /* ios_combined.framework */,
 			);
 			name = Frameworks;
@@ -165,6 +188,7 @@
 				0161170D21E9A95A009CBB8D /* Build Kotlin Modules */,
 				01578EB921E5E75A002B2033 /* Sources */,
 				01578EBA21E5E75A002B2033 /* Frameworks */,
+				E9B4925B21ECB696000F1072 /* Carthage Copy Frameworks */,
 				01578EBB21E5E75A002B2033 /* Resources */,
 				01E0C3D321E9ED4B0014DA7E /* Embed Frameworks */,
 			);
@@ -183,6 +207,7 @@
 			buildPhases = (
 				01578ED021E5E75D002B2033 /* Sources */,
 				01578ED121E5E75D002B2033 /* Frameworks */,
+				E9B4926621ECB790000F1072 /* Carthage Copy Frameworks */,
 				01578ED221E5E75D002B2033 /* Resources */,
 			);
 			buildRules = (
@@ -301,6 +326,54 @@
 			shellPath = /bin/sh;
 			shellScript = "cd \"$SRCROOT/../..\"\n./gradlew \":frontend:ios-combined:packForXCode\" -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
 		};
+		E9B4925B21ECB696000F1072 /* Carthage Copy Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
+			);
+			name = "Carthage Copy Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxSwift.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxCocoa.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+		E9B4926621ECB790000F1072 /* Carthage Copy Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxBlocking.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxTest.framework",
+			);
+			name = "Carthage Copy Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxSwift.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxCocoa.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxBlocking.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxTest.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -308,7 +381,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01578EC321E5E75A002B2033 /* ViewController.swift in Sources */,
+				01578EC321E5E75A002B2033 /* SessionsViewController.swift in Sources */,
+				E9B4926821ECC7DA000F1072 /* SessionsViewModel.swift in Sources */,
 				63F34E1B21EB43CE00B2EC48 /* SessionRepository.swift in Sources */,
 				01578EC121E5E75A002B2033 /* AppDelegate.swift in Sources */,
 			);
@@ -490,6 +564,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/../ios-combined/build/xcode-frameworks",
 					"$(PROJECT_DIR)-combined/build/xcode-frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "DroidKaigi 2019/Info.plist";
@@ -513,6 +588,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/../ios-combined/build/xcode-frameworks",
 					"$(PROJECT_DIR)-combined/build/xcode-frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "DroidKaigi 2019/Info.plist";
@@ -533,6 +609,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "DroidKaigi 2019Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -553,6 +633,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "DroidKaigi 2019Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

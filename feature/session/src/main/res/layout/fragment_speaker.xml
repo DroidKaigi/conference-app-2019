@@ -23,9 +23,9 @@
             />
 
         <variable
-                name="timeZoneOffset"
-                type="com.soywiz.klock.DateTimeSpan"
-        />
+            name="timeZoneOffset"
+            type="com.soywiz.klock.DateTimeSpan"
+            />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,7 +47,7 @@
                 android:layout_height="match_parent"
                 >
 
-                <androidx.emoji.widget.EmojiTextView
+                <androidx.emoji.widget.EmojiAppCompatTextView
                     android:id="@+id/speaker_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="4dp"
                     android:text="@{speaker.tagLine}"
-                    android:textAppearance="@style/TextAppearance.App.Subtitle2"
+                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toStartOf="@id/speaker_image"
                     app:layout_constraintHorizontal_bias="0"
@@ -99,6 +99,8 @@
                     android:id="@+id/divider1"
                     android:layout_width="0dp"
                     android:layout_height="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="56dp"
                     android:contentDescription="@null"
                     android:layerType="software"
@@ -108,18 +110,19 @@
                     app:layout_constraintTop_toBottomOf="@id/speaker_tag_line"
                     />
 
-                <androidx.emoji.widget.EmojiTextView
-                    android:autoLink="web"
+                <androidx.emoji.widget.EmojiAppCompatTextView
                     android:id="@+id/speaker_description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="16dp"
+                    android:autoLink="web"
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:paddingBottom="2dp"
                     android:text="@{speaker.bio}"
                     android:textAlignment="viewStart"
+                    android:textAppearance="@style/TextAppearance.App.Body1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/speaker_name"
                     app:layout_constraintTop_toBottomOf="@id/divider1"
@@ -131,6 +134,8 @@
                     android:id="@+id/divider2"
                     android:layout_width="0dp"
                     android:layout_height="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="28dp"
                     android:contentDescription="@null"
                     android:layerType="software"
@@ -147,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/session_speaker_sessions"
-                    android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                    android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/speaker_name"
                     app:layout_constraintTop_toBottomOf="@id/divider2"
                     />

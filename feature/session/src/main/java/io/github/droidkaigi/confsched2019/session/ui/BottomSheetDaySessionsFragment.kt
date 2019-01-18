@@ -56,7 +56,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
 
     private val groupAdapter = GroupAdapter<ViewHolder<*>>()
     private val args: BottomSheetDaySessionsFragmentArgs by lazy {
-        BottomSheetDaySessionsFragmentArgs.fromBundle(arguments)
+        BottomSheetDaySessionsFragmentArgs.fromBundle(arguments ?: Bundle())
     }
 
     override fun onCreateView(
@@ -140,6 +140,11 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                 binding.isCollapsed = isCollapsed
             }
         }
+    }
+
+    override fun onDestroyView() {
+        binding.sessionsRecycler.adapter = null
+        super.onDestroyView()
     }
 
     companion object {

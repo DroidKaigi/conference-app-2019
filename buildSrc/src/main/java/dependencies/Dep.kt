@@ -12,6 +12,7 @@ object Dep {
         val jetifier = "com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta02"
         val licensesPlugin = "com.google.android.gms:oss-licenses-plugin:0.9.4"
         val crashlytics = "io.fabric.tools:gradle:1.26.1"
+        val iconRibbonPlugin = "com.akaita.android:easylauncher:1.3.1"
     }
 
     object Test {
@@ -56,7 +57,7 @@ object Dep {
         }
 
         object Navigation {
-            val version = "1.0.0-alpha08"
+            val version = "1.0.0-alpha09"
             val runtime = "android.arch.navigation:navigation-runtime:$version"
             val runtimeKtx = "android.arch.navigation:navigation-runtime-ktx:$version"
             val fragment = "android.arch.navigation:navigation-fragment:$version"
@@ -87,6 +88,7 @@ object Dep {
         val fireStore = "com.google.firebase:firebase-firestore:17.1.3"
         val auth = "com.google.firebase:firebase-auth:16.0.5"
         val crashlytics = "com.crashlytics.sdk.android:crashlytics:2.9.8"
+        val messaging = "com.google.firebase:firebase-messaging:17.3.3"
     }
 
     object PlayServices {
@@ -137,7 +139,7 @@ object Dep {
     }
 
     object Hyperion {
-        val version = "0.9.24"
+        val version = "0.9.25"
         val hyperionPlugins = listOf(
             "com.willowtreeapps.hyperion:hyperion-core:$version",
             "com.willowtreeapps.hyperion:hyperion-attr:$version",
@@ -185,5 +187,9 @@ object Dep {
         val common = "com.jakewharton.timber:timber-common:5.0.0-SNAPSHOT"
         val jdk = "com.jakewharton.timber:timber-jdk:5.0.0-SNAPSHOT"
         val android = "com.jakewharton.timber:timber-android:5.0.0-SNAPSHOT"
+    }
+
+    object PhotoView {
+        val photoview =  "com.github.chrisbanes:PhotoView:2.3.0"
     }
 }

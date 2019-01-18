@@ -47,6 +47,8 @@ import io.github.droidkaigi.confsched2019.session.ui.SpeakerFragment
 import io.github.droidkaigi.confsched2019.session.ui.SpeakerFragmentModule
 import io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragment
 import io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragmentModule
+import io.github.droidkaigi.confsched2019.survey.ui.SessionSurveyFragment
+import io.github.droidkaigi.confsched2019.survey.ui.SessionSurveyFragmentModule
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.ui.widget.StatusBarColorManager
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
@@ -98,7 +100,10 @@ class MainActivity : DaggerAppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(
             topLevelDestinationIds,
             binding.drawerLayout
-        )
+        ) {
+            onBackPressed()
+            true
+        }
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
@@ -218,6 +223,10 @@ abstract class MainActivityModule {
     @PageScope
     @ContributesAndroidInjector(modules = [SponsorFragmentModule::class])
     abstract fun contributeSponsorFragment(): SponsorFragment
+
+    @PageScope
+    @ContributesAndroidInjector(modules = [SessionSurveyFragmentModule::class])
+    abstract fun contributeSessionSurveyFragment(): SessionSurveyFragment
 
     @Module
     companion object {

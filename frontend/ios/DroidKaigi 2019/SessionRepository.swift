@@ -7,13 +7,21 @@
 
 import Foundation
 import ios_combined
+import RxSwift
+import RxCocoa
 
-class SessionRepository {
-    func fetchSessions(callback:@escaping (SessionContents) -> Void){
-        ApiComponentKt.generateDroidKaigiApi().getSessions(callback: { (response) -> KotlinUnit in
-            callback(ResponseToModelMapperKt.toModel(response))
-            return KotlinUnit()
-            }
-        )
+final class SessionRepository {
+    
+    func fetch() -> Single<SessionContents> {
+        return Single<SessionContents>.create { observer -> Disposable in
+            ApiComponentKt.generateDroidKaigiApi().getSessions(callback: { response in
+                observer(.success(ResponseToModelMapperKt.toModel(response)))
+                return KotlinUnit()
+            }, onError: { error in
+                observer(.error(NSError(domain: error.message ?? "No message", code: -1, userInfo: nil)))
+                return KotlinUnit()
+            })
+            return Disposables.create()
+        }
     }
 }

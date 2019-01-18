@@ -3,7 +3,7 @@ package io.github.droidkaigi.confsched2019.di
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.data.firestore.Firestore
-import io.github.droidkaigi.confsched2019.data.repository.FirestoreComponent
+import io.github.droidkaigi.confsched2019.data.firestore.FirestoreComponent
 import io.github.droidkaigi.confsched2019.ext.android.Dispatchers
 import javax.inject.Singleton
 

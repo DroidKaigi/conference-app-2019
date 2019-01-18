@@ -17,7 +17,7 @@ class AboutHeaderItem(
             activityActionCreator.openUrl("https://twitter.com/droidkaigi")
         }
         binding.aboutThisAppGithub.setOnClickListener {
-            activityActionCreator.openUrl("https://github.com/DroidKaigi/conference-app-2018")
+            activityActionCreator.openUrl("https://github.com/DroidKaigi/conference-app-2019")
         }
         binding.aboutThisAppYoutube.setOnClickListener {
             activityActionCreator.openUrl(

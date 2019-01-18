@@ -9,5 +9,4 @@
     <string name="about_privacy_policy">Privacy Policy</string>
     <string name="about_license">Open Source Licenses</string>
     <string name="about_app_version">Version</string>
-    <string name="about_version_name" translatable="false">1.0.0</string>
 </resources>

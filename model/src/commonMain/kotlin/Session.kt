@@ -3,7 +3,7 @@ package io.github.droidkaigi.confsched2019.model
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.DateTimeSpan
 import com.soywiz.klock.TimeSpan
-import com.soywiz.klock.TimezoneOffset
+import com.soywiz.klock.hours
 
 sealed class Session(
     open val id: String,
@@ -49,24 +49,27 @@ sealed class Session(
         override val isFavorited: Boolean
     ) : Session(id, dayNumber, startTime, endTime, room, isFavorited)
 
-    val startDayText by lazy { startTime.format("yyyy.M.d") }
+    val startDayText by lazy { startTime.toOffset(9.hours).format("yyyy.M.d") }
 
     fun timeSummary(lang: Lang, timezoneOffset: DateTimeSpan) = buildString {
+        val startTimeTZ = startTime.toOffset(timezoneOffset.timeSpan)
+        val endTimeTZ = endTime.toOffset(timezoneOffset.timeSpan)
+
         // ex: 2月2日 10:20-10:40
         if (lang == Lang.EN) {
-            append(startTime.format("M"))
+            append(startTimeTZ.format("M"))
             append(".")
-            append(startTime.format("d"))
+            append(startTimeTZ.format("d"))
         } else {
-            append(startTime.format("M"))
+            append(startTimeTZ.format("M"))
             append("月")
-            append(startTime.format("d"))
+            append(startTimeTZ.format("d"))
             append("日")
         }
         append(" ")
-        append(startTime.plus(timezoneOffset).format("HH:mm"))
+        append(startTimeTZ.format("HH:mm"))
         append(" - ")
-        append(endTime.plus(timezoneOffset).format("HH:mm"))
+        append(endTimeTZ.format("HH:mm"))
     }
 
     fun summary(lang: Lang, timezoneOffset: DateTimeSpan) = buildString {

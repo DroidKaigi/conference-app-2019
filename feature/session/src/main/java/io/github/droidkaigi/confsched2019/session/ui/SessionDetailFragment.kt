@@ -1,20 +1,27 @@
 package io.github.droidkaigi.confsched2019.session.ui
 
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.util.TypedValue
+import android.text.SpannableStringBuilder
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
-import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.view.get
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.text.buildSpannedString
+import androidx.core.text.color
+import androidx.core.text.inSpans
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.NavController
+import androidx.transition.TransitionManager
 import com.soywiz.klock.DateTimeSpan
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
@@ -31,8 +38,8 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionConten
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeakerItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
-import io.github.droidkaigi.confsched2019.session.ui.widget.SessionToolbarBehavior
 import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
+import io.github.droidkaigi.confsched2019.user.store.UserStore
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import javax.inject.Inject
 
@@ -41,13 +48,16 @@ class SessionDetailFragment : DaggerFragment() {
 
     @Inject lateinit var sessionContentsActionCreator: SessionContentsActionCreator
     @Inject lateinit var sessionContentsStore: SessionContentsStore
+    @Inject lateinit var userStore: UserStore
     @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
     @Inject lateinit var activityActionCreator: ActivityActionCreator
+    @Inject lateinit var navController: NavController
 
     private lateinit var progressTimeLatch: ProgressTimeLatch
 
     private lateinit var sessionDetailFragmentArgs: SessionDetailFragmentArgs
     private val groupAdapter = GroupAdapter<ViewHolder<*>>()
+    private var showEllipsis = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,7 +76,7 @@ class SessionDetailFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        sessionDetailFragmentArgs = SessionDetailFragmentArgs.fromBundle(arguments)
+        sessionDetailFragmentArgs = SessionDetailFragmentArgs.fromBundle(arguments ?: Bundle())
 
         binding.sessionSpeakers.adapter = groupAdapter
 
@@ -96,6 +106,12 @@ class SessionDetailFragment : DaggerFragment() {
             return@setOnMenuItemClickListener true
         }
 
+        userStore.registered.changed(viewLifecycleOwner) { registered ->
+            if (registered && sessionContentsStore.isInitialized) {
+                sessionContentsActionCreator.refresh()
+            }
+        }
+
         sessionContentsStore.speechSession(sessionDetailFragmentArgs.session)
             .changed(viewLifecycleOwner) { session ->
                 applySpeechSessionLayout(session)
@@ -115,7 +131,6 @@ class SessionDetailFragment : DaggerFragment() {
 
         binding.sessionFavorite.setOnClickListener {
             val session = binding.session ?: return@setOnClickListener
-            progressTimeLatch.loading = true
 
             // Immediate reflection on view to avoid time lag
             binding.sessionFavorite.setImageResource(
@@ -134,6 +149,15 @@ class SessionDetailFragment : DaggerFragment() {
 
             sessionContentsActionCreator.toggleFavorite(session)
         }
+
+        binding.sessionGoToSurvey.setOnClickListener {
+            val session = binding.session ?: return@setOnClickListener
+            navController.navigate(
+                SessionDetailFragmentDirections.actionSessionDetailToSessionSurvey(
+                    session.id
+                )
+            )
+        }
     }
 
     private fun applySpeechSessionLayout(session: Session.SpeechSession) {
@@ -141,14 +165,15 @@ class SessionDetailFragment : DaggerFragment() {
         binding.speechSession = session
         val lang = defaultLang()
         binding.lang = lang
+        setupSessionDescription()
         binding.timeZoneOffset = DateTimeSpan(hours = 9) // FIXME Get from device setting
 
         binding.sessionTitle.text = session.title.getByLang(lang)
 
-        @Suppress("StringFormatMatches") // FIXME
+        val timeInMinutes: Int = session.timeInMinutes
         binding.sessionTimeAndRoom.text = getString(
             R.string.session_duration_room_format,
-            session.timeInMinutes,
+            timeInMinutes,
             session.room.name
         )
         binding.sessionIntendedAudienceDescription.text = session.intendedAudience
@@ -197,6 +222,49 @@ class SessionDetailFragment : DaggerFragment() {
         }
     }
 
+    private fun setupSessionDescription() {
+        val textView = binding.sessionDescription
+        textView.doOnPreDraw {
+            if (textView.lineCount > 5 && showEllipsis) {
+                val end = textView.layout.getLineStart(5)
+                val ellipsis = getString(R.string.ellipsis_label)
+                val ellipsisColor = ContextCompat.getColor(requireContext(), R.color.colorSecondary)
+                val onClickListener = {
+                    TransitionManager.beginDelayedTransition(binding.sessionLayout)
+                    val session = binding.speechSession?.desc
+                    binding.sessionDescription.text = session
+                    showEllipsis = !showEllipsis
+                }
+                val detailText = textView.text.subSequence(0, end - ellipsis.length)
+                val text = buildSpannedString {
+                    clickableSpan(onClickListener, {
+                        append(detailText)
+                        color(ellipsisColor) {
+                            append(ellipsis)
+                        }
+                    })
+                }
+                binding.sessionDescription.setText(text, TextView.BufferType.SPANNABLE)
+                binding.sessionDescription.movementMethod = LinkMovementMethod.getInstance()
+            }
+        }
+    }
+
+    private fun SpannableStringBuilder.clickableSpan(
+        clickListener: () -> Unit,
+        builderAction: SpannableStringBuilder.() -> Unit
+    ) {
+        inSpans(object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                clickListener()
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                // nothing
+            }
+        }, builderAction)
+    }
+
     private fun applyServiceSessionLayout(session: Session.ServiceSession) {
         binding.session = session
         binding.serviceSession = session
@@ -207,10 +275,10 @@ class SessionDetailFragment : DaggerFragment() {
 
         binding.sessionTitle.text = session.title.getByLang(lang)
 
-        @Suppress("StringFormatMatches") // FIXME
+        val timeInMinutes: Int = session.timeInMinutes
         binding.sessionTimeAndRoom.text = getString(
             R.string.session_duration_room_format,
-            session.timeInMinutes,
+            timeInMinutes,
             session.room.name
         )
 

@@ -1,9 +1,7 @@
-package io.github.droidkaigi.confsched2019.data.repository
+package io.github.droidkaigi.confsched2019.data.firestore
 
 import dagger.BindsInstance
 import dagger.Component
-import io.github.droidkaigi.confsched2019.data.firestore.Firestore
-import io.github.droidkaigi.confsched2019.data.firestore.FirestoreModule
 import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
 

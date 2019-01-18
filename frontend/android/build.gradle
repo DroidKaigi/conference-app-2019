@@ -7,6 +7,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 apply plugin: 'io.fabric'
+apply plugin: 'com.akaita.android.easylauncher'
 
 android {
     compileSdkVersion Versions.androidCompileSdkVersion
@@ -22,13 +23,14 @@ android {
         applicationId "io.github.droidkaigi.confsched2019"
         minSdkVersion Versions.androidMinSdkVersion
         targetSdkVersion 28
-        versionCode 2
-        versionName "1.0"
+        versionCode Versions.androidVersionCode
+        versionName Versions.androidVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         resConfigs "ja"
         // For Android Studio Gradle sync
         applicationIdSuffix ".debug"
+        manifestPlaceholders = [isCi: String.valueOf(isCi)]
     }
     buildTypes {
         release {
@@ -67,9 +69,11 @@ dependencies {
     implementation project(":feature:floormap")
     implementation project(":feature:sponsor")
     implementation project(":feature:settings")
-    implementation project(':frontendcomponent:androidcomponent')
     implementation project(':feature:user')
+    implementation project(':feature:survey')
     implementation project(':feature:system')
+    implementation project(':feature:notification')
+    implementation project(':frontendcomponent:androidcomponent')
     implementation project(':data:db-room')
     implementation project(':data:repository-impl')
     implementation project(':data:firestore-impl')
