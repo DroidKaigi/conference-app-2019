@@ -122,8 +122,12 @@ class SearchFragment : DaggerFragment() {
                         val item = groupAdapter.getItem(position)
                         when (item) {
                             is SpeakerItem -> item.speaker.name[0].toUpperCase().toLong()
-                            is SpeechSessionItem -> item.speechSession.title.getByLang(defaultLang())[0].toUpperCase().toLong()
-                            is ServiceSessionItem -> item.serviceSession.title.getByLang(defaultLang())[0].toUpperCase().toLong()
+                            is SpeechSessionItem ->
+                                item.speechSession.title.getByLang(defaultLang())[0]
+                                    .toUpperCase().toLong()
+                            is ServiceSessionItem ->
+                                item.serviceSession.title.getByLang(defaultLang())[0]
+                                    .toUpperCase().toLong()
                             else -> StickyHeaderItemDecoration.EMPTY_ID
                         }
                     },
@@ -131,8 +135,12 @@ class SearchFragment : DaggerFragment() {
                         val item = groupAdapter.getItem(position)
                         when (item) {
                             is SpeakerItem -> item.speaker.name[0].toUpperCase().toString()
-                            is SpeechSessionItem -> item.speechSession.title.getByLang(defaultLang())[0].toUpperCase().toString()
-                            is ServiceSessionItem -> item.serviceSession.title.getByLang(defaultLang())[0].toUpperCase().toString()
+                            is SpeechSessionItem ->
+                                item.speechSession.title.getByLang(defaultLang())[0]
+                                    .toUpperCase().toString()
+                            is ServiceSessionItem ->
+                                item.serviceSession.title.getByLang(defaultLang())[0]
+                                    .toUpperCase().toString()
                             else -> StickyHeaderItemDecoration.DEFAULT_INITIAL
                         }
                     })
