@@ -43,6 +43,7 @@ allprojects {
         maven { url "https://dl.bintray.com/kotlin/ktor" }
         maven { url "https://dl.bintray.com/soywiz/soywiz" }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+        maven { url "https://jitpack.io" }
     }
     tasks.matching { it instanceof Test }.all {
         testLogging {
