@@ -43,7 +43,6 @@ class DispatcherTest {
         val sessionContents: SessionContents = mockk()
         val dispatcher = Dispatcher()
 
-
         runBlocking {
             val allSessionLoaded1 = async {
                 dispatcher.subscribe<Action.SessionContentsLoaded>().receive()
@@ -64,7 +63,6 @@ class DispatcherTest {
         val sessionContents1: SessionContents = mockk()
         val sessionContents2: SessionContents = mockk()
         val dispatcher = Dispatcher()
-
 
         runBlocking {
             val allSessionLoaded1 = async {
@@ -87,7 +85,6 @@ class DispatcherTest {
         val sessionContents1: SessionContents = mockk()
         val sessionContents2: SessionContents = mockk()
         val dispatcher = Dispatcher()
-
 
         runBlocking {
             val allSessionLoaded1 = async {

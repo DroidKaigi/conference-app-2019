@@ -1,14 +1,25 @@
 package io.github.droidkaigi.confsched2019.session.ui
 
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.text.buildSpannedString
+import androidx.core.text.color
+import androidx.core.text.inSpans
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.NavController
 import com.soywiz.klock.DateTimeSpan
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
@@ -38,11 +49,13 @@ class SessionDetailFragment : DaggerFragment() {
     @Inject lateinit var userStore: UserStore
     @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
     @Inject lateinit var activityActionCreator: ActivityActionCreator
+    @Inject lateinit var navController: NavController
 
     private lateinit var progressTimeLatch: ProgressTimeLatch
 
     private lateinit var sessionDetailFragmentArgs: SessionDetailFragmentArgs
     private val groupAdapter = GroupAdapter<ViewHolder<*>>()
+    private var showEllipsis = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -131,6 +144,15 @@ class SessionDetailFragment : DaggerFragment() {
 
             sessionContentsActionCreator.toggleFavorite(session)
         }
+
+        binding.sessionGoToSurvey.setOnClickListener {
+            val session = binding.session ?: return@setOnClickListener
+            navController.navigate(
+                SessionDetailFragmentDirections.actionSessionDetailToSessionSurvey(
+                    session.id
+                )
+            )
+        }
     }
 
     private fun applySpeechSessionLayout(session: Session.SpeechSession) {
@@ -138,6 +160,7 @@ class SessionDetailFragment : DaggerFragment() {
         binding.speechSession = session
         val lang = defaultLang()
         binding.lang = lang
+        setupSessionDescription()
         binding.timeZoneOffset = DateTimeSpan(hours = 9) // FIXME Get from device setting
 
         binding.sessionTitle.text = session.title.getByLang(lang)
@@ -178,6 +201,48 @@ class SessionDetailFragment : DaggerFragment() {
                 activityActionCreator.openUrl(urlString)
             }
         }
+    }
+
+    private fun setupSessionDescription() {
+        val textView = binding.sessionDescription
+        textView.doOnPreDraw {
+            if (textView.lineCount > 5 && showEllipsis) {
+                val end = textView.layout.getLineStart(5)
+                val ellipsis = getString(R.string.ellipsis_label)
+                val ellipsisColor = ContextCompat.getColor(requireContext(), R.color.colorSecondary)
+                val onClickListener = {
+                    val session = binding.speechSession?.desc
+                    binding.sessionDescription.text = session
+                    showEllipsis = !showEllipsis
+                }
+                val detailText = textView.text.subSequence(0, end - ellipsis.length)
+                val text = buildSpannedString {
+                    clickableSpan(onClickListener, {
+                        append(detailText)
+                        color(ellipsisColor) {
+                            append(ellipsis)
+                        }
+                    })
+                }
+                binding.sessionDescription.setText(text, TextView.BufferType.SPANNABLE)
+                binding.sessionDescription.movementMethod = LinkMovementMethod.getInstance()
+            }
+        }
+    }
+
+    private fun SpannableStringBuilder.clickableSpan(
+        clickListener: () -> Unit,
+        builderAction: SpannableStringBuilder.() -> Unit
+    ) {
+        inSpans(object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                clickListener()
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                // nothing
+            }
+        }, builderAction)
     }
 
     private fun applyServiceSessionLayout(session: Session.ServiceSession) {
