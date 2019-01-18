@@ -29,6 +29,7 @@ import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.ext.android.requireValue
 import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSearchBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SearchActionCreator
@@ -121,7 +122,8 @@ class SearchFragment : DaggerFragment() {
                         val item = groupAdapter.getItem(position)
                         when (item) {
                             is SpeakerItem -> item.speaker.name[0].toUpperCase().toLong()
-                            // FIXME add sessionsItem logic
+                            is SpeechSessionItem -> item.speechSession.title.getByLang(defaultLang())[0].toUpperCase().toLong()
+                            is ServiceSessionItem -> item.serviceSession.title.getByLang(defaultLang())[0].toUpperCase().toLong()
                             else -> StickyHeaderItemDecoration.EMPTY_ID
                         }
                     },
@@ -129,7 +131,8 @@ class SearchFragment : DaggerFragment() {
                         val item = groupAdapter.getItem(position)
                         when (item) {
                             is SpeakerItem -> item.speaker.name[0].toUpperCase().toString()
-                            // FIXME add serssionsItem logic
+                            is SpeechSessionItem -> item.speechSession.title.getByLang(defaultLang())[0].toUpperCase().toString()
+                            is ServiceSessionItem -> item.serviceSession.title.getByLang(defaultLang())[0].toUpperCase().toString()
                             else -> StickyHeaderItemDecoration.DEFAULT_INITIAL
                         }
                     })
