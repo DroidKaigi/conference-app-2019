@@ -32,4 +32,5 @@
     <string name="session_for_beginners">For Beginners</string>
     <string name="session_bottom_appbar_behavior" translatable="false">io.github.droidkaigi.confsched2019.session.ui.widget.SessionBottomAppBarBehavior</string>
     <string name="session_favorite_empty">Add sessions to your plan\nby tapping the bookmark button.</string>
+    <string name="session_favorite_connection_error">Could not register as a favorite.</string>
 </resources>

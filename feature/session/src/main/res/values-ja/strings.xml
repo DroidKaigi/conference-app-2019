@@ -16,4 +16,5 @@
     <string name="session_simultaneous_interpretation">同時通訳</string>
     <string name="session_for_beginners">初心者向け</string>
     <string name="session_favorite_empty">お気に入りのセッションを登録すると\nあなた専用のプランを作ることが\nできます。</string>
+    <string name="session_favorite_connection_error">お気に入りに失敗しました。</string>
 </resources>

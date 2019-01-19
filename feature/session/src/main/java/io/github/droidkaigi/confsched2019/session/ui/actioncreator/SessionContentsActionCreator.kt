@@ -6,8 +6,10 @@ import io.github.droidkaigi.confsched2019.data.repository.SessionRepository
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
+import io.github.droidkaigi.confsched2019.model.ErrorMessage
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.system.actioncreator.ErrorHandler
 import io.github.droidkaigi.confsched2019.util.SessionAlarm
 import kotlinx.coroutines.CoroutineScope
@@ -71,7 +73,9 @@ class SessionContentsActionCreator @Inject constructor(
                 val sessionContents = sessionRepository.sessionContents()
                 dispatcher.dispatch(Action.SessionContentsLoaded(sessionContents))
             } catch (e: Exception) {
-                onError(e)
+                dispatcher.dispatch(
+                    Action.Error(ErrorMessage.Companion.of(R.string.session_favorite_connection_error, e))
+                )
             }
         }
     }
