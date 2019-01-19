@@ -22,6 +22,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
+import com.xwray.groupie.Section
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
@@ -46,16 +47,22 @@ import javax.inject.Provider
 class SearchFragment : DaggerFragment() {
     private lateinit var binding: FragmentSearchBinding
 
-    @Inject lateinit var searchActionCreator: SearchActionCreator
-    @Inject lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
-    @Inject lateinit var serviceSessionItemFactory: ServiceSessionItem.Factory
-    @Inject lateinit var sessionContentsStore: SessionContentsStore
+    @Inject
+    lateinit var searchActionCreator: SearchActionCreator
+    @Inject
+    lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
+    @Inject
+    lateinit var serviceSessionItemFactory: ServiceSessionItem.Factory
+    @Inject
+    lateinit var sessionContentsStore: SessionContentsStore
     private var searchView: SearchView? = null
-    @Inject lateinit var searchStoreProvider: Provider<SearchStore>
+    @Inject
+    lateinit var searchStoreProvider: Provider<SearchStore>
     private val searchStore: SearchStore by lazy {
         InjectedViewModelProviders.of(requireActivity()).get(searchStoreProvider)
     }
-    @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
+    @Inject
+    lateinit var speakerItemFactory: SpeakerItem.Factory
 
     private val groupAdapter = GroupAdapter<ViewHolder<*>>()
 
@@ -85,16 +92,20 @@ class SearchFragment : DaggerFragment() {
         }
         // TODO apply design
         searchStore.searchResult.changed(viewLifecycleOwner) { result ->
-            val items = mutableListOf<Item<*>>()
-            items += result.speakers.map {
-                speakerItemFactory.create(
-                    it,
-                    SearchFragmentDirections.actionSearchToSpeaker(it.id)
-                )
-            }.sortedBy { it.speaker.name.toUpperCase() }
+            val items = mutableListOf<Section>()
+            items += Section().apply {
+                val speakers = result.speakers.map {
+                    speakerItemFactory.create(
+                        it,
+                        SearchFragmentDirections.actionSearchToSpeaker(it.id)
+                    )
+                }.sortedBy { it.speaker.name.toUpperCase() }
+                addAll(speakers)
+                // Add footer
+            }
 
-            items += result.sessions
-                .map<Session, Item<*>> { session ->
+            items += Section().apply {
+                val sessions = result.sessions.map<Session, Item<*>> { session ->
                     when (session) {
                         is Session.SpeechSession ->
                             speechSessionItemFactory.create(
@@ -114,6 +125,8 @@ class SearchFragment : DaggerFragment() {
                             )
                     }
                 }
+                addAll(sessions)
+            }
             groupAdapter.update(items)
         }
         context?.let {
@@ -281,13 +294,16 @@ abstract class SearchFragmentModule {
 
     @Module
     companion object {
-        @JvmStatic @Provides
+        @JvmStatic
+        @Provides
         @PageScope
         fun providesLifecycle(searchFragment: SearchFragment): Lifecycle {
             return searchFragment.viewLifecycleOwner.lifecycle
         }
 
-        @JvmStatic @Provides fun provideActivity(
+        @JvmStatic
+        @Provides
+        fun provideActivity(
             searchFragment: SearchFragment
         ): FragmentActivity {
             return searchFragment.requireActivity()
