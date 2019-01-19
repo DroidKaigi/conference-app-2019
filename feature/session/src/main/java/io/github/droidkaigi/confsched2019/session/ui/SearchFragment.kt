@@ -22,12 +22,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
+import com.xwray.groupie.Section
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.ext.android.requireValue
+import io.github.droidkaigi.confsched2019.item.DividerItem
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
@@ -85,16 +87,20 @@ class SearchFragment : DaggerFragment() {
         }
         // TODO apply design
         searchStore.searchResult.changed(viewLifecycleOwner) { result ->
-            val items = mutableListOf<Item<*>>()
-            items += result.speakers.map {
-                speakerItemFactory.create(
-                    it,
-                    SearchFragmentDirections.actionSearchToSpeaker(it.id)
-                )
-            }.sortedBy { it.speaker.name.toUpperCase() }
+            val items = mutableListOf<Section>()
+            items += Section().apply {
+                val speakers = result.speakers.map {
+                    speakerItemFactory.create(
+                        it,
+                        SearchFragmentDirections.actionSearchToSpeaker(it.id)
+                    )
+                }.sortedBy { it.speaker.name.toUpperCase() }
+                addAll(speakers)
+                setFooter(DividerItem())
+            }
 
-            items += result.sessions
-                .map<Session, Item<*>> { session ->
+            items += Section().apply {
+                val sessions = result.sessions.map<Session, Item<*>> { session ->
                     when (session) {
                         is Session.SpeechSession ->
                             speechSessionItemFactory.create(
@@ -124,6 +130,8 @@ class SearchFragment : DaggerFragment() {
                         else -> StickyHeaderItemDecoration.DEFAULT_TITLE
                     }
                 }
+                addAll(sessions)
+            }
             groupAdapter.update(items)
         }
         context?.let {
@@ -139,6 +147,7 @@ class SearchFragment : DaggerFragment() {
                             is ServiceSessionItem ->
                                 item.serviceSession.title.getByLang(defaultLang())[0]
                                     .toUpperCase().toLong()
+                            is DividerItem -> StickyHeaderItemDecoration.EMPTY_ID
                             else -> StickyHeaderItemDecoration.EMPTY_ID
                         }
                     },
@@ -230,6 +239,9 @@ class StickyHeaderItemDecoration(
         state: RecyclerView.State
     ) {
         super.getItemOffsets(outRect, view, parent, state)
+        val position = parent.getChildAdapterPosition(view)
+        if (position < 0) return
+        if (getGroupId(position) == EMPTY_ID) return
         if (view.layoutDirection == View.LAYOUT_DIRECTION_RTL) {
             outRect.right = contentMargin
         } else {
