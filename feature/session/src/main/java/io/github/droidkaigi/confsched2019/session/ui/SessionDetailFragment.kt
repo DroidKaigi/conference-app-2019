@@ -57,6 +57,9 @@ class SessionDetailFragment : DaggerFragment() {
     private lateinit var sessionDetailFragmentArgs: SessionDetailFragmentArgs
     private var showEllipsis = true
 
+    private val groupAdapter
+        get() = binding.sessionSpeakers.adapter as GroupAdapter<*>
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -109,7 +112,7 @@ class SessionDetailFragment : DaggerFragment() {
 
         sessionContentsStore.speechSession(sessionDetailFragmentArgs.session)
             .changed(viewLifecycleOwner) { session ->
-                applySpeechSessionLayout(session, groupAdapter)
+                applySpeechSessionLayout(session)
             }
 
         sessionContentsStore.serviceSession(sessionDetailFragmentArgs.session)
@@ -155,10 +158,7 @@ class SessionDetailFragment : DaggerFragment() {
         }
     }
 
-    private fun applySpeechSessionLayout(
-        session: Session.SpeechSession,
-        groupAdapter: GroupAdapter<*>
-    ) {
+    private fun applySpeechSessionLayout(session: Session.SpeechSession) {
         binding.session = session
         binding.speechSession = session
         val lang = defaultLang()
