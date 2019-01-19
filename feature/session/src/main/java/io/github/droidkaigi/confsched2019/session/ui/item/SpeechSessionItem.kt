@@ -31,7 +31,7 @@ import kotlin.math.max
 class SpeechSessionItem @AssistedInject constructor(
     @Assisted override val session: Session.SpeechSession,
     @Assisted val navDirections: NavDirections,
-    @Assisted val addPaddingForTime: Boolean,
+    @Assisted val hasStartPadding: Boolean,
     val navController: NavController,
     val sessionContentsActionCreator: SessionContentsActionCreator
 ) : BindableItem<ItemSessionBinding>(
@@ -44,7 +44,7 @@ class SpeechSessionItem @AssistedInject constructor(
         fun create(
             session: Session.SpeechSession,
             navDirections: NavDirections,
-            addPaddingForTime: Boolean
+            hasStartPadding: Boolean
         ): SpeechSessionItem
     }
 
@@ -59,7 +59,7 @@ class SpeechSessionItem @AssistedInject constructor(
             }
             session = speechSession
             lang = defaultLang()
-            addPaddingForTime = this@SpeechSessionItem.addPaddingForTime
+            hasStartPadding = this@SpeechSessionItem.hasStartPadding
             favorite.setOnClickListener {
                 sessionContentsActionCreator.toggleFavorite(speechSession)
             }
