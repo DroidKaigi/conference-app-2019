@@ -119,7 +119,11 @@ class FilterChip @JvmOverloads constructor(
             }
         }
 
-    private val padding: Int
+    private val horizontalPadding: Int
+
+    private val verticalPadding: Int
+
+    private val dotPadding: Int
 
     private val outlinePaint: Paint
 
@@ -128,6 +132,8 @@ class FilterChip @JvmOverloads constructor(
     private val dotPaint: Paint
 
     private var clear: Drawable
+
+    private val dotSize: Float
 
     private val touchFeedback: Drawable
 
@@ -166,18 +172,23 @@ class FilterChip @JvmOverloads constructor(
         touchFeedback = a.getDrawableOrThrow(R.styleable.FilterChip_foreground).apply {
             callback = this@FilterChip
         }
-        padding = a.getDimensionPixelSizeOrThrow(R.styleable.FilterChip_android_padding)
+        horizontalPadding = a.getDimensionPixelSizeOrThrow(R.styleable.FilterChip_horizontalPadding)
+        verticalPadding = a.getDimensionPixelSizeOrThrow(R.styleable.FilterChip_verticalPadding)
+        dotPadding = a.getDimensionPixelSizeOrThrow(R.styleable.FilterChip_dotPadding)
         isChecked = a.getBoolean(R.styleable.FilterChip_android_checked, false)
         showIcons = a.getBoolean(R.styleable.FilterChip_showIcons, true)
+        dotSize = a.getDimensionOrThrow(R.styleable.FilterChip_dotSize)
         a.recycle()
         clipToOutline = true
         setOnClickListener { toggleWithAnimation() }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val nonTextWidth = (4 * padding) +
+        val nonTextWidth = 2 * (horizontalPadding + dotPadding) +
             (2 * outlinePaint.strokeWidth).toInt() +
-            if (showIcons) clear.intrinsicWidth else 0
+            if (showIcons) maxOf(clear.intrinsicWidth, dotSize.toInt()) else 0
+        val nonTextHeight = (2 * verticalPadding) +
+            (2 * outlinePaint.strokeWidth).toInt()
         val availableTextWidth = when (MeasureSpec.getMode(widthMeasureSpec)) {
             MeasureSpec.EXACTLY -> MeasureSpec.getSize(widthMeasureSpec) - nonTextWidth
             MeasureSpec.AT_MOST -> MeasureSpec.getSize(widthMeasureSpec) - nonTextWidth
@@ -186,7 +197,7 @@ class FilterChip @JvmOverloads constructor(
         }
         createLayout(availableTextWidth)
         val w = nonTextWidth + textLayout.textWidth()
-        val h = padding + textLayout.height + padding
+        val h = nonTextHeight + textLayout.height
         setMeasuredDimension(w, h)
         outlineProvider = object : ViewOutlineProvider() {
             override fun getOutline(view: View, outline: Outline) {
@@ -198,7 +209,6 @@ class FilterChip @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         val strokeWidth = outlinePaint.strokeWidth
-        val iconRadius = clear.intrinsicWidth / 2f
         val halfStroke = strokeWidth / 2f
         val rounding = (height - strokeWidth) / 2f
 
@@ -217,13 +227,19 @@ class FilterChip @JvmOverloads constructor(
 
         // Tag color dot/background
         if (showIcons) {
+            val defaultDotRadius = dotSize / 2f
             // Draws beyond bounds and relies on clipToOutline to enforce pill shape
             val dotRadius = lerp(
-                strokeWidth + iconRadius,
+                defaultDotRadius,
                 width.toFloat(),
                 progress
             )
-            canvas.drawCircle(strokeWidth + padding + iconRadius, height / 2f, dotRadius, dotPaint)
+            canvas.drawCircle(
+                strokeWidth + horizontalPadding + defaultDotRadius,
+                height / 2f,
+                dotRadius,
+                dotPaint
+            )
         } else {
             canvas.drawRoundRect(
                 halfStroke,
@@ -239,12 +255,12 @@ class FilterChip @JvmOverloads constructor(
         // Text
         val textX = if (showIcons) {
             lerp(
-                strokeWidth + padding + clear.intrinsicWidth + padding,
-                strokeWidth + padding * 2f,
+                strokeWidth + horizontalPadding + dotSize + dotPadding,
+                strokeWidth + horizontalPadding + dotPadding,
                 progress
             )
         } else {
-            strokeWidth + padding * 2f
+            strokeWidth + horizontalPadding + dotPadding
         }
         val selectedColor = selectedTextColor
         textPaint.color = if (selectedColor != null && selectedColor != 0 && progress > 0) {
@@ -262,7 +278,7 @@ class FilterChip @JvmOverloads constructor(
         // Clear icon
         if (showIcons && progress > 0f) {
             canvas.withTranslation(
-                x = width - strokeWidth - padding - iconRadius,
+                x = width - strokeWidth - horizontalPadding - clear.intrinsicWidth / 2,
                 y = height / 2f
             ) {
                 canvas.withScale(progress, progress) {
