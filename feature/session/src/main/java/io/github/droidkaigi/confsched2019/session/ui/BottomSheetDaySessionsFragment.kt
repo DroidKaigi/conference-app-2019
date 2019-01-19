@@ -108,7 +108,8 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                                 session,
                                 SessionPagesFragmentDirections.actionSessionToSessionDetail(
                                     session.id
-                                )
+                                ),
+                                true
                             )
                     }
                 }

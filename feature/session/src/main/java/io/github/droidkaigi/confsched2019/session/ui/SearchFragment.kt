@@ -109,7 +109,8 @@ class SearchFragment : DaggerFragment() {
                                 session,
                                 SearchFragmentDirections.actionSearchToSessionDetail(
                                     session.id
-                                )
+                                ),
+                                false
                             )
                     }
                 }

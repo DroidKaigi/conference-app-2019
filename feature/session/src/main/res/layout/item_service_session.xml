@@ -20,6 +20,11 @@
             name="lang"
             type="io.github.droidkaigi.confsched2019.model.Lang"
             />
+
+        <variable
+            name="addPaddingForTime"
+            type="boolean"
+            />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +34,7 @@
         android:paddingTop="@dimen/session_item_top_padding"
         android:paddingBottom="@dimen/session_item_bottom_padding"
         android:paddingEnd="0dp"
-        android:paddingStart="@dimen/session_bottom_sheet_left_time_space"
+        android:paddingStart="@{addPaddingForTime ? @dimen/session_bottom_sheet_left_time_space : 0}"
         >
 
         <TextView
