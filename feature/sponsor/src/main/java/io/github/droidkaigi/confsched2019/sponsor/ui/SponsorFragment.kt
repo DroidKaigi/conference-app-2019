@@ -85,9 +85,7 @@ class SponsorFragment : DaggerFragment() {
         sponsorStore.loadingState.changed(viewLifecycleOwner) {
             progressTimeLatch.loading = it == LoadingState.LOADING
         }
-        sponsorStore.sponsors.changed(viewLifecycleOwner) {
-            setupSponsorsLayout(it)
-        }
+        sponsorStore.sponsors.changed(viewLifecycleOwner, this::setupSponsorsLayout)
 
         sponsorActionCreator.load()
     }
