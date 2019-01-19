@@ -44,7 +44,7 @@
             android:id="@+id/non_empty_state_view_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="sessions_list_header, sessions_recycler"
+            app:constraint_referenced_ids="sessions_list_header, sessions_recycler_wrapper"
             app:visibleGone="@{!safeUnbox(shouldShowEmptyStateView)}"
             />
 
@@ -119,6 +119,7 @@
             />
 
         <FrameLayout
+            android:id="@+id/sessions_recycler_wrapper"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
