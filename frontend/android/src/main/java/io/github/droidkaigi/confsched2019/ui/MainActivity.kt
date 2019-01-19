@@ -55,8 +55,6 @@ import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.ui.widget.StatusBarColorManager
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
 import io.github.droidkaigi.confsched2019.user.store.UserStore
-import timber.log.Timber
-import timber.log.debug
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
