@@ -47,6 +47,9 @@ class SponsorFragment : DaggerFragment() {
 
     private lateinit var progressTimeLatch: ProgressTimeLatch
 
+    private val groupAdapter
+        get() = binding.sponsorRecycler.adapter as GroupAdapter<*>
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -83,16 +86,13 @@ class SponsorFragment : DaggerFragment() {
             progressTimeLatch.loading = it == LoadingState.LOADING
         }
         sponsorStore.sponsors.changed(viewLifecycleOwner) {
-            setupSponsorsLayout(it, groupAdapter)
+            setupSponsorsLayout(it)
         }
 
         sponsorActionCreator.load()
     }
 
-    private fun setupSponsorsLayout(
-        sponsorCategories: List<SponsorCategory>,
-        groupAdapter: GroupAdapter<*>
-    ) {
+    private fun setupSponsorsLayout(sponsorCategories: List<SponsorCategory>) {
         val sponsors = sponsorCategories.map { category ->
             category.toSection(sponsorCategories.last() == category)
         }
