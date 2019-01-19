@@ -74,7 +74,9 @@ class SessionContentsActionCreator @Inject constructor(
                 dispatcher.dispatch(Action.SessionContentsLoaded(sessionContents))
             } catch (e: Exception) {
                 dispatcher.dispatch(
-                    Action.Error(ErrorMessage.Companion.of(R.string.session_favorite_connection_error, e))
+                    Action.Error(ErrorMessage.Companion.of(
+                        R.string.session_favorite_connection_error, e)
+                    )
                 )
             }
         }
