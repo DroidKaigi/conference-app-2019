@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.children
+import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -54,6 +55,8 @@ import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.ui.widget.StatusBarColorManager
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
 import io.github.droidkaigi.confsched2019.user.store.UserStore
+import timber.log.Timber
+import timber.log.debug
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
@@ -176,6 +179,10 @@ class MainActivity : DaggerAppCompatActivity() {
 
             return@setNavigationItemSelectedListener handled
         }
+        binding.navView.doOnLayout {
+            // when rotate occur, check drawer menu only displayed page
+            checkCurrentDestinationIdInDrawer(navController.currentDestination?.id ?: R.id.main)
+        }
     }
 
     private fun checkCurrentDestinationIdInDrawer(id: Int) {
@@ -185,7 +192,7 @@ class MainActivity : DaggerAppCompatActivity() {
             it.isChecked = match
             contain = contain or match
         }
-        // if id dose not exist in menu items, check main instead
+        // if id dose not exist in menu items, check main instead (e.g. session detail is displayed)
         if (!contain) {
             binding.navView.menu.findItem(R.id.main).isChecked = true
         }
