@@ -2,14 +2,14 @@ package io.github.droidkaigi.confsched2019.floormap.ui
 
 import android.content.Context
 import android.util.AttributeSet
-import androidx.viewpager.widget.ViewPager
 import android.view.MotionEvent
+import androidx.viewpager.widget.ViewPager
 
 /**
  * work around for PhotoView in ViewPager
  * [https://github.com/chrisbanes/PhotoView#issues-with-viewgroups]
  */
-class FixedViewPager: ViewPager {
+class FixedViewPager : ViewPager {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
