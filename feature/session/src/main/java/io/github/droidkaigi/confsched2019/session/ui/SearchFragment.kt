@@ -34,6 +34,7 @@ import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSearchBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SearchActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.item.DividerItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SearchStore
 import io.github.droidkaigi.confsched2019.session.ui.item.ServiceSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeakerItem
@@ -101,7 +102,7 @@ class SearchFragment : DaggerFragment() {
                     )
                 }.sortedBy { it.speaker.name.toUpperCase() }
                 addAll(speakers)
-                // Add footer
+                setFooter(DividerItem())
             }
 
             items += Section().apply {
@@ -142,6 +143,7 @@ class SearchFragment : DaggerFragment() {
                             is ServiceSessionItem ->
                                 item.serviceSession.title.getByLang(defaultLang())[0]
                                     .toUpperCase().toLong()
+                            is DividerItem -> StickyHeaderItemDecoration.EMPTY_ID
                             else -> StickyHeaderItemDecoration.EMPTY_ID
                         }
                     },
@@ -233,6 +235,9 @@ class StickyHeaderItemDecoration(
         state: RecyclerView.State
     ) {
         super.getItemOffsets(outRect, view, parent, state)
+        val position = parent.getChildAdapterPosition(view)
+        if (position < 0) return
+        if (getGroupId(position) == EMPTY_ID) return
         if (view.layoutDirection == View.LAYOUT_DIRECTION_RTL) {
             outRect.right = contentMargin
         } else {
