@@ -48,22 +48,16 @@ import javax.inject.Provider
 class SearchFragment : DaggerFragment() {
     private lateinit var binding: FragmentSearchBinding
 
-    @Inject
-    lateinit var searchActionCreator: SearchActionCreator
-    @Inject
-    lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
-    @Inject
-    lateinit var serviceSessionItemFactory: ServiceSessionItem.Factory
-    @Inject
-    lateinit var sessionContentsStore: SessionContentsStore
+    @Inject lateinit var searchActionCreator: SearchActionCreator
+    @Inject lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
+    @Inject lateinit var serviceSessionItemFactory: ServiceSessionItem.Factory
+    @Inject lateinit var sessionContentsStore: SessionContentsStore
     private var searchView: SearchView? = null
-    @Inject
-    lateinit var searchStoreProvider: Provider<SearchStore>
+    @Inject lateinit var searchStoreProvider: Provider<SearchStore>
     private val searchStore: SearchStore by lazy {
         InjectedViewModelProviders.of(requireActivity()).get(searchStoreProvider)
     }
-    @Inject
-    lateinit var speakerItemFactory: SpeakerItem.Factory
+    @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
 
     private val groupAdapter = GroupAdapter<ViewHolder<*>>()
 
@@ -299,16 +293,13 @@ abstract class SearchFragmentModule {
 
     @Module
     companion object {
-        @JvmStatic
-        @Provides
+        @JvmStatic @Provides
         @PageScope
         fun providesLifecycle(searchFragment: SearchFragment): Lifecycle {
             return searchFragment.viewLifecycleOwner.lifecycle
         }
 
-        @JvmStatic
-        @Provides
-        fun provideActivity(
+        @JvmStatic @Provides fun provideActivity(
             searchFragment: SearchFragment
         ): FragmentActivity {
             return searchFragment.requireActivity()
