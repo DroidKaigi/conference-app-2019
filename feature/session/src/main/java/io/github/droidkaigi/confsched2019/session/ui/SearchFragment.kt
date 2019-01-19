@@ -112,6 +112,16 @@ class SearchFragment : DaggerFragment() {
                                 )
                             )
                     }
+                }.sortedBy { item ->
+                    when (item) {
+                        is SpeechSessionItem ->
+                            item.speechSession.title.getByLang(defaultLang())
+                                .toUpperCase()
+                        is ServiceSessionItem ->
+                            item.serviceSession.title.getByLang(defaultLang())
+                                .toUpperCase()
+                        else -> StickyHeaderItemDecoration.DEFAULT_TITLE
+                    }
                 }
             groupAdapter.update(items)
         }
@@ -272,6 +282,7 @@ class StickyHeaderItemDecoration(
     companion object {
         const val EMPTY_ID: Long = -1
         const val DEFAULT_INITIAL = "*"
+        const val DEFAULT_TITLE = "******"
     }
 }
 
