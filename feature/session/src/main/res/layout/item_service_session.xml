@@ -9,8 +9,6 @@
 
         <import type="io.github.droidkaigi.confsched2019.model.SessionType"/>
 
-        <import type="android.view.View"/>
-
         <variable
             name="session"
             type="io.github.droidkaigi.confsched2019.model.Session.ServiceSession"
@@ -19,6 +17,11 @@
         <variable
             name="lang"
             type="io.github.droidkaigi.confsched2019.model.Lang"
+            />
+
+        <variable
+            name="hasStartPadding"
+            type="boolean"
             />
     </data>
 
@@ -29,7 +32,7 @@
         android:paddingTop="@dimen/session_item_top_padding"
         android:paddingBottom="@dimen/session_item_bottom_padding"
         android:paddingEnd="0dp"
-        android:paddingStart="@dimen/session_bottom_sheet_left_time_space"
+        android:paddingStart="@{hasStartPadding ? @dimen/session_bottom_sheet_left_time_space : 0}"
         >
 
         <TextView

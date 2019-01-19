@@ -14,6 +14,7 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionConten
 class ServiceSessionItem @AssistedInject constructor(
     @Assisted override val session: Session.ServiceSession,
     @Assisted val navDirections: NavDirections,
+    @Assisted val hasStartPadding: Boolean,
     navController: NavController,
     sessionContentsActionCreator: SessionContentsActionCreator
 ) : BindableItem<ItemServiceSessionBinding>(
@@ -25,7 +26,8 @@ class ServiceSessionItem @AssistedInject constructor(
     interface Factory {
         fun create(
             session: Session.ServiceSession,
-            navDirections: NavDirections
+            navDirections: NavDirections,
+            hasStartPadding: Boolean
         ): ServiceSessionItem
     }
 
@@ -47,6 +49,7 @@ class ServiceSessionItem @AssistedInject constructor(
                 root.setOnClickListener(null)
                 root.isClickable = false
             }
+            hasStartPadding = this@ServiceSessionItem.hasStartPadding
             session = serviceSession
             lang = defaultLang()
 
