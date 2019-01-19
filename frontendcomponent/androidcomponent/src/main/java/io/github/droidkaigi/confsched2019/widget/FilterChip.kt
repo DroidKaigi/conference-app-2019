@@ -77,6 +77,11 @@ class FilterChip @JvmOverloads constructor(
         set(value) {
             if (field != value) {
                 field = value
+                if (value != null) {
+                    clear = clear.mutate().apply {
+                        setTint(value)
+                    }
+                }
                 postInvalidateOnAnimation()
             }
         }
@@ -122,7 +127,7 @@ class FilterChip @JvmOverloads constructor(
 
     private val dotPaint: Paint
 
-    private val clear: Drawable
+    private var clear: Drawable
 
     private val touchFeedback: Drawable
 
@@ -145,6 +150,11 @@ class FilterChip @JvmOverloads constructor(
             strokeWidth = a.getDimensionOrThrow(R.styleable.FilterChip_strokeWidth)
             style = STROKE
         }
+        clear = a.getDrawableOrThrow(R.styleable.FilterChip_clearIcon).apply {
+            setBounds(
+                -intrinsicWidth / 2, -intrinsicHeight / 2, intrinsicWidth / 2, intrinsicHeight / 2
+            )
+        }
         textColor = a.getColorOrThrow(R.styleable.FilterChip_android_textColor)
         selectedTextColor = a.getColor(R.styleable.FilterChip_selectedTextColor, 0)
         textPaint = TextPaint(ANTI_ALIAS_FLAG).apply {
@@ -153,11 +163,6 @@ class FilterChip @JvmOverloads constructor(
         }
         dotPaint = Paint(ANTI_ALIAS_FLAG)
         color = a.getColor(R.styleable.FilterChip_android_color, 0)
-        clear = a.getDrawableOrThrow(R.styleable.FilterChip_clearIcon).apply {
-            setBounds(
-                -intrinsicWidth / 2, -intrinsicHeight / 2, intrinsicWidth / 2, intrinsicHeight / 2
-            )
-        }
         touchFeedback = a.getDrawableOrThrow(R.styleable.FilterChip_foreground).apply {
             callback = this@FilterChip
         }
