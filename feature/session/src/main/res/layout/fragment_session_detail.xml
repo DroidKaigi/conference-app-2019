@@ -7,6 +7,8 @@
 
     <data>
 
+        <import type="io.github.droidkaigi.confsched2019.model.Lang" />
+
         <variable
             name="session"
             type="io.github.droidkaigi.confsched2019.model.Session"
@@ -286,8 +288,8 @@
                         android:focusable="false"
                         android:text="@{speechSession.lang.text.getByLang(lang)}"
                         android:textAppearance="?textAppearanceCaption"
-                        android:textColor="@color/white"
-                        app:chipBackgroundColor="#7982e1"
+                        android:textColor="@{speechSession.lang.equals(Lang.EN)?@color/session_en_talk_text:@color/session_ja_talk_text}"
+                        app:chipBackgroundColor="@{speechSession.lang.equals(Lang.EN)?@color/session_en_talk_background:@color/session_ja_talk_background}"
                         app:chipMinTouchTargetSize="0dp"
                         tools:text="Japanese"
                         app:visibleGone="@{speechSession != null}"
@@ -303,8 +305,8 @@
                         android:focusable="false"
                         android:text="@string/session_simultaneous_interpretation"
                         android:textAppearance="?textAppearanceCaption"
-                        android:textColor="@color/white"
-                        app:chipBackgroundColor="#7982e1"
+                        android:textColor="@color/gray1"
+                        app:chipBackgroundColor="@color/session_category_background"
                         app:chipMinTouchTargetSize="0dp"
                         app:visibleGone="@{speechSession.isInterpretationTarget}"
                         />
@@ -319,8 +321,8 @@
                         android:focusable="false"
                         android:text="@string/session_for_beginners"
                         android:textAppearance="?textAppearanceCaption"
-                        android:textColor="@color/white"
-                        app:chipBackgroundColor="#7982e1"
+                        android:textColor="@color/session_for_beginners_text"
+                        app:chipBackgroundColor="@color/session_for_beginners_background"
                         app:chipMinTouchTargetSize="0dp"
                         app:visibleGone="@{speechSession.forBeginners}"
                         />
@@ -334,8 +336,8 @@
                         android:enabled="false"
                         android:focusable="false"
                         android:textAppearance="?textAppearanceCaption"
-                        android:textColor="@color/white"
-                        app:chipBackgroundColor="#95959c"
+                        android:textColor="@color/gray1"
+                        app:chipBackgroundColor="@color/session_category_background"
                         app:chipMinTouchTargetSize="0dp"
                         tools:text="ソフトウェアアーキテクチャ"
                         app:visibleGone="@{speechSession != null}"
