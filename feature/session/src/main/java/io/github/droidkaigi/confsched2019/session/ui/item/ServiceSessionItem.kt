@@ -5,14 +5,14 @@ import androidx.navigation.NavDirections
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.xwray.groupie.databinding.BindableItem
-import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemServiceSessionBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
 
 class ServiceSessionItem @AssistedInject constructor(
-    @Assisted override val session: Session.ServiceSession,
+    @Assisted override val session: ServiceSession,
     @Assisted val navDirections: NavDirections,
     @Assisted val hasStartPadding: Boolean,
     navController: NavController,
@@ -25,16 +25,16 @@ class ServiceSessionItem @AssistedInject constructor(
     @AssistedInject.Factory
     interface Factory {
         fun create(
-            session: Session.ServiceSession,
+            session: ServiceSession,
             navDirections: NavDirections,
             hasStartPadding: Boolean
         ): ServiceSessionItem
     }
 
-    private val onFavoriteClickListener: (Session.ServiceSession) -> Unit = { session ->
+    private val onFavoriteClickListener: (ServiceSession) -> Unit = { session ->
         sessionContentsActionCreator.toggleFavorite(session)
     }
-    private val onClickListener: (Session.ServiceSession) -> Unit = { session ->
+    private val onClickListener: (ServiceSession) -> Unit = { session ->
         navController
             .navigate(
                 navDirections

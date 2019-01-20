@@ -13,6 +13,7 @@ import io.github.droidkaigi.confsched2019.model.LangSupport
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.model.SessionFeedback
+import io.github.droidkaigi.confsched2019.model.SpeechSession
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -28,7 +29,7 @@ class DataSessionRepository @Inject constructor(
     override suspend fun sessionContents(): SessionContents = coroutineScope {
         val sessions = sessions()
             .sortedBy { it.startTime }
-        val speechSessions = sessions.filterIsInstance<Session.SpeechSession>()
+        val speechSessions = sessions.filterIsInstance<SpeechSession>()
         SessionContents(
             sessions = sessions,
             speakers = speechSessions.flatMap { it.speakers }.distinct(),
@@ -75,7 +76,7 @@ class DataSessionRepository @Inject constructor(
     }
 
     override suspend fun submitSessionFeedback(
-        session: Session.SpeechSession,
+        session: SpeechSession,
         sessionFeedback: SessionFeedback
     ) {
         val response = googleFormApi.submitSessionFeedback(

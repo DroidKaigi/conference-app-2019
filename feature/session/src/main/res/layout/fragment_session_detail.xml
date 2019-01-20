@@ -16,12 +16,12 @@
 
         <variable
             name="speechSession"
-            type="io.github.droidkaigi.confsched2019.model.Session.SpeechSession"
+            type="io.github.droidkaigi.confsched2019.model.SpeechSession"
             />
 
         <variable
             name="serviceSession"
-            type="io.github.droidkaigi.confsched2019.model.Session.ServiceSession"
+            type="io.github.droidkaigi.confsched2019.model.ServiceSession"
             />
 
         <variable

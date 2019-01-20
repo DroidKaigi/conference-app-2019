@@ -3,6 +3,7 @@ package io.github.droidkaigi.confsched2019.data.repository
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.model.SessionFeedback
+import io.github.droidkaigi.confsched2019.model.SpeechSession
 
 interface SessionRepository {
     suspend fun sessionContents(): SessionContents
@@ -11,7 +12,7 @@ interface SessionRepository {
     suspend fun sessionFeedback(session: String): SessionFeedback
     suspend fun saveSessionFeedback(sessionFeedback: SessionFeedback)
     suspend fun submitSessionFeedback(
-        session: Session.SpeechSession,
+        session: SpeechSession,
         sessionFeedback: SessionFeedback
     )
 }

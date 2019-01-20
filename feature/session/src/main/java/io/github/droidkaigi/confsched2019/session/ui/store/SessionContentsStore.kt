@@ -7,9 +7,10 @@ import io.github.droidkaigi.confsched2019.ext.android.mapNotNull
 import io.github.droidkaigi.confsched2019.ext.android.requireValue
 import io.github.droidkaigi.confsched2019.ext.android.toLiveData
 import io.github.droidkaigi.confsched2019.model.LoadingState
-import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.model.Speaker
+import io.github.droidkaigi.confsched2019.model.SpeechSession
 import kotlinx.coroutines.channels.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -37,18 +38,18 @@ class SessionContentsStore @Inject constructor(
     val langSupports get() = sessionContents.requireValue().langSupports
     val audienceCategories get() = sessionContents.requireValue().audienceCategories
 
-    fun speechSession(sessionId: String): LiveData<Session.SpeechSession> =
+    fun speechSession(sessionId: String): LiveData<SpeechSession> =
         sessionContents.mapNotNull { sessionContents ->
             sessionContents
                 ?.sessions
-                ?.find { it.id == sessionId } as? Session.SpeechSession
+                ?.find { it.id == sessionId } as? SpeechSession
         }
 
-    fun speechSessionBySpeakerName(speakerId: String): LiveData<Session.SpeechSession> =
+    fun speechSessionBySpeakerName(speakerId: String): LiveData<SpeechSession> =
         sessionContents.mapNotNull { sessionContents ->
             sessionContents
                 ?.sessions
-                ?.filterIsInstance<Session.SpeechSession>()
+                ?.filterIsInstance<SpeechSession>()
                 ?.find { it.speakers.find { it.id == speakerId } != null }
         }
 
@@ -59,10 +60,10 @@ class SessionContentsStore @Inject constructor(
                 ?.find { it.id == speakerId }
         }
 
-    fun serviceSession(sessionId: String): LiveData<Session.ServiceSession> =
+    fun serviceSession(sessionId: String): LiveData<ServiceSession> =
         sessionContents.mapNotNull { sessionContents ->
             sessionContents
                 ?.sessions
-                ?.findLast { it.id == sessionId } as? Session.ServiceSession
+                ?.findLast { it.id == sessionId } as? ServiceSession
         }
 }

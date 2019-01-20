@@ -48,10 +48,10 @@ final class SessionsViewModel {
                 return sessions.map {
                     let title: LocaledString?
                     switch $0 {
-                    case is Session.ServiceSession:
-                        title = ($0 as! Session.ServiceSession).title
-                    case is Session.SpeechSession:
-                        title = ($0 as! Session.SpeechSession).title
+                    case is ServiceSession:
+                        title = ($0 as! ServiceSession).title
+                    case is SpeechSession:
+                        title = ($0 as! SpeechSession).title
                     default:
                         title = nil
                     }
