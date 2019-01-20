@@ -23,7 +23,6 @@ import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.ext.android.requireValue
 import io.github.droidkaigi.confsched2019.model.Staff
-import io.github.droidkaigi.confsched2019.model.StaffSearchResult
 import io.github.droidkaigi.confsched2019.staff.R
 import io.github.droidkaigi.confsched2019.staff.databinding.FragmentStaffSearchBinding
 import io.github.droidkaigi.confsched2019.staff.ui.actioncreator.StaffSearchActionCreator
@@ -82,7 +81,9 @@ class StaffSearchFragment : DaggerFragment() {
             groupAdapter.update(items)
         }
 
-        searchActionCreator.load()
+        if (!searchStore.loadingState.requireValue().isLoaded) {
+            searchActionCreator.load()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -24,4 +24,3 @@ class DataStaffRepository @Inject constructor(
 }
 
 private fun StaffEntity.toStaff(): Staff = Staff(id, name, iconUrl, profileUrl)
-

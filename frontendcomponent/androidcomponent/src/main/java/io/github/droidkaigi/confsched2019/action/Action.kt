@@ -13,7 +13,6 @@ import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.model.SponsorCategory
-import io.github.droidkaigi.confsched2019.model.Staff
 import io.github.droidkaigi.confsched2019.model.StaffContents
 import io.github.droidkaigi.confsched2019.model.StaffSearchResult
 import io.github.droidkaigi.confsched2019.model.SystemProperty

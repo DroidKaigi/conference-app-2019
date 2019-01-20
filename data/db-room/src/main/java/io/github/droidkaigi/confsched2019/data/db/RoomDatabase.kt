@@ -104,6 +104,7 @@ class RoomDatabase @Inject constructor(
         withContext(coroutineContext) {
             database.runInTransaction {
                 val staffs = apiResponse.staffs.toStaffEntities()
+                staffDao.deleteAll()
                 staffDao.insert(staffs)
             }
         }

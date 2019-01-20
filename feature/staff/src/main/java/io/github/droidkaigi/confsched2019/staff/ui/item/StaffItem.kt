@@ -9,7 +9,7 @@ import io.github.droidkaigi.confsched2019.staff.R
 import io.github.droidkaigi.confsched2019.staff.databinding.ItemStaffBinding
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
-class StaffItem constructor(
+class StaffItem(
     val staff: Staff
 ) : BindableItem<ItemStaffBinding>(staff.id.hashCode().toLong()) {
 
