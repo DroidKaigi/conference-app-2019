@@ -52,12 +52,6 @@ fun SessionWithSpeakers.toSession(
             desc = session.desc,
             room = Room(requireNotNull(session.room?.id), requireNotNull(session.room?.name)),
             format = requireNotNull(session.sessionFormat),
-            language = requireNotNull(session.language).let { language ->
-                LocaledString(
-                    language.jaName,
-                    language.enName
-                )
-            },
             lang = Lang.findLang(requireNotNull(session.language?.name)),
             category = requireNotNull(session.category).let { category ->
                 Category(

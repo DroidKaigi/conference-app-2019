@@ -78,10 +78,6 @@ private fun SessionResponse.toSession(
             desc = response.description,
             room = Room(response.roomId, requireNotNull(room.name)),
             format = requireNotNull(sessionFormat.name),
-            language = LocaledString(
-                requireNotNull(language.translatedName?.ja),
-                requireNotNull(language.translatedName?.en)
-            ),
             lang = Lang.findLang(requireNotNull(language.name)),
             category = Category(
                 requireNotNull(category.id),
