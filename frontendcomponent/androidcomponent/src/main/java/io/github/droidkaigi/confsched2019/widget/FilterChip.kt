@@ -209,8 +209,8 @@ class FilterChip @JvmOverloads constructor(
             else -> Int.MAX_VALUE
         }
         createLayout(availableTextWidth)
-        val w = nonTextWidth + textLayout.textWidth()
-        val h = nonTextHeight + textLayout.height
+        val w = maxOf(nonTextWidth + textLayout.textWidth(), suggestedMinimumWidth)
+        val h = maxOf(nonTextHeight + textLayout.height, suggestedMinimumHeight)
         setMeasuredDimension(w, h)
         outlineProvider = object : ViewOutlineProvider() {
             override fun getOutline(view: View, outline: Outline) {
@@ -283,7 +283,8 @@ class FilterChip @JvmOverloads constructor(
         }
         canvas.withTranslation(
             x = textX,
-            y = (height - textLayout.height) / 2f
+            // `textLayout.lastLineDescent / 4f` is dirty but effective position adjustment for Lekton...
+            y = (height - (textLayout.height - textLayout.lastLineDescent / 4f)) / 2f
         ) {
             textLayout.draw(canvas)
         }
@@ -391,6 +392,9 @@ class FilterChip @JvmOverloads constructor(
         }
         return width.toInt()
     }
+
+    private val StaticLayout.lastLineDescent: Int
+        get() = getLineDescent(lineCount - 1)
 
     interface OnCheckedChangeListener {
         fun onCheckedChanged(chip: FilterChip, isChecked: Boolean)

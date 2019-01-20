@@ -7,7 +7,9 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:fontFamily="@font/lekton"
+    android:minHeight="30dp"
     app:strokeColor="@color/white"
+    app:verticalPadding="3dp"
     tools:ignore="Overdraw"
     tools:text="hoge"
     />
