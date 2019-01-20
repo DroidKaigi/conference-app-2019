@@ -3,20 +3,24 @@ package io.github.droidkaigi.confsched2019.data.db
 import io.github.droidkaigi.confsched2019.data.api.response.AnnouncementResponse
 import io.github.droidkaigi.confsched2019.data.api.response.Response
 import io.github.droidkaigi.confsched2019.data.api.response.SponsorResponse
+import io.github.droidkaigi.confsched2019.data.api.response.StaffResponse
 import io.github.droidkaigi.confsched2019.data.db.dao.AnnouncementDao
 import io.github.droidkaigi.confsched2019.data.db.dao.SessionDao
 import io.github.droidkaigi.confsched2019.data.db.dao.SessionSpeakerJoinDao
 import io.github.droidkaigi.confsched2019.data.db.dao.SpeakerDao
 import io.github.droidkaigi.confsched2019.data.db.dao.SponsorDao
+import io.github.droidkaigi.confsched2019.data.db.dao.StaffDao
 import io.github.droidkaigi.confsched2019.data.db.entity.AnnouncementEntity
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionWithSpeakers
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntity
 import io.github.droidkaigi.confsched2019.data.db.entity.SponsorEntity
+import io.github.droidkaigi.confsched2019.data.db.entity.StaffEntity
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toAnnouncementEntities
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionEntities
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionSpeakerJoinEntities
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSpeakerEntities
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSponsorEntities
+import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toStaffEntities
 import io.github.droidkaigi.confsched2019.model.SponsorCategory
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -29,8 +33,9 @@ class RoomDatabase @Inject constructor(
     private val sessionSpeakerJoinDao: SessionSpeakerJoinDao,
     private val coroutineContext: CoroutineContext,
     private val sponsorDao: SponsorDao,
-    private val announcementDao: AnnouncementDao
-) : SessionDatabase, SponsorDatabase, AnnouncementDatabase {
+    private val announcementDao: AnnouncementDao,
+    private val staffDao: StaffDao
+) : SessionDatabase, SponsorDatabase, AnnouncementDatabase, StaffDatabase {
     override suspend fun sessions(): List<SessionWithSpeakers> {
         return sessionSpeakerJoinDao.getAllSessions()
     }
@@ -89,6 +94,17 @@ class RoomDatabase @Inject constructor(
                 val announcements = apiResponse.toAnnouncementEntities()
 
                 announcementDao.insert(announcements)
+            }
+        }
+    }
+
+    override suspend fun staffs(): List<StaffEntity> = staffDao.allStaffs()
+
+    override suspend fun save(apiResponse: StaffResponse) {
+        withContext(coroutineContext) {
+            database.runInTransaction {
+                val staffs = apiResponse.staffs.toStaffEntities()
+                staffDao.insert(staffs)
             }
         }
     }

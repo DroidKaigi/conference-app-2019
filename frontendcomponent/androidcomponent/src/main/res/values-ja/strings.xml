@@ -10,6 +10,7 @@
     <string name="session_survey_label">セッションフィードバック</string>
     <string name="description_filter_applied">フィルター%1$sを適用</string>
     <string name="description_filter_not_applied">フィルター%1$sを解除</string>
+    <string name="staff_search_label">スタッフリスト</string>
     <!-- Notification -->
     <string name="notification_title_session_start">マイセッション開始のお知らせ</string>
     <string name="notification_message_session_title">%1$s がもうすぐ始まります。</string>

@@ -134,4 +134,9 @@
         android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
         >
     </activity>
+    <fragment
+        android:id="@+id/staff_search"
+        android:name="io.github.droidkaigi.confsched2019.staff.ui.StaffSearchFragment"
+        android:label="@string/staff_search_label"
+        />
 </navigation>
