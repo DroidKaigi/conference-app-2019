@@ -7,6 +7,8 @@
 
     <data>
 
+        <import type="io.github.droidkaigi.confsched2019.model.Lang" />
+
         <variable
             name="session"
             type="io.github.droidkaigi.confsched2019.model.Session.SpeechSession"
@@ -125,10 +127,10 @@
                 android:clickable="false"
                 android:ellipsize="end"
                 android:enabled="false"
-                android:text="@{session.language.getByLang(lang)}"
+                android:text="@{session.lang.text.getByLang(lang)}"
                 android:textAppearance="@style/TextAppearance.App.Caption"
-                android:textColor="@color/white"
-                app:chipBackgroundColor="#7982e1"
+                android:textColor="@{session.lang.equals(Lang.EN)?@color/blue1:@color/red1}"
+                app:chipBackgroundColor="@{session.lang.equals(Lang.EN)?@color/blue2:@color/red2}"
                 app:chipMinTouchTargetSize="0dp"
                 tools:text="@sample/service_session.json/data/language"
                 />

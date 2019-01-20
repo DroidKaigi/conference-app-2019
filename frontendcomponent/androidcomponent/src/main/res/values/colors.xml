@@ -8,6 +8,9 @@
     <color name="gray3">#d8d7dc</color>
     <color name="gray4">#f4f4f4</color>
     <color name="red1">#f63529</color>
+    <color name="red2">#FDD7D4</color>
+    <color name="blue1">#190089</color>
+    <color name="blue2">#E8E6F3</color>
 
     <color name="white">#FFFFFF</color>
 </resources>

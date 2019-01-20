@@ -82,6 +82,7 @@ private fun SessionResponse.toSession(
                 requireNotNull(language.translatedName?.ja),
                 requireNotNull(language.translatedName?.en)
             ),
+            lang = Lang.findLang(requireNotNull(language.name)),
             category = Category(
                 requireNotNull(category.id),
                 LocaledString(
