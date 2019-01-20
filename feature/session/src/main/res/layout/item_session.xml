@@ -136,23 +136,6 @@
                 />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/simultaneous_interpretation_chip"
-                style="@style/Widget.MaterialComponents.Chip.Action"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="false"
-                android:ellipsize="end"
-                android:enabled="false"
-                android:text="@string/session_simultaneous_interpretation"
-                android:textAppearance="@style/TextAppearance.App.Caption"
-                android:textColor="@color/gray1"
-                app:chipBackgroundColor="#E5E8EA"
-                app:chipMinTouchTargetSize="0dp"
-                app:visibleGone="@{session.isInterpretationTarget}"
-                tools:text="@sample/service_session.json/data/simultaneous_interpretation"
-                />
-
-            <com.google.android.material.chip.Chip
                 android:id="@+id/for_beginners_chip"
                 style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
@@ -167,6 +150,23 @@
                 app:chipMinTouchTargetSize="0dp"
                 app:visibleGone="@{session.forBeginners}"
                 tools:text="@sample/service_session.json/data/for_beginners"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/simultaneous_interpretation_chip"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:ellipsize="end"
+                android:enabled="false"
+                android:text="@string/session_simultaneous_interpretation"
+                android:textAppearance="@style/TextAppearance.App.Caption"
+                android:textColor="@color/gray1"
+                app:chipBackgroundColor="#E5E8EA"
+                app:chipMinTouchTargetSize="0dp"
+                app:visibleGone="@{session.isInterpretationTarget}"
+                tools:text="@sample/service_session.json/data/simultaneous_interpretation"
                 />
 
             <com.google.android.material.chip.Chip
