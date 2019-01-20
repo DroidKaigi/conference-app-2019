@@ -4,6 +4,7 @@ import com.soywiz.klock.DateTime
 import com.soywiz.klock.hours
 import com.soywiz.klock.minutes
 import io.github.droidkaigi.confsched2019.model.Category
+import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LocaledString
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
@@ -38,7 +39,7 @@ fun dummySessionData(): List<Session> {
             desc = "2 Please tell me",
             room = Room(2, "Room 2"),
             format = "this is format2",
-            language = LocaledString("英語", "English"),
+            lang = Lang.EN,
             category = Category(10, LocaledString("ツール", "Tool")),
             intendedAudience = "extream",
             videoUrl = "https://droidkaigi.jp/2019/#might_be_null",
@@ -65,7 +66,7 @@ fun firstDummySpeechSession(): Session.SpeechSession {
         desc = "Please tell me",
         room = Room(1, "Room 1"),
         format = "this is format",
-        language = LocaledString("日本語", "Japanese"),
+        lang = Lang.JA,
         category = Category(id = 10, name = LocaledString("アーキテクチャ", "App Architecture")),
         intendedAudience = "intermediate",
         videoUrl = "https://droidkaigi.jp/2019/#might_be_null",

@@ -7,6 +7,7 @@ import io.github.droidkaigi.confsched2019.data.db.AnnouncementDatabase
 import io.github.droidkaigi.confsched2019.data.db.DbComponent
 import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.db.SponsorDatabase
+import io.github.droidkaigi.confsched2019.data.db.StaffDatabase
 import io.github.droidkaigi.confsched2019.ext.android.Dispatchers
 import javax.inject.Singleton
 
@@ -43,5 +44,16 @@ object DbComponentModule {
             .filename("droidkaigi.db")
             .build()
             .announcementDatabase()
+    }
+
+    @JvmStatic @Provides @Singleton fun provideStaffStore(
+        application: Application
+    ): StaffDatabase {
+        return DbComponent.builder()
+            .context(application)
+            .coroutineContext(Dispatchers.IO)
+            .filename("droidkaigi.db")
+            .build()
+            .staffDatabase()
     }
 }

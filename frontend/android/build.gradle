@@ -69,6 +69,7 @@ dependencies {
     implementation project(":feature:floormap")
     implementation project(":feature:sponsor")
     implementation project(":feature:settings")
+    implementation project(":feature:staff")
     implementation project(':feature:user')
     implementation project(':feature:survey')
     implementation project(':feature:system')

@@ -22,7 +22,7 @@ data class Filters(
         }
         val langFilterOk = run {
             if (langs.isEmpty()) return@run true
-            return@run langs.map { it.text }.contains(session.language)
+            return@run langs.any { it == session.lang }
         }
         val langSupportFilterOk = run {
             if (langSupports.contains(LangSupport.INTERPRETATION)) {

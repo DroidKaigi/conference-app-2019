@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+        <variable
+            name="staff"
+            type="io.github.droidkaigi.confsched2019.model.Staff"
+            />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        >
+
+        <ImageView
+            android:id="@+id/staff_image"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/staff_image_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars"
+            />
+
+        <TextView
+            android:id="@+id/staff_text"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:gravity="start|center_vertical"
+            android:text="@{staff.name}"
+            android:textAppearance="@style/TextAppearance.Lekton.Body1"
+            android:textColor="@color/gray1"
+            app:layout_constraintBottom_toBottomOf="@id/staff_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/staff_image"
+            app:layout_constraintTop_toTopOf="@id/staff_image"
+            tools:text="@tools:sample/full_names"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

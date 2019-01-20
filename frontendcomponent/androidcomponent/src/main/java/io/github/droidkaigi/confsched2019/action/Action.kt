@@ -13,6 +13,8 @@ import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.model.SponsorCategory
+import io.github.droidkaigi.confsched2019.model.StaffContents
+import io.github.droidkaigi.confsched2019.model.StaffSearchResult
 import io.github.droidkaigi.confsched2019.model.SystemProperty
 
 sealed class Action {
@@ -61,6 +63,10 @@ sealed class Action {
     class BottomSheetFilterStateChanged(val page: SessionPage, val bottomSheetState: Int) : Action()
 
     data class SearchResultLoaded(val searchResult: SearchResult) : Action()
+
+    data class StaffSearchResultLoaded(val searchResult: StaffSearchResult) : Action()
+    data class StaffSearchLoadingStateChanged(val loadingState: LoadingState) : Action()
+    data class StaffLoaded(val staffContents: StaffContents) : Action()
 
     object UserRegistered : Action()
 

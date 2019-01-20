@@ -10,6 +10,7 @@ dependencies {
     api project(":model")
     api project(":feature:notification")
     api project(":ext:android-extension")
+    api Dep.AndroidX.constraint
     api Dep.AndroidX.design
     api Dep.AndroidX.coreKtx
     implementation Dep.Kotlin.stdlibJvm
@@ -27,6 +28,8 @@ dependencies {
 
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport
+
+    implementation Dep.Groupie.groupie
 
     testImplementation Dep.Test.junit
     testImplementation Dep.MockK.jvm

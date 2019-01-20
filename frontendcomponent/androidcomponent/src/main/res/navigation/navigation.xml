@@ -75,9 +75,14 @@
             />
     </fragment>
     <fragment
+        android:id="@+id/tabular_form"
+        android:name="io.github.droidkaigi.confsched2019.session.ui.TabularFormSessionPagesFragment"
+        android:label="@string/tabular_form_label"
+        >
+    </fragment>
+    <fragment
         android:id="@+id/speaker"
         android:name="io.github.droidkaigi.confsched2019.session.ui.SpeakerFragment"
-        android:label="@string/speaker_label"
         >
         <argument
             android:name="speaker"
@@ -134,4 +139,9 @@
         android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
         >
     </activity>
+    <fragment
+        android:id="@+id/staff_search"
+        android:name="io.github.droidkaigi.confsched2019.staff.ui.StaffSearchFragment"
+        android:label="@string/staff_search_label"
+        />
 </navigation>

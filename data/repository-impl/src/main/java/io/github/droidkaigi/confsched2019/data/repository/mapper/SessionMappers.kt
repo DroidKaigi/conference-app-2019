@@ -5,6 +5,7 @@ import com.soywiz.klock.hours
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionWithSpeakers
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntity
 import io.github.droidkaigi.confsched2019.model.Category
+import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LocaledString
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
@@ -57,12 +58,7 @@ fun SessionWithSpeakers.toSession(
             desc = session.desc,
             room = Room(requireNotNull(session.room?.id), requireNotNull(session.room?.name)),
             format = requireNotNull(session.sessionFormat),
-            language = requireNotNull(session.language).let { language ->
-                LocaledString(
-                    language.jaName,
-                    language.enName
-                )
-            },
+            lang = Lang.findLang(requireNotNull(session.language?.name)),
             category = requireNotNull(session.category).let { category ->
                 Category(
                     category.id,

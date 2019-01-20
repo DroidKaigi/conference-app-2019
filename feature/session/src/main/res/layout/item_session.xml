@@ -7,6 +7,8 @@
 
     <data>
 
+        <import type="io.github.droidkaigi.confsched2019.model.Lang" />
+
         <variable
             name="session"
             type="io.github.droidkaigi.confsched2019.model.Session.SpeechSession"
@@ -21,6 +23,9 @@
             name="hasStartPadding"
             type="boolean"
             />
+        <variable
+            name="query"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -66,6 +71,7 @@
             app:layout_constraintEnd_toStartOf="@id/favorite"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/live"
+            app:highlightText="@{query}"
             tools:text="@sample/service_session.json/data/session_name"
             />
 
@@ -125,29 +131,12 @@
                 android:clickable="false"
                 android:ellipsize="end"
                 android:enabled="false"
-                android:text="@{session.language.getByLang(lang)}"
+                android:text="@{session.lang.text.getByLang(lang)}"
                 android:textAppearance="@style/TextAppearance.App.Caption"
-                android:textColor="@color/white"
-                app:chipBackgroundColor="#7982e1"
+                android:textColor="@{session.lang.equals(Lang.EN)?@color/session_en_talk_text:@color/session_ja_talk_text}"
+                app:chipBackgroundColor="@{session.lang.equals(Lang.EN)?@color/session_en_talk_background:@color/session_ja_talk_background}"
                 app:chipMinTouchTargetSize="0dp"
                 tools:text="@sample/service_session.json/data/language"
-                />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/simultaneous_interpretation_chip"
-                style="@style/Widget.MaterialComponents.Chip.Action"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="false"
-                android:ellipsize="end"
-                android:enabled="false"
-                android:text="@string/session_simultaneous_interpretation"
-                android:textAppearance="@style/TextAppearance.App.Caption"
-                android:textColor="@color/white"
-                app:chipBackgroundColor="#7982e1"
-                app:chipMinTouchTargetSize="0dp"
-                app:visibleGone="@{session.isInterpretationTarget}"
-                tools:text="@sample/service_session.json/data/simultaneous_interpretation"
                 />
 
             <com.google.android.material.chip.Chip
@@ -160,11 +149,28 @@
                 android:enabled="false"
                 android:text="@string/session_for_beginners"
                 android:textAppearance="@style/TextAppearance.App.Caption"
-                android:textColor="@color/white"
-                app:chipBackgroundColor="#7982e1"
+                android:textColor="@color/session_for_beginners_text"
+                app:chipBackgroundColor="@color/session_for_beginners_background"
                 app:chipMinTouchTargetSize="0dp"
                 app:visibleGone="@{session.forBeginners}"
                 tools:text="@sample/service_session.json/data/for_beginners"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/simultaneous_interpretation_chip"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:ellipsize="end"
+                android:enabled="false"
+                android:text="@string/session_simultaneous_interpretation"
+                android:textAppearance="@style/TextAppearance.App.Caption"
+                android:textColor="@color/gray1"
+                app:chipBackgroundColor="@color/session_category_background"
+                app:chipMinTouchTargetSize="0dp"
+                app:visibleGone="@{session.isInterpretationTarget}"
+                tools:text="@sample/service_session.json/data/simultaneous_interpretation"
                 />
 
             <com.google.android.material.chip.Chip
@@ -176,8 +182,8 @@
                 android:ellipsize="end"
                 android:enabled="false"
                 android:textAppearance="@style/TextAppearance.App.Caption"
-                android:textColor="@color/white"
-                app:chipBackgroundColor="#95959c"
+                android:textColor="@color/gray1"
+                app:chipBackgroundColor="@color/session_category_background"
                 app:chipMinTouchTargetSize="0dp"
                 tools:text="@sample/service_session.json/data/category"
                 />
