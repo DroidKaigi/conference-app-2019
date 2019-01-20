@@ -24,7 +24,7 @@ fun setHighlightText(view: TextView, highlightText: String?) {
     val matcher = pattern.matcher(view.text)
     while (matcher.find()) {
         stringBuilder.setSpan(
-            BackgroundColorSpan(ContextCompat.getColor(view.context, R.color.colorSecondary)),
+            BackgroundColorSpan(ContextCompat.getColor(view.context, R.color.colorSecondary_50)),
             matcher.start(),
             matcher.end(),
             Spannable.SPAN_INCLUSIVE_INCLUSIVE
