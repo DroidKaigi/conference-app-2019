@@ -56,7 +56,7 @@ class FilterChip @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr), Checkable {
 
-    var color: Int = 0
+    @ColorInt var color: Int = 0
         set(value) {
             if (field != value) {
                 field = value
@@ -65,7 +65,21 @@ class FilterChip @JvmOverloads constructor(
             }
         }
 
-    var selectedTextColor: Int? = null
+    @ColorInt var textColor: Int = 0
+        set(value) {
+            if (field != value) {
+                field = value
+                postInvalidateOnAnimation()
+            }
+        }
+
+    @ColorInt var selectedTextColor: Int? = null
+        set(value) {
+            if (field != value) {
+                field = value
+                postInvalidateOnAnimation()
+            }
+        }
 
     var text: CharSequence = ""
         set(value) {
@@ -119,8 +133,6 @@ class FilterChip @JvmOverloads constructor(
     private val interp =
         AnimationUtils.loadInterpolator(context, android.R.interpolator.fast_out_slow_in)
 
-    @ColorInt private val defaultTextColor: Int
-
     init {
         val a = context.obtainStyledAttributes(
             attrs,
@@ -133,10 +145,10 @@ class FilterChip @JvmOverloads constructor(
             strokeWidth = a.getDimensionOrThrow(R.styleable.FilterChip_strokeWidth)
             style = STROKE
         }
-        defaultTextColor = a.getColorOrThrow(R.styleable.FilterChip_android_textColor)
+        textColor = a.getColorOrThrow(R.styleable.FilterChip_android_textColor)
         selectedTextColor = a.getColor(R.styleable.FilterChip_selectedTextColor, 0)
         textPaint = TextPaint(ANTI_ALIAS_FLAG).apply {
-            color = defaultTextColor
+            color = textColor
             textSize = a.getDimensionOrThrow(R.styleable.FilterChip_android_textSize)
         }
         dotPaint = Paint(ANTI_ALIAS_FLAG)
@@ -231,9 +243,9 @@ class FilterChip @JvmOverloads constructor(
         }
         val selectedColor = selectedTextColor
         textPaint.color = if (selectedColor != null && selectedColor != 0 && progress > 0) {
-            ColorUtils.blendARGB(defaultTextColor, selectedColor, progress)
+            ColorUtils.blendARGB(textColor, selectedColor, progress)
         } else {
-            defaultTextColor
+            textColor
         }
         canvas.withTranslation(
             x = textX,

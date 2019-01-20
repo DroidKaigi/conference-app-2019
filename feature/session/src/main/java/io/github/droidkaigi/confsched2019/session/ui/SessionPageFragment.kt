@@ -204,6 +204,9 @@ class SessionPageFragment : DaggerFragment() {
                 ) as FilterChip
                 chip.apply {
                     text = itemAttributes.getText(item)
+                    color = itemAttributes.getBackgroundColor(item)
+                    textColor = itemAttributes.getTextColor(item)
+                    selectedTextColor = itemAttributes.getTextColor(item)
                     tag = item
                 }
             }
