@@ -1,7 +1,6 @@
 package io.github.droidkaigi.confsched2019.session.ui.widget
 
 import android.content.Context
-import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.LinearLayout
@@ -15,19 +14,15 @@ import androidx.core.widget.NestedScrollView
 import io.github.droidkaigi.confsched2019.session.R
 
 class SessionToolbarBehavior(
-    val context: Context,
-    attrs: AttributeSet? = null
-) : CoordinatorLayout.Behavior<LinearLayout>(context, attrs) {
+    val context: Context
+) : CoordinatorLayout.Behavior<LinearLayout>() {
 
     private var sessionTitle: String = ""
     private var hasSetToolbarTitle = false
     private var appCompatTextView: AppCompatTextView? = null
     private var mIsAnimation = false
 
-    constructor(context: Context, attrs: AttributeSet?, sessionTitle: String) : this(
-        context,
-        attrs
-    ) {
+    constructor(context: Context, sessionTitle: String) : this(context) {
         this.sessionTitle = sessionTitle
     }
 
