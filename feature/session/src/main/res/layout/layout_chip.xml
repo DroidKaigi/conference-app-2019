@@ -8,5 +8,6 @@
     android:background="@color/white"
     android:fontFamily="@font/lekton"
     app:strokeColor="@color/white"
+    tools:ignore="Overdraw"
     tools:text="hoge"
     />

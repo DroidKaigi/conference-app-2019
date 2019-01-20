@@ -7,7 +7,6 @@ import io.github.droidkaigi.confsched2019.model.Category
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LangSupport
 import io.github.droidkaigi.confsched2019.model.Room
-import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 
@@ -24,7 +23,8 @@ class AudienceCategoryTagAttributes(private val context: Context) :
     }
 
     override fun getTextColor(tag: AudienceCategory): Int {
-        return ContextCompat.getColor(context,
+        return ContextCompat.getColor(
+            context,
             when (tag) {
                 AudienceCategory.BEGINNERS -> R.color.session_for_beginners_text
                 AudienceCategory.UNSPECIFIED -> R.color.gray1
@@ -33,7 +33,8 @@ class AudienceCategoryTagAttributes(private val context: Context) :
     }
 
     override fun getBackgroundColor(tag: AudienceCategory): Int {
-        return ContextCompat.getColor(context,
+        return ContextCompat.getColor(
+            context,
             when (tag) {
                 AudienceCategory.BEGINNERS -> R.color.session_for_beginners_background
                 AudienceCategory.UNSPECIFIED -> R.color.session_category_background
@@ -62,7 +63,8 @@ class LangTagAttributes(private val context: Context) : SessionTagAttributes<Lan
     }
 
     override fun getTextColor(tag: Lang): Int {
-        return ContextCompat.getColor(context, 
+        return ContextCompat.getColor(
+            context,
             when (tag) {
                 Lang.EN -> R.color.session_en_talk_text
                 Lang.JA -> R.color.session_ja_talk_text
@@ -71,7 +73,8 @@ class LangTagAttributes(private val context: Context) : SessionTagAttributes<Lan
     }
 
     override fun getBackgroundColor(tag: Lang): Int {
-        return ContextCompat.getColor(context, 
+        return ContextCompat.getColor(
+            context,
             when (tag) {
                 Lang.EN -> R.color.session_en_talk_background
                 Lang.JA -> R.color.session_ja_talk_background
