@@ -23,6 +23,9 @@
             name="hasStartPadding"
             type="boolean"
             />
+        <variable
+            name="query"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -68,6 +71,7 @@
             app:layout_constraintEnd_toStartOf="@id/favorite"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/live"
+            app:highlightText="@{query}"
             tools:text="@sample/service_session.json/data/session_name"
             />
 
