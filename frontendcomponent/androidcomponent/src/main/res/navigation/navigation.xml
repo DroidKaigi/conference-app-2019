@@ -77,7 +77,6 @@
     <fragment
         android:id="@+id/speaker"
         android:name="io.github.droidkaigi.confsched2019.session.ui.SpeakerFragment"
-        android:label="@string/speaker_label"
         >
         <argument
             android:name="speaker"
