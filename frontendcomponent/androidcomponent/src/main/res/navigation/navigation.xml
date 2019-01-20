@@ -75,9 +75,14 @@
             />
     </fragment>
     <fragment
+        android:id="@+id/tabular_form"
+        android:name="io.github.droidkaigi.confsched2019.session.ui.TabularFormSessionPagesFragment"
+        android:label="@string/tabular_form_label"
+        >
+    </fragment>
+    <fragment
         android:id="@+id/speaker"
         android:name="io.github.droidkaigi.confsched2019.session.ui.SpeakerFragment"
-        android:label="@string/speaker_label"
         >
         <argument
             android:name="speaker"

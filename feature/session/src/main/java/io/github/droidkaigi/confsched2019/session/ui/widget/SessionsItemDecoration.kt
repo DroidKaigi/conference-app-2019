@@ -20,11 +20,13 @@ import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.timber.debug
 import timber.log.Timber
+import java.lang.ref.WeakReference
 
 class SessionsItemDecoration(
     val context: Context,
-    val groupAdapter: GroupAdapter<*>
+    groupAdapter: GroupAdapter<*>
 ) : RecyclerView.ItemDecoration() {
+    private val groupAdapterRef = WeakReference(groupAdapter)
     private val resources = context.resources
     private val textSize = resources.getDimensionPixelSize(
         R.dimen.session_bottom_sheet_left_time_text_size
@@ -78,6 +80,8 @@ class SessionsItemDecoration(
     private val lineX = textX + (paint.measureText("00:00") / 2F)
 
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+        val groupAdapter = groupAdapterRef.get() ?: return
+
         // Sort child views by adapter position
         for (i in 0 until parent.childCount) {
             val view = parent.getChildAt(i)
@@ -184,6 +188,8 @@ class SessionsItemDecoration(
     }
 
     private fun getSession(position: Int): Session? {
+        val groupAdapter = groupAdapterRef.get() ?: return null
+
         if (position < 0 || position >= groupAdapter.itemCount) {
             return null
         }

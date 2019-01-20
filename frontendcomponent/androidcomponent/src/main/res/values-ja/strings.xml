@@ -14,4 +14,5 @@
     <string name="notification_title_session_start">マイセッション開始のお知らせ</string>
     <string name="notification_message_session_title">%1$s がもうすぐ始まります。</string>
     <string name="notification_message_session_start_time">%1$s ~ %2$s @ %3$s</string>
+    <string name="tabular_form_label">タイムテーブル</string>
 </resources>

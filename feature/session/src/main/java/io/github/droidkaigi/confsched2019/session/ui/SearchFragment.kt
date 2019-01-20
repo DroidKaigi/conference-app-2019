@@ -35,10 +35,10 @@ import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSearchBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SearchActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.store.SearchStore
 import io.github.droidkaigi.confsched2019.session.ui.item.ServiceSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeakerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeechSessionItem
+import io.github.droidkaigi.confsched2019.session.ui.store.SearchStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
@@ -59,8 +59,6 @@ class SearchFragment : DaggerFragment() {
     }
     @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
 
-    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -78,6 +76,7 @@ class SearchFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.searchRecycler.adapter = groupAdapter
         sessionContentsStore.sessionContents.changed(viewLifecycleOwner) { contents ->
             searchActionCreator.search(
@@ -92,7 +91,8 @@ class SearchFragment : DaggerFragment() {
                 val speakers = result.speakers.map {
                     speakerItemFactory.create(
                         it,
-                        SearchFragmentDirections.actionSearchToSpeaker(it.id)
+                        SearchFragmentDirections.actionSearchToSpeaker(it.id),
+                        result.query
                     )
                 }.sortedBy { it.speaker.name.toUpperCase() }
                 addAll(speakers)
@@ -108,7 +108,8 @@ class SearchFragment : DaggerFragment() {
                                 SearchFragmentDirections.actionSearchToSessionDetail(
                                     session.id
                                 ),
-                                false
+                                false,
+                                result.query
                             )
                         is Session.ServiceSession ->
                             serviceSessionItemFactory.create(

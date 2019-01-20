@@ -1,10 +1,12 @@
 package io.github.droidkaigi.confsched2019.session.ui
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.children
 import androidx.core.view.forEach
 import androidx.databinding.DataBindingUtil
@@ -34,7 +36,13 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPagesA
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPageStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
+import io.github.droidkaigi.confsched2019.session.ui.widget.AudienceCategoryTagAttributes
+import io.github.droidkaigi.confsched2019.session.ui.widget.CategoryTagAttributes
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
+import io.github.droidkaigi.confsched2019.session.ui.widget.LangSupportTagAttributes
+import io.github.droidkaigi.confsched2019.session.ui.widget.LangTagAttributes
+import io.github.droidkaigi.confsched2019.session.ui.widget.RoomTagAttributes
+import io.github.droidkaigi.confsched2019.session.ui.widget.SessionTagAttributes
 import io.github.droidkaigi.confsched2019.widget.BottomSheetBehavior
 import io.github.droidkaigi.confsched2019.widget.FilterChip
 import io.github.droidkaigi.confsched2019.widget.onCheckedChanged
@@ -101,22 +109,36 @@ class SessionPageFragment : DaggerFragment() {
             applyFilters()
         }
         sessionStore.sessionContents.changed(viewLifecycleOwner) { contents ->
+            val overrideTypeface = if (defaultLang() == Lang.JA) {
+                ResourcesCompat.getFont(requireContext(), R.font.notosans_regular)
+            } else {
+                null
+            }
             binding.sessionsFilterRoomChip.setupFilter(
                 contents.rooms,
-                Room::name
+                RoomTagAttributes(requireContext()),
+                null // Always use default typeface for room chips
             )
             binding.sessionsFilterCategoryChip.setupFilter(
-                contents.category
-            ) { category -> category.name.getByLang(defaultLang()) }
+                contents.category,
+                CategoryTagAttributes(requireContext()),
+                overrideTypeface
+            )
             binding.sessionsFilterLangChip.setupFilter(
-                contents.langs
-            ) { lang -> lang.text.getByLang(defaultLang()) }
+                contents.langs,
+                LangTagAttributes(requireContext()),
+                overrideTypeface
+            )
             binding.sessionsFilterLangSupportChip.setupFilter(
-                contents.langSupports
-            ) { langSupport -> langSupport.text.getByLang(defaultLang()) }
+                contents.langSupports,
+                LangSupportTagAttributes(requireContext()),
+                overrideTypeface
+            )
             binding.sessionsFilterAudienceCategoryChip.setupFilter(
-                contents.audienceCategories
-            ) { audienceCategory -> audienceCategory.text.getByLang(defaultLang()) }
+                contents.audienceCategories,
+                AudienceCategoryTagAttributes(requireContext()),
+                overrideTypeface
+            )
         }
         sessionPagesStore.selectedTab.changed(viewLifecycleOwner) {
             if (SessionPage.pages[args.tabIndex] == it) {
@@ -182,7 +204,8 @@ class SessionPageFragment : DaggerFragment() {
 
     private fun <T> ChipGroup.setupFilter(
         items: List<T>,
-        chipText: (T) -> String
+        itemAttributes: SessionTagAttributes<T>,
+        overrideTypeface: Typeface?
     ) {
         children.filterIsInstance<Chip>().forEach { it.setOnCheckedChangeListener(null) }
         removeAllViews()
@@ -194,8 +217,14 @@ class SessionPageFragment : DaggerFragment() {
                     false
                 ) as FilterChip
                 chip.apply {
-                    text = chipText(item)
+                    text = itemAttributes.getText(item)
+                    color = itemAttributes.getBackgroundColor(item)
+                    textColor = itemAttributes.getTextColor(item)
+                    selectedTextColor = itemAttributes.getTextColor(item)
                     tag = item
+                    if (overrideTypeface != null) {
+                        typeface = overrideTypeface
+                    }
                 }
             }
             .forEach {

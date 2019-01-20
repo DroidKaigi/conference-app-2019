@@ -2,7 +2,8 @@
 <resources>
 
     <style name="Widget.App.ChipGroup.SessionFilter" parent="Widget.MaterialComponents.ChipGroup">
-        <item name="chipSpacingVertical">8dp</item>
+        <item name="chipSpacingHorizontal">8dp</item>
+        <item name="chipSpacingVertical">16dp</item>
     </style>
 
     <style name="TabTextAppearance" parent="TextAppearance.App.Body2">

@@ -55,8 +55,10 @@ class SessionDetailFragment : DaggerFragment() {
     private lateinit var progressTimeLatch: ProgressTimeLatch
 
     private lateinit var sessionDetailFragmentArgs: SessionDetailFragmentArgs
-    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
     private var showEllipsis = true
+
+    private val groupAdapter
+        get() = binding.sessionSpeakers.adapter as GroupAdapter<*>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,6 +79,7 @@ class SessionDetailFragment : DaggerFragment() {
 
         sessionDetailFragmentArgs = SessionDetailFragmentArgs.fromBundle(arguments ?: Bundle())
 
+        val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.sessionSpeakers.adapter = groupAdapter
 
         binding.bottomAppBar.replaceMenu(R.menu.menu_session_detail_bottomappbar)
