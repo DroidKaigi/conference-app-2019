@@ -12,6 +12,8 @@ internal abstract class RepositoryModule {
     @Binds
     abstract fun announcementDatabase(impl: DataAnnouncementRepository): AnnouncementRepository
 
+    @Binds abstract fun staffDatabase(impl: DataStaffRepository): StaffRepository
+
     @Module
     internal object Providers
 }

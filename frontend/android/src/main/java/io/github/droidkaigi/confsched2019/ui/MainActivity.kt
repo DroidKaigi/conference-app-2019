@@ -49,6 +49,8 @@ import io.github.droidkaigi.confsched2019.session.ui.TabularFormSessionPagesFrag
 import io.github.droidkaigi.confsched2019.session.ui.TabularFromSessionPagesFragmentModule
 import io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragment
 import io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragmentModule
+import io.github.droidkaigi.confsched2019.staff.ui.StaffSearchFragment
+import io.github.droidkaigi.confsched2019.staff.ui.StaffSearchFragmentModule
 import io.github.droidkaigi.confsched2019.survey.ui.SessionSurveyFragment
 import io.github.droidkaigi.confsched2019.survey.ui.SessionSurveyFragmentModule
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
@@ -230,6 +232,10 @@ abstract class MainActivityModule {
     @PageScope
     @ContributesAndroidInjector(modules = [SessionSurveyFragmentModule::class])
     abstract fun contributeSessionSurveyFragment(): SessionSurveyFragment
+
+    @PageScope
+    @ContributesAndroidInjector(modules = [StaffSearchFragmentModule::class])
+    abstract fun contributeStaffSearchFragment(): StaffSearchFragment
 
     @Module
     companion object {
