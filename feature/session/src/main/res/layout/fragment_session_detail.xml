@@ -284,7 +284,7 @@
                         android:clickable="false"
                         android:enabled="false"
                         android:focusable="false"
-                        android:text="@{speechSession.language.getByLang(lang)}"
+                        android:text="@{speechSession.lang.text.getByLang(lang)}"
                         android:textAppearance="?textAppearanceCaption"
                         android:textColor="@color/white"
                         app:chipBackgroundColor="#7982e1"
