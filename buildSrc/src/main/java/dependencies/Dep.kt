@@ -3,7 +3,7 @@ package dependencies
 @Suppress("unused")
 object Dep {
     object GradlePlugin {
-        val android = "com.android.tools.build:gradle:3.2.1"
+        val android = "com.android.tools.build:gradle:3.3.0"
         val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Kotlin.version}"
         val kotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Kotlin.version}"
         val playServices = "com.google.gms:google-services:4.1.0"
@@ -72,7 +72,7 @@ object Dep {
         val stdlibCommon = "org.jetbrains.kotlin:kotlin-stdlib-common:$version"
         val stdlibJvm = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version"
         val coroutinesVersion = "1.1.0"
-        val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+        val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0-native-1.3.20-eap-100-gradle-5-v2"
         val androidCoroutinesDispatcher =
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
         val coroutinesReactive =
@@ -161,7 +161,7 @@ object Dep {
     }
 
     object Klock {
-        val version = "1.0.0"
+        val version = "1.1.0-eap-100"
         val common = "com.soywiz:klock:$version"
         val jvm = "com.soywiz:klock-jvm:$version"
     }
