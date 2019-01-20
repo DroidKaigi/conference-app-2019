@@ -108,7 +108,8 @@ class SearchFragment : DaggerFragment() {
                                 SearchFragmentDirections.actionSearchToSessionDetail(
                                     session.id
                                 ),
-                                false
+                                false,
+                                result.query
                             )
                         is Session.ServiceSession ->
                             serviceSessionItemFactory.create(
