@@ -10,7 +10,6 @@ import kotlinx.coroutines.channels.map
 import kotlinx.coroutines.channels.take
 import kotlinx.coroutines.channels.takeWhile
 import kotlinx.coroutines.channels.toList
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
@@ -200,7 +199,7 @@ class DispatcherTest {
     }
 
     @Test fun parallelMultipleSendAndReceive_dispatch() {
-        val numActions = 32
+        val numActions = 256
         val sessionContentsList = List<SessionContents>(numActions) { mockk() }
         val terminator: SessionContents = mockk()
         val dispatcher = Dispatcher()
@@ -213,7 +212,6 @@ class DispatcherTest {
             }
             yield() // Make sure subscribe() is called before launchAndDispatch()
             val jobs = sessionContentsList.map { sessionContents ->
-                delay(8) // Need delay not to lose any action and to pass this test
                 launch(Dispatchers.IO) {
                     dispatcher.dispatch(Action.SessionContentsLoaded(sessionContents))
                 }
@@ -228,7 +226,7 @@ class DispatcherTest {
     }
 
     @Test fun parallelMultipleSendAndReceive_launchAndDispatch() {
-        val numActions = 32
+        val numActions = 256
         val sessionContentsList = List<SessionContents>(numActions) { mockk() }
         val terminator: SessionContents = mockk()
         val dispatcher = Dispatcher()
@@ -241,7 +239,6 @@ class DispatcherTest {
             }
             yield() // Make sure subscribe() is called before launchAndDispatch()
             val jobs = sessionContentsList.map { sessionContents ->
-                delay(8) // Need delay not to lose any action and to pass this test
                 launch(Dispatchers.IO) {
                     dispatcher.launchAndDispatch(Action.SessionContentsLoaded(sessionContents))
                 }
