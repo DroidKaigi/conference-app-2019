@@ -92,7 +92,8 @@ class SearchFragment : DaggerFragment() {
                 val speakers = result.speakers.map {
                     speakerItemFactory.create(
                         it,
-                        SearchFragmentDirections.actionSearchToSpeaker(it.id)
+                        SearchFragmentDirections.actionSearchToSpeaker(it.id),
+                        result.query
                     )
                 }.sortedBy { it.speaker.name.toUpperCase() }
                 addAll(speakers)
