@@ -3,7 +3,12 @@ package io.github.droidkaigi.confsched2019
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.hours
 import com.soywiz.klock.minutes
-import io.github.droidkaigi.confsched2019.model.*
+import io.github.droidkaigi.confsched2019.model.Category
+import io.github.droidkaigi.confsched2019.model.Lang
+import io.github.droidkaigi.confsched2019.model.LocaledString
+import io.github.droidkaigi.confsched2019.model.Room
+import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.SessionType
 
 private val startTime =
     DateTime.createAdjusted(2019, 2, 7, 10, 0).toOffsetUnadjusted(9.hours).utc

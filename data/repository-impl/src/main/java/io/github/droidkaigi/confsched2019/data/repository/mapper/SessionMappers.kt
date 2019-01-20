@@ -4,7 +4,13 @@ import com.soywiz.klock.DateTime
 import com.soywiz.klock.hours
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionWithSpeakers
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntity
-import io.github.droidkaigi.confsched2019.model.*
+import io.github.droidkaigi.confsched2019.model.Category
+import io.github.droidkaigi.confsched2019.model.Lang
+import io.github.droidkaigi.confsched2019.model.LocaledString
+import io.github.droidkaigi.confsched2019.model.Room
+import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.SessionType
+import io.github.droidkaigi.confsched2019.model.Speaker
 
 private val jstOffset = 9.hours
 
