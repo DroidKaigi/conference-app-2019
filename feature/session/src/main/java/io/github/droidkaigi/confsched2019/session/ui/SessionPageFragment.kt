@@ -23,7 +23,6 @@ import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LangSupport
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.SessionPage
-import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionPageBinding
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
@@ -34,7 +33,13 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPagesA
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPageStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
+import io.github.droidkaigi.confsched2019.session.ui.widget.AudienceCategoryTagAttributes
+import io.github.droidkaigi.confsched2019.session.ui.widget.CategoryTagAttributes
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
+import io.github.droidkaigi.confsched2019.session.ui.widget.LangSupportTagAttributes
+import io.github.droidkaigi.confsched2019.session.ui.widget.LangTagAttributes
+import io.github.droidkaigi.confsched2019.session.ui.widget.RoomTagAttributes
+import io.github.droidkaigi.confsched2019.session.ui.widget.SessionTagAttributes
 import io.github.droidkaigi.confsched2019.widget.BottomSheetBehavior
 import io.github.droidkaigi.confsched2019.widget.FilterChip
 import io.github.droidkaigi.confsched2019.widget.onCheckedChanged
@@ -103,20 +108,24 @@ class SessionPageFragment : DaggerFragment() {
         sessionStore.sessionContents.changed(viewLifecycleOwner) { contents ->
             binding.sessionsFilterRoomChip.setupFilter(
                 contents.rooms,
-                Room::name
+                RoomTagAttributes(requireContext())
             )
             binding.sessionsFilterCategoryChip.setupFilter(
-                contents.category
-            ) { category -> category.name.getByLang(defaultLang()) }
+                contents.category,
+                CategoryTagAttributes(requireContext())
+            )
             binding.sessionsFilterLangChip.setupFilter(
-                contents.langs
-            ) { lang -> lang.text.getByLang(defaultLang()) }
+                contents.langs,
+                LangTagAttributes(requireContext())
+            )
             binding.sessionsFilterLangSupportChip.setupFilter(
-                contents.langSupports
-            ) { langSupport -> langSupport.text.getByLang(defaultLang()) }
+                contents.langSupports,
+                LangSupportTagAttributes(requireContext())
+            )
             binding.sessionsFilterAudienceCategoryChip.setupFilter(
-                contents.audienceCategories
-            ) { audienceCategory -> audienceCategory.text.getByLang(defaultLang()) }
+                contents.audienceCategories,
+                AudienceCategoryTagAttributes(requireContext())
+            )
         }
         sessionPagesStore.selectedTab.changed(viewLifecycleOwner) {
             if (SessionPage.pages[args.tabIndex] == it) {
@@ -182,7 +191,7 @@ class SessionPageFragment : DaggerFragment() {
 
     private fun <T> ChipGroup.setupFilter(
         items: List<T>,
-        chipText: (T) -> String
+        itemAttributes: SessionTagAttributes<T>
     ) {
         children.filterIsInstance<Chip>().forEach { it.setOnCheckedChangeListener(null) }
         removeAllViews()
@@ -194,7 +203,7 @@ class SessionPageFragment : DaggerFragment() {
                     false
                 ) as FilterChip
                 chip.apply {
-                    text = chipText(item)
+                    text = itemAttributes.getText(item)
                     tag = item
                 }
             }
