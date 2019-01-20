@@ -89,7 +89,7 @@ open class App : DaggerApplication() {
         Timber.plant(CrashlyticsTree())
     }
 
-    inner class CrashlyticsTree : Tree() {
+    class CrashlyticsTree : Tree() {
         override fun performLog(
             priority: Int,
             tag: String?,
