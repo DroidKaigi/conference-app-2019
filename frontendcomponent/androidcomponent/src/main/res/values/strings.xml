@@ -28,4 +28,6 @@
     <string name="notification_title_session_start">Notice of favorite session start</string>
     <string name="notification_message_session_title">%1$s will start soon</string>
     <string name="notification_message_session_start_time">%1$s to %2$s @ %3$s</string>
+    <!-- Tabular Form -->
+    <string name="tabular_form_label">Timetable</string>
 </resources>
