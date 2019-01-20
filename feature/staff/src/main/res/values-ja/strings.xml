@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="staff_search_hint">検索する…</string>
+    <string name="staff_image_description">スタッフ</string>
 </resources>
