@@ -10,6 +10,19 @@ data class SessionFeedback(
     val comment: String,
     val submitted: Boolean
 ) {
+    companion object {
+        val EMPTY = SessionFeedback(
+            sessionId = "",
+            totalEvaluation = 0,
+            relevancy = 0,
+            asExpected = 0,
+            difficulty = 0,
+            knowledgeable = 0,
+            comment = "",
+            submitted = false
+        )
+    }
+
     val fillouted: Boolean
         get() = sessionId.isNotBlank() &&
             totalEvaluation != 0 &&

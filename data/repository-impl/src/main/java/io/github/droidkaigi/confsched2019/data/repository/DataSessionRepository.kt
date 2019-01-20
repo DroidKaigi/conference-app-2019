@@ -6,9 +6,10 @@ import io.github.droidkaigi.confsched2019.data.api.GoogleFormApi
 import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.firestore.Firestore
 import io.github.droidkaigi.confsched2019.data.repository.mapper.toSession
+import io.github.droidkaigi.confsched2019.data.repository.mapper.toSessionFeedback
+import io.github.droidkaigi.confsched2019.model.AudienceCategory
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LangSupport
-import io.github.droidkaigi.confsched2019.model.AudienceCategory
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.model.SessionFeedback
@@ -61,6 +62,16 @@ class DataSessionRepository @Inject constructor(
 
     override suspend fun toggleFavorite(session: Session) {
         firestore.toggleFavorite(session.id)
+    }
+
+    override suspend fun sessionFeedback(session: String): SessionFeedback {
+        return sessionDatabase.sessionFeedbacks()
+            .map { it.toSessionFeedback() }
+            .firstOrNull { it.sessionId == session } ?: SessionFeedback.EMPTY
+    }
+
+    override suspend fun saveSessionFeedback(sessionFeedback: SessionFeedback) {
+        sessionDatabase.saveSessionFeedback(sessionFeedback)
     }
 
     override suspend fun submitSessionFeedback(
