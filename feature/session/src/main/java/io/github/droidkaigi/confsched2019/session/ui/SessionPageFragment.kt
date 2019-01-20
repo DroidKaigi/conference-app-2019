@@ -1,10 +1,12 @@
 package io.github.droidkaigi.confsched2019.session.ui
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.children
 import androidx.core.view.forEach
 import androidx.databinding.DataBindingUtil
@@ -23,6 +25,7 @@ import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LangSupport
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.SessionPage
+import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionPageBinding
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
@@ -106,25 +109,35 @@ class SessionPageFragment : DaggerFragment() {
             applyFilters()
         }
         sessionStore.sessionContents.changed(viewLifecycleOwner) { contents ->
+            val overrideTypeface = if (defaultLang() == Lang.JA) {
+                ResourcesCompat.getFont(requireContext(), R.font.notosans_regular)
+            } else {
+                null
+            }
             binding.sessionsFilterRoomChip.setupFilter(
                 contents.rooms,
-                RoomTagAttributes(requireContext())
+                RoomTagAttributes(requireContext()),
+                null // Always use default typeface for room chips
             )
             binding.sessionsFilterCategoryChip.setupFilter(
                 contents.category,
-                CategoryTagAttributes(requireContext())
+                CategoryTagAttributes(requireContext()),
+                overrideTypeface
             )
             binding.sessionsFilterLangChip.setupFilter(
                 contents.langs,
-                LangTagAttributes(requireContext())
+                LangTagAttributes(requireContext()),
+                overrideTypeface
             )
             binding.sessionsFilterLangSupportChip.setupFilter(
                 contents.langSupports,
-                LangSupportTagAttributes(requireContext())
+                LangSupportTagAttributes(requireContext()),
+                overrideTypeface
             )
             binding.sessionsFilterAudienceCategoryChip.setupFilter(
                 contents.audienceCategories,
-                AudienceCategoryTagAttributes(requireContext())
+                AudienceCategoryTagAttributes(requireContext()),
+                overrideTypeface
             )
         }
         sessionPagesStore.selectedTab.changed(viewLifecycleOwner) {
@@ -191,7 +204,8 @@ class SessionPageFragment : DaggerFragment() {
 
     private fun <T> ChipGroup.setupFilter(
         items: List<T>,
-        itemAttributes: SessionTagAttributes<T>
+        itemAttributes: SessionTagAttributes<T>,
+        overrideTypeface: Typeface?
     ) {
         children.filterIsInstance<Chip>().forEach { it.setOnCheckedChangeListener(null) }
         removeAllViews()
@@ -208,6 +222,9 @@ class SessionPageFragment : DaggerFragment() {
                     textColor = itemAttributes.getTextColor(item)
                     selectedTextColor = itemAttributes.getTextColor(item)
                     tag = item
+                    if (overrideTypeface != null) {
+                        typeface = overrideTypeface
+                    }
                 }
             }
             .forEach {

@@ -8,6 +8,7 @@
         <attr name="android:textColor"/>
         <attr name="android:textSize"/>
         <attr name="android:color"/>
+        <attr name="android:fontFamily"/>
         <attr name="strokeColor"/>
         <attr name="strokeWidth"/>
         <attr name="horizontalPadding" format="dimension"/>

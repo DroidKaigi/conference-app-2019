@@ -23,6 +23,7 @@ import android.graphics.Outline
 import android.graphics.Paint
 import android.graphics.Paint.ANTI_ALIAS_FLAG
 import android.graphics.Paint.Style.STROKE
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.M
@@ -36,6 +37,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Checkable
 import androidx.annotation.ColorInt
 import androidx.core.animation.doOnEnd
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.content.res.getColorOrThrow
 import androidx.core.content.res.getDimensionOrThrow
 import androidx.core.content.res.getDimensionPixelSizeOrThrow
@@ -90,6 +92,13 @@ class FilterChip @JvmOverloads constructor(
         set(value) {
             field = value
             updateContentDescription()
+            requestLayout()
+        }
+
+    var typeface: Typeface?
+        get() = textPaint.typeface
+        set(value) {
+            textPaint.typeface = value
             requestLayout()
         }
 
@@ -166,6 +175,10 @@ class FilterChip @JvmOverloads constructor(
         textPaint = TextPaint(ANTI_ALIAS_FLAG).apply {
             color = textColor
             textSize = a.getDimensionOrThrow(R.styleable.FilterChip_android_textSize)
+            val font = a.getResourceId(R.styleable.FilterChip_android_fontFamily, 0)
+            if (font != 0) {
+                typeface = ResourcesCompat.getFont(context, font)
+            }
         }
         dotPaint = Paint(ANTI_ALIAS_FLAG)
         color = a.getColor(R.styleable.FilterChip_android_color, 0)
