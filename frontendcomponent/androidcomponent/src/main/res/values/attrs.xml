@@ -8,12 +8,16 @@
         <attr name="android:textColor"/>
         <attr name="android:textSize"/>
         <attr name="android:color"/>
-        <attr name="android:padding"/>
+        <attr name="android:fontFamily"/>
         <attr name="strokeColor"/>
         <attr name="strokeWidth"/>
+        <attr name="horizontalPadding" format="dimension"/>
+        <attr name="verticalPadding" format="dimension"/>
         <attr name="selectedTextColor" format="color"/>
         <attr name="clearIcon" format="reference"/>
         <attr name="foreground" format="reference"/>
         <attr name="showIcons" format="boolean"/>
+        <attr name="dotSize" format="dimension"/>
+        <attr name="dotPadding" format="dimension"/>
     </declare-styleable>
 </resources>
