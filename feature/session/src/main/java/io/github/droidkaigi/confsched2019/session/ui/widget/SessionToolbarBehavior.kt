@@ -2,7 +2,6 @@ package io.github.droidkaigi.confsched2019.session.ui.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.LinearLayout
@@ -16,17 +15,16 @@ import androidx.core.widget.NestedScrollView
 import io.github.droidkaigi.confsched2019.session.R
 
 class SessionToolbarBehavior(
-    val context: Context? = null,
+    val context: Context,
     attrs: AttributeSet? = null
 ) : CoordinatorLayout.Behavior<LinearLayout>(context, attrs) {
 
     private var sessionTitle: String = ""
     private var hasSetToolbarTitle = false
     private var appCompatTextView: AppCompatTextView? = null
-
     private var mIsAnimation = false
 
-    constructor(context: Context?, attrs: AttributeSet?, sessionTitle: String) : this(
+    constructor(context: Context, attrs: AttributeSet?, sessionTitle: String) : this(
         context,
         attrs
     ) {
@@ -65,13 +63,15 @@ class SessionToolbarBehavior(
             if (nestedScrollView?.canScrollVertically(NEGATIVE_DIRECTION) == false) {
                 appCompatTextView?.let {
                     animateTitle(TOP_TITLE_ANIMATION_ALPHA, TOP_TITLE_ANIMATION_DURATION, it)
-                    animateToolbarElevation(toolbar, TOP_TOOLBAR_ELEVATION)
+                    toolbar.elevation = context.resources.getDimension(R.dimen.session_detail_toolbar_elevation_top) /
+                        context.resources.displayMetrics.density
                 }
             } else {
                 initToolbarTitle(toolbar)
                 appCompatTextView?.let {
                     animateTitle(NO_TOP_TITLE_ANIMATION_ALPHA, NO_TOP_TITLE_ANIMATION_DURATION, it)
-                    animateToolbarElevation(toolbar, NO_TOP_TOOLBAR_ELEVATION)
+                    toolbar.elevation = context.resources.getDimension(R.dimen.session_detail_toolbar_elevation_not_top) /
+                        context.resources.displayMetrics.density
                 }
             }
         }
@@ -84,14 +84,6 @@ class SessionToolbarBehavior(
                 toolbar.children.find { it is AppCompatTextView } as AppCompatTextView
             hasSetToolbarTitle = true
         }
-    }
-
-    private fun animateToolbarElevation(toolbar: Toolbar, dp: Float) {
-        val floatDp = TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP, dp,
-            context?.resources?.displayMetrics
-        )
-        toolbar.elevation = floatDp
     }
 
     private fun animateTitle(
@@ -122,10 +114,8 @@ class SessionToolbarBehavior(
 
         private const val TOP_TITLE_ANIMATION_ALPHA = 0f
         private const val TOP_TITLE_ANIMATION_DURATION = 20L
-        private const val TOP_TOOLBAR_ELEVATION = 0f
 
         private const val NO_TOP_TITLE_ANIMATION_ALPHA = 1f
         private const val NO_TOP_TITLE_ANIMATION_DURATION = 20L
-        private const val NO_TOP_TOOLBAR_ELEVATION = 4f
     }
 }
