@@ -14,17 +14,13 @@ import androidx.core.widget.NestedScrollView
 import io.github.droidkaigi.confsched2019.session.R
 
 class SessionToolbarBehavior(
-    val context: Context
+    private val context: Context,
+    private val sessionTitle: String
 ) : CoordinatorLayout.Behavior<LinearLayout>() {
 
-    private var sessionTitle: String = ""
     private var hasSetToolbarTitle = false
     private var appCompatTextView: AppCompatTextView? = null
     private var mIsAnimation = false
-
-    constructor(context: Context, sessionTitle: String) : this(context) {
-        this.sessionTitle = sessionTitle
-    }
 
     override fun onStartNestedScroll(
         coordinatorLayout: CoordinatorLayout,
