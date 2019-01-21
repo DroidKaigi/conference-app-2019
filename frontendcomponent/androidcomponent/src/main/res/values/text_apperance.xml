@@ -58,6 +58,14 @@
         <item name="android:textColor">@color/gray1</item>
     </style>
 
+    <!-- Notosans Regular-Bold 24sp -->
+    <style name="TextAppearance.NotoSans.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:fontFamily">@font/notosans_regular</item>
+        <item name="fontFamily">@font/notosans_regular</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/gray1</item>
+    </style>
+
     <!-- Lekton-Bold 16sp -->
     <style name="TextAppearance.Lekton.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="android:fontFamily">@font/lekton</item>
