@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.DateTimeSpan
 import com.xwray.groupie.GroupAdapter
+import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.timber.debug
@@ -47,6 +48,7 @@ class SessionsItemDecoration(
     private val cachedDateTimeText = HashMap<DateTime, String>()
 
     private data class TimeText(
+        val dayNumber: Int,
         val text: String,
         val y: Float,
         val fixed: Boolean
@@ -93,7 +95,9 @@ class SessionsItemDecoration(
         adapterPositionToViews.forEach { position, view ->
             val timeText = calcTimeText(position, view) ?: return@forEach
 
-            if (timeText.text == lastTimeText?.text) return@forEach
+            lastTimeText?.let {
+                if (timeText.dayNumber == it.dayNumber && timeText.text == it.text) return@forEach
+            }
             lastTimeText = timeText
 
             c.drawText(
@@ -106,7 +110,11 @@ class SessionsItemDecoration(
             // find next time session from all sessions
             var nextTimePosition = -1
             for (pos in position until groupAdapter.itemCount) {
-                val time = getSessionTime(pos)
+                val session = getSession(pos) ?: break
+                if (session.dayNumber != timeText.dayNumber) {
+                    break
+                }
+                val time = extractSessionTime(session)
                 if (time != timeText.text) {
                     nextTimePosition = pos
                     break
@@ -150,15 +158,19 @@ class SessionsItemDecoration(
     }
 
     private fun calcTimeText(position: Int, view: View): TimeText? {
-        val time = getSessionTime(position) ?: return null
-        val nextTime = getSessionTime(position + 1)
+        val session = getSession(position) ?: return null
+        val nextSession = getSession(position + 1)
+        val time = extractSessionTime(session)
+        val nextTime = nextSession?.let {
+            extractSessionTime(it)
+        }
 
         var y = view.top.coerceAtLeast(0) + textPaddingTop + textSize
-        if (time != nextTime) {
+        if (session.dayNumber != nextSession?.dayNumber || time != nextTime) {
             y = y.coerceAtMost(view.bottom - textPaddingBottom)
         }
         val fixed = y == textPaddingTop + textSize
-        return TimeText(time, y.toFloat(), fixed)
+        return TimeText(session.dayNumber, time, y.toFloat(), fixed)
     }
 
     private fun calcTimeText(parent: RecyclerView, position: Int): TimeText? {
@@ -167,18 +179,20 @@ class SessionsItemDecoration(
         return calcTimeText(position, view)
     }
 
-    private fun getSessionTime(position: Int): String? {
+    private fun extractSessionTime(session: Session): String {
+        return cachedDateTimeText[session.startTime]
+            ?: session.startTime.toOffset(displayTimezoneOffset.value)
+                .toString("HH:mm").also {
+                    cachedDateTimeText[session.startTime] = it
+                }
+    }
+
+    private fun getSession(position: Int): Session? {
         val groupAdapter = groupAdapterRef.get() ?: return null
 
         if (position < 0 || position >= groupAdapter.itemCount) {
             return null
         }
-
-        val item = groupAdapter.getItem(position) as? SessionItem ?: return null
-        return cachedDateTimeText[item.session.startTime]
-            ?: item.session.startTime.toOffset(displayTimezoneOffset.value)
-                .toString("HH:mm").also {
-                    cachedDateTimeText[item.session.startTime] = it
-                }
+        return (groupAdapter.getItem(position) as? SessionItem)?.session
     }
 }
