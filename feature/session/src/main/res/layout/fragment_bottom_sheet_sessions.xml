@@ -44,7 +44,7 @@
             android:id="@+id/non_empty_state_view_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="sessions_list_header, sessions_recycler"
+            app:constraint_referenced_ids="sessions_list_header, sessions_recycler_wrapper"
             app:visibleGone="@{!safeUnbox(shouldShowEmptyStateView)}"
             />
 
@@ -118,18 +118,25 @@
             app:layout_constraintTop_toBottomOf="@id/sessions_list_header"
             />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/sessions_recycler"
-            android:orientation="vertical"
+        <FrameLayout
+            android:id="@+id/sessions_recycler_wrapper"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/sessions_list_header"
-            tools:listitem="@layout/item_session"
-            />
+            >
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/sessions_recycler"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_session"
+                />
+        </FrameLayout>
+
 
         <LinearLayout
             android:id="@+id/sessions_empty_state_view"
