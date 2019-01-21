@@ -36,8 +36,6 @@ class AnnouncementFragment : DaggerFragment() {
 
     private lateinit var progressTimeLatch: ProgressTimeLatch
 
-    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,6 +52,7 @@ class AnnouncementFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.announcementRecycler.adapter = groupAdapter
 
         progressTimeLatch = ProgressTimeLatch { showProgress ->

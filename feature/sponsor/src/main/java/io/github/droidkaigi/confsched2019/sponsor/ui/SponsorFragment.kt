@@ -16,13 +16,13 @@ import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.item.DividerItem
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.Sponsor
 import io.github.droidkaigi.confsched2019.model.SponsorCategory
 import io.github.droidkaigi.confsched2019.sponsor.R
 import io.github.droidkaigi.confsched2019.sponsor.databinding.FragmentSponsorBinding
 import io.github.droidkaigi.confsched2019.sponsor.ui.actioncreator.SponsorActionCreator
-import io.github.droidkaigi.confsched2019.sponsor.ui.item.DividerItem
 import io.github.droidkaigi.confsched2019.sponsor.ui.item.HeaderItem
 import io.github.droidkaigi.confsched2019.sponsor.ui.item.SponsorItem
 import io.github.droidkaigi.confsched2019.sponsor.ui.item.TallSponsorItem
@@ -47,7 +47,8 @@ class SponsorFragment : DaggerFragment() {
 
     private lateinit var progressTimeLatch: ProgressTimeLatch
 
-    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
+    private val groupAdapter
+        get() = binding.sponsorRecycler.adapter as GroupAdapter<*>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,6 +66,8 @@ class SponsorFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val groupAdapter = GroupAdapter<ViewHolder<*>>()
+
         groupAdapter.spanCount = 2
 
         binding.sponsorRecycler.layoutManager = GridLayoutManager(

@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "session_feedback")
-data class SessionFeedbackImpl(
+data class SessionFeedbackEntityImpl(
     @PrimaryKey @ColumnInfo(name = "session_id", index = true) override var sessionId: String,
     @ColumnInfo(name = "total_evaluation") override val totalEvaluation: Int,
     override val relevancy: Int,
@@ -14,4 +14,4 @@ data class SessionFeedbackImpl(
     override val knowledgeable: Int,
     override val comment: String,
     override val submitted: Boolean
-) : SessionFeedback
+) : SessionFeedbackEntity

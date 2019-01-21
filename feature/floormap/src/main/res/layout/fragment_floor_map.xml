@@ -28,7 +28,7 @@
             app:layout_constraintBottom_toTopOf="@+id/floorMapViewPager"
             />
 
-        <androidx.viewpager.widget.ViewPager
+        <io.github.droidkaigi.confsched2019.floormap.ui.FixedViewPager
             android:id="@+id/floorMapViewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"

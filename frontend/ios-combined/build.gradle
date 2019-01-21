@@ -31,18 +31,18 @@ kotlin {
                 projectsList.forEach {
                     project(it).configurations.all { c ->
                         if (c.name == "commonMainApi") {
-                            c.dependencies.all {
+                            c.dependencies.all { dep ->
                                 // note: Avoid dependencies for this project's modules like a `api project(":model")`.
                                 //       Already these classes are included via `srcDir`,
                                 //       so adding dependencies for projects causes compile error by double declaration.
-                                if (!it.group.startsWith("conference-app-2019")) {
-                                    api it
+                                if (!(dep instanceof ProjectDependency)) {
+                                    api dep
                                 }
                             }
                         } else if (c.name == "commonMainImplementation") {
-                            c.dependencies.all {
-                                if (!it.group.startsWith("conference-app-2019")) {
-                                    implementation it
+                            c.dependencies.all { dep ->
+                                if (!(dep instanceof ProjectDependency)) {
+                                    implementation dep
                                 }
                             }
                         }
@@ -59,15 +59,15 @@ kotlin {
                 projectsList.forEach {
                     project(it).configurations.all { c ->
                         if (c.name == "iOSMainApi") {
-                            c.dependencies.all {
-                                if (!it.group.startsWith("conference-app-2019")) {
-                                    api it
+                            c.dependencies.all { dep ->
+                                if (!(dep instanceof ProjectDependency)) {
+                                    api dep
                                 }
                             }
                         } else if (c.name == "iOSMainImplementation") {
-                            c.dependencies.all {
-                                if (!it.group.startsWith("conference-app-2019")) {
-                                    implementation it
+                            c.dependencies.all { dep ->
+                                if (!(dep instanceof ProjectDependency)) {
+                                    implementation dep
                                 }
                             }
                         }

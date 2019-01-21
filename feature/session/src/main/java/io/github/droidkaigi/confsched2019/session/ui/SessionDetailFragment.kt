@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import android.widget.TextView
-import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.text.buildSpannedString
@@ -31,7 +30,8 @@ import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.afterMeasured
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.LoadingState
-import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.ServiceSession
+import io.github.droidkaigi.confsched2019.model.SpeechSession
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionDetailBinding
@@ -58,8 +58,10 @@ class SessionDetailFragment : DaggerFragment() {
     private lateinit var progressTimeLatch: ProgressTimeLatch
 
     private lateinit var sessionDetailFragmentArgs: SessionDetailFragmentArgs
-    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
     private var showEllipsis = true
+
+    private val groupAdapter
+        get() = binding.sessionSpeakers.adapter as GroupAdapter<*>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,6 +82,7 @@ class SessionDetailFragment : DaggerFragment() {
 
         sessionDetailFragmentArgs = SessionDetailFragmentArgs.fromBundle(arguments ?: Bundle())
 
+        val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.sessionSpeakers.adapter = groupAdapter
 
         binding.sessionToolbar.setNavigationOnClickListener {
@@ -98,12 +101,11 @@ class SessionDetailFragment : DaggerFragment() {
                         )
                     )
                 }
-                R.id.session_place ->
-                    Toast.makeText(
-                        requireContext(),
-                        "not implemented yet",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                R.id.session_place -> {
+                    navController.navigate(
+                        SessionDetailFragmentDirections.actionSessionDetailToFloormap()
+                    )
+                }
             }
             return@setOnMenuItemClickListener true
         }
@@ -153,16 +155,16 @@ class SessionDetailFragment : DaggerFragment() {
         }
 
         binding.sessionGoToSurvey.setOnClickListener {
-            val session = binding.session ?: return@setOnClickListener
+            val session = binding.session as? SpeechSession ?: return@setOnClickListener
             navController.navigate(
                 SessionDetailFragmentDirections.actionSessionDetailToSessionSurvey(
-                    session.id
+                    session
                 )
             )
         }
     }
 
-    private fun applySpeechSessionLayout(session: Session.SpeechSession) {
+    private fun applySpeechSessionLayout(session: SpeechSession) {
         binding.session = session
         binding.speechSession = session
         val lang = defaultLang()
@@ -274,7 +276,7 @@ class SessionDetailFragment : DaggerFragment() {
         }, builderAction)
     }
 
-    private fun applyServiceSessionLayout(session: Session.ServiceSession) {
+    private fun applyServiceSessionLayout(session: ServiceSession) {
         binding.session = session
         binding.serviceSession = session
 

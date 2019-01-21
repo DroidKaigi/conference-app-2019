@@ -14,7 +14,7 @@
 
         <variable
             name="session"
-            type="io.github.droidkaigi.confsched2019.model.Session.SpeechSession"
+            type="io.github.droidkaigi.confsched2019.model.SpeechSession"
             />
 
         <variable
