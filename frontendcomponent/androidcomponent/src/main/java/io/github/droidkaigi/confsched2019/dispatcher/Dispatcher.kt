@@ -4,12 +4,10 @@ import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.ext.android.CoroutinePlugin
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach
-import kotlinx.coroutines.channels.consumes
 import kotlinx.coroutines.channels.produce
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -41,11 +39,10 @@ class Dispatcher @Inject constructor() {
         }
     }
 
-    @UseExperimental(InternalCoroutinesApi::class)
     inline fun <reified E, reified R : E> ReceiveChannel<E>.filterAndCast(
         context: CoroutineContext = Dispatchers.Unconfined
     ): ReceiveChannel<R> =
-        GlobalScope.produce(context, capacity = Channel.UNLIMITED, onCompletion = consumes()) {
+        GlobalScope.produce(context, capacity = Channel.UNLIMITED) {
             consumeEach { e ->
                 (e as? R)?.let { send(it) }
             }
