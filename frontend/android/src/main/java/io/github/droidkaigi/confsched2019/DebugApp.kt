@@ -10,7 +10,6 @@ class DebugApp : App() {
         super.onCreate()
         setupLeakCanary()
         setupStetho()
-        setupLogHandler()
     }
 
     private fun setupLeakCanary() {
@@ -24,7 +23,7 @@ class DebugApp : App() {
         Stetho.initializeWithDefaults(this)
     }
 
-    private fun setupLogHandler() {
+    override fun setupLogHandler() {
         Timber.plant(LogcatTree("droidkaigi"))
     }
 }

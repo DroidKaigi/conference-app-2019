@@ -45,8 +45,12 @@ import io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment
 import io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.SpeakerFragment
 import io.github.droidkaigi.confsched2019.session.ui.SpeakerFragmentModule
+import io.github.droidkaigi.confsched2019.session.ui.TabularFormSessionPagesFragment
+import io.github.droidkaigi.confsched2019.session.ui.TabularFromSessionPagesFragmentModule
 import io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragment
 import io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragmentModule
+import io.github.droidkaigi.confsched2019.staff.ui.StaffSearchFragment
+import io.github.droidkaigi.confsched2019.staff.ui.StaffSearchFragmentModule
 import io.github.droidkaigi.confsched2019.survey.ui.SessionSurveyFragment
 import io.github.droidkaigi.confsched2019.survey.ui.SessionSurveyFragmentModule
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
@@ -203,6 +207,12 @@ abstract class MainActivityModule {
 
     @PageScope
     @ContributesAndroidInjector(
+        modules = [TabularFromSessionPagesFragmentModule::class, SessionAssistedInjectModule::class]
+    )
+    abstract fun contributeTabularFormSessionPagesFragment(): TabularFormSessionPagesFragment
+
+    @PageScope
+    @ContributesAndroidInjector(
         modules = [AboutFragmentModule::class]
     )
     abstract fun contributeAboutFragment(): AboutFragment
@@ -222,6 +232,10 @@ abstract class MainActivityModule {
     @PageScope
     @ContributesAndroidInjector(modules = [SessionSurveyFragmentModule::class])
     abstract fun contributeSessionSurveyFragment(): SessionSurveyFragment
+
+    @PageScope
+    @ContributesAndroidInjector(modules = [StaffSearchFragmentModule::class])
+    abstract fun contributeStaffSearchFragment(): StaffSearchFragment
 
     @Module
     companion object {

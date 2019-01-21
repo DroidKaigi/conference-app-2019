@@ -54,7 +54,6 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
         InjectedViewModelProviders.of(requireActivity()).get(sessionPagesStoreProvider)
     }
 
-    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
     private val args: BottomSheetDaySessionsFragmentArgs by lazy {
         BottomSheetDaySessionsFragmentArgs.fromBundle(arguments ?: Bundle())
     }
@@ -72,6 +71,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.sessionsRecycler.apply {
             adapter = groupAdapter
             addItemDecoration(
@@ -108,7 +108,8 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                                 session,
                                 SessionPagesFragmentDirections.actionSessionToSessionDetail(
                                     session.id
-                                )
+                                ),
+                                true
                             )
                     }
                 }

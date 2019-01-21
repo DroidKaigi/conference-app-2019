@@ -43,6 +43,7 @@ allprojects {
         maven { url "https://dl.bintray.com/kotlin/ktor" }
         maven { url "https://dl.bintray.com/soywiz/soywiz" }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+        maven { url "https://jitpack.io" }
     }
     tasks.matching { it instanceof Test }.all {
         testLogging {
@@ -103,6 +104,11 @@ allprojects {
                     details.useVersion '1.0.0-beta02'
                 }
             }
+        }
+    }
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xmaxerrs" << "300"
         }
     }
 }

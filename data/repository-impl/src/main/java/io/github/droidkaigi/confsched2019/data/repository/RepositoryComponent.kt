@@ -7,6 +7,7 @@ import io.github.droidkaigi.confsched2019.data.api.GoogleFormApi
 import io.github.droidkaigi.confsched2019.data.db.AnnouncementDatabase
 import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.db.SponsorDatabase
+import io.github.droidkaigi.confsched2019.data.db.StaffDatabase
 import io.github.droidkaigi.confsched2019.data.firestore.Firestore
 import javax.inject.Singleton
 
@@ -20,6 +21,7 @@ interface RepositoryComponent {
     fun sessionRepository(): SessionRepository
     fun sponsorRepository(): SponsorRepository
     fun announcementRepository(): AnnouncementRepository
+    fun staffRepository(): StaffRepository
 
     @Component.Builder
     interface Builder {
@@ -30,6 +32,7 @@ interface RepositoryComponent {
         @BindsInstance fun database(database: SessionDatabase): Builder
         @BindsInstance fun sponsorDatabase(database: SponsorDatabase): Builder
         @BindsInstance fun announcementDatabase(database: AnnouncementDatabase): Builder
+        @BindsInstance fun staffDatabase(database: StaffDatabase): Builder
 
         @BindsInstance fun firestore(firestore: Firestore): Builder
 

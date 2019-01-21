@@ -23,6 +23,7 @@ import android.graphics.Outline
 import android.graphics.Paint
 import android.graphics.Paint.ANTI_ALIAS_FLAG
 import android.graphics.Paint.Style.STROKE
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.M
@@ -36,6 +37,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Checkable
 import androidx.annotation.ColorInt
 import androidx.core.animation.doOnEnd
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.content.res.getColorOrThrow
 import androidx.core.content.res.getDimensionOrThrow
 import androidx.core.content.res.getDimensionPixelSizeOrThrow
@@ -56,7 +58,7 @@ class FilterChip @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr), Checkable {
 
-    var color: Int = 0
+    @ColorInt var color: Int = 0
         set(value) {
             if (field != value) {
                 field = value
@@ -65,12 +67,38 @@ class FilterChip @JvmOverloads constructor(
             }
         }
 
-    var selectedTextColor: Int? = null
+    @ColorInt var textColor: Int = 0
+        set(value) {
+            if (field != value) {
+                field = value
+                postInvalidateOnAnimation()
+            }
+        }
+
+    @ColorInt var selectedTextColor: Int? = null
+        set(value) {
+            if (field != value) {
+                field = value
+                if (value != null) {
+                    clear = clear.mutate().apply {
+                        setTint(value)
+                    }
+                }
+                postInvalidateOnAnimation()
+            }
+        }
 
     var text: CharSequence = ""
         set(value) {
             field = value
             updateContentDescription()
+            requestLayout()
+        }
+
+    var typeface: Typeface?
+        get() = textPaint.typeface
+        set(value) {
+            textPaint.typeface = value
             requestLayout()
         }
 
@@ -100,7 +128,11 @@ class FilterChip @JvmOverloads constructor(
             }
         }
 
-    private val padding: Int
+    private val horizontalPadding: Int
+
+    private val verticalPadding: Int
+
+    private val dotPadding: Int
 
     private val outlinePaint: Paint
 
@@ -108,7 +140,9 @@ class FilterChip @JvmOverloads constructor(
 
     private val dotPaint: Paint
 
-    private val clear: Drawable
+    private var clear: Drawable
+
+    private val dotSize: Float
 
     private val touchFeedback: Drawable
 
@@ -118,8 +152,6 @@ class FilterChip @JvmOverloads constructor(
 
     private val interp =
         AnimationUtils.loadInterpolator(context, android.R.interpolator.fast_out_slow_in)
-
-    @ColorInt private val defaultTextColor: Int
 
     init {
         val a = context.obtainStyledAttributes(
@@ -133,34 +165,43 @@ class FilterChip @JvmOverloads constructor(
             strokeWidth = a.getDimensionOrThrow(R.styleable.FilterChip_strokeWidth)
             style = STROKE
         }
-        defaultTextColor = a.getColorOrThrow(R.styleable.FilterChip_android_textColor)
-        selectedTextColor = a.getColor(R.styleable.FilterChip_selectedTextColor, 0)
-        textPaint = TextPaint(ANTI_ALIAS_FLAG).apply {
-            color = defaultTextColor
-            textSize = a.getDimensionOrThrow(R.styleable.FilterChip_android_textSize)
-        }
-        dotPaint = Paint(ANTI_ALIAS_FLAG)
-        color = a.getColor(R.styleable.FilterChip_android_color, 0)
         clear = a.getDrawableOrThrow(R.styleable.FilterChip_clearIcon).apply {
             setBounds(
                 -intrinsicWidth / 2, -intrinsicHeight / 2, intrinsicWidth / 2, intrinsicHeight / 2
             )
         }
+        textColor = a.getColorOrThrow(R.styleable.FilterChip_android_textColor)
+        selectedTextColor = a.getColor(R.styleable.FilterChip_selectedTextColor, 0)
+        textPaint = TextPaint(ANTI_ALIAS_FLAG).apply {
+            color = textColor
+            textSize = a.getDimensionOrThrow(R.styleable.FilterChip_android_textSize)
+            val font = a.getResourceId(R.styleable.FilterChip_android_fontFamily, 0)
+            if (font != 0) {
+                typeface = ResourcesCompat.getFont(context, font)
+            }
+        }
+        dotPaint = Paint(ANTI_ALIAS_FLAG)
+        color = a.getColor(R.styleable.FilterChip_android_color, 0)
         touchFeedback = a.getDrawableOrThrow(R.styleable.FilterChip_foreground).apply {
             callback = this@FilterChip
         }
-        padding = a.getDimensionPixelSizeOrThrow(R.styleable.FilterChip_android_padding)
+        horizontalPadding = a.getDimensionPixelSizeOrThrow(R.styleable.FilterChip_horizontalPadding)
+        verticalPadding = a.getDimensionPixelSizeOrThrow(R.styleable.FilterChip_verticalPadding)
+        dotPadding = a.getDimensionPixelSizeOrThrow(R.styleable.FilterChip_dotPadding)
         isChecked = a.getBoolean(R.styleable.FilterChip_android_checked, false)
         showIcons = a.getBoolean(R.styleable.FilterChip_showIcons, true)
+        dotSize = a.getDimensionOrThrow(R.styleable.FilterChip_dotSize)
         a.recycle()
         clipToOutline = true
         setOnClickListener { toggleWithAnimation() }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val nonTextWidth = (4 * padding) +
+        val nonTextWidth = 2 * (horizontalPadding + dotPadding) +
             (2 * outlinePaint.strokeWidth).toInt() +
-            if (showIcons) clear.intrinsicWidth else 0
+            if (showIcons) maxOf(clear.intrinsicWidth, dotSize.toInt()) else 0
+        val nonTextHeight = (2 * verticalPadding) +
+            (2 * outlinePaint.strokeWidth).toInt()
         val availableTextWidth = when (MeasureSpec.getMode(widthMeasureSpec)) {
             MeasureSpec.EXACTLY -> MeasureSpec.getSize(widthMeasureSpec) - nonTextWidth
             MeasureSpec.AT_MOST -> MeasureSpec.getSize(widthMeasureSpec) - nonTextWidth
@@ -168,8 +209,8 @@ class FilterChip @JvmOverloads constructor(
             else -> Int.MAX_VALUE
         }
         createLayout(availableTextWidth)
-        val w = nonTextWidth + textLayout.textWidth()
-        val h = padding + textLayout.height + padding
+        val w = maxOf(nonTextWidth + textLayout.textWidth(), suggestedMinimumWidth)
+        val h = maxOf(nonTextHeight + textLayout.height, suggestedMinimumHeight)
         setMeasuredDimension(w, h)
         outlineProvider = object : ViewOutlineProvider() {
             override fun getOutline(view: View, outline: Outline) {
@@ -181,7 +222,6 @@ class FilterChip @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         val strokeWidth = outlinePaint.strokeWidth
-        val iconRadius = clear.intrinsicWidth / 2f
         val halfStroke = strokeWidth / 2f
         val rounding = (height - strokeWidth) / 2f
 
@@ -200,13 +240,19 @@ class FilterChip @JvmOverloads constructor(
 
         // Tag color dot/background
         if (showIcons) {
+            val defaultDotRadius = dotSize / 2f
             // Draws beyond bounds and relies on clipToOutline to enforce pill shape
             val dotRadius = lerp(
-                strokeWidth + iconRadius,
+                defaultDotRadius,
                 width.toFloat(),
                 progress
             )
-            canvas.drawCircle(strokeWidth + padding + iconRadius, height / 2f, dotRadius, dotPaint)
+            canvas.drawCircle(
+                strokeWidth + horizontalPadding + defaultDotRadius,
+                height / 2f,
+                dotRadius,
+                dotPaint
+            )
         } else {
             canvas.drawRoundRect(
                 halfStroke,
@@ -222,22 +268,23 @@ class FilterChip @JvmOverloads constructor(
         // Text
         val textX = if (showIcons) {
             lerp(
-                strokeWidth + padding + clear.intrinsicWidth + padding,
-                strokeWidth + padding * 2f,
+                strokeWidth + horizontalPadding + dotSize + dotPadding,
+                strokeWidth + horizontalPadding + dotPadding,
                 progress
             )
         } else {
-            strokeWidth + padding * 2f
+            strokeWidth + horizontalPadding + dotPadding
         }
         val selectedColor = selectedTextColor
         textPaint.color = if (selectedColor != null && selectedColor != 0 && progress > 0) {
-            ColorUtils.blendARGB(defaultTextColor, selectedColor, progress)
+            ColorUtils.blendARGB(textColor, selectedColor, progress)
         } else {
-            defaultTextColor
+            textColor
         }
         canvas.withTranslation(
             x = textX,
-            y = (height - textLayout.height) / 2f
+            // `textLayout.lastLineDescent / 4f` is dirty but effective position adjustment for Lekton...
+            y = (height - (textLayout.height - textLayout.lastLineDescent / 4f)) / 2f
         ) {
             textLayout.draw(canvas)
         }
@@ -245,7 +292,7 @@ class FilterChip @JvmOverloads constructor(
         // Clear icon
         if (showIcons && progress > 0f) {
             canvas.withTranslation(
-                x = width - strokeWidth - padding - iconRadius,
+                x = width - strokeWidth - horizontalPadding - clear.intrinsicWidth / 2,
                 y = height / 2f
             ) {
                 canvas.withScale(progress, progress) {
@@ -345,6 +392,9 @@ class FilterChip @JvmOverloads constructor(
         }
         return width.toInt()
     }
+
+    private val StaticLayout.lastLineDescent: Int
+        get() = getLineDescent(lineCount - 1)
 
     interface OnCheckedChangeListener {
         fun onCheckedChanged(chip: FilterChip, isChecked: Boolean)

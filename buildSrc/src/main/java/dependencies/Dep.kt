@@ -188,4 +188,8 @@ object Dep {
         val jdk = "com.jakewharton.timber:timber-jdk:5.0.0-SNAPSHOT"
         val android = "com.jakewharton.timber:timber-android:5.0.0-SNAPSHOT"
     }
+
+    object PhotoView {
+        val photoview =  "com.github.chrisbanes:PhotoView:2.3.0"
+    }
 }

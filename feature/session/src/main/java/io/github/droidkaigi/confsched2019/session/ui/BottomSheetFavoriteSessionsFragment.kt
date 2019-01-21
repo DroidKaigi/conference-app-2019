@@ -59,7 +59,8 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
         InjectedViewModelProviders.of(requireActivity()).get(sessionPagesStoreProvider)
     }
 
-    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
+    private val groupAdapter
+        get() = binding.sessionsRecycler.adapter as GroupAdapter<*>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -74,6 +75,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.sessionsRecycler.apply {
             adapter = groupAdapter
             addItemDecoration(
@@ -117,7 +119,8 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
                                 session,
                                 SessionPagesFragmentDirections.actionSessionToSessionDetail(
                                     session.id
-                                )
+                                ),
+                                true
                             )
                     }
                 }

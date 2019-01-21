@@ -10,7 +10,7 @@ apply from: rootProject.file('gradle/android.gradle')
 android.dataBinding.enabled = true
 android {
     defaultConfig {
-        resValue "string", "version_name", Versions.androidVersionName
+        resValue "string", "version_name_with_commit_hash", "${Versions.androidVersionName} (${commitHash})"
     }
 }
 
@@ -53,4 +53,8 @@ dependencies {
     testImplementation Dep.Test.junit
     androidTestImplementation Dep.Test.testRunner
     androidTestImplementation Dep.Test.espressoCore
+}
+
+static def getCommitHash() {
+    'git rev-parse --short HEAD'.execute().text.trim()
 }

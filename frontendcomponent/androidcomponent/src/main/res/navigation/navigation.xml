@@ -55,6 +55,10 @@
             android:id="@+id/action_session_detail_to_session_survey"
             app:destination="@id/session_survey"
             />
+        <action
+            android:id="@+id/action_session_detail_to_floormap"
+            app:destination="@id/floormap"
+            />
         <deepLink app:uri="droidkaigi.jp/2019/timetable/{session}/"/>
         <deepLink app:uri="droidkaigi.jp/2019/timetable/{session}"/>
         <deepLink app:uri="droidkaigi.jp/2019/en/timetable/{session}/"/>
@@ -73,6 +77,12 @@
             android:id="@+id/action_search_to_session_detail"
             app:destination="@id/session_detail"
             />
+    </fragment>
+    <fragment
+        android:id="@+id/tabular_form"
+        android:name="io.github.droidkaigi.confsched2019.session.ui.TabularFormSessionPagesFragment"
+        android:label="@string/tabular_form_label"
+        >
     </fragment>
     <fragment
         android:id="@+id/speaker"
@@ -134,4 +144,9 @@
         android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
         >
     </activity>
+    <fragment
+        android:id="@+id/staff_search"
+        android:name="io.github.droidkaigi.confsched2019.staff.ui.StaffSearchFragment"
+        android:label="@string/staff_search_label"
+        />
 </navigation>

@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.text.buildSpannedString
 import androidx.core.text.color
@@ -20,6 +19,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
+import androidx.transition.TransitionManager
 import com.soywiz.klock.DateTimeSpan
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
@@ -54,8 +54,10 @@ class SessionDetailFragment : DaggerFragment() {
     private lateinit var progressTimeLatch: ProgressTimeLatch
 
     private lateinit var sessionDetailFragmentArgs: SessionDetailFragmentArgs
-    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
     private var showEllipsis = true
+
+    private val groupAdapter
+        get() = binding.sessionSpeakers.adapter as GroupAdapter<*>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,6 +78,7 @@ class SessionDetailFragment : DaggerFragment() {
 
         sessionDetailFragmentArgs = SessionDetailFragmentArgs.fromBundle(arguments ?: Bundle())
 
+        val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.sessionSpeakers.adapter = groupAdapter
 
         binding.bottomAppBar.replaceMenu(R.menu.menu_session_detail_bottomappbar)
@@ -90,12 +93,11 @@ class SessionDetailFragment : DaggerFragment() {
                         )
                     )
                 }
-                R.id.session_place ->
-                    Toast.makeText(
-                        requireContext(),
-                        "not implemented yet",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                R.id.session_place -> {
+                    navController.navigate(
+                        SessionDetailFragmentDirections.actionSessionDetailToFloormap()
+                    )
+                }
             }
             return@setOnMenuItemClickListener true
         }
@@ -210,6 +212,7 @@ class SessionDetailFragment : DaggerFragment() {
                 val ellipsis = getString(R.string.ellipsis_label)
                 val ellipsisColor = ContextCompat.getColor(requireContext(), R.color.colorSecondary)
                 val onClickListener = {
+                    TransitionManager.beginDelayedTransition(binding.sessionLayout)
                     val session = binding.speechSession?.desc
                     binding.sessionDescription.text = session
                     showEllipsis = !showEllipsis
