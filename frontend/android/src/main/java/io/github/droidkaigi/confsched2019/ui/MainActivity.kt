@@ -1,5 +1,6 @@
 package io.github.droidkaigi.confsched2019.ui
 
+import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.MenuItem
@@ -169,6 +170,12 @@ class MainActivity : DaggerAppCompatActivity() {
             // drawer close
             if (binding.drawerLayout.isDrawerOpen(binding.navView)) {
                 binding.drawerLayout.closeDrawer(binding.navView)
+            }
+            // to avoid flickering, set current fragment background color to white
+            // see https://github.com/DroidKaigi/conference-app-2019/pull/521
+            supportFragmentManager.findFragmentById(R.id.root_nav_host_fragment)?.let { host ->
+                host.childFragmentManager
+                    .primaryNavigationFragment?.view?.setBackgroundColor(Color.WHITE)
             }
             // navigate
             val handled = handleNavigation(item)
