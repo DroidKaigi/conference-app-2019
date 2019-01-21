@@ -358,6 +358,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_tags"
+                    app:visibleGone="@{session.isFinished}"
                     />
 
 
@@ -370,6 +371,7 @@
                     android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_title"
                     app:layout_constraintTop_toBottomOf="@id/divider_top_survey"
+                    app:visibleGone="@{session.isFinished}"
                     />
 
                 <TextView
@@ -381,6 +383,7 @@
                     android:textColor="@color/colorSecondary"
                     app:layout_constraintBaseline_toBaselineOf="@id/session_survey_title"
                     app:layout_constraintEnd_toEndOf="@id/session_title"
+                    app:visibleGone="@{session.isFinished}"
                     />
 
                 <ImageView
