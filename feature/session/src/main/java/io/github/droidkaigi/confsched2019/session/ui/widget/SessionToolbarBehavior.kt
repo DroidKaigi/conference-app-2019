@@ -54,15 +54,17 @@ class SessionToolbarBehavior(
             if (nestedScrollView?.canScrollVertically(NEGATIVE_DIRECTION) == false) {
                 textView?.let {
                     animateTitle(TOP_TITLE_ANIMATION_ALPHA, it)
-                    toolbar.elevation = context.resources.getDimension(R.dimen.session_detail_toolbar_elevation_top) /
-                        context.resources.displayMetrics.density
+                    toolbar.elevation = context.resources.getDimension(
+                        R.dimen.session_detail_toolbar_elevation_top
+                    ) / context.resources.displayMetrics.density
                 }
             } else {
                 setToolbarTitle()
                 textView?.let {
                     animateTitle(NO_TOP_TITLE_ANIMATION_ALPHA, it)
-                    toolbar.elevation = context.resources.getDimension(R.dimen.session_detail_toolbar_elevation_not_top) /
-                        context.resources.displayMetrics.density
+                    toolbar.elevation = context.resources.getDimension(
+                        R.dimen.session_detail_toolbar_elevation_not_top
+                    ) / context.resources.displayMetrics.density
                 }
             }
         }

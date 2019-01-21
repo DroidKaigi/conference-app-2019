@@ -8,7 +8,6 @@ import android.text.style.ClickableSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.view.animation.OvershootInterpolator
 import android.widget.TextView
 import android.widget.Toast
@@ -211,15 +210,20 @@ class SessionDetailFragment : DaggerFragment() {
         }
 
         (binding.toolbarParent.layoutParams as CoordinatorLayout.LayoutParams).behavior =
-            SessionToolbarBehavior(requireContext(), binding.sessionToolbar, session.title.getByLang(lang))
+            SessionToolbarBehavior(
+                requireContext(),
+                binding.sessionToolbar,
+                session.title.getByLang(lang)
+            )
         // To setup the toolbar when it's backed from a speaker page.
         binding.scrollView.afterMeasured {
             if (binding.scrollView.scrollY != 0) {
                 val resources = context?.resources
                 resources?.let {
                     with(binding.sessionToolbar) {
-                        elevation = it.getDimension(R.dimen.session_detail_toolbar_elevation_not_top) /
-                            it.displayMetrics.density
+                        elevation = it.getDimension(
+                            R.dimen.session_detail_toolbar_elevation_not_top
+                        ) / it.displayMetrics.density
                         title = session.title.getByLang(lang)
                     }
                 }
