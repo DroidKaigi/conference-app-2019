@@ -111,7 +111,10 @@ class BottomSheetBehavior<V : View> : Behavior<V> {
     }
 
     /** The current state of the bottom sheet, backing property */
-    private var _state = STATE_COLLAPSED
+    // **  Start DroidKaigi Modify **
+    // Set default value to STATE_EXPANDED
+    private var _state = STATE_EXPANDED
+    // ** End DroidKaigi Modify **
     /** The current state of the bottom sheet */
     @State
     var state
