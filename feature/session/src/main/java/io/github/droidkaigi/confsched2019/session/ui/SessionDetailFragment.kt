@@ -91,7 +91,9 @@ class SessionDetailFragment : DaggerFragment() {
                     )
                 }
                 R.id.session_place -> {
-                    navController.navigate(SessionDetailFragmentDirections.actionSessionDetailToFloormap())
+                    navController.navigate(
+                        SessionDetailFragmentDirections.actionSessionDetailToFloormap()
+                    )
                 }
             }
             return@setOnMenuItemClickListener true
