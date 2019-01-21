@@ -32,6 +32,7 @@ import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragmentModule
 import io.github.droidkaigi.confsched2019.databinding.ActivityMainBinding
 import io.github.droidkaigi.confsched2019.di.PageScope
+import io.github.droidkaigi.confsched2019.di.ScreenModule
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.floormap.ui.FloorMapFragment
 import io.github.droidkaigi.confsched2019.floormap.ui.FloorMapFragmentModule
@@ -247,7 +248,7 @@ abstract class MainActivityModule {
 
     @Module
     abstract class MainActivityBuilder {
-        @ContributesAndroidInjector(modules = [MainActivityModule::class])
+        @ContributesAndroidInjector(modules = [MainActivityModule::class, ScreenModule::class])
         abstract fun contributeMainActivity(): MainActivity
     }
 }

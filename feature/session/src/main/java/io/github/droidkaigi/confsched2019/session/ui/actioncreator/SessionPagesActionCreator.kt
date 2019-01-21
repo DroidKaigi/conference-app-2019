@@ -13,14 +13,16 @@ import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.system.actioncreator.ErrorHandler
+import io.github.droidkaigi.confsched2019.util.ScreenLifecycle
+import io.github.droidkaigi.confsched2019.util.coroutineScope
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
 @PageScope
 class SessionPagesActionCreator @Inject constructor(
     override val dispatcher: Dispatcher,
-    @PageScope private val lifecycle: Lifecycle
-) : CoroutineScope by lifecycle.coroutineScope,
+    private val screenLifecycle: ScreenLifecycle
+) : CoroutineScope by screenLifecycle.coroutineScope,
     ErrorHandler {
     fun load(sessions: List<Session>) {
         dispatcher.launchAndDispatch(Action.SessionsLoaded(sessions))

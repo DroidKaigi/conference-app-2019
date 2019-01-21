@@ -10,6 +10,8 @@ import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.StaffContents
 import io.github.droidkaigi.confsched2019.model.StaffSearchResult
 import io.github.droidkaigi.confsched2019.system.actioncreator.ErrorHandler
+import io.github.droidkaigi.confsched2019.util.ScreenLifecycle
+import io.github.droidkaigi.confsched2019.util.coroutineScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,8 +20,8 @@ import javax.inject.Inject
 class StaffSearchActionCreator @Inject constructor(
     override val dispatcher: Dispatcher,
     private val staffRepository: StaffRepository,
-    @PageScope private val lifecycle: Lifecycle
-) : CoroutineScope by lifecycle.coroutineScope, ErrorHandler {
+    private val screenLifecycle: ScreenLifecycle
+) : CoroutineScope by screenLifecycle.coroutineScope, ErrorHandler {
 
     fun load() = launch {
         try {

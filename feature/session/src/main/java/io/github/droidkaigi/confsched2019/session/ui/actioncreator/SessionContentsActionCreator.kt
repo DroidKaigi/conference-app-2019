@@ -11,7 +11,9 @@ import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.system.actioncreator.ErrorHandler
+import io.github.droidkaigi.confsched2019.util.ScreenLifecycle
 import io.github.droidkaigi.confsched2019.util.SessionAlarm
+import io.github.droidkaigi.confsched2019.util.coroutineScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -22,9 +24,9 @@ import javax.inject.Inject
 class SessionContentsActionCreator @Inject constructor(
     override val dispatcher: Dispatcher,
     private val sessionRepository: SessionRepository,
-    @PageScope private val lifecycle: Lifecycle,
+    private val screenLifecycle: ScreenLifecycle,
     private val sessionAlarm: SessionAlarm
-) : CoroutineScope by lifecycle.coroutineScope,
+) : CoroutineScope by screenLifecycle.coroutineScope,
     ErrorHandler {
     fun refresh() = launch {
         try {
