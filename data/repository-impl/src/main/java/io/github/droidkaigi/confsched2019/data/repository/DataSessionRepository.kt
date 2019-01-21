@@ -7,7 +7,13 @@ import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.firestore.Firestore
 import io.github.droidkaigi.confsched2019.data.repository.mapper.toSession
 import io.github.droidkaigi.confsched2019.data.repository.mapper.toSessionFeedback
-import io.github.droidkaigi.confsched2019.model.*
+import io.github.droidkaigi.confsched2019.model.AudienceCategory
+import io.github.droidkaigi.confsched2019.model.Lang
+import io.github.droidkaigi.confsched2019.model.LangSupport
+import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.SessionContents
+import io.github.droidkaigi.confsched2019.model.SessionFeedback
+import io.github.droidkaigi.confsched2019.model.SpeechSession
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope

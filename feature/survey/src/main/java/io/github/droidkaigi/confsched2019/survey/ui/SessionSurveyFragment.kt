@@ -118,7 +118,10 @@ class SessionSurveyFragment : DaggerFragment() {
                 if (position == 5) {
                     itemBindng.comment.visibility = View.VISIBLE
                     itemBindng.rating.visibility = View.GONE
-                    itemBindng.comment.setText(sessionSurveyStore.comment, TextView.BufferType.EDITABLE)
+                    itemBindng.comment.setText(
+                        sessionSurveyStore.comment,
+                        TextView.BufferType.EDITABLE
+                    )
                 } else {
                     itemBindng.comment.visibility = View.GONE
                     itemBindng.rating.visibility = View.VISIBLE
@@ -133,11 +136,26 @@ class SessionSurveyFragment : DaggerFragment() {
 
                 itemBindng.rating.setOnRatingBarChangeListener { _, rating, _ ->
                     val newSessionFeedback = when (position) {
-                        0 -> sessionSurveyStore.sessionFeedback.requireValue().copy(totalEvaluation = rating.toInt())
-                        1 -> sessionSurveyStore.sessionFeedback.requireValue().copy(relevancy = rating.toInt())
-                        2 -> sessionSurveyStore.sessionFeedback.requireValue().copy(asExpected = rating.toInt())
-                        3 -> sessionSurveyStore.sessionFeedback.requireValue().copy(difficulty = rating.toInt())
-                        4 -> sessionSurveyStore.sessionFeedback.requireValue().copy(knowledgeable = rating.toInt())
+                        0 -> {
+                            sessionSurveyStore.sessionFeedback.requireValue()
+                                .copy(totalEvaluation = rating.toInt())
+                        }
+                        1 -> {
+                            sessionSurveyStore.sessionFeedback.requireValue()
+                                .copy(relevancy = rating.toInt())
+                        }
+                        2 -> {
+                            sessionSurveyStore.sessionFeedback.requireValue()
+                                .copy(asExpected = rating.toInt())
+                        }
+                        3 -> {
+                            sessionSurveyStore.sessionFeedback.requireValue()
+                                .copy(difficulty = rating.toInt())
+                        }
+                        4 -> {
+                            sessionSurveyStore.sessionFeedback.requireValue()
+                                .copy(knowledgeable = rating.toInt())
+                        }
                         else -> sessionSurveyStore.sessionFeedback.requireValue()
                     }
 
