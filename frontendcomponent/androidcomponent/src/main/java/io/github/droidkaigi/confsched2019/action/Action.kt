@@ -11,6 +11,7 @@ import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.SearchResult
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
+import io.github.droidkaigi.confsched2019.model.SessionFeedback
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.model.SponsorCategory
 import io.github.droidkaigi.confsched2019.model.StaffContents
@@ -75,6 +76,10 @@ sealed class Action {
 
     data class SponsorLoadingStateChanged(val loadingState: LoadingState) : Action()
     data class SponsorLoaded(val sponsors: List<SponsorCategory>) : Action()
+
+    data class SessionSurveyLoadingStateChanged(val loadingState: LoadingState) : Action()
+    data class SessionSurveyLoaded(val sessionFeedback: SessionFeedback) : Action()
+    object SessionSurveySubmitted : Action()
 
     class FloorMapLoadingStateChanged(val loadingState: LoadingState) : Action()
 }

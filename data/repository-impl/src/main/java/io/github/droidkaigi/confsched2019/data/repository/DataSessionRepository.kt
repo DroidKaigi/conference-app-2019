@@ -6,12 +6,14 @@ import io.github.droidkaigi.confsched2019.data.api.GoogleFormApi
 import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.firestore.Firestore
 import io.github.droidkaigi.confsched2019.data.repository.mapper.toSession
+import io.github.droidkaigi.confsched2019.data.repository.mapper.toSessionFeedback
+import io.github.droidkaigi.confsched2019.model.AudienceCategory
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LangSupport
-import io.github.droidkaigi.confsched2019.model.AudienceCategory
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.model.SessionFeedback
+import io.github.droidkaigi.confsched2019.model.SpeechSession
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -27,7 +29,7 @@ class DataSessionRepository @Inject constructor(
     override suspend fun sessionContents(): SessionContents = coroutineScope {
         val sessions = sessions()
             .sortedBy { it.startTime }
-        val speechSessions = sessions.filterIsInstance<Session.SpeechSession>()
+        val speechSessions = sessions.filterIsInstance<SpeechSession>()
         SessionContents(
             sessions = sessions,
             speakers = speechSessions.flatMap { it.speakers }.distinct(),
@@ -63,8 +65,27 @@ class DataSessionRepository @Inject constructor(
         firestore.toggleFavorite(session.id)
     }
 
+    override suspend fun sessionFeedback(sessionId: String): SessionFeedback {
+        return sessionDatabase.sessionFeedbacks()
+            .map { it.toSessionFeedback() }
+            .firstOrNull { it.sessionId == sessionId } ?: SessionFeedback(
+            sessionId = sessionId,
+            totalEvaluation = 0,
+            relevancy = 0,
+            asExpected = 0,
+            difficulty = 0,
+            knowledgeable = 0,
+            comment = "",
+            submitted = false
+        )
+    }
+
+    override suspend fun saveSessionFeedback(sessionFeedback: SessionFeedback) {
+        sessionDatabase.saveSessionFeedback(sessionFeedback)
+    }
+
     override suspend fun submitSessionFeedback(
-        session: Session.SpeechSession,
+        session: SpeechSession,
         sessionFeedback: SessionFeedback
     ) {
         val response = googleFormApi.submitSessionFeedback(

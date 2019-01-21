@@ -135,9 +135,8 @@
         >
         <argument
             android:name="session"
-            app:argType="string"
+            app:argType="io.github.droidkaigi.confsched2019.model.SpeechSession"
             />
-
     </fragment>
     <activity
         android:id="@+id/licenses"

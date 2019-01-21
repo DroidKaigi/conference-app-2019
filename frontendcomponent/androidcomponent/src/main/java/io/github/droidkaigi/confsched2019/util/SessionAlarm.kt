@@ -10,6 +10,8 @@ import com.soywiz.klock.DateTimeSpan
 import com.soywiz.klock.minutes
 import io.github.droidkaigi.confsched2019.broadcastreceiver.NotificationBroadcastReceiver
 import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.SpeechSession
+import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.widget.component.R
 import javax.inject.Inject
@@ -49,8 +51,8 @@ class SessionAlarm @Inject constructor(private val app: Application) {
         val sessionTitle = app.getString(
             R.string.notification_message_session_title,
             when (session) {
-                is Session.SpeechSession -> session.title.getByLang(defaultLang())
-                is Session.ServiceSession -> session.title
+                is SpeechSession -> session.title.getByLang(defaultLang())
+                is ServiceSession -> session.title
             }
         )
         val sessionStartTime = app.getString(
