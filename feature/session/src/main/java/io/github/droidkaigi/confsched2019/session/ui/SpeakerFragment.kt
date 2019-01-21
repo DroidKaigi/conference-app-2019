@@ -75,8 +75,7 @@ abstract class SpeakerFragmentModule {
     @Module
     companion object {
         @JvmStatic @Provides
-        @PageScope
-        fun providesLifecycle(sessionsFragment: SpeakerFragment): Lifecycle {
+fun providesLifecycle(sessionsFragment: SpeakerFragment): Lifecycle {
             return sessionsFragment.viewLifecycleOwner.lifecycle
         }
 

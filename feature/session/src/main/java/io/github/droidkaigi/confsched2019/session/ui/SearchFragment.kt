@@ -306,8 +306,7 @@ abstract class SearchFragmentModule {
     @Module
     companion object {
         @JvmStatic @Provides
-        @PageScope
-        fun providesLifecycle(searchFragment: SearchFragment): Lifecycle {
+fun providesLifecycle(searchFragment: SearchFragment): Lifecycle {
             return searchFragment.viewLifecycleOwner.lifecycle
         }
 

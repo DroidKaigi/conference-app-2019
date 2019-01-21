@@ -28,6 +28,8 @@ interface AppComponent : AndroidInjector<App> {
         fun build(): AppComponent
     }
 
+    fun plus(screenModule: ScreenModule): ScreenComponent
+
     override fun inject(app: App)
 }
 

@@ -44,8 +44,7 @@ abstract class SessionSurveyFragmentModule {
     @Module
     companion object {
         @JvmStatic @Provides
-        @PageScope
-        fun providesLifecycle(sessionSurveyFragment: SessionSurveyFragment): Lifecycle {
+fun providesLifecycle(sessionSurveyFragment: SessionSurveyFragment): Lifecycle {
             return sessionSurveyFragment.viewLifecycleOwner.lifecycle
         }
     }

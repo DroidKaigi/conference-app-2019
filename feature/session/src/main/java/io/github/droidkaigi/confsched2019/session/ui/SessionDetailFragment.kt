@@ -274,7 +274,6 @@ abstract class SessionDetailFragmentModule {
     @Module
     companion object {
         @JvmStatic @Provides
-        @PageScope
         fun providesLifecycle(sessionsFragment: SessionDetailFragment): Lifecycle {
             return sessionsFragment.viewLifecycleOwner.lifecycle
         }

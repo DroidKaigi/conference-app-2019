@@ -7,6 +7,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProviders
 import com.crashlytics.android.Crashlytics
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
@@ -15,10 +17,14 @@ import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import io.fabric.sdk.android.Fabric
 import io.github.droidkaigi.confsched2019.announcement.ui.subscribeAnnouncementTopic
+import io.github.droidkaigi.confsched2019.di.AppComponent
+import io.github.droidkaigi.confsched2019.di.DaggerAppComponent
+import io.github.droidkaigi.confsched2019.di.ScreenModule
 import io.github.droidkaigi.confsched2019.di.createAppComponent
 import io.github.droidkaigi.confsched2019.ext.android.changedForever
 import io.github.droidkaigi.confsched2019.system.actioncreator.SystemActionCreator
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
+import io.github.droidkaigi.confsched2019.ui.ScreenViewModel
 import timber.log.Timber
 import timber.log.Tree
 import timber.log.debug
@@ -108,7 +114,14 @@ open class App : DaggerApplication() {
         }
     }
 
+    private lateinit var appComponent: AppComponent
+
+    fun attachViewModel(activity: FragmentActivity) {
+        appComponent.plus(ScreenModule(ViewModelProviders.of(activity).get(ScreenViewModel::class.java)))
+    }
+
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return createAppComponent()
+        appComponent = createAppComponent()
+        return appComponent
     }
 }

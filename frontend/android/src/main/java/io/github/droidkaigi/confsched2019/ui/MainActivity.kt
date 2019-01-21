@@ -25,6 +25,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import dagger.android.support.DaggerAppCompatActivity
+import io.github.droidkaigi.confsched2019.App
 import io.github.droidkaigi.confsched2019.R
 import io.github.droidkaigi.confsched2019.about.ui.AboutFragment
 import io.github.droidkaigi.confsched2019.about.ui.AboutFragmentModule
@@ -82,6 +83,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        (application as App).attachViewModel(this)
         setSupportActionBar(binding.toolbar)
         setupNavigation()
         setupStatusBarColors()
@@ -248,7 +250,7 @@ abstract class MainActivityModule {
 
     @Module
     abstract class MainActivityBuilder {
-        @ContributesAndroidInjector(modules = [MainActivityModule::class, ScreenModule::class])
+        @ContributesAndroidInjector(modules = [MainActivityModule::class])
         abstract fun contributeMainActivity(): MainActivity
     }
 }

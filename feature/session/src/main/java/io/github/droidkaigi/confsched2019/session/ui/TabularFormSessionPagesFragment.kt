@@ -74,8 +74,7 @@ abstract class TabularFromSessionPagesFragmentModule {
     @Module
     companion object {
         @JvmStatic @Provides
-        @PageScope
-        fun providesLifecycle(
+fun providesLifecycle(
             tabularFromSessionPagesFragment: TabularFormSessionPagesFragment
         ): Lifecycle {
             return tabularFromSessionPagesFragment.viewLifecycleOwner.lifecycle
