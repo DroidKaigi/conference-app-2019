@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.text.buildSpannedString
 import androidx.core.text.color
@@ -94,12 +93,11 @@ class SessionDetailFragment : DaggerFragment() {
                         )
                     )
                 }
-                R.id.session_place ->
-                    Toast.makeText(
-                        requireContext(),
-                        "not implemented yet",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                R.id.session_place -> {
+                    navController.navigate(
+                        SessionDetailFragmentDirections.actionSessionDetailToFloormap()
+                    )
+                }
             }
             return@setOnMenuItemClickListener true
         }
