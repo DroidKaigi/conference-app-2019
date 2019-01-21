@@ -15,6 +15,7 @@ import io.github.droidkaigi.confsched2019.session.R
 
 class SessionToolbarBehavior(
     private val context: Context,
+    private val toolbar: Toolbar,
     private val sessionTitle: String
 ) : CoordinatorLayout.Behavior<LinearLayout>() {
 
@@ -40,27 +41,26 @@ class SessionToolbarBehavior(
         consumed: IntArray,
         type: Int
     ) {
-        val toolbar = child.findViewById<Toolbar>(R.id.session_toolbar)
         val nestedScrollView = if (child.childCount > 0) {
             (child.children.find { it is NestedScrollView } as? NestedScrollView)
         } else {
             null
         }
-        performAnimation(toolbar, nestedScrollView)
+        performAnimation(nestedScrollView)
     }
 
-    private fun performAnimation(toolbar: Toolbar, nestedScrollView: NestedScrollView?) {
+    private fun performAnimation(nestedScrollView: NestedScrollView?) {
         if (!mIsAnimation) {
             if (nestedScrollView?.canScrollVertically(NEGATIVE_DIRECTION) == false) {
                 textView?.let {
-                    animateTitle(TOP_TITLE_ANIMATION_ALPHA, TOP_TITLE_ANIMATION_DURATION, it)
+                    animateTitle(TOP_TITLE_ANIMATION_ALPHA, it)
                     toolbar.elevation = context.resources.getDimension(R.dimen.session_detail_toolbar_elevation_top) /
                         context.resources.displayMetrics.density
                 }
             } else {
-                initToolbarTitle(toolbar)
+                setToolbarTitle()
                 textView?.let {
-                    animateTitle(NO_TOP_TITLE_ANIMATION_ALPHA, NO_TOP_TITLE_ANIMATION_DURATION, it)
+                    animateTitle(NO_TOP_TITLE_ANIMATION_ALPHA, it)
                     toolbar.elevation = context.resources.getDimension(R.dimen.session_detail_toolbar_elevation_not_top) /
                         context.resources.displayMetrics.density
                 }
@@ -68,22 +68,21 @@ class SessionToolbarBehavior(
         }
     }
 
-    private fun initToolbarTitle(toolbar: Toolbar) {
+    private fun setToolbarTitle() {
         if (!hasSetToolbarTitle) {
             toolbar.title = sessionTitle
-            textView =
-                toolbar.children.find { it is TextView } as TextView
+            textView = toolbar.children.find { it is TextView } as TextView
             hasSetToolbarTitle = true
         }
     }
 
     private fun animateTitle(
         alpha: Float,
-        duration: Long,
         child: TextView
     ) {
         ViewCompat.animate(child)
             .alpha(alpha)
+            .setDuration(TOOLBAR_TITLE_ANIMATION_DURATION_IN_MILLIS)
             .setInterpolator(AccelerateDecelerateInterpolator())
             .setListener(object : ViewPropertyAnimatorListener {
                 override fun onAnimationEnd(view: View?) {
@@ -97,16 +96,13 @@ class SessionToolbarBehavior(
                 override fun onAnimationStart(view: View?) {
                     mIsAnimation = true
                 }
-            }).duration = duration
+            })
     }
 
     companion object {
         private const val NEGATIVE_DIRECTION = -1
-
+        private const val TOOLBAR_TITLE_ANIMATION_DURATION_IN_MILLIS = 20L
         private const val TOP_TITLE_ANIMATION_ALPHA = 0f
-        private const val TOP_TITLE_ANIMATION_DURATION = 20L
-
         private const val NO_TOP_TITLE_ANIMATION_ALPHA = 1f
-        private const val NO_TOP_TITLE_ANIMATION_DURATION = 20L
     }
 }

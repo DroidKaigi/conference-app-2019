@@ -211,7 +211,7 @@ class SessionDetailFragment : DaggerFragment() {
         }
 
         (binding.toolbarParent.layoutParams as CoordinatorLayout.LayoutParams).behavior =
-            SessionToolbarBehavior(requireContext(), session.title.getByLang(lang))
+            SessionToolbarBehavior(requireContext(), binding.sessionToolbar, session.title.getByLang(lang))
         // To setup the toolbar when it's backed from a speaker page.
         binding.scrollView.afterMeasured {
             if (binding.scrollView.scrollY != 0) {
