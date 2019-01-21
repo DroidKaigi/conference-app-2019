@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.LinearLayout
-import androidx.appcompat.widget.AppCompatTextView
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
@@ -19,7 +19,7 @@ class SessionToolbarBehavior(
 ) : CoordinatorLayout.Behavior<LinearLayout>() {
 
     private var hasSetToolbarTitle = false
-    private var appCompatTextView: AppCompatTextView? = null
+    private var textView: TextView? = null
     private var mIsAnimation = false
 
     override fun onStartNestedScroll(
@@ -52,14 +52,14 @@ class SessionToolbarBehavior(
     private fun performAnimation(toolbar: Toolbar, nestedScrollView: NestedScrollView?) {
         if (!mIsAnimation) {
             if (nestedScrollView?.canScrollVertically(NEGATIVE_DIRECTION) == false) {
-                appCompatTextView?.let {
+                textView?.let {
                     animateTitle(TOP_TITLE_ANIMATION_ALPHA, TOP_TITLE_ANIMATION_DURATION, it)
                     toolbar.elevation = context.resources.getDimension(R.dimen.session_detail_toolbar_elevation_top) /
                         context.resources.displayMetrics.density
                 }
             } else {
                 initToolbarTitle(toolbar)
-                appCompatTextView?.let {
+                textView?.let {
                     animateTitle(NO_TOP_TITLE_ANIMATION_ALPHA, NO_TOP_TITLE_ANIMATION_DURATION, it)
                     toolbar.elevation = context.resources.getDimension(R.dimen.session_detail_toolbar_elevation_not_top) /
                         context.resources.displayMetrics.density
@@ -71,8 +71,8 @@ class SessionToolbarBehavior(
     private fun initToolbarTitle(toolbar: Toolbar) {
         if (!hasSetToolbarTitle) {
             toolbar.title = sessionTitle
-            appCompatTextView =
-                toolbar.children.find { it is AppCompatTextView } as AppCompatTextView
+            textView =
+                toolbar.children.find { it is TextView } as TextView
             hasSetToolbarTitle = true
         }
     }
@@ -80,7 +80,7 @@ class SessionToolbarBehavior(
     private fun animateTitle(
         alpha: Float,
         duration: Long,
-        child: AppCompatTextView
+        child: TextView
     ) {
         ViewCompat.animate(child)
             .alpha(alpha)
