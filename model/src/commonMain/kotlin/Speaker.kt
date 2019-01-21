@@ -1,5 +1,6 @@
 package io.github.droidkaigi.confsched2019.model
 
+@AndroidParcelize
 data class Speaker(
     val id: String,
     val name: String,
@@ -10,4 +11,4 @@ data class Speaker(
     val githubUrl: String?,
     val blogUrl: String?,
     val companyUrl: String?
-)
+) : AndroidParcel

@@ -13,42 +13,6 @@ sealed class Session(
     open val room: Room,
     open val isFavorited: Boolean
 ) {
-    data class SpeechSession(
-        override val id: String,
-        override val dayNumber: Int,
-        override val startTime: DateTime,
-        override val endTime: DateTime,
-        val title: LocaledString,
-        val desc: String,
-        override val room: Room,
-        val format: String,
-        val lang: Lang,
-        val category: Category,
-        val intendedAudience: String?,
-        val videoUrl: String?,
-        val slideUrl: String?,
-        val isInterpretationTarget: Boolean,
-        override val isFavorited: Boolean,
-        val speakers: List<Speaker>,
-        val forBeginners: Boolean,
-        val message: LocaledString?
-    ) : Session(id, dayNumber, startTime, endTime, room, isFavorited) {
-        val hasVideo: Boolean = videoUrl.isNullOrEmpty().not()
-        val hasSlide: Boolean = slideUrl.isNullOrEmpty().not()
-    }
-
-    data class ServiceSession(
-        override val id: String,
-        override val dayNumber: Int,
-        override val startTime: DateTime,
-        override val endTime: DateTime,
-        val title: LocaledString,
-        val desc: String,
-        override val room: Room,
-        val sessionType: SessionType,
-        override val isFavorited: Boolean
-    ) : Session(id, dayNumber, startTime, endTime, room, isFavorited)
-
     val startDayText by lazy { startTime.toOffset(9.hours).format("yyyy.M.d") }
 
     fun timeSummary(lang: Lang, timezoneOffset: DateTimeSpan) = buildString {
@@ -90,3 +54,41 @@ sealed class Session(
     val timeInMinutes: Int
         get() = TimeSpan(endTime.unixMillis - startTime.unixMillis).minutes.toInt()
 }
+
+@AndroidParcelize
+data class SpeechSession(
+    override val id: String,
+    override val dayNumber: Int,
+    override val startTime: DateTime,
+    override val endTime: DateTime,
+    val title: LocaledString,
+    val desc: String,
+    override val room: Room,
+    val format: String,
+    val lang: Lang,
+    val category: Category,
+    val intendedAudience: String?,
+    val videoUrl: String?,
+    val slideUrl: String?,
+    val isInterpretationTarget: Boolean,
+    override val isFavorited: Boolean,
+    val speakers: List<Speaker>,
+    val forBeginners: Boolean,
+    val message: LocaledString?
+) : Session(id, dayNumber, startTime, endTime, room, isFavorited), AndroidParcel {
+    val hasVideo: Boolean = videoUrl.isNullOrEmpty().not()
+    val hasSlide: Boolean = slideUrl.isNullOrEmpty().not()
+}
+
+@AndroidParcelize
+data class ServiceSession(
+    override val id: String,
+    override val dayNumber: Int,
+    override val startTime: DateTime,
+    override val endTime: DateTime,
+    val title: LocaledString,
+    val desc: String,
+    override val room: Room,
+    val sessionType: SessionType,
+    override val isFavorited: Boolean
+) : Session(id, dayNumber, startTime, endTime, room, isFavorited), AndroidParcel

@@ -11,7 +11,7 @@
 
         <variable
             name="session"
-            type="io.github.droidkaigi.confsched2019.model.Session.ServiceSession"
+            type="io.github.droidkaigi.confsched2019.model.ServiceSession"
             />
 
         <variable

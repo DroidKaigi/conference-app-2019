@@ -1,6 +1,6 @@
 package io.github.droidkaigi.confsched2019.data.db.entity
 
-interface SessionFeedback {
+interface SessionFeedbackEntity {
     val sessionId: String
     val totalEvaluation: Int
     val relevancy: Int
