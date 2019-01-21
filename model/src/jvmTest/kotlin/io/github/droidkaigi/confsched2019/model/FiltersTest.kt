@@ -66,7 +66,7 @@ class FiltersTest {
     @Test fun isPass_WhenLangFiltered() {
         val lang = Lang.JA
         val speechSession = mockk<SpeechSession>()
-        every { speechSession.language } returns Lang.JA.text
+        every { speechSession.lang } returns Lang.JA
 
         assertTrue { Filters(langs = mutableSetOf(lang)).isPass(speechSession) }
     }
@@ -75,7 +75,7 @@ class FiltersTest {
         val lang1 = Lang.JA
         val lang2 = Lang.EN
         val speechSession = mockk<SpeechSession>()
-        every { speechSession.language } returns Lang.JA.text
+        every { speechSession.lang } returns Lang.JA
 
         assertFalse { Filters(langs = mutableSetOf(lang2)).isPass(speechSession) }
     }
