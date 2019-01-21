@@ -24,6 +24,7 @@ import io.github.droidkaigi.confsched2019.survey.databinding.ItemSessionSurveyBi
 import io.github.droidkaigi.confsched2019.survey.ui.actioncreator.SessionSurveyActionCreator
 import io.github.droidkaigi.confsched2019.survey.ui.store.SessionSurveyStore
 import io.github.droidkaigi.confsched2019.survey.ui.widget.DaggerFragment
+import io.github.droidkaigi.confsched2019.survey.ui.widget.SurveyItem
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -104,55 +105,61 @@ class SessionSurveyFragment : DaggerFragment() {
     }
 
     private fun setupSessionSurveyPager() {
-        val surveyItems = resources.getStringArray(R.array.survey_items)
         binding.sessionSurveyViewPager.adapter = object : PagerAdapter() {
             override fun instantiateItem(container: ViewGroup, position: Int): Any {
-                val itemBindng = DataBindingUtil.inflate<ItemSessionSurveyBinding>(
+                val itemBinding = DataBindingUtil.inflate<ItemSessionSurveyBinding>(
                     LayoutInflater.from(context),
                     R.layout.item_session_survey,
                     container,
                     true
                 )
-                itemBindng.title.text = surveyItems[position]
 
-                if (position == 5) {
-                    itemBindng.comment.visibility = View.VISIBLE
-                    itemBindng.rating.visibility = View.GONE
-                    itemBindng.comment.setText(
+                itemBinding.surveyItem = SurveyItem.of(position)
+
+                if (position == SurveyItem.COMMENT.position) {
+                    itemBinding.comment.setText(
                         sessionSurveyStore.comment,
                         TextView.BufferType.EDITABLE
                     )
                 } else {
-                    itemBindng.comment.visibility = View.GONE
-                    itemBindng.rating.visibility = View.VISIBLE
                     when (position) {
-                        0 -> itemBindng.rating.rating = sessionSurveyStore.totalEvaluation.toFloat()
-                        1 -> itemBindng.rating.rating = sessionSurveyStore.relevancy.toFloat()
-                        2 -> itemBindng.rating.rating = sessionSurveyStore.asExpected.toFloat()
-                        3 -> itemBindng.rating.rating = sessionSurveyStore.difficulty.toFloat()
-                        4 -> itemBindng.rating.rating = sessionSurveyStore.knowledgeable.toFloat()
+                        SurveyItem.TOTAL_EVALUATION.position -> {
+                            itemBinding.rating.rating = sessionSurveyStore.totalEvaluation.toFloat()
+                        }
+                        SurveyItem.RELEVANCY.position -> {
+                            itemBinding.rating.rating = sessionSurveyStore.relevancy.toFloat()
+                        }
+                        SurveyItem.AS_EXPECTED.position -> {
+                            itemBinding.rating.rating = sessionSurveyStore.asExpected.toFloat()
+                        }
+                        SurveyItem.DIFFICULTY.position -> {
+                            itemBinding.rating.rating = sessionSurveyStore.difficulty.toFloat()
+                        }
+                        SurveyItem.KNOWLEDGEABLE.position -> {
+                            itemBinding.rating.rating = sessionSurveyStore.knowledgeable.toFloat()
+                        }
                     }
                 }
 
-                itemBindng.rating.setOnRatingBarChangeListener { _, rating, _ ->
+                itemBinding.rating.setOnRatingBarChangeListener { _, rating, _ ->
                     val newSessionFeedback = when (position) {
-                        0 -> {
+                        SurveyItem.TOTAL_EVALUATION.position -> {
                             sessionSurveyStore.sessionFeedback.requireValue()
                                 .copy(totalEvaluation = rating.toInt())
                         }
-                        1 -> {
+                        SurveyItem.RELEVANCY.position -> {
                             sessionSurveyStore.sessionFeedback.requireValue()
                                 .copy(relevancy = rating.toInt())
                         }
-                        2 -> {
+                        SurveyItem.AS_EXPECTED.position -> {
                             sessionSurveyStore.sessionFeedback.requireValue()
                                 .copy(asExpected = rating.toInt())
                         }
-                        3 -> {
+                        SurveyItem.DIFFICULTY.position -> {
                             sessionSurveyStore.sessionFeedback.requireValue()
                                 .copy(difficulty = rating.toInt())
                         }
-                        4 -> {
+                        SurveyItem.KNOWLEDGEABLE.position -> {
                             sessionSurveyStore.sessionFeedback.requireValue()
                                 .copy(knowledgeable = rating.toInt())
                         }
@@ -167,7 +174,7 @@ class SessionSurveyFragment : DaggerFragment() {
                     }
                 }
 
-                itemBindng.comment.addTextChangedListener(object : TextWatcher {
+                itemBinding.comment.addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
                     }
 
@@ -191,7 +198,7 @@ class SessionSurveyFragment : DaggerFragment() {
                     }
                 })
 
-                return itemBindng.root
+                return itemBinding.root
             }
 
             override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
