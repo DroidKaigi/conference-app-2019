@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -174,29 +175,11 @@ class SessionSurveyFragment : DaggerFragment() {
                     }
                 }
 
-                itemBinding.comment.addTextChangedListener(object : TextWatcher {
-                    override fun afterTextChanged(s: Editable?) {
-                    }
-
-                    override fun beforeTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        count: Int,
-                        after: Int
-                    ) {
-                    }
-
-                    override fun onTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        before: Int,
-                        count: Int
-                    ) {
-                        val newSessionFeedback = sessionSurveyStore.sessionFeedback.requireValue()
-                            .copy(comment = s.toString())
-                        sessionSurveyActionCreator.changeSessionFeedback(newSessionFeedback)
-                    }
-                })
+                itemBinding.comment.onTextChange { text ->
+                    val newSessionFeedback = sessionSurveyStore.sessionFeedback.requireValue()
+                        .copy(comment = text)
+                    sessionSurveyActionCreator.changeSessionFeedback(newSessionFeedback)
+                }
 
                 return itemBinding.root
             }
@@ -210,23 +193,36 @@ class SessionSurveyFragment : DaggerFragment() {
             override fun getCount(): Int = 6
         }
 
-        binding.sessionSurveyViewPager.addOnPageChangeListener(object :
-            ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-            }
-
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-            }
-
-            override fun onPageSelected(position: Int) {
-                binding.submitButton.isVisible = position == 5
-            }
-        })
+        binding.sessionSurveyViewPager.onPageSelected { position ->
+            binding.pageProgress.text = "${position + 1}/6"
+            binding.submitButton.isVisible = position == 5
+        }
     }
+}
+
+private fun EditText.onTextChange(onChanged: (text: String) -> Unit) {
+    this.addTextChangedListener(object : TextWatcher {
+        override fun afterTextChanged(p0: Editable?) = Unit
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
+        override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            onChanged(text.toString())
+        }
+    })
+}
+
+private fun ViewPager.onPageSelected(onPageSelected: (position: Int) -> Unit) {
+    this.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        override fun onPageScrollStateChanged(state: Int) = Unit
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) = Unit
+
+        override fun onPageSelected(position: Int) {
+            onPageSelected(position)
+        }
+    })
 }
 
 @Module
