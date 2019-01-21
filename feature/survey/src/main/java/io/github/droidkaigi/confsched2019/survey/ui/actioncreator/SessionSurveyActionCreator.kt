@@ -21,10 +21,16 @@ class SessionSurveyActionCreator @Inject constructor(
 ) : CoroutineScope by lifecycle.coroutineScope,
     ErrorHandler {
 
-    fun load(session: String) = launch {
+    fun load(sessionId: String) = launch {
         try {
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
-            dispatcher.dispatch(Action.SessionSurveyLoaded(sessionRepository.sessionFeedback(session)))
+            dispatcher.dispatch(
+                Action.SessionSurveyLoaded(
+                    sessionRepository.sessionFeedback(
+                        sessionId
+                    )
+                )
+            )
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
         } catch (e: Exception) {
             onError(e)
@@ -39,13 +45,15 @@ class SessionSurveyActionCreator @Inject constructor(
             sessionRepository.saveSessionFeedback(sessionFeedback)
             dispatcher.dispatch(Action.SessionSurveySubmitted)
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
+            // TODO: show snackbar feedback submit success
         } catch (e: Exception) {
             onError(e)
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.INITIALIZED))
+            // TODO: show snackbar feedback submit fail
         }
     }
 
     fun changeSessionFeedback(sessionFeedback: SessionFeedback) = launch {
-
+        dispatcher.dispatch(Action.SessionSurveyLoaded(sessionFeedback))
     }
 }

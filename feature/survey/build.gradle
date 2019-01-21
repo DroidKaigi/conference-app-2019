@@ -13,6 +13,7 @@ dependencies {
     implementation project(':feature:system')
     implementation project(':data:repository')
     implementation project(':ext:android-extension')
+    implementation project(':ext:log')
 
     implementation Dep.Kotlin.stdlibJvm
 
@@ -34,6 +35,8 @@ dependencies {
     implementation Dep.InjectedVmProvider.ktx
     compileOnly Dep.Dagger.assistedInjectAnnotations
     kapt Dep.Dagger.assistedInjectProcessor
+
+    implementation Dep.Timber.android
 
     testImplementation project(':frontendcomponent:androidtestcomponent')
     testImplementation Dep.Test.junit

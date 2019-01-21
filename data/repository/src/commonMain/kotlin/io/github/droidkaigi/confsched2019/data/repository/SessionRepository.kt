@@ -9,7 +9,7 @@ interface SessionRepository {
     suspend fun sessionContents(): SessionContents
     suspend fun refresh()
     suspend fun toggleFavorite(session: Session)
-    suspend fun sessionFeedback(session: String): SessionFeedback
+    suspend fun sessionFeedback(sessionId: String): SessionFeedback
     suspend fun saveSessionFeedback(sessionFeedback: SessionFeedback)
     suspend fun submitSessionFeedback(
         session: SpeechSession,
