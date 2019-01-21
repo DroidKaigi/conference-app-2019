@@ -11,7 +11,7 @@ import MaterialComponents.MaterialSnackbar
 import RxSwift
 import RxCocoa
 
-final class SessionsViewController: UIViewController {
+final class SessionsViewController: UIViewController, StoryboardInstantiable {
     
     @IBOutlet private weak var tableView: UITableView!
     
