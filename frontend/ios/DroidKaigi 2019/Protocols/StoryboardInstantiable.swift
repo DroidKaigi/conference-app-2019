@@ -23,7 +23,8 @@ extension StoryboardInstantiable where Self: UIViewController {
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
         let controller = storyboard.instantiateInitialViewController() as? Self
         if controller == nil {
-            assert(false, "生成したいViewControllerと同じ名前のStorybaordが見つからないか、Initial ViewControllerに設定されていない可能性があります。")
+            assert(false, "Can not find Storyboard with the same name as the ViewController to generate," +
+                    " or the ViewController is not \"Initial ViewController\".")
         }
         return controller!
     }
