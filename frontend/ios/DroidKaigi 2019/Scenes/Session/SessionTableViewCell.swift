@@ -23,6 +23,10 @@ class SessionTableViewCell: UITableViewCell, Reusable {
                 titleLabel.text = serviceSession.title.getByLang(lang: LangKt.defaultLang())
             case let speechSession as SpeechSession:
                 titleLabel.text = speechSession.title.getByLang(lang: LangKt.defaultLang())
+                speechSession.speakers.forEach { speaker in
+                    let cell = SpeakerCell(speaker: speaker)
+                    speakersStackView.addArrangedSubview(cell)
+                }
             default:
                 return
             }
@@ -34,6 +38,14 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         setupSubviews()
     }
     required init?(coder aDecoder: NSCoder) { fatalError() }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        speakersStackView.subviews.forEach {
+            speakersStackView.removeArrangedSubview($0)
+            $0.removeFromSuperview()
+        }
+    }
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -56,6 +68,9 @@ class SessionTableViewCell: UITableViewCell, Reusable {
     private lazy var speakersStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
+        stackView.spacing = 4
+        stackView.distribution = .equalSpacing
+        stackView.alignment = .leading
         return stackView
     }()
     private lazy var timeAndRoomLabel: UILabel = {
@@ -82,6 +97,7 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         speakersStackView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(8)
             $0.leading.equalTo(titleLabel)
+            $0.trailing.equalToSuperview().inset(16)
         }
         remakeTimeAndRoomLabelConstraints()
     }
