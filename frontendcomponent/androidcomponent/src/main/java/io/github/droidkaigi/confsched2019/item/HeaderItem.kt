@@ -5,7 +5,7 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import io.github.droidkaigi.confsched2019.widget.component.R
 
-class HeaderItem(private val title: CharSequence): Item<ViewHolder>() {
+class HeaderItem(private val title: CharSequence) : Item<ViewHolder>() {
 
     override fun getLayout(): Int = R.layout.section
 
@@ -14,5 +14,4 @@ class HeaderItem(private val title: CharSequence): Item<ViewHolder>() {
             text = title
         }
     }
-
 }
