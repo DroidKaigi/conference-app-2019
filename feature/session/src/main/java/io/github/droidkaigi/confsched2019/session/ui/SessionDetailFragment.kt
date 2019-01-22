@@ -20,6 +20,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionManager
 import com.soywiz.klock.DateTimeSpan
 import com.xwray.groupie.GroupAdapter
@@ -86,7 +87,7 @@ class SessionDetailFragment : DaggerFragment() {
         binding.sessionSpeakers.adapter = groupAdapter
 
         binding.sessionToolbar.setNavigationOnClickListener {
-            fragmentManager?.popBackStack()
+            findNavController().popBackStack()
         }
 
         binding.bottomAppBar.replaceMenu(R.menu.menu_session_detail_bottomappbar)
