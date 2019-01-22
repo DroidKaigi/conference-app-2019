@@ -10,8 +10,8 @@
         android:textColor="@color/gray1"
         android:textSize="24sp"
         android:text="@string/session_label"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="28dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="27dp"
+        android:layout_marginBottom="28dp"
         />
 </LinearLayout>
