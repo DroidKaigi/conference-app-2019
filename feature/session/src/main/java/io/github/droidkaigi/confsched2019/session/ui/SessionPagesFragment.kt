@@ -18,7 +18,6 @@ import com.soywiz.klock.hours
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
-import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.session.R
@@ -154,7 +153,7 @@ abstract class SessionPagesFragmentModule {
 
     @Module
     companion object {
-        @PageScope @JvmStatic @Provides fun providesLifecycle(
+        @JvmStatic @Provides fun providesLifecycle(
             sessionPagesFragment: SessionPagesFragment
         ): Lifecycle {
             return sessionPagesFragment.viewLifecycleOwner.lifecycle

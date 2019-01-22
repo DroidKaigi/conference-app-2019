@@ -82,8 +82,8 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         (application as App).attachViewModel(this)
+        super.onCreate(savedInstanceState)
         setSupportActionBar(binding.toolbar)
         setupNavigation()
         setupStatusBarColors()
@@ -184,59 +184,48 @@ class MainActivity : DaggerAppCompatActivity() {
 abstract class MainActivityModule {
     @Binds abstract fun providesActivity(mainActivity: MainActivity): FragmentActivity
 
-    @PageScope
     @ContributesAndroidInjector(
         modules = [SessionPagesFragmentModule::class, SessionAssistedInjectModule::class]
     )
     abstract fun contributeSessionPagesFragment(): SessionPagesFragment
 
-    @PageScope
     @ContributesAndroidInjector(
         modules = [SessionDetailFragmentModule::class, SessionAssistedInjectModule::class]
     )
     abstract fun contributeSessionDetailFragment(): SessionDetailFragment
 
-    @PageScope
     @ContributesAndroidInjector(
         modules = [SpeakerFragmentModule::class, SessionAssistedInjectModule::class]
     )
     abstract fun contributeSpeakerFragment(): SpeakerFragment
 
-    @PageScope
     @ContributesAndroidInjector(
         modules = [SearchFragmentModule::class, SessionAssistedInjectModule::class]
     )
     abstract fun contributeSearchFragment(): SearchFragment
 
-    @PageScope
     @ContributesAndroidInjector(
         modules = [TabularFromSessionPagesFragmentModule::class, SessionAssistedInjectModule::class]
     )
     abstract fun contributeTabularFormSessionPagesFragment(): TabularFormSessionPagesFragment
 
-    @PageScope
     @ContributesAndroidInjector(
         modules = [AboutFragmentModule::class]
     )
     abstract fun contributeAboutFragment(): AboutFragment
 
-    @PageScope
     @ContributesAndroidInjector(modules = [AnnouncementFragmentModule::class])
     abstract fun contributeAnnouncementFragment(): AnnouncementFragment
 
-    @PageScope
     @ContributesAndroidInjector(modules = [FloorMapFragmentModule::class])
     abstract fun contributeFloorMapFragment(): FloorMapFragment
 
-    @PageScope
     @ContributesAndroidInjector(modules = [SponsorFragmentModule::class])
     abstract fun contributeSponsorFragment(): SponsorFragment
 
-    @PageScope
     @ContributesAndroidInjector(modules = [SessionSurveyFragmentModule::class])
     abstract fun contributeSessionSurveyFragment(): SessionSurveyFragment
 
-    @PageScope
     @ContributesAndroidInjector(modules = [StaffSearchFragmentModule::class])
     abstract fun contributeStaffSearchFragment(): StaffSearchFragment
 

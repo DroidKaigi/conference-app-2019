@@ -13,7 +13,6 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AndroidSupportInjectionModule::class,
-        MainActivityModule.MainActivityBuilder::class,
         DbComponentModule::class,
         RepositoryComponentModule::class,
         FirestoreComponentModule::class,
@@ -28,9 +27,9 @@ interface AppComponent : AndroidInjector<App> {
         fun build(): AppComponent
     }
 
-    fun plus(screenModule: ScreenModule): ScreenComponent
-
     override fun inject(app: App)
+
+    operator fun plus(screenModule: ScreenModule): ScreenComponent
 }
 
 fun Application.createAppComponent() = DaggerAppComponent.builder()
