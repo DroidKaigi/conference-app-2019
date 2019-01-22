@@ -10,6 +10,7 @@ apply from: rootProject.file('gradle/android.gradle')
 
 androidExtensions {
     experimental = true
+    features = ["parcelize"]
 }
 kotlin {
     targets {
