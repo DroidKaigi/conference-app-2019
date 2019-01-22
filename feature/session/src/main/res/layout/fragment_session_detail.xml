@@ -78,7 +78,7 @@
                 />
 
             <androidx.core.widget.NestedScrollView
-                android:id="@+id/scrollView"
+                android:id="@+id/scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 >
@@ -306,6 +306,7 @@
                             android:clickable="false"
                             android:enabled="false"
                             android:focusable="false"
+                            android:gravity="center_vertical|start"
                             android:text="@{speechSession.lang.text.getByLang(lang)}"
                             android:textAppearance="@style/TextAppearance.App.Body1"
                             android:textColor="@{speechSession.lang.equals(Lang.EN)?@color/session_en_talk_text:@color/session_ja_talk_text}"
@@ -323,6 +324,7 @@
                             android:clickable="false"
                             android:enabled="false"
                             android:focusable="false"
+                            android:gravity="center_vertical|start"
                             android:text="@string/session_simultaneous_interpretation"
                             android:textAppearance="@style/TextAppearance.App.Body1"
                             android:textColor="@color/gray1"
@@ -339,6 +341,7 @@
                             android:clickable="false"
                             android:enabled="false"
                             android:focusable="false"
+                            android:gravity="center_vertical|start"
                             android:text="@string/session_for_beginners"
                             android:textAppearance="@style/TextAppearance.App.Body1"
                             android:textColor="@color/session_for_beginners_text"
@@ -355,6 +358,7 @@
                             android:clickable="false"
                             android:enabled="false"
                             android:focusable="false"
+                            android:gravity="center_vertical|start"
                             android:textAppearance="@style/TextAppearance.App.Body1"
                             android:textColor="@color/gray1"
                             app:chipBackgroundColor="@color/session_category_background"
