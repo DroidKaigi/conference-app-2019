@@ -2,16 +2,18 @@ package io.github.droidkaigi.confsched2019.dispatcher
 
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.ext.android.CoroutinePlugin
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.channels.filter
-import kotlinx.coroutines.channels.map
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.channels.produce
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.coroutines.CoroutineContext
 
 @Singleton
 class Dispatcher @Inject constructor() {
@@ -19,7 +21,7 @@ class Dispatcher @Inject constructor() {
     val events: ReceiveChannel<Action> get() = _actions.openSubscription()
 
     inline fun <reified T : Action> subscribe(): ReceiveChannel<T> {
-        return events.filter { it is T }.map { it as T }
+        return events.filterAndCast()
     }
 
     suspend fun dispatch(action: Action) {
@@ -36,4 +38,13 @@ class Dispatcher @Inject constructor() {
             _actions.send(action)
         }
     }
+
+    inline fun <reified E, reified R : E> ReceiveChannel<E>.filterAndCast(
+        context: CoroutineContext = Dispatchers.Unconfined
+    ): ReceiveChannel<R> =
+        GlobalScope.produce(context, capacity = Channel.UNLIMITED) {
+            consumeEach { e ->
+                (e as? R)?.let { send(it) }
+            }
+        }
 }
