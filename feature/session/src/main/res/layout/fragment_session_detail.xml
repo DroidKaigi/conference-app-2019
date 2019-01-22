@@ -60,7 +60,7 @@
             />
 
         <LinearLayout
-            android:id="@+id/toolbar_parent"
+            android:id="@+id/content_parent"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

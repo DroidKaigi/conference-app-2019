@@ -212,7 +212,7 @@ class SessionDetailFragment : DaggerFragment() {
             }
         }
 
-        (binding.toolbarParent.layoutParams as CoordinatorLayout.LayoutParams).behavior =
+        (binding.contentParent.layoutParams as CoordinatorLayout.LayoutParams).behavior =
             SessionToolbarBehavior(
                 requireContext(),
                 binding.sessionToolbar,
