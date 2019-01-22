@@ -20,6 +20,10 @@
 		362D910221F5DC2D006962C8 /* SessionsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 362D90FF21F5DC2C006962C8 /* SessionsViewController.storyboard */; };
 		362D910321F5DC2D006962C8 /* SessionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362D910021F5DC2C006962C8 /* SessionsViewController.swift */; };
 		362D910421F5DC2D006962C8 /* SessionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362D910121F5DC2C006962C8 /* SessionsViewModel.swift */; };
+		366B060721F751C400C912AD /* TagsLeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366B060621F751C400C912AD /* TagsLeftAlignedCollectionViewFlowLayout.swift */; };
+		366B060921F756CB00C912AD /* TagsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366B060821F756CB00C912AD /* TagsCollectionViewCell.swift */; };
+		366B060B21F7604500C912AD /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366B060A21F7604400C912AD /* UICollectionView+Extension.swift */; };
+		366B060E21F7652D00C912AD /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366B060D21F7652D00C912AD /* PaddingLabel.swift */; };
 		3672C2C921F5E08C00ACB910 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3672C2C821F5E08C00ACB910 /* UIColor+Extension.swift */; };
 		3672C2CB21F601D600ACB910 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3672C2CA21F601D600ACB910 /* UITableView+Extension.swift */; };
 		3672C2CD21F6024B00ACB910 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3672C2CC21F6024B00ACB910 /* Reusable.swift */; };
@@ -90,6 +94,10 @@
 		362D90FF21F5DC2C006962C8 /* SessionsViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SessionsViewController.storyboard; sourceTree = "<group>"; };
 		362D910021F5DC2C006962C8 /* SessionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsViewController.swift; sourceTree = "<group>"; };
 		362D910121F5DC2C006962C8 /* SessionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsViewModel.swift; sourceTree = "<group>"; };
+		366B060621F751C400C912AD /* TagsLeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsLeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		366B060821F756CB00C912AD /* TagsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsCollectionViewCell.swift; sourceTree = "<group>"; };
+		366B060A21F7604400C912AD /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
+		366B060D21F7652D00C912AD /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		3672C2C821F5E08C00ACB910 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		3672C2CA21F601D600ACB910 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		3672C2CC21F6024B00ACB910 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
@@ -242,8 +250,18 @@
 				3672C2D221F6FB7E00ACB910 /* SessionDataSource.swift */,
 				3672C2D821F70AC100ACB910 /* SessionTableViewCell.swift */,
 				3672C2DE21F73A9400ACB910 /* SpeakerCell.swift */,
+				366B060621F751C400C912AD /* TagsLeftAlignedCollectionViewFlowLayout.swift */,
+				366B060821F756CB00C912AD /* TagsCollectionViewCell.swift */,
 			);
 			path = Session;
+			sourceTree = "<group>";
+		};
+		366B060C21F7650D00C912AD /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				366B060D21F7652D00C912AD /* PaddingLabel.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		3672C2C721F5E05500ACB910 /* Extensions */ = {
@@ -251,6 +269,7 @@
 			children = (
 				3672C2C821F5E08C00ACB910 /* UIColor+Extension.swift */,
 				3672C2CA21F601D600ACB910 /* UITableView+Extension.swift */,
+				366B060A21F7604400C912AD /* UICollectionView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -260,6 +279,7 @@
 			children = (
 				362D90FC21F5DBC2006962C8 /* StartViewController.storyboard */,
 				362D90FB21F5DBC2006962C8 /* StartViewController.swift */,
+				366B060C21F7650D00C912AD /* Common */,
 				362D90F621F5D521006962C8 /* Session */,
 			);
 			path = Scenes;
@@ -592,14 +612,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				366B060B21F7604500C912AD /* UICollectionView+Extension.swift in Sources */,
 				3672C2D921F70AC100ACB910 /* SessionTableViewCell.swift in Sources */,
+				366B060921F756CB00C912AD /* TagsCollectionViewCell.swift in Sources */,
 				3672C2C921F5E08C00ACB910 /* UIColor+Extension.swift in Sources */,
 				3672C2DF21F73A9400ACB910 /* SpeakerCell.swift in Sources */,
 				362D910321F5DC2D006962C8 /* SessionsViewController.swift in Sources */,
 				63F34E1B21EB43CE00B2EC48 /* SessionRepository.swift in Sources */,
 				3672C2D321F6FB7E00ACB910 /* SessionDataSource.swift in Sources */,
+				366B060721F751C400C912AD /* TagsLeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				3672C2D121F6033200ACB910 /* NibLoadable.swift in Sources */,
 				3672C2CD21F6024B00ACB910 /* Reusable.swift in Sources */,
+				366B060E21F7652D00C912AD /* PaddingLabel.swift in Sources */,
 				36D1FA2721F5CF6600ADBBDE /* StoryboardInstantiable.swift in Sources */,
 				01578EC121E5E75A002B2033 /* AppDelegate.swift in Sources */,
 				362D90FD21F5DBC2006962C8 /* StartViewController.swift in Sources */,
