@@ -7,6 +7,7 @@
     <string name="session_filter_button">Filtering</string>
     <string name="session_filter_button_filtered">Filtered</string>
     <string name="session_filter_title">Filter</string>
+    <string name="session_title" translatable="false">Sessions</string>
     <string name="session_filter_reset">Reset</string>
     <string name="session_filter_room" translatable="false">Room</string>
     <string name="session_filter_language" translatable="false">Language</string>

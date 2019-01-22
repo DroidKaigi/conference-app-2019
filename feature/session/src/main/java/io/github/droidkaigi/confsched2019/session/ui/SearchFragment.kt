@@ -30,6 +30,7 @@ import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.ext.android.requireValue
 import io.github.droidkaigi.confsched2019.item.DividerItem
+import io.github.droidkaigi.confsched2019.item.HeaderItem
 import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SpeechSession
@@ -97,6 +98,7 @@ class SearchFragment : DaggerFragment() {
                         result.query
                     )
                 }.sortedBy { it.speaker.name.toUpperCase() }
+                setHeader(HeaderItem(requireContext().getString(R.string.speaker_label)))
                 addAll(speakers)
                 setFooter(DividerItem())
             }
@@ -133,6 +135,7 @@ class SearchFragment : DaggerFragment() {
                         else -> StickyHeaderItemDecoration.DEFAULT_TITLE
                     }
                 }
+                setHeader(HeaderItem(requireContext().getString(R.string.session_title)))
                 addAll(sessions)
             }
             groupAdapter.update(items)
