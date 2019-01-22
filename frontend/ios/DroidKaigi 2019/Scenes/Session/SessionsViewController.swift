@@ -23,6 +23,8 @@ final class SessionsViewController: UIViewController, StoryboardInstantiable {
     private var viewModel = SessionsViewModel()
     private let bag = DisposeBag()
 
+    private let dataSource = SessionDataSource()
+
     private func bind() {
         let input = SessionsViewModel.Input(initTrigger: Observable.just(()))
         let output = viewModel.transform(input: input)
@@ -34,16 +36,7 @@ final class SessionsViewController: UIViewController, StoryboardInstantiable {
               })
               .disposed(by: bag)
         output.sessions
-              .drive(tableView.rx.items(cellIdentifier: "Cell")) { indexPath, element, cell in
-                  switch element {
-                  case let serviceSession as ServiceSession:
-                      cell.textLabel?.text = serviceSession.title.getByLang(lang: LangKt.defaultLang())
-                  case let speechSession as SpeechSession:
-                      cell.textLabel?.text = speechSession.title.getByLang(lang: LangKt.defaultLang())
-                  default:
-                      break
-                  }
-              }
+              .drive(tableView.rx.items(dataSource: dataSource))
               .disposed(by: bag)
     }
 }
