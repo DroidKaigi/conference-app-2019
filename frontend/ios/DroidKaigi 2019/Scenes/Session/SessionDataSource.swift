@@ -25,16 +25,8 @@ final class SessionDataSource: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let element = items[indexPath.row]
-        switch element {
-        case let serviceSession as ServiceSession:
-            cell.textLabel?.text = serviceSession.title.getByLang(lang: LangKt.defaultLang())
-        case let speechSession as SpeechSession:
-            cell.textLabel?.text = speechSession.title.getByLang(lang: LangKt.defaultLang())
-        default:
-            break
-        }
+        let cell: SessionTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+        cell.session = items[indexPath.row]
         return cell
     }
 }
