@@ -31,7 +31,8 @@ extension SessionsViewModel {
 
     func transform(input: Input) -> Output {
         let sessionContents = input.initTrigger
-                .flatMap { (_) -> Observable<SessionContents> in
+                .flatMap { [weak self] (_) -> Observable<SessionContents> in
+                    guard let `self` = self else { return Observable.empty() }
                     return self.repository.fetch()
                         .asObservable()
                         .catchError { error in
