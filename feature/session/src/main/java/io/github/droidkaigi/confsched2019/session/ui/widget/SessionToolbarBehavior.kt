@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
-import androidx.core.view.ViewPropertyAnimatorListener
 import androidx.core.view.children
 import androidx.core.widget.NestedScrollView
 import io.github.droidkaigi.confsched2019.session.R
@@ -86,19 +85,12 @@ class SessionToolbarBehavior(
             .alpha(alpha)
             .setDuration(TOOLBAR_TITLE_ANIMATION_DURATION_IN_MILLIS)
             .setInterpolator(AccelerateDecelerateInterpolator())
-            .setListener(object : ViewPropertyAnimatorListener {
-                override fun onAnimationEnd(view: View?) {
-                    mIsAnimation = false
-                }
-
-                override fun onAnimationCancel(view: View?) {
-                    mIsAnimation = false
-                }
-
-                override fun onAnimationStart(view: View?) {
-                    mIsAnimation = true
-                }
-            })
+            .withStartAction {
+                mIsAnimation = true
+            }
+            .withEndAction {
+                mIsAnimation = false
+            }
     }
 
     companion object {
