@@ -18,6 +18,16 @@ android {
             storeFile file('debug.keystore')
             storePassword 'droidkaigi'
         }
+        release.initWith(debugSigningConfig())
+
+        if (isProductionBuild) {
+            release {
+                keyAlias System.getenv("RELEASE_KEY_ALIAS")
+                keyPassword System.getenv("RELEASE_KEY_PASSWORD")
+                storeFile System.getenv("RELEASE_STORE_FILE")
+                storePassword System.getenv("RELEASE_PASSWORD")
+            }
+        }
     }
     defaultConfig {
         applicationId "io.github.droidkaigi.confsched2019"
@@ -37,6 +47,10 @@ android {
             applicationIdSuffix ""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            if (isProductionBuild) {
+                proguardFiles 'proguard-rules-production.pro'
+            }
         }
     }
     dataBinding {

@@ -7,6 +7,7 @@ apply from: file('gradle/dependencyGraph.gradle')
 buildscript {
     ext {
         isCi = System.getenv("CI") == "true"
+        isProductionBuild = System.getenv("PRODUCTION_BUILD") == "true"
     }
     repositories {
         google()
