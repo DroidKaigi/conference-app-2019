@@ -13,6 +13,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.di.PageScope
@@ -23,6 +25,7 @@ import io.github.droidkaigi.confsched2019.survey.R
 import io.github.droidkaigi.confsched2019.survey.databinding.FragmentSessionSurveyBinding
 import io.github.droidkaigi.confsched2019.survey.databinding.ItemSessionSurveyBinding
 import io.github.droidkaigi.confsched2019.survey.ui.actioncreator.SessionSurveyActionCreator
+import io.github.droidkaigi.confsched2019.survey.ui.item.SpeakerIconItem
 import io.github.droidkaigi.confsched2019.survey.ui.store.SessionSurveyStore
 import io.github.droidkaigi.confsched2019.survey.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.survey.ui.widget.SurveyItem
@@ -39,10 +42,8 @@ import javax.inject.Provider
 
 class SessionSurveyFragment : DaggerFragment() {
 
-    @Inject
-    lateinit var sessionSurveyActionCreator: SessionSurveyActionCreator
-    @Inject
-    lateinit var sessionSurveyStoreProvider: Provider<SessionSurveyStore>
+    @Inject lateinit var sessionSurveyActionCreator: SessionSurveyActionCreator
+    @Inject lateinit var sessionSurveyStoreProvider: Provider<SessionSurveyStore>
     private val sessionSurveyStore: SessionSurveyStore by lazy {
         InjectedViewModelProviders.of(requireActivity())[sessionSurveyStoreProvider]
     }
@@ -69,6 +70,14 @@ class SessionSurveyFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         sessionSurveyFragmentArgs = SessionSurveyFragmentArgs.fromBundle(arguments ?: Bundle())
+
+        val groupAdapter = GroupAdapter<ViewHolder<*>>()
+        binding.speakerIcons.adapter = groupAdapter
+
+        val speakerIconItems = sessionSurveyFragmentArgs.session.speakers.map {
+            SpeakerIconItem(it)
+        }
+        groupAdapter.update(speakerIconItems)
 
         progressTimeLatch = ProgressTimeLatch { showProgress ->
             binding.progressBar.isVisible = showProgress
