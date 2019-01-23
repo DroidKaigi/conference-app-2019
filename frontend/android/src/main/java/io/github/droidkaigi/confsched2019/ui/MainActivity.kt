@@ -122,6 +122,11 @@ class MainActivity : DaggerAppCompatActivity() {
             binding.logo.isVisible = config.isShowLogoImage
             if (!config.hasTitle) supportActionBar?.title = ""
 
+            if (config.hideToolbar) {
+                supportActionBar?.hide()
+            } else {
+                supportActionBar?.show()
+            }
             binding.isWhiteTheme = config.isWhiteTheme
             statusBarColors.isWhiteTheme = config.isWhiteTheme
             if (destination.id in topLevelDestinationIds) {

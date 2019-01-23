@@ -15,4 +15,6 @@
     <dimen name="sticky_label_padding">20dp</dimen>
     <dimen name="sticky_label_font_size">24sp</dimen>
     <dimen name="sticky_label_content_margin">60dp</dimen>
+    <dimen name="session_detail_toolbar_elevation_not_top">10dp</dimen>
+    <dimen name="session_detail_toolbar_elevation_top">0dp</dimen>
 </resources>
