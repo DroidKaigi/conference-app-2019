@@ -44,11 +44,11 @@ android {
     }
     buildTypes {
         release {
-            applicationIdSuffix ""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
             if (isProductionBuild) {
+                applicationIdSuffix ""
                 proguardFiles 'proguard-rules-production.pro'
             }
         }
