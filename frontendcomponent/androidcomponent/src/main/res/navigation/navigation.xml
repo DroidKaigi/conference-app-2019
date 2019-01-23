@@ -121,6 +121,11 @@
         android:name="io.github.droidkaigi.confsched2019.floormap.ui.FloorMapFragment"
         android:label="@string/map_label"
         >
+        <argument
+            android:name="tabIndex"
+            app:argType="integer"
+            android:defaultValue="0"
+        />
     </fragment>
     <fragment
         android:id="@+id/setting"

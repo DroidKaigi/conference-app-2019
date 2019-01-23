@@ -4,4 +4,8 @@ package io.github.droidkaigi.confsched2019.model
 data class Room(
     val id: Int,
     val name: String
-) : AndroidParcel
+) : AndroidParcel {
+    fun isFirstFloor(): Boolean {
+        return name.contains("Hall")
+    }
+}
