@@ -70,6 +70,7 @@
                 android:id="@+id/session_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:includeFontPadding="false"
                 android:textAppearance="@style/TextAppearance.App.Headline5"
                 android:textStyle="bold"
