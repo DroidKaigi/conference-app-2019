@@ -53,6 +53,7 @@ android {
     }
     packagingOptions {
         exclude 'META-INF/*.kotlin_module'
+        exclude 'META-INF/android.arch.navigation_navigation-*.version'
     }
 }
 
