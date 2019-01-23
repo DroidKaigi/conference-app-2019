@@ -13,29 +13,37 @@ import RxCocoa
 
 final class SessionsViewController: UIViewController, StoryboardInstantiable {
     
-    @IBOutlet private weak var tableView: UITableView!
-    
-    private var viewModel: SessionsViewModel?
-    private let disposeBag = DisposeBag()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let viewModel = SessionsViewModel(input: .init(viewDidLoad: Driver.just(())))
-        
-        viewModel.titles
-            .bind(to: tableView.rx.items(cellIdentifier: "Cell")) { index, model, cell in
-                cell.textLabel?.text = model
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.error
-            .bind { (errorMessage) in
-                if let errMsg = errorMessage {
-                    MDCSnackbarManager.show(MDCSnackbarMessage(text: errMsg))
-                }
-            }
-            .disposed(by: disposeBag)
+        bind()
+    }
 
-        self.viewModel = viewModel
+    @IBOutlet private weak var tableView: UITableView! {
+        didSet {
+            tableView.separatorStyle = .none
+            tableView.rowHeight = UITableView.automaticDimension
+            tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+            tableView.register(SessionTableViewCell.self)
+        }
+    }
+
+    private var viewModel = SessionsViewModel()
+    private let bag = DisposeBag()
+
+    private let dataSource = SessionDataSource()
+
+    private func bind() {
+        let input = SessionsViewModel.Input(initTrigger: Observable.just(()))
+        let output = viewModel.transform(input: input)
+        output.error
+              .drive(onNext: { errorMessage in
+                  if let errMsg = errorMessage {
+                      MDCSnackbarManager.show(MDCSnackbarMessage(text: errMsg))
+                  }
+              })
+              .disposed(by: bag)
+        output.sessions
+              .drive(tableView.rx.items(dataSource: dataSource))
+              .disposed(by: bag)
     }
 }

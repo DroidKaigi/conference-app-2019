@@ -11,54 +11,37 @@ import RxSwift
 import RxCocoa
 
 final class SessionsViewModel {
-    
-    struct Input {
-        let viewDidLoad: Driver<Void>
-    }
-    
-    // MARK: Output
-    let titles: Observable<[String]>
 
-    // MARK: Output
-    let error: Observable<String?>
-
-    // MARK: Self state
-    private let _titles = BehaviorRelay<[String]>(value: [])
-
-    // MARK: Self state
-    private let _error = BehaviorRelay<String?>(value: nil)
-
-    private let disposeBag = DisposeBag()
     private let repository =  SessionRepository()
-    
-    init(input: Input) {
-        titles = _titles.asObservable()
-        error = _error.asObservable()
+    private let bag = DisposeBag()
+    init() {}
+    private let _error = BehaviorRelay<String?>(value: nil)
+}
 
-        input.viewDidLoad
-            .asObservable()
-            .flatMap { [weak self] (_: Void) -> Observable<SessionContents> in
-                self?.repository.fetch().asObservable().catchError { err in
-                        self?._error.accept(err.localizedDescription)
-                        return .empty()
-                    } ?? .empty()
-            }
-            .map { $0.sessions }
-            .map { sessions in
-                return sessions.map {
-                    let title: LocaledString?
-                    switch $0 {
-                    case is ServiceSession:
-                        title = ($0 as! ServiceSession).title
-                    case is SpeechSession:
-                        title = ($0 as! SpeechSession).title
-                    default:
-                        title = nil
-                    }
-                    return title?.getByLang(lang: LangKt.defaultLang())
-                    }.compactMap { $0 }
-            }
-            .bind(to: _titles)
-            .disposed(by: disposeBag)
+extension SessionsViewModel {
+
+    struct Input {
+        let initTrigger: Observable<Void>
+    }
+
+    struct Output {
+        let sessions: Driver<[Session]>
+        let error: Driver<String?>
+    }
+
+    func transform(input: Input) -> Output {
+        let sessionContents = input.initTrigger
+                .flatMap { [weak self] (_) -> Observable<SessionContents> in
+                    guard let `self` = self else { return Observable.empty() }
+                    return self.repository.fetch()
+                        .asObservable()
+                        .catchError { error in
+                            self._error.accept(error.localizedDescription)
+                            return Observable.empty()
+                        }
+                }
+        let sessions = sessionContents.map { $0.sessions }.asDriver(onErrorJustReturn: [])
+        let error = _error.asDriver()
+        return Output(sessions: sessions, error: error)
     }
 }
