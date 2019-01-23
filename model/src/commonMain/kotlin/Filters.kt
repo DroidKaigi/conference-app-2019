@@ -32,11 +32,13 @@ data class Filters(
             }
         }
         val audienceCategoryFilterOk = run {
-            if (audienceCategories.contains(AudienceCategory.BEGINNERS)) {
-                session.forBeginners
+            if (audienceCategories.isEmpty()) return@run true
+            val audienceCategory = if (session.forBeginners) {
+                AudienceCategory.BEGINNERS
             } else {
-                true
+                AudienceCategory.UNSPECIFIED
             }
+            audienceCategories.any { it == audienceCategory }
         }
         return roomFilterOk &&
             categoryFilterOk &&

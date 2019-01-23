@@ -111,4 +111,45 @@ class FiltersTest {
 
         assertFalse { Filters(audienceCategories = mutableSetOf(audienceCategory)).isPass(speechSession) }
     }
+
+    private fun speechSessionMock(isBeginner: Boolean = false): SpeechSession {
+        val speechSessionBeginner = mockk<SpeechSession>()
+        every { speechSessionBeginner.forBeginners } returns isBeginner
+        return speechSessionBeginner
+    }
+
+    @Test fun audienceCategoryFilter_Empty() {
+        val filter = Filters(audienceCategories = mutableSetOf())
+
+        // pass all
+        assertTrue { filter.isPass(speechSessionMock(isBeginner = true)) }
+        assertTrue { filter.isPass(speechSessionMock(isBeginner = false)) }
+    }
+
+    @Test fun audienceCategoryFilter_Beginner() {
+        val filter = Filters(audienceCategories = mutableSetOf(AudienceCategory.BEGINNERS))
+
+        // pass only beginner
+        assertTrue { filter.isPass(speechSessionMock(isBeginner = true)) }
+        assertFalse { filter.isPass(speechSessionMock(isBeginner = false)) }
+    }
+
+    @Test fun audienceCategoryFilter_Unspecified() {
+        val filter = Filters(audienceCategories = mutableSetOf(AudienceCategory.UNSPECIFIED))
+
+        // pass only not beginner
+        assertFalse { filter.isPass(speechSessionMock(isBeginner = true)) }
+        assertTrue { filter.isPass(speechSessionMock(isBeginner = false)) }
+    }
+
+    @Test fun audienceCategoryFilter_Both() {
+        val filter = Filters(audienceCategories = mutableSetOf(
+            AudienceCategory.BEGINNERS,
+            AudienceCategory.UNSPECIFIED)
+        )
+
+        // pass all
+        assertTrue { filter.isPass(speechSessionMock(isBeginner = true)) }
+        assertTrue { filter.isPass(speechSessionMock(isBeginner = false)) }
+    }
 }
