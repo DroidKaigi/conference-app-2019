@@ -18,7 +18,7 @@ android {
             storeFile file('debug.keystore')
             storePassword 'droidkaigi'
         }
-        release.initWith(debugSigningConfig())
+        release.initWith(debug)
 
         if (isProductionBuild) {
             release {
