@@ -1,5 +1,7 @@
 package io.github.droidkaigi.confsched2019.session.ui
 
+import android.graphics.Paint
+import android.graphics.Rect
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.TextPaint
@@ -60,6 +62,7 @@ class SessionDetailFragment : DaggerFragment() {
 
     private lateinit var sessionDetailFragmentArgs: SessionDetailFragmentArgs
     private var showEllipsis = true
+    private val ellipsisLineCount = 5
 
     private val groupAdapter
         get() = binding.sessionSpeakers.adapter as GroupAdapter<*>
@@ -170,7 +173,7 @@ class SessionDetailFragment : DaggerFragment() {
         binding.speechSession = session
         val lang = defaultLang()
         binding.lang = lang
-        setupSessionDescription()
+        setupSessionDescription(session.desc)
         binding.timeZoneOffset = DateTimeSpan(hours = 9) // FIXME Get from device setting
 
         binding.sessionTitle.text = session.title.getByLang(lang)
@@ -187,8 +190,6 @@ class SessionDetailFragment : DaggerFragment() {
         session.message?.let { message ->
             binding.sessionMessage.text = message.getByLang(defaultLang())
         }
-
-        binding.sessionDescription.text = session.desc
 
         val speakerItems = session
             .speakers
@@ -234,20 +235,20 @@ class SessionDetailFragment : DaggerFragment() {
         }
     }
 
-    private fun setupSessionDescription() {
-        val textView = binding.sessionDescription
-        textView.doOnPreDraw {
-            if (textView.lineCount > 5 && showEllipsis) {
-                val end = textView.layout.getLineStart(5)
+    private fun setupSessionDescription(description: String) {
+        binding.sessionDescription.doOnPreDraw {
+            val expectedLineCount = computeLineCount(description)
+            if (expectedLineCount > ellipsisLineCount && showEllipsis) {
+                val lineLength = description.length / expectedLineCount
+                val end = lineLength * ellipsisLineCount
                 val ellipsis = getString(R.string.ellipsis_label)
                 val ellipsisColor = ContextCompat.getColor(requireContext(), R.color.colorSecondary)
                 val onClickListener = {
                     TransitionManager.beginDelayedTransition(binding.sessionLayout)
-                    val session = binding.speechSession?.desc
-                    binding.sessionDescription.text = session
+                    binding.sessionDescription.text = description
                     showEllipsis = !showEllipsis
                 }
-                val detailText = textView.text.subSequence(0, end - ellipsis.length)
+                val detailText = description.subSequence(0, end - ellipsis.length)
                 val text = buildSpannedString {
                     clickableSpan(onClickListener, {
                         append(detailText)
@@ -258,6 +259,8 @@ class SessionDetailFragment : DaggerFragment() {
                 }
                 binding.sessionDescription.setText(text, TextView.BufferType.SPANNABLE)
                 binding.sessionDescription.movementMethod = LinkMovementMethod.getInstance()
+            } else {
+                binding.sessionDescription.text = description
             }
         }
     }
@@ -275,6 +278,15 @@ class SessionDetailFragment : DaggerFragment() {
                 // nothing
             }
         }, builderAction)
+    }
+
+    private fun computeLineCount(fullText: String): Int {
+        if (binding.sessionDescription.width == 0) return 0
+        val rect = Rect()
+        val paint = Paint()
+        paint.textSize = binding.sessionDescription.textSize
+        paint.getTextBounds(fullText, 0, fullText.length, rect)
+        return rect.width() / binding.sessionDescription.width
     }
 
     private fun applyServiceSessionLayout(session: ServiceSession) {
