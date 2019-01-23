@@ -22,7 +22,7 @@ final class SessionsViewController: UIViewController, StoryboardInstantiable {
         didSet {
             tableView.separatorStyle = .none
             tableView.rowHeight = UITableView.automaticDimension
-            tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
             tableView.register(SessionTableViewCell.self)
         }
     }
