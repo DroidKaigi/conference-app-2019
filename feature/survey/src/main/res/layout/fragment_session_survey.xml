@@ -15,6 +15,7 @@
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="64dp"
+            android:layout_marginTop="32dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,11 +26,11 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/session_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="24dp"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
             app:layout_constraintEnd_toEndOf="parent"
@@ -53,11 +54,15 @@
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/session_survey_view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/submit_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/page_progress"
+            app:layout_goneMarginBottom="88dp"
             />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -66,15 +71,18 @@
             android:layout_height="56dp"
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
-            android:drawablePadding="-16dp"
+            android:background="@drawable/submit_botton"
+            android:drawablePadding="-24dp"
             android:drawableStart="@drawable/ic_baseline_send_24px"
             android:gravity="center"
-            android:paddingStart="16dp"
+            android:paddingStart="28dp"
             android:text="@string/submit"
+            android:textColor="@color/white"
             android:textSize="16sp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            tools:visibility="visible"
             />
 
         <ProgressBar
