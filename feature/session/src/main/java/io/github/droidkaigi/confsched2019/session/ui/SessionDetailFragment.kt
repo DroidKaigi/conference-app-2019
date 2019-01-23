@@ -104,7 +104,7 @@ class SessionDetailFragment : DaggerFragment() {
                 }
                 R.id.session_place -> {
                     val session = binding.session ?: return@setOnMenuItemClickListener false
-                    val tabIndex = if (session.room.name.contains("Hall")) 0 else 1
+                    val tabIndex = if (session.room.isFirstFloor()) 0 else 1
                     navController.navigate(
                         SessionDetailFragmentDirections.actionSessionDetailToFloormap().apply {
                             setTabIndex(tabIndex)
