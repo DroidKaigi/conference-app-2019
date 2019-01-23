@@ -50,7 +50,7 @@ class SessionToolbarBehavior(
 
     private fun performAnimation(nestedScrollView: NestedScrollView?) {
         if (!mIsAnimation) {
-            if (nestedScrollView?.canScrollVertically(NEGATIVE_DIRECTION) == false) {
+            if (nestedScrollView?.canScrollVertically(SCROLL_DOWN_DIRECTION) == false) {
                 textView?.let {
                     animateTitle(TOP_TITLE_ANIMATION_ALPHA, it)
                     toolbar.elevation = context.resources.getDimension(
@@ -94,7 +94,7 @@ class SessionToolbarBehavior(
     }
 
     companion object {
-        private const val NEGATIVE_DIRECTION = -1
+        private const val SCROLL_DOWN_DIRECTION = -1
         private const val TOOLBAR_TITLE_ANIMATION_DURATION_IN_MILLIS = 20L
         private const val TOP_TITLE_ANIMATION_ALPHA = 0f
         private const val NO_TOP_TITLE_ANIMATION_ALPHA = 1f
