@@ -24,6 +24,6 @@ class DebugApp : App() {
     }
 
     override fun setupLogHandler() {
-        Timber.plant(LogcatTree("droidkaigi"))
+        enableLogCatLogging()
     }
 }

@@ -19,6 +19,7 @@ import io.github.droidkaigi.confsched2019.di.createAppComponent
 import io.github.droidkaigi.confsched2019.ext.android.changedForever
 import io.github.droidkaigi.confsched2019.system.actioncreator.SystemActionCreator
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
+import timber.log.LogcatTree
 import timber.log.Timber
 import timber.log.Tree
 import timber.log.debug
@@ -87,6 +88,10 @@ open class App : DaggerApplication() {
     open fun setupLogHandler() {
         Fabric.with(this, Crashlytics())
         Timber.plant(CrashlyticsTree())
+    }
+
+    fun enableLogCatLogging() {
+        Timber.plant(LogcatTree("droidkaigi"))
     }
 
     class CrashlyticsTree : Tree() {
