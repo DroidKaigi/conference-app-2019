@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        app:constraintSetEnd="@id/end"
+        app:constraintSetStart="@id/start">
+
+        <OnSwipe
+            app:dragDirection="dragUp"
+            app:touchAnchorId="@id/scroll_view"
+            app:touchAnchorSide="top" />
+
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+
+        <Constraint android:id="@id/session_toolbar">
+            <Transform app:elevation="0dp" />
+            <Layout
+                app:layout_constraintBottom_toBottomOf="@id/session_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_height="0dp" />
+        </Constraint>
+
+        <Constraint android:id="@id/session_title">
+            <Transform app:elevation="0dp" />
+            <Layout
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_height="wrap_content"
+                app:layout_marginBottom="8dp"
+                app:layout_marginStart="16dp"
+                app:layout_marginTop="?attr/actionBarSize"
+                app:layout_width="0dp" />
+            <CustomAttribute
+                app:attributeName="maxLines"
+                app:customIntegerValue="5" />
+            <CustomAttribute
+                app:attributeName="ellipsize"
+                app:customStringValue="none" />
+        </Constraint>
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+
+        <Constraint android:id="@id/session_toolbar">
+            <Transform app:elevation="8dp" />
+            <Layout
+                app:layout_constraintBottom_toTopOf="@id/scroll_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_height="?attr/actionBarSize" />
+        </Constraint>
+
+        <Constraint android:id="@id/session_title">
+            <Transform app:elevation="9dp" />
+            <Layout
+                app:layout_constraintBottom_toBottomOf="@id/session_toolbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/session_toolbar"
+                app:layout_height="wrap_content"
+                app:layout_marginStart="56dp"
+                app:layout_width="0dp" />
+            <CustomAttribute
+                app:attributeName="maxLines"
+                app:customIntegerValue="1" />
+            <CustomAttribute
+                app:attributeName="ellipsize"
+                app:customStringValue="end" />
+
+        </Constraint>
+
+    </ConstraintSet>
+
+</MotionScene>

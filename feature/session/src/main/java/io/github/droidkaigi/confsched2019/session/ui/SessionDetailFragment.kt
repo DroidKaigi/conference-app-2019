@@ -212,26 +212,26 @@ class SessionDetailFragment : DaggerFragment() {
             }
         }
 
-        (binding.contentParent.layoutParams as CoordinatorLayout.LayoutParams).behavior =
-            SessionToolbarBehavior(
-                requireContext(),
-                binding.sessionToolbar,
-                session.title.getByLang(lang)
-            )
-        // To setup the toolbar when it's backed from a speaker page.
-        binding.scrollView.afterMeasured {
-            if (binding.scrollView.scrollY != 0) {
-                val resources = context?.resources
-                resources?.let {
-                    with(binding.sessionToolbar) {
-                        elevation = it.getDimension(
-                            R.dimen.session_detail_toolbar_elevation_not_top
-                        ) / it.displayMetrics.density
-                        title = session.title.getByLang(lang)
-                    }
-                }
-            }
-        }
+//        (binding.contentParent.layoutParams as CoordinatorLayout.LayoutParams).behavior =
+//            SessionToolbarBehavior(
+//                requireContext(),
+//                binding.sessionToolbar,
+//                session.title.getByLang(lang)
+//            )
+//        // To setup the toolbar when it's backed from a speaker page.
+//        binding.scrollView.afterMeasured {
+//            if (binding.scrollView.scrollY != 0) {
+//                val resources = context?.resources
+//                resources?.let {
+//                    with(binding.sessionToolbar) {
+//                        elevation = it.getDimension(
+//                            R.dimen.session_detail_toolbar_elevation_not_top
+//                        ) / it.displayMetrics.density
+//                        title = session.title.getByLang(lang)
+//                    }
+//                }
+//            }
+//        }
     }
 
     private fun setupSessionDescription() {
