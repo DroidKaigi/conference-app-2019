@@ -122,7 +122,7 @@ class MainActivity : DaggerAppCompatActivity() {
             binding.logo.isVisible = config.isShowLogoImage
             if (!config.hasTitle) supportActionBar?.title = ""
 
-            if (destination.id == R.id.session_detail) {
+            if (config.hideToolbar) {
                 supportActionBar?.hide()
             } else {
                 supportActionBar?.show()
