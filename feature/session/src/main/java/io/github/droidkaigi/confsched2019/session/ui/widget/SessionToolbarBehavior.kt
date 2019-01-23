@@ -91,6 +91,7 @@ class SessionToolbarBehavior(
             .withEndAction {
                 mIsAnimation = false
             }
+            .start()
     }
 
     companion object {
