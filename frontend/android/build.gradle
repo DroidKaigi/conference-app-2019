@@ -44,9 +44,6 @@ android {
         manifestPlaceholders = [isCi: String.valueOf(isCi)]
     }
     buildTypes {
-        debug {
-            zipAlignEnabled true
-        }
         release {
             zipAlignEnabled true
             useProguard true
