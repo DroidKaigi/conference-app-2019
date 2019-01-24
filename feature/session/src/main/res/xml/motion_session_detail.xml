@@ -6,11 +6,6 @@
         app:constraintSetEnd="@id/end"
         app:constraintSetStart="@id/start">
 
-        <OnSwipe
-            app:dragDirection="dragUp"
-            app:touchAnchorId="@id/scroll_view"
-            app:touchAnchorSide="top" />
-
         <KeyFrameSet>
             <KeyPosition
                 app:framePosition="25"
@@ -32,26 +27,23 @@
     <ConstraintSet android:id="@+id/start">
 
         <Constraint android:id="@id/session_toolbar">
-            <Transform app:elevation="0dp" />
             <Layout
-                app:layout_constraintBottom_toBottomOf="@id/session_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_height="0dp" />
+                app:layout_height="?attr/actionBarSize"
+                app:layout_width="0dp" />
         </Constraint>
 
         <Constraint android:id="@id/session_title">
-            <Transform app:elevation="0dp" />
             <Layout
-                app:layout_constraintBottom_toBottomOf="@id/session_toolbar"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/session_toolbar"
+                app:layout_constraintTop_toBottomOf="@id/session_toolbar"
                 app:layout_height="wrap_content"
-                app:layout_marginBottom="8dp"
+                app:layout_marginEnd="16dp"
                 app:layout_marginStart="16dp"
-                app:layout_marginTop="?attr/actionBarSize"
                 app:layout_width="0dp" />
             <CustomAttribute
                 app:attributeName="maxLines"
@@ -63,24 +55,22 @@
     <ConstraintSet android:id="@+id/end">
 
         <Constraint android:id="@id/session_toolbar">
-            <Transform app:elevation="8dp" />
             <Layout
-                app:layout_constraintBottom_toTopOf="@id/scroll_view"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_height="?attr/actionBarSize" />
+                app:layout_height="?attr/actionBarSize"
+                app:layout_width="0dp" />
         </Constraint>
 
         <Constraint android:id="@id/session_title">
-            <Transform app:elevation="9dp" />
             <Layout
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_height="?attr/actionBarSize"
+                app:layout_marginEnd="16dp"
                 app:layout_marginStart="56dp"
-                app:layout_marginTop="0dp"
                 app:layout_width="0dp" />
             <CustomAttribute
                 app:attributeName="maxLines"
