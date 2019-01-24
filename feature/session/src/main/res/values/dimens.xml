@@ -17,4 +17,6 @@
     <dimen name="sticky_label_content_margin">60dp</dimen>
     <dimen name="session_detail_toolbar_elevation_not_top">10dp</dimen>
     <dimen name="session_detail_toolbar_elevation_top">0dp</dimen>
+    <dimen name="tabular_form_column_width">130dp</dimen>
+    <dimen name="tabular_form_px_per_minute">5dp</dimen>
 </resources>

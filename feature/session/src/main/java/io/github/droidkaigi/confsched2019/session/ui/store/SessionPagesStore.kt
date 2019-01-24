@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.shopify.livedataktx.combineWith
+import com.shopify.livedataktx.filter
 import com.shopify.livedataktx.map
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
@@ -120,6 +121,13 @@ class SessionPagesStore @Inject constructor(
 
     fun filteredSessionsByDay(day: Int): LiveData<List<Session>> {
         return filteredSessions
+            .map { sessions ->
+                sessions.orEmpty().filter { session -> session.dayNumber == day }
+            }
+    }
+
+    fun sessionsByDay(day: Int): LiveData<List<Session>> {
+        return sessions
             .map { sessions ->
                 sessions.orEmpty().filter { session -> session.dayNumber == day }
             }
