@@ -9,8 +9,7 @@ class TimeTableLayoutManager(
     private val columnWidth: Int,
     private val pxPerMinute: Int,
     private val periodLookUp: (position: Int) -> PeriodInfo
-) :
-    RecyclerView.LayoutManager() {
+) : RecyclerView.LayoutManager() {
 
     class PeriodInfo(val startEpochMilli: Long, val endEpochMilli: Long, val columnNumber: Int)
 
@@ -38,6 +37,35 @@ class TimeTableLayoutManager(
             RecyclerView.LayoutParams.WRAP_CONTENT,
             RecyclerView.LayoutParams.WRAP_CONTENT
         )
+    }
+
+    private fun fillColumn(
+        columnNumber: Int,
+        fromPeriodPositionInColumn: Int,
+        offsetX: Int,
+        startY: Int,
+        recycler: RecyclerView.Recycler
+    ): Int {
+        val periods = columns[columnNumber] ?: return 0
+        var yOffset = startY
+        var columnWidth = 0
+        for (i in fromPeriodPositionInColumn until periods.size()) {
+            val period = periods[i]
+            val view = recycler.getViewForPosition(period.position)
+            addView(view)
+            measureChild(view, period)
+            val width = getDecoratedMeasuredWidth(view)
+            val height = getDecoratedMeasuredHeight(view)
+            val left = offsetX
+            val top = yOffset
+            val right = left + width
+            val bottom = top + height
+            layoutDecorated(view, left, top, right, bottom)
+
+            columnWidth = width
+            yOffset = bottom
+        }
+        return columnWidth
     }
 
     private fun measureChild(view: View, period: Period) {
