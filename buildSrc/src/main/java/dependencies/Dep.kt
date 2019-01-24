@@ -57,22 +57,22 @@ object Dep {
         }
 
         object Navigation {
-            val version = "1.0.0-alpha10"
+            val version = "1.0.0-alpha08"
             val runtime = "android.arch.navigation:navigation-runtime:$version"
             val runtimeKtx = "android.arch.navigation:navigation-runtime-ktx:$version"
             val fragment = "android.arch.navigation:navigation-fragment:$version"
-            val ui = "android.arch.navigation:navigation-ui:$version"
+            val ui = "android.arch.navigation:navigation-ui:1.0.0-alpha10"
             val fragmentKtx = "android.arch.navigation:navigation-fragment-ktx:$version"
-            val uiKtx = "android.arch.navigation:navigation-ui-ktx:$version"
+            val uiKtx = "android.arch.navigation:navigation-ui-ktx:1.0.0-alpha10"
         }
     }
 
     object Kotlin {
-        val version = "1.3.11"
+        val version = "1.3.20"
         val stdlibCommon = "org.jetbrains.kotlin:kotlin-stdlib-common:$version"
         val stdlibJvm = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version"
-        val coroutinesVersion = "1.1.0"
-        val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0-native-1.3.20-eap-100-gradle-5-v2"
+        val coroutinesVersion = "1.1.1"
+        val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
         val androidCoroutinesDispatcher =
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
         val coroutinesReactive =
@@ -109,7 +109,7 @@ object Dep {
     }
 
     object Ktor {
-        val version = "1.1.1"
+        val version = "1.1.2"
         val clientCommon = "io.ktor:ktor-client-core:$version"
         val clientAndroid = "io.ktor:ktor-client-okhttp:$version"
         val clientIos = "io.ktor:ktor-client-ios:$version"
