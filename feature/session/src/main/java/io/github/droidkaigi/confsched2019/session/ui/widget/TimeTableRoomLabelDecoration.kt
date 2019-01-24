@@ -49,27 +49,20 @@ class TimeTableRoomLabelDecoration(
         super.getItemOffsets(outRect, view, parent, state)
 
         val position = parent.getChildAdapterPosition(view)
-        val item = groupAdapter.getItem(position)
-
-        val roomNumber = when (item) {
-            is TabularServiceSessionItem -> item.session.room
-            is TabularSpeechSessionItem -> item.session.room
-            is TabularSpacerItem -> item.room
-            else -> return
-        }.sequentialNumber
-
         if (position < columnCount) outRect.top = labelHeight.toInt()
     }
 
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         super.onDrawOver(c, parent, state)
 
+        // draw background
         c.drawRect(
             Rect(parent.left, parent.top, parent.right, parent.top + labelHeight.toInt()),
             backgroundPaint
         )
 
-        val children = parent.children
+        // draw room number
+        parent.children
             .map { it to groupAdapter.getItem(parent.getChildAdapterPosition(it)) }
             .distinctBy { (view, _) -> view.left }
             .forEach { (view, item) ->
