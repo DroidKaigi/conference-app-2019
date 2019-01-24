@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="total_evaluation">セッションはどうでしたか?(総合評価)</string>
-    <string name="relevancy">セッションはあなたの仕事やプロジェクトに関連がありましたか?</string>
-    <string name="as_expected">セッションの説明を読んで期待した通りの内容でしたか?</string>
-    <string name="difficulty">セッションの難易度はいかがでしたか?</string>
-    <string name="knowledgeable">技術的な知見は得られたでしょうか?</string>
-    <string name="comment">他にコメントがあればぜひ教えてください</string>
-    <string name="comment_hint">個人が特定できるような内容は書かないでください</string>
-    <string name="submit">送信する</string>
+    <string name="total_evaluation">How was the session?\n(Overall Rating)</string>
+    <string name="relevancy">How relevant was this session to your work or personal projects?</string>
+    <string name="as_expected">Based on the description, was the content as expected?</string>
+    <string name="difficulty">Was this session easy to understand?</string>
+    <string name="knowledgeable">Were you able to gain useful knowledge from the content?</string>
+    <string name="comment">Anything else we should know?</string>
+    <string name="comment_hint"><font size="12">Please don\'t add any personal information in your comments</font></string>
+    <string name="submit">Submit</string>
+
+    <string name="page_progress">%1$d/%2$d</string>
 </resources>

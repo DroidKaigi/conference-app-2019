@@ -38,6 +38,12 @@ dependencies {
 
     implementation Dep.Timber.android
 
+    implementation Dep.Groupie.groupie
+    implementation Dep.Groupie.databinding
+
+    implementation Dep.Picasso.picasso
+    implementation Dep.Picasso.picassoTransformation
+
     testImplementation project(':frontendcomponent:androidtestcomponent')
     testImplementation Dep.Test.junit
     testImplementation Dep.Test.kotlinTestAssertions

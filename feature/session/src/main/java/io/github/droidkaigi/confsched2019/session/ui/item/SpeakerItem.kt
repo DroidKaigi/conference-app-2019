@@ -71,7 +71,7 @@ class SpeakerItem @AssistedInject constructor(
         other as SpeakerItem
 
         if (speaker != other.speaker) return false
-        if (query == null || other.query == null || query != other.query) return false
+        if (query != other.query) return false
 
         return true
     }
