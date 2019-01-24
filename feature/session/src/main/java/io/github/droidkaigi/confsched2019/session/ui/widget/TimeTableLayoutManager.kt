@@ -40,14 +40,14 @@ class TimeTableLayoutManager(
     }
 
     override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
-        super.onLayoutChildren(recycler, state)
-
         if (itemCount == 0) {
+            detachAndScrapAttachedViews(recycler)
             periods.clear()
             columns.clear()
             return
         }
 
+        detachAndScrapAttachedViews(recycler)
         calculateLayout()
 
         var xOffset = parentLeft
