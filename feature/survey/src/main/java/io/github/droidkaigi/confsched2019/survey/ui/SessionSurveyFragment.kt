@@ -199,7 +199,7 @@ class SessionSurveyFragment : DaggerFragment() {
 
             override fun isViewFromObject(view: View, `object`: Any): Boolean = view == `object`
 
-            override fun getCount(): Int = 6
+             override fun getCount(): Int = enumValues<SurveyItem>().size
         }
 
         binding.sessionSurveyViewPager.onPageSelected { position ->
@@ -208,7 +208,7 @@ class SessionSurveyFragment : DaggerFragment() {
                 position + 1,
                 (binding.sessionSurveyViewPager.adapter as PagerAdapter).count
             )
-            binding.submitButton.isVisible = position == 5
+            binding.submitButton.isVisible = position == (enumValues<SurveyItem>().size - 1)
         }
     }
 }
