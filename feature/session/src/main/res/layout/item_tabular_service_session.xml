@@ -22,7 +22,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/tabular_form_column_width"
         android:layout_height="wrap_content"
-        android:padding="1dp"
+        android:padding="4dp"
         >
 
         <androidx.emoji.widget.EmojiTextView

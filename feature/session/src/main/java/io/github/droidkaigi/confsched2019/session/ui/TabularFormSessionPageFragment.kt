@@ -12,7 +12,6 @@ import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.ext.android.changed
-import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SpeechSession
@@ -24,6 +23,7 @@ import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpacerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
+import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableItemDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableLayoutManager
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
@@ -56,7 +56,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
         val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.tabularFormSessionsRecycler.apply {
-            adapter = groupAdapter
+            addItemDecoration(TimeTableItemDecoration(context, 9, groupAdapter))
             layoutManager = TimeTableLayoutManager(
                 resources.getDimensionPixelSize(R.dimen.tabular_form_column_width),
                 resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute)
@@ -84,6 +84,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                     else -> TimeTableLayoutManager.PeriodInfo(0, 0, 0)
                 }
             }
+            adapter = groupAdapter
         }
 
         sessionPagesStore.sessionsByDay(arguments?.getInt(KEY_DAY) ?: 1) // TODO: SafeArgs
@@ -152,22 +153,6 @@ class TabularFormSessionPageFragment : DaggerFragment() {
             }
         }
     }
-
-    private val Room.sequentialNumber: Int
-        get() {
-            return when (id) {
-                3869 -> 0
-                3870 -> 1
-                3871 -> 2
-                3872 -> 3
-                3873 -> 4
-                3874 -> 5
-                3959 -> 6
-                3875 -> 7
-                3876 -> 8
-                else -> 9
-            }
-        }
 
     companion object {
         // TODO: use SageArgs
