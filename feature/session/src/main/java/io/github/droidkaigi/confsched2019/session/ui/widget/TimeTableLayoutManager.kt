@@ -125,6 +125,20 @@ class TimeTableLayoutManager(
         return scrollAmount
     }
 
+    override fun computeVerticalScrollRange(state: RecyclerView.State): Int {
+        val top = getChildAt(0)?.let(this::getDecoratedTop) ?: return 0
+        val bottom = getChildAt(childCount - 1)?.let(this::getDecoratedBottom) ?: return 0
+        return bottom - top
+    }
+
+    override fun computeVerticalScrollExtent(state: RecyclerView.State): Int {
+        return height - paddingTop - paddingBottom
+    }
+
+    override fun computeVerticalScrollOffset(state: RecyclerView.State): Int {
+        return -(getChildAt(0)?.let(this::getDecoratedTop) ?: 0)
+    }
+
     private fun measureChild(view: View, period: Period) {
         val lp = view.layoutParams as RecyclerView.LayoutParams
         lp.width = columnWidth
