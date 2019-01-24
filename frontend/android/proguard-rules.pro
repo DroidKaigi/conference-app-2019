@@ -9,7 +9,6 @@
 
 # Generate merge config list
 -printconfiguration proguard-merged-config.txt
--printmapping proguard-merged.map
 
 ## General
 
