@@ -21,3 +21,11 @@
     public static *** w(...);
     public static *** wtf(...);
 }
+
+# Remove our log methods which are lower than ERROR
+-assumenosideeffects class io.github.droidkaigi.confsched2019.timber.Timber {
+    *** info(...);
+    *** warn(...);
+    *** debug(...);
+    *** verbose(...);
+}
