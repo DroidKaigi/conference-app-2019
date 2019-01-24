@@ -4,6 +4,7 @@ import android.graphics.Rect
 import android.util.SparseArray
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import java.util.concurrent.TimeUnit
 
 // TODO: Implement View Recycling on scrolling
 // TODO: save first visible item position or scroll position and restore it
@@ -22,8 +23,8 @@ class TimeTableLayoutManager(
         val columnNumber: Int,
         val position: Int
     ) {
-        val startUnixMin = (startUnixMillis / 1000 / 60).toInt()
-        val endUnixMin = (endUnixMillis / 1000 / 60).toInt()
+        val startUnixMin = TimeUnit.MILLISECONDS.toMinutes(startUnixMillis).toInt()
+        val endUnixMin = TimeUnit.MILLISECONDS.toMinutes(endUnixMillis).toInt()
         val durationMin = endUnixMin - startUnixMin
     }
 
