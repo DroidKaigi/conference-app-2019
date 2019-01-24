@@ -53,7 +53,7 @@ android {
             signingConfig = signingConfigs.release
 
             if (isProductionBuild) {
-                applicationIdSuffix ""
+                applicationIdSuffix null
                 proguardFiles 'proguard-rules-production.pro'
             }
         }
