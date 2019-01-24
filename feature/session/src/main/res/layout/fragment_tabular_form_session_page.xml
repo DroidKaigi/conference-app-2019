@@ -9,8 +9,10 @@
         android:id="@+id/tabular_form_sessions_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="@dimen/tabular_form_room_label_height"
+        android:overScrollMode="never"
         android:paddingLeft="@dimen/tabular_form_time_label_width"
+        android:paddingTop="@dimen/tabular_form_room_label_height"
+        android:scrollbars="vertical|horizontal"
         tools:ignore="RtlHardcoded,RtlSymmetry"
         />
 
