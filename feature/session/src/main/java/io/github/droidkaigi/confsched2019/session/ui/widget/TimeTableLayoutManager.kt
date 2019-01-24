@@ -139,6 +139,20 @@ class TimeTableLayoutManager(
         return -(getChildAt(0)?.let(this::getDecoratedTop) ?: 0)
     }
 
+    override fun computeHorizontalScrollRange(state: RecyclerView.State): Int {
+        val left = getChildAt(0)?.let(this::getDecoratedLeft) ?: return 0
+        val right = getChildAt(childCount - 1)?.let(this::getDecoratedRight) ?: return 0
+        return right - left
+    }
+
+    override fun computeHorizontalScrollExtent(state: RecyclerView.State): Int {
+        return width - paddingBottom - paddingRight
+    }
+
+    override fun computeHorizontalScrollOffset(state: RecyclerView.State): Int {
+        return -(getChildAt(0)?.let(this::getDecoratedLeft) ?: 0)
+    }
+
     private fun measureChild(view: View, period: Period) {
         val lp = view.layoutParams as RecyclerView.LayoutParams
         lp.width = columnWidth
