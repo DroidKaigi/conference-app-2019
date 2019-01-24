@@ -72,20 +72,14 @@ class TimeTableRoomLabelDecoration(
                     is TabularSpeechSessionItem -> item.session.room
                     else -> return@forEach
                 }
-                c.drawTextAtCenter(
-                    room.name,
-                    Rect(view.left, parent.top, view.right, parent.top + labelHeight.toInt()),
-                    textPaint
-                )
-            }
-    }
 
-    private fun Canvas.drawTextAtCenter(text: String, rect: Rect, paint: Paint) {
-        val baseX = rect.centerX().toFloat() - paint.measureText(text) / 2f
-        val textBounds = Rect().apply { paint.getTextBounds(text, 0, text.length - 1, this) }
-        val baseY = rect.centerY() +
-            if (textBounds.height() != 0) textBounds.height() / 2f
-            else -(paint.fontMetrics.ascent + paint.fontMetrics.descent) / 2f
-        drawText(text, baseX, baseY, paint)
+                val roomName = room.name
+                val rect =
+                    Rect(view.left, parent.top, view.right, parent.top + labelHeight.toInt())
+                val baseX = rect.centerX().toFloat() - textPaint.measureText(roomName) / 2f
+                val baseY =
+                    rect.centerY() - (textPaint.fontMetrics.ascent + textPaint.fontMetrics.descent) / 2f
+                c.drawText(roomName, baseX, baseY, textPaint)
+            }
     }
 }

@@ -26,6 +26,7 @@ import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableDividerDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableLayoutManager
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableRoomLabelDecoration
+import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableTimeLabelDecoration
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
 import javax.inject.Provider
@@ -59,6 +60,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
         binding.tabularFormSessionsRecycler.apply {
             addItemDecoration(TimeTableDividerDecoration(context, COLUMN_COUNT, groupAdapter))
             addItemDecoration(TimeTableRoomLabelDecoration(context, COLUMN_COUNT, groupAdapter))
+            addItemDecoration(TimeTableTimeLabelDecoration(context, groupAdapter))
             layoutManager = TimeTableLayoutManager(
                 resources.getDimensionPixelSize(R.dimen.tabular_form_column_width),
                 resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute)
