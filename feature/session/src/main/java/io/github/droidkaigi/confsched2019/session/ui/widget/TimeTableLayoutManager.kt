@@ -49,7 +49,7 @@ class TimeTableLayoutManager(
         }
 
         detachAndScrapAttachedViews(recycler)
-        calculateLayout()
+        calculateColumns()
 
         var xOffset = parentLeft
         for (columnNumber in 0 until columns.size) {
@@ -177,7 +177,7 @@ class TimeTableLayoutManager(
         view.measure(widthSpec, heightSpec)
     }
 
-    private fun calculateLayout() {
+    private fun calculateColumns() {
         this.periods.clear()
         this.columns.clear()
         (0 until itemCount)
