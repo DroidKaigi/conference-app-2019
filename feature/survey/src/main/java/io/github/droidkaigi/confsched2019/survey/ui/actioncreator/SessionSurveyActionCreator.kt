@@ -52,12 +52,18 @@ class SessionSurveyActionCreator @Inject constructor(
             sessionRepository.saveSessionFeedback(sessionFeedback)
             dispatcher.dispatch(Action.SessionSurveySubmitted)
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
-            val snackBarText = LocaledString(context.getString(R.string.submit_successful),context.getString(R.string.submit_successful))
+            val snackBarText = LocaledString(
+                context.getString(R.string.submit_successful),
+                context.getString(R.string.submit_successful)
+            )
             dispatcher.dispatch(Action.SessionSurveyShowSnackBar(snackBarText))
         } catch (e: Exception) {
             onError(e)
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.INITIALIZED))
-            val snackBarText = LocaledString(context.getString(R.string.submit_failure),context.getString(R.string.submit_failure))
+            val snackBarText = LocaledString(
+                context.getString(R.string.submit_failure),
+                context.getString(R.string.submit_failure)
+            )
             dispatcher.dispatch(Action.SessionSurveyShowSnackBar(snackBarText))
         }
     }

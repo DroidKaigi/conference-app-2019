@@ -106,18 +106,18 @@ class SessionSurveyFragment : DaggerFragment() {
                 sessionSurveyStore.sessionFeedback.requireValue().copy(submitted = true)
             if (sessionFeedback.fillouted) {
                 // TODO: show confirm dialog
-                context?.let { it ->
+                context?.let { context ->
                     sessionSurveyActionCreator.submit(
                         sessionSurveyFragmentArgs.session,
                         sessionFeedback,
-                        it
+                        context
                     )
                 }
             } else {
                 // TODO: show snackbar no input item message
-                view?.let {
+                view?.let { view ->
                     Snackbar.make(
-                        it,
+                        view,
                         LocaledString(
                             getString(R.string.not_input),
                             getString(R.string.not_input)
