@@ -85,6 +85,25 @@ class TimeTableLayoutManager(
         return columnWidth
     }
 
+    override fun canScrollVertically() = true
+
+    override fun scrollVerticallyBy(
+        dy: Int, recycler: RecyclerView.Recycler, state: RecyclerView.State
+    ): Int {
+        if (dy == 0) return 0
+
+        val scrollAmount = if (dy > 0) {
+            val bottom = getChildAt(childCount - 1)?.let(this::getDecoratedBottom) ?: return 0
+            if (bottom - dy < parentBottom) bottom - parentBottom else dy
+        } else {
+            val top = getChildAt(0)?.let(this::getDecoratedTop) ?: return 0
+            if (top - dy > parentTop) top - parentTop else dy
+        }
+
+        offsetChildrenVertical(-scrollAmount)
+        return scrollAmount
+    }
+
     private fun measureChild(view: View, period: Period) {
         val lp = view.layoutParams as RecyclerView.LayoutParams
         lp.width = columnWidth
