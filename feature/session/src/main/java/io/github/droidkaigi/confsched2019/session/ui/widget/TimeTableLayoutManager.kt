@@ -39,6 +39,23 @@ class TimeTableLayoutManager(
         )
     }
 
+    override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
+        super.onLayoutChildren(recycler, state)
+
+        if (itemCount == 0) {
+            periods.clear()
+            columns.clear()
+            return
+        }
+
+        calculateLayout()
+
+        var xOffset = parentLeft
+        for (columnNumber in 0 until columns.size) {
+            xOffset += fillColumn(columnNumber, 0, xOffset, parentTop, recycler)
+        }
+    }
+
     private fun fillColumn(
         columnNumber: Int,
         fromPeriodPositionInColumn: Int,
