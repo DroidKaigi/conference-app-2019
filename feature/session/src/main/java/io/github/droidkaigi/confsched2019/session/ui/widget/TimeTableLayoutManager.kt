@@ -6,6 +6,8 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
 // TODO: Implement View Recycling on scrolling
+// TODO: save first visible item position or scroll position and restore it
+// TODO: implement scrollToPosition
 class TimeTableLayoutManager(
     private val columnWidth: Int,
     private val pxPerMinute: Int,
@@ -178,8 +180,8 @@ class TimeTableLayoutManager(
     }
 
     private fun calculateColumns() {
-        this.periods.clear()
-        this.columns.clear()
+        periods.clear()
+        columns.clear()
         (0 until itemCount)
             .map {
                 val periodInfo = periodLookUp(it)
