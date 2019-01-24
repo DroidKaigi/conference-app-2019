@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 // MARK: - Reuse Extension
 
 extension UITableView {

@@ -128,7 +128,6 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         return collectionView
     }()
 
-
     private func setupSubviews() {
         [titleLabel, liveMark, speakersStackView, timeAndRoomLabel, collectionView].forEach(contentView.addSubview)
         titleLabel.snp.makeConstraints {
@@ -184,7 +183,6 @@ extension SessionTableViewCell: UICollectionViewDataSource {
     }
 }
 
-
 final class SessionCalculateHeightTableViewCell: UITableViewCell {
 
     var session: Session? {
@@ -202,13 +200,11 @@ final class SessionCalculateHeightTableViewCell: UITableViewCell {
         }
     }
 
-
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupSubviews()
     }
     required init?(coder aDecoder: NSCoder) { fatalError() }
-
 
     private var tagContents: [TagContent] = []
 

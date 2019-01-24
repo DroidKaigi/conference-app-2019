@@ -7,6 +7,8 @@
 
 import UIKit
 
+// swiftlint:disable identifier_name
+
 extension UIColor {
 
     enum DK: String {
@@ -39,3 +41,5 @@ extension UIColor {
         self.init(hex: hex, alpha: 1.0)
     }
 }
+
+// swiftlint:enable identifier_name
