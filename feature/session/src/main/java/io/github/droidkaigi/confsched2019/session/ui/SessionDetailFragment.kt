@@ -170,7 +170,7 @@ class SessionDetailFragment : DaggerFragment() {
         binding.speechSession = session
         val lang = defaultLang()
         binding.lang = lang
-        setupSessionDescription()
+        setupSessionDescription(session.desc)
         binding.timeZoneOffset = DateTimeSpan(hours = 9) // FIXME Get from device setting
 
         binding.sessionTitle.text = session.title.getByLang(lang)
@@ -187,8 +187,6 @@ class SessionDetailFragment : DaggerFragment() {
         session.message?.let { message ->
             binding.sessionMessage.text = message.getByLang(defaultLang())
         }
-
-        binding.sessionDescription.text = session.desc
 
         val speakerItems = session
             .speakers
@@ -234,20 +232,22 @@ class SessionDetailFragment : DaggerFragment() {
         }
     }
 
-    private fun setupSessionDescription() {
+    private fun setupSessionDescription(fullText: String) {
         val textView = binding.sessionDescription
         textView.doOnPreDraw {
+            // check the number of lines if set full length text (this text is not displayed yet)
+            textView.text = fullText
+            // if lines are more than prescribed value then collapse
             if (textView.lineCount > 5 && showEllipsis) {
                 val end = textView.layout.getLineStart(5)
                 val ellipsis = getString(R.string.ellipsis_label)
                 val ellipsisColor = ContextCompat.getColor(requireContext(), R.color.colorSecondary)
                 val onClickListener = {
                     TransitionManager.beginDelayedTransition(binding.sessionLayout)
-                    val session = binding.speechSession?.desc
-                    binding.sessionDescription.text = session
+                    textView.text = fullText
                     showEllipsis = !showEllipsis
                 }
-                val detailText = textView.text.subSequence(0, end - ellipsis.length)
+                val detailText = fullText.subSequence(0, end - ellipsis.length)
                 val text = buildSpannedString {
                     clickableSpan(onClickListener, {
                         append(detailText)
@@ -256,8 +256,8 @@ class SessionDetailFragment : DaggerFragment() {
                         }
                     })
                 }
-                binding.sessionDescription.setText(text, TextView.BufferType.SPANNABLE)
-                binding.sessionDescription.movementMethod = LinkMovementMethod.getInstance()
+                textView.setText(text, TextView.BufferType.SPANNABLE)
+                textView.movementMethod = LinkMovementMethod.getInstance()
             }
         }
     }
