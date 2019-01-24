@@ -9,5 +9,9 @@
     <string name="comment_hint"><font size="12">個人が特定できるような内容は書かないでください</font></string>
     <string name="submit">送信する</string>
 
+    <string name="submit_successful">送信されました。回答ありがとうございます。</string>
+    <string name="submit_failure">送信できませんでした。時間を置いて再度お試しください</string>
+    <string name="not_input">入力されていない値があります</string>
+
     <string name="page_progress">%1$d/%2$d</string>
 </resources>

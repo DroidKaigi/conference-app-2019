@@ -21,6 +21,7 @@ import dagger.Provides
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.ext.android.requireValue
+import io.github.droidkaigi.confsched2019.model.LocaledString
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.survey.R
 import io.github.droidkaigi.confsched2019.survey.databinding.FragmentSessionSurveyBinding
@@ -93,11 +94,11 @@ class SessionSurveyFragment : DaggerFragment() {
             // TODO: save sessionFeedback state to cacheDB
         }
 
+        val lang = defaultLang()
         sessionSurveyStore.showSnackBar.changed(viewLifecycleOwner) { text ->
-            view?.let { Snackbar.make(it, text, Snackbar.LENGTH_SHORT).show() }
+            view?.let { Snackbar.make(it, text.getByLang(lang), Snackbar.LENGTH_SHORT).show() }
         }
 
-        val lang = defaultLang()
         binding.sessionTitle.text = sessionSurveyFragmentArgs.session.title.getByLang(lang)
 
         binding.submitButton.setOnClickListener {
@@ -105,14 +106,24 @@ class SessionSurveyFragment : DaggerFragment() {
                 sessionSurveyStore.sessionFeedback.requireValue().copy(submitted = true)
             if (sessionFeedback.fillouted) {
                 // TODO: show confirm dialog
-                sessionSurveyActionCreator.submit(
-                    sessionSurveyFragmentArgs.session,
-                    sessionFeedback
-                )
+                context?.let { it ->
+                    sessionSurveyActionCreator.submit(
+                        sessionSurveyFragmentArgs.session,
+                        sessionFeedback,
+                        it
+                    )
+                }
             } else {
                 // TODO: show snackbar no input item message
                 view?.let {
-                    Snackbar.make(it, "no input item message", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(
+                        it,
+                        LocaledString(
+                            getString(R.string.not_input),
+                            getString(R.string.not_input)
+                        ).getByLang(lang),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                 }
             }
         }

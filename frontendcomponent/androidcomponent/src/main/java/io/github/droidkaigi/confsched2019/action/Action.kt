@@ -7,6 +7,7 @@ import io.github.droidkaigi.confsched2019.model.ErrorMessage
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LangSupport
 import io.github.droidkaigi.confsched2019.model.LoadingState
+import io.github.droidkaigi.confsched2019.model.LocaledString
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.SearchResult
 import io.github.droidkaigi.confsched2019.model.Session
@@ -80,7 +81,7 @@ sealed class Action {
     data class SessionSurveyLoadingStateChanged(val loadingState: LoadingState) : Action()
     data class SessionSurveyLoaded(val sessionFeedback: SessionFeedback) : Action()
     object SessionSurveySubmitted : Action()
-    data class SessionSurveyShowSnackBar(val text:String) : Action()
+    data class SessionSurveyShowSnackBar(val text: LocaledString) : Action()
 
     class FloorMapLoadingStateChanged(val loadingState: LoadingState) : Action()
 }

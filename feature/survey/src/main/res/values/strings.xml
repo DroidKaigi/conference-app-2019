@@ -9,5 +9,9 @@
     <string name="comment_hint"><font size="12">Please don\'t add any personal information in your comments</font></string>
     <string name="submit">Submit</string>
 
+    <string name="submit_successful">Submitted successfully. Thanks</string>
+    <string name="submit_failure">Failed to submit. Please try it again later</string>
+    <string name="not_input">Some of fields aren\'t filled</string>
+
     <string name="page_progress">%1$d/%2$d</string>
 </resources>
