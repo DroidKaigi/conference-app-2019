@@ -49,8 +49,7 @@ class SessionSurveyActionCreator @Inject constructor(
         } catch (e: Exception) {
             onError(e)
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.INITIALIZED))
- ction ReformatCode
-     dispatcher.dispatch(Action.SessionSurveyShowSnackBar("submit fail"))
+            dispatcher.dispatch(Action.SessionSurveyShowSnackBar("submit fail"))
         }
     }
 
