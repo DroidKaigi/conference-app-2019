@@ -104,7 +104,8 @@ jobs:
       - restore_cache: *restore_gradle_cache
       - run: *download_all_dependencies
       - save_cache: *save_gradle_cache
-      - run: ./gradlew testDebugUnitTest lintDebug ktlint --continue --offline
+      - run: ./gradlew lintDebug lintRelease --continue --offline # No need to use lintVitalRelease
+      - run: ./gradlew testDebugUnitTest ktlint --continue --offline
       - run:
           name: Aggregate junit report files into one dir
           command: aggregate_junit_results

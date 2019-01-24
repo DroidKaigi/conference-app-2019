@@ -23,6 +23,9 @@ android {
         if (lintFile.exists()) {
             lintConfig lintFile
         }
+
+        checkReleaseBuilds !isCi
+        abortOnError !isCi
     }
 }
 kotlin.sourceSets.all {
