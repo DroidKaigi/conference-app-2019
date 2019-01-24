@@ -6,6 +6,10 @@ apply plugin: 'androidx.navigation.safeargs'
 
 apply from: rootProject.file('gradle/android.gradle')
 
+android.buildTypes.release {
+    consumerProguardFiles 'proguard-rules-navigation.pro'
+}
+
 dependencies {
     api project(":model")
     api project(":feature:notification")
@@ -37,9 +41,14 @@ dependencies {
     androidTestImplementation Dep.Test.espressoCore
 }
 repositories {
-    if (!isCi) { maven { url "https://maven-central-asia.storage-download.googleapis.com/repos/central/data/" } }
+    if (!isCi) {
+        maven {
+            url "https://maven-central-asia.storage-download.googleapis.com/repos/central/data/"
+        }
+    }
     mavenCentral()
 }
+
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions {
         freeCompilerArgs = [
@@ -48,3 +57,38 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         ]
     }
 }
+
+task buildNavigationProguard << {
+    def navigationGraphXml = project.file("src/main/res/navigation/navigation.xml")
+
+    // XmlParser didn't work so let me use the dirty hack
+    if (!navigationGraphXml.text.contains("xmlns:app=\"http://schemas.android.com/apk/res-auto\"")) {
+        throw new GradleScriptException("the namespace has been changed from app")
+    }
+
+    def fqdns = []
+
+    navigationGraphXml.eachLine {
+        def line = it.trim()
+
+        if (line.startsWith("android:name=\"")) {
+            def className = line.substring("android:name=\"".length(), line.lastIndexOf("\""))
+
+            if (className.contains(".")) {
+                fqdns << className
+            }
+        } else if (line.startsWith("app:argType=\"")) {
+            def className = line.substring("app:argType=\"".length(), line.lastIndexOf("\""))
+
+            if (className.contains(".")) {
+                fqdns << className
+            }
+        }
+    }
+
+    project.file("proguard-rules-navigation.pro").write(fqdns.sort().collect {
+        "-keepnames class $it"
+    }.join("\n"))
+}
+
+preBuild.dependsOn(buildNavigationProguard)

@@ -1,0 +1,17 @@
+-keepnames class com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+-keepnames class io.github.droidkaigi.confsched2019.about.ui.AboutFragment
+-keepnames class io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment
+-keepnames class io.github.droidkaigi.confsched2019.floormap.ui.FloorMapFragment
+-keepnames class io.github.droidkaigi.confsched2019.model.SpeechSession
+-keepnames class io.github.droidkaigi.confsched2019.session.ui.BottomSheetDaySessionsFragment
+-keepnames class io.github.droidkaigi.confsched2019.session.ui.BottomSheetFavoriteSessionsFragment
+-keepnames class io.github.droidkaigi.confsched2019.session.ui.SearchFragment
+-keepnames class io.github.droidkaigi.confsched2019.session.ui.SessionDetailFragment
+-keepnames class io.github.droidkaigi.confsched2019.session.ui.SessionPageFragment
+-keepnames class io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment
+-keepnames class io.github.droidkaigi.confsched2019.session.ui.SpeakerFragment
+-keepnames class io.github.droidkaigi.confsched2019.session.ui.TabularFormSessionPagesFragment
+-keepnames class io.github.droidkaigi.confsched2019.settings.ui.SettingsFragment
+-keepnames class io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragment
+-keepnames class io.github.droidkaigi.confsched2019.staff.ui.StaffSearchFragment
+-keepnames class io.github.droidkaigi.confsched2019.survey.ui.SessionSurveyFragment

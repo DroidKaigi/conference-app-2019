@@ -18,7 +18,6 @@ android {
             storeFile file('debug.keystore')
             storePassword 'droidkaigi'
         }
-        release.initWith(debug)
 
         if (isProductionBuild) {
             release {
@@ -27,6 +26,8 @@ android {
                 storeFile System.getenv("RELEASE_STORE_FILE")
                 storePassword System.getenv("RELEASE_PASSWORD")
             }
+        } else {
+            release.initWith(debug)
         }
     }
     defaultConfig {
@@ -52,6 +53,7 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig = signingConfigs.release
 
             if (isProductionBuild) {
                 applicationIdSuffix ""
@@ -145,6 +147,5 @@ dependencies {
         debugImplementation it
     }
 }
-
 
 apply plugin: 'com.google.gms.google-services'
