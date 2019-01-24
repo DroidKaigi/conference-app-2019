@@ -19,4 +19,6 @@
     <dimen name="session_detail_toolbar_elevation_top">0dp</dimen>
     <dimen name="tabular_form_column_width">130dp</dimen>
     <dimen name="tabular_form_px_per_minute">5dp</dimen>
+    <dimen name="tabular_form_room_label_height">48dp</dimen>
+    <dimen name="tabular_form_room_label_text_size">16sp</dimen>
 </resources>

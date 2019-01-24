@@ -12,7 +12,7 @@ import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularServiceSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionItem
 
-class TimeTableItemDecoration(
+class TimeTableDividerDecoration(
     private val columnCount: Int,
     private val lineColor: Int,
     private val lineWidth: Float,
