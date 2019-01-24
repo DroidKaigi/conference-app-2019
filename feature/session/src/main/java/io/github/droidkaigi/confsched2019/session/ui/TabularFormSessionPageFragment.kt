@@ -59,8 +59,8 @@ class TabularFormSessionPageFragment : DaggerFragment() {
         val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.tabularFormSessionsRecycler.apply {
             addItemDecoration(TimeTableDividerDecoration(context, COLUMN_COUNT, groupAdapter))
-            addItemDecoration(TimeTableRoomLabelDecoration(context, COLUMN_COUNT, groupAdapter))
             addItemDecoration(TimeTableTimeLabelDecoration(context, groupAdapter))
+            addItemDecoration(TimeTableRoomLabelDecoration(context, groupAdapter))
             layoutManager = TimeTableLayoutManager(
                 resources.getDimensionPixelSize(R.dimen.tabular_form_column_width),
                 resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute)

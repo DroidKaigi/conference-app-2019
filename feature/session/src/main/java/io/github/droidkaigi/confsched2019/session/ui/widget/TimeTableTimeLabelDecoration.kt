@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
-import android.view.View
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.soywiz.klock.DateFormat
@@ -13,7 +12,6 @@ import com.soywiz.klock.format
 import com.xwray.groupie.GroupAdapter
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularServiceSessionItem
-import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpacerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionItem
 
 // FIXME: TIMEZONE
@@ -46,30 +44,32 @@ class TimeTableTimeLabelDecoration(
     private val textHeight =
         Rect().apply { textPaint.getTextBounds("00:00", 0, "00:00".length - 1, this) }.height()
 
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        super.getItemOffsets(outRect, view, parent, state)
-        val roomNumber =
-            when (val item = groupAdapter.getItem(parent.getChildAdapterPosition(view))) {
-                is TabularServiceSessionItem -> item.session.room
-                is TabularSpeechSessionItem -> item.session.room
-                is TabularSpacerItem -> item.room
-                else -> return
-            }.sequentialNumber
-
-        if (roomNumber == 0) outRect.left = labelWidth.toInt()
-    }
+    // set padding to parent RecyclerView. room number 0 isn't always at the left
+    // or specify the room at the left
+//    override fun getItemOffsets(
+//        outRect: Rect,
+//        view: View,
+//        parent: RecyclerView,
+//        state: RecyclerView.State
+//    ) {
+//        super.getItemOffsets(outRect, view, parent, state)
+//        val roomNumber =
+//            when (val item = groupAdapter.getItem(parent.getChildAdapterPosition(view))) {
+//                is TabularServiceSessionItem -> item.session.room
+//                is TabularSpeechSessionItem -> item.session.room
+//                is TabularSpacerItem -> item.room
+//                else -> return
+//            }.sequentialNumber
+//
+//        if (roomNumber == 0) outRect.left = labelWidth.toInt()
+//    }
 
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         super.onDrawOver(c, parent, state)
 
         // draw background
         c.drawRect(
-            Rect(parent.left, parent.top, parent.left + labelWidth.toInt(), parent.bottom),
+            Rect(0, parent.top, labelWidth.toInt(), parent.bottom),
             backgroundPaint
         )
 
@@ -88,7 +88,7 @@ class TimeTableTimeLabelDecoration(
             .forEach { (v, time) ->
                 val timeText = dateFormat.format(time)
                 val rect =
-                    Rect(parent.left, v.top, parent.left + labelWidth.toInt(), v.top + textHeight)
+                    Rect(0, v.top, labelWidth.toInt(), v.top + textHeight)
                 val baseX = rect.centerX().toFloat() - textPaint.measureText(timeText) / 2f
                 val baseY =
                     rect.centerY() - (textPaint.fontMetrics.ascent + textPaint.fontMetrics.descent) / 2f

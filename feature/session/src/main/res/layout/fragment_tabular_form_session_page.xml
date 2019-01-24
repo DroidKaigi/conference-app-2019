@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     >
 
+    <!-- ItemDecorations for TimeTableLayoutManager needs RecyclerView padding-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tabular_form_sessions_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="@dimen/tabular_form_room_label_height"
+        android:paddingLeft="@dimen/tabular_form_time_label_width"
+        tools:ignore="RtlHardcoded,RtlSymmetry"
         />
 
 </layout>

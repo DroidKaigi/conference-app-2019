@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
-import android.view.View
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupAdapter
@@ -15,7 +14,6 @@ import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpacerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionItem
 
 class TimeTableRoomLabelDecoration(
-    private val columnCount: Int,
     private val labelHeight: Float,
     private val labelTextSize: Float,
     private val labelBackgroundColor: Int,
@@ -23,8 +21,7 @@ class TimeTableRoomLabelDecoration(
     private val groupAdapter: GroupAdapter<*>
 ) : RecyclerView.ItemDecoration() {
 
-    constructor(context: Context, columnCount: Int, groupAdapter: GroupAdapter<*>) : this(
-        columnCount,
+    constructor(context: Context, groupAdapter: GroupAdapter<*>) : this(
         context.resources.getDimension(R.dimen.tabular_form_room_label_height),
         context.resources.getDimension(R.dimen.tabular_form_room_label_text_size),
         Color.WHITE,
@@ -40,24 +37,12 @@ class TimeTableRoomLabelDecoration(
         textSize = labelTextSize
     }
 
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        super.getItemOffsets(outRect, view, parent, state)
-
-        val position = parent.getChildAdapterPosition(view)
-        if (position < columnCount) outRect.top = labelHeight.toInt()
-    }
-
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         super.onDrawOver(c, parent, state)
 
         // draw background
         c.drawRect(
-            Rect(parent.left, parent.top, parent.right, parent.top + labelHeight.toInt()),
+            Rect(0, parent.top, parent.width, parent.top + labelHeight.toInt()),
             backgroundPaint
         )
 
