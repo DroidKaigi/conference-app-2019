@@ -94,7 +94,6 @@ class SessionSurveyFragment : DaggerFragment() {
 
         val lang = defaultLang()
         binding.sessionTitle.text = sessionSurveyFragmentArgs.session.title.getByLang(lang)
-        // TODO: set speackers icon
 
         binding.submitButton.setOnClickListener {
             val sessionFeedback =

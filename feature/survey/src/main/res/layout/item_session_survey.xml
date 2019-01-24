@@ -48,11 +48,12 @@
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/comment"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:gravity="center_vertical"
             android:hint="@string/comment_hint"
+            android:minHeight="60dp"
             android:paddingEnd="10dp"
             android:paddingStart="10dp"
             app:visibleGone="@{surveyItem.isComment}"
