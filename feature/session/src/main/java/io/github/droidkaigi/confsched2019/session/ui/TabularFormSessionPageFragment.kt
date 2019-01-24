@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Lifecycle
 import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.databinding.BindableItem
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
@@ -19,6 +21,7 @@ import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentTabularFormSessionPageBinding
 import io.github.droidkaigi.confsched2019.session.di.SessionPageScope
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularServiceSessionItem
+import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpacerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
@@ -60,28 +63,97 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                 resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute)
             ) { position ->
                 val item = groupAdapter.getItem(position)
-                val session = when (item) {
-                    is TabularSpeechSessionItem -> item.session as Session
-                    is TabularServiceSessionItem -> item.session as Session
+                when (item) {
+                    is TabularSpeechSessionItem ->
+                        TimeTableLayoutManager.PeriodInfo(
+                            item.session.startTime.unixMillisLong,
+                            item.session.endTime.unixMillisLong,
+                            item.session.room.sequentialNumber
+                        )
+                    is TabularServiceSessionItem ->
+                        TimeTableLayoutManager.PeriodInfo(
+                            item.session.startTime.unixMillisLong,
+                            item.session.endTime.unixMillisLong,
+                            item.session.room.sequentialNumber
+                        )
+                    is TabularSpacerItem ->
+                        TimeTableLayoutManager.PeriodInfo(
+                            item.startEpochMilli,
+                            item.endEpochMilli,
+                            item.room.sequentialNumber
+                        )
                     else -> throw IllegalStateException() // TODO: Fill with Spacer
                 }
-                TimeTableLayoutManager.PeriodInfo(
-                    session.startTime.unixMillisLong,
-                    session.endTime.unixMillisLong,
-                    session.room.sequentialNumber
-                )
             }
         }
 
         sessionPagesStore.sessionsByDay(arguments?.getInt(KEY_DAY) ?: 1) // TODO: SafeArgs
             .changed(viewLifecycleOwner) { sessions ->
-                sessions.map { session ->
-                    when (session) {
-                        is SpeechSession -> TabularSpeechSessionItem(session)
-                        is ServiceSession -> TabularServiceSessionItem(session)
-                    }
-                }.let(groupAdapter::update)
+                groupAdapter.update(fillWithSpacer(sessions))
             }
+    }
+
+    private fun Session.toBindableItem(): BindableItem<out ViewDataBinding> {
+        return when (this) {
+            is SpeechSession -> TabularSpeechSessionItem(this)
+            is ServiceSession -> TabularServiceSessionItem(this)
+        }
+    }
+
+    private fun fillWithSpacer(sessions: List<Session>): List<BindableItem<*>> {
+        if (sessions.isEmpty()) return emptyList()
+
+        val sortedSessions = sessions.sortedBy { it.startTime.unixMillisLong }
+        val firstSessionStart = sortedSessions.first().startTime.unixMillisLong
+        val lastSessionEnd =
+            sortedSessions.maxBy { it.endTime.unixMillisLong }?.endTime?.unixMillisLong
+                ?: return emptyList()
+        val rooms = sortedSessions.map { it.room }.distinct()
+
+        val filledBindableItems = ArrayList<BindableItem<*>>()
+        rooms.forEach { room ->
+            val sessionsInSameRoom = sortedSessions.filter { it.room == room }
+            sessionsInSameRoom.forEachIndexed { index, session ->
+                if (index == 0 && session.startTime.unixMillisLong > firstSessionStart)
+                    filledBindableItems.add(
+                        TabularSpacerItem(
+                            firstSessionStart,
+                            session.startTime.unixMillisLong,
+                            room
+                        )
+                    )
+
+                filledBindableItems.add(session.toBindableItem())
+
+                if (index == sessionsInSameRoom.size - 1 && session.endTime.unixMillisLong < lastSessionEnd) {
+                    filledBindableItems.add(
+                        TabularSpacerItem(
+                            session.endTime.unixMillisLong,
+                            lastSessionEnd,
+                            room
+                        )
+                    )
+                }
+
+                val nextSession = sessionsInSameRoom.getOrNull(index + 1) ?: return@forEachIndexed
+                if (session.endTime.unixMillisLong != nextSession.startTime.unixMillisLong)
+                    filledBindableItems.add(
+                        TabularSpacerItem(
+                            session.endTime.unixMillisLong,
+                            nextSession.startTime.unixMillisLong,
+                            room
+                        )
+                    )
+            }
+        }
+        return filledBindableItems.sortedBy {
+            when (it) {
+                is TabularSpeechSessionItem -> it.session.startTime.unixMillisLong
+                is TabularServiceSessionItem -> it.session.startTime.unixMillisLong
+                is TabularSpacerItem -> it.startEpochMilli
+                else -> throw IllegalStateException()
+            }
+        }
     }
 
     private val Room.sequentialNumber: Int
