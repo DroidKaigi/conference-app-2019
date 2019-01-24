@@ -29,9 +29,16 @@ final class SessionDataSource: NSObject, UITableViewDataSource {
         cell.session = items[indexPath.section].sessions[indexPath.row]
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return items[section].startTimeText
+}
+
+extension SessionDataSource: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = SessionHeaderView(frame: CGRect(x: 0,
+                                                   y: 0,
+                                                   width: tableView.frame.width,
+                                                   height: 30))
+        view.set(startTimeText: items[section].startTimeText)
+        return view
     }
 }
 

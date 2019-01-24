@@ -132,7 +132,7 @@ class SessionTableViewCell: UITableViewCell, Reusable {
     private func setupSubviews() {
         [titleLabel, liveMark, speakersStackView, timeAndRoomLabel, collectionView].forEach(contentView.addSubview)
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(20)
+            $0.top.equalToSuperview().inset(5)
             $0.leading.equalToSuperview().inset(90)
             $0.trailing.equalTo(liveMark.snp.leading).offset(-4)
         }
@@ -152,7 +152,7 @@ class SessionTableViewCell: UITableViewCell, Reusable {
             $0.leading.equalTo(titleLabel)
             $0.trailing.equalToSuperview().inset(16)
             $0.top.equalTo(timeAndRoomLabel.snp.bottom).offset(7)
-            $0.bottom.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(26)
         }
     }
 
