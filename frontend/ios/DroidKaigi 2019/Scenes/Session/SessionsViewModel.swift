@@ -25,10 +25,10 @@ extension SessionsViewModel {
     }
 
     struct Output {
-        let sessions: Driver<[Session]>
+        let sessions: Driver<[SessionByStartTime]>
         let error: Driver<String?>
     }
-
+    
     func transform(input: Input) -> Output {
         let sessionContents = input.initTrigger
                 .flatMap { [weak self] (_) -> Observable<SessionContents> in
@@ -40,7 +40,24 @@ extension SessionsViewModel {
                             return Observable.empty()
                         }
                 }
-        let sessions = sessionContents.map { $0.sessions }.asDriver(onErrorJustReturn: [])
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "HH:mm"
+        
+        let sessions = sessionContents.map { sessionContents -> [SessionByStartTime] in
+            return sessionContents.sessions.reduce(into: [SessionByStartTime]()) { result, session in
+                if let index = result.firstIndex(where: { $0.startTime == session.startTime }) {
+                    result[index].sessions.append(session)
+                    return
+                }
+                result.append(SessionByStartTime(startDayText: session.startDayText,
+                                                 startTimeText: dateFormatter.string(from: Date(timeIntervalSince1970: session.startTime / 1000)),
+                                                 startTime: session.startTime,
+                                                 sessions: [session]))
+            }
+        }.asDriver(onErrorJustReturn: [])
         let error = _error.asDriver()
         return Output(sessions: sessions, error: error)
     }
