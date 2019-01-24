@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Lifecycle
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.BindableItem
@@ -82,25 +81,18 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                             item.endEpochMilli,
                             item.room.sequentialNumber
                         )
-                    else -> throw IllegalStateException() // TODO: Fill with Spacer
+                    else -> TimeTableLayoutManager.PeriodInfo(0, 0, 0)
                 }
             }
         }
 
         sessionPagesStore.sessionsByDay(arguments?.getInt(KEY_DAY) ?: 1) // TODO: SafeArgs
             .changed(viewLifecycleOwner) { sessions ->
-                groupAdapter.update(fillWithSpacer(sessions))
+                groupAdapter.update(fillGaps(sessions))
             }
     }
 
-    private fun Session.toBindableItem(): BindableItem<out ViewDataBinding> {
-        return when (this) {
-            is SpeechSession -> TabularSpeechSessionItem(this)
-            is ServiceSession -> TabularServiceSessionItem(this)
-        }
-    }
-
-    private fun fillWithSpacer(sessions: List<Session>): List<BindableItem<*>> {
+    private fun fillGaps(sessions: List<Session>): List<BindableItem<*>> {
         if (sessions.isEmpty()) return emptyList()
 
         val sortedSessions = sessions.sortedBy { it.startTime.unixMillisLong }
@@ -110,12 +102,12 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                 ?: return emptyList()
         val rooms = sortedSessions.map { it.room }.distinct()
 
-        val filledBindableItems = ArrayList<BindableItem<*>>()
+        val filledItems = ArrayList<BindableItem<*>>()
         rooms.forEach { room ->
             val sessionsInSameRoom = sortedSessions.filter { it.room == room }
             sessionsInSameRoom.forEachIndexed { index, session ->
                 if (index == 0 && session.startTime.unixMillisLong > firstSessionStart)
-                    filledBindableItems.add(
+                    filledItems.add(
                         TabularSpacerItem(
                             firstSessionStart,
                             session.startTime.unixMillisLong,
@@ -123,10 +115,15 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                         )
                     )
 
-                filledBindableItems.add(session.toBindableItem())
+                filledItems.add(
+                    when (session) {
+                        is SpeechSession -> TabularSpeechSessionItem(session)
+                        is ServiceSession -> TabularServiceSessionItem(session)
+                    }
+                )
 
                 if (index == sessionsInSameRoom.size - 1 && session.endTime.unixMillisLong < lastSessionEnd) {
-                    filledBindableItems.add(
+                    filledItems.add(
                         TabularSpacerItem(
                             session.endTime.unixMillisLong,
                             lastSessionEnd,
@@ -137,7 +134,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
 
                 val nextSession = sessionsInSameRoom.getOrNull(index + 1) ?: return@forEachIndexed
                 if (session.endTime.unixMillisLong != nextSession.startTime.unixMillisLong)
-                    filledBindableItems.add(
+                    filledItems.add(
                         TabularSpacerItem(
                             session.endTime.unixMillisLong,
                             nextSession.startTime.unixMillisLong,
@@ -146,12 +143,12 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                     )
             }
         }
-        return filledBindableItems.sortedBy {
+        return filledItems.sortedBy {
             when (it) {
                 is TabularSpeechSessionItem -> it.session.startTime.unixMillisLong
                 is TabularServiceSessionItem -> it.session.startTime.unixMillisLong
                 is TabularSpacerItem -> it.startEpochMilli
-                else -> throw IllegalStateException()
+                else -> 0
             }
         }
     }
