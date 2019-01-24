@@ -3,6 +3,7 @@ package io.github.droidkaigi.confsched2019.session.ui
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.TextPaint
+import android.text.TextUtils
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.LayoutInflater
@@ -45,6 +46,8 @@ import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCre
 import io.github.droidkaigi.confsched2019.user.store.UserStore
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import javax.inject.Inject
+
+private const val ELIPSIS_LINE_COUNT = 5
 
 class SessionDetailFragment : DaggerFragment() {
     private lateinit var binding: FragmentSessionDetailBinding
@@ -242,16 +245,26 @@ class SessionDetailFragment : DaggerFragment() {
             // check the number of lines if set full length text (this text is not displayed yet)
             textView.text = fullText
             // if lines are more than prescribed value then collapse
-            if (textView.lineCount > 5 && showEllipsis) {
-                val end = textView.layout.getLineStart(5)
+            if (textView.lineCount > ELIPSIS_LINE_COUNT && showEllipsis) {
+                val lastLineStartPosition = textView.layout.getLineStart(ELIPSIS_LINE_COUNT - 1)
+                val paint = textView.paint
                 val ellipsis = getString(R.string.ellipsis_label)
+                val ellipsisWidth = paint.measureText(ellipsis)
+                // avoid shifting position, delete line feed code after target line.
+                val target = fullText.substring(lastLineStartPosition).replace("\n", "")
+                val lastLineText = TextUtils.ellipsize(
+                    target,
+                    paint,
+                    textView.width - ellipsisWidth,
+                    TextUtils.TruncateAt.END
+                )
                 val ellipsisColor = ContextCompat.getColor(requireContext(), R.color.colorSecondary)
                 val onClickListener = {
                     TransitionManager.beginDelayedTransition(binding.sessionLayout)
                     textView.text = fullText
                     showEllipsis = !showEllipsis
                 }
-                val detailText = fullText.subSequence(0, end - ellipsis.length)
+                val detailText = fullText.substring(0, lastLineStartPosition) + lastLineText
                 val text = buildSpannedString {
                     clickableSpan(onClickListener, {
                         append(detailText)
