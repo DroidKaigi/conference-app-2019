@@ -91,7 +91,8 @@ class TimeTableTimeLabelDecoration(
                     Rect(0, v.top, labelWidth.toInt(), v.top + textHeight)
                 val baseX = rect.centerX().toFloat() - textPaint.measureText(timeText) / 2f
                 val baseY =
-                    rect.centerY() - (textPaint.fontMetrics.ascent + textPaint.fontMetrics.descent) / 2f
+                    rect.centerY() - (textPaint.fontMetrics.ascent +
+                        textPaint.fontMetrics.descent) / 2f
                 c.drawText(timeText, baseX, baseY, textPaint)
             }
     }

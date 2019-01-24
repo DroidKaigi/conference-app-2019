@@ -63,7 +63,8 @@ class TimeTableRoomLabelDecoration(
                     Rect(view.left, parent.top, view.right, parent.top + labelHeight.toInt())
                 val baseX = rect.centerX().toFloat() - textPaint.measureText(roomName) / 2f
                 val baseY =
-                    rect.centerY() - (textPaint.fontMetrics.ascent + textPaint.fontMetrics.descent) / 2f
+                    rect.centerY() - (textPaint.fontMetrics.ascent +
+                        textPaint.fontMetrics.descent) / 2f
                 c.drawText(roomName, baseX, baseY, textPaint)
             }
     }

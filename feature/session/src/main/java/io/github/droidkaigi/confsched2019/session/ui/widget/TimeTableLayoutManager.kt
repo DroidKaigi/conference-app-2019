@@ -93,7 +93,9 @@ class TimeTableLayoutManager(
     override fun canScrollHorizontally() = true
 
     override fun scrollVerticallyBy(
-        dy: Int, recycler: RecyclerView.Recycler, state: RecyclerView.State
+        dy: Int,
+        recycler: RecyclerView.Recycler,
+        state: RecyclerView.State
     ): Int {
         if (dy == 0) return 0
 

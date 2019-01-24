@@ -127,7 +127,9 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                     }
                 )
 
-                if (index == sessionsInSameRoom.size - 1 && session.endTime.unixMillisLong < lastSessionEnd) {
+                if (index == sessionsInSameRoom.size - 1 &&
+                    session.endTime.unixMillisLong < lastSessionEnd
+                ) {
                     filledItems.add(
                         TabularSpacerItem(
                             session.endTime.unixMillisLong,
