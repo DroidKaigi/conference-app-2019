@@ -13,13 +13,10 @@
 
         <KeyFrameSet>
             <KeyPosition
-                app:framePosition="30"
-                app:percentWidth="1"
-                app:percentX="1"
-                app:target="@id/session_title" />
-            <KeyPosition
-                app:framePosition="1"
-                app:percentWidth="1"
+                app:framePosition="25"
+                app:keyPositionType="deltaRelative"
+                app:pathMotionArc="none"
+                app:percentX="0.75"
                 app:target="@id/session_title" />
             <KeyAttribute
                 app:framePosition="1"
@@ -78,12 +75,12 @@
         <Constraint android:id="@id/session_title">
             <Transform app:elevation="9dp" />
             <Layout
-                app:layout_constraintBottom_toBottomOf="@id/session_toolbar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/session_toolbar"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_height="?attr/actionBarSize"
                 app:layout_marginStart="56dp"
+                app:layout_marginTop="0dp"
                 app:layout_width="0dp" />
             <CustomAttribute
                 app:attributeName="maxLines"
