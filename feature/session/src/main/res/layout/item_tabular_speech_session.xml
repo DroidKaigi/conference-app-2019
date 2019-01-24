@@ -22,13 +22,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/tabular_form_column_width"
         android:layout_height="wrap_content"
-        android:padding="4dp"
+        android:padding="1dp"
         >
 
         <androidx.emoji.widget.EmojiTextView
             android:id="@+id/session_title"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:background="@android:color/darker_gray"
             android:ellipsize="end"
             android:fontFamily="@font/notosans_medium"
@@ -38,7 +38,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0"
             tools:text="@sample/service_session.json/data/session_name"
             />
 
