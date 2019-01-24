@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tabular_form_sessions_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

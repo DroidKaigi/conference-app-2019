@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.session.R
@@ -31,6 +33,14 @@ class TabularFormSessionPageFragment : DaggerFragment() {
         return binding.root
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val groupAdapter = GroupAdapter<ViewHolder<*>>()
+        binding.tabularFormSessionsRecycler.apply {
+            adapter = groupAdapter
+        }
+    }
+
     companion object {
         fun newInstance(): TabularFormSessionPageFragment {
             return TabularFormSessionPageFragment()
@@ -43,7 +53,8 @@ abstract class TabularFormSessionPageFragmentModule {
 
     @Module
     companion object {
-        @JvmStatic @Provides
+        @JvmStatic
+        @Provides
         @SessionPageScope
         fun providesLifecycle(
             tabularFromSessionPageFragment: TabularFormSessionPageFragment
