@@ -5,6 +5,7 @@ import android.util.SparseArray
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
+// TODO: Implement View Recycling on scrolling
 class TimeTableLayoutManager(
     private val columnWidth: Int,
     private val pxPerMinute: Int,
