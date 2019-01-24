@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     >
 
@@ -41,7 +42,7 @@
             android:layout_marginTop="40dp"
             android:numStars="5"
             android:stepSize="1"
-            android:visibility="@{surveyItem.isComment ? View.GONE : View.VISIBLE}"
+            app:visibleGone="@{!surveyItem.isComment}"
             />
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -54,7 +55,7 @@
             android:hint="@string/comment_hint"
             android:paddingEnd="10dp"
             android:paddingStart="10dp"
-            android:visibility="@{surveyItem.isComment ? View.VISIBLE : View.GONE}"
+            app:visibleGone="@{surveyItem.isComment}"
             tools:visibility="visible"
             />
 
