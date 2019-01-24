@@ -203,7 +203,11 @@ class SessionSurveyFragment : DaggerFragment() {
         }
 
         binding.sessionSurveyViewPager.onPageSelected { position ->
-            binding.pageProgress.text = "${position + 1}/6"
+            binding.pageProgress.text = getString(
+                R.string.page_progress,
+                position + 1,
+                (binding.sessionSurveyViewPager.adapter as PagerAdapter).count
+            )
             binding.submitButton.isVisible = position == 5
         }
     }

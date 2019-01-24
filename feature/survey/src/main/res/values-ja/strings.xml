@@ -8,4 +8,6 @@
     <string name="comment">他にコメントがあればぜひ教えてください</string>
     <string name="comment_hint"><font size="12">個人が特定できるような内容は書かないでください</font></string>
     <string name="submit">送信する</string>
+
+    <string name="page_progress">%1$d/%2$d</string>
 </resources>
