@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import android.widget.TextView
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.text.buildSpannedString
 import androidx.core.text.color
@@ -28,7 +27,6 @@ import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.di.PageScope
-import io.github.droidkaigi.confsched2019.ext.android.afterMeasured
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.ServiceSession
@@ -40,7 +38,6 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionConten
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeakerItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
-import io.github.droidkaigi.confsched2019.session.ui.widget.SessionToolbarBehavior
 import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
 import io.github.droidkaigi.confsched2019.user.store.UserStore
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
@@ -211,27 +208,6 @@ class SessionDetailFragment : DaggerFragment() {
                 activityActionCreator.openUrl(urlString)
             }
         }
-
-//        (binding.contentParent.layoutParams as CoordinatorLayout.LayoutParams).behavior =
-//            SessionToolbarBehavior(
-//                requireContext(),
-//                binding.sessionToolbar,
-//                session.title.getByLang(lang)
-//            )
-//        // To setup the toolbar when it's backed from a speaker page.
-//        binding.scrollView.afterMeasured {
-//            if (binding.scrollView.scrollY != 0) {
-//                val resources = context?.resources
-//                resources?.let {
-//                    with(binding.sessionToolbar) {
-//                        elevation = it.getDimension(
-//                            R.dimen.session_detail_toolbar_elevation_not_top
-//                        ) / it.displayMetrics.density
-//                        title = session.title.getByLang(lang)
-//                    }
-//                }
-//            }
-//        }
     }
 
     private fun setupSessionDescription() {

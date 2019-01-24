@@ -12,6 +12,7 @@
                 app:keyPositionType="deltaRelative"
                 app:pathMotionArc="none"
                 app:percentX="0.75"
+                app:sizePercent="1"
                 app:target="@id/session_title" />
             <KeyAttribute
                 app:framePosition="1"
