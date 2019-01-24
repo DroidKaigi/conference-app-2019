@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.snackbar.Snackbar
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.di.PageScope
@@ -81,6 +82,10 @@ class SessionSurveyFragment : DaggerFragment() {
             // TODO: save sessionFeedback state to cacheDB
         }
 
+        sessionSurveyStore.showSnackBar.changed(viewLifecycleOwner) { text ->
+            view?.let { Snackbar.make(it, text, Snackbar.LENGTH_SHORT).show() }
+        }
+
         val lang = defaultLang()
         binding.sessionTitle.text = sessionSurveyFragmentArgs.session.title.getByLang(lang)
         // TODO: set speackers icon
@@ -96,6 +101,9 @@ class SessionSurveyFragment : DaggerFragment() {
                 )
             } else {
                 // TODO: show snackbar no input item message
+                view?.let {
+                    Snackbar.make(it, "no input item message", Snackbar.LENGTH_SHORT).show()
+                }
             }
         }
 

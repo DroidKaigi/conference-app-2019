@@ -14,6 +14,10 @@ import javax.inject.Inject
 class SessionSurveyStore @Inject constructor(
     dispatcher: Dispatcher
 ) : ViewModel() {
+    val showSnackBar: LiveData<String> = dispatcher
+        .subscribe<Action.SessionSurveyShowSnackBar>()
+        .map { it.text }
+        .toLiveData()
     val loadingState: LiveData<LoadingState> = dispatcher
         .subscribe<Action.SessionSurveyLoadingStateChanged>()
         .map { it.loadingState }

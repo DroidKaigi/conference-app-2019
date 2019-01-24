@@ -45,11 +45,12 @@ class SessionSurveyActionCreator @Inject constructor(
             sessionRepository.saveSessionFeedback(sessionFeedback)
             dispatcher.dispatch(Action.SessionSurveySubmitted)
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
-            // TODO: show snackbar feedback submit success
+            dispatcher.dispatch(Action.SessionSurveyShowSnackBar("submit success"))
         } catch (e: Exception) {
             onError(e)
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.INITIALIZED))
-            // TODO: show snackbar feedback submit fail
+ ction ReformatCode
+     dispatcher.dispatch(Action.SessionSurveyShowSnackBar("submit fail"))
         }
     }
 

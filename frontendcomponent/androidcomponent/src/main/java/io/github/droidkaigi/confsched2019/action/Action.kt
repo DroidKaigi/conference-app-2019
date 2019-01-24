@@ -80,6 +80,7 @@ sealed class Action {
     data class SessionSurveyLoadingStateChanged(val loadingState: LoadingState) : Action()
     data class SessionSurveyLoaded(val sessionFeedback: SessionFeedback) : Action()
     object SessionSurveySubmitted : Action()
+    data class SessionSurveyShowSnackBar(val text:String):Action()
 
     class FloorMapLoadingStateChanged(val loadingState: LoadingState) : Action()
 }
