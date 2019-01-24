@@ -5,7 +5,7 @@ import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemTabularSpacerBinding
 
-class TabularSpacerItem(val startEpochMilli: Long, val endEpochMilli: Long, val room: Room) :
+class TabularSpacerItem(val startUnixMillis: Long, val endUnixMillis: Long, val room: Room) :
     BindableItem<ItemTabularSpacerBinding>() {
 
     override fun bind(viewBinding: ItemTabularSpacerBinding, pposition: Int) {

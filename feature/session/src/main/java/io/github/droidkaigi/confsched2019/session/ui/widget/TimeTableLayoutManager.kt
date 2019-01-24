@@ -14,17 +14,17 @@ class TimeTableLayoutManager(
     private val periodLookUp: (position: Int) -> PeriodInfo
 ) : RecyclerView.LayoutManager() {
 
-    class PeriodInfo(val startEpochMilli: Long, val endEpochMilli: Long, val columnNumber: Int)
+    class PeriodInfo(val startUnixMillis: Long, val endUnixMillis: Long, val columnNumber: Int)
 
     private data class Period(
-        val startEpochMilli: Long,
-        val endEpochMilli: Long,
+        val startUnixMillis: Long,
+        val endUnixMillis: Long,
         val columnNumber: Int,
         val position: Int
     ) {
-        val startEpochMin = (startEpochMilli / 1000 / 60).toInt()
-        val endEpochMin = (endEpochMilli / 1000 / 60).toInt()
-        val durationMin = endEpochMin - startEpochMin
+        val startUnixMin = (startUnixMillis / 1000 / 60).toInt()
+        val endUnixMin = (endUnixMillis / 1000 / 60).toInt()
+        val durationMin = endUnixMin - startUnixMin
     }
 
     private val parentLeft get() = paddingLeft
@@ -188,8 +188,8 @@ class TimeTableLayoutManager(
             .map {
                 val periodInfo = periodLookUp(it)
                 Period(
-                    periodInfo.startEpochMilli,
-                    periodInfo.endEpochMilli,
+                    periodInfo.startUnixMillis,
+                    periodInfo.endUnixMillis,
                     periodInfo.columnNumber,
                     it
                 )

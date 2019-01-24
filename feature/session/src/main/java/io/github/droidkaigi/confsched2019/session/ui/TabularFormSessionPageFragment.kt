@@ -81,8 +81,8 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                         )
                     is TabularSpacerItem ->
                         TimeTableLayoutManager.PeriodInfo(
-                            item.startEpochMilli,
-                            item.endEpochMilli,
+                            item.startUnixMillis,
+                            item.endUnixMillis,
                             item.room.sequentialNumber
                         )
                     else -> TimeTableLayoutManager.PeriodInfo(0, 0, 0)
@@ -154,7 +154,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
             when (it) {
                 is TabularSpeechSessionItem -> it.session.startTime.unixMillisLong
                 is TabularServiceSessionItem -> it.session.startTime.unixMillisLong
-                is TabularSpacerItem -> it.startEpochMilli
+                is TabularSpacerItem -> it.startUnixMillis
                 else -> 0
             }
         }
