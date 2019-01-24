@@ -329,6 +329,7 @@
 				01578EBB21E5E75A002B2033 /* Resources */,
 				01E0C3D321E9ED4B0014DA7E /* Embed Frameworks */,
 				361EF11099051CF5E1A29049 /* [CP] Embed Pods Frameworks */,
+				435E83A821FA250500209995 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -475,7 +476,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-DroidKaigi 2019/Pods-DroidKaigi 2019-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-DroidKaigi 2019/Pods-DroidKaigi 2019-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
 				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
@@ -490,8 +491,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DroidKaigi 2019/Pods-DroidKaigi 2019-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DroidKaigi 2019/Pods-DroidKaigi 2019-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		435E83A821FA250500209995 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which \"${PODS_ROOT}/SwiftLint/swiftlint\" >/dev/null; then\n  \"${PODS_ROOT}/SwiftLint/swiftlint\"\nelse\n  echo \"warning: SwiftLint not installed, run `pod install`\"\nfi\n";
 		};
 		BAF164195EA80D251D34EE96 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
