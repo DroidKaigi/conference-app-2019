@@ -9,6 +9,7 @@
 
 # Generate merge config list
 -printconfiguration proguard-merged-config.txt
+-printmapping proguard-merged.map
 
 ## General
 
@@ -30,10 +31,13 @@
 -keepnames class kotlinx.coroutines.internal.MainDispatcherFactory {}
 -keepnames class kotlinx.coroutines.CoroutineExceptionHandler {}
 
- # Most of volatile fields are updated with AFU and should not be mangled
+# Most of volatile fields are updated with AFU and should not be mangled
 -keepclassmembernames class kotlinx.** {
     volatile <fields>;
 }
+
+# AFU stuff
+-dontwarn kotlinx.atomicfu.**
 
 ## OkHttp
 
@@ -43,3 +47,7 @@
 # A resource is loaded with a relative path so the package of this class must be preserved.
 -keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
 
+## Ktor
+
+-dontwarn com.typesafe.**
+-dontwarn org.slf4j.**

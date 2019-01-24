@@ -43,8 +43,14 @@ android {
         manifestPlaceholders = [isCi: String.valueOf(isCi)]
     }
     buildTypes {
+        debug {
+            zipAlignEnabled true
+        }
         release {
-            minifyEnabled false
+            zipAlignEnabled true
+            useProguard true
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
             if (isProductionBuild) {
