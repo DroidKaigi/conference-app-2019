@@ -330,6 +330,7 @@
 				01E0C3D321E9ED4B0014DA7E /* Embed Frameworks */,
 				361EF11099051CF5E1A29049 /* [CP] Embed Pods Frameworks */,
 				435E83A821FA250500209995 /* ShellScript */,
+				21071A4521FB74AE004FBA38 /* Generate License Plist */,
 			);
 			buildRules = (
 			);
@@ -468,6 +469,24 @@
 			shellPath = /bin/sh;
 			shellScript = "cd \"$SRCROOT/../..\"\n./gradlew \":frontend:ios-combined:packForXCode\" -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
 		};
+		21071A4521FB74AE004FBA38 /* Generate License Plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate License Plist";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ $CONFIGURATION = \"Debug\" ]; then\ncd $SRCROOT\n/usr/local/bin/license-plist --output-path $PRODUCT_NAME/Settings.bundle\nfi\n";
+		};
 		361EF11099051CF5E1A29049 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -476,7 +495,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-DroidKaigi 2019/Pods-DroidKaigi 2019-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-DroidKaigi 2019/Pods-DroidKaigi 2019-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
 				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
@@ -491,7 +510,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DroidKaigi 2019/Pods-DroidKaigi 2019-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DroidKaigi 2019/Pods-DroidKaigi 2019-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		435E83A821FA250500209995 /* ShellScript */ = {
