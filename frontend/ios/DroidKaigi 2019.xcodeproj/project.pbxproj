@@ -479,7 +479,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-DroidKaigi 2019/Pods-DroidKaigi 2019-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-DroidKaigi 2019/Pods-DroidKaigi 2019-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
 				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
@@ -494,7 +494,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DroidKaigi 2019/Pods-DroidKaigi 2019-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DroidKaigi 2019/Pods-DroidKaigi 2019-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		435E83A821FA250500209995 /* ShellScript */ = {
