@@ -6,7 +6,7 @@ object Dep {
         val android = "com.android.tools.build:gradle:3.3.0"
         val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Kotlin.version}"
         val kotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Kotlin.version}"
-        val playServices = "com.google.gms:google-services:4.1.0"
+        val playServices = "com.google.gms:google-services:4.2.0"
         val safeArgs =
             "android.arch.navigation:navigation-safe-args-gradle-plugin:${AndroidX.Navigation.version}"
         val jetifier = "com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta02"

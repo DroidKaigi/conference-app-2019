@@ -23,7 +23,7 @@ We always welcome any and all contributions! See [CONTRIBUTING.md](CONTRIBUTING.
 
 ## Requirements
 
-- Android Studio 3.2.1 and higher.
+- Android Studio 3.4 Beta1 and higher.
 - Android Studio Kotlin Plugin 1.3.11-release-Studio<AS version>
 
 **Check out following status.**  
