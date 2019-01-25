@@ -19,8 +19,7 @@ final class SessionsViewController: UIViewController, StoryboardInstantiable {
         tableView.rx.modelSelected(Session.self)
                 .asDriver()
                 .drive(onNext: { session in
-                    let viewController = UIViewController()
-                    viewController.view.backgroundColor = .white
+                    let viewController = SessionDetailViewController(session: session)
                     self.navigationController?.pushViewController(viewController, animated: true)
                 }).disposed(by: bag)
     }

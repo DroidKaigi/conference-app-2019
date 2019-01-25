@@ -16,6 +16,10 @@
 		01E0C3D221E9ED4B0014DA7E /* ios_combined.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01E0C3CF21E9ED450014DA7E /* ios_combined.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		218481C521FB7F480048D9D3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 218481C421FB7F480048D9D3 /* Settings.bundle */; };
 		2CBEBD60F6DCD21A07E2D311 /* Pods_DroidKaigi_2019.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A3E24B47F135429DAD2646 /* Pods_DroidKaigi_2019.framework */; };
+		360744F121FADF53003569D3 /* SessionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360744F021FADF53003569D3 /* SessionDetailViewController.swift */; };
+		360744F321FAF0CE003569D3 /* SessionDetailHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360744F221FAF0CE003569D3 /* SessionDetailHeaderTableViewCell.swift */; };
+		360744F521FAF13C003569D3 /* SessionDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360744F421FAF13C003569D3 /* SessionDetailTableViewCell.swift */; };
+		360744F721FAF152003569D3 /* SessionDetailTagsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360744F621FAF152003569D3 /* SessionDetailTagsTableViewCell.swift */; };
 		362D90FD21F5DBC2006962C8 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362D90FB21F5DBC2006962C8 /* StartViewController.swift */; };
 		362D90FE21F5DBC2006962C8 /* StartViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 362D90FC21F5DBC2006962C8 /* StartViewController.storyboard */; };
 		362D910221F5DC2D006962C8 /* SessionsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 362D90FF21F5DC2C006962C8 /* SessionsViewController.storyboard */; };
@@ -94,6 +98,10 @@
 		01578EE521E5E75D002B2033 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		01E0C3CF21E9ED450014DA7E /* ios_combined.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ios_combined.framework; path = "../ios-combined/build/xcode-frameworks/ios_combined.framework"; sourceTree = "<group>"; };
 		218481C421FB7F480048D9D3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		360744F021FADF53003569D3 /* SessionDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailViewController.swift; sourceTree = "<group>"; };
+		360744F221FAF0CE003569D3 /* SessionDetailHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		360744F421FAF13C003569D3 /* SessionDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailTableViewCell.swift; sourceTree = "<group>"; };
+		360744F621FAF152003569D3 /* SessionDetailTagsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailTagsTableViewCell.swift; sourceTree = "<group>"; };
 		362D90FB21F5DBC2006962C8 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		362D90FC21F5DBC2006962C8 /* StartViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = StartViewController.storyboard; sourceTree = "<group>"; };
 		362D90FF21F5DC2C006962C8 /* SessionsViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SessionsViewController.storyboard; sourceTree = "<group>"; };
@@ -242,6 +250,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		360744EF21FADF22003569D3 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				360744F021FADF53003569D3 /* SessionDetailViewController.swift */,
+				360744F221FAF0CE003569D3 /* SessionDetailHeaderTableViewCell.swift */,
+				360744F421FAF13C003569D3 /* SessionDetailTableViewCell.swift */,
+				360744F621FAF152003569D3 /* SessionDetailTagsTableViewCell.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
 		362D90F521F5D50F006962C8 /* data */ = {
 			isa = PBXGroup;
 			children = (
@@ -293,6 +312,7 @@
 				362D90FB21F5DBC2006962C8 /* StartViewController.swift */,
 				366B060C21F7650D00C912AD /* Common */,
 				362D90F621F5D521006962C8 /* Session */,
+				360744EF21FADF22003569D3 /* Detail */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -667,6 +687,7 @@
 				366B060921F756CB00C912AD /* TagsCollectionViewCell.swift in Sources */,
 				3672C2C921F5E08C00ACB910 /* UIColor+Extension.swift in Sources */,
 				3672C2DF21F73A9400ACB910 /* SpeakerCell.swift in Sources */,
+				360744F721FAF152003569D3 /* SessionDetailTagsTableViewCell.swift in Sources */,
 				362D910321F5DC2D006962C8 /* SessionsViewController.swift in Sources */,
 				63F34E1B21EB43CE00B2EC48 /* SessionRepository.swift in Sources */,
 				59D30FC921F8B1BD003A937C /* SessionByStartTime.swift in Sources */,
@@ -680,7 +701,10 @@
 				01578EC121E5E75A002B2033 /* AppDelegate.swift in Sources */,
 				7B76F7A821FB45D2008A059B /* KotlinxDeferred+Extension.swift in Sources */,
 				362D90FD21F5DBC2006962C8 /* StartViewController.swift in Sources */,
+				360744F321FAF0CE003569D3 /* SessionDetailHeaderTableViewCell.swift in Sources */,
+				360744F521FAF13C003569D3 /* SessionDetailTableViewCell.swift in Sources */,
 				362D910421F5DC2D006962C8 /* SessionsViewModel.swift in Sources */,
+				360744F121FADF53003569D3 /* SessionDetailViewController.swift in Sources */,
 				3672C2CB21F601D600ACB910 /* UITableView+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
