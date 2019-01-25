@@ -170,7 +170,13 @@ class TabularFormSessionPageFragment : DaggerFragment() {
 
         fun newInstance(day: Int): TabularFormSessionPageFragment {
             return TabularFormSessionPageFragment()
-                .apply { arguments = TabularFormSessionPagesFragmentArgs.Builder().setDay(day).build().toBundle() }
+                .apply {
+                    arguments =
+                        TabularFormSessionPagesFragmentArgs.Builder()
+                            .setDay(day)
+                            .build()
+                            .toBundle()
+                }
         }
     }
 }
