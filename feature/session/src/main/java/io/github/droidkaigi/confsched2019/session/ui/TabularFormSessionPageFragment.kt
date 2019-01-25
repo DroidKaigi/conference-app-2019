@@ -40,6 +40,10 @@ class TabularFormSessionPageFragment : DaggerFragment() {
         InjectedViewModelProviders.of(requireActivity()).get(sessionPagesStoreProvider)
     }
 
+    private val args: TabularFormSessionPagesFragmentArgs by lazy {
+        TabularFormSessionPagesFragmentArgs.fromBundle(arguments ?: Bundle())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -91,12 +95,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
             adapter = groupAdapter
         }
 
-        val day = if (arguments != null) {
-            TabularFormSessionPagesFragmentArgs.fromBundle(arguments!!).day
-        } else {
-            1
-        }
-        sessionPagesStore.sessionsByDay(day)
+        sessionPagesStore.sessionsByDay(args.day)
             .changed(viewLifecycleOwner) { sessions ->
                 groupAdapter.update(fillGaps(sessions))
             }
@@ -168,15 +167,9 @@ class TabularFormSessionPageFragment : DaggerFragment() {
     companion object {
         const val COLUMN_COUNT = 9
 
-        fun newInstance(day: Int): TabularFormSessionPageFragment {
+        fun newInstance(args: TabularFormSessionPagesFragmentArgs): TabularFormSessionPageFragment {
             return TabularFormSessionPageFragment()
-                .apply {
-                    arguments =
-                        TabularFormSessionPagesFragmentArgs.Builder()
-                            .setDay(day)
-                            .build()
-                            .toBundle()
-                }
+                .apply { arguments = args.toBundle() }
         }
     }
 }
