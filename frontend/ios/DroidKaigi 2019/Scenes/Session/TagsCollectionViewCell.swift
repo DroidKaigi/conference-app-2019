@@ -7,10 +7,10 @@
 
 import UIKit
 import SnapKit
-import ios_combined
+import main
 
 enum TagContent {
-    case category(category: ios_combined.Category)
+    case category(category: main.Category)
     case lang(lang: Lang)
     case beginner
     case other(string: String)

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import ios_combined
+import main
 import MaterialComponents.MaterialSnackbar
 import RxSwift
 import RxCocoa

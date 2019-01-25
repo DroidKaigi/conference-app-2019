@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import ios_combined
+import main
 import SnapKit
 
 class SessionHeaderView: UIView {
