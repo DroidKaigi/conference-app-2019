@@ -6,12 +6,15 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.di.PageScope
@@ -22,8 +25,10 @@ import io.github.droidkaigi.confsched2019.survey.R
 import io.github.droidkaigi.confsched2019.survey.databinding.FragmentSessionSurveyBinding
 import io.github.droidkaigi.confsched2019.survey.databinding.ItemSessionSurveyBinding
 import io.github.droidkaigi.confsched2019.survey.ui.actioncreator.SessionSurveyActionCreator
+import io.github.droidkaigi.confsched2019.survey.ui.item.SpeakerIconItem
 import io.github.droidkaigi.confsched2019.survey.ui.store.SessionSurveyStore
 import io.github.droidkaigi.confsched2019.survey.ui.widget.DaggerFragment
+import io.github.droidkaigi.confsched2019.survey.ui.widget.SurveyItem
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -37,10 +42,8 @@ import javax.inject.Provider
 
 class SessionSurveyFragment : DaggerFragment() {
 
-    @Inject
-    lateinit var sessionSurveyActionCreator: SessionSurveyActionCreator
-    @Inject
-    lateinit var sessionSurveyStoreProvider: Provider<SessionSurveyStore>
+    @Inject lateinit var sessionSurveyActionCreator: SessionSurveyActionCreator
+    @Inject lateinit var sessionSurveyStoreProvider: Provider<SessionSurveyStore>
     private val sessionSurveyStore: SessionSurveyStore by lazy {
         InjectedViewModelProviders.of(requireActivity())[sessionSurveyStoreProvider]
     }
@@ -68,6 +71,14 @@ class SessionSurveyFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
         sessionSurveyFragmentArgs = SessionSurveyFragmentArgs.fromBundle(arguments ?: Bundle())
 
+        val groupAdapter = GroupAdapter<ViewHolder<*>>()
+        binding.speakerIcons.adapter = groupAdapter
+
+        val speakerIconItems = sessionSurveyFragmentArgs.session.speakers.map {
+            SpeakerIconItem(it)
+        }
+        groupAdapter.update(speakerIconItems)
+
         progressTimeLatch = ProgressTimeLatch { showProgress ->
             binding.progressBar.isVisible = showProgress
         }
@@ -83,7 +94,6 @@ class SessionSurveyFragment : DaggerFragment() {
 
         val lang = defaultLang()
         binding.sessionTitle.text = sessionSurveyFragmentArgs.session.title.getByLang(lang)
-        // TODO: set speackers icon
 
         binding.submitButton.setOnClickListener {
             val sessionFeedback =
@@ -104,55 +114,61 @@ class SessionSurveyFragment : DaggerFragment() {
     }
 
     private fun setupSessionSurveyPager() {
-        val surveyItems = resources.getStringArray(R.array.survey_items)
         binding.sessionSurveyViewPager.adapter = object : PagerAdapter() {
             override fun instantiateItem(container: ViewGroup, position: Int): Any {
-                val itemBindng = DataBindingUtil.inflate<ItemSessionSurveyBinding>(
+                val itemBinding = DataBindingUtil.inflate<ItemSessionSurveyBinding>(
                     LayoutInflater.from(context),
                     R.layout.item_session_survey,
                     container,
                     true
                 )
-                itemBindng.title.text = surveyItems[position]
 
-                if (position == 5) {
-                    itemBindng.comment.visibility = View.VISIBLE
-                    itemBindng.rating.visibility = View.GONE
-                    itemBindng.comment.setText(
+                itemBinding.surveyItem = SurveyItem.of(position)
+
+                if (position == SurveyItem.COMMENT.position) {
+                    itemBinding.comment.setText(
                         sessionSurveyStore.comment,
                         TextView.BufferType.EDITABLE
                     )
                 } else {
-                    itemBindng.comment.visibility = View.GONE
-                    itemBindng.rating.visibility = View.VISIBLE
                     when (position) {
-                        0 -> itemBindng.rating.rating = sessionSurveyStore.totalEvaluation.toFloat()
-                        1 -> itemBindng.rating.rating = sessionSurveyStore.relevancy.toFloat()
-                        2 -> itemBindng.rating.rating = sessionSurveyStore.asExpected.toFloat()
-                        3 -> itemBindng.rating.rating = sessionSurveyStore.difficulty.toFloat()
-                        4 -> itemBindng.rating.rating = sessionSurveyStore.knowledgeable.toFloat()
+                        SurveyItem.TOTAL_EVALUATION.position -> {
+                            itemBinding.rating.rating = sessionSurveyStore.totalEvaluation.toFloat()
+                        }
+                        SurveyItem.RELEVANCY.position -> {
+                            itemBinding.rating.rating = sessionSurveyStore.relevancy.toFloat()
+                        }
+                        SurveyItem.AS_EXPECTED.position -> {
+                            itemBinding.rating.rating = sessionSurveyStore.asExpected.toFloat()
+                        }
+                        SurveyItem.DIFFICULTY.position -> {
+                            itemBinding.rating.rating = sessionSurveyStore.difficulty.toFloat()
+                        }
+                        SurveyItem.KNOWLEDGEABLE.position -> {
+                            itemBinding.rating.rating = sessionSurveyStore.knowledgeable.toFloat()
+                        }
                     }
                 }
 
-                itemBindng.rating.setOnRatingBarChangeListener { _, rating, _ ->
+                itemBinding.rating.setOnRatingBarChangeListener { _, rating, _ ->
                     val newSessionFeedback = when (position) {
-                        0 -> {
+                        SurveyItem.TOTAL_EVALUATION.position -> {
                             sessionSurveyStore.sessionFeedback.requireValue()
                                 .copy(totalEvaluation = rating.toInt())
                         }
-                        1 -> {
+                        SurveyItem.RELEVANCY.position -> {
                             sessionSurveyStore.sessionFeedback.requireValue()
                                 .copy(relevancy = rating.toInt())
                         }
-                        2 -> {
+                        SurveyItem.AS_EXPECTED.position -> {
                             sessionSurveyStore.sessionFeedback.requireValue()
                                 .copy(asExpected = rating.toInt())
                         }
-                        3 -> {
+                        SurveyItem.DIFFICULTY.position -> {
                             sessionSurveyStore.sessionFeedback.requireValue()
                                 .copy(difficulty = rating.toInt())
                         }
-                        4 -> {
+                        SurveyItem.KNOWLEDGEABLE.position -> {
                             sessionSurveyStore.sessionFeedback.requireValue()
                                 .copy(knowledgeable = rating.toInt())
                         }
@@ -167,31 +183,13 @@ class SessionSurveyFragment : DaggerFragment() {
                     }
                 }
 
-                itemBindng.comment.addTextChangedListener(object : TextWatcher {
-                    override fun afterTextChanged(s: Editable?) {
-                    }
+                itemBinding.comment.onTextChange { text ->
+                    val newSessionFeedback = sessionSurveyStore.sessionFeedback.requireValue()
+                        .copy(comment = text)
+                    sessionSurveyActionCreator.changeSessionFeedback(newSessionFeedback)
+                }
 
-                    override fun beforeTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        count: Int,
-                        after: Int
-                    ) {
-                    }
-
-                    override fun onTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        before: Int,
-                        count: Int
-                    ) {
-                        val newSessionFeedback = sessionSurveyStore.sessionFeedback.requireValue()
-                            .copy(comment = s.toString())
-                        sessionSurveyActionCreator.changeSessionFeedback(newSessionFeedback)
-                    }
-                })
-
-                return itemBindng.root
+                return itemBinding.root
             }
 
             override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
@@ -200,26 +198,43 @@ class SessionSurveyFragment : DaggerFragment() {
 
             override fun isViewFromObject(view: View, `object`: Any): Boolean = view == `object`
 
-            override fun getCount(): Int = 6
+            override fun getCount(): Int = enumValues<SurveyItem>().size
         }
 
-        binding.sessionSurveyViewPager.addOnPageChangeListener(object :
-            ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-            }
-
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-            }
-
-            override fun onPageSelected(position: Int) {
-                binding.submitButton.isVisible = position == 5
-            }
-        })
+        binding.sessionSurveyViewPager.onPageSelected { position ->
+            binding.pageProgress.text = getString(
+                R.string.page_progress,
+                position + 1,
+                (binding.sessionSurveyViewPager.adapter as PagerAdapter).count
+            )
+            binding.submitButton.isVisible = position == (enumValues<SurveyItem>().size - 1)
+        }
     }
+}
+
+private fun EditText.onTextChange(onChanged: (text: String) -> Unit) {
+    this.addTextChangedListener(object : TextWatcher {
+        override fun afterTextChanged(p0: Editable?) = Unit
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
+        override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            onChanged(text.toString())
+        }
+    })
+}
+
+private fun ViewPager.onPageSelected(onPageSelected: (position: Int) -> Unit) {
+    this.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        override fun onPageScrollStateChanged(state: Int) = Unit
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) = Unit
+
+        override fun onPageSelected(position: Int) {
+            onPageSelected(position)
+        }
+    })
 }
 
 @Module

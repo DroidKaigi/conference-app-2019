@@ -66,6 +66,10 @@ class SessionTableViewCell: UITableViewCell, Reusable {
                 withHorizontalFittingPriority: horizontalFittingPriority,
                 verticalFittingPriority: verticalFittingPriority
         )
+        let hash = tagContents.hashValue ^ Int(targetSize.width).hashValue
+        if let cachedHeight = SessionCalculateHeightTableViewCell.cachedHeights[hash] {
+            return CGSize.init(width: targetSize.width, height: cachedHeight + defaultSize.height)
+        }
         struct Static {
             static let cell = SessionCalculateHeightTableViewCell(style: .default, reuseIdentifier: nil)
         }
@@ -79,6 +83,7 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         cell.collectionView.layoutIfNeeded()
         cell.collectionView.collectionViewLayout.invalidateLayout()
         let collectionViewHeight = cell.collectionView.collectionViewLayout.collectionViewContentSize.height
+        SessionCalculateHeightTableViewCell.cachedHeights[hash] = collectionViewHeight
         return CGSize.init(width: targetSize.width, height: collectionViewHeight + defaultSize.height)
     }
 
@@ -127,7 +132,6 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         collectionView.register(TagsCollectionViewCell.self)
         return collectionView
     }()
-
 
     private func setupSubviews() {
         [titleLabel, liveMark, speakersStackView, timeAndRoomLabel, collectionView].forEach(contentView.addSubview)
@@ -184,8 +188,9 @@ extension SessionTableViewCell: UICollectionViewDataSource {
     }
 }
 
-
 final class SessionCalculateHeightTableViewCell: UITableViewCell {
+
+    static var cachedHeights = [Int: CGFloat]()
 
     var session: Session? {
         didSet {
@@ -202,13 +207,11 @@ final class SessionCalculateHeightTableViewCell: UITableViewCell {
         }
     }
 
-
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupSubviews()
     }
     required init?(coder aDecoder: NSCoder) { fatalError() }
-
 
     private var tagContents: [TagContent] = []
 

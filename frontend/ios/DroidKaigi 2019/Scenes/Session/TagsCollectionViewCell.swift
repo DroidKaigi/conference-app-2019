@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import ios_combined
 
-enum TagContent {
+enum TagContent: Hashable {
     case category(category: ios_combined.Category)
     case lang(lang: Lang)
     case beginner

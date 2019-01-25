@@ -13,6 +13,7 @@ enum class PageConfiguration(
     MAIN(R.id.main, isWhiteTheme = false, hasTitle = false, isShowLogoImage = true),
     DETAIL(R.id.session_detail, hasTitle = false, hideToolbar = true),
     SPEAKER(R.id.speaker, hasTitle = false),
+    SURVEY(R.id.session_survey, isWhiteTheme = false, hasTitle = false),
     OTHER(0);
 
     operator fun component1() = id

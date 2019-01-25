@@ -21,7 +21,7 @@ class StartViewController: UIViewController {
         let navigationController = UINavigationController(rootViewController: sessionsViewController)
         sessionsViewController.navigationItem.titleView = logoView
         self.view.window?.rootViewController = navigationController
-        self.view.window?.layer.add(CATransition(), forKey:kCATransition)
+        self.view.window?.layer.add(CATransition(), forKey: kCATransition)
     }
 
     private lazy var logoView: UIView = {

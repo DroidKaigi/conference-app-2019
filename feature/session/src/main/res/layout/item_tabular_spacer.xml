@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <!-- width and height will be changed by TimeTableLayoutManager -->
+    <Space
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="@dimen/tabular_form_column_width"
+        android:layout_height="wrap_content"
+        />
+</layout>
