@@ -15,10 +15,12 @@ import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LangSupport
 import io.github.droidkaigi.confsched2019.model.LocaledString
 import io.github.droidkaigi.confsched2019.model.Room
+import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.model.SessionType
 import io.github.droidkaigi.confsched2019.model.Speaker
+import io.github.droidkaigi.confsched2019.model.SpeechSession
 
 private val dateFormat: DateFormat =
     DateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
@@ -34,7 +36,7 @@ fun Response.toModel(): SessionContents {
             requireNotNull(categories)
         )
     }
-    val speechSessions = sessions.filterIsInstance<Session.SpeechSession>()
+    val speechSessions = sessions.filterIsInstance<SpeechSession>()
     return SessionContents(
         sessions = sessions,
         speakers = speechSessions.flatMap { it.speakers }.distinct(),
@@ -67,7 +69,7 @@ private fun SessionResponse.toSession(
         val category = categoryItems[2].let {
             categoryResponse.category(2, it)
         }
-        Session.SpeechSession(
+        SpeechSession(
             id = response.id,
             // dayNumber is starts with 1.
             // Example: First day = 1, Second day = 2. So I plus 1 to period days
@@ -78,11 +80,7 @@ private fun SessionResponse.toSession(
             desc = response.description,
             room = Room(response.roomId, requireNotNull(room.name)),
             format = requireNotNull(sessionFormat.name),
-            language = LocaledString(
-                requireNotNull(language.translatedName?.ja),
-                requireNotNull(language.translatedName?.en)
-            )
-            ,
+            lang = Lang.findLang(requireNotNull(language.name)),
             category = Category(
                 requireNotNull(category.id),
                 LocaledString(
@@ -128,7 +126,7 @@ private fun SessionResponse.toSession(
             forBeginners = response.forBeginners
         )
     } else {
-        Session.ServiceSession(
+        ServiceSession(
             id = response.id,
             // dayNumber is starts with 1.
             // Example: First day = 1, Second day = 2. So I plus 1 to period days
@@ -151,4 +149,3 @@ private fun List<CategoryResponse>.category(
 ): CategoryItemResponse {
     return this[categoryIndex].items!!.first { it!!.id == categoryId }!!
 }
-

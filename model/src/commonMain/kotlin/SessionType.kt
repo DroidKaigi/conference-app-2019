@@ -1,6 +1,11 @@
 package io.github.droidkaigi.confsched2019.model
 
-enum class SessionType(val id: String, val isFavoritable: Boolean, val supportDetail: Boolean, val isFilterable: Boolean) {
+enum class SessionType(
+    val id: String,
+    val isFavoritable: Boolean,
+    val supportDetail: Boolean,
+    val isFilterable: Boolean
+) {
     NORMAL(
         id = "normal",
         isFavoritable = false,

@@ -7,6 +7,9 @@ import io.github.droidkaigi.confsched2019.data.api.response.Response
 import io.github.droidkaigi.confsched2019.data.api.response.ResponseImpl
 import io.github.droidkaigi.confsched2019.data.api.response.SponsorResponse
 import io.github.droidkaigi.confsched2019.data.api.response.SponsorResponseImpl
+import io.github.droidkaigi.confsched2019.data.api.response.StaffItemResponseImpl
+import io.github.droidkaigi.confsched2019.data.api.response.StaffResponse
+import io.github.droidkaigi.confsched2019.data.api.response.StaffResponseImpl
 import io.ktor.client.HttpClient
 import io.ktor.client.request.accept
 import io.ktor.client.request.get
@@ -33,10 +36,17 @@ open class KtorDroidKaigiApi constructor(
         return JSON.nonstrict.parse(ResponseImpl.serializer(), rawResponse)
     }
 
-    override fun getSessions(callback: (response: Response) -> Unit) {
+    override fun getSessions(
+        callback: (response: Response) -> Unit,
+        onError: (error: Exception) -> Unit
+    ) {
         GlobalScope.launch(requireNotNull(coroutineDispatcherForCallback)) {
-            val response = getSessions()
-            callback(response)
+            try {
+                val response = getSessions()
+                callback(response)
+            } catch (ex: Exception) {
+                onError(ex)
+            }
         }
     }
 
@@ -50,9 +60,20 @@ open class KtorDroidKaigiApi constructor(
     }
 
     override suspend fun getSponsors(): SponsorResponse {
-        return httpClient.get<SponsorResponseImpl> {
+        val rawResponse = httpClient.get<String> {
             url("$apiEndpoint/sponsors")
             accept(ContentType.Application.Json)
         }
+
+        return JSON.nonstrict.parse(SponsorResponseImpl.serializer(), rawResponse)
+    }
+
+    override suspend fun getStaffs(): StaffResponse {
+        val rawResponse = httpClient.get<String> {
+            url("$apiEndpoint/staffs")
+            accept(ContentType.Application.Json)
+        }
+
+        return StaffResponseImpl(JSON.parse(StaffItemResponseImpl.serializer().list, rawResponse))
     }
 }

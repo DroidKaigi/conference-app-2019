@@ -1,6 +1,5 @@
 package io.github.droidkaigi.confsched2019.about.ui.item
 
-import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.Navigation
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
@@ -28,7 +27,8 @@ class AboutSection @Inject constructor(
                     name = R.string.about_staff_list,
                     description = R.string.about_check
                 ) {
-                    Toast.makeText(it, "FIXME!!", Toast.LENGTH_SHORT).show()
+                    Navigation.findNavController(activity, R.id.root_nav_host_fragment)
+                        .navigate(R.id.staff_search)
                 },
                 AboutItem(
                     name = R.string.about_privacy_policy,
@@ -46,7 +46,7 @@ class AboutSection @Inject constructor(
                 },
                 AboutItem(
                     name = R.string.about_app_version,
-                    description = R.string.version_name,
+                    description = R.string.version_name_with_commit_hash,
                     isLektonCheckText = true
                 )
             )

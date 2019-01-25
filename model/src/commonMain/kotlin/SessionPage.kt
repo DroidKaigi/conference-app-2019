@@ -9,8 +9,7 @@ sealed class SessionPage {
     open class Day(
         override val title: String,
         val day: Int
-    ) : SessionPage() {
-    }
+    ) : SessionPage()
 
     object Day1 : Day("Day1", 1)
     object Day2 : Day("Day2", 2)

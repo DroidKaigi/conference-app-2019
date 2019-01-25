@@ -16,13 +16,15 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation
 class SpeakerItem @AssistedInject constructor(
     @Assisted val speaker: Speaker,
     @Assisted val clickNavDirection: NavDirections,
+    @Assisted val query: String?,
     val navController: NavController
 ) : BindableItem<ItemSpeakerBinding>(speaker.id.hashCode().toLong()) {
     @AssistedInject.Factory
     interface Factory {
         fun create(
             speaker: Speaker,
-            clickNavDirection: NavDirections
+            clickNavDirection: NavDirections,
+            query: String? = null
         ): SpeakerItem
     }
 
@@ -30,6 +32,7 @@ class SpeakerItem @AssistedInject constructor(
 
     override fun bind(itemBinding: ItemSpeakerBinding, position: Int) {
         itemBinding.speaker = speaker
+        itemBinding.query = query
         val context = itemBinding.speakerImage.context
         val placeHolderColor = ContextCompat.getColor(
             context,
@@ -59,5 +62,21 @@ class SpeakerItem @AssistedInject constructor(
         itemBinding.root.setOnClickListener {
             navController.navigate(clickNavDirection)
         }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as SpeakerItem
+
+        if (speaker != other.speaker) return false
+        if (query != other.query) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return speaker.hashCode() + query.hashCode()
     }
 }

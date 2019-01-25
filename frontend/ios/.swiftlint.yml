@@ -1,0 +1,10 @@
+disabled_rules:
+  - line_length
+  - trailing_whitespace
+
+included:
+  - DroidKaigi 2019
+
+excluded:
+  - Carthage
+  - Pods

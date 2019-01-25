@@ -39,7 +39,7 @@ object Dep {
         val jetifier = "com.android.tools.build.jetifier:jetifier-core:1.0.0-beta02"
         val appCompat = "androidx.appcompat:appcompat:1.0.0"
         val recyclerView = "androidx.recyclerview:recyclerview:1.0.0"
-        val constraint = "androidx.constraintlayout:constraintlayout:1.1.3"
+        val constraint = "androidx.constraintlayout:constraintlayout:2.0.0-alpha3"
         val emoji = "androidx.emoji:emoji-appcompat:1.0.0"
         val design = "com.google.android.material:material:1.1.0-alpha02"
         val coreKtx = "androidx.core:core-ktx:1.0.0-alpha1"
@@ -57,7 +57,7 @@ object Dep {
         }
 
         object Navigation {
-            val version = "1.0.0-alpha08"
+            val version = "1.0.0-alpha09"
             val runtime = "android.arch.navigation:navigation-runtime:$version"
             val runtimeKtx = "android.arch.navigation:navigation-runtime-ktx:$version"
             val fragment = "android.arch.navigation:navigation-fragment:$version"
@@ -88,6 +88,7 @@ object Dep {
         val fireStore = "com.google.firebase:firebase-firestore:17.1.3"
         val auth = "com.google.firebase:firebase-auth:16.0.5"
         val crashlytics = "com.crashlytics.sdk.android:crashlytics:2.9.8"
+        val messaging = "com.google.firebase:firebase-messaging:17.3.3"
     }
 
     object PlayServices {
@@ -186,5 +187,9 @@ object Dep {
         val common = "com.jakewharton.timber:timber-common:5.0.0-SNAPSHOT"
         val jdk = "com.jakewharton.timber:timber-jdk:5.0.0-SNAPSHOT"
         val android = "com.jakewharton.timber:timber-android:5.0.0-SNAPSHOT"
+    }
+
+    object PhotoView {
+        val photoview =  "com.github.chrisbanes:PhotoView:2.3.0"
     }
 }
