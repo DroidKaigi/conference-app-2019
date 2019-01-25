@@ -83,6 +83,11 @@
         android:name="io.github.droidkaigi.confsched2019.session.ui.TabularFormSessionPagesFragment"
         android:label="@string/tabular_form_label"
         >
+        <argument
+            android:name="day"
+            app:argType="integer"
+            android:defaultValue="1"
+            />
     </fragment>
     <fragment
         android:id="@+id/speaker"

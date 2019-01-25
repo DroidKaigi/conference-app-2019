@@ -91,7 +91,12 @@ class TabularFormSessionPageFragment : DaggerFragment() {
             adapter = groupAdapter
         }
 
-        sessionPagesStore.sessionsByDay(arguments?.getInt(KEY_DAY) ?: 1) // TODO: SafeArgs
+        val day = if (arguments != null) {
+            TabularFormSessionPagesFragmentArgs.fromBundle(arguments!!).day
+        } else {
+            1
+        }
+        sessionPagesStore.sessionsByDay(day)
             .changed(viewLifecycleOwner) { sessions ->
                 groupAdapter.update(fillGaps(sessions))
             }
@@ -161,13 +166,11 @@ class TabularFormSessionPageFragment : DaggerFragment() {
     }
 
     companion object {
-        // TODO: use SageArgs
         const val COLUMN_COUNT = 9
-        const val KEY_DAY = "day"
 
         fun newInstance(day: Int): TabularFormSessionPageFragment {
             return TabularFormSessionPageFragment()
-                .apply { arguments = Bundle().apply { putInt(KEY_DAY, day) } }
+                .apply { arguments = TabularFormSessionPagesFragmentArgs.Builder().setDay(day).build().toBundle() }
         }
     }
 }
