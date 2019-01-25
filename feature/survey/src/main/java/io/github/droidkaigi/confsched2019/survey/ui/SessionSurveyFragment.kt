@@ -13,7 +13,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.google.android.material.snackbar.Snackbar
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
@@ -21,7 +20,6 @@ import dagger.Provides
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.ext.android.requireValue
-import io.github.droidkaigi.confsched2019.model.LocaledString
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.survey.R
 import io.github.droidkaigi.confsched2019.survey.databinding.FragmentSessionSurveyBinding
@@ -95,9 +93,6 @@ class SessionSurveyFragment : DaggerFragment() {
         }
 
         val lang = defaultLang()
-        sessionSurveyStore.showSnackBar.changed(viewLifecycleOwner) { text ->
-            view?.let { Snackbar.make(it, text.getByLang(lang), Snackbar.LENGTH_SHORT).show() }
-        }
 
         binding.sessionTitle.text = sessionSurveyFragmentArgs.session.title.getByLang(lang)
 
@@ -106,25 +101,12 @@ class SessionSurveyFragment : DaggerFragment() {
                 sessionSurveyStore.sessionFeedback.requireValue().copy(submitted = true)
             if (sessionFeedback.fillouted) {
                 // TODO: show confirm dialog
-                context?.let { context ->
-                    sessionSurveyActionCreator.submit(
-                        sessionSurveyFragmentArgs.session,
-                        sessionFeedback,
-                        context
-                    )
-                }
+                sessionSurveyActionCreator.submit(
+                    sessionSurveyFragmentArgs.session,
+                    sessionFeedback
+                )
             } else {
-                // TODO: show snackbar no input item message
-                view?.let { view ->
-                    Snackbar.make(
-                        view,
-                        LocaledString(
-                            getString(R.string.not_input),
-                            getString(R.string.not_input)
-                        ).getByLang(lang),
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                }
+                sessionSurveyActionCreator.processMessage(R.string.not_input)
             }
         }
 

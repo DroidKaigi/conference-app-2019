@@ -1,6 +1,5 @@
 package io.github.droidkaigi.confsched2019.survey.ui.actioncreator
 
-import android.content.Context
 import androidx.lifecycle.Lifecycle
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.data.repository.SessionRepository
@@ -8,7 +7,7 @@ import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
 import io.github.droidkaigi.confsched2019.model.LoadingState
-import io.github.droidkaigi.confsched2019.model.LocaledString
+import io.github.droidkaigi.confsched2019.model.Message
 import io.github.droidkaigi.confsched2019.model.SessionFeedback
 import io.github.droidkaigi.confsched2019.model.SpeechSession
 import io.github.droidkaigi.confsched2019.survey.R
@@ -41,30 +40,17 @@ class SessionSurveyActionCreator @Inject constructor(
         }
     }
 
-    fun submit(
-        session: SpeechSession,
-        sessionFeedback: SessionFeedback,
-        context: Context
-    ) = launch {
+    fun processMessage(messageId: Int) {
+        dispatcher.launchAndDispatch(Action.ShowProcessingMessage(Message.of(messageId)))
+    }
+
+    fun submit(session: SpeechSession, sessionFeedback: SessionFeedback) = launch {
         try {
-            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
-            sessionRepository.submitSessionFeedback(session, sessionFeedback)
-            sessionRepository.saveSessionFeedback(sessionFeedback)
-            dispatcher.dispatch(Action.SessionSurveySubmitted)
-            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
-            val snackBarText = LocaledString(
-                context.getString(R.string.submit_successful),
-                context.getString(R.string.submit_successful)
-            )
-            dispatcher.dispatch(Action.SessionSurveyShowSnackBar(snackBarText))
+            processMessage(R.string.submit_successful)
         } catch (e: Exception) {
             onError(e)
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.INITIALIZED))
-            val snackBarText = LocaledString(
-                context.getString(R.string.submit_failure),
-                context.getString(R.string.submit_failure)
-            )
-            dispatcher.dispatch(Action.SessionSurveyShowSnackBar(snackBarText))
+            processMessage(R.string.submit_failure)
         }
     }
 
