@@ -48,18 +48,20 @@ class TabularFormSessionPagesFragment : DaggerFragment() {
 
         // For a few reasons, we stopped using ViewPager in this fragment.
         // See https://github.com/DroidKaigi/conference-app-2019/issues/622 .
-        binding.tabularFormSessionsTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                val selectedFragment = TabularFormSessionPageFragment.newInstance(days[tab.position].day)
-                childFragmentManager.beginTransaction()
-                    .replace(R.id.tabular_form_sessions_fragment_container, selectedFragment)
-                    .commit()
-            }
+        binding.tabularFormSessionsTabLayout.addOnTabSelectedListener(
+            object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    val day = days[tab.position].day
+                    val selectedFragment = TabularFormSessionPageFragment.newInstance(day)
+                    childFragmentManager.beginTransaction()
+                        .replace(R.id.tabular_form_sessions_fragment_container, selectedFragment)
+                        .commit()
+                }
 
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
+                override fun onTabReselected(tab: TabLayout.Tab?) {}
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-        })
+                override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            })
 
         days.forEachIndexed { index, day ->
             val newTab = binding.tabularFormSessionsTabLayout.newTab().apply {
