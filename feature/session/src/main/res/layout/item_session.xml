@@ -39,14 +39,14 @@
         >
 
         <TextView
-            android:id="@+id/live"
+            android:id="@+id/ongoing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/robotomono_medium"
-            android:text="@string/session_live"
+            android:text="@string/session_ongoing"
             android:textAllCaps="true"
-            android:background="@drawable/shape_live"
+            android:background="@drawable/shape_ongoing"
             android:textColor="@color/white"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
@@ -70,7 +70,7 @@
             android:textAppearance="@style/TextAppearance.App.Subtitle1"
             app:layout_constraintEnd_toStartOf="@id/favorite"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/live"
+            app:layout_constraintTop_toBottomOf="@+id/ongoing"
             app:highlightText="@{query}"
             tools:text="@sample/service_session.json/data/session_name"
             />

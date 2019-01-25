@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+// swiftlint:disable force_cast
+
 protocol NibLoadable: class {
     static var nibName: String { get }
 }
@@ -22,3 +24,5 @@ extension NibLoadable where Self: UIView {
         return nib.instantiate(withOwner: self, options: nil).first as! Self
     }
 }
+
+// swiftlint:enable force_cast

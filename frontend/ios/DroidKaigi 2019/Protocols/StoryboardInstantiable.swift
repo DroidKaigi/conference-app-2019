@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 
-
 protocol StoryboardInstantiable {
     static var storyboardName: String { get }
 }

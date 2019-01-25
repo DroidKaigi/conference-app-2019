@@ -67,10 +67,12 @@ open class KtorDroidKaigiApi constructor(
     }
 
     override suspend fun getSponsors(): SponsorResponse {
-        return httpClient.get<SponsorResponseImpl> {
+        val rawResponse = httpClient.get<String> {
             url("$apiEndpoint/sponsors")
             accept(ContentType.Application.Json)
         }
+
+        return JSON.nonstrict.parse(SponsorResponseImpl.serializer(), rawResponse)
     }
 
     override suspend fun getStaffs(): StaffResponse {

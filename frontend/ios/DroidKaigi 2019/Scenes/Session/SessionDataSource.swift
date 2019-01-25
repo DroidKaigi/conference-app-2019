@@ -13,21 +13,32 @@ import ios_combined
 
 final class SessionDataSource: NSObject, UITableViewDataSource {
 
-    typealias Element = [Session]
+    typealias Element = [SessionByStartTime]
     var items: Element = []
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return items.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return items[section].sessions.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: SessionTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-        cell.session = items[indexPath.row]
+        cell.session = items[indexPath.section].sessions[indexPath.row]
         return cell
+    }
+}
+
+extension SessionDataSource: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = SessionHeaderView(frame: CGRect(x: 0,
+                                                   y: 0,
+                                                   width: tableView.frame.width,
+                                                   height: 30))
+        view.set(startTimeText: items[section].startTimeText)
+        return view
     }
 }
 

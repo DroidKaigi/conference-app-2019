@@ -23,6 +23,7 @@ final class SessionsViewController: UIViewController, StoryboardInstantiable {
             tableView.separatorStyle = .none
             tableView.rowHeight = UITableView.automaticDimension
             tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+            tableView.delegate = dataSource
             tableView.register(SessionTableViewCell.self)
         }
     }

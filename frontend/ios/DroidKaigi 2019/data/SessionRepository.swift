@@ -22,7 +22,6 @@ final class SessionRepository {
 
 }
 
-
 //FIXME: If you have a more better idea, we can refine this.
 private func handledKotlinException(_ error: Error) -> Error {
 
