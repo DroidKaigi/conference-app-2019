@@ -40,6 +40,8 @@ class TabularFormSessionPageFragment : DaggerFragment() {
         InjectedViewModelProviders.of(requireActivity()).get(sessionPagesStoreProvider)
     }
 
+    private lateinit var args: TabularFormSessionPagesFragmentArgs
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,6 +58,8 @@ class TabularFormSessionPageFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        args = TabularFormSessionPagesFragmentArgs.fromBundle(arguments ?: Bundle())
+
         val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.tabularFormSessionsRecycler.apply {
             addItemDecoration(TimeTableDividerDecoration(context, COLUMN_COUNT, groupAdapter))
@@ -91,7 +95,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
             adapter = groupAdapter
         }
 
-        sessionPagesStore.sessionsByDay(arguments?.getInt(KEY_DAY) ?: 1) // TODO: SafeArgs
+        sessionPagesStore.sessionsByDay(args.day)
             .changed(viewLifecycleOwner) { sessions ->
                 groupAdapter.update(fillGaps(sessions))
             }
@@ -161,13 +165,11 @@ class TabularFormSessionPageFragment : DaggerFragment() {
     }
 
     companion object {
-        // TODO: use SageArgs
         const val COLUMN_COUNT = 9
-        const val KEY_DAY = "day"
 
-        fun newInstance(day: Int): TabularFormSessionPageFragment {
+        fun newInstance(args: TabularFormSessionPagesFragmentArgs): TabularFormSessionPageFragment {
             return TabularFormSessionPageFragment()
-                .apply { arguments = Bundle().apply { putInt(KEY_DAY, day) } }
+                .apply { arguments = args.toBundle() }
         }
     }
 }
