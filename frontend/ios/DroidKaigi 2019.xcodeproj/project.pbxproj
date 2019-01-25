@@ -35,7 +35,6 @@
 		3672C2DF21F73A9400ACB910 /* SpeakerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3672C2DE21F73A9400ACB910 /* SpeakerCell.swift */; };
 		36D1FA2721F5CF6600ADBBDE /* StoryboardInstantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D1FA2621F5CF6600ADBBDE /* StoryboardInstantiable.swift */; };
 		63F34E1B21EB43CE00B2EC48 /* SessionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F34E1A21EB43CE00B2EC48 /* SessionRepository.swift */; };
-		7BF21EDB21F9E1B7001956CF /* KotlinxDeferred+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF21EDA21F9E1B7001956CF /* KotlinxDeferred+Extension.swift */; };
 		E9B4925E21ECB6CE000F1072 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925C21ECB6CE000F1072 /* RxCocoa.framework */; };
 		E9B4925F21ECB6CE000F1072 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925D21ECB6CE000F1072 /* RxSwift.framework */; };
 		E9B4926021ECB782000F1072 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925C21ECB6CE000F1072 /* RxCocoa.framework */; };
@@ -112,7 +111,6 @@
 		63F34E1A21EB43CE00B2EC48 /* SessionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRepository.swift; sourceTree = "<group>"; };
 		668449C104FFB0635F949A44 /* Pods-DroidKaigi 2019Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DroidKaigi 2019Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DroidKaigi 2019Tests/Pods-DroidKaigi 2019Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		724135790B4D380473272A9A /* Pods-DroidKaigi 2019UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DroidKaigi 2019UITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DroidKaigi 2019UITests/Pods-DroidKaigi 2019UITests.release.xcconfig"; sourceTree = "<group>"; };
-		7BF21EDA21F9E1B7001956CF /* KotlinxDeferred+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KotlinxDeferred+Extension.swift"; sourceTree = "<group>"; };
 		8A9EFD2BFF415746908BCDDF /* Pods-DroidKaigi 2019.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DroidKaigi 2019.release.xcconfig"; path = "Pods/Target Support Files/Pods-DroidKaigi 2019/Pods-DroidKaigi 2019.release.xcconfig"; sourceTree = "<group>"; };
 		93A3E24B47F135429DAD2646 /* Pods_DroidKaigi_2019.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DroidKaigi_2019.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5169C19DCCF2E51B73E147C /* Pods-DroidKaigi 2019.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DroidKaigi 2019.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DroidKaigi 2019/Pods-DroidKaigi 2019.debug.xcconfig"; sourceTree = "<group>"; };
@@ -272,7 +270,6 @@
 				3672C2C821F5E08C00ACB910 /* UIColor+Extension.swift */,
 				3672C2CA21F601D600ACB910 /* UITableView+Extension.swift */,
 				366B060A21F7604400C912AD /* UICollectionView+Extension.swift */,
-				7BF21EDA21F9E1B7001956CF /* KotlinxDeferred+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -627,7 +624,6 @@
 				3672C2D121F6033200ACB910 /* NibLoadable.swift in Sources */,
 				3672C2CD21F6024B00ACB910 /* Reusable.swift in Sources */,
 				366B060E21F7652D00C912AD /* PaddingLabel.swift in Sources */,
-				7BF21EDB21F9E1B7001956CF /* KotlinxDeferred+Extension.swift in Sources */,
 				36D1FA2721F5CF6600ADBBDE /* StoryboardInstantiable.swift in Sources */,
 				01578EC121E5E75A002B2033 /* AppDelegate.swift in Sources */,
 				362D90FD21F5DBC2006962C8 /* StartViewController.swift in Sources */,
