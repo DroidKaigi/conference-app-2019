@@ -40,9 +40,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
         InjectedViewModelProviders.of(requireActivity()).get(sessionPagesStoreProvider)
     }
 
-    private val args: TabularFormSessionPagesFragmentArgs by lazy {
-        TabularFormSessionPagesFragmentArgs.fromBundle(arguments ?: Bundle())
-    }
+    private lateinit var args: TabularFormSessionPagesFragmentArgs
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,6 +58,8 @@ class TabularFormSessionPageFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        args = TabularFormSessionPagesFragmentArgs.fromBundle(arguments ?: Bundle())
+
         val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.tabularFormSessionsRecycler.apply {
             addItemDecoration(TimeTableDividerDecoration(context, COLUMN_COUNT, groupAdapter))
