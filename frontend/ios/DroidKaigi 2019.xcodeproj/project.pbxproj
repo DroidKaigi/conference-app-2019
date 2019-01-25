@@ -14,6 +14,7 @@
 		01578EE421E5E75D002B2033 /* DroidKaigi_2019UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01578EE321E5E75D002B2033 /* DroidKaigi_2019UITests.swift */; };
 		01E0C3D021E9ED450014DA7E /* ios_combined.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E0C3CF21E9ED450014DA7E /* ios_combined.framework */; };
 		01E0C3D221E9ED4B0014DA7E /* ios_combined.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01E0C3CF21E9ED450014DA7E /* ios_combined.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		218481C521FB7F480048D9D3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 218481C421FB7F480048D9D3 /* Settings.bundle */; };
 		2CBEBD60F6DCD21A07E2D311 /* Pods_DroidKaigi_2019.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A3E24B47F135429DAD2646 /* Pods_DroidKaigi_2019.framework */; };
 		362D90FD21F5DBC2006962C8 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362D90FB21F5DBC2006962C8 /* StartViewController.swift */; };
 		362D90FE21F5DBC2006962C8 /* StartViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 362D90FC21F5DBC2006962C8 /* StartViewController.storyboard */; };
@@ -91,6 +92,7 @@
 		01578EE321E5E75D002B2033 /* DroidKaigi_2019UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroidKaigi_2019UITests.swift; sourceTree = "<group>"; };
 		01578EE521E5E75D002B2033 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		01E0C3CF21E9ED450014DA7E /* ios_combined.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ios_combined.framework; path = "../ios-combined/build/xcode-frameworks/ios_combined.framework"; sourceTree = "<group>"; };
+		218481C421FB7F480048D9D3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		362D90FB21F5DBC2006962C8 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		362D90FC21F5DBC2006962C8 /* StartViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = StartViewController.storyboard; sourceTree = "<group>"; };
 		362D90FF21F5DC2C006962C8 /* SessionsViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SessionsViewController.storyboard; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				01578ECC21E5E75D002B2033 /* LaunchScreen.storyboard */,
 				01578EC021E5E75A002B2033 /* AppDelegate.swift */,
 				01578ECF21E5E75D002B2033 /* Info.plist */,
+				218481C421FB7F480048D9D3 /* Settings.bundle */,
 			);
 			path = "DroidKaigi 2019";
 			sourceTree = "<group>";
@@ -429,6 +432,7 @@
 			files = (
 				01578ECE21E5E75D002B2033 /* LaunchScreen.storyboard in Resources */,
 				01578ECB21E5E75D002B2033 /* Assets.xcassets in Resources */,
+				218481C521FB7F480048D9D3 /* Settings.bundle in Resources */,
 				362D910221F5DC2D006962C8 /* SessionsViewController.storyboard in Resources */,
 				362D90FE21F5DBC2006962C8 /* StartViewController.storyboard in Resources */,
 			);
@@ -485,7 +489,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ $CONFIGURATION = \"Debug\" ]; then\ncd $SRCROOT\n/usr/local/bin/license-plist --output-path $PRODUCT_NAME/Settings.bundle\nfi\n";
+			shellScript = "if [ $CONFIGURATION = \"Debug\" ] && which \"/usr/local/bin/license-plist\" >/dev/null; then\ncd $SRCROOT\n/usr/local/bin/license-plist --output-path \"$PRODUCT_NAME/Settings.bundle\"\nfi\n";
 		};
 		361EF11099051CF5E1A29049 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
