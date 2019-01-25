@@ -7,13 +7,11 @@ import Foundation
 import RxSwift
 import ios_combined
 
-
 extension KotlinThrowable: LocalizedError {
     public var errorDescription: String? {
         return self.message ?? "No message. \(self)"
     }
 }
-
 
 extension Kotlinx_coroutines_core_nativeDeferred {
 
