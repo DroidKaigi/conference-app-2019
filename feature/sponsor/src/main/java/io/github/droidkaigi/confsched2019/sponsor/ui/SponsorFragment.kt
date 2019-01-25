@@ -47,7 +47,8 @@ class SponsorFragment : DaggerFragment() {
 
     private lateinit var progressTimeLatch: ProgressTimeLatch
 
-    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
+    private val groupAdapter
+        get() = binding.sponsorRecycler.adapter as GroupAdapter<*>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,6 +66,8 @@ class SponsorFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val groupAdapter = GroupAdapter<ViewHolder<*>>()
+
         groupAdapter.spanCount = 2
 
         binding.sponsorRecycler.layoutManager = GridLayoutManager(

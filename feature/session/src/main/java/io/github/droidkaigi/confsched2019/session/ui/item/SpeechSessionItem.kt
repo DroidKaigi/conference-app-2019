@@ -18,20 +18,22 @@ import com.squareup.inject.assisted.AssistedInject
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import com.xwray.groupie.databinding.BindableItem
-import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.Speaker
+import io.github.droidkaigi.confsched2019.model.SpeechSession
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSessionBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.bindingadapter.setHighlightText
 import io.github.droidkaigi.confsched2019.util.lazyWithParam
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlin.math.max
 
 class SpeechSessionItem @AssistedInject constructor(
-    @Assisted override val session: Session.SpeechSession,
+    @Assisted override val session: SpeechSession,
     @Assisted val navDirections: NavDirections,
     @Assisted val hasStartPadding: Boolean,
+    @Assisted val query: String?,
     val navController: NavController,
     val sessionContentsActionCreator: SessionContentsActionCreator
 ) : BindableItem<ItemSessionBinding>(
@@ -42,9 +44,10 @@ class SpeechSessionItem @AssistedInject constructor(
     @AssistedInject.Factory
     interface Factory {
         fun create(
-            session: Session.SpeechSession,
+            session: SpeechSession,
             navDirections: NavDirections,
-            hasStartPadding: Boolean
+            hasStartPadding: Boolean,
+            query: String? = null
         ): SpeechSessionItem
     }
 
@@ -60,6 +63,7 @@ class SpeechSessionItem @AssistedInject constructor(
             session = speechSession
             lang = defaultLang()
             hasStartPadding = this@SpeechSessionItem.hasStartPadding
+            query = this@SpeechSessionItem.query
             favorite.setOnClickListener {
                 sessionContentsActionCreator.toggleFavorite(speechSession)
             }
@@ -117,6 +121,7 @@ class SpeechSessionItem @AssistedInject constructor(
         textView: TextView
     ) {
         textView.text = speaker.name
+        setHighlightText(textView, query)
         val imageUrl = speaker.imageUrl
         val context = textView.context
         val placeHolder = run {
@@ -186,11 +191,12 @@ class SpeechSessionItem @AssistedInject constructor(
         other as SpeechSessionItem
 
         if (session != other.session) return false
+        if (query == null || other.query == null || query != other.query) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return session.hashCode()
+        return session.hashCode() + query.hashCode()
     }
 }

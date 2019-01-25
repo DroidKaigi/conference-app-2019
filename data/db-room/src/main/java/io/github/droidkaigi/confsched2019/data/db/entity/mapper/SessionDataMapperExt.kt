@@ -12,8 +12,10 @@ import io.github.droidkaigi.confsched2019.data.db.entity.LanguageEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.MessageEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.RoomEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionEntityImpl
+import io.github.droidkaigi.confsched2019.data.db.entity.SessionFeedbackEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionSpeakerJoinEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntityImpl
+import io.github.droidkaigi.confsched2019.model.SessionFeedback
 
 fun List<SessionResponse>?.toSessionSpeakerJoinEntities(): List<SessionSpeakerJoinEntityImpl> {
     val sessionSpeakerJoinEntity: MutableList<SessionSpeakerJoinEntityImpl> = arrayListOf()
@@ -140,3 +142,15 @@ private fun List<CategoryResponse>.category(
 }
 
 private fun List<RoomResponse>.roomName(roomId: Int?): String = first { it.id == roomId }.name!!
+
+fun SessionFeedback.toSessionFeedbackEntity(): SessionFeedbackEntityImpl =
+    SessionFeedbackEntityImpl(
+        sessionId = sessionId,
+        totalEvaluation = totalEvaluation,
+        relevancy = relevancy,
+        asExpected = asExpected,
+        difficulty = difficulty,
+        knowledgeable = knowledgeable,
+        comment = comment,
+        submitted = submitted
+    )

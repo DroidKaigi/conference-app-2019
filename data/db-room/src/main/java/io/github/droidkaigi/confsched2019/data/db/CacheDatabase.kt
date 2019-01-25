@@ -9,12 +9,14 @@ import io.github.droidkaigi.confsched2019.data.db.dao.SessionFeedbackDao
 import io.github.droidkaigi.confsched2019.data.db.dao.SessionSpeakerJoinDao
 import io.github.droidkaigi.confsched2019.data.db.dao.SpeakerDao
 import io.github.droidkaigi.confsched2019.data.db.dao.SponsorDao
+import io.github.droidkaigi.confsched2019.data.db.dao.StaffDao
 import io.github.droidkaigi.confsched2019.data.db.entity.AnnouncementEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionEntityImpl
-import io.github.droidkaigi.confsched2019.data.db.entity.SessionFeedbackImpl
+import io.github.droidkaigi.confsched2019.data.db.entity.SessionFeedbackEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.SessionSpeakerJoinEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntityImpl
 import io.github.droidkaigi.confsched2019.data.db.entity.SponsorEntityImpl
+import io.github.droidkaigi.confsched2019.data.db.entity.StaffEntityImpl
 
 @Database(
     entities = [
@@ -22,10 +24,11 @@ import io.github.droidkaigi.confsched2019.data.db.entity.SponsorEntityImpl
         (SpeakerEntityImpl::class),
         (SessionSpeakerJoinEntityImpl::class),
         (SponsorEntityImpl::class),
-        (SessionFeedbackImpl::class),
-        (AnnouncementEntityImpl::class)
+        (SessionFeedbackEntityImpl::class),
+        (AnnouncementEntityImpl::class),
+        (StaffEntityImpl::class)
     ],
-    version = 11
+    version = 12
 )
 abstract class CacheDatabase : RoomDatabase() {
     abstract fun sessionDao(): SessionDao
@@ -34,6 +37,7 @@ abstract class CacheDatabase : RoomDatabase() {
     abstract fun sponsorDao(): SponsorDao
     abstract fun sessionFeedbackDao(): SessionFeedbackDao
     abstract fun announcementDao(): AnnouncementDao
+    abstract fun staffDao(): StaffDao
     fun sqlite(): SupportSQLiteDatabase {
         return mDatabase
     }

@@ -7,6 +7,7 @@
     <string name="session_filter_button">Filtering</string>
     <string name="session_filter_button_filtered">Filtered</string>
     <string name="session_filter_title">Filter</string>
+    <string name="session_title" translatable="false">Sessions</string>
     <string name="session_filter_reset">Reset</string>
     <string name="session_filter_room" translatable="false">Room</string>
     <string name="session_filter_language" translatable="false">Language</string>
@@ -27,7 +28,7 @@
     <string name="session_place" translatable="false">Place</string>
     <string name="session_search_hint">Search…</string>
     <string name="session_go_to_survey">Go to survey</string>
-    <string name="session_live" translatable="false">Live</string>
+    <string name="session_ongoing" translatable="false">ONGOING</string>
     <string name="session_simultaneous_interpretation">Simultaneous Interpretation</string>
     <string name="session_for_beginners">For Beginners</string>
     <string name="session_bottom_appbar_behavior" translatable="false">io.github.droidkaigi.confsched2019.session.ui.widget.SessionBottomAppBarBehavior</string>

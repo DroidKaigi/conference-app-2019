@@ -11,6 +11,9 @@
             name="speaker"
             type="io.github.droidkaigi.confsched2019.model.Speaker"
             />
+        <variable
+            name="query"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,6 +54,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/speaker_image"
             app:layout_constraintTop_toTopOf="@id/speaker_image"
+            app:highlightText="@{query}"
             tools:text="@tools:sample/full_names"
             />
 

@@ -16,6 +16,7 @@ interface DbComponent {
     fun sessionDatabase(): SessionDatabase
     fun sponsorDatabase(): SponsorDatabase
     fun announcementDatabase(): AnnouncementDatabase
+    fun staffDatabase(): StaffDatabase
 
     @Component.Builder
     interface Builder {

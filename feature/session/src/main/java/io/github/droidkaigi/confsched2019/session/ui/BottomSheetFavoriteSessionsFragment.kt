@@ -17,8 +17,10 @@ import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionPage
+import io.github.droidkaigi.confsched2019.model.SpeechSession
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentBottomSheetSessionsBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
@@ -59,7 +61,8 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
         InjectedViewModelProviders.of(requireActivity()).get(sessionPagesStoreProvider)
     }
 
-    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
+    private val groupAdapter
+        get() = binding.sessionsRecycler.adapter as GroupAdapter<*>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -74,6 +77,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.sessionsRecycler.apply {
             adapter = groupAdapter
             addItemDecoration(
@@ -104,7 +108,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
             val items = sessions
                 .map<Session, Item<*>> { session ->
                     when (session) {
-                        is Session.SpeechSession ->
+                        is SpeechSession ->
                             speechSessionItemFactory.create(
                                 session,
                                 SessionPagesFragmentDirections.actionSessionToSessionDetail(
@@ -112,7 +116,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
                                 ),
                                 true
                             )
-                        is Session.ServiceSession ->
+                        is ServiceSession ->
                             serviceSessionItemFactory.create(
                                 session,
                                 SessionPagesFragmentDirections.actionSessionToSessionDetail(

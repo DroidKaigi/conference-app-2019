@@ -15,14 +15,14 @@ data class Filters(
             if (rooms.isEmpty()) return@run true
             return@run rooms.contains(session.room)
         }
-        if (session !is Session.SpeechSession) return roomFilterOk
+        if (session !is SpeechSession) return roomFilterOk
         val categoryFilterOk = run {
             if (categories.isEmpty()) return@run true
             return@run categories.contains(session.category)
         }
         val langFilterOk = run {
             if (langs.isEmpty()) return@run true
-            return@run langs.map { it.text }.contains(session.language)
+            return@run langs.any { it == session.lang }
         }
         val langSupportFilterOk = run {
             if (langSupports.contains(LangSupport.INTERPRETATION)) {
@@ -32,11 +32,13 @@ data class Filters(
             }
         }
         val audienceCategoryFilterOk = run {
-            if (audienceCategories.contains(AudienceCategory.BEGINNERS)) {
-                session.forBeginners
+            if (audienceCategories.isEmpty()) return@run true
+            val audienceCategory = if (session.forBeginners) {
+                AudienceCategory.BEGINNERS
             } else {
-                true
+                AudienceCategory.UNSPECIFIED
             }
+            audienceCategories.any { it == audienceCategory }
         }
         return roomFilterOk &&
             categoryFilterOk &&
@@ -54,5 +56,5 @@ data class Filters(
     }
 
     private fun Session.isNotFilterableServiceSession() =
-        this is Session.ServiceSession && !sessionType.isFilterable
+        this is ServiceSession && !sessionType.isFilterable
 }
