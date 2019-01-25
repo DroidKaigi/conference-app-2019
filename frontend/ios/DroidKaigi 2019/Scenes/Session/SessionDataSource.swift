@@ -40,6 +40,10 @@ extension SessionDataSource: UITableViewDelegate {
         view.set(startTimeText: items[section].startTimeText)
         return view
     }
+
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+    }
 }
 
 extension SessionDataSource: RxTableViewDataSourceType {
@@ -50,5 +54,11 @@ extension SessionDataSource: RxTableViewDataSourceType {
             tableView.reloadData()
         }
         .on(observedEvent)
+    }
+}
+
+extension SessionDataSource: SectionedViewDataSourceType {
+    func model(at indexPath: IndexPath) throws -> Any {
+        return items[indexPath.section].sessions[indexPath.row]
     }
 }
