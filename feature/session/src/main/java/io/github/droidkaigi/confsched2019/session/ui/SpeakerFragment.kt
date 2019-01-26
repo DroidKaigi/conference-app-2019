@@ -9,12 +9,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
-import com.soywiz.klock.DateTimeTz
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
-import io.github.droidkaigi.confsched2019.ext.android.offsetTimeSpanFromUTC
+import io.github.droidkaigi.confsched2019.model.Device
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSpeakerBinding
@@ -49,7 +48,7 @@ class SpeakerFragment : DaggerFragment() {
 
         val speakerId = speakerFragmentArgs.speaker
         binding.lang = defaultLang()
-        binding.timeZoneOffset = DateTimeTz.nowLocal().offsetTimeSpanFromUTC()
+        binding.timeZoneOffset = Device.getOffsetFromUTC()
         sessionContentsStore.speaker(speakerId).changed(
             this
         ) { speaker ->

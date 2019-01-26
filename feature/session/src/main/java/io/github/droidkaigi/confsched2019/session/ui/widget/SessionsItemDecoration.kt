@@ -13,9 +13,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.util.forEach
 import androidx.recyclerview.widget.RecyclerView
 import com.soywiz.klock.DateTime
-import com.soywiz.klock.DateTimeTz
 import com.xwray.groupie.GroupAdapter
-import io.github.droidkaigi.confsched2019.ext.android.offsetTimeSpanFromUTC
+import io.github.droidkaigi.confsched2019.model.Device
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
@@ -155,7 +154,7 @@ class SessionsItemDecoration(
     }
 
     private val displayTimezoneOffset = lazy {
-        DateTimeTz.nowLocal().offsetTimeSpanFromUTC().timeSpan
+        Device.getOffsetFromUTC().timeSpan
     }
 
     private fun calcTimeText(position: Int, view: View): TimeText? {
