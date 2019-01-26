@@ -15,6 +15,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import io.fabric.sdk.android.Fabric
 import io.github.droidkaigi.confsched2019.announcement.ui.subscribeAnnouncementTopic
+import io.github.droidkaigi.confsched2019.di.AppComponent
 import io.github.droidkaigi.confsched2019.di.createAppComponent
 import io.github.droidkaigi.confsched2019.ext.changedForever
 import io.github.droidkaigi.confsched2019.model.SystemProperty
@@ -29,6 +30,10 @@ import javax.inject.Inject
 open class App : DaggerApplication() {
     @Inject lateinit var systemStore: SystemStore
     @Inject lateinit var systemActionCreator: SystemActionCreator
+
+    val appCmponent: AppComponent by lazy {
+        createAppComponent()
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -118,6 +123,6 @@ open class App : DaggerApplication() {
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return createAppComponent()
+        return appCmponent
     }
 }

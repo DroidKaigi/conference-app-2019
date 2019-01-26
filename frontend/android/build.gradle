@@ -67,7 +67,7 @@ android {
                 // That may be a bug of r8
                 optimizeCode = false
                 removeUnusedCode = true
-                removeUnusedResources = true
+                removeUnusedResources = false // Prevent error of "Resource shrinker cannot be used for multi-apk applications" when gradle sync.
                 codeShrinker = 'r8'
             }
         }
@@ -84,7 +84,7 @@ android {
                 // That may be a bug of r8
                 optimizeCode = false
                 removeUnusedCode = true
-                removeUnusedResources = true
+                removeUnusedResources = false // Prevent error of "Resource shrinker cannot be used for multi-apk applications" when gradle sync.
                 codeShrinker = 'r8'
             }
         }
@@ -109,6 +109,8 @@ android {
         exclude 'META-INF/*.version'
         exclude 'META-INF/proguard/*.pro'
     }
+
+    dynamicFeatures = [":feature:staff_dfm"]
 }
 
 dependencies {
@@ -120,7 +122,6 @@ dependencies {
     implementation project(":feature:sponsor")
     implementation project(":feature:settings")
     implementation project(":feature:contributor")
-    implementation project(":feature:staff")
     implementation project(':feature:user')
     implementation project(':feature:survey')
     implementation project(':feature:system')

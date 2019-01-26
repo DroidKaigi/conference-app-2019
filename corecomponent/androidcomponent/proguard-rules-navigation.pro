@@ -14,5 +14,5 @@
 -keepnames class io.github.droidkaigi.confsched2019.session.ui.TabularFormSessionPagesFragment
 -keepnames class io.github.droidkaigi.confsched2019.settings.ui.SettingsFragment
 -keepnames class io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragment
--keepnames class io.github.droidkaigi.confsched2019.staff.ui.StaffSearchFragment
+-keepnames class io.github.droidkaigi.confsched2019.staff_dfm.ui.StaffSearchFragment
 -keepnames class io.github.droidkaigi.confsched2019.survey.ui.SessionSurveyFragment

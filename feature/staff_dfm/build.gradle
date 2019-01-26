@@ -1,0 +1,59 @@
+import dependencies.Versions
+import dependencies.Dep
+
+apply plugin: 'com.android.dynamic-feature'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion Versions.androidCompileSdkVersion
+    defaultConfig {
+        minSdkVersion Versions.androidMinSdkVersion
+        targetSdkVersion Versions.androidTargetSdkVersion
+    }
+
+    signingConfigs {
+        debug {
+            keyAlias 'droidkaigi_debug'
+            keyPassword 'droidkaigi'
+            storeFile file("${project.rootDir}/frontend/android/debug.keystore")
+            storePassword 'droidkaigi'
+        }
+    }
+
+    dataBinding {
+        enabled true
+    }
+}
+
+dependencies {
+    implementation project(':frontend:android')
+
+    implementation project(':frontendcomponent:androidcomponent')
+    implementation project(':ext:android-extension')
+    implementation project(":data:repository")
+    implementation project(":feature:system")
+    implementation project(":model")
+
+    implementation Dep.InjectedVmProvider.extension
+    implementation Dep.InjectedVmProvider.injectedVmProvider
+    implementation Dep.InjectedVmProvider.ktx
+
+    implementation Dep.Groupie.groupie
+    implementation Dep.Groupie.databinding
+
+    implementation Dep.Picasso.picasso
+    implementation Dep.Picasso.picassoTransformation
+
+    kapt Dep.Dagger.compiler
+    kapt Dep.Dagger.androidProcessor
+    compileOnly Dep.Dagger.assistedInjectAnnotations
+    kapt Dep.Dagger.assistedInjectProcessor
+
+    testImplementation Dep.Test.junit
+    testImplementation Dep.MockK.jvm
+    androidTestImplementation Dep.Test.testRunner
+    androidTestImplementation Dep.Test.espressoCore
+}
+
+apply plugin: 'com.google.gms.google-services'

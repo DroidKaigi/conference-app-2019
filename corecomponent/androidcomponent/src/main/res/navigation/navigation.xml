@@ -175,7 +175,7 @@
     </activity>
     <fragment
         android:id="@+id/staff_search"
-        android:name="io.github.droidkaigi.confsched2019.staff.ui.StaffSearchFragment"
+        android:name="io.github.droidkaigi.confsched2019.staff_dfm.ui.StaffSearchFragment"
         android:label="@string/staff_search_label"
         />
 </navigation>

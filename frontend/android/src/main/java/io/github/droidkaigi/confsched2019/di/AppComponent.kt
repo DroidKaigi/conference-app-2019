@@ -6,6 +6,8 @@ import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import io.github.droidkaigi.confsched2019.App
+import io.github.droidkaigi.confsched2019.data.repository.StaffRepository
+import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ui.MainActivityModule
 import javax.inject.Singleton
 
@@ -30,6 +32,9 @@ interface AppComponent : AndroidInjector<App> {
     }
 
     override fun inject(app: App)
+
+    fun dispatcher(): Dispatcher
+    fun staffRepository(): StaffRepository
 }
 
 fun Application.createAppComponent() = DaggerAppComponent.builder()

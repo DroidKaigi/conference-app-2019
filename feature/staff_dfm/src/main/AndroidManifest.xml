@@ -1,0 +1,14 @@
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="io.github.droidkaigi.confsched2019.staff_dfm"
+    >
+
+    <dist:module
+        dist:onDemand="false"
+        dist:title="@string/title_staff_dfm"
+        >
+        <dist:fusing dist:include="true"/>
+    </dist:module>
+</manifest>
+

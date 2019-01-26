@@ -34,9 +34,6 @@ import io.github.droidkaigi.confsched2019.about.ui.AboutFragment
 import io.github.droidkaigi.confsched2019.about.ui.AboutFragmentModule
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragmentModule
-import io.github.droidkaigi.confsched2019.contributor.ContributorFragment
-import io.github.droidkaigi.confsched2019.contributor.ContributorFragmentModule
-import io.github.droidkaigi.confsched2019.contributor.di.ContributorAssistedInjectModule
 import io.github.droidkaigi.confsched2019.databinding.ActivityMainBinding
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.changed
@@ -56,8 +53,6 @@ import io.github.droidkaigi.confsched2019.session.ui.TabularFormSessionPagesFrag
 import io.github.droidkaigi.confsched2019.session.ui.TabularFromSessionPagesFragmentModule
 import io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragment
 import io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragmentModule
-import io.github.droidkaigi.confsched2019.staff.ui.StaffSearchFragment
-import io.github.droidkaigi.confsched2019.staff.ui.StaffSearchFragmentModule
 import io.github.droidkaigi.confsched2019.survey.ui.SessionSurveyFragment
 import io.github.droidkaigi.confsched2019.survey.ui.SessionSurveyFragmentModule
 import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
@@ -322,16 +317,6 @@ abstract class MainActivityModule {
     @PageScope
     @ContributesAndroidInjector(modules = [SessionSurveyFragmentModule::class])
     abstract fun contributeSessionSurveyFragment(): SessionSurveyFragment
-
-    @PageScope
-    @ContributesAndroidInjector(modules = [StaffSearchFragmentModule::class])
-    abstract fun contributeStaffSearchFragment(): StaffSearchFragment
-
-    @PageScope
-    @ContributesAndroidInjector(
-        modules = [ContributorFragmentModule::class, ContributorAssistedInjectModule::class]
-    )
-    abstract fun contrbutorContributorFragment(): ContributorFragment
 
     @Module
     companion object {
