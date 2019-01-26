@@ -119,6 +119,14 @@ class SessionPagesStore @Inject constructor(
         .map { it.sessionPage }
         .toLiveData(SessionPage.pages[0])
 
+    val reselectedTab: LiveData<Int> = dispatcher
+        .subscribe<Action.SessionPageReselected>()
+        .map { action ->
+            filteredSessions.requireValue()
+                .filter { session -> session.dayNumber == action.dayNumber }
+                .indexOfFirst { session -> session.isOnGoing }
+        }.toLiveData(0)
+
     fun filteredSessionsByDay(day: Int): LiveData<List<Session>> {
         return filteredSessions
             .map { sessions ->

@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
+import com.shopify.livedataktx.observe
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.databinding.ViewHolder
@@ -141,6 +142,11 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                     })
                 val isCollapsed = newState == BottomSheetBehavior.STATE_COLLAPSED
                 binding.isCollapsed = isCollapsed
+            }
+        }
+        sessionPagesStore.reselectedTab.observe(viewLifecycleOwner) {
+            it?.let { position ->
+                binding.sessionsRecycler.scrollToPosition(position)
             }
         }
     }
