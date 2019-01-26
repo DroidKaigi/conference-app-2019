@@ -95,21 +95,21 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                 }
             }
             adapter = groupAdapter
-            groupAdapter.setOnItemClickListener { item, _ ->
-                val session: String? = when (item) {
-                    is TabularSpeechSessionItem -> {
-                        item.session.id
-                    }
-                    is TabularServiceSessionItem -> {
-                        item.session.id
-                    }
-                    else -> null
+        }
+        groupAdapter.setOnItemClickListener { item, _ ->
+            val session: String? = when (item) {
+                is TabularSpeechSessionItem -> {
+                    item.session.id
                 }
-                session?.let {
-                    navController.navigate(
-                        TabularFormSessionPagesFragmentDirections.actionTabularFormToSessionDetail(it)
-                    )
+                is TabularServiceSessionItem -> {
+                    item.session.id
                 }
+                else -> null
+            }
+            session?.let {
+                val navDirections = TabularFormSessionPagesFragmentDirections
+                    .actionTabularFormToSessionDetail(it)
+                navController.navigate(navDirections)
             }
         }
 
