@@ -122,10 +122,10 @@ class SessionPagesStore @Inject constructor(
     val reselectedTab: LiveData<Int> = dispatcher
         .subscribe<Action.SessionPageReselected>()
         .map { action ->
-            filteredSessions.requireValue()
-                .filter { session -> session.dayNumber == action.dayNumber }
-                .indexOfFirst { session -> session.isOnGoing }
-        }.toLiveData(0)
+            filteredSessions.value
+                ?.filter { session -> session.dayNumber == action.dayNumber }
+                ?.indexOfFirst { session -> session.isOnGoing } ?: -1
+        }.toLiveData(-1)
 
     fun filteredSessionsByDay(day: Int): LiveData<List<Session>> {
         return filteredSessions
