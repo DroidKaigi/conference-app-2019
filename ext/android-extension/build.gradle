@@ -18,6 +18,8 @@ dependencies {
     api Dep.AndroidX.lifecycleLiveData
     api Dep.liveDataKtx
 
+    api Dep.Klock.common
+
     testImplementation Dep.Test.junit
 }
 
