@@ -1,0 +1,54 @@
+branches:
+  only:
+  - enable_travis
+  - master
+  - release
+  - "/^v\\d+\\.\\d+(\\.\\d+)?(-\\S*)?$/"
+matrix:
+  include:
+  - language: android
+    sudo: required
+    jdk: oraclejdk8
+    before_cache:
+    - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+    - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
+    cache:
+      directories:
+      - "$HOME/.gradle"
+      - "$HOME/.android"
+      - ".gradle"
+    before_install:
+    - "./.travis/android/before_install.bash"
+    android:
+      components:
+      - platform-tools
+      - android-28
+      - build-tools-28.0.3
+      - extra-google-m2repository
+      - extra-android-m2repository
+      - tools
+      licenses:
+      - android-sdk-preview-license-.+
+      - android-sdk-license-.+
+      - google-gdk-license-.+
+    script: ".travis/android/run.bash"
+  - language: objective-c
+    os: osx
+    osx_image: xcode10.1
+    xcode_workspace: frontend/ios/DroidKaigi\ 2019.xcworkspace
+    cache:
+    - directories:
+      - ios/frontend/vendor/bundle
+      - ios/frontend/Pods
+      - ios/frontend/Carthage
+      - "$HOME/.gradle"
+      - "$HOME/.android"
+      - ".gradle"
+      - "$ANDROID_HOME"
+    env:
+      - ANDROID_HOME="$HOME/android-sdk"
+    before_install:
+    - "./.travis/ios/before_install.bash"
+    before_script:
+    - "./.travis/ios/before_script.bash"
+    script: ".travis/ios/run.bash"
