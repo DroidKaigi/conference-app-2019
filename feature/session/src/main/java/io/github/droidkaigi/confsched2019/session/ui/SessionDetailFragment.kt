@@ -21,13 +21,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionManager
-import com.soywiz.klock.DateTimeSpan
+import com.soywiz.klock.DateTimeTz
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.ext.android.offsetTimeSpanFromUTC
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.SpeechSession
@@ -172,7 +173,7 @@ class SessionDetailFragment : DaggerFragment() {
         val lang = defaultLang()
         binding.lang = lang
         setupSessionDescription(session.desc)
-        binding.timeZoneOffset = DateTimeSpan(hours = 9) // FIXME Get from device setting
+        binding.timeZoneOffset = DateTimeTz.nowLocal().offsetTimeSpanFromUTC()
 
         binding.sessionTitle.text = session.title.getByLang(lang)
 
@@ -263,7 +264,7 @@ class SessionDetailFragment : DaggerFragment() {
 
         val lang = defaultLang()
         binding.lang = lang
-        binding.timeZoneOffset = DateTimeSpan(hours = 9) // FIXME Get from device setting
+        binding.timeZoneOffset = DateTimeTz.nowLocal().offsetTimeSpanFromUTC()
 
         binding.sessionTitle.text = session.title.getByLang(lang)
 

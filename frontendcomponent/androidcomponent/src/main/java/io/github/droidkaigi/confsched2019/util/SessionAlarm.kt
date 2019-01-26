@@ -6,9 +6,10 @@ import android.app.PendingIntent
 import android.content.Context
 import android.os.Build
 import androidx.core.app.AlarmManagerCompat
-import com.soywiz.klock.DateTimeSpan
+import com.soywiz.klock.DateTimeTz
 import com.soywiz.klock.minutes
 import io.github.droidkaigi.confsched2019.broadcastreceiver.NotificationBroadcastReceiver
+import io.github.droidkaigi.confsched2019.ext.android.offsetTimeSpanFromUTC
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SpeechSession
 import io.github.droidkaigi.confsched2019.model.ServiceSession
@@ -45,7 +46,7 @@ class SessionAlarm @Inject constructor(private val app: Application) {
     }
 
     private fun createAlarmIntent(session: Session): PendingIntent {
-        val timezoneOffset = DateTimeSpan(hours = 9).timeSpan // FIXME Get from device setting
+        val timezoneOffset = DateTimeTz.nowLocal().offsetTimeSpanFromUTC().timeSpan
         val displaySTime = session.startTime.toOffset(timezoneOffset).format("HH:mm")
         val displayETime = session.endTime.toOffset(timezoneOffset).format("HH:mm")
         val sessionTitle = app.getString(
