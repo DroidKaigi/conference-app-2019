@@ -18,16 +18,11 @@ android {
             storeFile file('debug.keystore')
             storePassword 'droidkaigi'
         }
-
-        if (isProductionBuild) {
-            release {
-                keyAlias System.getenv("RELEASE_KEY_ALIAS")
-                keyPassword System.getenv("RELEASE_KEY_PASSWORD")
-                storeFile System.getenv("RELEASE_STORE_FILE")
-                storePassword System.getenv("RELEASE_PASSWORD")
-            }
-        } else {
-            release.initWith(debug)
+        release {
+            keyAlias System.getenv("RELEASE_KEY_ALIAS")
+            keyPassword System.getenv("RELEASE_KEY_PASSWORD")
+            storeFile file(System.getenv("RELEASE_STORE_FILE") ?: "debug.keystore")
+            storePassword System.getenv("RELEASE_PASSWORD")
         }
     }
     defaultConfig {
@@ -44,18 +39,21 @@ android {
         manifestPlaceholders = [isCi: String.valueOf(isCi)]
     }
     buildTypes {
-        release {
+        staging {
             zipAlignEnabled true
             useProguard true
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig = signingConfigs.debug
+            matchingFallbacks = ['release']
+        }
+        release.initWith(staging)
+        release {
+            applicationIdSuffix null
+            proguardFiles 'proguard-rules-production.pro'
             signingConfig = signingConfigs.release
-
-            if (isProductionBuild) {
-                applicationIdSuffix null
-                proguardFiles 'proguard-rules-production.pro'
-            }
+            matchingFallbacks = []
         }
     }
     dataBinding {
@@ -120,9 +118,11 @@ dependencies {
 
     implementation Dep.Stetho.stetho
 
-    releaseImplementation Dep.LeakCanary.leakCanary
     debugImplementation Dep.LeakCanary.leakCanary
     debugImplementation Dep.LeakCanary.leakCanaryFragment
+    stagingImplementation Dep.LeakCanary.leakCanary
+    stagingImplementation Dep.LeakCanary.leakCanaryFragment
+    releaseImplementation Dep.LeakCanary.leakCanaryNoOp
 
     implementation Dep.Firebase.core
     implementation Dep.Firebase.auth

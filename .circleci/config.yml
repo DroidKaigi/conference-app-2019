@@ -66,7 +66,7 @@ jobs:
           name: Assemble apk from App Bundle
           command: |
             use_debug_keystore
-            ./gradlew bundleDebug --offline
+            ./gradlew bundleStaging --offline
             create_universal_apk_from_aab.bash $(find frontend/android/build/outputs -name "*.aab" | head -1)
       - store_artifacts:
           path: frontend/android/build/outputs
