@@ -5,10 +5,10 @@ import com.soywiz.klock.DateTimeTz
 
 class Device {
     companion object {
-        fun getOffsetFromUTC() : DateTimeSpan{
+        fun getOffsetFromUTC(): DateTimeSpan {
             val nowLocal = DateTimeTz.nowLocal()
-            val offsetHours = nowLocal.hours - nowLocal.utc.hours
-            val offsetMinutes = nowLocal.minutes - nowLocal.utc.minutes
+            val offsetHours = nowLocal.utc.localOffset.time.hours.toInt()
+            val offsetMinutes = nowLocal.utc.localOffset.time.minutes.toInt() - (offsetHours * 60)
             return DateTimeSpan(hours = offsetHours, minutes = offsetMinutes)
         }
     }
