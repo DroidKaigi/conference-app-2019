@@ -489,7 +489,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ $CONFIGURATION = \"Debug\" ] && which \"/usr/local/bin/license-plist\" >/dev/null; then\ncd $SRCROOT\n/usr/local/bin/license-plist --output-path \"$PRODUCT_NAME/Settings.bundle\"\nfi\n";
+			shellScript = "if [ $CONFIGURATION = \"Debug\" ]; then\n${PODS_ROOT}/LicensePlist/license-plist --output-path \"$PRODUCT_NAME/Settings.bundle\"\nfi\n";
 		};
 		361EF11099051CF5E1A29049 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
