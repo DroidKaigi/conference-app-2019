@@ -15,7 +15,9 @@ import io.ktor.client.request.accept
 import io.ktor.client.request.get
 import io.ktor.client.request.url
 import io.ktor.http.ContentType
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.JSON
 import kotlinx.serialization.list
@@ -49,6 +51,11 @@ open class KtorDroidKaigiApi constructor(
             }
         }
     }
+
+    override fun getSessionsAsync(): Deferred<Response> =
+        GlobalScope.async(requireNotNull(coroutineDispatcherForCallback)) {
+            getSessions()
+        }
 
     override suspend fun getAnnouncements(lang: LangParameter): AnnouncementListResponse {
         val rawResponse = httpClient.get<String> {

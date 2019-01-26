@@ -55,7 +55,11 @@ class TabularFormSessionPagesFragment : DaggerFragment() {
             private val days = listOf(SessionPage.pageOfDay(1), SessionPage.pageOfDay(2))
 
             override fun getItem(position: Int): Fragment {
-                return TabularFormSessionPageFragment.newInstance(days[position].day)
+                return TabularFormSessionPageFragment.newInstance(
+                        TabularFormSessionPagesFragmentArgs.Builder()
+                            .setDay(days[position].day)
+                            .build()
+                    )
             }
 
             override fun getPageTitle(position: Int) = days[position].title
