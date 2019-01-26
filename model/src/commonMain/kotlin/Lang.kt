@@ -11,6 +11,16 @@ enum class Lang(val text: LocaledString) {
             ja
         }
     }
+
+    companion object {
+        fun findLang(name: String): Lang {
+            return if (name == "日本語") {
+                JA
+            } else {
+                EN
+            }
+        }
+    }
 }
 
 expect fun defaultLang(): Lang

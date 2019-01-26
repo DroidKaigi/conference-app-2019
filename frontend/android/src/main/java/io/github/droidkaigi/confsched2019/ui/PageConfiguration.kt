@@ -7,10 +7,13 @@ enum class PageConfiguration(
     val id: Int,
     val isWhiteTheme: Boolean = true,
     val hasTitle: Boolean = true,
-    val isShowLogoImage: Boolean = false
+    val isShowLogoImage: Boolean = false,
+    val hideToolbar: Boolean = false
 ) {
     MAIN(R.id.main, isWhiteTheme = false, hasTitle = false, isShowLogoImage = true),
-    DETAIL(R.id.session_detail, hasTitle = false),
+    DETAIL(R.id.session_detail, hasTitle = false, hideToolbar = true),
+    SPEAKER(R.id.speaker, hasTitle = false),
+    SURVEY(R.id.session_survey, isWhiteTheme = false, hasTitle = false),
     OTHER(0);
 
     operator fun component1() = id

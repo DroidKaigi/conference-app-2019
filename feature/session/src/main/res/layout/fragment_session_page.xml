@@ -23,7 +23,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="16dp"
+                android:paddingBottom="40dp"
                 >
 
                 <TextView
@@ -41,7 +41,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     />
 
-
                 <com.google.android.material.chip.Chip
                     android:id="@+id/sessions_filter_reset"
                     android:layout_width="wrap_content"
@@ -50,6 +49,7 @@
                     android:text="@string/session_filter_reset"
                     android:textAppearance="?textAppearanceSubtitle1"
                     android:textColor="@color/white"
+                    android:gravity="center_vertical|start"
                     app:chipBackgroundColor="#d12016"
                     app:layout_constraintBottom_toBottomOf="@id/sessions_filter_title"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -61,6 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/lekton"
                     android:text="@string/session_filter_room"
                     android:textAppearance="?textAppearanceSubtitle1"
                     android:textColor="@color/white"
@@ -83,7 +84,8 @@
                     android:id="@+id/sessions_filter_lang_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="32dp"
+                    android:fontFamily="@font/lekton"
                     android:text="@string/session_filter_language"
                     android:textAppearance="?textAppearanceSubtitle1"
                     android:textColor="@color/white"
@@ -106,7 +108,8 @@
                     android:id="@+id/sessions_filter_lang_support_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="32dp"
+                    android:fontFamily="@font/lekton"
                     android:text="@string/session_filter_language_support"
                     android:textAppearance="?textAppearanceSubtitle1"
                     android:textColor="@color/white"
@@ -129,7 +132,8 @@
                     android:id="@+id/sessions_filter_audience_category_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="32dp"
+                    android:fontFamily="@font/lekton"
                     android:text="@string/session_filter_audience_category"
                     android:textAppearance="?textAppearanceSubtitle1"
                     android:textColor="@color/white"
@@ -152,7 +156,8 @@
                     android:id="@+id/sessions_filter_category_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="32dp"
+                    android:fontFamily="@font/lekton"
                     android:text="@string/session_filter_category"
                     android:textAppearance="?textAppearanceSubtitle1"
                     android:textColor="@color/white"

@@ -51,6 +51,18 @@
             android:id="@+id/action_session_detail_to_speaker"
             app:destination="@id/speaker"
             />
+        <action
+            android:id="@+id/action_session_detail_to_session_survey"
+            app:destination="@id/session_survey"
+            />
+        <action
+            android:id="@+id/action_session_detail_to_floormap"
+            app:destination="@id/floormap"
+            />
+        <deepLink app:uri="droidkaigi.jp/2019/timetable/{session}/"/>
+        <deepLink app:uri="droidkaigi.jp/2019/timetable/{session}"/>
+        <deepLink app:uri="droidkaigi.jp/2019/en/timetable/{session}/"/>
+        <deepLink app:uri="droidkaigi.jp/2019/en/timetable/{session}"/>
     </fragment>
     <fragment
         android:id="@+id/search"
@@ -64,6 +76,17 @@
         <action
             android:id="@+id/action_search_to_session_detail"
             app:destination="@id/session_detail"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/tabular_form"
+        android:name="io.github.droidkaigi.confsched2019.session.ui.TabularFormSessionPagesFragment"
+        android:label="@string/tabular_form_label"
+        >
+        <argument
+            android:name="day"
+            app:argType="integer"
+            android:defaultValue="1"
             />
     </fragment>
     <fragment
@@ -103,6 +126,11 @@
         android:name="io.github.droidkaigi.confsched2019.floormap.ui.FloorMapFragment"
         android:label="@string/map_label"
         >
+        <argument
+            android:name="tabIndex"
+            app:argType="integer"
+            android:defaultValue="0"
+        />
     </fragment>
     <fragment
         android:id="@+id/setting"
@@ -110,9 +138,24 @@
         android:label="@string/setting_label"
         >
     </fragment>
+    <fragment
+        android:id="@+id/session_survey"
+        android:name="io.github.droidkaigi.confsched2019.survey.ui.SessionSurveyFragment"
+        android:label="@string/session_survey_label"
+        >
+        <argument
+            android:name="session"
+            app:argType="io.github.droidkaigi.confsched2019.model.SpeechSession"
+            />
+    </fragment>
     <activity
         android:id="@+id/licenses"
         android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
         >
     </activity>
+    <fragment
+        android:id="@+id/staff_search"
+        android:name="io.github.droidkaigi.confsched2019.staff.ui.StaffSearchFragment"
+        android:label="@string/staff_search_label"
+        />
 </navigation>

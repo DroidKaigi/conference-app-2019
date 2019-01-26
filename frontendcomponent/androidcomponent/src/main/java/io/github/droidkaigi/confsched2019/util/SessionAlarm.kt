@@ -5,10 +5,13 @@ import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
 import android.os.Build
+import androidx.core.app.AlarmManagerCompat
 import com.soywiz.klock.DateTimeSpan
 import com.soywiz.klock.minutes
 import io.github.droidkaigi.confsched2019.broadcastreceiver.NotificationBroadcastReceiver
 import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.SpeechSession
+import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.widget.component.R
 import javax.inject.Inject
@@ -27,19 +30,12 @@ class SessionAlarm @Inject constructor(private val app: Application) {
 
         if (System.currentTimeMillis() < time) {
             val alarmManager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                alarmManager.setAndAllowWhileIdle(
-                    AlarmManager.RTC_WAKEUP,
-                    time,
-                    createAlarmIntent(session)
-                )
-            } else {
-                alarmManager.set(
-                    AlarmManager.RTC_WAKEUP,
-                    time,
-                    createAlarmIntent(session)
-                )
-            }
+            AlarmManagerCompat.setAndAllowWhileIdle(
+                alarmManager,
+                AlarmManager.RTC_WAKEUP,
+                time,
+                createAlarmIntent(session)
+            )
         }
     }
 
@@ -55,8 +51,8 @@ class SessionAlarm @Inject constructor(private val app: Application) {
         val sessionTitle = app.getString(
             R.string.notification_message_session_title,
             when (session) {
-                is Session.SpeechSession -> session.title.getByLang(defaultLang())
-                is Session.ServiceSession -> session.title
+                is SpeechSession -> session.title.getByLang(defaultLang())
+                is ServiceSession -> session.title
             }
         )
         val sessionStartTime = app.getString(
@@ -76,12 +72,11 @@ class SessionAlarm @Inject constructor(private val app: Application) {
             title = sessionTitle
             text = sessionStartTime
         }
-        val intent = NotificationBroadcastReceiver.createIntent(
+        val intent = NotificationBroadcastReceiver.createForFavoritedSessionStart(
             app,
             session.id,
             title,
-            text,
-            NotificationChannelInfo.FAVORITE_SESSION_START
+            text
         )
         return PendingIntent.getBroadcast(
             app,

@@ -25,7 +25,7 @@ data class SessionContents(
         return SearchResult(
             sessions.filter {
                 when (it) {
-                    is Session.SpeechSession ->
+                    is SpeechSession ->
                         find(
                             query,
                             it.title.en,
@@ -33,7 +33,7 @@ data class SessionContents(
                             it.desc,
                             *it.speakers.map { speaker -> speaker.name }.toTypedArray()
                         )
-                    is Session.ServiceSession ->
+                    is ServiceSession ->
                         find(
                             query,
                             it.title.en,

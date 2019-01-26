@@ -9,16 +9,19 @@
 
         <import type="io.github.droidkaigi.confsched2019.model.SessionType"/>
 
-        <import type="android.view.View"/>
-
         <variable
             name="session"
-            type="io.github.droidkaigi.confsched2019.model.Session.ServiceSession"
+            type="io.github.droidkaigi.confsched2019.model.ServiceSession"
             />
 
         <variable
             name="lang"
             type="io.github.droidkaigi.confsched2019.model.Lang"
+            />
+
+        <variable
+            name="hasStartPadding"
+            type="boolean"
             />
     </data>
 
@@ -29,18 +32,18 @@
         android:paddingTop="@dimen/session_item_top_padding"
         android:paddingBottom="@dimen/session_item_bottom_padding"
         android:paddingEnd="0dp"
-        android:paddingStart="@dimen/session_bottom_sheet_left_time_space"
+        android:paddingStart="@{hasStartPadding ? @dimen/session_bottom_sheet_left_time_space : 0}"
         >
 
         <TextView
-            android:id="@+id/live"
+            android:id="@+id/ongoing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/robotomono_medium"
-            android:text="@string/session_live"
+            android:text="@string/session_ongoing"
             android:textAllCaps="true"
-            android:background="@drawable/shape_live"
+            android:background="@drawable/shape_ongoing"
             android:textColor="@color/white"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
@@ -64,7 +67,7 @@
             android:textAppearance="@style/TextAppearance.App.Subtitle1"
             app:layout_constraintEnd_toStartOf="@id/favorite"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/live"
+            app:layout_constraintTop_toBottomOf="@+id/ongoing"
             tools:text="テストセッション"
             />
 

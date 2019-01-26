@@ -11,8 +11,11 @@ import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.SearchResult
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
+import io.github.droidkaigi.confsched2019.model.SessionFeedback
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.model.SponsorCategory
+import io.github.droidkaigi.confsched2019.model.StaffContents
+import io.github.droidkaigi.confsched2019.model.StaffSearchResult
 import io.github.droidkaigi.confsched2019.model.SystemProperty
 
 sealed class Action {
@@ -62,6 +65,10 @@ sealed class Action {
 
     data class SearchResultLoaded(val searchResult: SearchResult) : Action()
 
+    data class StaffSearchResultLoaded(val searchResult: StaffSearchResult) : Action()
+    data class StaffSearchLoadingStateChanged(val loadingState: LoadingState) : Action()
+    data class StaffLoaded(val staffContents: StaffContents) : Action()
+
     object UserRegistered : Action()
 
     data class AnnouncementLoadingStateChanged(val loadingState: LoadingState) : Action()
@@ -69,6 +76,10 @@ sealed class Action {
 
     data class SponsorLoadingStateChanged(val loadingState: LoadingState) : Action()
     data class SponsorLoaded(val sponsors: List<SponsorCategory>) : Action()
+
+    data class SessionSurveyLoadingStateChanged(val loadingState: LoadingState) : Action()
+    data class SessionSurveyLoaded(val sessionFeedback: SessionFeedback) : Action()
+    object SessionSurveySubmitted : Action()
 
     class FloorMapLoadingStateChanged(val loadingState: LoadingState) : Action()
 }

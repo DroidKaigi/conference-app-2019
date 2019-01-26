@@ -20,6 +20,10 @@ class FloorMapFragment : DaggerFragment() {
 
     private lateinit var binding: FragmentFloorMapBinding
 
+    private val args: FloorMapFragmentArgs by lazy {
+        FloorMapFragmentArgs.fromBundle(arguments ?: Bundle())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -67,6 +71,8 @@ class FloorMapFragment : DaggerFragment() {
                 return view == `object`
             }
         }
+
+        binding.floorMapTabLayout.getTabAt(args.tabIndex)?.select()
     }
 }
 

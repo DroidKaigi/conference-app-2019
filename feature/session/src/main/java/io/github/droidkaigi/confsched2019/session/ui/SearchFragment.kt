@@ -22,20 +22,26 @@ import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
+import com.xwray.groupie.Section
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.ext.android.requireValue
+import io.github.droidkaigi.confsched2019.item.DividerItem
+import io.github.droidkaigi.confsched2019.item.HeaderItem
+import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.SpeechSession
+import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSearchBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SearchActionCreator
-import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SearchStore
 import io.github.droidkaigi.confsched2019.session.ui.item.ServiceSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeakerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeechSessionItem
+import io.github.droidkaigi.confsched2019.session.ui.store.SearchStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
@@ -56,8 +62,6 @@ class SearchFragment : DaggerFragment() {
     }
     @Inject lateinit var speakerItemFactory: SpeakerItem.Factory
 
-    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -75,6 +79,7 @@ class SearchFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.searchRecycler.adapter = groupAdapter
         sessionContentsStore.sessionContents.changed(viewLifecycleOwner) { contents ->
             searchActionCreator.search(
@@ -84,34 +89,55 @@ class SearchFragment : DaggerFragment() {
         }
         // TODO apply design
         searchStore.searchResult.changed(viewLifecycleOwner) { result ->
-            val items = mutableListOf<Item<*>>()
-            items += result.speakers.map {
-                speakerItemFactory.create(
-                    it,
-                    SearchFragmentDirections.actionSearchToSpeaker(it.id)
-                )
-            }.sortedBy { it.speaker.name.toUpperCase() }
+            val items = mutableListOf<Section>()
+            items += Section().apply {
+                val speakers = result.speakers.map {
+                    speakerItemFactory.create(
+                        it,
+                        SearchFragmentDirections.actionSearchToSpeaker(it.id),
+                        result.query
+                    )
+                }.sortedBy { it.speaker.name.toUpperCase() }
+                setHeader(HeaderItem(requireContext().getString(R.string.speaker_label)))
+                addAll(speakers)
+                setFooter(DividerItem())
+            }
 
-            items += result.sessions
-                .map<Session, Item<*>> { session ->
+            items += Section().apply {
+                val sessions = result.sessions.map<Session, Item<*>> { session ->
                     when (session) {
-                        is Session.SpeechSession ->
+                        is SpeechSession ->
                             speechSessionItemFactory.create(
+                                session,
+                                SearchFragmentDirections.actionSearchToSessionDetail(
+                                    session.id
+                                ),
+                                false,
+                                result.query
+                            )
+                        is ServiceSession ->
+                            serviceSessionItemFactory.create(
                                 session,
                                 SearchFragmentDirections.actionSearchToSessionDetail(
                                     session.id
                                 ),
                                 false
                             )
-                        is Session.ServiceSession ->
-                            serviceSessionItemFactory.create(
-                                session,
-                                SearchFragmentDirections.actionSearchToSessionDetail(
-                                    session.id
-                                )
-                            )
+                    }
+                }.sortedBy { item ->
+                    when (item) {
+                        is SpeechSessionItem ->
+                            item.speechSession.title.getByLang(defaultLang())
+                                .toUpperCase()
+                        is ServiceSessionItem ->
+                            item.serviceSession.title.getByLang(defaultLang())
+                                .toUpperCase()
+                        else -> StickyHeaderItemDecoration.DEFAULT_TITLE
                     }
                 }
+                setHeader(HeaderItem(requireContext().getString(R.string.session_title)))
+                addAll(sessions)
+            }
             groupAdapter.update(items)
         }
         context?.let {
@@ -121,7 +147,13 @@ class SearchFragment : DaggerFragment() {
                         val item = groupAdapter.getItem(position)
                         when (item) {
                             is SpeakerItem -> item.speaker.name[0].toUpperCase().toLong()
-                            // FIXME add sessionsItem logic
+                            is SpeechSessionItem ->
+                                item.speechSession.title.getByLang(defaultLang())[0]
+                                    .toUpperCase().toLong()
+                            is ServiceSessionItem ->
+                                item.serviceSession.title.getByLang(defaultLang())[0]
+                                    .toUpperCase().toLong()
+                            is DividerItem -> StickyHeaderItemDecoration.EMPTY_ID
                             else -> StickyHeaderItemDecoration.EMPTY_ID
                         }
                     },
@@ -129,7 +161,12 @@ class SearchFragment : DaggerFragment() {
                         val item = groupAdapter.getItem(position)
                         when (item) {
                             is SpeakerItem -> item.speaker.name[0].toUpperCase().toString()
-                            // FIXME add serssionsItem logic
+                            is SpeechSessionItem ->
+                                item.speechSession.title.getByLang(defaultLang())[0]
+                                    .toUpperCase().toString()
+                            is ServiceSessionItem ->
+                                item.serviceSession.title.getByLang(defaultLang())[0]
+                                    .toUpperCase().toString()
                             else -> StickyHeaderItemDecoration.DEFAULT_INITIAL
                         }
                     })
@@ -208,6 +245,9 @@ class StickyHeaderItemDecoration(
         state: RecyclerView.State
     ) {
         super.getItemOffsets(outRect, view, parent, state)
+        val position = parent.getChildAdapterPosition(view)
+        if (position < 0) return
+        if (getGroupId(position) == EMPTY_ID) return
         if (view.layoutDirection == View.LAYOUT_DIRECTION_RTL) {
             outRect.right = contentMargin
         } else {
@@ -245,8 +285,9 @@ class StickyHeaderItemDecoration(
             if (TextUtils.isEmpty(initial)) return@forEach
 
             // drawing
+            val viewTop = view.top + labelPadding
             val viewBottom = view.bottom + view.paddingBottom
-            var textY = Math.max(view.height, viewBottom) - lineHeight
+            var textY = Math.max(labelPadding, viewTop) + lineHeight
             if (position + 1 < totalItemCount) {
                 val nextGroupId = getGroupId(position + 1)
                 if (nextGroupId != groupId && viewBottom < textY + lineHeight) {
@@ -260,6 +301,7 @@ class StickyHeaderItemDecoration(
     companion object {
         const val EMPTY_ID: Long = -1
         const val DEFAULT_INITIAL = "*"
+        const val DEFAULT_TITLE = "******"
     }
 }
 
@@ -268,13 +310,16 @@ abstract class SearchFragmentModule {
 
     @Module
     companion object {
-        @JvmStatic @Provides
+        @JvmStatic
+        @Provides
         @PageScope
         fun providesLifecycle(searchFragment: SearchFragment): Lifecycle {
             return searchFragment.viewLifecycleOwner.lifecycle
         }
 
-        @JvmStatic @Provides fun provideActivity(
+        @JvmStatic
+        @Provides
+        fun provideActivity(
             searchFragment: SearchFragment
         ): FragmentActivity {
             return searchFragment.requireActivity()

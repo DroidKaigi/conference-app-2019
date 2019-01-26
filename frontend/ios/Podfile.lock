@@ -1,0 +1,65 @@
+PODS:
+  - LicensePlist (2.0.0)
+  - MaterialComponents/AnimationTiming (74.0.0)
+  - MaterialComponents/Buttons (74.0.0):
+    - MaterialComponents/Ink
+    - MaterialComponents/private/Math
+    - MaterialComponents/private/Shapes
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Typography
+    - MDFInternationalization
+    - MDFTextAccessibility
+  - MaterialComponents/Ink (74.0.0):
+    - MaterialComponents/private/Math
+  - MaterialComponents/OverlayWindow (74.0.0):
+    - MaterialComponents/private/Application
+  - MaterialComponents/private/Application (74.0.0)
+  - MaterialComponents/private/KeyboardWatcher (74.0.0):
+    - MaterialComponents/private/Application
+  - MaterialComponents/private/Math (74.0.0)
+  - MaterialComponents/private/Overlay (74.0.0)
+  - MaterialComponents/private/Shapes (74.0.0):
+    - MaterialComponents/private/Math
+    - MaterialComponents/ShadowLayer
+  - MaterialComponents/ShadowElevations (74.0.0)
+  - MaterialComponents/ShadowLayer (74.0.0):
+    - MaterialComponents/ShadowElevations
+  - MaterialComponents/Snackbar (74.0.0):
+    - MaterialComponents/AnimationTiming
+    - MaterialComponents/Buttons
+    - MaterialComponents/OverlayWindow
+    - MaterialComponents/private/Application
+    - MaterialComponents/private/KeyboardWatcher
+    - MaterialComponents/private/Overlay
+    - MaterialComponents/Typography
+  - MaterialComponents/Typography (74.0.0):
+    - MaterialComponents/private/Application
+    - MaterialComponents/private/Math
+  - MDFInternationalization (2.0.0)
+  - MDFTextAccessibility (2.0.0)
+  - SwiftLint (0.30.1)
+
+DEPENDENCIES:
+  - LicensePlist
+  - MaterialComponents/Snackbar (~> 74.0)
+  - SwiftLint
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - LicensePlist
+    - MaterialComponents
+    - MDFInternationalization
+    - MDFTextAccessibility
+    - SwiftLint
+
+SPEC CHECKSUMS:
+  LicensePlist: 558c95c739171b96896d38fa5502f3721aada13c
+  MaterialComponents: c382f7a1881832ff88a05bb1536c47714cf1295f
+  MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
+  MDFTextAccessibility: 85c09a1bd9c321f494348e632a25063bcda35a53
+  SwiftLint: a54bf1fe12b55c68560eb2a7689dfc81458508f7
+
+PODFILE CHECKSUM: 6dff9dbcdaca3b1d16f5048a9b12b6abee9cd41e
+
+COCOAPODS: 1.5.3

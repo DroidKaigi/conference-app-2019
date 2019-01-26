@@ -11,21 +11,12 @@
             />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/floorMapImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:overScrollMode="never"
-        android:paddingBottom="48dp"
-        android:paddingTop="48dp"
-        >
-
-        <ImageView
-            android:id="@+id/floorMapImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contentDescription="@{@string/floor_map_image(floorTitle)}"
-            android:scaleType="centerInside"
-            />
-    </androidx.core.widget.NestedScrollView>
+        android:padding="32dp"
+        android:contentDescription="@{@string/floor_map_image(floorTitle)}"
+        android:scaleType="centerInside"
+        />
 </layout>
