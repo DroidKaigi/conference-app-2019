@@ -51,9 +51,9 @@ parse_response() {
         local comment_id=$(get_comments | parse_comment_id)
 
         if [[ -n "${comment_id:-}" ]]; then
-            edit_github_comment <(jq -n --arg body "Try it via $distribution_url\n <!-- parse_dg_response=true -->" '{ "body": $body }') "$comment_id"
+            edit_github_comment <(jq -n --arg body "Try it via $distribution_url \n <!-- parse_dg_response=true -->" '{ "body": $body }') "$comment_id"
         else
-            comment_to_github <(jq -n --arg body "Try it via $distribution_url\n <!-- parse_dg_response=true -->" '{ "body": $body }')
+            comment_to_github <(jq -n --arg body "Try it via $distribution_url \n <!-- parse_dg_response=true -->" '{ "body": $body }')
         fi
 
         echo $response
