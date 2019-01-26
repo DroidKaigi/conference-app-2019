@@ -120,8 +120,7 @@ dependencies {
 
     debugImplementation Dep.LeakCanary.leakCanary
     debugImplementation Dep.LeakCanary.leakCanaryFragment
-    stagingImplementation Dep.LeakCanary.leakCanary
-    stagingImplementation Dep.LeakCanary.leakCanaryFragment
+    stagingImplementation Dep.LeakCanary.leakCanaryNoOp
     releaseImplementation Dep.LeakCanary.leakCanaryNoOp
 
     implementation Dep.Firebase.core
@@ -145,6 +144,7 @@ dependencies {
 
     Dep.Hyperion.hyperionPlugins.forEach {
         debugImplementation it
+        stagingImplementation it
     }
 }
 
