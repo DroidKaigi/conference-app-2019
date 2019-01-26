@@ -37,21 +37,25 @@ PODS:
     - MaterialComponents/private/Math
   - MDFInternationalization (2.0.0)
   - MDFTextAccessibility (2.0.0)
+  - SwiftLint (0.30.1)
 
 DEPENDENCIES:
   - MaterialComponents/Snackbar (~> 74.0)
+  - SwiftLint
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - MaterialComponents
     - MDFInternationalization
     - MDFTextAccessibility
+    - SwiftLint
 
 SPEC CHECKSUMS:
   MaterialComponents: c382f7a1881832ff88a05bb1536c47714cf1295f
   MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
   MDFTextAccessibility: 85c09a1bd9c321f494348e632a25063bcda35a53
+  SwiftLint: a54bf1fe12b55c68560eb2a7689dfc81458508f7
 
-PODFILE CHECKSUM: 2533769f1c03294e2e44ad4d61d72a9387fcb2f6
+PODFILE CHECKSUM: 17a235f3a37f92d461f9ba72010944fb19b35972
 
 COCOAPODS: 1.5.3

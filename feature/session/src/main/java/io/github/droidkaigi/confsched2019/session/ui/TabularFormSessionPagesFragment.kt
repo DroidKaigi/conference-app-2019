@@ -51,7 +51,9 @@ class TabularFormSessionPagesFragment : DaggerFragment() {
         binding.tabularFormSessionsTabLayout.addOnTabSelectedListener(
             object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
-                    val day = days[tab.position].day
+                    val day = TabularFormSessionPagesFragmentArgs.Builder()
+                        .setDay(days[tab.position].day)
+                        .build()
                     val selectedFragment = TabularFormSessionPageFragment.newInstance(day)
                     childFragmentManager.beginTransaction()
                         .replace(R.id.tabular_form_sessions_fragment_container, selectedFragment)
