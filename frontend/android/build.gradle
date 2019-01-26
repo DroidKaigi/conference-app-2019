@@ -54,7 +54,7 @@ android {
     packagingOptions {
         exclude 'META-INF/*.kotlin_module'
         exclude 'META-INF/*.version'
-        exclude 'META-INF/proguard/*.pro'        
+        exclude 'META-INF/proguard/*.pro'
     }
 }
 
