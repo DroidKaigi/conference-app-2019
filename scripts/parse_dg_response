@@ -6,25 +6,55 @@ set -o pipefail
 comment_to_github() {
     local -r message_fd="$1" pr_number=$(basename $CI_PULL_REQUEST)
 
+    curl -sL -X POST \
+        -H "Content-type: application/json" \
+        -H "Accept: application/vnd.github.v3+json" \
+        -H "Authorization: token $DANGER_GITHUB_API_TOKEN" \
+        -d "$(cat $message_fd)" \
+            "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$pr_number/comments"
+}
+
+edit_github_comment() {
+    local -r message_fd="$1" comment_id="$2"
 
     curl -sL -X POST \
         -H "Content-type: application/json" \
         -H "Accept: application/vnd.github.v3+json" \
-        -u "${DANGER_GITHUB_API_TOKEN}:x-oauth-basic" \
+        -H "Authorization: token $DANGER_GITHUB_API_TOKEN" \
         -d "$(cat $message_fd)" \
+            "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/comments/$comment_id"
+}
+
+get_comments() {
+    local -r pr_number=$(basename $CI_PULL_REQUEST)
+
+    curl -sL -X GET \
+        -H "Content-type: application/json" \
+        -H "Accept: application/vnd.github.v3+json" \
+        -H "Authorization: token $DANGER_GITHUB_API_TOKEN" \
             "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$pr_number/comments"
+}
+
+parse_comment_id() {
+    cat - | jq -r '.[] | select(.body | test("<!-- parse_dg_response=true -->")) | .id'
 }
 
 parse_response() {
     local -r response="$(cat -)"
 
     if [[ $(echo $response | jq ".error") != "false" ]]; then
-        // any error happened so it should be out as it is but to stderr
+        # any error happened so it should be out as it is but to stderr
         echo $response >&2
     else
         distribution_url=$(echo $response | jq -r ".results.distribution.url")
 
-        comment_to_github <(jq -n --arg body "Your app is deployed! Try it via $distribution_url" '{ "body": $body }')
+        local comment_id=$(get_comments | parse_comment_id)
+
+        if [[ -n "${comment_id:-}" ]]; then
+            edit_github_comment <(jq -n --arg body "Try it via $distribution_url\n <!-- parse_dg_response=true -->" '{ "body": $body }') "$comment_id"
+        else
+            comment_to_github <(jq -n --arg body "Try it via $distribution_url\n <!-- parse_dg_response=true -->" '{ "body": $body }')
+        fi
 
         echo $response
     fi
