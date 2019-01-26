@@ -13,7 +13,7 @@ sealed class Session(
     open val isFavorited: Boolean
 ) {
 
-    fun getStartDaytext() : String{
+    fun getStartDaytext(): String {
         return startTime.toOffset(Device.getOffsetFromUTC().timeSpan).format("yyyy.M.d")
     }
 
