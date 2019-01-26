@@ -28,3 +28,7 @@ If you would like to select the *ANDROID_HOME* variable way, you may be able to 
 ## No such module xxxxxxx
 
 Please open `DroidKaigi 2019.xcworkspace` instead of `DroidKaigi 2019.xcodeproj` in Xcode.
+
+## java.lang.UnsupportedClassVersionError: org/jetbrains/kotlin/lexer/KotlinLexer
+
+Maybe you use an older version of JDK. [Update JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) on your computer and try building again.
