@@ -49,6 +49,4 @@ matrix:
       - ANDROID_HOME="$HOME/android-sdk"
     before_install:
     - "./.travis/ios/before_install.bash"
-    before_script:
-    - "./.travis/ios/before_script.bash"
     script: ".travis/ios/run.bash"
