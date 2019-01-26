@@ -17,7 +17,7 @@ class TabularServiceSessionItem @AssistedInject constructor(
     private val navController: NavController
 ) : BindableItem<ItemTabularServiceSessionBinding>(
     session.id.hashCode().toLong()
-), SessionItem {
+), SessionItem, EqualableContentsProvider {
 
     @AssistedInject.Factory
     interface Factory {
@@ -46,18 +46,13 @@ class TabularServiceSessionItem @AssistedInject constructor(
 
     override fun getLayout() = R.layout.item_tabular_service_session
 
+    override fun providerEqualableContents(): Array<*> = arrayOf(session)
+
     override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as TabularServiceSessionItem
-
-        if (session != other.session) return false
-
-        return true
+        return isSameContents(other)
     }
 
     override fun hashCode(): Int {
-        return session.hashCode()
+        return contentsHash()
     }
 }

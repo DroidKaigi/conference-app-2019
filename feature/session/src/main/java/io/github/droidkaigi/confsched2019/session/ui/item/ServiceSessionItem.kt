@@ -19,7 +19,7 @@ class ServiceSessionItem @AssistedInject constructor(
     val sessionContentsActionCreator: SessionContentsActionCreator
 ) : BindableItem<ItemServiceSessionBinding>(
     session.id.hashCode().toLong()
-), SessionItem {
+), SessionItem, EqualableContentsProvider {
     val serviceSession get() = session
 
     @AssistedInject.Factory
@@ -63,18 +63,13 @@ class ServiceSessionItem @AssistedInject constructor(
 
     override fun getLayout(): Int = R.layout.item_service_session
 
+    override fun providerEqualableContents(): Array<*> = arrayOf(session)
+
     override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as ServiceSessionItem
-
-        if (session != other.session) return false
-
-        return true
+        return isSameContents(other)
     }
 
     override fun hashCode(): Int {
-        return session.hashCode()
+        return contentsHash()
     }
 }

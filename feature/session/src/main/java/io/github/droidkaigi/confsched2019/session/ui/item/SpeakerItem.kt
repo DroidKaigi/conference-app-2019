@@ -18,7 +18,8 @@ class SpeakerItem @AssistedInject constructor(
     @Assisted val clickNavDirection: NavDirections,
     @Assisted val query: String?,
     val navController: NavController
-) : BindableItem<ItemSpeakerBinding>(speaker.id.hashCode().toLong()) {
+) : BindableItem<ItemSpeakerBinding>(speaker.id.hashCode().toLong()),
+    EqualableContentsProvider {
     @AssistedInject.Factory
     interface Factory {
         fun create(
@@ -64,19 +65,13 @@ class SpeakerItem @AssistedInject constructor(
         }
     }
 
+    override fun providerEqualableContents(): Array<*> = arrayOf(speaker)
+
     override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as SpeakerItem
-
-        if (speaker != other.speaker) return false
-        if (query != other.query) return false
-
-        return true
+        return isSameContents(other)
     }
 
     override fun hashCode(): Int {
-        return speaker.hashCode() + query.hashCode()
+        return contentsHash()
     }
 }

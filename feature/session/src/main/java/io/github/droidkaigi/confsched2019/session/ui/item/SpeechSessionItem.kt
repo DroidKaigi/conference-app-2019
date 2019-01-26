@@ -40,7 +40,7 @@ class SpeechSessionItem @AssistedInject constructor(
     val sessionContentsActionCreator: SessionContentsActionCreator
 ) : BindableItem<ItemSessionBinding>(
     session.id.hashCode().toLong()
-), SessionItem {
+), SessionItem, EqualableContentsProvider {
     val speechSession get() = session
 
     @AssistedInject.Factory
@@ -199,19 +199,13 @@ class SpeechSessionItem @AssistedInject constructor(
 
     override fun getLayout(): Int = R.layout.item_session
 
+    override fun providerEqualableContents(): Array<*> = arrayOf(session)
+
     override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as SpeechSessionItem
-
-        if (session != other.session) return false
-        if (query == null || other.query == null || query != other.query) return false
-
-        return true
+        return isSameContents(other)
     }
 
     override fun hashCode(): Int {
-        return session.hashCode() + query.hashCode()
+        return contentsHash()
     }
 }
