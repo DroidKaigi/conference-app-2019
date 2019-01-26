@@ -46,6 +46,11 @@ class SessionSurveyActionCreator @Inject constructor(
 
     fun submit(session: SpeechSession, sessionFeedback: SessionFeedback) = launch {
         try {
+            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
+            sessionRepository.submitSessionFeedback(session, sessionFeedback)
+            sessionRepository.saveSessionFeedback(sessionFeedback)
+            dispatcher.dispatch(Action.SessionSurveySubmitted)
+            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
             processMessage(R.string.submit_successful)
         } catch (e: Exception) {
             onError(e)

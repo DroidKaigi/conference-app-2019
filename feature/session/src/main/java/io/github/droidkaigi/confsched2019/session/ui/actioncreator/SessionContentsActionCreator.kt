@@ -6,8 +6,8 @@ import io.github.droidkaigi.confsched2019.data.repository.SessionRepository
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
-import io.github.droidkaigi.confsched2019.model.Message
 import io.github.droidkaigi.confsched2019.model.LoadingState
+import io.github.droidkaigi.confsched2019.model.Message
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.system.actioncreator.ErrorHandler
@@ -74,8 +74,10 @@ class SessionContentsActionCreator @Inject constructor(
                 dispatcher.dispatch(Action.SessionContentsLoaded(sessionContents))
             } catch (e: Exception) {
                 dispatcher.dispatch(
-                    Action.ShowProcessingMessage(Message.of(
-                        R.string.session_favorite_connection_error)
+                    Action.ShowProcessingMessage(
+                        Message.of(
+                            R.string.session_favorite_connection_error
+                        )
                     )
                 )
             }
