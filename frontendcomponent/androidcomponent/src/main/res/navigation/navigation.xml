@@ -82,7 +82,7 @@
             app:destination="@id/session_detail"
             />
         <action
-            android:id="@+id/action_search_to_survey"
+            android:id="@+id/action_search_to_session_survey"
             app:destination="@id/session_survey"
             />
     </fragment>
