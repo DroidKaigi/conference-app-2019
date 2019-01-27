@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
+import com.shopify.livedataktx.nonNull
 import com.shopify.livedataktx.observe
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
@@ -144,10 +145,8 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                 binding.isCollapsed = isCollapsed
             }
         }
-        sessionPagesStore.reselectedTab.observe(viewLifecycleOwner) {
-            it?.let { position ->
-                binding.sessionsRecycler.scrollToPosition(position)
-            }
+        sessionPagesStore.reselectedTab.nonNull().observe(viewLifecycleOwner) {
+            binding.sessionsRecycler.scrollToPosition(it)
         }
     }
 
