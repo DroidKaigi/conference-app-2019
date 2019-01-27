@@ -13,7 +13,6 @@ import java.util.concurrent.TimeUnit
 import kotlin.math.max
 import kotlin.math.min
 
-// TODO: Implement View Recycling on scrolling
 // TODO: save first visible item position or scroll position and restore it
 // TODO: implement scrollToPosition
 class TimeTableLayoutManager(
