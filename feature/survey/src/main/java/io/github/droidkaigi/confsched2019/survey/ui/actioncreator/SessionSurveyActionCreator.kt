@@ -25,7 +25,7 @@ class SessionSurveyActionCreator @Inject constructor(
 
     fun load(sessionId: String) = launch {
         try {
-            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
+            dispatcher.dispatchLoadingState(LoadingState.LOADING)
             dispatcher.dispatch(
                 Action.SessionSurveyLoaded(
                     sessionRepository.sessionFeedback(
@@ -33,10 +33,10 @@ class SessionSurveyActionCreator @Inject constructor(
                     )
                 )
             )
-            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
+            dispatcher.dispatchLoadingState(LoadingState.LOADED)
         } catch (e: Exception) {
             onError(e)
-            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.INITIALIZED))
+            dispatcher.dispatchLoadingState(LoadingState.INITIALIZED)
         }
     }
 
@@ -46,20 +46,24 @@ class SessionSurveyActionCreator @Inject constructor(
 
     fun submit(session: SpeechSession, sessionFeedback: SessionFeedback) = launch {
         try {
-            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
+            dispatcher.dispatchLoadingState(LoadingState.LOADING)
             sessionRepository.submitSessionFeedback(session, sessionFeedback)
             sessionRepository.saveSessionFeedback(sessionFeedback)
-            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
+            dispatcher.dispatchLoadingState(LoadingState.LOADED)
             dispatcher.dispatch(Action.SessionSurveyLoaded(sessionFeedback))
             processMessage(R.string.session_survey_submit_successful)
         } catch (e: Exception) {
             onError(e)
-            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.INITIALIZED))
+            dispatcher.dispatchLoadingState(LoadingState.INITIALIZED)
             processMessage(R.string.session_survey_submit_failure)
         }
     }
 
     fun changeSessionFeedback(sessionFeedback: SessionFeedback) = launch {
         dispatcher.dispatch(Action.SessionSurveyLoaded(sessionFeedback))
+    }
+
+    suspend fun Dispatcher.dispatchLoadingState(loadingState: LoadingState) {
+        dispatch(Action.SessionSurveyLoadingStateChanged(loadingState))
     }
 }

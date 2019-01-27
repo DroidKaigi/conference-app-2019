@@ -87,6 +87,10 @@ class SessionSurveyFragment : DaggerFragment() {
 
         sessionSurveyStore.loadingState.changed(viewLifecycleOwner) {
             progressTimeLatch.loading = it.isLoading
+            if (it.isInitialized) {
+                // when error, we should re enable button
+                binding.submitButton.isEnabled = true
+            }
         }
 
         sessionSurveyStore.sessionFeedback.changed(viewLifecycleOwner) { sessionFeedback ->
