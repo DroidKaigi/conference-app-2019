@@ -118,6 +118,13 @@ class MainActivity : DaggerAppCompatActivity() {
             // check drawer menu item/ apply when back key pressed
             checkCurrentDestinationIdInDrawer(destination.id)
 
+            // to avoid flickering, set current fragment background color to white
+            // see https://github.com/DroidKaigi/conference-app-2019/pull/521
+            supportFragmentManager.findFragmentById(R.id.root_nav_host_fragment)?.let { host ->
+                host.childFragmentManager
+                    .primaryNavigationFragment?.view?.setBackgroundColor(Color.WHITE)
+            }
+
             val config = PageConfiguration.getConfiguration(destination.id)
             binding.logo.isVisible = config.isShowLogoImage
             if (!config.hasTitle) supportActionBar?.title = ""
@@ -179,12 +186,6 @@ class MainActivity : DaggerAppCompatActivity() {
             // drawer close
             if (binding.drawerLayout.isDrawerOpen(binding.navView)) {
                 binding.drawerLayout.closeDrawer(binding.navView)
-            }
-            // to avoid flickering, set current fragment background color to white
-            // see https://github.com/DroidKaigi/conference-app-2019/pull/521
-            supportFragmentManager.findFragmentById(R.id.root_nav_host_fragment)?.let { host ->
-                host.childFragmentManager
-                    .primaryNavigationFragment?.view?.setBackgroundColor(Color.WHITE)
             }
             // navigate
             val handled = handleNavigation(item)
