@@ -96,23 +96,6 @@ class TabularFormSessionPageFragment : DaggerFragment() {
             }
             adapter = groupAdapter
         }
-        groupAdapter.setOnItemClickListener { item, _ ->
-            val session: String? = when (item) {
-                is TabularSpeechSessionItem -> {
-                    item.session.id
-                }
-                is TabularServiceSessionItem -> {
-                    item.session.id
-                }
-                else -> null
-            }
-            session?.let {
-                val navDirections = TabularFormSessionPagesFragmentDirections
-                    .actionTabularFormToSessionDetail(it)
-                navController.navigate(navDirections)
-            }
-        }
-
         sessionPagesStore.sessionsByDay(args.day)
             .changed(viewLifecycleOwner) { sessions ->
                 groupAdapter.update(fillGaps(sessions))
@@ -141,11 +124,12 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                             room
                         )
                     )
-
+                val navDirections = TabularFormSessionPagesFragmentDirections
+                    .actionTabularFormToSessionDetail(session.id)
                 filledItems.add(
                     when (session) {
-                        is SpeechSession -> TabularSpeechSessionItem(session)
-                        is ServiceSession -> TabularServiceSessionItem(session)
+                        is SpeechSession -> TabularSpeechSessionItem(session, navDirections, navController)
+                        is ServiceSession -> TabularServiceSessionItem(session, navDirections, navController)
                     }
                 )
 
