@@ -45,15 +45,17 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release.initWith(staging)
+        staging {
+            debuggable true
             signingConfig = signingConfigs.debug
             matchingFallbacks = ['release']
         }
-        release.initWith(staging)
         release {
             applicationIdSuffix null
             proguardFiles 'proguard-rules-production.pro'
             signingConfig = signingConfigs.release
-            matchingFallbacks = []
         }
     }
     dataBinding {
