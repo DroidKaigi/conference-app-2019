@@ -5,6 +5,8 @@ import android.util.SparseArray
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import java.util.concurrent.TimeUnit
+import kotlin.math.max
+import kotlin.math.min
 
 // TODO: Implement View Recycling on scrolling
 // TODO: save first visible item position or scroll position and restore it
@@ -18,13 +20,12 @@ class TimeTableLayoutManager(
     class PeriodInfo(val startUnixMillis: Long, val endUnixMillis: Long, val columnNumber: Int)
 
     private data class Period(
-        val startUnixMillis: Long,
-        val endUnixMillis: Long,
+        val startUnixMin: Int,
+        val endUnixMin: Int,
         val columnNumber: Int,
-        val position: Int
+        val adapterPosition: Int,
+        val positionInColumn: Int
     ) {
-        val startUnixMin = TimeUnit.MILLISECONDS.toMinutes(startUnixMillis).toInt()
-        val endUnixMin = TimeUnit.MILLISECONDS.toMinutes(endUnixMillis).toInt()
         val durationMin = endUnixMin - startUnixMin
     }
 
@@ -33,8 +34,11 @@ class TimeTableLayoutManager(
     private val parentRight get() = width - paddingRight
     private val parentBottom get() = height - paddingBottom
 
-    private val columns = HashMap<Int, SparseArray<Period>>()
-    private val periods = SparseArray<Period>()
+    private val periods = ArrayList<Period>()
+    private val columns = SparseArray<ArrayList<Period>>()
+
+    private var firstStartUnixMin = NO_TIME
+    private var lastEndUnixMin = NO_TIME
 
     override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
         return RecyclerView.LayoutParams(
@@ -55,7 +59,7 @@ class TimeTableLayoutManager(
         calculateColumns()
 
         var xOffset = parentLeft
-        for (columnNumber in 0 until columns.size) {
+        for (columnNumber in 0 until columns.size()) {
             xOffset += fillColumn(columnNumber, 0, xOffset, parentTop, recycler)
         }
     }
@@ -70,9 +74,9 @@ class TimeTableLayoutManager(
         val periods = columns[columnNumber] ?: return 0
         var yOffset = startY
         var columnWidth = 0
-        for (i in fromPeriodPositionInColumn until periods.size()) {
+        for (i in fromPeriodPositionInColumn until periods.size) {
             val period = periods[i]
-            val view = recycler.getViewForPosition(period.position)
+            val view = recycler.getViewForPosition(period.adapterPosition)
             addView(view)
             measureChild(view, period)
             val width = getDecoratedMeasuredWidth(view)
@@ -115,20 +119,45 @@ class TimeTableLayoutManager(
     private fun calculateColumns() {
         periods.clear()
         columns.clear()
-        (0 until itemCount)
-            .map {
-                val periodInfo = periodLookUp(it)
-                Period(
-                    periodInfo.startUnixMillis,
-                    periodInfo.endUnixMillis,
-                    periodInfo.columnNumber,
-                    it
-                )
+        firstStartUnixMin = NO_TIME
+        lastEndUnixMin = NO_TIME
+
+        (0 until itemCount).forEach {
+            val periodInfo = periodLookUp(it)
+            val column = columns.getOrPut(periodInfo.columnNumber) { ArrayList() }
+
+            val period = Period(
+                TimeUnit.MILLISECONDS.toMinutes(periodInfo.startUnixMillis).toInt(),
+                TimeUnit.MILLISECONDS.toMinutes(periodInfo.endUnixMillis).toInt(),
+                periodInfo.columnNumber,
+                adapterPosition = it,
+                positionInColumn = column.size
+            )
+            periods.add(period)
+            column.add(period)
+
+            if (it == 0) {
+                firstStartUnixMin = period.startUnixMin
+                lastEndUnixMin = period.endUnixMin
+            } else {
+                firstStartUnixMin = min(period.startUnixMin, firstStartUnixMin)
+                lastEndUnixMin = max(period.endUnixMin, lastEndUnixMin)
             }
-            .forEachIndexed { i, period ->
-                periods.put(i, period)
-                val list = columns.getOrPut(period.columnNumber) { SparseArray() }
-                list.put(list.size(), period)
-            }
+        }
+    }
+
+    private inline fun <E> SparseArray<E>.getOrPut(key: Int, defaultValue: () -> E): E {
+        val value = get(key)
+        return if (value == null) {
+            val answer = defaultValue()
+            put(key, answer)
+            answer
+        } else {
+            value
+        }
+    }
+
+    companion object {
+        private const val NO_TIME = -1
     }
 }
