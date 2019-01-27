@@ -257,7 +257,7 @@ extension SessionCalculateHeightTableViewCell: UICollectionViewDelegateFlowLayou
         let cell = Static.cell
         cell.tagContent = tagContents[indexPath.item]
         let cellSize = cell.label.intrinsicContentSize
-        let width = cellSize.width > collectionView.bounds.size.width ? collectionView.bounds.size.width - 30 : cellSize.width
+        let width = cellSize.width > collectionView.bounds.size.width - 20 ? collectionView.bounds.size.width - 20 : cellSize.width
         return CGSize(width: width, height: cellSize.height)
     }
 }

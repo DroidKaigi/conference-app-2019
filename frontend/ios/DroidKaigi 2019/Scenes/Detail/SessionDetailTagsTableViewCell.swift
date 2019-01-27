@@ -102,7 +102,7 @@ extension SessionDetailTagsTableViewCell: UICollectionViewDelegateFlowLayout {
         cell.tagContent = tagContents[indexPath.item]
         cell.label.font = .systemFont(ofSize: 14)
         let cellSize = cell.label.intrinsicContentSize
-        let width = cellSize.width > 230 ? 230 : cellSize.width
+        let width = cellSize.width > collectionView.bounds.size.width - 20 ? collectionView.bounds.size.width - 20 : cellSize.width
         return CGSize(width: width, height: cellSize.height)
     }
 }
