@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
-import com.shopify.livedataktx.nonNull
 import com.shopify.livedataktx.observe
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
