@@ -2,8 +2,12 @@ package io.github.droidkaigi.confsched2019.session.ui.widget
 
 import android.graphics.Rect
 import android.util.SparseArray
+import android.util.SparseIntArray
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.NO_POSITION
+import androidx.recyclerview.widget.RecyclerView.Recycler
+import androidx.recyclerview.widget.RecyclerView.State
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
 import kotlin.math.min
@@ -29,6 +33,24 @@ class TimeTableLayoutManager(
         val durationMin = endUnixMin - startUnixMin
     }
 
+    private class Anchor {
+        val top = SparseIntArray()
+        val bottom = SparseIntArray()
+        var leftColumn = NO_POSITION
+        var rightColumn = NO_POSITION
+
+        fun reset() {
+            top.clear()
+            bottom.clear()
+            leftColumn = NO_POSITION
+            rightColumn = NO_POSITION
+        }
+    }
+
+    enum class Direction {
+        LEFT, TOP, RIGHT, BOTTOM
+    }
+
     private val parentLeft get() = paddingLeft
     private val parentTop get() = paddingTop
     private val parentRight get() = width - paddingRight
@@ -36,6 +58,7 @@ class TimeTableLayoutManager(
 
     private val periods = ArrayList<Period>()
     private val columns = SparseArray<ArrayList<Period>>()
+    private val anchor = Anchor()
 
     private var firstStartUnixMin = NO_TIME
     private var lastEndUnixMin = NO_TIME
@@ -47,48 +70,76 @@ class TimeTableLayoutManager(
         )
     }
 
-    override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
+    override fun onLayoutChildren(recycler: Recycler, state: State) {
         if (itemCount == 0) {
             detachAndScrapAttachedViews(recycler)
             periods.clear()
             columns.clear()
+            anchor.reset()
             return
         }
 
         detachAndScrapAttachedViews(recycler)
+        anchor.reset()
         calculateColumns()
 
-        var xOffset = parentLeft
-        for (columnNumber in 0 until columns.size()) {
-            xOffset += fillColumn(columnNumber, 0, xOffset, parentTop, recycler)
+        var offsetX = parentLeft
+        anchor.leftColumn = 0
+        for (columnNum in 0 until columns.size()) {
+            offsetX += fillColumnHorizontally(columnNum, 0, offsetX, parentTop, true, recycler)
+            if (offsetX > parentRight) {
+                anchor.rightColumn = columnNum
+                break
+            }
         }
     }
 
-    private fun fillColumn(
-        columnNumber: Int,
-        fromPeriodPositionInColumn: Int,
+    private fun addPeriod(
+        period: Period,
+        direction: Direction,
+        offsetX: Int,
+        offsetY: Int,
+        recycler: Recycler
+    ): Pair<Int, Int> {
+        val view = recycler.getViewForPosition(period.adapterPosition)
+        addView(view)
+        measureChild(view, period)
+        val width = getDecoratedMeasuredWidth(view)
+        val height = getDecoratedMeasuredHeight(view)
+        val left = if (direction == Direction.LEFT) offsetX - width else offsetX
+        val top = if (direction == Direction.TOP) offsetY - height else offsetY
+        val right = left + width
+        val bottom = top + height
+        layoutDecorated(view, left, top, right, bottom)
+        return width to height
+    }
+
+    private fun fillColumnHorizontally(
+        columnNum: Int,
+        startPositionInColumn: Int,
         offsetX: Int,
         startY: Int,
-        recycler: RecyclerView.Recycler
+        isAppend: Boolean,
+        recycler: Recycler
     ): Int {
-        val periods = columns[columnNumber] ?: return 0
-        var yOffset = startY
+        val periods = columns[columnNum] ?: return 0
+        val direction = if (isAppend) Direction.RIGHT else Direction.LEFT
+        var offsetY = startY
         var columnWidth = 0
-        for (i in fromPeriodPositionInColumn until periods.size) {
+        for (i in startPositionInColumn until periods.size) {
             val period = periods[i]
-            val view = recycler.getViewForPosition(period.adapterPosition)
-            addView(view)
-            measureChild(view, period)
-            val width = getDecoratedMeasuredWidth(view)
-            val height = getDecoratedMeasuredHeight(view)
-            val left = offsetX
-            val top = yOffset
-            val right = left + width
-            val bottom = top + height
-            layoutDecorated(view, left, top, right, bottom)
+            val (width, height) = addPeriod(period, direction, offsetX, offsetY, recycler)
 
-            columnWidth = width
-            yOffset = bottom
+            offsetY += height
+
+            if (i == startPositionInColumn) {
+                anchor.top.put(columnNum, period.adapterPosition)
+            }
+            if (offsetY > parentBottom) {
+                columnWidth = width
+                anchor.bottom.put(columnNum, period.adapterPosition)
+                break
+            }
         }
         return columnWidth
     }
