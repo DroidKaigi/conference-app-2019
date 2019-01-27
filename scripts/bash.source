@@ -10,3 +10,5 @@ fi
 if [[ ! -d "$AGGREGATED_REPORT_RESULT_DIR" ]]; then
     mkdir -p "$AGGREGATED_REPORT_RESULT_DIR"
 fi
+
+export UNIVERSAL_APK_PATH="$REPOSITORY_ROOT/universal.apk"
