@@ -83,7 +83,7 @@ class TagsCollectionViewCell: UICollectionViewCell, Reusable {
         label.padding = UIEdgeInsets(top: 6, left: 10, bottom: 6, right: 10)
         label.font = UIFont.systemFont(ofSize: 12)
         label.numberOfLines = 1
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.lineBreakMode = .byTruncatingTail
         label.clipsToBounds = true
         return label
@@ -93,7 +93,6 @@ class TagsCollectionViewCell: UICollectionViewCell, Reusable {
         addSubview(label)
         label.snp.makeConstraints {
             $0.edges.equalToSuperview()
-            $0.width.lessThanOrEqualTo(230)
         }
     }
 }
