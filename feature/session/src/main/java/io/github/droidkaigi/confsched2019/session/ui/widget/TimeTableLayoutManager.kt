@@ -97,6 +97,8 @@ class TimeTableLayoutManager(
 
     override fun canScrollVertically() = true
 
+    override fun canScrollHorizontally() = true
+
     override fun scrollVerticallyBy(dy: Int, recycler: Recycler, state: State): Int {
         if (dy == 0) return 0
 
@@ -159,6 +161,73 @@ class TimeTableLayoutManager(
         return scrollAmount
     }
 
+    override fun scrollHorizontallyBy(dx: Int, recycler: Recycler, state: State): Int {
+        if (dx == 0) return 0
+
+        val rightView = findRightView() ?: return 0
+        val leftView = findLeftView() ?: return 0
+        val right = getDecoratedRight(rightView)
+        val left = getDecoratedLeft(leftView)
+        val scrollAmount = calculateHorizontallyScrollAmount(dx, left, right)
+        if (scrollAmount > 0) {
+            // recycle
+            if (getDecoratedRight(leftView) - scrollAmount < parentLeft) {
+                findViewsByColumn(anchor.leftColumn).forEach { removeAndRecycleView(it, recycler) }
+                anchor.leftColumn++
+            }
+            // append
+            if (right - scrollAmount < parentRight) {
+                val nextColumnNum = anchor.rightColumn + 1
+                if (nextColumnNum >= columns.size()) return 0
+
+                val topView = findTopView() ?: return 0
+                val topPeriod = periods[topView.adapterPosition]
+                val startPeriodInColumn =
+                    calculateStartPeriodInColumn(nextColumnNum, topView, topPeriod) ?: return 0
+                val offsetY =
+                    getDecoratedTop(topView) + (startPeriodInColumn.startUnixMin - topPeriod.startUnixMin) * pxPerMinute
+                fillColumnHorizontally(
+                    nextColumnNum,
+                    startPeriodInColumn.positionInColumn,
+                    right,
+                    offsetY,
+                    true,
+                    recycler
+                )
+                anchor.rightColumn = nextColumnNum
+            }
+        } else {
+            // recycle
+            if (getDecoratedLeft(rightView) - scrollAmount > parentRight) {
+                findViewsByColumn(anchor.rightColumn).forEach { removeAndRecycleView(it, recycler) }
+                anchor.rightColumn--
+            }
+            // prepend
+            if (left - scrollAmount > parentLeft) {
+                val nextColumnNum = anchor.leftColumn - 1
+                if (nextColumnNum < 0) return 0
+                val topView = findTopView() ?: return 0
+                val topPeriod = periods[topView.adapterPosition]
+                val startPeriodInColumn =
+                    calculateStartPeriodInColumn(nextColumnNum, topView, topPeriod) ?: return 0
+                val offsetY =
+                    getDecoratedTop(topView) + (startPeriodInColumn.startUnixMin - topPeriod.startUnixMin) * pxPerMinute
+                fillColumnHorizontally(
+                    nextColumnNum,
+                    startPeriodInColumn.positionInColumn,
+                    left,
+                    offsetY,
+                    false,
+                    recycler
+                )
+                anchor.leftColumn = nextColumnNum
+            }
+        }
+
+        offsetChildrenHorizontal(-scrollAmount)
+        return scrollAmount
+    }
+
     private fun calculateVerticallyScrollAmount(dy: Int): Int {
         return if (dy > 0) {
             val bottomView = findBottomView() ?: return 0
@@ -178,6 +247,19 @@ class TimeTableLayoutManager(
                 top - parentTop
             )
             else dy
+        }
+    }
+
+    private fun calculateHorizontallyScrollAmount(dx: Int, left: Int, right: Int): Int {
+        return if (dx > 0) {
+            if (anchor.rightColumn == columns.size() - 1) if (right == parentRight) 0 else min(
+                dx,
+                right - parentRight
+            )
+            else dx
+        } else {
+            if (anchor.leftColumn == 0) if (left == parentLeft) 0 else max(dx, left - parentLeft)
+            else dx
         }
     }
 
@@ -294,6 +376,48 @@ class TimeTableLayoutManager(
             }
         }
         return maxView
+    }
+
+    private fun findLeftView() = findViewByColumn(anchor.leftColumn)
+
+    private fun findRightView() = findViewByColumn(anchor.rightColumn)
+
+    private fun findViewByColumn(columnNumber: Int): View? {
+        (0 until childCount).forEach { layoutPosition ->
+            val view = getChildAt(layoutPosition) ?: return@forEach
+            val period = periods[view.adapterPosition]
+            if (period.columnNumber == columnNumber) return view
+        }
+        return null
+    }
+
+    private fun findViewsByColumn(columnNumber: Int): List<View> {
+        return (0 until childCount).mapNotNull { layoutPosition ->
+            val view = getChildAt(layoutPosition) ?: return@mapNotNull null
+            val period = periods[view.adapterPosition]
+            if (period.columnNumber == columnNumber) view else null
+        }
+    }
+
+    private fun calculateStartPeriodInColumn(
+        columnNumber: Int,
+        topView: View,
+        topPeriod: Period
+    ): Period? {
+        if (topPeriod.adapterPosition != topView.adapterPosition) return null
+        val periods = columns[columnNumber] ?: return null
+        val top = getDecoratedTop(topView)
+
+        var maxTopPeriod: Period? = null
+        periods
+            .filter { it.startUnixMin <= topPeriod.endUnixMin && it.endUnixMin >= topPeriod.startUnixMin }
+            .forEach { period ->
+                val gapHeight = (period.startUnixMin - topPeriod.startUnixMin) * pxPerMinute
+                if (top + gapHeight <= parentTop)
+                    maxTopPeriod = maxTopPeriod?.let { if (it.startUnixMin < period.startUnixMin) period else it } ?:
+                        period
+            }
+        return maxTopPeriod
     }
 
     private fun calculateColumns() {
