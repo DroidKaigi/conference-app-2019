@@ -93,6 +93,7 @@ class SessionSurveyFragment : DaggerFragment() {
         }
 
         val lang = defaultLang()
+
         binding.sessionTitle.text = sessionSurveyFragmentArgs.session.title.getByLang(lang)
 
         binding.submitButton.setOnClickListener {
@@ -105,7 +106,7 @@ class SessionSurveyFragment : DaggerFragment() {
                     sessionFeedback
                 )
             } else {
-                // TODO: show snackbar no input item message
+                sessionSurveyActionCreator.processMessage(R.string.not_input)
             }
         }
 

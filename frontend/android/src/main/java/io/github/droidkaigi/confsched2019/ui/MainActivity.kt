@@ -38,7 +38,7 @@ import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.floormap.ui.FloorMapFragment
 import io.github.droidkaigi.confsched2019.floormap.ui.FloorMapFragmentModule
-import io.github.droidkaigi.confsched2019.model.ErrorMessage
+import io.github.droidkaigi.confsched2019.model.Message
 import io.github.droidkaigi.confsched2019.session.di.SessionAssistedInjectModule
 import io.github.droidkaigi.confsched2019.session.ui.SearchFragment
 import io.github.droidkaigi.confsched2019.session.ui.SearchFragmentModule
@@ -88,10 +88,10 @@ class MainActivity : DaggerAppCompatActivity() {
         setupNavigation()
         setupStatusBarColors()
 
-        systemStore.errorMsg.changed(this) { message ->
-            val messageStr = when (message) {
-                is ErrorMessage.ResourceIdMessage -> getString(message.messageId)
-                is ErrorMessage.Message -> message.message
+        systemStore.message.changed(this) { message ->
+            val messageStr: String = when (message) {
+                is Message.ResourceIdMessage -> getString(message.messageId)
+                is Message.TextMessage -> message.message
             }
             Snackbar.make(binding.root, messageStr, Snackbar.LENGTH_LONG).show()
         }

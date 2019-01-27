@@ -7,8 +7,10 @@ import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
 import io.github.droidkaigi.confsched2019.model.LoadingState
+import io.github.droidkaigi.confsched2019.model.Message
 import io.github.droidkaigi.confsched2019.model.SessionFeedback
 import io.github.droidkaigi.confsched2019.model.SpeechSession
+import io.github.droidkaigi.confsched2019.survey.R
 import io.github.droidkaigi.confsched2019.system.actioncreator.ErrorHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -38,6 +40,10 @@ class SessionSurveyActionCreator @Inject constructor(
         }
     }
 
+    fun processMessage(messageId: Int) {
+        dispatcher.launchAndDispatch(Action.ShowProcessingMessage(Message.of(messageId)))
+    }
+
     fun submit(session: SpeechSession, sessionFeedback: SessionFeedback) = launch {
         try {
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
@@ -45,11 +51,11 @@ class SessionSurveyActionCreator @Inject constructor(
             sessionRepository.saveSessionFeedback(sessionFeedback)
             dispatcher.dispatch(Action.SessionSurveySubmitted)
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
-            // TODO: show snackbar feedback submit success
+            processMessage(R.string.submit_successful)
         } catch (e: Exception) {
             onError(e)
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.INITIALIZED))
-            // TODO: show snackbar feedback submit fail
+            processMessage(R.string.submit_failure)
         }
     }
 
