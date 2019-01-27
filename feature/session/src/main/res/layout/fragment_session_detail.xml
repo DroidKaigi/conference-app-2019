@@ -74,6 +74,7 @@
                 android:fitsSystemWindows="false"
                 android:minHeight="?attr/actionBarSize"
                 app:layoutDescription="@xml/motion_session_detail"
+                app:progress="0"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 >
 
