@@ -68,6 +68,14 @@
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/XLPagerTabStrip</string>
+			<key>Title</key>
+			<string>XLPagerTabStrip</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
 	</array>
 </dict>
 </plist>
