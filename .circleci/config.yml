@@ -63,17 +63,18 @@ jobs:
             - .gradle
           key: *primary_key_of_gradle_cache
       - run:
-          name: Assemble apk
+          name: Assemble apk from App Bundle
           command: |
-            ./gradlew clean assembleDebug --offline
+            use_debug_keystore
+            ./gradlew bundleDebug --offline
+            create_universal_apk_from_aab.bash $(find frontend/android/build/outputs -name "*.aab" | head -1)
       - store_artifacts:
-          path: frontend/android/build/outputs/apk
+          path: frontend/android/build/outputs
       - run: *download_dpg
       - run:
           name: Upload an apk and create a distribution by app-manage procedure.
           command: |
-            apk_path=$(find frontend/android/build/outputs/apk -name "*.apk" | head -1)
-            dpg procedure app-manage on-feature-branch --app "$apk_path" --android | parse_dg_response
+            dpg procedure app-manage on-feature-branch --app "$UNIVERSAL_APK_PATH" --android | parse_dg_response
       - restore_cache: &restore_danger_cache
           keys: *all_keys_of_danger_cache
       - run: &bundle_install_for_danger
@@ -90,15 +91,10 @@ jobs:
           name: Compare apks with the latest production apk
           command: |
             if download_latest_apk "$PWD/latest.apk"; then
-              # find first
-              export BUILT_APK_FILE_PATH="$PWD/$(find frontend/android/build/outputs/apk -name "*.apk" | head -1)"
+              export BUILT_APK_FILE_PATH="$UNIVERSAL_APK_PATH"
               export OLD_BUILT_APK_FILE_PATH="$PWD/latest.apk"
 
-              if [[ -f "$BUILT_APK_FILE_PATH" ]] && [[ -f "$OLD_BUILT_APK_FILE_PATH" ]]; then
-                danger_compare_apks
-              else
-                echo "Cannot find apks" 1>&2
-              fi
+              danger_compare_apks
             fi
   vital_check:
     <<: *android_defaults
