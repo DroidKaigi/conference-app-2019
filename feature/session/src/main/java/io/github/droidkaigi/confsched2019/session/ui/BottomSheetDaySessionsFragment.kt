@@ -146,7 +146,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
         }
         sessionPagesStore.reselectedTab.observe(viewLifecycleOwner) {
             if (SessionPage.pageOfDay(args.day) == it) {
-                scrollToCurrentSession(args.day)
+                scrollToCurrentSession()
             }
         }
     }
@@ -156,8 +156,10 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
         super.onDestroyView()
     }
 
-    private fun scrollToCurrentSession(day: Int) {
-        val position = sessionPagesStore.onGoingSessionIndex(day)
+    private fun scrollToCurrentSession() {
+        val position = sessionPagesStore.filteredSessions.value.orEmpty()
+            .filter { session -> session.dayNumber == args.day }
+            .indexOfFirst { session -> session.isOnGoing }
         binding.sessionsRecycler.scrollToPosition(position)
     }
 

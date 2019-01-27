@@ -107,7 +107,7 @@ class SessionPagesStore @Inject constructor(
     }
     val filtersValue: Filters get() = filters.requireValue()
 
-    private val filteredSessions: LiveData<List<Session>> = sessions
+    val filteredSessions: LiveData<List<Session>> = sessions
         .combineWith(filters) { sessions, filters ->
             sessions ?: return@combineWith listOf<Session>()
             sessions.filter { session ->
@@ -146,8 +146,4 @@ class SessionPagesStore @Inject constructor(
                     .filter { session -> session.isFavorited }
             }
     }
-
-    fun onGoingSessionIndex(day: Int) = filteredSessions.value.orEmpty()
-            .filter { session -> session.dayNumber == day }
-            .indexOfFirst { session -> session.isOnGoing }
 }
