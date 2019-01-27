@@ -63,7 +63,7 @@ class SessionSurveyActionCreator @Inject constructor(
         dispatcher.dispatch(Action.SessionSurveyLoaded(sessionFeedback))
     }
 
-    suspend fun Dispatcher.dispatchLoadingState(loadingState: LoadingState) {
+    private suspend fun Dispatcher.dispatchLoadingState(loadingState: LoadingState) {
         dispatch(Action.SessionSurveyLoadingStateChanged(loadingState))
     }
 }
