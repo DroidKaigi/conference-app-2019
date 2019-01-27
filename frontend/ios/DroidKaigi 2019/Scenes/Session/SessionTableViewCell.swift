@@ -8,6 +8,7 @@
 import UIKit
 import ios_combined
 import SnapKit
+import MaterialComponents.MDCInkTouchController
 
 class SessionTableViewCell: UITableViewCell, Reusable {
 
@@ -87,6 +88,10 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         return CGSize.init(width: targetSize.width, height: collectionViewHeight + defaultSize.height)
     }
 
+    private lazy var inkTouchController: MDCInkTouchController = {
+        return MDCInkTouchController(view: self)
+    }()
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
@@ -158,6 +163,8 @@ class SessionTableViewCell: UITableViewCell, Reusable {
             $0.top.equalTo(timeAndRoomLabel.snp.bottom).offset(7)
             $0.bottom.equalToSuperview().inset(26)
         }
+        
+        inkTouchController.addInkView()
     }
 
     private func remakeTimeAndRoomLabelConstraints() {
