@@ -18,5 +18,5 @@ abstract class SessionFeedbackDao {
     abstract fun delete(sessionId: String)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun upsert(sessionFeedback: SessionFeedbackEntityImpl)
+    abstract suspend fun upsert(sessionFeedback: SessionFeedbackEntityImpl)
 }

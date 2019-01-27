@@ -91,9 +91,7 @@ class SessionSurveyFragment : DaggerFragment() {
 
         sessionSurveyStore.sessionFeedback.changed(viewLifecycleOwner) { sessionFeedback ->
             Timber.debug { sessionFeedback.toString() }
-            val submitted = sessionSurveyStore.submitted
-            binding.submitButton.isEnabled = !submitted
-            applySubmitButton(submitted)
+            applySubmitButton()
 
             // TODO: save sessionFeedback state to cacheDB
         }
@@ -121,7 +119,11 @@ class SessionSurveyFragment : DaggerFragment() {
         sessionSurveyActionCreator.load(sessionSurveyFragmentArgs.session.id)
     }
 
-    private fun applySubmitButton(submitted: Boolean) {
+    private fun applySubmitButton() {
+        val submitted = sessionSurveyStore.submitted
+        binding.submitButton.isEnabled = !submitted
+        binding.submitButton.isVisible =
+            binding.sessionSurveyViewPager.currentItem == (enumValues<SurveyItem>().size - 1) || sessionSurveyStore.submitted
         val text = if (submitted) {
             R.string.session_survey_submit_end
         } else {
@@ -241,7 +243,7 @@ class SessionSurveyFragment : DaggerFragment() {
                 position + 1,
                 (binding.sessionSurveyViewPager.adapter as PagerAdapter).count
             )
-            binding.submitButton.isVisible = position == (enumValues<SurveyItem>().size - 1)
+            applySubmitButton()
         }
     }
 }
