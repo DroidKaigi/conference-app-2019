@@ -29,11 +29,7 @@ class SessionTableViewCell: UITableViewCell, Reusable {
                     let cell = SpeakerCell(speaker: speaker)
                     speakersStackView.addArrangedSubview(cell)
                 }
-                tagContents.append(.lang(lang: speechSession.lang))
-                if speechSession.forBeginners {
-                    tagContents.append(.beginner)
-                }
-                tagContents.append(.category(category: speechSession.category))
+                tagContents = speechSession.tagContents
             default:
                 return
             }
@@ -41,7 +37,6 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         }
     }
 
-    var tagContents: [TagContent] = []
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -88,10 +83,12 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         return CGSize.init(width: targetSize.width, height: collectionViewHeight + defaultSize.height)
     }
 
+    private var tagContents: [TagContent] = []
+
     private lazy var inkTouchController: MDCInkTouchController = {
         return MDCInkTouchController(view: self)
     }()
-    
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
@@ -201,16 +198,8 @@ final class SessionCalculateHeightTableViewCell: UITableViewCell {
 
     var session: Session? {
         didSet {
-            if let session = session as? SpeechSession {
-                tagContents = [.lang(lang: session.lang)]
-                if session.forBeginners {
-                    tagContents.append(.beginner)
-                }
-                tagContents.append(.category(category: session.category))
-            } else {
-                tagContents = []
-            }
-            collectionView.reloadData()
+            guard let speechSession = session as? SpeechSession else { return }
+            tagContents = speechSession.tagContents
         }
     }
 
