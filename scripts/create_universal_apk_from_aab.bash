@@ -15,7 +15,11 @@ java -jar bundletool.jar \
   --bundle="$BUNDLE_FILE" \
   --output=temp.apks \
   --overwrite \
-  --mode=universal
+  --mode=universal \
+  --ks="$KEY_STORE_FILE" \
+  --ks-key-alias="$KEY_ALIAS" \
+  --ks-pass="$KEY_STORE_PASSWORD" \
+  --key-pass="$KEY_PASSWORD"
 
 unzip temp.apks
 

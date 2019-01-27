@@ -12,3 +12,15 @@ if [[ ! -d "$AGGREGATED_REPORT_RESULT_DIR" ]]; then
 fi
 
 export UNIVERSAL_APK_PATH="$REPOSITORY_ROOT/universal.apk"
+
+export DEBUG_KEY_ALIAS='droidkaigi_debug'
+export DEBUG_KEY_PASSWORD='droidkaigi'
+export DEBUG_KEY_STORE_FILE="$REPOSITORY_ROOT/frontend/android/debug.keystore"
+export DEBUG_KEY_STORE_PASSWORD='droidkaigi'
+
+use_debug_keystore() {
+    export KEY_ALIAS="$DEBUG_KEY_ALIAS"
+    export KEY_PASSWORD="$DEBUG_KEY_PASSWORD"
+    export KEY_STORE_FILE="$DEBUG_KEY_STORE_FILE"
+    export KEY_STORE_PASSWORD="$DEBUG_KEY_STORE_PASSWORD"
+}
