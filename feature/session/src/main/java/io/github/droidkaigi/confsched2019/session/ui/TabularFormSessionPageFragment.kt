@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.NavController
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.BindableItem
 import com.xwray.groupie.databinding.ViewHolder
@@ -36,6 +37,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
     private lateinit var binding: FragmentTabularFormSessionPageBinding
 
     @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
+    @Inject lateinit var navController: NavController
     private val sessionPagesStore: SessionPagesStore by lazy {
         InjectedViewModelProviders.of(requireActivity()).get(sessionPagesStoreProvider)
     }
@@ -94,7 +96,6 @@ class TabularFormSessionPageFragment : DaggerFragment() {
             }
             adapter = groupAdapter
         }
-
         sessionPagesStore.sessionsByDay(args.day)
             .changed(viewLifecycleOwner) { sessions ->
                 groupAdapter.update(fillGaps(sessions))
@@ -123,11 +124,14 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                             room
                         )
                     )
-
+                val navDirections = TabularFormSessionPagesFragmentDirections
+                    .actionTabularFormToSessionDetail(session.id)
                 filledItems.add(
                     when (session) {
-                        is SpeechSession -> TabularSpeechSessionItem(session)
-                        is ServiceSession -> TabularServiceSessionItem(session)
+                        is SpeechSession ->
+                            TabularSpeechSessionItem(session, navDirections, navController)
+                        is ServiceSession ->
+                            TabularServiceSessionItem(session, navDirections, navController)
                     }
                 )
 
