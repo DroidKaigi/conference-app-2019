@@ -40,6 +40,7 @@ class SessionTableViewCell: UITableViewCell, Reusable {
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
         setupSubviews()
     }
     required init?(coder aDecoder: NSCoder) { fatalError() }
