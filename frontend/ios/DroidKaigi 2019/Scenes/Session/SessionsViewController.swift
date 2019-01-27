@@ -16,6 +16,12 @@ final class SessionsViewController: UIViewController, StoryboardInstantiable {
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
+        tableView.rx.modelSelected(Session.self)
+                .asDriver()
+                .drive(onNext: { session in
+                    let viewController = SessionDetailViewController(session: session)
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }).disposed(by: bag)
     }
 
     @IBOutlet private weak var tableView: UITableView! {

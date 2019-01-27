@@ -9,55 +9,8 @@ import UIKit
 import SnapKit
 import ios_combined
 
-enum TagContent: Hashable {
-    case category(category: ios_combined.Category)
-    case lang(lang: Lang)
-    case beginner
-    case other(string: String)
-
-    var textColor: UIColor {
-        switch self {
-        case .category, .other: return UIColor(hex: "353435")
-        case .lang(let lang):
-            if lang == Lang.ja {
-                return UIColor(hex: "F63529")
-            } else {
-                return UIColor(hex: "190089")
-            }
-        case .beginner: return UIColor(hex: "00BE80")
-        }
-    }
-
-    var backgroundColor: UIColor {
-        switch self {
-        case .category: return UIColor(hex: "E5E8EA")
-        case .lang(let lang):
-            if lang == Lang.ja {
-                return UIColor(hex: "FDD7D4")
-            } else {
-                return UIColor(hex: "E8E6F3")
-            }
-        case .beginner: return UIColor(hex: "C1EBDD")
-        case .other: return UIColor(hex: "D8D7DC")
-        }
-    }
-
-    var text: String {
-        switch self {
-        case .category(let category):
-            return category.name.getByLang(lang: LangKt.defaultLang())
-        case .lang(let lang):
-            return lang.text.getByLang(lang: LangKt.defaultLang())
-        case .beginner:
-            return "初心者歓迎"
-        case .other(let string):
-            return string
-        }
-    }
-}
-
 class TagsCollectionViewCell: UICollectionViewCell, Reusable {
-
+    
     var tagContent: TagContent? {
         didSet {
             guard let tagContent = tagContent else { return }
@@ -66,7 +19,7 @@ class TagsCollectionViewCell: UICollectionViewCell, Reusable {
             label.text = tagContent.text
         }
     }
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupSubviews()
