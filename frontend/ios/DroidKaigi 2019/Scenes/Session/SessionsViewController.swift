@@ -10,11 +10,15 @@ import ios_combined
 import MaterialComponents.MaterialSnackbar
 import RxSwift
 import RxCocoa
+import XLPagerTabStrip
 
 final class SessionsViewController: UIViewController, StoryboardInstantiable {
-    
+
+    var day: Day!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = SessionsViewModel(day: day)
         bind()
         tableView.rx.modelSelected(Session.self)
                 .asDriver()
@@ -34,7 +38,7 @@ final class SessionsViewController: UIViewController, StoryboardInstantiable {
         }
     }
 
-    private var viewModel = SessionsViewModel()
+    private var viewModel: SessionsViewModel!
     private let bag = DisposeBag()
 
     private let dataSource = SessionDataSource()
@@ -52,5 +56,11 @@ final class SessionsViewController: UIViewController, StoryboardInstantiable {
         output.sessions
               .drive(tableView.rx.items(dataSource: dataSource))
               .disposed(by: bag)
+    }
+}
+
+extension SessionsViewController: IndicatorInfoProvider {
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: day.title)
     }
 }
