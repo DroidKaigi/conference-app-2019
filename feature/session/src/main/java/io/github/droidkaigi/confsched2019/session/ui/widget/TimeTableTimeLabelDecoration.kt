@@ -8,7 +8,8 @@ import android.graphics.Rect
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.soywiz.klock.DateFormat
-import com.soywiz.klock.format
+import com.soywiz.klock.DateTimeTz
+import com.soywiz.klock.hours
 import com.xwray.groupie.GroupAdapter
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularServiceSessionItem
@@ -86,7 +87,7 @@ class TimeTableTimeLabelDecoration(
             }
             .distinctBy { (_, time) -> time }
             .forEach { (v, time) ->
-                val timeText = dateFormat.format(time)
+                val timeText = dateFormat.format(DateTimeTz.fromUnixLocal(time).addOffset(9.hours))
                 val rect =
                     Rect(0, v.top, labelWidth.toInt(), v.top + textHeight)
                 val baseX = rect.centerX().toFloat() - textPaint.measureText(timeText) / 2f
