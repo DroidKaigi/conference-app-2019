@@ -93,7 +93,7 @@ class SessionSurveyFragment : DaggerFragment() {
             Timber.debug { sessionFeedback.toString() }
             val submitted = sessionSurveyStore.submitted
             binding.submitButton.isEnabled = !submitted
-            applySubmitButtonDesign(submitted)
+            applySubmitButton(submitted)
 
             // TODO: save sessionFeedback state to cacheDB
         }
@@ -121,7 +121,7 @@ class SessionSurveyFragment : DaggerFragment() {
         sessionSurveyActionCreator.load(sessionSurveyFragmentArgs.session.id)
     }
 
-    private fun applySubmitButtonDesign(submitted: Boolean) {
+    private fun applySubmitButton(submitted: Boolean) {
         val text = if (submitted) {
             R.string.session_survey_submit_end
         } else {
