@@ -145,15 +145,21 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                 binding.isCollapsed = isCollapsed
             }
         }
-        sessionPagesStore.onGoingSessionOnTabReselected(args.day).nonNull()
-            .observe(viewLifecycleOwner) {
-                binding.sessionsRecycler.scrollToPosition(it)
+        sessionPagesStore.reselectedTab.observe(viewLifecycleOwner) {
+            if (SessionPage.pageOfDay(args.day) == it) {
+                scrollToCurrentSession(args.day)
             }
+        }
     }
 
     override fun onDestroyView() {
         binding.sessionsRecycler.adapter = null
         super.onDestroyView()
+    }
+
+    private fun scrollToCurrentSession(day: Int) {
+        val position = sessionPagesStore.onGoingSessionIndex(day)
+        binding.sessionsRecycler.scrollToPosition(position)
     }
 
     companion object {

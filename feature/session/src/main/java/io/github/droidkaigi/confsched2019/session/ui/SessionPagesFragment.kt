@@ -125,9 +125,7 @@ class SessionPagesFragment : DaggerFragment() {
             object : TabLayout.OnTabSelectedListener {
                 override fun onTabReselected(tab: TabLayout.Tab?) {
                     tab?.let {
-                        (SessionPage.pages[it.position] as? SessionPage.Day)?.let { page ->
-                            sessionPagesActionCreator.reselectTab(page.day)
-                        }
+                        sessionPagesActionCreator.reselectTab(SessionPage.pages[it.position])
                     }
                 }
 
