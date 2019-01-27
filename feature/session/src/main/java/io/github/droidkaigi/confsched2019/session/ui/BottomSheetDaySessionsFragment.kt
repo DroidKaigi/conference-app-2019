@@ -145,9 +145,10 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                 binding.isCollapsed = isCollapsed
             }
         }
-        sessionPagesStore.reselectedTab.nonNull().observe(viewLifecycleOwner) {
-            binding.sessionsRecycler.scrollToPosition(it)
-        }
+        sessionPagesStore.onGoingSessionOnTabReselected(args.day).nonNull()
+            .observe(viewLifecycleOwner) {
+                binding.sessionsRecycler.scrollToPosition(it)
+            }
     }
 
     override fun onDestroyView() {

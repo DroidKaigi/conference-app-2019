@@ -115,18 +115,15 @@ class SessionPagesStore @Inject constructor(
             }
         }.map { it.orEmpty() }
 
+    private val reselectedTab: LiveData<Int> = dispatcher
+        .subscribe<Action.SessionPageReselected>()
+        .map { it.dayNumber }
+        .toSingleLiveData(0)
+
     val selectedTab: LiveData<SessionPage> = dispatcher
         .subscribe<Action.SessionPageSelected>()
         .map { it.sessionPage }
         .toLiveData(SessionPage.pages[0])
-
-    val reselectedTab: LiveData<Int> = dispatcher
-        .subscribe<Action.SessionPageReselected>()
-        .map { action ->
-            filteredSessions.value
-                ?.filter { session -> session.dayNumber == action.dayNumber }
-                ?.indexOfFirst { session -> session.isOnGoing } ?: -1
-        }.toSingleLiveData(-1)
 
     fun filteredSessionsByDay(day: Int): LiveData<List<Session>> {
         return filteredSessions
@@ -147,6 +144,18 @@ class SessionPagesStore @Inject constructor(
             .map { sessions ->
                 sessions.orEmpty()
                     .filter { session -> session.isFavorited }
+            }
+    }
+
+    fun onGoingSessionOnTabReselected(day: Int): LiveData<Int> {
+        return reselectedTab
+            .map { reselectedDay ->
+                if (reselectedDay != day) -1
+                else {
+                    filteredSessions.value
+                        ?.filter { session -> session.dayNumber == reselectedDay }
+                        ?.indexOfFirst { session -> session.isOnGoing } ?: -1
+                }
             }
     }
 }
