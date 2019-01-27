@@ -166,7 +166,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
         binding.sessionsBottomSheetTitle.text = (groupAdapter
             .getItem(firstPosition) as SessionItem)
             .session
-            .getStartDaytext()
+            .startDayText
     }
 
     companion object {

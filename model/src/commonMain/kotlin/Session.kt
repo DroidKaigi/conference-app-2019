@@ -3,6 +3,7 @@ package io.github.droidkaigi.confsched2019.model
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.DateTimeSpan
 import com.soywiz.klock.TimeSpan
+import com.soywiz.klock.hours
 
 sealed class Session(
     open val id: String,
@@ -12,10 +13,7 @@ sealed class Session(
     open val room: Room,
     open val isFavorited: Boolean
 ) {
-
-    fun getStartDaytext(): String {
-        return startTime.toOffset(Device.getOffsetFromUTC().timeSpan).format("yyyy.M.d")
-    }
+    val startDayText by lazy { startTime.toOffset(9.hours).format("yyyy.M.d") }
 
     fun timeSummary(lang: Lang, timezoneOffset: DateTimeSpan) = buildString {
         val startTimeTZ = startTime.toOffset(timezoneOffset.timeSpan)

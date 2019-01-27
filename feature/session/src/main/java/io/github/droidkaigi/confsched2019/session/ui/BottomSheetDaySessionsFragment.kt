@@ -124,7 +124,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                 .filterIsInstance<SessionItem>()
                 .firstOrNull()
                 ?.session
-                ?.getStartDaytext() ?: return@changed
+                ?.startDayText ?: return@changed
             binding.sessionsBottomSheetTitle.text = titleText
         }
         sessionPagesStore.filters.changed(viewLifecycleOwner) {

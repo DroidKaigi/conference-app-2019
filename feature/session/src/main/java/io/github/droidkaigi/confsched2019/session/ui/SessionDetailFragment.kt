@@ -21,6 +21,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionManager
+import com.soywiz.klock.DateTimeSpan
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
@@ -31,7 +32,6 @@ import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.SpeechSession
 import io.github.droidkaigi.confsched2019.model.defaultLang
-import io.github.droidkaigi.confsched2019.model.Device
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSessionDetailBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
@@ -172,7 +172,7 @@ class SessionDetailFragment : DaggerFragment() {
         val lang = defaultLang()
         binding.lang = lang
         setupSessionDescription(session.desc)
-        binding.timeZoneOffset = Device.getOffsetFromUTC()
+        binding.timeZoneOffset = DateTimeSpan(hours = 9) // FIXME Get from device setting
 
         binding.sessionTitle.text = session.title.getByLang(lang)
 
@@ -263,7 +263,7 @@ class SessionDetailFragment : DaggerFragment() {
 
         val lang = defaultLang()
         binding.lang = lang
-        binding.timeZoneOffset = Device.getOffsetFromUTC()
+        binding.timeZoneOffset = DateTimeSpan(hours = 9) // FIXME Get from device setting
 
         binding.sessionTitle.text = session.title.getByLang(lang)
 
