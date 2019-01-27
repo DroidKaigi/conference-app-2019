@@ -114,6 +114,7 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
                                 SessionPagesFragmentDirections.actionSessionToSessionDetail(
                                     session.id
                                 ),
+                                SessionPagesFragmentDirections.actionSessionToSessionSurvey(session),
                                 true
                             )
                         is ServiceSession ->
