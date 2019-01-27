@@ -89,48 +89,6 @@ class TimeTableLayoutManager(
         return columnWidth
     }
 
-    override fun canScrollVertically() = true
-
-    override fun canScrollHorizontally() = true
-
-    override fun scrollVerticallyBy(
-        dy: Int,
-        recycler: RecyclerView.Recycler,
-        state: RecyclerView.State
-    ): Int {
-        if (dy == 0) return 0
-
-        val scrollAmount = if (dy > 0) {
-            val bottom = getChildAt(childCount - 1)?.let(this::getDecoratedBottom) ?: return 0
-            if (bottom - dy < parentBottom) bottom - parentBottom else dy
-        } else {
-            val top = getChildAt(0)?.let(this::getDecoratedTop) ?: return 0
-            if (top - dy > parentTop) top - parentTop else dy
-        }
-
-        offsetChildrenVertical(-scrollAmount)
-        return scrollAmount
-    }
-
-    override fun scrollHorizontallyBy(
-        dx: Int,
-        recycler: RecyclerView.Recycler,
-        state: RecyclerView.State
-    ): Int {
-        if (dx == 0) return 0
-
-        val scrollAmount = if (dx > 0) {
-            val right = getChildAt(childCount - 1)?.let(this::getDecoratedRight) ?: return 0
-            if (right - dx < parentRight) right - parentRight else dx
-        } else {
-            val left = getChildAt(0)?.let(this::getDecoratedLeft) ?: return 0
-            if (left - dx > parentLeft) left - parentLeft else dx
-        }
-
-        offsetChildrenHorizontal(-scrollAmount)
-        return scrollAmount
-    }
-
     private fun measureChild(view: View, period: Period) {
         val lp = view.layoutParams as RecyclerView.LayoutParams
         lp.width = columnWidth
