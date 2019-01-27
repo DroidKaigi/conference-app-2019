@@ -122,8 +122,9 @@ class SessionSurveyFragment : DaggerFragment() {
     private fun applySubmitButton() {
         val submitted = sessionSurveyStore.submitted
         binding.submitButton.isEnabled = !submitted
-        binding.submitButton.isVisible =
-            binding.sessionSurveyViewPager.currentItem == (enumValues<SurveyItem>().size - 1) || sessionSurveyStore.submitted
+        val currentItem = binding.sessionSurveyViewPager.currentItem
+        val isLastItem = currentItem == (enumValues<SurveyItem>().size - 1)
+        binding.submitButton.isVisible = isLastItem || sessionSurveyStore.submitted
         val text = if (submitted) {
             R.string.session_survey_submit_end
         } else {
