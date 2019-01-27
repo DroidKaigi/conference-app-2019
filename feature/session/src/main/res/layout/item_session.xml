@@ -225,6 +225,7 @@
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:maxLines="1"
+            android:background="?selectableItemBackground"
             android:text="@string/session_go_to_survey"
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.App.Caption"
