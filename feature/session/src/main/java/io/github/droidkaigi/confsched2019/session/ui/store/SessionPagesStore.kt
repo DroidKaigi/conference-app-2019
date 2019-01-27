@@ -10,6 +10,7 @@ import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.requireValue
 import io.github.droidkaigi.confsched2019.ext.android.toLiveData
+import io.github.droidkaigi.confsched2019.ext.android.toSingleLiveData
 import io.github.droidkaigi.confsched2019.model.Filters
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionPage
@@ -125,7 +126,7 @@ class SessionPagesStore @Inject constructor(
             filteredSessions.value
                 ?.filter { session -> session.dayNumber == action.dayNumber }
                 ?.indexOfFirst { session -> session.isOnGoing } ?: -1
-        }.toLiveData(-1)
+        }.toSingleLiveData(-1)
 
     fun filteredSessionsByDay(day: Int): LiveData<List<Session>> {
         return filteredSessions
