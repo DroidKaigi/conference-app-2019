@@ -2,7 +2,6 @@ package io.github.droidkaigi.confsched2019.session.ui.item
 
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
-import com.squareup.inject.assisted.AssistedInject
 import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.model.SpeechSession
 import io.github.droidkaigi.confsched2019.model.defaultLang
@@ -12,8 +11,8 @@ import io.github.droidkaigi.confsched2019.session.databinding.ItemTabularSpeechS
 class TabularSpeechSessionItem(
     val session: SpeechSession,
     private val navDirections: NavDirections,
-    private val navController: NavController) :
-    BindableItem<ItemTabularSpeechSessionBinding>(session.id.hashCode().toLong()) {
+    private val navController: NavController
+) : BindableItem<ItemTabularSpeechSessionBinding>(session.id.hashCode().toLong()) {
 
     override fun bind(viewBinding: ItemTabularSpeechSessionBinding, position: Int) {
         viewBinding.apply {

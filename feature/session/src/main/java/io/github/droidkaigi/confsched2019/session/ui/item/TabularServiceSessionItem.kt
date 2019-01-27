@@ -11,8 +11,8 @@ import io.github.droidkaigi.confsched2019.session.databinding.ItemTabularService
 class TabularServiceSessionItem(
     val session: ServiceSession,
     private val navDirections: NavDirections,
-    private val navController: NavController) :
-    BindableItem<ItemTabularServiceSessionBinding>(session.id.hashCode().toLong()) {
+    private val navController: NavController
+) : BindableItem<ItemTabularServiceSessionBinding>(session.id.hashCode().toLong()) {
 
     override fun bind(viewBinding: ItemTabularServiceSessionBinding, position: Int) {
         viewBinding.apply {

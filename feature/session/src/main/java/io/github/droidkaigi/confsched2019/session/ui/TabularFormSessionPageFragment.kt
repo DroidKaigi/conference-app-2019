@@ -128,8 +128,10 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                     .actionTabularFormToSessionDetail(session.id)
                 filledItems.add(
                     when (session) {
-                        is SpeechSession -> TabularSpeechSessionItem(session, navDirections, navController)
-                        is ServiceSession -> TabularServiceSessionItem(session, navDirections, navController)
+                        is SpeechSession ->
+                            TabularSpeechSessionItem(session, navDirections, navController)
+                        is ServiceSession ->
+                            TabularServiceSessionItem(session, navDirections, navController)
                     }
                 )
 
