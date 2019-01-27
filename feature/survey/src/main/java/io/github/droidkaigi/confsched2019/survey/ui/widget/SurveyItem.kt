@@ -11,33 +11,33 @@ enum class SurveyItem(
 ) {
     TOTAL_EVALUATION(
         position = 0,
-        titleResId = R.string.total_evaluation,
+        titleResId = R.string.session_survey_total_evaluation,
         isComment = false
     ),
 
     RELEVANCY(
         position = 1,
-        titleResId = R.string.relevancy,
+        titleResId = R.string.session_survey_relevancy,
         isComment = false
     ),
     AS_EXPECTED(
         position = 2,
-        titleResId = R.string.as_expected,
+        titleResId = R.string.session_survey_as_expected,
         isComment = false
     ),
     DIFFICULTY(
         position = 3,
-        titleResId = R.string.difficulty,
+        titleResId = R.string.session_survey_difficulty,
         isComment = false
     ),
     KNOWLEDGEABLE(
         position = 4,
-        titleResId = R.string.knowledgeable,
+        titleResId = R.string.session_survey_knowledgeable,
         isComment = false
     ),
     COMMENT(
         position = 5,
-        titleResId = R.string.comment,
+        titleResId = R.string.session_survey_comment,
         isComment = true
     );
 
