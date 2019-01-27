@@ -91,12 +91,11 @@ class SessionSurveyFragment : DaggerFragment() {
 
         sessionSurveyStore.sessionFeedback.changed(viewLifecycleOwner) { sessionFeedback ->
             Timber.debug { sessionFeedback.toString() }
-            // TODO: save sessionFeedback state to cacheDB
-        }
-
-        sessionSurveyStore.sessionSubmitted.changed(viewLifecycleOwner) { submitted ->
+            val submitted = sessionSurveyStore.submitted
             binding.submitButton.isEnabled = !submitted
             applySubmitButtonDesign(submitted)
+
+            // TODO: save sessionFeedback state to cacheDB
         }
 
         val lang = defaultLang()

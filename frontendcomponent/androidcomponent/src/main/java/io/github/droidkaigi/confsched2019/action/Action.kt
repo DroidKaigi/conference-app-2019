@@ -79,7 +79,6 @@ sealed class Action {
 
     data class SessionSurveyLoadingStateChanged(val loadingState: LoadingState) : Action()
     data class SessionSurveyLoaded(val sessionFeedback: SessionFeedback) : Action()
-    object SessionSurveySubmitted : Action()
 
     class FloorMapLoadingStateChanged(val loadingState: LoadingState) : Action()
 }

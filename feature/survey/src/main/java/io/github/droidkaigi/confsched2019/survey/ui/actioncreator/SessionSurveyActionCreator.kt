@@ -49,8 +49,8 @@ class SessionSurveyActionCreator @Inject constructor(
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
             sessionRepository.submitSessionFeedback(session, sessionFeedback)
             sessionRepository.saveSessionFeedback(sessionFeedback)
-            dispatcher.dispatch(Action.SessionSurveySubmitted)
             dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
+            dispatcher.dispatch(Action.SessionSurveyLoaded(sessionFeedback))
             processMessage(R.string.session_survey_submit_successful)
         } catch (e: Exception) {
             onError(e)
