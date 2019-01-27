@@ -1,5 +1,6 @@
 package io.github.droidkaigi.confsched2019.session.ui.item
 
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import com.xwray.groupie.databinding.BindableItem
@@ -16,10 +17,16 @@ class TabularServiceSessionItem(
 
     override fun bind(viewBinding: ItemTabularServiceSessionBinding, position: Int) {
         viewBinding.apply {
-            root.setOnClickListener {
-                navController.navigate(navDirections)
+            val sessionField = this@TabularServiceSessionItem.session
+            val onClickListener: ((View) -> Unit)? = if (sessionField.sessionType.supportDetail) {
+                {
+                    navController.navigate(navDirections)
+                }
+            } else {
+                null
             }
-            session = this@TabularServiceSessionItem.session
+            root.setOnClickListener(onClickListener)
+            session = sessionField
             lang = defaultLang()
         }
     }
