@@ -18,8 +18,8 @@ java -jar bundletool.jar \
   --mode=universal \
   --ks="$KEY_STORE_FILE" \
   --ks-key-alias="$KEY_ALIAS" \
-  --ks-pass="$KEY_STORE_PASSWORD" \
-  --key-pass="$KEY_PASSWORD"
+  --ks-pass="pass:$KEY_STORE_PASSWORD" \
+  --key-pass="pass:$KEY_PASSWORD"
 
 unzip temp.apks
 

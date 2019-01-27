@@ -1,3 +1,7 @@
+if [[ -z "$REPOSITORY_ROOT" ]]; then
+    export REPOSITORY_ROOT="$(git rev-parse --show-toplevel)"
+fi
+
 export PATH="${REPOSITORY_ROOT}/scripts:$PATH"
 export PATH="${REPOSITORY_ROOT}/.circleci/scripts:$PATH"
 export AGGREGATED_TEST_RESULT_DIR="$REPOSITORY_ROOT/test-results"
