@@ -4,6 +4,7 @@ import android.graphics.Rect
 import android.util.SparseArray
 import android.util.SparseIntArray
 import android.view.View
+import androidx.core.util.forEach
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.NO_POSITION
 import androidx.recyclerview.widget.RecyclerView.Recycler
@@ -94,6 +95,92 @@ class TimeTableLayoutManager(
         }
     }
 
+    override fun canScrollVertically() = true
+
+    override fun scrollVerticallyBy(dy: Int, recycler: Recycler, state: State): Int {
+        if (dy == 0) return 0
+
+        val scrollAmount = calculateVerticallyScrollAmount(dy)
+        if (scrollAmount > 0) {
+            // recycle
+            anchor.top.forEach { columnNum, position ->
+                val view = findViewByPosition(position) ?: return@forEach
+                val bottom = getDecoratedBottom(view)
+                if (bottom - scrollAmount < parentTop) {
+                    val period = periods.getOrNull(position) ?: return@forEach
+                    val nextPeriod = columns.get(columnNum).getOrNull(period.positionInColumn + 1)
+                        ?: return@forEach
+                    removeAndRecycleView(view, recycler)
+                    anchor.top.put(columnNum, nextPeriod.adapterPosition)
+                }
+            }
+            // append
+            anchor.bottom.forEach { columnNum, position ->
+                val view = findViewByPosition(position) ?: return@forEach
+                val bottom = getDecoratedBottom(view)
+                if (bottom - scrollAmount < parentBottom) {
+                    val left = getDecoratedLeft(view)
+                    val period = periods.getOrNull(position) ?: return@forEach
+                    val nextPeriod = columns.get(columnNum).getOrNull(period.positionInColumn + 1)
+                        ?: return@forEach
+                    addPeriod(nextPeriod, Direction.BOTTOM, left, bottom, recycler)
+                    anchor.bottom.put(columnNum, nextPeriod.adapterPosition)
+                }
+            }
+        } else {
+            // recycle
+            anchor.bottom.forEach { columnNum, position ->
+                val view = findViewByPosition(position) ?: return@forEach
+                val top = getDecoratedTop(view)
+                if (top - scrollAmount > parentBottom) {
+                    val period = periods.getOrNull(position) ?: return@forEach
+                    val nextPeriod = columns.get(columnNum).getOrNull(period.positionInColumn - 1)
+                        ?: return@forEach
+                    removeAndRecycleView(view, recycler)
+                    anchor.bottom.put(columnNum, nextPeriod.adapterPosition)
+                }
+            }
+            // prepend
+            anchor.top.forEach { columnNum, position ->
+                val view = findViewByPosition(position) ?: return@forEach
+                val top = getDecoratedTop(view)
+                if (top - scrollAmount > parentTop) {
+                    val left = getDecoratedLeft(view)
+                    val period = periods.getOrNull(position) ?: return@forEach
+                    val nextPeriod = columns.get(columnNum).getOrNull(period.positionInColumn - 1)
+                        ?: return@forEach
+                    addPeriod(nextPeriod, Direction.TOP, left, top, recycler)
+                    anchor.top.put(columnNum, nextPeriod.adapterPosition)
+                }
+            }
+        }
+
+        offsetChildrenVertical(-scrollAmount)
+        return scrollAmount
+    }
+
+    private fun calculateVerticallyScrollAmount(dy: Int): Int {
+        return if (dy > 0) {
+            val bottomView = findBottomView() ?: return 0
+            val period = periods.getOrNull(bottomView.adapterPosition) ?: return 0
+            val bottom = getDecoratedBottom(bottomView)
+            if (period.endUnixMin == lastEndUnixMin) if (bottom == parentBottom) 0 else min(
+                dy,
+                bottom - parentBottom
+            )
+            else dy
+        } else {
+            val topView = findTopView() ?: return 0
+            val period = periods.getOrNull(topView.adapterPosition) ?: return 0
+            val top = getDecoratedTop(topView)
+            if (period.startUnixMin == firstStartUnixMin) if (top == parentTop) 0 else max(
+                dy,
+                top - parentTop
+            )
+            else dy
+        }
+    }
+
     private fun addPeriod(
         period: Period,
         direction: Direction,
@@ -167,6 +254,48 @@ class TimeTableLayoutManager(
         view.measure(widthSpec, heightSpec)
     }
 
+    private fun findTopView(): View? {
+        var minTop: Int? = null
+        var minView: View? = null
+        anchor.top.forEach { _, position ->
+            val view = findViewByPosition(position) ?: return@forEach
+            val top = getDecoratedTop(view)
+            if (minView == null) {
+                minView = view
+                minTop = top
+                return@forEach
+            }
+            minTop?.let {
+                if (top < it) {
+                    minView = view
+                    minTop = top
+                }
+            }
+        }
+        return minView
+    }
+
+    private fun findBottomView(): View? {
+        var maxBottom: Int? = null
+        var maxView: View? = null
+        anchor.bottom.forEach { _, position ->
+            val view = findViewByPosition(position) ?: return@forEach
+            val bottom = getDecoratedBottom(view)
+            if (maxView == null) {
+                maxView = view
+                maxBottom = bottom
+                return@forEach
+            }
+            maxBottom?.let {
+                if (bottom > it) {
+                    maxView = view
+                    maxBottom = bottom
+                }
+            }
+        }
+        return maxView
+    }
+
     private fun calculateColumns() {
         periods.clear()
         columns.clear()
@@ -196,6 +325,9 @@ class TimeTableLayoutManager(
             }
         }
     }
+
+    private inline val View.adapterPosition
+        get() = (layoutParams as RecyclerView.LayoutParams).viewAdapterPosition
 
     private inline fun <E> SparseArray<E>.getOrPut(key: Int, defaultValue: () -> E): E {
         val value = get(key)
