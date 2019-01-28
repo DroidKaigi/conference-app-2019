@@ -67,7 +67,8 @@ class TabularFormSessionPageFragment : DaggerFragment() {
             addItemDecoration(TimeTableRoomLabelDecoration(context, groupAdapter))
             layoutManager = TimeTableLayoutManager(
                 resources.getDimensionPixelSize(R.dimen.tabular_form_column_width),
-                resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute)
+                resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute),
+                shouldLoopHorizontally = true
             ) { position ->
                 val item = groupAdapter.getItem(position)
                 when (item) {
