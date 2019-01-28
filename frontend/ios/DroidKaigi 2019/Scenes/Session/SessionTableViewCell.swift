@@ -201,6 +201,7 @@ final class SessionCalculateHeightTableViewCell: UITableViewCell {
         didSet {
             guard let speechSession = session as? SpeechSession else { return }
             tagContents = speechSession.tagContents
+            collectionView.reloadData()
         }
     }
 
