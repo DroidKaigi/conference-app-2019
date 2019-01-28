@@ -10,7 +10,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.soywiz.klock.DateFormat
-import com.soywiz.klock.format
+import com.soywiz.klock.DateTimeTz
+import com.soywiz.klock.hours
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import io.github.droidkaigi.confsched2019.model.Session
@@ -126,7 +127,8 @@ class TimeTableTimeLabelDecoration(
     }
 
     private fun drawTimeLabel(c: Canvas, top: Int, it: Session) {
-        val timeText = dateFormat.format(it.startTime.unixMillisLong)
+        val timeText = dateFormat
+            .format(DateTimeTz.fromUnixLocal(it.startTime.unixMillisLong).addOffset(9.hours))
         val rect =
             Rect(0, top, labelWidth.toInt(), top + textHeight)
         val baseX = rect.centerX().toFloat() - textPaint.measureText(timeText) / 2f
