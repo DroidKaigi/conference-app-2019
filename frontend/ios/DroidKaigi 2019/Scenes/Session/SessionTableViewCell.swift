@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import ios_combined
+import ioscombined
 import SnapKit
 import MaterialComponents.MDCInkTouchController
 
