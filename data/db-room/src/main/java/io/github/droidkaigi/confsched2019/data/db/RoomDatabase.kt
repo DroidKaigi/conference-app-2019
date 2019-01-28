@@ -71,11 +71,7 @@ class RoomDatabase @Inject constructor(
     }
 
     override suspend fun saveSessionFeedback(sessionFeedback: SessionFeedback) {
-        withContext(coroutineContext) {
-            database.runInTransaction {
-                sessionFeedbackDao.upsert(sessionFeedback.toSessionFeedbackEntity())
-            }
-        }
+        sessionFeedbackDao.upsert(sessionFeedback.toSessionFeedbackEntity())
     }
 
     override suspend fun sponsors(): List<SponsorEntity> {

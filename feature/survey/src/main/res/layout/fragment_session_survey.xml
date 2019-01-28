@@ -13,7 +13,7 @@
         <View
             android:layout_width="0dp"
             android:layout_height="96dp"
-            android:background="@drawable/background"
+            android:background="@drawable/bg_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +34,7 @@
             tools:listitem="@layout/item_speaker_icon"
             />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/session_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
             tools:text="Kotlinアンチパターン"
             />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/page_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,16 +77,17 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/submit_button"
-            android:layout_width="153dp"
+            android:layout_width="wrap_content"
             android:layout_height="56dp"
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/submit_botton"
-            android:drawablePadding="-24dp"
+            android:background="@drawable/bg_submit_botton"
             android:drawableStart="@drawable/ic_baseline_send_24px"
-            android:gravity="center"
+            android:gravity="start|center"
+            android:paddingEnd="28dp"
             android:paddingStart="28dp"
-            android:text="@string/submit"
+            android:text="@string/session_survey_submit"
+            android:drawablePadding="@dimen/session_survey_submit_drawable_padding"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:visibility="invisible"

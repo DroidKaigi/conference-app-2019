@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
@@ -34,7 +36,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import me.tatarka.injectedvmprovider.InjectedViewModelProviders
+import me.tatarka.injectedvmprovider.ktx.injectedViewModelProvider
 import timber.log.Timber
 import timber.log.debug
 import javax.inject.Inject
@@ -45,7 +47,7 @@ class SessionSurveyFragment : DaggerFragment() {
     @Inject lateinit var sessionSurveyActionCreator: SessionSurveyActionCreator
     @Inject lateinit var sessionSurveyStoreProvider: Provider<SessionSurveyStore>
     private val sessionSurveyStore: SessionSurveyStore by lazy {
-        InjectedViewModelProviders.of(requireActivity())[sessionSurveyStoreProvider]
+        injectedViewModelProvider[sessionSurveyStoreProvider]
     }
 
     private lateinit var binding: FragmentSessionSurveyBinding
@@ -85,10 +87,16 @@ class SessionSurveyFragment : DaggerFragment() {
 
         sessionSurveyStore.loadingState.changed(viewLifecycleOwner) {
             progressTimeLatch.loading = it.isLoading
+            if (it.isInitialized) {
+                // when error, we should re enable button
+                binding.submitButton.isEnabled = true
+            }
         }
 
         sessionSurveyStore.sessionFeedback.changed(viewLifecycleOwner) { sessionFeedback ->
             Timber.debug { sessionFeedback.toString() }
+            applySubmitButton()
+
             // TODO: save sessionFeedback state to cacheDB
         }
 
@@ -100,18 +108,50 @@ class SessionSurveyFragment : DaggerFragment() {
             val sessionFeedback =
                 sessionSurveyStore.sessionFeedback.requireValue().copy(submitted = true)
             if (sessionFeedback.fillouted) {
+                binding.submitButton.isEnabled = false
                 // TODO: show confirm dialog
                 sessionSurveyActionCreator.submit(
                     sessionSurveyFragmentArgs.session,
                     sessionFeedback
                 )
             } else {
-                sessionSurveyActionCreator.processMessage(R.string.not_input)
+                sessionSurveyActionCreator.processMessage(R.string.session_survey_not_input)
             }
         }
 
         setupSessionSurveyPager()
         sessionSurveyActionCreator.load(sessionSurveyFragmentArgs.session.id)
+    }
+
+    private fun applySubmitButton() {
+        val submitted = sessionSurveyStore.submitted
+        binding.submitButton.isEnabled = !submitted
+        val currentItem = binding.sessionSurveyViewPager.currentItem
+        val isLastItem = currentItem == (enumValues<SurveyItem>().size - 1)
+        binding.submitButton.isVisible = isLastItem || sessionSurveyStore.submitted
+        val text = if (submitted) {
+            R.string.session_survey_submit_end
+        } else {
+            R.string.session_survey_submit
+        }
+        binding.submitButton.setText(text)
+        val iconRes = if (submitted) {
+            R.drawable.ic_check_black_24dp
+        } else {
+            R.drawable.ic_baseline_send_24px
+        }
+        val drawable = ContextCompat.getDrawable(requireContext(), iconRes) ?: return
+        val wrappedDrawable = DrawableCompat.wrap(drawable)
+        wrappedDrawable.setTint(ContextCompat.getColor(requireContext(), R.color.white))
+        binding.submitButton.setCompoundDrawablesWithIntrinsicBounds(
+            wrappedDrawable,
+            null,
+            null,
+            null
+        )
+        val drawablePadding =
+            resources.getDimensionPixelSize(R.dimen.session_survey_submit_drawable_padding)
+        binding.submitButton.compoundDrawablePadding = drawablePadding
     }
 
     private fun setupSessionSurveyPager() {
@@ -204,11 +244,11 @@ class SessionSurveyFragment : DaggerFragment() {
 
         binding.sessionSurveyViewPager.onPageSelected { position ->
             binding.pageProgress.text = getString(
-                R.string.page_progress,
+                R.string.session_survey_page_progress,
                 position + 1,
                 (binding.sessionSurveyViewPager.adapter as PagerAdapter).count
             )
-            binding.submitButton.isVisible = position == (enumValues<SurveyItem>().size - 1)
+            applySubmitButton()
         }
     }
 }
