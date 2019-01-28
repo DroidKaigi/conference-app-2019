@@ -18,8 +18,26 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/tabular_form_column_width"
         android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
         android:padding="4dp">
+
+        <View
+            android:id="@+id/background_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_item_tabular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/vertical_line_view"
+            android:layout_width="2dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_vertical_line"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/speaker_icon_list"
@@ -36,15 +54,18 @@
             android:id="@+id/session_title"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginBottom="6dp"
             android:ellipsize="end"
             android:fontFamily="@font/notosans_medium"
-            android:padding="4dp"
             android:text="@{session.title.getByLang(lang)}"
+            android:textColor="@color/tabular_session_title"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/speaker_icon_list"
             app:layout_constraintTop_toBottomOf="@id/speaker_icon_list"
-            app:layout_goneMarginTop="2dp"
             tools:text="@sample/service_session.json/data/session_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

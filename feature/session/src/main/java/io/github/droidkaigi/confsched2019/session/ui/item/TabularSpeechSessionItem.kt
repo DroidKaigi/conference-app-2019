@@ -42,6 +42,8 @@ class TabularSpeechSessionItem(
                 layoutManager = LinearLayoutManager(root.context, RecyclerView.HORIZONTAL, false)
                 adapter = groupAdapter
             }
+            // FIXME pattern favorited
+            root.isActivated = !speechSession.isFinished
         }
     }
 
