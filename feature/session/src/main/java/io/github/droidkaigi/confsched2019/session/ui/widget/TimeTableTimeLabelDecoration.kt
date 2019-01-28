@@ -148,9 +148,9 @@ class TimeTableTimeLabelDecoration(
 
         return (0 until groupAdapter.itemCount)
             .mapNotNull {
-                val session = when (val item = groupAdapter.getItem(it)) {
-                    is TabularSpeechSessionItem -> item.session as Session
-                    is TabularServiceSessionItem -> item.session as Session
+                val session: Session = when (val item = groupAdapter.getItem(it)) {
+                    is TabularSpeechSessionItem -> item.session
+                    is TabularServiceSessionItem -> item.session
                     else -> return@mapNotNull null
                 }
                 if (session.startTime.unixMillisLong in minStart..maxEnd) session else null
