@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import main
+import ios_combined
 
 struct SessionByStartTime {
     let startDayText: String

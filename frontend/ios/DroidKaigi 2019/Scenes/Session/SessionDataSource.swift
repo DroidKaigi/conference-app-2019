@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import RxCocoa
 import RxSwift
-import main
+import ios_combined
 
 final class SessionDataSource: NSObject, UITableViewDataSource {
 
