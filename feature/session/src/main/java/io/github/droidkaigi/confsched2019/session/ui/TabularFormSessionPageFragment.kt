@@ -24,7 +24,6 @@ import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpacerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
-import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableDividerDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableLayoutManager
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableRoomLabelDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableTimeLabelDecoration
@@ -64,7 +63,6 @@ class TabularFormSessionPageFragment : DaggerFragment() {
 
         val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.tabularFormSessionsRecycler.apply {
-            addItemDecoration(TimeTableDividerDecoration(context, groupAdapter))
             addItemDecoration(TimeTableTimeLabelDecoration(context, groupAdapter))
             addItemDecoration(TimeTableRoomLabelDecoration(context, groupAdapter))
             layoutManager = TimeTableLayoutManager(
