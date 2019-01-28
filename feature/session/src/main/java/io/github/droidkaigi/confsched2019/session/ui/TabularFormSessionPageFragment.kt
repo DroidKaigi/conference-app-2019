@@ -64,7 +64,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
 
         val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.tabularFormSessionsRecycler.apply {
-            addItemDecoration(TimeTableDividerDecoration(context, COLUMN_COUNT, groupAdapter))
+            addItemDecoration(TimeTableDividerDecoration(context, groupAdapter))
             addItemDecoration(TimeTableTimeLabelDecoration(context, groupAdapter))
             addItemDecoration(TimeTableRoomLabelDecoration(context, groupAdapter))
             layoutManager = TimeTableLayoutManager(
@@ -169,8 +169,6 @@ class TabularFormSessionPageFragment : DaggerFragment() {
     }
 
     companion object {
-        const val COLUMN_COUNT = 9
-
         fun newInstance(args: TabularFormSessionPagesFragmentArgs): TabularFormSessionPageFragment {
             return TabularFormSessionPageFragment()
                 .apply { arguments = args.toBundle() }

@@ -8,12 +8,13 @@ import android.graphics.Rect
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.soywiz.klock.DateFormat
-import com.soywiz.klock.DateTimeTz
-import com.soywiz.klock.hours
+import com.soywiz.klock.format
 import com.xwray.groupie.GroupAdapter
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularServiceSessionItem
+import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpacerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionItem
+import java.util.concurrent.TimeUnit
 
 // FIXME: TIMEZONE
 class TimeTableTimeLabelDecoration(
@@ -21,6 +22,7 @@ class TimeTableTimeLabelDecoration(
     private val labelTextSize: Float,
     private val labelBackgroundColor: Int,
     private val labelTextColor: Int,
+    private val pxPerMin: Int,
     private val groupAdapter: GroupAdapter<*>
 ) : RecyclerView.ItemDecoration() {
 
@@ -29,6 +31,7 @@ class TimeTableTimeLabelDecoration(
         context.resources.getDimension(R.dimen.tabular_form_time_label_text_size),
         Color.WHITE,
         Color.BLACK,
+        context.resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute),
         groupAdapter
     )
 
@@ -75,21 +78,42 @@ class TimeTableTimeLabelDecoration(
         )
 
         // draw time
-        parent.children
+        val referenceView = parent.getChildAt(0) ?: return
+        val referenceStart =
+            when (val item = groupAdapter.getItem(parent.getChildAdapterPosition(referenceView))) {
+                is TabularSpeechSessionItem -> item.session.startTime.unixMillisLong
+                is TabularServiceSessionItem -> item.session.startTime.unixMillisLong
+                is TabularSpacerItem -> item.startUnixMillis
+                else -> return
+            }
+        val childrenStart = parent.children.mapNotNull {
+            when (val item = groupAdapter.getItem(parent.getChildAdapterPosition(it))) {
+                is TabularSpeechSessionItem -> item.session.startTime.unixMillisLong
+                is TabularServiceSessionItem -> item.session.startTime.unixMillisLong
+                is TabularSpacerItem -> item.startUnixMillis
+                else -> null
+            }
+        }
+        val minStart = childrenStart.min() ?: 0
+        val maxEnd = childrenStart.max() ?: 0
+        (0 until groupAdapter.itemCount)
             .mapNotNull {
-                val item = groupAdapter.getItem(parent.getChildAdapterPosition(it))
-                val startUnixMillis = when (item) {
-                    is TabularServiceSessionItem -> item.session.startTime.unixMillisLong
-                    is TabularSpeechSessionItem -> item.session.startTime.unixMillisLong
+                val startTime = when (val item = groupAdapter.getItem(it)) {
+                    is TabularSpeechSessionItem -> item.session.startTime
+                    is TabularServiceSessionItem -> item.session.startTime
                     else -> return@mapNotNull null
                 }
-                it to startUnixMillis
+                if (startTime.unixMillisLong in minStart..maxEnd) startTime else null
             }
-            .distinctBy { (_, time) -> time }
-            .forEach { (v, time) ->
-                val timeText = dateFormat.format(DateTimeTz.fromUnixLocal(time).addOffset(9.hours))
+            .distinct()
+            .forEach {
+                val gapHeight =
+                    TimeUnit.MILLISECONDS.toMinutes(it.unixMillisLong - referenceStart)
+                        .toInt() * pxPerMin
+                val timeText = dateFormat.format(it)
+                val top = referenceView.top + gapHeight
                 val rect =
-                    Rect(0, v.top, labelWidth.toInt(), v.top + textHeight)
+                    Rect(0, top, labelWidth.toInt(), top + textHeight)
                 val baseX = rect.centerX().toFloat() - textPaint.measureText(timeText) / 2f
                 val baseY =
                     rect.centerY() - (textPaint.fontMetrics.ascent +
