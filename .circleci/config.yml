@@ -70,6 +70,8 @@ jobs:
             create_universal_apk_from_aab.bash $(find frontend/android/build/outputs -name "*.aab" | head -1)
       - store_artifacts:
           path: frontend/android/build/outputs
+      - store_artifacts:
+          path: universal.apk # see UNIVERSAL_APK_PATH
       - run: *download_dpg
       - run:
           name: Upload an apk and create a distribution by app-manage procedure.
