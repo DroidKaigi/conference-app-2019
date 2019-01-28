@@ -54,7 +54,7 @@ class TimeTableRoomLabelDecoration(
                 val room = when (item) {
                     is TabularSpacerItem -> item.room
                     is TabularServiceSessionItem -> item.session.room
-                    is TabularSpeechSessionItem -> item.session.room
+                    is TabularSpeechSessionItem -> item.speechSession.room
                     else -> return@forEach
                 }
 

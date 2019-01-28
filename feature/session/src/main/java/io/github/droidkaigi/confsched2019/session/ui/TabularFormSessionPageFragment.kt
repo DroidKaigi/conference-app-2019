@@ -75,9 +75,9 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                 when (item) {
                     is TabularSpeechSessionItem ->
                         TimeTableLayoutManager.PeriodInfo(
-                            item.session.startTime.unixMillisLong,
-                            item.session.endTime.unixMillisLong,
-                            item.session.room.sequentialNumber
+                            item.speechSession.startTime.unixMillisLong,
+                            item.speechSession.endTime.unixMillisLong,
+                            item.speechSession.room.sequentialNumber
                         )
                     is TabularServiceSessionItem ->
                         TimeTableLayoutManager.PeriodInfo(
@@ -160,7 +160,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
         }
         return filledItems.sortedBy {
             when (it) {
-                is TabularSpeechSessionItem -> it.session.startTime.unixMillisLong
+                is TabularSpeechSessionItem -> it.speechSession.startTime.unixMillisLong
                 is TabularServiceSessionItem -> it.session.startTime.unixMillisLong
                 is TabularSpacerItem -> it.startUnixMillis
                 else -> 0

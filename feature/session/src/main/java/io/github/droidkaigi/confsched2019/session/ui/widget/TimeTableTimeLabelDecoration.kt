@@ -80,7 +80,7 @@ class TimeTableTimeLabelDecoration(
                 val item = groupAdapter.getItem(parent.getChildAdapterPosition(it))
                 val startUnixMillis = when (item) {
                     is TabularServiceSessionItem -> item.session.startTime.unixMillisLong
-                    is TabularSpeechSessionItem -> item.session.startTime.unixMillisLong
+                    is TabularSpeechSessionItem -> item.speechSession.startTime.unixMillisLong
                     else -> return@mapNotNull null
                 }
                 it to startUnixMillis
