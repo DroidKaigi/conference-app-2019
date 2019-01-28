@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ios_combined
+import ioscombined
 
 extension SpeechSession {
 

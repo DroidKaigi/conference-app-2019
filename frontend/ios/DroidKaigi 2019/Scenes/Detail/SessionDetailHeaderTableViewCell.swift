@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-import ios_combined
+import ioscombined
 
 class SessionDetailHeaderTableViewCell: UITableViewCell, Reusable {
 

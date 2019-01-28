@@ -7,10 +7,10 @@
 
 import Foundation
 import UIKit
-import ios_combined
+import ioscombined
 
 enum TagContent: Hashable {
-    case category(category: ios_combined.Category)
+    case category(category: ioscombined.Category)
     case lang(lang: Lang)
     case beginner
     case interpretation
