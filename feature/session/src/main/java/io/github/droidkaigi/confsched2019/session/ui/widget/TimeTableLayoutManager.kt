@@ -183,8 +183,8 @@ class TimeTableLayoutManager(
                 val topPeriod = periods[topView.adapterPosition]
                 val startPeriodInColumn =
                     calculateStartPeriodInColumn(nextColumnNum, topView, topPeriod) ?: return 0
-                val offsetY =
-                    getDecoratedTop(topView) + (startPeriodInColumn.startUnixMin - topPeriod.startUnixMin) * pxPerMinute
+                val offsetY = getDecoratedTop(topView) +
+                    (startPeriodInColumn.startUnixMin - topPeriod.startUnixMin) * pxPerMinute
                 fillColumnHorizontally(
                     nextColumnNum,
                     startPeriodInColumn.positionInColumn,
@@ -209,8 +209,8 @@ class TimeTableLayoutManager(
                 val topPeriod = periods[topView.adapterPosition]
                 val startPeriodInColumn =
                     calculateStartPeriodInColumn(nextColumnNum, topView, topPeriod) ?: return 0
-                val offsetY =
-                    getDecoratedTop(topView) + (startPeriodInColumn.startUnixMin - topPeriod.startUnixMin) * pxPerMinute
+                val offsetY = getDecoratedTop(topView) +
+                    (startPeriodInColumn.startUnixMin - topPeriod.startUnixMin) * pxPerMinute
                 fillColumnHorizontally(
                     nextColumnNum,
                     startPeriodInColumn.positionInColumn,
@@ -251,13 +251,12 @@ class TimeTableLayoutManager(
 
     private fun calculateHorizontallyScrollAmount(dx: Int, left: Int, right: Int): Int {
         return if (dx > 0) {
-            if (anchor.rightColumn == columns.size() - 1) if (right == parentRight) 0 else min(
-                dx,
-                right - parentRight
-            )
+            if (anchor.rightColumn == columns.size() - 1)
+                if (right == parentRight) 0 else min(dx, right - parentRight)
             else dx
         } else {
-            if (anchor.leftColumn == 0) if (left == parentLeft) 0 else max(dx, left - parentLeft)
+            if (anchor.leftColumn == 0)
+                if (left == parentLeft) 0 else max(dx, left - parentLeft)
             else dx
         }
     }
@@ -409,12 +408,15 @@ class TimeTableLayoutManager(
 
         var maxTopPeriod: Period? = null
         periods
-            .filter { it.startUnixMin <= topPeriod.endUnixMin && it.endUnixMin >= topPeriod.startUnixMin }
+            .filter {
+                it.startUnixMin <= topPeriod.endUnixMin && it.endUnixMin >= topPeriod.startUnixMin
+            }
             .forEach { period ->
                 val gapHeight = (period.startUnixMin - topPeriod.startUnixMin) * pxPerMinute
                 if (top + gapHeight <= parentTop)
-                    maxTopPeriod = maxTopPeriod?.let { if (it.startUnixMin < period.startUnixMin) period else it } ?:
-                        period
+                    maxTopPeriod = maxTopPeriod?.let {
+                        if (it.startUnixMin < period.startUnixMin) period else it
+                    } ?: period
             }
         return maxTopPeriod
     }
