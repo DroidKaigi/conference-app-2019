@@ -41,10 +41,17 @@ android {
     buildTypes {
         staging {
             zipAlignEnabled true
-            useProguard true
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            postprocessing {
+                proguardFiles 'proguard-rules.pro'
+                obfuscate = true
+                // if we want to enable optimization, then codeShrinker must be proguard for now
+                // That may be a bug of r8
+                optimizeCode = false
+                removeUnusedCode = true
+                removeUnusedResources = true
+                codeShrinker = 'r8'
+            }
         }
         release.initWith(staging)
         staging {
@@ -54,8 +61,11 @@ android {
         }
         release {
             applicationIdSuffix null
-            proguardFiles 'proguard-rules-production.pro'
             signingConfig = signingConfigs.release
+
+            postprocessing {
+                proguardFiles 'proguard-rules-production.pro'
+            }
         }
     }
     dataBinding {
