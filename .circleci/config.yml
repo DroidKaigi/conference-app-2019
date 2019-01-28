@@ -21,7 +21,7 @@ docker_env:
       - image: circleci/android:api-28-alpha
     environment:
       <<: *cache_version_keys
-      JAVA_OPTS: "-Xms512m -Xmx2048m"
+      JAVA_OPTS: "-Xmx1024m"
       GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError" -Dorg.gradle.daemon=false -Dorg.gradle.parallel=false'
 
   go_defaults: &go_defaults
@@ -66,7 +66,7 @@ jobs:
           name: Assemble apk from App Bundle
           command: |
             use_debug_keystore
-            ./gradlew bundleDebug --offline
+            ./gradlew bundleStaging --offline
             create_universal_apk_from_aab.bash $(find frontend/android/build/outputs -name "*.aab" | head -1)
       - store_artifacts:
           path: frontend/android/build/outputs
@@ -106,7 +106,7 @@ jobs:
       - restore_cache: *restore_gradle_cache
       - run: *download_all_dependencies
       - save_cache: *save_gradle_cache
-      - run: ./gradlew testDebugUnitTest lintDebug ktlint --continue --offline
+      - run: ./gradlew lintDebug testDebugUnitTest ktlint --continue --offline # we want to check lintRelease as well but RAM shortage... oh my...
       - run:
           name: Aggregate junit report files into one dir
           command: aggregate_junit_results
