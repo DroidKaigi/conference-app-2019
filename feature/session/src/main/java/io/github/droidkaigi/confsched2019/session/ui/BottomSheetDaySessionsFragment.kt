@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
+import com.shopify.livedataktx.observe
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.databinding.ViewHolder
@@ -146,11 +147,23 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                 binding.isCollapsed = isCollapsed
             }
         }
+        sessionPagesStore.reselectedTab.observe(viewLifecycleOwner) {
+            if (SessionPage.pageOfDay(args.day) == it) {
+                scrollToCurrentSession()
+            }
+        }
     }
 
     override fun onDestroyView() {
         binding.sessionsRecycler.adapter = null
         super.onDestroyView()
+    }
+
+    private fun scrollToCurrentSession() {
+        val position = sessionPagesStore.filteredSessions.value.orEmpty()
+            .filter { session -> session.dayNumber == args.day }
+            .indexOfFirst { session -> session.isOnGoing }
+        binding.sessionsRecycler.scrollToPosition(position)
     }
 
     companion object {
