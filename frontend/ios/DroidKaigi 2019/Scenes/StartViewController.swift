@@ -16,10 +16,10 @@ class StartViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        let sessionsViewController = SessionsViewController.instantiateFromStoryboard()
+        let mainViewController = MainViewController.instantiateFromStoryboard()
         // TODO: Replace rootViewController
-        let navigationController = UINavigationController(rootViewController: sessionsViewController)
-        sessionsViewController.navigationItem.titleView = logoView
+        let navigationController = UINavigationController(rootViewController: mainViewController)
+        mainViewController.navigationItem.titleView = logoView
         self.view.window?.rootViewController = navigationController
         self.view.window?.layer.add(CATransition(), forKey: kCATransition)
     }

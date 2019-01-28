@@ -30,6 +30,10 @@ class SessionPagesActionCreator @Inject constructor(
         dispatcher.launchAndDispatch(Action.SessionPageSelected(sessionPage))
     }
 
+    fun reselectTab(sessionPage: SessionPage) {
+        dispatcher.launchAndDispatch(Action.SessionPageReselected(sessionPage))
+    }
+
     fun changeFilter(room: Room, checked: Boolean) {
         dispatcher.launchAndDispatch(Action.RoomFilterChanged(room, checked))
     }

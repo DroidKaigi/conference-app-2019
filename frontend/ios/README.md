@@ -9,7 +9,7 @@ make init
 
 *If you haven't installed Android SDK, then you need to get it. Please visit https://developer.android.com/studio/ and download it. The easist way to install Android Sdk is to install AndroidStudio.*
 
-Please make sure `./gradlew :frontend:ios-combined:packForXCode -PXCODE_CONFIGURATION=Debug` is successfuly run. 
+Please make sure `./gradlew :frontend:ioscombined:packForXCode -PXCODE_CONFIGURATION=Debug` is successfuly run. 
 
 After that, you can open `DroidKaigi 2019.xcworkspace` in Xcode.
 
@@ -28,3 +28,7 @@ If you would like to select the *ANDROID_HOME* variable way, you may be able to 
 ## No such module xxxxxxx
 
 Please open `DroidKaigi 2019.xcworkspace` instead of `DroidKaigi 2019.xcodeproj` in Xcode.
+
+## java.lang.UnsupportedClassVersionError: org/jetbrains/kotlin/lexer/KotlinLexer
+
+Maybe you use an older version of JDK. [Update JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) on your computer and try building again.

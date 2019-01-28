@@ -29,4 +29,5 @@ class SessionSurveyStore @Inject constructor(
     val difficulty get() = sessionFeedback.requireValue().difficulty
     val knowledgeable get() = sessionFeedback.requireValue().knowledgeable
     val comment get() = sessionFeedback.requireValue().comment
+    val submitted get() = sessionFeedback.requireValue().submitted
 }

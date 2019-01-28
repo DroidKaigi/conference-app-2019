@@ -6,22 +6,39 @@
 //
 
 import Foundation
-import ios_combined
+import ioscombined
 import RxSwift
-import RxCocoa
 
 final class SessionRepository {
-    
+
     func fetch() -> Single<SessionContents> {
-        return Single<SessionContents>.create { observer -> Disposable in
-            ApiComponentKt.generateDroidKaigiApi().getSessions(callback: { response in
-                observer(.success(ResponseToModelMapperKt.toModel(response)))
-                return KotlinUnit()
-            }, onError: { error in
-                observer(.error(NSError(domain: error.message ?? "No message", code: -1, userInfo: nil)))
-                return KotlinUnit()
-            })
-            return Disposables.create()
-        }
+        return ApiComponentKt.generateDroidKaigiApi()
+            .getSessionsAsync()
+            .asSingle(Response.self)
+            .map { ResponseToModelMapperKt.toModel($0) }
+            .catchError { throw handledKotlinException($0) }
+            // .do(onError: { NSLog("fetch error: \($0)") })
     }
+
+}
+
+//FIXME: If you have a more better idea, we can refine this.
+private func handledKotlinException(_ error: Error) -> Error {
+
+    guard let cause = error as? KotlinThrowable else {
+        fatalError("Unexpedeted Eroor: \(error)")
+    }
+
+    // Obtain `NSError` from Ktor `IosHttpRequestException`.
+    // See also: data/api/ThrowableExt.kt
+    if let origin = cause.originNSError {
+        return origin
+    }
+
+    // Return handled kotlin exception.
+    if let handledException = cause as? KotlinException {
+        return handledException
+    }
+
+    fatalError("Unexpedeted KotlinThrowable: \(cause)")
 }

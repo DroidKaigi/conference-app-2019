@@ -112,6 +112,7 @@ class SearchFragment : DaggerFragment() {
                                 SearchFragmentDirections.actionSearchToSessionDetail(
                                     session.id
                                 ),
+                                SearchFragmentDirections.actionSearchToSessionSurvey(session),
                                 false,
                                 result.query
                             )

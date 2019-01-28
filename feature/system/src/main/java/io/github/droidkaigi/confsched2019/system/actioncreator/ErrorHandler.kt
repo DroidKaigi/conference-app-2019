@@ -5,7 +5,7 @@ import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.firestore.FirebaseFirestoreException
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
-import io.github.droidkaigi.confsched2019.model.ErrorMessage
+import io.github.droidkaigi.confsched2019.model.Message
 import io.github.droidkaigi.confsched2019.system.BuildConfig
 import io.github.droidkaigi.confsched2019.system.R
 import io.github.droidkaigi.confsched2019.timber.error
@@ -38,22 +38,22 @@ interface ErrorHandler {
             is FirebaseFirestoreException,
             is FirebaseApiNotAvailableException,
             is FirebaseNetworkException -> {
-                val message = ErrorMessage.of(R.string.system_error_network, e)
+                val message = Message.of(R.string.system_error_network)
                 Timber.error(e)
-                dispatcher.launchAndDispatch(Action.Error(message))
+                dispatcher.launchAndDispatch(Action.ShowProcessingMessage(message))
             }
             is BadResponseStatusException -> {
-                val message = ErrorMessage.of(R.string.system_error_server, e)
+                val message = Message.of(R.string.system_error_server)
                 Timber.error(e)
-                dispatcher.launchAndDispatch(Action.Error(message))
+                dispatcher.launchAndDispatch(Action.ShowProcessingMessage(message))
             }
             else -> {
-                val message = ErrorMessage.of(msg ?: e.message ?: e.javaClass.name ?: "", e)
+                val message = Message.of(msg ?: e.message ?: e.javaClass.name ?: "")
                 Timber.error(e) {
-                    (message as ErrorMessage.Message).message
+                    (message as Message.TextMessage).message
                 }
                 if (BuildConfig.DEBUG) throw UnknownException(e)
-                dispatcher.launchAndDispatch(Action.Error(message))
+                dispatcher.launchAndDispatch(Action.ShowProcessingMessage(message))
             }
         }
     }

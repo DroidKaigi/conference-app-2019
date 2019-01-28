@@ -12,6 +12,10 @@
             android:id="@+id/action_session_to_session_detail"
             app:destination="@id/session_detail"
             />
+        <action
+            android:id="@+id/action_session_to_session_survey"
+            app:destination="@id/session_survey"
+            />
     </fragment>
     <fragment
         android:id="@+id/sessions"
@@ -77,12 +81,25 @@
             android:id="@+id/action_search_to_session_detail"
             app:destination="@id/session_detail"
             />
+        <action
+            android:id="@+id/action_search_to_session_survey"
+            app:destination="@id/session_survey"
+            />
     </fragment>
     <fragment
         android:id="@+id/tabular_form"
         android:name="io.github.droidkaigi.confsched2019.session.ui.TabularFormSessionPagesFragment"
         android:label="@string/tabular_form_label"
         >
+        <action
+            android:id="@+id/action_tabular_form_to_session_detail"
+            app:destination="@id/session_detail"
+            />
+        <argument
+            android:name="day"
+            app:argType="integer"
+            android:defaultValue="1"
+            />
     </fragment>
     <fragment
         android:id="@+id/speaker"

@@ -6,8 +6,9 @@
 //
 
 import UIKit
-import ios_combined
+import ioscombined
 import SnapKit
+import MaterialComponents.MDCInkTouchController
 
 class SessionTableViewCell: UITableViewCell, Reusable {
 
@@ -28,11 +29,7 @@ class SessionTableViewCell: UITableViewCell, Reusable {
                     let cell = SpeakerCell(speaker: speaker)
                     speakersStackView.addArrangedSubview(cell)
                 }
-                tagContents.append(.lang(lang: speechSession.lang))
-                if speechSession.forBeginners {
-                    tagContents.append(.beginner)
-                }
-                tagContents.append(.category(category: speechSession.category))
+                tagContents = speechSession.tagContents
             default:
                 return
             }
@@ -40,10 +37,10 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         }
     }
 
-    var tagContents: [TagContent] = []
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
         setupSubviews()
     }
     required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -86,6 +83,12 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         SessionCalculateHeightTableViewCell.cachedHeights[hash] = collectionViewHeight
         return CGSize.init(width: targetSize.width, height: collectionViewHeight + defaultSize.height)
     }
+
+    private var tagContents: [TagContent] = []
+
+    private lazy var inkTouchController: MDCInkTouchController = {
+        return MDCInkTouchController(view: self)
+    }()
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -158,6 +161,8 @@ class SessionTableViewCell: UITableViewCell, Reusable {
             $0.top.equalTo(timeAndRoomLabel.snp.bottom).offset(7)
             $0.bottom.equalToSuperview().inset(26)
         }
+        
+        inkTouchController.addInkView()
     }
 
     private func remakeTimeAndRoomLabelConstraints() {
@@ -194,15 +199,8 @@ final class SessionCalculateHeightTableViewCell: UITableViewCell {
 
     var session: Session? {
         didSet {
-            if let session = session as? SpeechSession {
-                tagContents = [.lang(lang: session.lang)]
-                if session.forBeginners {
-                    tagContents.append(.beginner)
-                }
-                tagContents.append(.category(category: session.category))
-            } else {
-                tagContents = []
-            }
+            guard let speechSession = session as? SpeechSession else { return }
+            tagContents = speechSession.tagContents
             collectionView.reloadData()
         }
     }
@@ -260,7 +258,7 @@ extension SessionCalculateHeightTableViewCell: UICollectionViewDelegateFlowLayou
         let cell = Static.cell
         cell.tagContent = tagContents[indexPath.item]
         let cellSize = cell.label.intrinsicContentSize
-        let width = cellSize.width > collectionView.bounds.size.width ? collectionView.bounds.size.width - 30 : cellSize.width
+        let width = cellSize.width > collectionView.bounds.size.width - 20 ? collectionView.bounds.size.width - 20 : cellSize.width
         return CGSize(width: width, height: cellSize.height)
     }
 }

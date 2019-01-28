@@ -1,16 +1,24 @@
 package io.github.droidkaigi.confsched2019.session.ui.item
 
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.model.SpeechSession
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemTabularSpeechSessionBinding
 
-class TabularSpeechSessionItem(val session: SpeechSession) :
-    BindableItem<ItemTabularSpeechSessionBinding>(session.id.hashCode().toLong()) {
+class TabularSpeechSessionItem(
+    val session: SpeechSession,
+    private val navDirections: NavDirections,
+    private val navController: NavController
+) : BindableItem<ItemTabularSpeechSessionBinding>(session.id.hashCode().toLong()) {
 
     override fun bind(viewBinding: ItemTabularSpeechSessionBinding, position: Int) {
         viewBinding.apply {
+            root.setOnClickListener {
+                navController.navigate(navDirections)
+            }
             session = this@TabularSpeechSessionItem.session
             lang = defaultLang()
         }
