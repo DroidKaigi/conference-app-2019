@@ -19,18 +19,19 @@ import io.github.droidkaigi.confsched2019.session.databinding.ItemTabularSpeechS
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
 class TabularSpeechSessionItem(
-    val speechSession: SpeechSession,
+    val session: SpeechSession,
     private val navDirections: NavDirections,
     private val navController: NavController
-) : BindableItem<ItemTabularSpeechSessionBinding>(speechSession.id.hashCode().toLong()) {
+) : BindableItem<ItemTabularSpeechSessionBinding>(session.id.hashCode().toLong()) {
 
     private val groupAdapter = GroupAdapter<ViewHolder<*>>()
 
     init {
-        groupAdapter.addAll(speechSession.speakers.map { SpeakerIconItem(it) })
+        groupAdapter.addAll(session.speakers.map { SpeakerIconItem(it) })
     }
 
     override fun bind(viewBinding: ItemTabularSpeechSessionBinding, position: Int) {
+        val speechSession = session
         viewBinding.apply {
             root.setOnClickListener {
                 navController.navigate(navDirections)
@@ -55,13 +56,13 @@ class TabularSpeechSessionItem(
 
         other as TabularSpeechSessionItem
 
-        if (speechSession != other.speechSession) return false
+        if (session != other.session) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return speechSession.hashCode()
+        return session.hashCode()
     }
 
     private class SpeakerIconItem(
