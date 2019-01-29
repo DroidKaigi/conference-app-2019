@@ -2,30 +2,54 @@ package io.github.droidkaigi.confsched2019.session.ui.widget
 
 import android.graphics.Rect
 import android.util.SparseArray
+import android.util.SparseIntArray
 import android.view.View
+import androidx.core.util.forEach
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.NO_POSITION
+import androidx.recyclerview.widget.RecyclerView.Recycler
+import androidx.recyclerview.widget.RecyclerView.State
 import java.util.concurrent.TimeUnit
+import kotlin.math.max
+import kotlin.math.min
 
-// TODO: Implement View Recycling on scrolling
 // TODO: save first visible item position or scroll position and restore it
 // TODO: implement scrollToPosition
 class TimeTableLayoutManager(
     private val columnWidth: Int,
     private val pxPerMinute: Int,
+    private val shouldLoopHorizontally: Boolean,
     private val periodLookUp: (position: Int) -> PeriodInfo
 ) : RecyclerView.LayoutManager() {
 
     class PeriodInfo(val startUnixMillis: Long, val endUnixMillis: Long, val columnNumber: Int)
 
     private data class Period(
-        val startUnixMillis: Long,
-        val endUnixMillis: Long,
+        val startUnixMin: Int,
+        val endUnixMin: Int,
         val columnNumber: Int,
-        val position: Int
+        val adapterPosition: Int,
+        val positionInColumn: Int
     ) {
-        val startUnixMin = TimeUnit.MILLISECONDS.toMinutes(startUnixMillis).toInt()
-        val endUnixMin = TimeUnit.MILLISECONDS.toMinutes(endUnixMillis).toInt()
         val durationMin = endUnixMin - startUnixMin
+    }
+
+    private class Anchor {
+        val top = SparseIntArray()
+        val bottom = SparseIntArray()
+        var leftColumn = NO_POSITION
+        var rightColumn = NO_POSITION
+
+        fun reset() {
+            top.clear()
+            bottom.clear()
+            leftColumn = NO_POSITION
+            rightColumn = NO_POSITION
+        }
+    }
+
+    enum class Direction {
+        LEFT, TOP, RIGHT, BOTTOM
     }
 
     private val parentLeft get() = paddingLeft
@@ -33,8 +57,12 @@ class TimeTableLayoutManager(
     private val parentRight get() = width - paddingRight
     private val parentBottom get() = height - paddingBottom
 
-    private val columns = HashMap<Int, SparseArray<Period>>()
-    private val periods = SparseArray<Period>()
+    private val periods = ArrayList<Period>()
+    private val columns = SparseArray<ArrayList<Period>>()
+    private val anchor = Anchor()
+
+    private var firstStartUnixMin = NO_TIME
+    private var lastEndUnixMin = NO_TIME
 
     override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
         return RecyclerView.LayoutParams(
@@ -43,120 +71,246 @@ class TimeTableLayoutManager(
         )
     }
 
-    override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
+    override fun onLayoutChildren(recycler: Recycler, state: State) {
         if (itemCount == 0) {
             detachAndScrapAttachedViews(recycler)
             periods.clear()
             columns.clear()
+            anchor.reset()
             return
         }
 
         detachAndScrapAttachedViews(recycler)
+        anchor.reset()
         calculateColumns()
 
-        var xOffset = parentLeft
-        for (columnNumber in 0 until columns.size) {
-            xOffset += fillColumn(columnNumber, 0, xOffset, parentTop, recycler)
+        var offsetX = parentLeft
+        for (columnNum in 0 until columns.size()) {
+            if (columns.indexOfKey(columnNum) == 0) anchor.leftColumn = columnNum
+            offsetX += fillColumnHorizontally(columnNum, 0, offsetX, parentTop, true, recycler)
+            if (offsetX > parentRight) {
+                anchor.rightColumn = columnNum
+                break
+            }
         }
-    }
-
-    private fun fillColumn(
-        columnNumber: Int,
-        fromPeriodPositionInColumn: Int,
-        offsetX: Int,
-        startY: Int,
-        recycler: RecyclerView.Recycler
-    ): Int {
-        val periods = columns[columnNumber] ?: return 0
-        var yOffset = startY
-        var columnWidth = 0
-        for (i in fromPeriodPositionInColumn until periods.size()) {
-            val period = periods[i]
-            val view = recycler.getViewForPosition(period.position)
-            addView(view)
-            measureChild(view, period)
-            val width = getDecoratedMeasuredWidth(view)
-            val height = getDecoratedMeasuredHeight(view)
-            val left = offsetX
-            val top = yOffset
-            val right = left + width
-            val bottom = top + height
-            layoutDecorated(view, left, top, right, bottom)
-
-            columnWidth = width
-            yOffset = bottom
-        }
-        return columnWidth
     }
 
     override fun canScrollVertically() = true
 
     override fun canScrollHorizontally() = true
 
-    override fun scrollVerticallyBy(
-        dy: Int,
-        recycler: RecyclerView.Recycler,
-        state: RecyclerView.State
-    ): Int {
+    override fun scrollVerticallyBy(dy: Int, recycler: Recycler, state: State): Int {
         if (dy == 0) return 0
 
-        val scrollAmount = if (dy > 0) {
-            val bottom = getChildAt(childCount - 1)?.let(this::getDecoratedBottom) ?: return 0
-            if (bottom - dy < parentBottom) bottom - parentBottom else dy
+        val scrollAmount = calculateVerticallyScrollAmount(dy)
+        if (scrollAmount > 0) {
+            // recycle
+            anchor.top.forEach { columnNum, position ->
+                val view = findViewByPosition(position) ?: return@forEach
+                val bottom = getDecoratedBottom(view)
+                if (bottom - scrollAmount < parentTop) {
+                    val period = periods.getOrNull(position) ?: return@forEach
+                    val nextPeriod = columns.get(columnNum).getOrNull(period.positionInColumn + 1)
+                        ?: return@forEach
+                    removeAndRecycleView(view, recycler)
+                    anchor.top.put(columnNum, nextPeriod.adapterPosition)
+                }
+            }
+            // append
+            anchor.bottom.forEach { columnNum, position ->
+                val view = findViewByPosition(position) ?: return@forEach
+                val bottom = getDecoratedBottom(view)
+                if (bottom - scrollAmount < parentBottom) {
+                    val left = getDecoratedLeft(view)
+                    val period = periods.getOrNull(position) ?: return@forEach
+                    val nextPeriod = columns.get(columnNum).getOrNull(period.positionInColumn + 1)
+                        ?: return@forEach
+                    addPeriod(nextPeriod, Direction.BOTTOM, left, bottom, recycler)
+                    anchor.bottom.put(columnNum, nextPeriod.adapterPosition)
+                }
+            }
         } else {
-            val top = getChildAt(0)?.let(this::getDecoratedTop) ?: return 0
-            if (top - dy > parentTop) top - parentTop else dy
+            // recycle
+            anchor.bottom.forEach { columnNum, position ->
+                val view = findViewByPosition(position) ?: return@forEach
+                val top = getDecoratedTop(view)
+                if (top - scrollAmount > parentBottom) {
+                    val period = periods.getOrNull(position) ?: return@forEach
+                    val nextPeriod = columns.get(columnNum).getOrNull(period.positionInColumn - 1)
+                        ?: return@forEach
+                    removeAndRecycleView(view, recycler)
+                    anchor.bottom.put(columnNum, nextPeriod.adapterPosition)
+                }
+            }
+            // prepend
+            anchor.top.forEach { columnNum, position ->
+                val view = findViewByPosition(position) ?: return@forEach
+                val top = getDecoratedTop(view)
+                if (top - scrollAmount > parentTop) {
+                    val left = getDecoratedLeft(view)
+                    val period = periods.getOrNull(position) ?: return@forEach
+                    val nextPeriod = columns.get(columnNum).getOrNull(period.positionInColumn - 1)
+                        ?: return@forEach
+                    addPeriod(nextPeriod, Direction.TOP, left, top, recycler)
+                    anchor.top.put(columnNum, nextPeriod.adapterPosition)
+                }
+            }
         }
 
         offsetChildrenVertical(-scrollAmount)
         return scrollAmount
     }
 
-    override fun scrollHorizontallyBy(
-        dx: Int,
-        recycler: RecyclerView.Recycler,
-        state: RecyclerView.State
-    ): Int {
+    override fun scrollHorizontallyBy(dx: Int, recycler: Recycler, state: State): Int {
         if (dx == 0) return 0
 
-        val scrollAmount = if (dx > 0) {
-            val right = getChildAt(childCount - 1)?.let(this::getDecoratedRight) ?: return 0
-            if (right - dx < parentRight) right - parentRight else dx
+        val rightView = findRightView() ?: return 0
+        val leftView = findLeftView() ?: return 0
+        val right = getDecoratedRight(rightView)
+        val left = getDecoratedLeft(leftView)
+        val scrollAmount = calculateHorizontallyScrollAmount(dx, left, right)
+        if (scrollAmount > 0) {
+            // recycle
+            if (getDecoratedRight(leftView) - dx < parentLeft) {
+                findViewsByColumn(anchor.leftColumn).forEach { removeAndRecycleView(it, recycler) }
+                anchor.leftColumn.getNextColumn()?.let { anchor.leftColumn = it }
+            }
+            // append
+            if (right - scrollAmount < parentRight) {
+                val nextColumnNum = anchor.rightColumn.getNextColumn() ?: return 0
+
+                val topView = findTopView() ?: return 0
+                val topPeriod = periods[topView.adapterPosition]
+                val startPeriodInColumn =
+                    calculateStartPeriodInColumn(nextColumnNum, topView, topPeriod) ?: return 0
+                val offsetY = getDecoratedTop(topView) +
+                    (startPeriodInColumn.startUnixMin - topPeriod.startUnixMin) * pxPerMinute
+                fillColumnHorizontally(
+                    nextColumnNum,
+                    startPeriodInColumn.positionInColumn,
+                    right,
+                    offsetY,
+                    true,
+                    recycler
+                )
+                anchor.rightColumn = nextColumnNum
+            }
         } else {
-            val left = getChildAt(0)?.let(this::getDecoratedLeft) ?: return 0
-            if (left - dx > parentLeft) left - parentLeft else dx
+            // recycle
+            if (getDecoratedLeft(rightView) - dx > parentRight) {
+                findViewsByColumn(anchor.rightColumn).forEach { removeAndRecycleView(it, recycler) }
+                anchor.rightColumn.getPreviousColumn()?.let { anchor.rightColumn = it }
+            }
+            // prepend
+            if (left - scrollAmount > parentLeft) {
+                val previousColumn = anchor.leftColumn.getPreviousColumn() ?: return 0
+
+                val topView = findTopView() ?: return 0
+                val topPeriod = periods[topView.adapterPosition]
+                val startPeriodInColumn =
+                    calculateStartPeriodInColumn(previousColumn, topView, topPeriod) ?: return 0
+                val offsetY = getDecoratedTop(topView) +
+                    (startPeriodInColumn.startUnixMin - topPeriod.startUnixMin) * pxPerMinute
+                fillColumnHorizontally(
+                    previousColumn,
+                    startPeriodInColumn.positionInColumn,
+                    left,
+                    offsetY,
+                    false,
+                    recycler
+                )
+                anchor.leftColumn = previousColumn
+            }
         }
 
         offsetChildrenHorizontal(-scrollAmount)
-        return scrollAmount
+        return dx
     }
 
-    override fun computeVerticalScrollRange(state: RecyclerView.State): Int {
-        val top = getChildAt(0)?.let(this::getDecoratedTop) ?: return 0
-        val bottom = getChildAt(childCount - 1)?.let(this::getDecoratedBottom) ?: return 0
-        return bottom - top
+    private fun calculateVerticallyScrollAmount(dy: Int): Int {
+        return if (dy > 0) {
+            val bottomView = findBottomView() ?: return 0
+            val period = periods.getOrNull(bottomView.adapterPosition) ?: return 0
+            val bottom = getDecoratedBottom(bottomView)
+            if (period.endUnixMin == lastEndUnixMin) if (bottom == parentBottom) 0 else min(
+                dy,
+                bottom - parentBottom
+            )
+            else dy
+        } else {
+            val topView = findTopView() ?: return 0
+            val period = periods.getOrNull(topView.adapterPosition) ?: return 0
+            val top = getDecoratedTop(topView)
+            if (period.startUnixMin == firstStartUnixMin) if (top == parentTop) 0 else max(
+                dy,
+                top - parentTop
+            )
+            else dy
+        }
     }
 
-    override fun computeVerticalScrollExtent(state: RecyclerView.State): Int {
-        return height - paddingTop - paddingBottom
+    private fun calculateHorizontallyScrollAmount(dx: Int, left: Int, right: Int): Int {
+        if (shouldLoopHorizontally) return dx
+
+        return if (dx > 0) {
+            if (anchor.rightColumn.isLastColumn()) if (right <= parentRight) 0
+            else min(dx, right - parentRight)
+            else dx
+        } else {
+            if (anchor.leftColumn.isFirstColumn()) if (left >= parentLeft) 0
+            else max(dx, left - parentLeft)
+            else dx
+        }
     }
 
-    override fun computeVerticalScrollOffset(state: RecyclerView.State): Int {
-        return -(getChildAt(0)?.let(this::getDecoratedTop) ?: 0)
+    private fun addPeriod(
+        period: Period,
+        direction: Direction,
+        offsetX: Int,
+        offsetY: Int,
+        recycler: Recycler
+    ): Pair<Int, Int> {
+        val view = recycler.getViewForPosition(period.adapterPosition)
+        addView(view)
+        measureChild(view, period)
+        val width = getDecoratedMeasuredWidth(view)
+        val height = getDecoratedMeasuredHeight(view)
+        val left = if (direction == Direction.LEFT) offsetX - width else offsetX
+        val top = if (direction == Direction.TOP) offsetY - height else offsetY
+        val right = left + width
+        val bottom = top + height
+        layoutDecorated(view, left, top, right, bottom)
+        return width to height
     }
 
-    override fun computeHorizontalScrollRange(state: RecyclerView.State): Int {
-        val left = getChildAt(0)?.let(this::getDecoratedLeft) ?: return 0
-        val right = getChildAt(childCount - 1)?.let(this::getDecoratedRight) ?: return 0
-        return right - left
-    }
+    private fun fillColumnHorizontally(
+        columnNum: Int,
+        startPositionInColumn: Int,
+        offsetX: Int,
+        startY: Int,
+        isAppend: Boolean,
+        recycler: Recycler
+    ): Int {
+        val periods = columns[columnNum] ?: return 0
+        val direction = if (isAppend) Direction.RIGHT else Direction.LEFT
+        var offsetY = startY
+        var columnWidth = 0
+        for (i in startPositionInColumn until periods.size) {
+            val period = periods[i]
+            val (width, height) = addPeriod(period, direction, offsetX, offsetY, recycler)
 
-    override fun computeHorizontalScrollExtent(state: RecyclerView.State): Int {
-        return width - paddingBottom - paddingRight
-    }
+            offsetY += height
 
-    override fun computeHorizontalScrollOffset(state: RecyclerView.State): Int {
-        return -(getChildAt(0)?.let(this::getDecoratedLeft) ?: 0)
+            if (i == startPositionInColumn) {
+                anchor.top.put(columnNum, period.adapterPosition)
+            }
+            if (offsetY > parentBottom) {
+                columnWidth = width
+                anchor.bottom.put(columnNum, period.adapterPosition)
+                break
+            }
+        }
+        return columnWidth
     }
 
     private fun measureChild(view: View, period: Period) {
@@ -182,23 +336,157 @@ class TimeTableLayoutManager(
         view.measure(widthSpec, heightSpec)
     }
 
+    private fun findTopView(): View? {
+        var minTop: Int? = null
+        var minView: View? = null
+        anchor.top.forEach { _, position ->
+            val view = findViewByPosition(position) ?: return@forEach
+            val top = getDecoratedTop(view)
+            if (minView == null) {
+                minView = view
+                minTop = top
+                return@forEach
+            }
+            minTop?.let {
+                if (top < it) {
+                    minView = view
+                    minTop = top
+                }
+            }
+        }
+        return minView
+    }
+
+    private fun findBottomView(): View? {
+        var maxBottom: Int? = null
+        var maxView: View? = null
+        anchor.bottom.forEach { _, position ->
+            val view = findViewByPosition(position) ?: return@forEach
+            val bottom = getDecoratedBottom(view)
+            if (maxView == null) {
+                maxView = view
+                maxBottom = bottom
+                return@forEach
+            }
+            maxBottom?.let {
+                if (bottom > it) {
+                    maxView = view
+                    maxBottom = bottom
+                }
+            }
+        }
+        return maxView
+    }
+
+    private fun findLeftView() = findViewByColumn(anchor.leftColumn)
+
+    private fun findRightView() = findViewByColumn(anchor.rightColumn)
+
+    private fun findViewByColumn(columnNumber: Int): View? {
+        (0 until childCount).forEach { layoutPosition ->
+            val view = getChildAt(layoutPosition) ?: return@forEach
+            val period = periods[view.adapterPosition]
+            if (period.columnNumber == columnNumber) return view
+        }
+        return null
+    }
+
+    private fun findViewsByColumn(columnNumber: Int): List<View> {
+        return (0 until childCount).mapNotNull { layoutPosition ->
+            val view = getChildAt(layoutPosition) ?: return@mapNotNull null
+            val period = periods[view.adapterPosition]
+            if (period.columnNumber == columnNumber) view else null
+        }
+    }
+
+    private fun calculateStartPeriodInColumn(
+        columnNumber: Int,
+        topView: View,
+        topPeriod: Period
+    ): Period? {
+        if (topPeriod.adapterPosition != topView.adapterPosition) return null
+        val periods = columns[columnNumber] ?: return null
+        val top = getDecoratedTop(topView)
+
+        var maxTopPeriod: Period? = null
+        periods.filter {
+            it.startUnixMin <= topPeriod.endUnixMin && it.endUnixMin >= topPeriod.startUnixMin
+        }
+            .forEach { period ->
+                val gapHeight = (period.startUnixMin - topPeriod.startUnixMin) * pxPerMinute
+                if (top + gapHeight <= parentTop)
+                    maxTopPeriod = maxTopPeriod?.let {
+                        if (it.startUnixMin < period.startUnixMin) period else it
+                    } ?: period
+            }
+        return maxTopPeriod
+    }
+
     private fun calculateColumns() {
         periods.clear()
         columns.clear()
-        (0 until itemCount)
-            .map {
-                val periodInfo = periodLookUp(it)
-                Period(
-                    periodInfo.startUnixMillis,
-                    periodInfo.endUnixMillis,
-                    periodInfo.columnNumber,
-                    it
-                )
+        firstStartUnixMin = NO_TIME
+        lastEndUnixMin = NO_TIME
+
+        (0 until itemCount).forEach {
+            val periodInfo = periodLookUp(it)
+            val column = columns.getOrPut(periodInfo.columnNumber) { ArrayList() }
+
+            val period = Period(
+                TimeUnit.MILLISECONDS.toMinutes(periodInfo.startUnixMillis).toInt(),
+                TimeUnit.MILLISECONDS.toMinutes(periodInfo.endUnixMillis).toInt(),
+                periodInfo.columnNumber,
+                adapterPosition = it,
+                positionInColumn = column.size
+            )
+            periods.add(period)
+            column.add(period)
+
+            if (it == 0) {
+                firstStartUnixMin = period.startUnixMin
+                lastEndUnixMin = period.endUnixMin
+            } else {
+                firstStartUnixMin = min(period.startUnixMin, firstStartUnixMin)
+                lastEndUnixMin = max(period.endUnixMin, lastEndUnixMin)
             }
-            .forEachIndexed { i, period ->
-                periods.put(i, period)
-                val list = columns.getOrPut(period.columnNumber) { SparseArray() }
-                list.put(list.size(), period)
-            }
+        }
+    }
+
+    private fun Int.isFirstColumn() = columns.indexOfKey(this) == 0
+
+    private fun Int.isLastColumn() = columns.indexOfKey(this) == columns.size() - 1
+
+    private fun Int.getNextColumn(): Int? {
+        val index = columns.indexOfKey(this)
+        return if (index == columns.size() - 1)
+            if (shouldLoopHorizontally) columns.keyAt(0) else null
+        else
+            columns.keyAt(index + 1)
+    }
+
+    private fun Int.getPreviousColumn(): Int? {
+        val index = columns.indexOfKey(this)
+        return if (index == 0)
+            if (shouldLoopHorizontally) columns.keyAt(columns.size() - 1) else null
+        else
+            columns.keyAt(index - 1)
+    }
+
+    private inline val View.adapterPosition
+        get() = (layoutParams as RecyclerView.LayoutParams).viewAdapterPosition
+
+    private inline fun <E> SparseArray<E>.getOrPut(key: Int, defaultValue: () -> E): E {
+        val value = get(key)
+        return if (value == null) {
+            val answer = defaultValue()
+            put(key, answer)
+            answer
+        } else {
+            value
+        }
+    }
+
+    companion object {
+        private const val NO_TIME = -1
     }
 }

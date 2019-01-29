@@ -8,12 +8,14 @@ import android.graphics.Rect
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupAdapter
+import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularServiceSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpacerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionItem
 
 class TimeTableRoomLabelDecoration(
+    private val columnWidth: Int,
     private val labelHeight: Float,
     private val labelTextSize: Float,
     private val labelBackgroundColor: Int,
@@ -22,6 +24,7 @@ class TimeTableRoomLabelDecoration(
 ) : RecyclerView.ItemDecoration() {
 
     constructor(context: Context, groupAdapter: GroupAdapter<*>) : this(
+        context.resources.getDimensionPixelOffset(R.dimen.tabular_form_column_width),
         context.resources.getDimension(R.dimen.tabular_form_room_label_height),
         context.resources.getDimension(R.dimen.tabular_form_room_label_text_size),
         Color.WHITE,
@@ -46,26 +49,58 @@ class TimeTableRoomLabelDecoration(
             backgroundPaint
         )
 
-        // draw room number
-        parent.children
-            .map { it to groupAdapter.getItem(parent.getChildAdapterPosition(it)) }
-            .distinctBy { (view, _) -> view.left }
-            .forEach { (view, item) ->
-                val room = when (item) {
-                    is TabularSpacerItem -> item.room
+        val rooms = (0 until groupAdapter.itemCount)
+            .mapNotNull {
+                when (val item = groupAdapter.getItem(it)) {
                     is TabularServiceSessionItem -> item.session.room
                     is TabularSpeechSessionItem -> item.session.room
-                    else -> return@forEach
+                    else -> null
                 }
-
-                val roomName = room.name
-                val rect =
-                    Rect(view.left, parent.top, view.right, parent.top + labelHeight.toInt())
-                val baseX = rect.centerX().toFloat() - textPaint.measureText(roomName) / 2f
-                val baseY =
-                    rect.centerY() - (textPaint.fontMetrics.ascent +
-                        textPaint.fontMetrics.descent) / 2f
-                c.drawText(roomName, baseX, baseY, textPaint)
             }
+            .distinct()
+            .sortedBy { it.sequentialNumber }
+        val leftView = parent.children.minBy { it.left } ?: return
+        val leftRoom =
+            when (val item = groupAdapter.getItem(parent.getChildAdapterPosition(leftView))) {
+                is TabularServiceSessionItem -> item.session.room
+                is TabularSpeechSessionItem -> item.session.room
+                is TabularSpacerItem -> item.room
+                else -> return
+            }
+        var offsetX = leftView.left
+        rooms.firstOrNull { it.sequentialNumber == leftRoom.sequentialNumber - 1 }
+            ?.let { drawRoomNumber(c, parent, offsetX - columnWidth, it) }
+        for (room in rooms) {
+            if (room.sequentialNumber < leftRoom.sequentialNumber) continue
+            drawRoomNumber(c, parent, offsetX, room)
+            offsetX += columnWidth
+            if (offsetX > c.width) break
+        }
+        for (room in rooms) {
+            if (room.sequentialNumber >= leftRoom.sequentialNumber) continue
+            drawRoomNumber(c, parent, offsetX, room)
+            offsetX += columnWidth
+            if (offsetX > c.width) break
+        }
+    }
+
+    private fun drawRoomNumber(
+        c: Canvas,
+        parent: RecyclerView,
+        offsetX: Int,
+        room: Room
+    ) {
+        val roomName = room.name
+        val rect = Rect(
+            offsetX,
+            parent.top,
+            (offsetX + columnWidth),
+            parent.top + labelHeight.toInt()
+        )
+        val baseX = rect.centerX().toFloat() - textPaint.measureText(roomName) / 2f
+        val baseY =
+            rect.centerY() - (textPaint.fontMetrics.ascent +
+                textPaint.fontMetrics.descent) / 2f
+        c.drawText(roomName, baseX, baseY, textPaint)
     }
 }

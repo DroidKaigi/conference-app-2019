@@ -24,7 +24,6 @@ import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpacerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
-import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableDividerDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableLayoutManager
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableRoomLabelDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableTimeLabelDecoration
@@ -64,12 +63,12 @@ class TabularFormSessionPageFragment : DaggerFragment() {
 
         val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.tabularFormSessionsRecycler.apply {
-            addItemDecoration(TimeTableDividerDecoration(context, COLUMN_COUNT, groupAdapter))
             addItemDecoration(TimeTableTimeLabelDecoration(context, groupAdapter))
             addItemDecoration(TimeTableRoomLabelDecoration(context, groupAdapter))
             layoutManager = TimeTableLayoutManager(
                 resources.getDimensionPixelSize(R.dimen.tabular_form_column_width),
-                resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute)
+                resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute),
+                shouldLoopHorizontally = true
             ) { position ->
                 val item = groupAdapter.getItem(position)
                 when (item) {
@@ -169,8 +168,6 @@ class TabularFormSessionPageFragment : DaggerFragment() {
     }
 
     companion object {
-        const val COLUMN_COUNT = 9
-
         fun newInstance(args: TabularFormSessionPagesFragmentArgs): TabularFormSessionPageFragment {
             return TabularFormSessionPageFragment()
                 .apply { arguments = args.toBundle() }
