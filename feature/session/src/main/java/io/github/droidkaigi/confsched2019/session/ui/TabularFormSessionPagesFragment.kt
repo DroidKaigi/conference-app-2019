@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import com.google.android.material.tabs.TabLayout
+import com.soywiz.klock.DateTime
+import com.soywiz.klock.hours
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -74,6 +76,14 @@ class TabularFormSessionPagesFragment : DaggerFragment() {
             // Select first tab
             if (index == 0) {
                 newTab.select()
+            }
+
+            // Select second tab
+            if (index == 1){
+                val jstNow = DateTime.now().toOffset(9.hours)
+                if (jstNow.yearInt == 2019 && jstNow.month1 == 2 && jstNow.dayOfMonth == 8) {
+                    newTab.select()
+                }
             }
         }
     }
