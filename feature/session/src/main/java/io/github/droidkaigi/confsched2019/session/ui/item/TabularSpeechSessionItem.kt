@@ -43,7 +43,27 @@ class TabularSpeechSessionItem(
                 layoutManager = LinearLayoutManager(root.context, RecyclerView.HORIZONTAL, false)
                 adapter = groupAdapter
             }
-            // FIXME pattern favorited
+
+            if (speechSession.isFavorited) {
+                backgroundView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        root.context,
+                        R.color.tabular_session_favoried_background
+                    )
+                )
+                verticalLineView.setBackgroundColor(
+                    ContextCompat.getColor(root.context, R.color.red1)
+                )
+                sessionTitle.setTextColor(
+                    ContextCompat.getColor(root.context, R.color.red1)
+                )
+            } else {
+                backgroundView.setBackgroundResource(R.drawable.bg_item_tabular)
+                verticalLineView.setBackgroundResource(R.drawable.bg_vertical_line)
+                sessionTitle.setTextColor(
+                    ContextCompat.getColorStateList(root.context, R.color.tabular_session_title)
+                )
+            }
             root.isActivated = !speechSession.isFinished
         }
     }
