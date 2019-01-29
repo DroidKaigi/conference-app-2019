@@ -12,7 +12,8 @@ import RxCocoa
 
 final class SessionsViewModel {
 
-    private let repository =  SessionRepository()
+    private let sessionRepository = SessionRepository()
+    private let favoriteRepository = FavoriteRepository()
     private let bag = DisposeBag()
     private let day: Day
     init(day: Day) {
@@ -36,13 +37,17 @@ extension SessionsViewModel {
         let sessionContents = input.viewWillAppear
                 .flatMap { [weak self] (_) -> Observable<SessionContents> in
                     guard let `self` = self else { return Observable.empty() }
-                    return self.repository.fetch()
+                    return self.sessionRepository.fetch()
                         .asObservable()
                         .catchError { error in
                             self._error.accept(error.localizedDescription)
                             return Observable.empty()
                         }
                 }
+        
+        let favoriteSessionIds = favoriteRepository.sessionIdsDidChanged
+        
+        favoriteSessionIds.subscribe { print($0) }.disposed(by: bag)
         
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
