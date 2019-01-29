@@ -3,11 +3,11 @@ package dependencies
 @Suppress("unused")
 object Dep {
     object GradlePlugin {
+        val android = "com.android.tools.build:gradle:3.4.0-beta02"
         val r8 = "com.android.tools:r8:1.3.52"
-        val android = "com.android.tools.build:gradle:3.2.1"
         val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Kotlin.version}"
         val kotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Kotlin.version}"
-        val playServices = "com.google.gms:google-services:4.1.0"
+        val playServices = "com.google.gms:google-services:4.2.0"
         val safeArgs =
             "android.arch.navigation:navigation-safe-args-gradle-plugin:${AndroidX.Navigation.version}"
         val jetifier = "com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta02"
@@ -58,21 +58,21 @@ object Dep {
         }
 
         object Navigation {
-            val version = "1.0.0-alpha09"
+            val version = "1.0.0-alpha08"
             val runtime = "android.arch.navigation:navigation-runtime:$version"
             val runtimeKtx = "android.arch.navigation:navigation-runtime-ktx:$version"
             val fragment = "android.arch.navigation:navigation-fragment:$version"
-            val ui = "android.arch.navigation:navigation-ui:$version"
+            val ui = "android.arch.navigation:navigation-ui:1.0.0-alpha10"
             val fragmentKtx = "android.arch.navigation:navigation-fragment-ktx:$version"
-            val uiKtx = "android.arch.navigation:navigation-ui-ktx:$version"
+            val uiKtx = "android.arch.navigation:navigation-ui-ktx:1.0.0-alpha10"
         }
     }
 
     object Kotlin {
-        val version = "1.3.11"
+        val version = "1.3.20"
         val stdlibCommon = "org.jetbrains.kotlin:kotlin-stdlib-common:$version"
         val stdlibJvm = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version"
-        val coroutinesVersion = "1.1.0"
+        val coroutinesVersion = "1.1.1"
         val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
         val androidCoroutinesDispatcher =
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
@@ -80,8 +80,8 @@ object Dep {
             "org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$coroutinesVersion"
         val coroutinesPlayServices =
             "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesVersion"
-        val serializationCommon = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.9.1"
-        val serializationIos = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.9.1"
+        val serializationCommon = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.10.0"
+        val serializationIos = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.10.0"
     }
 
     object Firebase {
@@ -110,7 +110,7 @@ object Dep {
     }
 
     object Ktor {
-        val version = "1.1.1"
+        val version = "1.1.2"
         val clientCommon = "io.ktor:ktor-client-core:$version"
         val clientAndroid = "io.ktor:ktor-client-okhttp:$version"
         val clientIos = "io.ktor:ktor-client-ios:$version"
@@ -162,7 +162,7 @@ object Dep {
     }
 
     object Klock {
-        val version = "1.0.0"
+        val version = "1.1.0-eap-100"
         val common = "com.soywiz:klock:$version"
         val jvm = "com.soywiz:klock-jvm:$version"
     }

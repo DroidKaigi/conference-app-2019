@@ -3,10 +3,11 @@ apply plugin: 'kotlinx-serialization'
 
 kotlin {
     targets {
-        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") ? presets.iosArm64 : presets.iosX64
-
-        fromPreset(iOSTarget, 'iOS') {
-            compilations.main.outputKinds('FRAMEWORK')
+        // presets.iosArm64
+        iosX64('iOS'){
+            binaries {
+                framework()
+            }
         }
     }
     sourceSets {
@@ -85,11 +86,12 @@ configurations {
 task packForXCode(type: Sync) {
     final File frameworkDir = new File(buildDir, "xcode-frameworks")
     final String mode = project.findProperty("XCODE_CONFIGURATION")?.toUpperCase() ?: 'DEBUG'
+    def target = project.findProperty("kotlin.target") ?: "iOS"
 
     inputs.property "mode", mode
-    dependsOn kotlin.targets.iOS.compilations.main.linkTaskName("FRAMEWORK", mode)
+    dependsOn kotlin.targets."$target".compilations.main.target.binaries.findFramework("", mode).linkTask
 
-    from { kotlin.targets.iOS.compilations.main.getBinary("FRAMEWORK", mode).parentFile }
+    from { kotlin.targets."$target".compilations.main.target.binaries.findFramework("", mode).outputFile.parentFile }
     into frameworkDir
 
     doLast {

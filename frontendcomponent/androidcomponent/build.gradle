@@ -58,7 +58,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     }
 }
 
-task buildNavigationProguard << {
+task buildNavigationProguard doLast {
     def navigationGraphXml = project.file("src/main/res/navigation/navigation.xml")
 
     // XmlParser didn't work so let me use the dirty hack
