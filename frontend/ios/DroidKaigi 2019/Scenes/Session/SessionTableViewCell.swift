@@ -39,6 +39,10 @@ class SessionTableViewCell: UITableViewCell, Reusable {
             collectionView.reloadData()
         }
     }
+    
+    var favoriteButtonDidTapped: ControlEvent<Void> {
+        return favoriteButton.rx.tap
+    }
 
     var bag = DisposeBag()
 
@@ -113,8 +117,7 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         label.textAlignment = .center
         return label
     }()
-    // FIXME: make this private
-    lazy var favoriteButton: UIButton = {
+    private lazy var favoriteButton: UIButton = {
         let button = UIButton()
         // FIXME: require the icon images
         button.setTitle("☆", for: .normal)

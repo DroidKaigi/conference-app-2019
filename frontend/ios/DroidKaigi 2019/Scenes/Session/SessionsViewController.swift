@@ -57,6 +57,10 @@ final class SessionsViewController: UIViewController, StoryboardInstantiable {
         output.sessions
               .drive(tableView.rx.items(dataSource: dataSource))
               .disposed(by: bag)
+        
+        dataSource.toggleFavorite
+            .subscribe { print($0) }
+            .disposed(by: bag)
     }
 }
 

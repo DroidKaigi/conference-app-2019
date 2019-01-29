@@ -16,6 +16,8 @@ final class SessionDataSource: NSObject, UITableViewDataSource {
     typealias Element = [SessionByStartTime]
     var items: Element = []
 
+    var toggleFavorite = PublishSubject<String>()
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return items.count
     }
@@ -26,9 +28,11 @@ final class SessionDataSource: NSObject, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: SessionTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-        cell.session = items[indexPath.section].sessions[indexPath.row]
-        cell.favoriteButton.rx.tap
-            .subscribe { _ in cell.favoriteButton.isSelected = !cell.favoriteButton.isSelected }
+        let session = items[indexPath.section].sessions[indexPath.row]
+        cell.session = session
+        cell.favoriteButtonDidTapped
+            .map { _ in session.id_ }
+            .bind(to: toggleFavorite)
             .disposed(by: cell.bag)
         return cell
     }
