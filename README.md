@@ -4,8 +4,6 @@
 
 You can download the binary built on master branch from [<img src="https://dply.me/t6sc7f/button/large" alt="Try it on your device via DeployGate">](https://dply.me/t6sc7f#install)
 
-NOTE: Google Play Protect will show a warning dialog on some of devices when installing the current apk. The detailed specification of Google Play Protect is not public so we cannot address this matter. Please ignore the dialog for now. If you cannot install this apk without any error message, please disable Google Play Protect from Google Play Store's menus. Sorry for the inconvenience.
-
 # Features
 
 | top | detail |
@@ -47,6 +45,14 @@ You can check [generated module dependency diagram](project.dot.png)
 Unidirectional data flow(Flux-based) Architecture with `Kotlin Coroutines` and `AndroidX` Libraries(`LiveData`, `ViewModel`, `Room`) `DataBinding`, `Dagger` and `AssistedInject`, `Firebase` etc.
 
 ![](images/architecture.png)
+
+# Kotlin Multiplatform Project
+
+You can check the [iOS application](https://itunes.apple.com/us/app/droidkaigi-2019/id1450771424). 
+
+The API and Model parts are shared as `Kotlin Multiplatform`, written in `Kotlin`, and the other part is written in `Swift`.
+
+You can check [How to build for iOS Application](https://github.com/DroidKaigi/conference-app-2019/blob/master/frontend/ios/README.md)
 
 ## Groupie
 
@@ -203,6 +209,8 @@ Thank you for contributing!
 ## Credit
 This project uses some modern Android libraries and source codes.
 
+### Android
+
 * [Android Jetpack](https://developer.android.com/jetpack/) (Google)
   * Foundation
     * AppCompat
@@ -249,3 +257,14 @@ This project uses some modern Android libraries and source codes.
 * [Injected ViewModel Provider](https://github.com/evant/injectedvmprovider) (evant)
 * [Google I/O 2018](https://github.com/google/iosched) (Google)
 * [Picasso](http://square.github.io/picasso/) (Square)
+
+### iOS
+
+* Kotlin/Native
+* MaterialComponents
+* ReactiveX/RxSwift
+* SnapKit/SnapKit
+* onevcat/Kingfisher
+* SwiftLint
+* LicensePlist
+* XLPagerTabStrip
