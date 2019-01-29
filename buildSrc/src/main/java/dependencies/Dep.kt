@@ -4,6 +4,7 @@ package dependencies
 object Dep {
     object GradlePlugin {
         val android = "com.android.tools.build:gradle:3.4.0-beta02"
+        val r8 = "com.android.tools:r8:1.3.52"
         val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Kotlin.version}"
         val kotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Kotlin.version}"
         val playServices = "com.google.gms:google-services:4.2.0"
