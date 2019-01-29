@@ -96,7 +96,7 @@ class SessionSurveyFragment : DaggerFragment() {
         sessionSurveyStore.sessionFeedback.changed(viewLifecycleOwner) { sessionFeedback ->
             Timber.debug { sessionFeedback.toString() }
             applySubmitButton()
-
+            setupSessionSurveyPager()
             // TODO: save sessionFeedback state to cacheDB
         }
 
@@ -119,7 +119,6 @@ class SessionSurveyFragment : DaggerFragment() {
             }
         }
 
-        setupSessionSurveyPager()
         sessionSurveyActionCreator.load(sessionSurveyFragmentArgs.session.id)
     }
 
