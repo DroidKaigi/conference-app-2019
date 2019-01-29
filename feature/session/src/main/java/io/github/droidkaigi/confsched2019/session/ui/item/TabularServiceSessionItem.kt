@@ -16,9 +16,9 @@ class TabularServiceSessionItem(
 ) : BindableItem<ItemTabularServiceSessionBinding>(session.id.hashCode().toLong()) {
 
     override fun bind(viewBinding: ItemTabularServiceSessionBinding, position: Int) {
+        val serviceSession = session
         viewBinding.apply {
-            val sessionField = this@TabularServiceSessionItem.session
-            val onClickListener: ((View) -> Unit)? = if (sessionField.sessionType.supportDetail) {
+            val onClickListener: ((View) -> Unit)? = if (serviceSession.sessionType.supportDetail) {
                 {
                     navController.navigate(navDirections)
                 }
@@ -26,8 +26,9 @@ class TabularServiceSessionItem(
                 null
             }
             root.setOnClickListener(onClickListener)
-            session = sessionField
+            session = serviceSession
             lang = defaultLang()
+            root.isActivated = !serviceSession.isFinished
         }
     }
 
