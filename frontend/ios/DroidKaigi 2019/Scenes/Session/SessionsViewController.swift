@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import ios_combined
+import ioscombined
 import MaterialComponents.MaterialSnackbar
 import RxSwift
 import RxCocoa
@@ -44,7 +44,8 @@ final class SessionsViewController: UIViewController, StoryboardInstantiable {
     private let dataSource = SessionDataSource()
 
     private func bind() {
-        let input = SessionsViewModel.Input(initTrigger: Observable.just(()))
+        let viewWillAppear = rx.methodInvoked(#selector(self.viewWillAppear)).map { _ in }
+        let input = SessionsViewModel.Input(viewWillAppear: viewWillAppear)
         let output = viewModel.transform(input: input)
         output.error
               .drive(onNext: { errorMessage in

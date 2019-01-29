@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import ios_combined
+import ioscombined
 import SnapKit
 import MaterialComponents.MDCInkTouchController
 
@@ -201,6 +201,7 @@ final class SessionCalculateHeightTableViewCell: UITableViewCell {
         didSet {
             guard let speechSession = session as? SpeechSession else { return }
             tagContents = speechSession.tagContents
+            collectionView.reloadData()
         }
     }
 

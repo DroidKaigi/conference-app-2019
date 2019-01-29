@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 import Kingfisher
-import ios_combined
+import ioscombined
 
 enum Document {
 

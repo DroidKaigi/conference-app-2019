@@ -9,7 +9,7 @@ make init
 
 *If you haven't installed Android SDK, then you need to get it. Please visit https://developer.android.com/studio/ and download it. The easist way to install Android Sdk is to install AndroidStudio.*
 
-Please make sure `./gradlew :frontend:ios-combined:packForXCode -PXCODE_CONFIGURATION=Debug` is successfuly run. 
+Please make sure `./gradlew :frontend:ioscombined:packForXCode -PXCODE_CONFIGURATION=Debug` is successfuly run. 
 
 After that, you can open `DroidKaigi 2019.xcworkspace` in Xcode.
 
