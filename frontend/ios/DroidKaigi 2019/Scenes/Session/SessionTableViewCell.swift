@@ -9,6 +9,8 @@ import UIKit
 import ioscombined
 import SnapKit
 import MaterialComponents.MDCInkTouchController
+import RxCocoa
+import RxSwift
 
 class SessionTableViewCell: UITableViewCell, Reusable {
 
@@ -17,6 +19,7 @@ class SessionTableViewCell: UITableViewCell, Reusable {
             guard let session = session else { return }
             timeAndRoomLabel.text = "\(session.timeInMinutes)min / \(session.room.name)"
             liveMark.isHidden = !session.isOnGoing
+            favoriteButton.isSelected = session.isFavorited
             speakersStackView.isHidden = session is ServiceSession
             collectionView.isHidden = session is ServiceSession
             remakeTimeAndRoomLabelConstraints()
@@ -37,6 +40,7 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         }
     }
 
+    var bag = DisposeBag()
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -53,6 +57,7 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         }
         tagContents.removeAll()
         collectionView.reloadData() // write to fix bug
+        bag = DisposeBag()
     }
 
     override func systemLayoutSizeFitting(_ targetSize: CGSize,
@@ -108,6 +113,16 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         label.textAlignment = .center
         return label
     }()
+    // FIXME: make this private
+    lazy var favoriteButton: UIButton = {
+        let button = UIButton()
+        // FIXME: require the icon images
+        button.setTitle("☆", for: .normal)
+        button.setTitle("★", for: .selected)
+        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(UIColor.DK.primary.color, for: .selected)
+        return button
+    }()
     private lazy var speakersStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -137,17 +152,22 @@ class SessionTableViewCell: UITableViewCell, Reusable {
     }()
 
     private func setupSubviews() {
-        [titleLabel, liveMark, speakersStackView, timeAndRoomLabel, collectionView].forEach(contentView.addSubview)
+        [titleLabel, liveMark, favoriteButton, speakersStackView, timeAndRoomLabel, collectionView].forEach(contentView.addSubview)
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(5)
             $0.leading.equalToSuperview().inset(90)
             $0.trailing.equalTo(liveMark.snp.leading).offset(-4)
         }
         liveMark.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(16)
             $0.top.equalTo(titleLabel)
+            $0.trailing.equalTo(favoriteButton.snp.leading)
             $0.width.equalTo(32)
             $0.height.equalTo(16)
+        }
+        favoriteButton.snp.makeConstraints {
+            $0.centerY.equalTo(titleLabel.snp.centerY)
+            $0.trailing.equalToSuperview().inset(16)
+            $0.width.height.equalTo(16)
         }
         speakersStackView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(8)

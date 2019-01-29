@@ -27,6 +27,9 @@ final class SessionDataSource: NSObject, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: SessionTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
         cell.session = items[indexPath.section].sessions[indexPath.row]
+        cell.favoriteButton.rx.tap
+            .subscribe { _ in cell.favoriteButton.isSelected = !cell.favoriteButton.isSelected }
+            .disposed(by: cell.bag)
         return cell
     }
 }
