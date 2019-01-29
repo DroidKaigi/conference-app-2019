@@ -79,7 +79,7 @@ class TabularFormSessionPagesFragment : DaggerFragment() {
             }
 
             // Select second tab
-            if (index == 1){
+            if (index == 1) {
                 val jstNow = DateTime.now().toOffset(9.hours)
                 if (jstNow.yearInt == 2019 && jstNow.month1 == 2 && jstNow.dayOfMonth == 8) {
                     newTab.select()
