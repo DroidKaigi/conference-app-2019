@@ -13,6 +13,7 @@
         android:id="@+id/icon"
         android:layout_width="64dp"
         android:layout_height="64dp"
+        android:background="@drawable/circle_background"
         tools:src="@tools:sample/avatars" />
 </layout>
 
