@@ -96,7 +96,7 @@ class SessionSurveyFragment : DaggerFragment() {
         sessionSurveyStore.sessionFeedback.changed(viewLifecycleOwner) { sessionFeedback ->
             Timber.debug { sessionFeedback.toString() }
             applySubmitButton()
-            setupSessionSurveyPager()
+            binding.sessionSurveyViewPager.adapter?.notifyDataSetChanged()
             // TODO: save sessionFeedback state to cacheDB
         }
 
@@ -119,6 +119,7 @@ class SessionSurveyFragment : DaggerFragment() {
             }
         }
 
+        setupSessionSurveyPager()
         sessionSurveyActionCreator.load(sessionSurveyFragmentArgs.session.id)
     }
 
@@ -190,7 +191,9 @@ class SessionSurveyFragment : DaggerFragment() {
                     }
                 }
 
-                itemBinding.rating.setOnRatingBarChangeListener { _, rating, _ ->
+                itemBinding.rating.setOnRatingBarChangeListener { _, rating, fromUser ->
+                    if (!fromUser) return@setOnRatingBarChangeListener
+
                     val newSessionFeedback = when (position) {
                         SurveyItem.TOTAL_EVALUATION.position -> {
                             sessionSurveyStore.sessionFeedback.requireValue()
@@ -239,6 +242,9 @@ class SessionSurveyFragment : DaggerFragment() {
             override fun isViewFromObject(view: View, `object`: Any): Boolean = view == `object`
 
             override fun getCount(): Int = enumValues<SurveyItem>().size
+
+            // views should be recreated on PagerAdapter#notifyDataSetChanged
+            override fun getItemPosition(`object`: Any): Int = POSITION_NONE
         }
 
         binding.sessionSurveyViewPager.onPageSelected { position ->
