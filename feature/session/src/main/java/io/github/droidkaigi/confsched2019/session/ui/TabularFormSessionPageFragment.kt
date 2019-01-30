@@ -24,7 +24,7 @@ import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpacerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
-import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableLayoutManager
+import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableLayoutManager
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableRoomLabelDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableTimeLabelDecoration
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
@@ -65,7 +65,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
         binding.tabularFormSessionsRecycler.apply {
             addItemDecoration(TimeTableTimeLabelDecoration(context, groupAdapter))
             addItemDecoration(TimeTableRoomLabelDecoration(context, groupAdapter))
-            layoutManager = TimeTableLayoutManager(
+            layoutManager = TimetableLayoutManager(
                 resources.getDimensionPixelSize(R.dimen.tabular_form_column_width),
                 resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute),
                 shouldLoopHorizontally = true
@@ -73,24 +73,24 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                 val item = groupAdapter.getItem(position)
                 when (item) {
                     is TabularSpeechSessionItem ->
-                        TimeTableLayoutManager.PeriodInfo(
+                        TimetableLayoutManager.PeriodInfo(
                             item.session.startTime.unixMillisLong,
                             item.session.endTime.unixMillisLong,
                             item.session.room.sequentialNumber
                         )
                     is TabularServiceSessionItem ->
-                        TimeTableLayoutManager.PeriodInfo(
+                        TimetableLayoutManager.PeriodInfo(
                             item.session.startTime.unixMillisLong,
                             item.session.endTime.unixMillisLong,
                             item.session.room.sequentialNumber
                         )
                     is TabularSpacerItem ->
-                        TimeTableLayoutManager.PeriodInfo(
+                        TimetableLayoutManager.PeriodInfo(
                             item.startUnixMillis,
                             item.endUnixMillis,
                             item.room.sequentialNumber
                         )
-                    else -> TimeTableLayoutManager.PeriodInfo(0, 0, 0)
+                    else -> TimetableLayoutManager.PeriodInfo(0, 0, 0)
                 }
             }
             adapter = groupAdapter

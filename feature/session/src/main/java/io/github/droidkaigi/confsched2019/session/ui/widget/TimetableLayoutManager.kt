@@ -16,7 +16,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 // TODO: implement scrollToPosition
-class TimeTableLayoutManager(
+class TimetableLayoutManager(
     private val columnWidth: Int,
     private val pxPerMinute: Int,
     private val shouldLoopHorizontally: Boolean,
