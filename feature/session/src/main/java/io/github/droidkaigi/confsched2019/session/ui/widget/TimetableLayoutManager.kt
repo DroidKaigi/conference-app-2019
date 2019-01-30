@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.NO_POSITION
 import androidx.recyclerview.widget.RecyclerView.Recycler
 import androidx.recyclerview.widget.RecyclerView.State
+import kotlinx.android.parcel.Parcelize
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
 import kotlin.math.min
-import kotlinx.android.parcel.Parcelize
 
 // TODO: implement scrollToPosition
 class TimetableLayoutManager(
@@ -276,28 +276,29 @@ class TimetableLayoutManager(
         var offsetX = startX
         anchor.leftColumn = topPeriod.columnNumber
         val columnCount = columns.size()
-        var i = columns.indexOfKey(topPeriod.columnNumber)
-        while (i < columnCount) {
-            val columnNumber = columns.keyAt(i)
-            val startPositionInColumn =
-                calculateStartPeriodInColumn(columnNumber, startY, topPeriod) ?: continue
-            val offsetY = startY +
-                (startPositionInColumn.startUnixMin - topPeriod.startUnixMin) * pxPerMinute
-            offsetX += fillColumnHorizontally(
-                columnNumber,
-                startPositionInColumn.positionInColumn,
-                offsetX,
-                offsetY,
-                true,
-                recycler
-            )
+        val indexOfFirstColumn = columns.indexOfKey(topPeriod.columnNumber)
+        (indexOfFirstColumn until columnCount)
+            .plus(if (shouldLoopHorizontally && indexOfFirstColumn > 0) (0 until indexOfFirstColumn) else emptyList())
+            .forEach {
+                val columnNumber = columns.keyAt(it)
+                val startPositionInColumn =
+                    calculateStartPeriodInColumn(columnNumber, startY, topPeriod) ?: return@forEach
+                val offsetY = startY +
+                    (startPositionInColumn.startUnixMin - topPeriod.startUnixMin) * pxPerMinute
+                offsetX += fillColumnHorizontally(
+                    columnNumber,
+                    startPositionInColumn.positionInColumn,
+                    offsetX,
+                    offsetY,
+                    true,
+                    recycler
+                )
 
-            if (i == columnCount - 1) i = 0 else i++
-            if (offsetX > parentRight) {
-                anchor.rightColumn = columnNumber
-                break
+                if (offsetX > parentRight) {
+                    anchor.rightColumn = columnNumber
+                    return
+                }
             }
-        }
     }
 
     private fun calculateVerticallyScrollAmount(dy: Int): Int {
@@ -473,7 +474,7 @@ class TimetableLayoutManager(
     }
 
     private fun findFirstVisibleView(): View? {
-        if (childCount > 0) return null
+        if (childCount == 0) return null
 
         return (0 until childCount).asSequence()
             .mapNotNull(this::getChildAt)
