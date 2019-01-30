@@ -99,6 +99,15 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         return MDCInkTouchController(view: self)
     }()
 
+    private lazy var titleStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        stackView.spacing = 8
+        stackView.backgroundColor = .blue
+        return stackView
+    }()
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
@@ -154,31 +163,29 @@ class SessionTableViewCell: UITableViewCell, Reusable {
     }()
 
     private func setupSubviews() {
-        [titleLabel, liveMark, favoriteButton, speakersStackView, timeAndRoomLabel, collectionView].forEach(contentView.addSubview)
-        titleLabel.snp.makeConstraints {
+        [titleLabel, liveMark, favoriteButton].forEach(titleStackView.addArrangedSubview)
+        
+        [titleStackView, speakersStackView, timeAndRoomLabel, collectionView].forEach(contentView.addSubview)
+        titleStackView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(5)
             $0.leading.equalToSuperview().inset(90)
-            $0.trailing.equalTo(liveMark.snp.leading).offset(-4)
+            $0.trailing.equalToSuperview().inset(16)
         }
         liveMark.snp.makeConstraints {
-            $0.top.equalTo(titleLabel)
-            $0.trailing.equalTo(favoriteButton.snp.leading)
             $0.width.equalTo(32)
             $0.height.equalTo(16)
         }
         favoriteButton.snp.makeConstraints {
-            $0.centerY.equalTo(titleLabel.snp.centerY)
-            $0.trailing.equalToSuperview().inset(16)
             $0.width.height.equalTo(24)
         }
         speakersStackView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(8)
-            $0.leading.equalTo(titleLabel)
+            $0.top.equalTo(titleStackView.snp.bottom).offset(8)
+            $0.leading.equalTo(titleStackView)
             $0.trailing.equalToSuperview().inset(16)
         }
         remakeTimeAndRoomLabelConstraints()
         collectionView.snp.makeConstraints {
-            $0.leading.equalTo(titleLabel)
+            $0.leading.equalTo(titleStackView)
             $0.trailing.equalToSuperview().inset(16)
             $0.top.equalTo(timeAndRoomLabel.snp.bottom).offset(7)
             $0.bottom.equalToSuperview().inset(26)
