@@ -1,6 +1,23 @@
 package io.github.droidkaigi.confsched2019.action
 
-import io.github.droidkaigi.confsched2019.model.*
+import io.github.droidkaigi.confsched2019.model.Announcement
+import io.github.droidkaigi.confsched2019.model.AudienceCategory
+import io.github.droidkaigi.confsched2019.model.Category
+import io.github.droidkaigi.confsched2019.model.ContributorContents
+import io.github.droidkaigi.confsched2019.model.ErrorMessage
+import io.github.droidkaigi.confsched2019.model.Lang
+import io.github.droidkaigi.confsched2019.model.LangSupport
+import io.github.droidkaigi.confsched2019.model.LoadingState
+import io.github.droidkaigi.confsched2019.model.Room
+import io.github.droidkaigi.confsched2019.model.SearchResult
+import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.SessionContents
+import io.github.droidkaigi.confsched2019.model.SessionFeedback
+import io.github.droidkaigi.confsched2019.model.SessionPage
+import io.github.droidkaigi.confsched2019.model.SponsorCategory
+import io.github.droidkaigi.confsched2019.model.StaffContents
+import io.github.droidkaigi.confsched2019.model.StaffSearchResult
+import io.github.droidkaigi.confsched2019.model.SystemProperty
 
 sealed class Action {
     class Error(val msg: ErrorMessage) : Action()

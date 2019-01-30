@@ -79,8 +79,9 @@ class ContributorFragment : DaggerFragment() {
                     ContributorBindingModel(index, item.name, item.iconUrl, item.profileUrl)
                 }
                 .map {
-                    ContributorProfileItemHolder(it)
-                    { profileUrl -> activityActionCreator.openUrl(profileUrl) }
+                    ContributorProfileItemHolder(it) { profileUrl ->
+                        activityActionCreator.openUrl(profileUrl)
+                    }
                 }
             groupAdapter.update(
                 itemList
