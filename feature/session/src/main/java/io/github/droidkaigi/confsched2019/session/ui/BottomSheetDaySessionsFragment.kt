@@ -131,6 +131,9 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                 ?.startDayText ?: return@changed
             binding.sessionsBottomSheetTitle.text = titleText
         }
+        sessionPagesStore.firstLoadSessions.changed(viewLifecycleOwner) {
+            scrollToCurrentSession()
+        }
         sessionPagesStore.filters.changed(viewLifecycleOwner) {
             binding.isFiltered = it.isFiltered()
         }
