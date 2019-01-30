@@ -278,7 +278,10 @@ class TimetableLayoutManager(
         val columnCount = columns.size()
         val indexOfFirstColumn = columns.indexOfKey(topPeriod.columnNumber)
         (indexOfFirstColumn until columnCount)
-            .plus(if (shouldLoopHorizontally && indexOfFirstColumn > 0) (0 until indexOfFirstColumn) else emptyList())
+            .plus(
+                if (shouldLoopHorizontally && indexOfFirstColumn > 0) (0 until indexOfFirstColumn)
+                else emptyList()
+            )
             .forEach {
                 val columnNumber = columns.keyAt(it)
                 val startPositionInColumn =
