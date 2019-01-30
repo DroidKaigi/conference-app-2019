@@ -1,7 +1,6 @@
 package io.github.droidkaigi.confsched2019.session.ui.widget
 
 import android.graphics.Rect
-import android.os.Parcel
 import android.os.Parcelable
 import android.util.SparseArray
 import android.util.SparseIntArray
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView.State
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
 import kotlin.math.min
+import kotlinx.android.parcel.Parcelize
 
 // TODO: implement scrollToPosition
 class TimetableLayoutManager(
@@ -53,33 +53,8 @@ class TimetableLayoutManager(
         LEFT, TOP, RIGHT, BOTTOM
     }
 
-    private data class SaveState(val position: Int, val left: Int, val top: Int) : Parcelable {
-        constructor(parcel: Parcel) : this(
-            parcel.readInt(),
-            parcel.readInt(),
-            parcel.readInt()
-        )
-
-        override fun writeToParcel(parcel: Parcel, flags: Int) {
-            parcel.writeInt(position)
-            parcel.writeInt(left)
-            parcel.writeInt(top)
-        }
-
-        override fun describeContents(): Int {
-            return 0
-        }
-
-        companion object CREATOR : Parcelable.Creator<SaveState> {
-            override fun createFromParcel(parcel: Parcel): SaveState {
-                return SaveState(parcel)
-            }
-
-            override fun newArray(size: Int): Array<SaveState?> {
-                return arrayOfNulls(size)
-            }
-        }
-    }
+    @Parcelize
+    private data class SaveState(val position: Int, val left: Int, val top: Int) : Parcelable
 
     private val parentLeft get() = paddingLeft
     private val parentTop get() = paddingTop
