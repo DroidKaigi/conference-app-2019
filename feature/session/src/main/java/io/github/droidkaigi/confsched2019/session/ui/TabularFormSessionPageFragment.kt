@@ -24,9 +24,9 @@ import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpacerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
-import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableRoomLabelDecoration
-import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableTimeLabelDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableLayoutManager
+import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableRoomLabelDecoration
+import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableTimeLabelDecoration
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
 import javax.inject.Provider
@@ -63,8 +63,8 @@ class TabularFormSessionPageFragment : DaggerFragment() {
 
         val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.tabularFormSessionsRecycler.apply {
-            addItemDecoration(TimeTableTimeLabelDecoration(context, groupAdapter))
-            addItemDecoration(TimeTableRoomLabelDecoration(context, groupAdapter))
+            addItemDecoration(TimetableTimeLabelDecoration(context, groupAdapter))
+            addItemDecoration(TimetableRoomLabelDecoration(context, groupAdapter))
             layoutManager = TimetableLayoutManager(
                 resources.getDimensionPixelSize(R.dimen.tabular_form_column_width),
                 resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute),
