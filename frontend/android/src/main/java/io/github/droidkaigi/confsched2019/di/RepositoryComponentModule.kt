@@ -10,7 +10,12 @@ import io.github.droidkaigi.confsched2019.data.db.SponsorDatabase
 import io.github.droidkaigi.confsched2019.data.db.StaffDatabase
 import io.github.droidkaigi.confsched2019.data.db.ContributorDatabase
 import io.github.droidkaigi.confsched2019.data.firestore.Firestore
-import io.github.droidkaigi.confsched2019.data.repository.*
+import io.github.droidkaigi.confsched2019.data.repository.RepositoryComponent
+import io.github.droidkaigi.confsched2019.data.repository.SessionRepository
+import io.github.droidkaigi.confsched2019.data.repository.SponsorRepository
+import io.github.droidkaigi.confsched2019.data.repository.AnnouncementRepository
+import io.github.droidkaigi.confsched2019.data.repository.StaffRepository
+import io.github.droidkaigi.confsched2019.data.repository.ContributorRepository
 import javax.inject.Singleton
 
 @Module

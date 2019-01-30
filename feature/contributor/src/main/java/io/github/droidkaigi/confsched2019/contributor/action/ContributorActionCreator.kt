@@ -21,12 +21,15 @@ class ContributorActionCreator @Inject constructor(
         try {
             // Load Local cashe
             dispatcher.dispatch(Action.ContributorLoadingStateChanged(LoadingState.LOADING))
-            dispatcher.dispatch(Action.ContributorLoaded(contributorRepository.contributorContents()))
+            dispatcher.dispatch(
+                Action.ContributorLoaded(contributorRepository.contributorContents())
+            )
             // Load From API
             contributorRepository.refresh()
-            dispatcher.dispatch(Action.ContributorLoaded(contributorRepository.contributorContents()))
+            dispatcher.dispatch(
+                Action.ContributorLoaded(contributorRepository.contributorContents())
+            )
             dispatcher.dispatch(Action.ContributorLoadingStateChanged(LoadingState.LOADED))
-
         } catch (e: Exception) {
             onError(e)
             dispatcher.dispatch(Action.ContributorLoadingStateChanged(LoadingState.INITIALIZED))

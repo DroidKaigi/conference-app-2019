@@ -26,7 +26,6 @@ import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
 import javax.inject.Provider
 
-
 class ContributorFragment : DaggerFragment() {
     private lateinit var binding: FragmentContributorBinding
 
@@ -63,13 +62,13 @@ class ContributorFragment : DaggerFragment() {
         binding.contributorRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.contributorRecyclerView.adapter = groupAdapter
 
-        progressTimeLatch = ProgressTimeLatch{ showProgress ->
+        progressTimeLatch = ProgressTimeLatch { showProgress ->
             binding.progressBar.isVisible = showProgress
         }.apply {
             loading = true
         }
 
-        contributorStore.loadingState.changed(viewLifecycleOwner){
+        contributorStore.loadingState.changed(viewLifecycleOwner) {
             progressTimeLatch.loading = it.isLoading
         }
 
