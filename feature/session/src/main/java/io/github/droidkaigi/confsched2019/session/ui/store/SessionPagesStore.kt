@@ -22,6 +22,8 @@ import javax.inject.Inject
 class SessionPagesStore @Inject constructor(
     dispatcher: Dispatcher
 ) : ViewModel() {
+    var isFirstLoadScrolled: Boolean = false
+
     private val sessions: LiveData<List<Session>> = dispatcher
         .subscribe<Action.SessionsLoaded>()
         .map { it.sessions }

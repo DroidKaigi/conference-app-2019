@@ -153,9 +153,10 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
             }
         }
 
-        if (savedInstanceState == null) {
-            sessionPagesStore.firstLoadSessions.observe(viewLifecycleOwner) {
+        sessionPagesStore.firstLoadSessions.changed(viewLifecycleOwner) {
+            if (!sessionPagesStore.isFirstLoadScrolled) {
                 scrollToCurrentSession()
+                sessionPagesStore.isFirstLoadScrolled = true
             }
         }
     }
