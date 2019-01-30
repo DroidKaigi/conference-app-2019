@@ -15,6 +15,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.shopify.livedataktx.filter
+import com.shopify.livedataktx.first
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
@@ -22,6 +24,7 @@ import dagger.Provides
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.ext.android.requireValue
+import io.github.droidkaigi.confsched2019.model.SessionFeedback
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.survey.R
 import io.github.droidkaigi.confsched2019.survey.databinding.FragmentSessionSurveyBinding
@@ -96,9 +99,16 @@ class SessionSurveyFragment : DaggerFragment() {
         sessionSurveyStore.sessionFeedback.changed(viewLifecycleOwner) { sessionFeedback ->
             Timber.debug { sessionFeedback.toString() }
             applySubmitButton()
-            binding.sessionSurveyViewPager.adapter?.notifyDataSetChanged()
+
             // TODO: save sessionFeedback state to cacheDB
         }
+
+        sessionSurveyStore.sessionFeedback
+            .filter { it != SessionFeedback.EMPTY }
+            .first()
+            .changed(viewLifecycleOwner) {
+                binding.sessionSurveyViewPager.adapter?.notifyDataSetChanged()
+            }
 
         val lang = defaultLang()
 
