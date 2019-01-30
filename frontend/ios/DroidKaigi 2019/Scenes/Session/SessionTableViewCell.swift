@@ -119,11 +119,10 @@ class SessionTableViewCell: UITableViewCell, Reusable {
     }()
     private lazy var favoriteButton: UIButton = {
         let button = UIButton()
-        // FIXME: require the icon images
-        button.setTitle("☆", for: .normal)
-        button.setTitle("★", for: .selected)
-        button.setTitleColor(.black, for: .normal)
-        button.setTitleColor(UIColor.DK.primary.color, for: .selected)
+        button.setImage(UIImage(named: "bookmark_border"), for: .normal)
+        button.setImage(UIImage(named: "bookmark"), for: .selected)
+        button.setImageTintColor(color: .black, for: .normal)
+        button.setImageTintColor(color: UIColor.DK.primary.color, for: .selected)
         return button
     }()
     private lazy var speakersStackView: UIStackView = {
@@ -170,7 +169,7 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         favoriteButton.snp.makeConstraints {
             $0.centerY.equalTo(titleLabel.snp.centerY)
             $0.trailing.equalToSuperview().inset(16)
-            $0.width.height.equalTo(16)
+            $0.width.height.equalTo(24)
         }
         speakersStackView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(8)
