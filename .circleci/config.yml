@@ -21,7 +21,7 @@ docker_env:
       - image: circleci/android:api-28-alpha
     environment:
       <<: *cache_version_keys
-      JAVA_OPTS: "-Xms512m -Xmx2048m"
+      JAVA_OPTS: "-Xmx1024m"
       GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError" -Dorg.gradle.daemon=false -Dorg.gradle.parallel=false'
 
   go_defaults: &go_defaults
@@ -63,17 +63,20 @@ jobs:
             - .gradle
           key: *primary_key_of_gradle_cache
       - run:
-          name: Assemble apk
+          name: Assemble apk from App Bundle
           command: |
-            ./gradlew clean assembleDebug --offline
+            use_debug_keystore
+            ./gradlew bundleStaging --offline
+            create_universal_apk_from_aab.bash $(find frontend/android/build/outputs -name "*.aab" | head -1)
       - store_artifacts:
-          path: frontend/android/build/outputs/apk
+          path: frontend/android/build/outputs
+      - store_artifacts:
+          path: universal.apk # see UNIVERSAL_APK_PATH
       - run: *download_dpg
       - run:
           name: Upload an apk and create a distribution by app-manage procedure.
           command: |
-            apk_path=$(find frontend/android/build/outputs/apk -name "*.apk" | head -1)
-            dpg procedure app-manage on-feature-branch --app "$apk_path" --android | parse_dg_response
+            dpg procedure app-manage on-feature-branch --app "$UNIVERSAL_APK_PATH" --android | parse_dg_response
       - restore_cache: &restore_danger_cache
           keys: *all_keys_of_danger_cache
       - run: &bundle_install_for_danger
@@ -90,15 +93,10 @@ jobs:
           name: Compare apks with the latest production apk
           command: |
             if download_latest_apk "$PWD/latest.apk"; then
-              # find first
-              export BUILT_APK_FILE_PATH="$PWD/$(find frontend/android/build/outputs/apk -name "*.apk" | head -1)"
+              export BUILT_APK_FILE_PATH="$UNIVERSAL_APK_PATH"
               export OLD_BUILT_APK_FILE_PATH="$PWD/latest.apk"
 
-              if [[ -f "$BUILT_APK_FILE_PATH" ]] && [[ -f "$OLD_BUILT_APK_FILE_PATH" ]]; then
-                danger_compare_apks
-              else
-                echo "Cannot find apks" 1>&2
-              fi
+              danger_compare_apks
             fi
   vital_check:
     <<: *android_defaults
@@ -108,7 +106,7 @@ jobs:
       - restore_cache: *restore_gradle_cache
       - run: *download_all_dependencies
       - save_cache: *save_gradle_cache
-      - run: ./gradlew testDebugUnitTest lintDebug ktlint --continue --offline
+      - run: ./gradlew lintDebug testDebugUnitTest ktlint --continue --offline # we want to check lintRelease as well but RAM shortage... oh my...
       - run:
           name: Aggregate junit report files into one dir
           command: aggregate_junit_results

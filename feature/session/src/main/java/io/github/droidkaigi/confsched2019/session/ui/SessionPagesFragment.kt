@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.hours
 import dagger.Module
@@ -119,6 +120,21 @@ class SessionPagesFragment : DaggerFragment() {
                 }
             }
         )
+
+        binding.sessionsTabLayout.addOnTabSelectedListener(
+            object : TabLayout.OnTabSelectedListener {
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+                    tab?.let {
+                        sessionPagesActionCreator.reselectTab(SessionPage.pages[it.position])
+                    }
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) { // no-op
+                }
+
+                override fun onTabSelected(tab: TabLayout.Tab?) { // no-op
+                }
+            })
 
         (0 until binding.sessionsTabLayout.tabCount).forEach { tabIndex ->
             val tab = binding.sessionsTabLayout.getTabAt(tabIndex)

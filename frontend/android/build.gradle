@@ -18,6 +18,12 @@ android {
             storeFile file('debug.keystore')
             storePassword 'droidkaigi'
         }
+        release {
+            keyAlias System.getenv("RELEASE_KEY_ALIAS")
+            keyPassword System.getenv("RELEASE_KEY_PASSWORD")
+            storeFile file(System.getenv("RELEASE_STORE_FILE") ?: "debug.keystore")
+            storePassword System.getenv("RELEASE_PASSWORD")
+        }
     }
     defaultConfig {
         applicationId "io.github.droidkaigi.confsched2019"
@@ -33,10 +39,33 @@ android {
         manifestPlaceholders = [isCi: String.valueOf(isCi)]
     }
     buildTypes {
+        staging {
+            zipAlignEnabled true
+
+            postprocessing {
+                proguardFiles 'proguard-rules.pro'
+                obfuscate = true
+                // if we want to enable optimization, then codeShrinker must be proguard for now
+                // That may be a bug of r8
+                optimizeCode = false
+                removeUnusedCode = true
+                removeUnusedResources = true
+                codeShrinker = 'r8'
+            }
+        }
+        release.initWith(staging)
+        staging {
+            debuggable true
+            signingConfig = signingConfigs.debug
+            matchingFallbacks = ['release']
+        }
         release {
-            applicationIdSuffix ""
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationIdSuffix null
+            signingConfig = signingConfigs.release
+
+            postprocessing {
+                proguardFiles 'proguard-rules-production.pro'
+            }
         }
     }
     dataBinding {
@@ -50,14 +79,14 @@ android {
 
         xmlOutput file("lint-results.xml")
         htmlOutput file("lint-results.html")
+
+        checkReleaseBuilds !isCi
+        abortOnError !isCi
     }
     packagingOptions {
-        exclude 'META-INF/ktor-http.kotlin_module'
-        exclude 'META-INF/kotlinx-io.kotlin_module'
-        exclude 'META-INF/atomicfu.kotlin_module'
-        exclude 'META-INF/ktor-utils.kotlin_module'
-        exclude 'META-INF/kotlinx-coroutines-io.kotlin_module'
-        exclude 'META-INF/ktor-client-core.kotlin_module'
+        exclude 'META-INF/*.kotlin_module'
+        exclude 'META-INF/*.version'
+        exclude 'META-INF/proguard/*.pro'
     }
 }
 
@@ -101,9 +130,10 @@ dependencies {
 
     implementation Dep.Stetho.stetho
 
-    releaseImplementation Dep.LeakCanary.leakCanary
     debugImplementation Dep.LeakCanary.leakCanary
     debugImplementation Dep.LeakCanary.leakCanaryFragment
+    stagingImplementation Dep.LeakCanary.leakCanaryNoOp
+    releaseImplementation Dep.LeakCanary.leakCanaryNoOp
 
     implementation Dep.Firebase.core
     implementation Dep.Firebase.auth
@@ -126,8 +156,8 @@ dependencies {
 
     Dep.Hyperion.hyperionPlugins.forEach {
         debugImplementation it
+        stagingImplementation it
     }
 }
-
 
 apply plugin: 'com.google.gms.google-services'

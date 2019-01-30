@@ -1,58 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    >
 
     <data>
 
-        <import type="io.github.droidkaigi.confsched2019.model.Lang" />
+        <import type="io.github.droidkaigi.confsched2019.model.Lang"/>
 
         <variable
             name="session"
-            type="io.github.droidkaigi.confsched2019.model.Session" />
+            type="io.github.droidkaigi.confsched2019.model.Session"
+            />
 
         <variable
             name="speechSession"
-            type="io.github.droidkaigi.confsched2019.model.SpeechSession" />
+            type="io.github.droidkaigi.confsched2019.model.SpeechSession"
+            />
 
         <variable
             name="serviceSession"
-            type="io.github.droidkaigi.confsched2019.model.ServiceSession" />
+            type="io.github.droidkaigi.confsched2019.model.ServiceSession"
+            />
 
         <variable
             name="isShowDayNumber"
-            type="boolean" />
+            type="boolean"
+            />
 
         <variable
             name="searchQuery"
-            type="String" />
+            type="String"
+            />
 
         <variable
             name="lang"
-            type="io.github.droidkaigi.confsched2019.model.Lang" />
+            type="io.github.droidkaigi.confsched2019.model.Lang"
+            />
 
         <variable
             name="timeZoneOffset"
-            type="com.soywiz.klock.DateTimeSpan" />
+            type="com.soywiz.klock.DateTimeSpan"
+            />
     </data>
 
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="false">
+        android:fitsSystemWindows="false"
+        >
 
         <ProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            />
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="150dp">
+            android:layout_height="150dp"
+            >
 
             <io.github.droidkaigi.confsched2019.session.ui.widget.CollapsibleToolbar
                 android:id="@+id/content_parent"
@@ -62,7 +74,9 @@
                 android:fitsSystemWindows="false"
                 android:minHeight="?attr/actionBarSize"
                 app:layoutDescription="@xml/motion_session_detail"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                app:progress="0"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                >
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/session_toolbar"
@@ -72,7 +86,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:navigationIcon="@drawable/abc_ic_ab_back_material"
-                    tools:ignore="PrivateResource" />
+                    tools:ignore="PrivateResource"
+                    />
 
                 <androidx.emoji.widget.EmojiAppCompatTextView
                     android:id="@+id/session_title"
@@ -88,7 +103,8 @@
                     app:layout_constraintBottom_toBottomOf="@id/session_toolbar"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:text="テストセッション" />
+                    tools:text="テストセッション"
+                    />
 
             </io.github.droidkaigi.confsched2019.session.ui.widget.CollapsibleToolbar>
 
@@ -97,27 +113,30 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/session_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="24dp">
+                android:paddingBottom="24dp"
+                >
 
                 <TextView
                     android:id="@+id/session_time_and_room"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="16dp"
                     android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="20min / Hall" />
+                    tools:text="20min / Hall"
+                    />
 
 
                 <ImageView
@@ -129,7 +148,8 @@
                     android:tint="@color/gray2"
                     app:layout_constraintStart_toStartOf="@id/session_time_and_room"
                     app:layout_constraintTop_toBottomOf="@id/session_time_and_room"
-                    app:srcCompat="@drawable/ic_access_time_black_24dp" />
+                    app:srcCompat="@drawable/ic_access_time_black_24dp"
+                    />
 
                 <TextView
                     android:id="@+id/session_start_end_time"
@@ -141,7 +161,8 @@
                     app:layout_constraintBottom_toBottomOf="@id/session_time_image"
                     app:layout_constraintStart_toEndOf="@id/session_time_image"
                     app:layout_constraintTop_toTopOf="@id/session_time_image"
-                    tools:text="2月2日 10:20-10:40" />
+                    tools:text="2月2日 10:20-10:40"
+                    />
 
                 <ImageView
                     android:id="@+id/session_message_image"
@@ -152,44 +173,47 @@
                     app:layout_constraintStart_toStartOf="@id/session_time_and_room"
                     app:layout_constraintTop_toTopOf="@id/session_message"
                     app:srcCompat="@drawable/ic_bug_report_border_orange_18dp"
-                    app:visibleGone="@{speechSession.message != null}" />
+                    app:visibleGone="@{speechSession.message != null}"
+                    />
 
                 <androidx.emoji.widget.EmojiAppCompatTextView
                     android:id="@+id/session_message"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="12dp"
-                    android:layout_marginEnd="16dp"
                     android:textAppearance="@style/TextAppearance.Lekton.Body1"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/session_message_image"
                     app:layout_constraintTop_toBottomOf="@id/session_time_image"
                     app:visibleGone="@{speechSession.message != null}"
-                    tools:text="セッションフロアがHallからRoom1に変更になりました" />
+                    tools:text="セッションフロアがHallからRoom1に変更になりました"
+                    />
 
                 <ImageView
                     android:id="@+id/divider_top_description"
                     android:layout_width="0dp"
                     android:layout_height="4dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginEnd="16dp"
                     android:contentDescription="@null"
                     android:layerType="software"
                     android:src="@drawable/shape_dashed_line"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_message"
-                    app:layout_goneMarginTop="32dp" />
+                    app:layout_goneMarginTop="32dp"
+                    />
 
                 <androidx.emoji.widget.EmojiAppCompatTextView
                     android:id="@+id/session_description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:lineSpacingExtra="4dp"
@@ -200,22 +224,24 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/session_time_and_room"
                     app:layout_constraintTop_toBottomOf="@id/divider_top_description"
-                    tools:text="Material is the metaphor A material metaphor is the unifying theory of a rationalized space and a system of motion. The material is grounded in tactile reality, inspired by the study of paper and ink, yet technologically advanced and open to imagination and magic." />
+                    tools:text="Material is the metaphor A material metaphor is the unifying theory of a rationalized space and a system of motion. The material is grounded in tactile reality, inspired by the study of paper and ink, yet technologically advanced and open to imagination and magic."
+                    />
 
                 <ImageView
                     android:id="@+id/divider_top_intended_audience"
                     android:layout_width="0dp"
                     android:layout_height="4dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginEnd="16dp"
                     android:contentDescription="@null"
                     android:layerType="software"
                     android:src="@drawable/shape_dashed_line"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_description"
-                    app:visibleGone="@{speechSession != null}" />
+                    app:visibleGone="@{speechSession != null}"
+                    />
 
                 <TextView
                     android:id="@+id/session_intended_audience_title"
@@ -226,14 +252,15 @@
                     android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_time_and_room"
                     app:layout_constraintTop_toBottomOf="@id/divider_top_intended_audience"
-                    app:visibleGone="@{speechSession != null}" />
+                    app:visibleGone="@{speechSession != null}"
+                    />
 
                 <androidx.emoji.widget.EmojiAppCompatTextView
                     android:id="@+id/session_intended_audience_description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
                     android:includeFontPadding="false"
                     android:lineSpacingExtra="4dp"
                     android:paddingBottom="2dp"
@@ -244,22 +271,24 @@
                     app:layout_constraintStart_toStartOf="@id/session_time_and_room"
                     app:layout_constraintTop_toBottomOf="@id/session_intended_audience_title"
                     app:visibleGone="@{speechSession != null}"
-                    tools:text="Kotlinでの実装経験者で、業務でばりばりKotlinでコードを書きまくっている人向け。" />
+                    tools:text="Kotlinでの実装経験者で、業務でばりばりKotlinでコードを書きまくっている人向け。"
+                    />
 
                 <ImageView
                     android:id="@+id/divider_top_tags"
                     android:layout_width="0dp"
                     android:layout_height="4dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginEnd="16dp"
                     android:contentDescription="@null"
                     android:layerType="software"
                     android:src="@drawable/shape_dashed_line"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_intended_audience_description"
-                    app:visibleGone="@{speechSession != null}" />
+                    app:visibleGone="@{speechSession != null}"
+                    />
 
                 <TextView
                     android:id="@+id/session_tag_title"
@@ -270,20 +299,22 @@
                     android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_time_and_room"
                     app:layout_constraintTop_toBottomOf="@id/divider_top_tags"
-                    app:visibleGone="@{speechSession != null}" />
+                    app:visibleGone="@{speechSession != null}"
+                    />
 
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/session_tags"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
                     android:layout_marginEnd="16dp"
+                    android:layout_marginTop="12dp"
                     app:chipSpacing="4dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/session_time_and_room"
                     app:layout_constraintTop_toBottomOf="@id/session_tag_title"
-                    app:visibleGone="@{speechSession != null}">
+                    app:visibleGone="@{speechSession != null}"
+                    >
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/language_chip"
@@ -300,7 +331,8 @@
                         app:chipBackgroundColor="@{speechSession.lang.equals(Lang.EN)?@color/session_en_talk_background:@color/session_ja_talk_background}"
                         app:chipMinTouchTargetSize="0dp"
                         app:visibleGone="@{speechSession != null}"
-                        tools:text="Japanese" />
+                        tools:text="Japanese"
+                        />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/simultaneous_interpretation_chip"
@@ -316,7 +348,8 @@
                         android:textColor="@color/gray1"
                         app:chipBackgroundColor="@color/session_category_background"
                         app:chipMinTouchTargetSize="0dp"
-                        app:visibleGone="@{speechSession.isInterpretationTarget}" />
+                        app:visibleGone="@{speechSession.isInterpretationTarget}"
+                        />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/for_beginners_chip"
@@ -332,7 +365,8 @@
                         android:textColor="@color/session_for_beginners_text"
                         app:chipBackgroundColor="@color/session_for_beginners_background"
                         app:chipMinTouchTargetSize="0dp"
-                        app:visibleGone="@{speechSession.forBeginners}" />
+                        app:visibleGone="@{speechSession.forBeginners}"
+                        />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/category_chip"
@@ -348,23 +382,25 @@
                         app:chipBackgroundColor="@color/session_category_background"
                         app:chipMinTouchTargetSize="0dp"
                         app:visibleGone="@{speechSession != null}"
-                        tools:text="ソフトウェアアーキテクチャ" />
+                        tools:text="ソフトウェアアーキテクチャ"
+                        />
                 </com.google.android.material.chip.ChipGroup>
 
                 <ImageView
                     android:id="@+id/divider_top_survey"
                     android:layout_width="0dp"
                     android:layout_height="4dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
-                    android:layout_marginEnd="16dp"
                     android:contentDescription="@null"
                     android:layerType="software"
                     android:src="@drawable/shape_dashed_line"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_tags"
-                    app:visibleGone="@{session.isFinished}" />
+                    app:visibleGone="@{session.isFinished &amp;&amp; speechSession != null}"
+                    />
 
 
                 <TextView
@@ -376,33 +412,42 @@
                     android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_time_and_room"
                     app:layout_constraintTop_toBottomOf="@id/divider_top_survey"
-                    app:visibleGone="@{session.isFinished}" />
+                    app:visibleGone="@{session.isFinished &amp;&amp; speechSession != null}"
+                    />
 
                 <TextView
                     android:id="@+id/session_go_to_survey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:background="?selectableItemBackground"
+                    android:paddingBottom="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
+                    android:paddingTop="8dp"
                     android:text="@string/session_detail_go_to_survey"
                     android:textAppearance="@style/TextAppearance.Lekton.Body1"
                     android:textColor="@color/colorSecondary"
                     app:layout_constraintBaseline_toBaselineOf="@id/session_survey_title"
-                    app:layout_constraintEnd_toEndOf="@id/session_time_and_room"
-                    app:visibleGone="@{session.isFinished}" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:visibleGone="@{session.isFinished &amp;&amp; speechSession != null}"
+                    />
 
                 <ImageView
                     android:id="@+id/divider_top_speakers"
                     android:layout_width="0dp"
                     android:layout_height="4dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="26dp"
-                    android:layout_marginEnd="16dp"
                     android:contentDescription="@null"
                     android:layerType="software"
                     android:src="@drawable/shape_dashed_line"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_survey_title"
-                    app:visibleGone="@{speechSession != null}" />
+                    app:visibleGone="@{speechSession != null}"
+                    />
 
                 <TextView
                     android:id="@+id/session_speaker_title"
@@ -413,34 +458,37 @@
                     android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_time_and_room"
                     app:layout_constraintTop_toBottomOf="@id/divider_top_speakers"
-                    app:visibleGone="@{speechSession != null}" />
+                    app:visibleGone="@{speechSession != null}"
+                    />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/session_speakers"
+                    android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_speaker_title"
                     app:visibleGone="@{speechSession != null}"
-                    tools:listitem="@layout/item_speaker" />
+                    tools:listitem="@layout/item_speaker"
+                    />
 
                 <ImageView
                     android:id="@+id/divider_top_resource"
                     android:layout_width="0dp"
                     android:layout_height="4dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
-                    android:layout_marginEnd="16dp"
                     android:contentDescription="@null"
                     android:layerType="software"
                     android:src="@drawable/shape_dashed_line"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_speakers"
-                    app:visibleGone="@{speechSession.hasVideo || speechSession.hasSlide}" />
+                    app:visibleGone="@{speechSession.hasVideo || speechSession.hasSlide}"
+                    />
 
                 <TextView
                     android:id="@+id/session_resource_title"
@@ -451,7 +499,8 @@
                     android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
                     app:layout_constraintStart_toStartOf="@id/session_time_and_room"
                     app:layout_constraintTop_toBottomOf="@id/divider_top_resource"
-                    app:visibleGone="@{speechSession.hasVideo || speechSession.hasSlide}" />
+                    app:visibleGone="@{speechSession.hasVideo || speechSession.hasSlide}"
+                    />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/session_video_button"
@@ -460,21 +509,22 @@
                     android:layout_marginTop="8dp"
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
-                    android:drawableStart="@drawable/ic_local_movies_outline_gray2_24dp"
                     android:drawablePadding="8dp"
+                    android:drawableStart="@drawable/ic_local_movies_outline_gray2_24dp"
                     android:focusable="true"
                     android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingEnd="16dp"
                     android:paddingStart="16dp"
                     android:paddingTop="8dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="8dp"
                     android:text="@string/session_detail_resource_video"
                     android:textAppearance="@style/TextAppearance.Lekton.Body1"
                     android:textColor="@color/colorSecondary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_resource_title"
-                    app:visibleGone="@{speechSession.hasVideo}" />
+                    app:visibleGone="@{speechSession.hasVideo}"
+                    />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/session_slide_button"
@@ -483,14 +533,14 @@
                     android:layout_marginTop="0dp"
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
-                    android:drawableStart="@drawable/ic_file_copy_outline_gray2_24dp"
                     android:drawablePadding="8dp"
+                    android:drawableStart="@drawable/ic_file_copy_outline_gray2_24dp"
                     android:focusable="true"
                     android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingEnd="16dp"
                     android:paddingStart="16dp"
                     android:paddingTop="8dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="8dp"
                     android:text="@string/session_detail_resource_slide"
                     android:textAppearance="@style/TextAppearance.Lekton.Body1"
                     android:textColor="@color/colorSecondary"
@@ -498,7 +548,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/session_video_button"
                     app:layout_goneMarginTop="8dp"
-                    app:visibleGone="@{speechSession.hasSlide}" />
+                    app:visibleGone="@{speechSession.hasSlide}"
+                    />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
@@ -510,7 +561,8 @@
             android:layout_gravity="bottom"
             app:fabAlignmentMode="end"
             app:hideOnScroll="true"
-            app:layout_behavior="@string/session_bottom_appbar_behavior" />
+            app:layout_behavior="@string/session_bottom_appbar_behavior"
+            />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/session_favorite"
@@ -519,7 +571,8 @@
             android:src="@{session.isFavorited? @drawable/ic_bookmark_black_24dp : @drawable/ic_bookmark_border_black_24dp}"
             app:backgroundTint="@color/colorPrimary"
             app:layout_anchor="@id/bottom_app_bar"
-            app:tint="@color/white" />
+            app:tint="@color/white"
+            />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -10,6 +10,7 @@ import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.requireValue
 import io.github.droidkaigi.confsched2019.ext.android.toLiveData
+import io.github.droidkaigi.confsched2019.ext.android.toSingleLiveData
 import io.github.droidkaigi.confsched2019.model.Filters
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionPage
@@ -106,7 +107,7 @@ class SessionPagesStore @Inject constructor(
     }
     val filtersValue: Filters get() = filters.requireValue()
 
-    private val filteredSessions: LiveData<List<Session>> = sessions
+    val filteredSessions: LiveData<List<Session>> = sessions
         .combineWith(filters) { sessions, filters ->
             sessions ?: return@combineWith listOf<Session>()
             sessions.filter { session ->
@@ -118,6 +119,11 @@ class SessionPagesStore @Inject constructor(
         .subscribe<Action.SessionPageSelected>()
         .map { it.sessionPage }
         .toLiveData(SessionPage.pages[0])
+
+    val reselectedTab: LiveData<SessionPage> = dispatcher
+        .subscribe<Action.SessionPageReselected>()
+        .map { it.sessionPage }
+        .toSingleLiveData(SessionPage.pages[0])
 
     fun filteredSessionsByDay(day: Int): LiveData<List<Session>> {
         return filteredSessions

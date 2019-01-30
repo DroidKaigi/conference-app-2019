@@ -1,5 +1,6 @@
 package io.github.droidkaigi.confsched2019.ext.android
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.GenericLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Lifecycle.State.INITIALIZED
@@ -42,14 +43,20 @@ fun Lifecycle.createJob(activeWhile: Lifecycle.State = INITIALIZED): Job {
             else -> GlobalScope.launch(Dispatchers.Main) {
                 // State is usually synced on next loop,
                 // this allows to use STARTED from onStart in Activities for example.
-                addObserver(object : GenericLifecycleObserver {
-                    override fun onStateChanged(source: LifecycleOwner?, event: Lifecycle.Event) {
-                        if (!currentState.isAtLeast(activeWhile)) {
-                            removeObserver(this)
-                            job.cancel()
+                addObserver(
+                    @SuppressLint("RestrictedApi")
+                    object : GenericLifecycleObserver {
+                        override fun onStateChanged(
+                            source: LifecycleOwner?,
+                            event: Lifecycle.Event
+                        ) {
+                            if (!currentState.isAtLeast(activeWhile)) {
+                                removeObserver(this)
+                                job.cancel()
+                            }
                         }
                     }
-                })
+                )
             }
         }
     }

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ios_combined
+import ioscombined
 import RxSwift
 import RxCocoa
 
@@ -14,14 +14,17 @@ final class SessionsViewModel {
 
     private let repository =  SessionRepository()
     private let bag = DisposeBag()
-    init() {}
+    private let day: Day
+    init(day: Day) {
+        self.day = day
+    }
     private let _error = BehaviorRelay<String?>(value: nil)
 }
 
 extension SessionsViewModel {
 
     struct Input {
-        let initTrigger: Observable<Void>
+        let viewWillAppear: Observable<Void>
     }
 
     struct Output {
@@ -30,7 +33,7 @@ extension SessionsViewModel {
     }
     
     func transform(input: Input) -> Output {
-        let sessionContents = input.initTrigger
+        let sessionContents = input.viewWillAppear
                 .flatMap { [weak self] (_) -> Observable<SessionContents> in
                     guard let `self` = self else { return Observable.empty() }
                     return self.repository.fetch()
@@ -46,8 +49,11 @@ extension SessionsViewModel {
         dateFormatter.locale = NSLocale.current
         dateFormatter.dateFormat = "HH:mm"
         
-        let sessions = sessionContents.map { sessionContents -> [SessionByStartTime] in
-            return sessionContents.sessions.reduce(into: [SessionByStartTime]()) { result, session in
+        let sessions = sessionContents.map {  [weak self] sessionContents -> [SessionByStartTime] in
+            guard let `self` = self else { return [] }
+            return sessionContents.sessions
+                .filter { $0.dayNumber == self.day.day }
+                .reduce(into: [SessionByStartTime]()) { result, session in
                 if let index = result.firstIndex(where: { $0.startTime == session.startTime }) {
                     result[index].sessions.append(session)
                     return

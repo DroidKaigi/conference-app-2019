@@ -6,16 +6,26 @@
 //
 
 import UIKit
-import ios_combined
+import ioscombined
 import MaterialComponents.MaterialSnackbar
 import RxSwift
 import RxCocoa
+import XLPagerTabStrip
 
 final class SessionsViewController: UIViewController, StoryboardInstantiable {
-    
+
+    var day: Day!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = SessionsViewModel(day: day)
         bind()
+        tableView.rx.modelSelected(Session.self)
+                .asDriver()
+                .drive(onNext: { session in
+                    let viewController = SessionDetailViewController(session: session)
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }).disposed(by: bag)
     }
 
     @IBOutlet private weak var tableView: UITableView! {
@@ -28,13 +38,14 @@ final class SessionsViewController: UIViewController, StoryboardInstantiable {
         }
     }
 
-    private var viewModel = SessionsViewModel()
+    private var viewModel: SessionsViewModel!
     private let bag = DisposeBag()
 
     private let dataSource = SessionDataSource()
 
     private func bind() {
-        let input = SessionsViewModel.Input(initTrigger: Observable.just(()))
+        let viewWillAppear = rx.methodInvoked(#selector(self.viewWillAppear)).map { _ in }
+        let input = SessionsViewModel.Input(viewWillAppear: viewWillAppear)
         let output = viewModel.transform(input: input)
         output.error
               .drive(onNext: { errorMessage in
@@ -46,5 +57,11 @@ final class SessionsViewController: UIViewController, StoryboardInstantiable {
         output.sessions
               .drive(tableView.rx.items(dataSource: dataSource))
               .disposed(by: bag)
+    }
+}
+
+extension SessionsViewController: IndicatorInfoProvider {
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: day.title)
     }
 }

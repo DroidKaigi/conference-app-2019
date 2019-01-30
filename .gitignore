@@ -18,3 +18,5 @@ build/
 
 **/vendor/bundle/
 **/xcuserdata/
+
+proguard-merged-config.txt

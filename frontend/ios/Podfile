@@ -10,6 +10,8 @@ target 'DroidKaigi 2019' do
   # Pods for DroidKaigi 2019
   pod 'MaterialComponents/Snackbar', '~> 74.0'
   pod 'SwiftLint'
+  pod 'LicensePlist'
+  pod 'XLPagerTabStrip'
 
   target 'DroidKaigi 2019Tests' do
     inherit! :search_paths

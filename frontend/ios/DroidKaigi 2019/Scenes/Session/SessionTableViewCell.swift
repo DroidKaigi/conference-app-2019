@@ -6,8 +6,9 @@
 //
 
 import UIKit
-import ios_combined
+import ioscombined
 import SnapKit
+import MaterialComponents.MDCInkTouchController
 
 class SessionTableViewCell: UITableViewCell, Reusable {
 
@@ -18,6 +19,9 @@ class SessionTableViewCell: UITableViewCell, Reusable {
             liveMark.isHidden = !session.isOnGoing
             speakersStackView.isHidden = session is ServiceSession
             collectionView.isHidden = session is ServiceSession
+            let message = (session as? SpeechSession)?.message
+            messageIconImageView.isHidden = message == nil
+            messageLabel.isHidden = message == nil
             remakeTimeAndRoomLabelConstraints()
             switch session {
             case let serviceSession as ServiceSession:
@@ -28,22 +32,19 @@ class SessionTableViewCell: UITableViewCell, Reusable {
                     let cell = SpeakerCell(speaker: speaker)
                     speakersStackView.addArrangedSubview(cell)
                 }
-                tagContents.append(.lang(lang: speechSession.lang))
-                if speechSession.forBeginners {
-                    tagContents.append(.beginner)
-                }
-                tagContents.append(.category(category: speechSession.category))
+                tagContents = speechSession.tagContents
             default:
                 return
             }
             collectionView.reloadData()
+            messageLabel.text = message?.getByLang(lang: LangKt.defaultLang()) ?? ""
         }
     }
 
-    var tagContents: [TagContent] = []
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
         setupSubviews()
     }
     required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -86,6 +87,12 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         SessionCalculateHeightTableViewCell.cachedHeights[hash] = collectionViewHeight
         return CGSize.init(width: targetSize.width, height: collectionViewHeight + defaultSize.height)
     }
+
+    private var tagContents: [TagContent] = []
+
+    private lazy var inkTouchController: MDCInkTouchController = {
+        return MDCInkTouchController(view: self)
+    }()
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -132,9 +139,25 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         collectionView.register(TagsCollectionViewCell.self)
         return collectionView
     }()
+    private lazy var messageIconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "bug_report")?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = UIColor.DK.primary.color
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    private lazy var messageLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = UIColor.DK.primary.color
+        label.numberOfLines = -1
+        return label
+    }()
+
 
     private func setupSubviews() {
-        [titleLabel, liveMark, speakersStackView, timeAndRoomLabel, collectionView].forEach(contentView.addSubview)
+        [titleLabel, liveMark, speakersStackView, timeAndRoomLabel, collectionView, messageIconImageView, messageLabel].forEach(contentView.addSubview)
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(5)
             $0.leading.equalToSuperview().inset(90)
@@ -156,8 +179,20 @@ class SessionTableViewCell: UITableViewCell, Reusable {
             $0.leading.equalTo(titleLabel)
             $0.trailing.equalToSuperview().inset(16)
             $0.top.equalTo(timeAndRoomLabel.snp.bottom).offset(7)
+        }
+        messageIconImageView.snp.makeConstraints {
+            $0.centerY.equalTo(messageLabel)
+            $0.leading.equalTo(titleLabel)
+            $0.width.height.equalTo(20)
+        }
+        messageLabel.snp.makeConstraints {
+            $0.leading.equalTo(messageIconImageView.snp.trailing).offset(9)
+            $0.trailing.equalToSuperview().inset(16)
+            $0.top.equalTo(collectionView.snp.bottom).offset(8)
             $0.bottom.equalToSuperview().inset(26)
         }
+        
+        inkTouchController.addInkView()
     }
 
     private func remakeTimeAndRoomLabelConstraints() {
@@ -194,15 +229,8 @@ final class SessionCalculateHeightTableViewCell: UITableViewCell {
 
     var session: Session? {
         didSet {
-            if let session = session as? SpeechSession {
-                tagContents = [.lang(lang: session.lang)]
-                if session.forBeginners {
-                    tagContents.append(.beginner)
-                }
-                tagContents.append(.category(category: session.category))
-            } else {
-                tagContents = []
-            }
+            guard let speechSession = session as? SpeechSession else { return }
+            tagContents = speechSession.tagContents
             collectionView.reloadData()
         }
     }
@@ -260,7 +288,7 @@ extension SessionCalculateHeightTableViewCell: UICollectionViewDelegateFlowLayou
         let cell = Static.cell
         cell.tagContent = tagContents[indexPath.item]
         let cellSize = cell.label.intrinsicContentSize
-        let width = cellSize.width > collectionView.bounds.size.width ? collectionView.bounds.size.width - 30 : cellSize.width
+        let width = cellSize.width > collectionView.bounds.size.width - 20 ? collectionView.bounds.size.width - 20 : cellSize.width
         return CGSize(width: width, height: cellSize.height)
     }
 }

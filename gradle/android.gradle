@@ -15,7 +15,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            consumerProguardFiles 'proguard-rules.pro'
         }
     }
     lintOptions {
@@ -23,6 +23,9 @@ android {
         if (lintFile.exists()) {
             lintConfig lintFile
         }
+
+        checkReleaseBuilds !isCi
+        abortOnError !isCi
     }
 }
 kotlin.sourceSets.all {

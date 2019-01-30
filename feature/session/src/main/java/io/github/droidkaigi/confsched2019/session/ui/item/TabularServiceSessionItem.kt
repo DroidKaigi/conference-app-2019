@@ -1,17 +1,32 @@
 package io.github.droidkaigi.confsched2019.session.ui.item
 
+import android.view.View
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemTabularServiceSessionBinding
 
-class TabularServiceSessionItem(val session: ServiceSession) :
-    BindableItem<ItemTabularServiceSessionBinding>(session.id.hashCode().toLong()) {
+class TabularServiceSessionItem(
+    val session: ServiceSession,
+    private val navDirections: NavDirections,
+    private val navController: NavController
+) : BindableItem<ItemTabularServiceSessionBinding>(session.id.hashCode().toLong()) {
 
     override fun bind(viewBinding: ItemTabularServiceSessionBinding, position: Int) {
         viewBinding.apply {
-            session = this@TabularServiceSessionItem.session
+            val sessionField = this@TabularServiceSessionItem.session
+            val onClickListener: ((View) -> Unit)? = if (sessionField.sessionType.supportDetail) {
+                {
+                    navController.navigate(navDirections)
+                }
+            } else {
+                null
+            }
+            root.setOnClickListener(onClickListener)
+            session = sessionField
             lang = defaultLang()
         }
     }

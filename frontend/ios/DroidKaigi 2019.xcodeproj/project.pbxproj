@@ -12,14 +12,26 @@
 		01578ECE21E5E75D002B2033 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01578ECC21E5E75D002B2033 /* LaunchScreen.storyboard */; };
 		01578ED921E5E75D002B2033 /* DroidKaigi_2019Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01578ED821E5E75D002B2033 /* DroidKaigi_2019Tests.swift */; };
 		01578EE421E5E75D002B2033 /* DroidKaigi_2019UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01578EE321E5E75D002B2033 /* DroidKaigi_2019UITests.swift */; };
-		01E0C3D021E9ED450014DA7E /* ios_combined.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E0C3CF21E9ED450014DA7E /* ios_combined.framework */; };
-		01E0C3D221E9ED4B0014DA7E /* ios_combined.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01E0C3CF21E9ED450014DA7E /* ios_combined.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		01E0C3D021E9ED450014DA7E /* ioscombined.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E0C3CF21E9ED450014DA7E /* ioscombined.framework */; };
+		2159CC5321FE0E0000DBD016 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2159CC5221FE0E0000DBD016 /* MainViewController.swift */; };
+		2159CC5521FE122F00DBD016 /* MainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2159CC5421FE122F00DBD016 /* MainViewController.storyboard */; };
+		2159CC5721FE186800DBD016 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2159CC5621FE186800DBD016 /* Day.swift */; };
+		218481C521FB7F480048D9D3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 218481C421FB7F480048D9D3 /* Settings.bundle */; };
 		2CBEBD60F6DCD21A07E2D311 /* Pods_DroidKaigi_2019.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A3E24B47F135429DAD2646 /* Pods_DroidKaigi_2019.framework */; };
+		360744F121FADF53003569D3 /* SessionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360744F021FADF53003569D3 /* SessionDetailViewController.swift */; };
+		360744F321FAF0CE003569D3 /* SessionDetailHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360744F221FAF0CE003569D3 /* SessionDetailHeaderTableViewCell.swift */; };
+		360744F521FAF13C003569D3 /* SessionDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360744F421FAF13C003569D3 /* SessionDetailTableViewCell.swift */; };
+		360744F721FAF152003569D3 /* SessionDetailTagsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360744F621FAF152003569D3 /* SessionDetailTagsTableViewCell.swift */; };
+		362546C921FC9DCD005ADB0F /* SessionDetailWithIconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362546C821FC9DCD005ADB0F /* SessionDetailWithIconTableViewCell.swift */; };
+		362546CB21FCD4E8005ADB0F /* SessionDetailSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362546CA21FCD4E8005ADB0F /* SessionDetailSectionHeaderView.swift */; };
+		362546CD21FCD4FF005ADB0F /* SessionDetailSectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362546CC21FCD4FF005ADB0F /* SessionDetailSectionFooterView.swift */; };
 		362D90FD21F5DBC2006962C8 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362D90FB21F5DBC2006962C8 /* StartViewController.swift */; };
 		362D90FE21F5DBC2006962C8 /* StartViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 362D90FC21F5DBC2006962C8 /* StartViewController.storyboard */; };
 		362D910221F5DC2D006962C8 /* SessionsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 362D90FF21F5DC2C006962C8 /* SessionsViewController.storyboard */; };
 		362D910321F5DC2D006962C8 /* SessionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362D910021F5DC2C006962C8 /* SessionsViewController.swift */; };
 		362D910421F5DC2D006962C8 /* SessionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362D910121F5DC2C006962C8 /* SessionsViewModel.swift */; };
+		363E6AF421FD536A00EBC698 /* TagContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363E6AF321FD536A00EBC698 /* TagContent.swift */; };
+		363E6AF621FD545B00EBC698 /* Session+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363E6AF521FD545B00EBC698 /* Session+Extension.swift */; };
 		366B060721F751C400C912AD /* TagsLeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366B060621F751C400C912AD /* TagsLeftAlignedCollectionViewFlowLayout.swift */; };
 		366B060921F756CB00C912AD /* TagsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366B060821F756CB00C912AD /* TagsCollectionViewCell.swift */; };
 		366B060B21F7604500C912AD /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366B060A21F7604400C912AD /* UICollectionView+Extension.swift */; };
@@ -36,6 +48,9 @@
 		36D1FA2721F5CF6600ADBBDE /* StoryboardInstantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D1FA2621F5CF6600ADBBDE /* StoryboardInstantiable.swift */; };
 		5917BCA621FA19B8005BEAF2 /* SessionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5917BCA521FA19B8005BEAF2 /* SessionHeaderView.swift */; };
 		59D30FC921F8B1BD003A937C /* SessionByStartTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D30FC821F8B1BD003A937C /* SessionByStartTime.swift */; };
+		63E7E66D21FF5B750076E6BC /* ioscombined.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E7E66721FF58BD0076E6BC /* ioscombined.framework */; };
+		63E7E67021FF78010076E6BC /* ioscombined.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E7E66721FF58BD0076E6BC /* ioscombined.framework */; };
+		63E7E67121FF78010076E6BC /* ioscombined.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 63E7E66721FF58BD0076E6BC /* ioscombined.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		63F34E1B21EB43CE00B2EC48 /* SessionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F34E1A21EB43CE00B2EC48 /* SessionRepository.swift */; };
 		7B76F7A821FB45D2008A059B /* KotlinxDeferred+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B76F7A721FB45D2008A059B /* KotlinxDeferred+Extension.swift */; };
 		E9B4925E21ECB6CE000F1072 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925C21ECB6CE000F1072 /* RxCocoa.framework */; };
@@ -66,13 +81,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		01E0C3D321E9ED4B0014DA7E /* Embed Frameworks */ = {
+		63E7E67221FF78020076E6BC /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				01E0C3D221E9ED4B0014DA7E /* ios_combined.framework in Embed Frameworks */,
+				63E7E67121FF78010076E6BC /* ioscombined.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -91,12 +106,25 @@
 		01578EDF21E5E75D002B2033 /* DroidKaigi 2019UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DroidKaigi 2019UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		01578EE321E5E75D002B2033 /* DroidKaigi_2019UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroidKaigi_2019UITests.swift; sourceTree = "<group>"; };
 		01578EE521E5E75D002B2033 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		01E0C3CF21E9ED450014DA7E /* ios_combined.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ios_combined.framework; path = "../ios-combined/build/xcode-frameworks/ios_combined.framework"; sourceTree = "<group>"; };
+		01E0C3CF21E9ED450014DA7E /* ioscombined.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ioscombined.framework; path = "../ioscombined/build/xcode-frameworks/ioscombined.framework"; sourceTree = "<group>"; };
+		2159CC5221FE0E0000DBD016 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		2159CC5421FE122F00DBD016 /* MainViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainViewController.storyboard; sourceTree = "<group>"; };
+		2159CC5621FE186800DBD016 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
+		218481C421FB7F480048D9D3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		360744F021FADF53003569D3 /* SessionDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailViewController.swift; sourceTree = "<group>"; };
+		360744F221FAF0CE003569D3 /* SessionDetailHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		360744F421FAF13C003569D3 /* SessionDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailTableViewCell.swift; sourceTree = "<group>"; };
+		360744F621FAF152003569D3 /* SessionDetailTagsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailTagsTableViewCell.swift; sourceTree = "<group>"; };
+		362546C821FC9DCD005ADB0F /* SessionDetailWithIconTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailWithIconTableViewCell.swift; sourceTree = "<group>"; };
+		362546CA21FCD4E8005ADB0F /* SessionDetailSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailSectionHeaderView.swift; sourceTree = "<group>"; };
+		362546CC21FCD4FF005ADB0F /* SessionDetailSectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailSectionFooterView.swift; sourceTree = "<group>"; };
 		362D90FB21F5DBC2006962C8 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		362D90FC21F5DBC2006962C8 /* StartViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = StartViewController.storyboard; sourceTree = "<group>"; };
 		362D90FF21F5DC2C006962C8 /* SessionsViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SessionsViewController.storyboard; sourceTree = "<group>"; };
 		362D910021F5DC2C006962C8 /* SessionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsViewController.swift; sourceTree = "<group>"; };
 		362D910121F5DC2C006962C8 /* SessionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsViewModel.swift; sourceTree = "<group>"; };
+		363E6AF321FD536A00EBC698 /* TagContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagContent.swift; sourceTree = "<group>"; };
+		363E6AF521FD545B00EBC698 /* Session+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+Extension.swift"; sourceTree = "<group>"; };
 		366B060621F751C400C912AD /* TagsLeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsLeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		366B060821F756CB00C912AD /* TagsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsCollectionViewCell.swift; sourceTree = "<group>"; };
 		366B060A21F7604400C912AD /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
@@ -113,6 +141,7 @@
 		36D1FA2621F5CF6600ADBBDE /* StoryboardInstantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardInstantiable.swift; sourceTree = "<group>"; };
 		5917BCA521FA19B8005BEAF2 /* SessionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionHeaderView.swift; sourceTree = "<group>"; };
 		59D30FC821F8B1BD003A937C /* SessionByStartTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionByStartTime.swift; sourceTree = "<group>"; };
+		63E7E66721FF58BD0076E6BC /* ioscombined.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ioscombined.framework; path = "../ioscombined/build/xcode-frameworks/ioscombined.framework"; sourceTree = "<group>"; };
 		63F34E1A21EB43CE00B2EC48 /* SessionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRepository.swift; sourceTree = "<group>"; };
 		668449C104FFB0635F949A44 /* Pods-DroidKaigi 2019Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DroidKaigi 2019Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DroidKaigi 2019Tests/Pods-DroidKaigi 2019Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		724135790B4D380473272A9A /* Pods-DroidKaigi 2019UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DroidKaigi 2019UITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DroidKaigi 2019UITests/Pods-DroidKaigi 2019UITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -138,8 +167,10 @@
 				E9B4925E21ECB6CE000F1072 /* RxCocoa.framework in Frameworks */,
 				E9B4925F21ECB6CE000F1072 /* RxSwift.framework in Frameworks */,
 				3672C2D721F707C500ACB910 /* SnapKit.framework in Frameworks */,
+				63E7E66D21FF5B750076E6BC /* ioscombined.framework in Frameworks */,
 				3672C2DD21F7392900ACB910 /* Kingfisher.framework in Frameworks */,
-				01E0C3D021E9ED450014DA7E /* ios_combined.framework in Frameworks */,
+				63E7E67021FF78010076E6BC /* ioscombined.framework in Frameworks */,
+				01E0C3D021E9ED450014DA7E /* ioscombined.framework in Frameworks */,
 				2CBEBD60F6DCD21A07E2D311 /* Pods_DroidKaigi_2019.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -170,6 +201,7 @@
 		01578EB421E5E75A002B2033 = {
 			isa = PBXGroup;
 			children = (
+				63E7E66721FF58BD0076E6BC /* ioscombined.framework */,
 				01578EBF21E5E75A002B2033 /* DroidKaigi 2019 */,
 				01578ED721E5E75D002B2033 /* DroidKaigi 2019Tests */,
 				01578EE221E5E75D002B2033 /* DroidKaigi 2019UITests */,
@@ -200,6 +232,7 @@
 				01578ECC21E5E75D002B2033 /* LaunchScreen.storyboard */,
 				01578EC021E5E75A002B2033 /* AppDelegate.swift */,
 				01578ECF21E5E75D002B2033 /* Info.plist */,
+				218481C421FB7F480048D9D3 /* Settings.bundle */,
 			);
 			path = "DroidKaigi 2019";
 			sourceTree = "<group>";
@@ -231,7 +264,7 @@
 				E9B4926321ECB783000F1072 /* RxTest.framework */,
 				E9B4925C21ECB6CE000F1072 /* RxCocoa.framework */,
 				E9B4925D21ECB6CE000F1072 /* RxSwift.framework */,
-				01E0C3CF21E9ED450014DA7E /* ios_combined.framework */,
+				01E0C3CF21E9ED450014DA7E /* ioscombined.framework */,
 				93A3E24B47F135429DAD2646 /* Pods_DroidKaigi_2019.framework */,
 				E0C273AE5C26B0C5563FFF9A /* Pods_DroidKaigi_2019Tests.framework */,
 				D1926B9E9C352CF5C49A9569 /* Pods_DroidKaigi_2019UITests.framework */,
@@ -239,11 +272,27 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		360744EF21FADF22003569D3 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				360744F021FADF53003569D3 /* SessionDetailViewController.swift */,
+				360744F221FAF0CE003569D3 /* SessionDetailHeaderTableViewCell.swift */,
+				360744F421FAF13C003569D3 /* SessionDetailTableViewCell.swift */,
+				362546C821FC9DCD005ADB0F /* SessionDetailWithIconTableViewCell.swift */,
+				360744F621FAF152003569D3 /* SessionDetailTagsTableViewCell.swift */,
+				362546CA21FCD4E8005ADB0F /* SessionDetailSectionHeaderView.swift */,
+				362546CC21FCD4FF005ADB0F /* SessionDetailSectionFooterView.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
 		362D90F521F5D50F006962C8 /* data */ = {
 			isa = PBXGroup;
 			children = (
+				2159CC5621FE186800DBD016 /* Day.swift */,
 				63F34E1A21EB43CE00B2EC48 /* SessionRepository.swift */,
 				59D30FC821F8B1BD003A937C /* SessionByStartTime.swift */,
+				363E6AF321FD536A00EBC698 /* TagContent.swift */,
 			);
 			path = data;
 			sourceTree = "<group>";
@@ -279,6 +328,7 @@
 				3672C2C821F5E08C00ACB910 /* UIColor+Extension.swift */,
 				3672C2CA21F601D600ACB910 /* UITableView+Extension.swift */,
 				366B060A21F7604400C912AD /* UICollectionView+Extension.swift */,
+				363E6AF521FD545B00EBC698 /* Session+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -286,10 +336,13 @@
 		36D1FA2221F5CD4A00ADBBDE /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				2159CC5421FE122F00DBD016 /* MainViewController.storyboard */,
+				2159CC5221FE0E0000DBD016 /* MainViewController.swift */,
 				362D90FC21F5DBC2006962C8 /* StartViewController.storyboard */,
 				362D90FB21F5DBC2006962C8 /* StartViewController.swift */,
 				366B060C21F7650D00C912AD /* Common */,
 				362D90F621F5D521006962C8 /* Session */,
+				360744EF21FADF22003569D3 /* Detail */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -330,9 +383,10 @@
 				01578EBA21E5E75A002B2033 /* Frameworks */,
 				E9B4925B21ECB696000F1072 /* Carthage Copy Frameworks */,
 				01578EBB21E5E75A002B2033 /* Resources */,
-				01E0C3D321E9ED4B0014DA7E /* Embed Frameworks */,
 				361EF11099051CF5E1A29049 /* [CP] Embed Pods Frameworks */,
 				435E83A821FA250500209995 /* ShellScript */,
+				21071A4521FB74AE004FBA38 /* Generate License Plist */,
+				63E7E67221FF78020076E6BC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -431,7 +485,9 @@
 			files = (
 				01578ECE21E5E75D002B2033 /* LaunchScreen.storyboard in Resources */,
 				01578ECB21E5E75D002B2033 /* Assets.xcassets in Resources */,
+				218481C521FB7F480048D9D3 /* Settings.bundle in Resources */,
 				362D910221F5DC2D006962C8 /* SessionsViewController.storyboard in Resources */,
+				2159CC5521FE122F00DBD016 /* MainViewController.storyboard in Resources */,
 				362D90FE21F5DBC2006962C8 /* StartViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -469,7 +525,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$SRCROOT/../..\"\n./gradlew \":frontend:ios-combined:packForXCode\" -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
+			shellScript = "cd \"$SRCROOT/../..\"\n./gradlew \":frontend:ioscombined:packForXCode\" -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
+		};
+		21071A4521FB74AE004FBA38 /* Generate License Plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate License Plist";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ $CONFIGURATION = \"Debug\" ]; then\n${PODS_ROOT}/LicensePlist/license-plist --output-path \"$PRODUCT_NAME/Settings.bundle\"\nfi\n";
 		};
 		361EF11099051CF5E1A29049 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -483,6 +557,7 @@
 				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
 				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
+				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
@@ -491,6 +566,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFInternationalization.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFTextAccessibility.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponents.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -641,13 +717,20 @@
 			files = (
 				366B060B21F7604500C912AD /* UICollectionView+Extension.swift in Sources */,
 				3672C2D921F70AC100ACB910 /* SessionTableViewCell.swift in Sources */,
+				363E6AF621FD545B00EBC698 /* Session+Extension.swift in Sources */,
 				366B060921F756CB00C912AD /* TagsCollectionViewCell.swift in Sources */,
 				3672C2C921F5E08C00ACB910 /* UIColor+Extension.swift in Sources */,
 				3672C2DF21F73A9400ACB910 /* SpeakerCell.swift in Sources */,
+				360744F721FAF152003569D3 /* SessionDetailTagsTableViewCell.swift in Sources */,
+				363E6AF421FD536A00EBC698 /* TagContent.swift in Sources */,
+				2159CC5721FE186800DBD016 /* Day.swift in Sources */,
 				362D910321F5DC2D006962C8 /* SessionsViewController.swift in Sources */,
+				2159CC5321FE0E0000DBD016 /* MainViewController.swift in Sources */,
 				63F34E1B21EB43CE00B2EC48 /* SessionRepository.swift in Sources */,
 				59D30FC921F8B1BD003A937C /* SessionByStartTime.swift in Sources */,
+				362546CD21FCD4FF005ADB0F /* SessionDetailSectionFooterView.swift in Sources */,
 				3672C2D321F6FB7E00ACB910 /* SessionDataSource.swift in Sources */,
+				362546C921FC9DCD005ADB0F /* SessionDetailWithIconTableViewCell.swift in Sources */,
 				366B060721F751C400C912AD /* TagsLeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				3672C2D121F6033200ACB910 /* NibLoadable.swift in Sources */,
 				3672C2CD21F6024B00ACB910 /* Reusable.swift in Sources */,
@@ -657,7 +740,11 @@
 				01578EC121E5E75A002B2033 /* AppDelegate.swift in Sources */,
 				7B76F7A821FB45D2008A059B /* KotlinxDeferred+Extension.swift in Sources */,
 				362D90FD21F5DBC2006962C8 /* StartViewController.swift in Sources */,
+				362546CB21FCD4E8005ADB0F /* SessionDetailSectionHeaderView.swift in Sources */,
+				360744F321FAF0CE003569D3 /* SessionDetailHeaderTableViewCell.swift in Sources */,
+				360744F521FAF13C003569D3 /* SessionDetailTableViewCell.swift in Sources */,
 				362D910421F5DC2D006962C8 /* SessionsViewModel.swift in Sources */,
+				360744F121FADF53003569D3 /* SessionDetailViewController.swift in Sources */,
 				3672C2CB21F601D600ACB910 /* UITableView+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -830,9 +917,10 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../ios-combined/build/xcode-frameworks",
+					"$(SRCROOT)/../ioscombined/build/xcode-frameworks",
 					"$(PROJECT_DIR)-combined/build/xcode-frameworks",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)combined/build/xcode-frameworks",
 				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "DroidKaigi 2019/Info.plist";
@@ -840,10 +928,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "io.github.droidkaigi.confsched2019.DroidKaigi-2019";
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.droidkaigi.confsched2019.DroidKaigi2019;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 arm64e armv7s";
 			};
 			name = Debug;
 		};
@@ -856,9 +945,10 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../ios-combined/build/xcode-frameworks",
+					"$(SRCROOT)/../ioscombined/build/xcode-frameworks",
 					"$(PROJECT_DIR)-combined/build/xcode-frameworks",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)combined/build/xcode-frameworks",
 				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "DroidKaigi 2019/Info.plist";
@@ -866,10 +956,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "io.github.droidkaigi.confsched2019.DroidKaigi-2019";
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.droidkaigi.confsched2019.DroidKaigi2019;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 arm64e armv7s";
 			};
 			name = Release;
 		};

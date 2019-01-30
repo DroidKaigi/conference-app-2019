@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.NavController
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.BindableItem
 import com.xwray.groupie.databinding.ViewHolder
@@ -23,7 +24,6 @@ import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpacerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
-import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableDividerDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableLayoutManager
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableRoomLabelDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimeTableTimeLabelDecoration
@@ -36,6 +36,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
     private lateinit var binding: FragmentTabularFormSessionPageBinding
 
     @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
+    @Inject lateinit var navController: NavController
     private val sessionPagesStore: SessionPagesStore by lazy {
         InjectedViewModelProviders.of(requireActivity()).get(sessionPagesStoreProvider)
     }
@@ -62,12 +63,12 @@ class TabularFormSessionPageFragment : DaggerFragment() {
 
         val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.tabularFormSessionsRecycler.apply {
-            addItemDecoration(TimeTableDividerDecoration(context, COLUMN_COUNT, groupAdapter))
             addItemDecoration(TimeTableTimeLabelDecoration(context, groupAdapter))
             addItemDecoration(TimeTableRoomLabelDecoration(context, groupAdapter))
             layoutManager = TimeTableLayoutManager(
                 resources.getDimensionPixelSize(R.dimen.tabular_form_column_width),
-                resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute)
+                resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute),
+                shouldLoopHorizontally = true
             ) { position ->
                 val item = groupAdapter.getItem(position)
                 when (item) {
@@ -94,7 +95,6 @@ class TabularFormSessionPageFragment : DaggerFragment() {
             }
             adapter = groupAdapter
         }
-
         sessionPagesStore.sessionsByDay(args.day)
             .changed(viewLifecycleOwner) { sessions ->
                 groupAdapter.update(fillGaps(sessions))
@@ -123,11 +123,14 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                             room
                         )
                     )
-
+                val navDirections = TabularFormSessionPagesFragmentDirections
+                    .actionTabularFormToSessionDetail(session.id)
                 filledItems.add(
                     when (session) {
-                        is SpeechSession -> TabularSpeechSessionItem(session)
-                        is ServiceSession -> TabularServiceSessionItem(session)
+                        is SpeechSession ->
+                            TabularSpeechSessionItem(session, navDirections, navController)
+                        is ServiceSession ->
+                            TabularServiceSessionItem(session, navDirections, navController)
                     }
                 )
 
@@ -165,8 +168,6 @@ class TabularFormSessionPageFragment : DaggerFragment() {
     }
 
     companion object {
-        const val COLUMN_COUNT = 9
-
         fun newInstance(args: TabularFormSessionPagesFragmentArgs): TabularFormSessionPageFragment {
             return TabularFormSessionPageFragment()
                 .apply { arguments = args.toBundle() }

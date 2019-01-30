@@ -20,7 +20,7 @@ make init
 
 *If you haven't installed Android SDK, then you need to get it. Please visit https://developer.android.com/studio/ and download it. The easist way to install Android Sdk is to install AndroidStudio.*
 
-Please make sure `./gradlew :frontend:ios-combined:packForXCode -PXCODE_CONFIGURATION=Debug` is successfuly run. 
+Please make sure `./gradlew :frontend:ioscombined:packForXCode -PXCODE_CONFIGURATION=Debug` is successfuly run. 
 
 After that, you can open `DroidKaigi 2019.xcworkspace` in Xcode.
 
@@ -54,7 +54,7 @@ Maybe you use an older version of JDK. [Update JDK](https://www.oracle.com/techn
 
 ## Could not create service of type ScriptPluginFactory using BuildScopeServices.createScriptPluginFactory()
 
-If you get errors like below when running gradle stuff, please try to switch jdk to 1.8.
+If you get errors like below when running gradle stuff, please try to switch jdk to 1.8. This bug may be based on Java 10 or higher.
 
 e.g. Run `export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)`
 
