@@ -50,6 +50,13 @@ kotlin {
             }
         }
         iOSMain {
+            final String mode = project.findProperty("XCODE_CONFIGURATION")?.toUpperCase() ?: 'DEBUG'
+            if (mode == "RELEASE") {
+                kotlin.srcDirs += "src/iosMain/kotlinRelease"
+            } else {
+                kotlin.srcDirs += "src/iosMain/kotlinDebug"
+            }
+
             dependsOn commonMain
             dependencies {
                 implementation Dep.Ktor.clientIos
