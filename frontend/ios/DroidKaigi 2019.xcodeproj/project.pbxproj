@@ -55,6 +55,11 @@
 		63E7E67121FF78010076E6BC /* ioscombined.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 63E7E66721FF58BD0076E6BC /* ioscombined.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		63F34E1B21EB43CE00B2EC48 /* SessionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F34E1A21EB43CE00B2EC48 /* SessionRepository.swift */; };
 		7B76F7A821FB45D2008A059B /* KotlinxDeferred+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B76F7A721FB45D2008A059B /* KotlinxDeferred+Extension.swift */; };
+		B977F3002202030B0048A02E /* FloorMap.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B977F2FF2202030B0048A02E /* FloorMap.storyboard */; };
+		B977F302220203170048A02E /* FloorMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B977F301220203170048A02E /* FloorMapViewController.swift */; };
+		B977F3042202041F0048A02E /* FloorMapContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B977F3032202041F0048A02E /* FloorMapContentViewController.swift */; };
+		B977F306220204550048A02E /* Floor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B977F305220204550048A02E /* Floor.swift */; };
+		B977F308220208D00048A02E /* NSLayoutConstraint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B977F307220208D00048A02E /* NSLayoutConstraint+Extension.swift */; };
 		E9B4925E21ECB6CE000F1072 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925C21ECB6CE000F1072 /* RxCocoa.framework */; };
 		E9B4925F21ECB6CE000F1072 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925D21ECB6CE000F1072 /* RxSwift.framework */; };
 		E9B4926021ECB782000F1072 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925C21ECB6CE000F1072 /* RxCocoa.framework */; };
@@ -153,6 +158,11 @@
 		8A9EFD2BFF415746908BCDDF /* Pods-DroidKaigi 2019.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DroidKaigi 2019.release.xcconfig"; path = "Pods/Target Support Files/Pods-DroidKaigi 2019/Pods-DroidKaigi 2019.release.xcconfig"; sourceTree = "<group>"; };
 		93A3E24B47F135429DAD2646 /* Pods_DroidKaigi_2019.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DroidKaigi_2019.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5169C19DCCF2E51B73E147C /* Pods-DroidKaigi 2019.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DroidKaigi 2019.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DroidKaigi 2019/Pods-DroidKaigi 2019.debug.xcconfig"; sourceTree = "<group>"; };
+		B977F2FF2202030B0048A02E /* FloorMap.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FloorMap.storyboard; sourceTree = "<group>"; };
+		B977F301220203170048A02E /* FloorMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorMapViewController.swift; sourceTree = "<group>"; };
+		B977F3032202041F0048A02E /* FloorMapContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorMapContentViewController.swift; sourceTree = "<group>"; };
+		B977F305220204550048A02E /* Floor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Floor.swift; sourceTree = "<group>"; };
+		B977F307220208D00048A02E /* NSLayoutConstraint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extension.swift"; sourceTree = "<group>"; };
 		D1926B9E9C352CF5C49A9569 /* Pods_DroidKaigi_2019UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DroidKaigi_2019UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D78D4A19C895C1993281143C /* Pods-DroidKaigi 2019Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DroidKaigi 2019Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DroidKaigi 2019Tests/Pods-DroidKaigi 2019Tests.release.xcconfig"; sourceTree = "<group>"; };
 		DD3A46465103BA27D8540B18 /* Pods-DroidKaigi 2019UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DroidKaigi 2019UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DroidKaigi 2019UITests/Pods-DroidKaigi 2019UITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -298,6 +308,7 @@
 				59D30FC821F8B1BD003A937C /* SessionByStartTime.swift */,
 				63F34E1A21EB43CE00B2EC48 /* SessionRepository.swift */,
 				363E6AF321FD536A00EBC698 /* TagContent.swift */,
+				B977F305220204550048A02E /* Floor.swift */,
 			);
 			path = data;
 			sourceTree = "<group>";
@@ -335,6 +346,7 @@
 				366B060A21F7604400C912AD /* UICollectionView+Extension.swift */,
 				363E6AF521FD545B00EBC698 /* Session+Extension.swift */,
 				43DC80C62201FC8100A3F710 /* UIButton+Extension.swift */,
+				B977F307220208D00048A02E /* NSLayoutConstraint+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -349,6 +361,7 @@
 				366B060C21F7650D00C912AD /* Common */,
 				362D90F621F5D521006962C8 /* Session */,
 				360744EF21FADF22003569D3 /* Detail */,
+				B977F2FE220202F90048A02E /* FloorMap */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -361,6 +374,16 @@
 				3672C2D021F6033200ACB910 /* NibLoadable.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		B977F2FE220202F90048A02E /* FloorMap */ = {
+			isa = PBXGroup;
+			children = (
+				B977F2FF2202030B0048A02E /* FloorMap.storyboard */,
+				B977F301220203170048A02E /* FloorMapViewController.swift */,
+				B977F3032202041F0048A02E /* FloorMapContentViewController.swift */,
+			);
+			path = FloorMap;
 			sourceTree = "<group>";
 		};
 		F443A17E5CE303CD71FFD9D7 /* Pods */ = {
@@ -490,6 +513,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01578ECE21E5E75D002B2033 /* LaunchScreen.storyboard in Resources */,
+				B977F3002202030B0048A02E /* FloorMap.storyboard in Resources */,
 				01578ECB21E5E75D002B2033 /* Assets.xcassets in Resources */,
 				218481C521FB7F480048D9D3 /* Settings.bundle in Resources */,
 				362D910221F5DC2D006962C8 /* SessionsViewController.storyboard in Resources */,
@@ -722,6 +746,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				366B060B21F7604500C912AD /* UICollectionView+Extension.swift in Sources */,
+				B977F308220208D00048A02E /* NSLayoutConstraint+Extension.swift in Sources */,
 				3672C2D921F70AC100ACB910 /* SessionTableViewCell.swift in Sources */,
 				363E6AF621FD545B00EBC698 /* Session+Extension.swift in Sources */,
 				366B060921F756CB00C912AD /* TagsCollectionViewCell.swift in Sources */,
@@ -742,9 +767,12 @@
 				3672C2D121F6033200ACB910 /* NibLoadable.swift in Sources */,
 				3672C2CD21F6024B00ACB910 /* Reusable.swift in Sources */,
 				43DC80C12200A0F600A3F710 /* FavoriteRepository.swift in Sources */,
+				B977F3042202041F0048A02E /* FloorMapContentViewController.swift in Sources */,
+				B977F306220204550048A02E /* Floor.swift in Sources */,
 				366B060E21F7652D00C912AD /* PaddingLabel.swift in Sources */,
 				5917BCA621FA19B8005BEAF2 /* SessionHeaderView.swift in Sources */,
 				36D1FA2721F5CF6600ADBBDE /* StoryboardInstantiable.swift in Sources */,
+				B977F302220203170048A02E /* FloorMapViewController.swift in Sources */,
 				01578EC121E5E75A002B2033 /* AppDelegate.swift in Sources */,
 				7B76F7A821FB45D2008A059B /* KotlinxDeferred+Extension.swift in Sources */,
 				362D90FD21F5DBC2006962C8 /* StartViewController.swift in Sources */,
