@@ -21,10 +21,6 @@ class FloorMapContentViewController: UIViewController {
 
         if let map = floor?.map {
             imageView.image = map
-//            NSLayoutConstraint.activate(
-//                imageView.widthAnchor.constraint(equalToConstant: map.size.width),
-//                imageView.heightAnchor.constraint(equalToConstant: map.size.height)
-//            )
         }
     }
 }
