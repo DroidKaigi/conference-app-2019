@@ -42,6 +42,7 @@
             app:layout_constraintTop_toTopOf="@+id/contributor_rank_text_view"
             app:circleCrop="true"
             tools:src="@tools:sample/avatars"
+            android:contentDescription="@string/contributor_member_icon"
             />
 
         <TextView

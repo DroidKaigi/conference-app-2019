@@ -9,4 +9,4 @@ data class ContributorItemReesponseImpl(
     override val iconUrl: String?,
     override val profileUrl: String?,
     override val type: String?
-): ContributorItemResponse
+) : ContributorItemResponse

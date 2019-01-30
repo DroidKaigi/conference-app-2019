@@ -1,6 +1,6 @@
 package io.github.droidkaigi.confsched2019.data.api.response
 
-interface ContributorItemResponse{
+interface ContributorItemResponse {
     val id: Int?
     val name: String?
     val iconUrl: String?

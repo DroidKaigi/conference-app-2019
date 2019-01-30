@@ -11,7 +11,8 @@ class DataContributorRepository @Inject constructor(
     private val api: DroidKaigiApi,
     private val contributorDatabase: ContributorDatabase
 ) : ContributorRepository {
-    override suspend fun contributorContents(): ContributorContents  = ContributorContents(contributorList())
+    override suspend fun contributorContents(): ContributorContents =
+        ContributorContents(contributorList())
 
     override suspend fun refresh() {
         val response = api.getContributorList()
@@ -23,4 +24,5 @@ class DataContributorRepository @Inject constructor(
         .map { it.toContributor() }
 }
 
-private fun ContributorEntity.toContributor(): Contributor = Contributor(id, name, iconUrl, profileUrl, author)
+private fun ContributorEntity.toContributor(): Contributor =
+    Contributor(id, name, iconUrl, profileUrl, author)

@@ -92,6 +92,11 @@ open class KtorDroidKaigiApi constructor(
             accept(ContentType.Application.Json)
         }
 
-        return ContributorResponseImpl(JSON.parse(ContributorItemReesponseImpl.serializer().list, rawResponse))
+        return ContributorResponseImpl(
+            JSON.parse(
+                ContributorItemReesponseImpl.serializer().list,
+                rawResponse
+            )
+        )
     }
 }

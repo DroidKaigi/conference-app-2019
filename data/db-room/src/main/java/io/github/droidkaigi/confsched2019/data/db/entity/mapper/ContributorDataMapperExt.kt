@@ -1,13 +1,13 @@
 package io.github.droidkaigi.confsched2019.data.db.entity.mapper
 
-import io.github.droidkaigi.confsched2019.data.db.entity.ContributorEntityImpl
 import io.github.droidkaigi.confsched2019.data.api.response.ContributorItemResponse
+import io.github.droidkaigi.confsched2019.data.db.entity.ContributorEntityImpl
 
 fun List<ContributorItemResponse>.toContributorEntityImpl(): List<ContributorEntityImpl> = map {
     it.toContributorEntityImpl()
 }
 
-fun ContributorItemResponse.toContributorEntityImpl(): ContributorEntityImpl{
+fun ContributorItemResponse.toContributorEntityImpl(): ContributorEntityImpl {
     return ContributorEntityImpl(
         id = id,
         name = name,
