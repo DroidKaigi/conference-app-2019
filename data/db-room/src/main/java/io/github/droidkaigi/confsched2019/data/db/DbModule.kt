@@ -5,7 +5,14 @@ import androidx.room.Room
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import io.github.droidkaigi.confsched2019.data.db.dao.*
+import io.github.droidkaigi.confsched2019.data.db.dao.AnnouncementDao
+import io.github.droidkaigi.confsched2019.data.db.dao.ContributorDao
+import io.github.droidkaigi.confsched2019.data.db.dao.SessionDao
+import io.github.droidkaigi.confsched2019.data.db.dao.SessionFeedbackDao
+import io.github.droidkaigi.confsched2019.data.db.dao.SessionSpeakerJoinDao
+import io.github.droidkaigi.confsched2019.data.db.dao.SpeakerDao
+import io.github.droidkaigi.confsched2019.data.db.dao.SponsorDao
+import io.github.droidkaigi.confsched2019.data.db.dao.StaffDao
 import javax.inject.Singleton
 
 @Module(includes = [DbModule.Providers::class])

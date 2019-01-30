@@ -1,7 +1,18 @@
 package io.github.droidkaigi.confsched2019.data.api
 
 import io.github.droidkaigi.confsched2019.data.api.parameter.LangParameter
-import io.github.droidkaigi.confsched2019.data.api.response.*
+import io.github.droidkaigi.confsched2019.data.api.response.AnnouncementListResponse
+import io.github.droidkaigi.confsched2019.data.api.response.AnnouncementResponseImpl
+import io.github.droidkaigi.confsched2019.data.api.response.ContributorItemReesponseImpl
+import io.github.droidkaigi.confsched2019.data.api.response.ContributorResponse
+import io.github.droidkaigi.confsched2019.data.api.response.ContributorResponseImpl
+import io.github.droidkaigi.confsched2019.data.api.response.Response
+import io.github.droidkaigi.confsched2019.data.api.response.ResponseImpl
+import io.github.droidkaigi.confsched2019.data.api.response.SponsorResponse
+import io.github.droidkaigi.confsched2019.data.api.response.SponsorResponseImpl
+import io.github.droidkaigi.confsched2019.data.api.response.StaffItemResponseImpl
+import io.github.droidkaigi.confsched2019.data.api.response.StaffResponse
+import io.github.droidkaigi.confsched2019.data.api.response.StaffResponseImpl
 import io.ktor.client.HttpClient
 import io.ktor.client.request.accept
 import io.ktor.client.request.get
