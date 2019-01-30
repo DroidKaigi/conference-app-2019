@@ -4,26 +4,10 @@ import io.github.droidkaigi.confsched2019.data.api.response.AnnouncementResponse
 import io.github.droidkaigi.confsched2019.data.api.response.Response
 import io.github.droidkaigi.confsched2019.data.api.response.SponsorResponse
 import io.github.droidkaigi.confsched2019.data.api.response.StaffResponse
-import io.github.droidkaigi.confsched2019.data.db.dao.AnnouncementDao
-import io.github.droidkaigi.confsched2019.data.db.dao.SessionDao
-import io.github.droidkaigi.confsched2019.data.db.dao.SessionFeedbackDao
-import io.github.droidkaigi.confsched2019.data.db.dao.SessionSpeakerJoinDao
-import io.github.droidkaigi.confsched2019.data.db.dao.SpeakerDao
-import io.github.droidkaigi.confsched2019.data.db.dao.SponsorDao
-import io.github.droidkaigi.confsched2019.data.db.dao.StaffDao
-import io.github.droidkaigi.confsched2019.data.db.entity.AnnouncementEntity
-import io.github.droidkaigi.confsched2019.data.db.entity.SessionFeedbackEntity
-import io.github.droidkaigi.confsched2019.data.db.entity.SessionWithSpeakers
-import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntity
-import io.github.droidkaigi.confsched2019.data.db.entity.SponsorEntity
-import io.github.droidkaigi.confsched2019.data.db.entity.StaffEntity
-import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toAnnouncementEntities
-import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionEntities
-import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionFeedbackEntity
-import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionSpeakerJoinEntities
-import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSpeakerEntities
-import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSponsorEntities
-import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toStaffEntities
+import io.github.droidkaigi.confsched2019.data.api.response.ContributorResponse
+import io.github.droidkaigi.confsched2019.data.db.dao.*
+import io.github.droidkaigi.confsched2019.data.db.entity.*
+import io.github.droidkaigi.confsched2019.data.db.entity.mapper.*
 import io.github.droidkaigi.confsched2019.model.SessionFeedback
 import io.github.droidkaigi.confsched2019.model.SponsorCategory
 import kotlinx.coroutines.withContext
@@ -39,8 +23,9 @@ class RoomDatabase @Inject constructor(
     private val coroutineContext: CoroutineContext,
     private val sponsorDao: SponsorDao,
     private val announcementDao: AnnouncementDao,
-    private val staffDao: StaffDao
-) : SessionDatabase, SponsorDatabase, AnnouncementDatabase, StaffDatabase {
+    private val staffDao: StaffDao,
+    private val contributorDao: ContributorDao
+) : SessionDatabase, SponsorDatabase, AnnouncementDatabase, StaffDatabase, ContributorDatabase {
     override suspend fun sessions(): List<SessionWithSpeakers> {
         return sessionSpeakerJoinDao.getAllSessions()
     }
@@ -123,6 +108,18 @@ class RoomDatabase @Inject constructor(
                 val staffs = apiResponse.staffs.toStaffEntities()
                 staffDao.deleteAll()
                 staffDao.insert(staffs)
+            }
+        }
+    }
+
+    override suspend fun contributorList(): List<ContributorEntity> = contributorDao.allContributorList()
+
+    override suspend fun save(apiReesponse: ContributorResponse) {
+        withContext(coroutineContext) {
+            database.runInTransaction{
+                val contributorList = apiReesponse.contributorList.toContributorEntityImpl()
+                contributorDao.deleteAll()
+                contributorDao.insert(contributorList)
             }
         }
     }

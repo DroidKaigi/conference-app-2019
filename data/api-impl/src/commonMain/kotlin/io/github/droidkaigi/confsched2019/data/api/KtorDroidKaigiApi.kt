@@ -1,15 +1,7 @@
 package io.github.droidkaigi.confsched2019.data.api
 
 import io.github.droidkaigi.confsched2019.data.api.parameter.LangParameter
-import io.github.droidkaigi.confsched2019.data.api.response.AnnouncementListResponse
-import io.github.droidkaigi.confsched2019.data.api.response.AnnouncementResponseImpl
-import io.github.droidkaigi.confsched2019.data.api.response.Response
-import io.github.droidkaigi.confsched2019.data.api.response.ResponseImpl
-import io.github.droidkaigi.confsched2019.data.api.response.SponsorResponse
-import io.github.droidkaigi.confsched2019.data.api.response.SponsorResponseImpl
-import io.github.droidkaigi.confsched2019.data.api.response.StaffItemResponseImpl
-import io.github.droidkaigi.confsched2019.data.api.response.StaffResponse
-import io.github.droidkaigi.confsched2019.data.api.response.StaffResponseImpl
+import io.github.droidkaigi.confsched2019.data.api.response.*
 import io.ktor.client.HttpClient
 import io.ktor.client.request.accept
 import io.ktor.client.request.get
@@ -28,7 +20,6 @@ open class KtorDroidKaigiApi constructor(
     val apiEndpoint: String,
     val coroutineDispatcherForCallback: CoroutineContext?
 ) : DroidKaigiApi {
-
     override suspend fun getSessions(): Response {
         // We are separate getting response string and parsing for Kotlin Native
         val rawResponse = httpClient.get<String> {
@@ -82,5 +73,14 @@ open class KtorDroidKaigiApi constructor(
         }
 
         return StaffResponseImpl(JSON.parse(StaffItemResponseImpl.serializer().list, rawResponse))
+    }
+
+    override suspend fun getContributorList(): ContributorResponse {
+        val rawResponse = httpClient.get<String> {
+            url("$apiEndpoint/contributors")
+            accept(ContentType.Application.Json)
+        }
+
+        return ContributorResponseImpl(JSON.parse(ContributorItemReesponseImpl.serializer().list, rawResponse))
     }
 }

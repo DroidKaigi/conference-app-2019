@@ -8,6 +8,7 @@ import io.github.droidkaigi.confsched2019.data.db.AnnouncementDatabase
 import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.db.SponsorDatabase
 import io.github.droidkaigi.confsched2019.data.db.StaffDatabase
+import io.github.droidkaigi.confsched2019.data.db.ContributorDatabase
 import io.github.droidkaigi.confsched2019.data.firestore.Firestore
 import javax.inject.Singleton
 
@@ -22,6 +23,7 @@ interface RepositoryComponent {
     fun sponsorRepository(): SponsorRepository
     fun announcementRepository(): AnnouncementRepository
     fun staffRepository(): StaffRepository
+    fun contributorRepository(): ContributorRepository
 
     @Component.Builder
     interface Builder {
@@ -33,6 +35,7 @@ interface RepositoryComponent {
         @BindsInstance fun sponsorDatabase(database: SponsorDatabase): Builder
         @BindsInstance fun announcementDatabase(database: AnnouncementDatabase): Builder
         @BindsInstance fun staffDatabase(database: StaffDatabase): Builder
+        @BindsInstance fun contributorDatabase(database: ContributorDatabase): Builder
 
         @BindsInstance fun firestore(firestore: Firestore): Builder
 
