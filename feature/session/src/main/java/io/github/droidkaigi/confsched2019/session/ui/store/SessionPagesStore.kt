@@ -127,9 +127,10 @@ class SessionPagesStore @Inject constructor(
         .map { it.sessionPage }
         .toSingleLiveData(SessionPage.pages[0])
 
-    val firstLoadSessions = filteredSessions
+    val firstLoadSessions: LiveData<Unit> = filteredSessions
         .nonNull()
         .filter { it.isNotEmpty() }
+        .map { Unit }
         .first()
 
     fun filteredSessionsByDay(day: Int): LiveData<List<Session>> {
