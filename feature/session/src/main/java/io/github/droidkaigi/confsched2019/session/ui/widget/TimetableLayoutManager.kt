@@ -105,11 +105,11 @@ class TimetableLayoutManager(
         anchor.reset()
         calculateColumns()
 
-        val firstVisibleView = if (childCount > 0) findFirstVisibleView() else null
+        val firstVisibleView = findFirstVisibleView()
         val offsetX = saveState?.left ?: firstVisibleView?.let(this::getDecoratedLeft)
         val offsetY = saveState?.top ?: firstVisibleView?.let(this::getDecoratedTop)
-        val period = saveState?.position?.let(periods::getOrNull)
-            ?: firstVisibleView?.adapterPosition?.let(periods::getOrNull)
+        val period = (saveState?.position ?: firstVisibleView?.adapterPosition)
+            ?.let(periods::getOrNull)
         detachAndScrapAttachedViews(recycler)
         if (offsetX != null && offsetY != null && period != null)
             relayoutChildren(offsetX, offsetY, period, recycler)
@@ -473,6 +473,8 @@ class TimetableLayoutManager(
     }
 
     private fun findFirstVisibleView(): View? {
+        if (childCount > 0) return null
+
         return (0 until childCount).asSequence()
             .mapNotNull(this::getChildAt)
             .filter { getDecoratedLeft(it) <= parentLeft }
