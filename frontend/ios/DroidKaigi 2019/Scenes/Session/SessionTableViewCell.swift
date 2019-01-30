@@ -22,6 +22,9 @@ class SessionTableViewCell: UITableViewCell, Reusable {
             favoriteButton.isSelected = session.isFavorited
             speakersStackView.isHidden = session is ServiceSession
             collectionView.isHidden = session is ServiceSession
+            let message = (session as? SpeechSession)?.message
+            messageIconImageView.isHidden = message == nil
+            messageLabel.isHidden = message == nil
             remakeTimeAndRoomLabelConstraints()
             switch session {
             case let serviceSession as ServiceSession:
@@ -37,9 +40,10 @@ class SessionTableViewCell: UITableViewCell, Reusable {
                 return
             }
             collectionView.reloadData()
+            messageLabel.text = message?.getByLang(lang: LangKt.defaultLang()) ?? ""
         }
     }
-    
+
     var favoriteButtonDidTapped: ControlEvent<Void> {
         return favoriteButton.rx.tap
     }
@@ -161,11 +165,27 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         collectionView.register(TagsCollectionViewCell.self)
         return collectionView
     }()
+    private lazy var messageIconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "bug_report")?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = UIColor.DK.primary.color
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    private lazy var messageLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = UIColor.DK.primary.color
+        label.numberOfLines = -1
+        return label
+    }()
+
 
     private func setupSubviews() {
         [titleLabel, liveMark, favoriteButton].forEach(titleStackView.addArrangedSubview)
-        
-        [titleStackView, speakersStackView, timeAndRoomLabel, collectionView].forEach(contentView.addSubview)
+
+        [titleStackView, speakersStackView, timeAndRoomLabel, collectionView, messageIconImageView, messageLabel].forEach(contentView.addSubview)
         titleStackView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(5)
             $0.leading.equalToSuperview().inset(90)
@@ -188,9 +208,19 @@ class SessionTableViewCell: UITableViewCell, Reusable {
             $0.leading.equalTo(titleStackView)
             $0.trailing.equalToSuperview().inset(16)
             $0.top.equalTo(timeAndRoomLabel.snp.bottom).offset(7)
+        }
+        messageIconImageView.snp.makeConstraints {
+            $0.centerY.equalTo(messageLabel)
+            $0.leading.equalTo(titleLabel)
+            $0.width.height.equalTo(20)
+        }
+        messageLabel.snp.makeConstraints {
+            $0.leading.equalTo(messageIconImageView.snp.trailing).offset(9)
+            $0.trailing.equalToSuperview().inset(16)
+            $0.top.equalTo(collectionView.snp.bottom).offset(8)
             $0.bottom.equalToSuperview().inset(26)
         }
-        
+
         inkTouchController.addInkView()
     }
 

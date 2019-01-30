@@ -23,7 +23,7 @@ We always welcome any and all contributions! See [CONTRIBUTING.md](CONTRIBUTING.
 
 ## Requirements
 
-- Android Studio 3.2.1 and higher.
+- Android Studio 3.4 Beta 2 and higher.
 - Android Studio Kotlin Plugin 1.3.11-release-Studio<AS version>
 
 **Check out following status.**  
@@ -47,6 +47,14 @@ You can check [generated module dependency diagram](project.dot.png)
 Unidirectional data flow(Flux-based) Architecture with `Kotlin Coroutines` and `AndroidX` Libraries(`LiveData`, `ViewModel`, `Room`) `DataBinding`, `Dagger` and `AssistedInject`, `Firebase` etc.
 
 ![](images/architecture.png)
+
+# Kotlin Multiplatform Project
+
+You can check the [iOS application](https://itunes.apple.com/us/app/droidkaigi-2019/id1450771424). 
+
+The API and Model parts are shared as `Kotlin Multiplatform`, written in `Kotlin`, and the other part is written in `Swift`.
+
+You can check [How to build for iOS Application](https://github.com/DroidKaigi/conference-app-2019/blob/master/frontend/ios/README.md)
 
 ## Groupie
 
@@ -203,6 +211,8 @@ Thank you for contributing!
 ## Credit
 This project uses some modern Android libraries and source codes.
 
+### Android
+
 * [Android Jetpack](https://developer.android.com/jetpack/) (Google)
   * Foundation
     * AppCompat
@@ -249,3 +259,14 @@ This project uses some modern Android libraries and source codes.
 * [Injected ViewModel Provider](https://github.com/evant/injectedvmprovider) (evant)
 * [Google I/O 2018](https://github.com/google/iosched) (Google)
 * [Picasso](http://square.github.io/picasso/) (Square)
+
+### iOS
+
+* Kotlin/Native
+* MaterialComponents
+* ReactiveX/RxSwift
+* SnapKit/SnapKit
+* onevcat/Kingfisher
+* SwiftLint
+* LicensePlist
+* XLPagerTabStrip
