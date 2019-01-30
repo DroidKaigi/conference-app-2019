@@ -4,6 +4,8 @@
 
 You can download the binary built on master branch from [<img src="https://dply.me/t6sc7f/button/large" alt="Try it on your device via DeployGate">](https://dply.me/t6sc7f#install)
 
+NOTE: Google Play Protect will show a warning dialog on some of devices when installing the current apk. The detailed specification of Google Play Protect is not public so we cannot address this matter. Please ignore the dialog for now. If you cannot install this apk without any error message, please disable Google Play Protect from Google Play Store's menus. Sorry for the inconvenience.
+
 # Features
 
 | top | detail |
