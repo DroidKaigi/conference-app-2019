@@ -16,7 +16,7 @@ final class SessionDataSource: NSObject, UITableViewDataSource {
     typealias Element = [SessionByStartTime]
     var items: Element = []
 
-    var toggleFavorite = PublishSubject<String>()
+    var toggleFavorite = PublishSubject<Session>()
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return items.count
@@ -31,7 +31,7 @@ final class SessionDataSource: NSObject, UITableViewDataSource {
         let session = items[indexPath.section].sessions[indexPath.row]
         cell.session = session
         cell.favoriteButtonDidTapped
-            .map { _ in session.id_ }
+            .map { _ in session }
             .bind(to: toggleFavorite)
             .disposed(by: cell.bag)
         return cell

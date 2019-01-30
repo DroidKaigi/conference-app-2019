@@ -26,6 +26,7 @@ extension SessionsViewModel {
 
     struct Input {
         let viewWillAppear: Observable<Void>
+        let toggleFavorite: Observable<Session>
     }
 
     struct Output {
@@ -34,6 +35,10 @@ extension SessionsViewModel {
     }
     
     func transform(input: Input) -> Output {
+        input.toggleFavorite
+            .subscribe(onNext: { [weak self] in self?.favoriteRepository.toggle(sessionId: $0.id_) })
+            .disposed(by: bag)
+        
         let sessionContents = input.viewWillAppear
                 .flatMap { [weak self] (_) -> Observable<SessionContents> in
                     guard let `self` = self else { return Observable.empty() }
@@ -47,28 +52,32 @@ extension SessionsViewModel {
         
         let favoriteSessionIds = favoriteRepository.sessionIdsDidChanged
         
-        favoriteSessionIds.subscribe { print($0) }.disposed(by: bag)
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
-        dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "HH:mm"
-        
-        let sessions = sessionContents.map {  [weak self] sessionContents -> [SessionByStartTime] in
-            guard let `self` = self else { return [] }
-            return sessionContents.sessions
-                .filter { $0.dayNumber == self.day.day }
-                .reduce(into: [SessionByStartTime]()) { result, session in
-                if let index = result.firstIndex(where: { $0.startTime == session.startTime }) {
-                    result[index].sessions.append(session)
-                    return
-                }
-                result.append(SessionByStartTime(startDayText: session.startDayText,
-                                                 startTimeText: dateFormatter.string(from: Date(timeIntervalSince1970: session.startTime / 1000)),
-                                                 startTime: session.startTime,
-                                                 sessions: [session]))
+        let sessions = Observable.combineLatest(sessionContents, favoriteSessionIds)
+            .map { [weak self] (sessionContents, favoriteSessionIds) -> [SessionByStartTime] in
+                guard let `self` = self else { return [] }
+                return sessionContents.sessions
+                    .filter { $0.dayNumber == self.day.day }
+                    .map { (session: Session) -> Session in
+                        if let session = session as? ServiceSession {
+                            return session.doCopy(isFavorited: favoriteSessionIds.contains(session.id_))
+                        } else if let session = session as? SpeechSession {
+                            return session.doCopy(isFavorited: favoriteSessionIds.contains(session.id_))
+                        } else {
+                            return session
+                        }
+                    }
+                    .reduce(into: [SessionByStartTime]()) { result, session in
+                        if let index = result.firstIndex(where: { $0.startTime == session.startTime }) {
+                            result[index].sessions.append(session)
+                            return
+                        }
+                        result.append(SessionByStartTime(startDayText: session.startDayText,
+                                                         startTimeText: session.startTimeText,
+                                                         startTime: session.startTime,
+                                                         sessions: [session]))
+                    }
             }
-        }.asDriver(onErrorJustReturn: [])
+            .asDriver(onErrorJustReturn: [])
         let error = _error.asDriver()
         return Output(sessions: sessions, error: error)
     }
