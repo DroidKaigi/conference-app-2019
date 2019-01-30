@@ -8,3 +8,4 @@ included:
 excluded:
   - Carthage
   - Pods
+  - DroidKaigi 2019/Libs

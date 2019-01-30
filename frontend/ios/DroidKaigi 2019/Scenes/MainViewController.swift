@@ -36,7 +36,10 @@ class MainViewController: ButtonBarPagerTabStripViewController, StoryboardInstan
 
 private extension MainViewController {
     @objc func locationButtonTapped(_ sender: Any?) {
-        let floorMap = FloorMapViewController.instantiateFromStoryboard()
+        guard let floorMap = R.storyboard.floorMap.instantiateInitialViewController() else {
+            assertionFailure("FloorMap.storyboard instantiate error.")
+            return
+        }
         show(floorMap, sender: nil)
     }
 }
