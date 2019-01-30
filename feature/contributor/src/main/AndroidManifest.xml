@@ -1,4 +1,8 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.github.droidkaigi.confsched2019.contributor"
-    />
+    >
+
+    <application
+        android:supportsRtl="false"/>
+</manifest>
