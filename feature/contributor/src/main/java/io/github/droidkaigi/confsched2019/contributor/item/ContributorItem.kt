@@ -7,7 +7,7 @@ import io.github.droidkaigi.confsched2019.contributor.bindingmodel.ContributorBi
 import io.github.droidkaigi.confsched2019.contributor.databinding.ItemContributorProfileBinding
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
-class ContributorProfileItemHolder(
+class ContributorItem(
     private val bindingModel: ContributorBindingModel,
     private val onProfileClicked: (profileUrl: String) -> Unit
 ) : BindableItem<ItemContributorProfileBinding>() {

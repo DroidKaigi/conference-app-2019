@@ -15,7 +15,7 @@ import dagger.Provides
 import io.github.droidkaigi.confsched2019.contributor.action.ContributorActionCreator
 import io.github.droidkaigi.confsched2019.contributor.bindingmodel.ContributorBindingModel
 import io.github.droidkaigi.confsched2019.contributor.databinding.FragmentContributorBinding
-import io.github.droidkaigi.confsched2019.contributor.item.ContributorProfileItemHolder
+import io.github.droidkaigi.confsched2019.contributor.item.ContributorItem
 import io.github.droidkaigi.confsched2019.contributor.store.ContributorStore
 import io.github.droidkaigi.confsched2019.contributor.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.di.PageScope
@@ -79,7 +79,7 @@ class ContributorFragment : DaggerFragment() {
                     ContributorBindingModel(index, item.name, item.iconUrl, item.profileUrl)
                 }
                 .map {
-                    ContributorProfileItemHolder(it) { profileUrl ->
+                    ContributorItem(it) { profileUrl ->
                         activityActionCreator.openUrl(profileUrl)
                     }
                 }
