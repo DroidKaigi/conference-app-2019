@@ -18,7 +18,7 @@ matrix:
       - "$HOME/.android"
       - ".gradle"
     env:
-      - RELEASE_BUILD=true
+    - RELEASE_BUILD=true
     android:
       components:
       - platform-tools
@@ -32,7 +32,8 @@ matrix:
       - android-sdk-license-.+
       - google-gdk-license-.+
     before_install:
-    - openssl aes-256-cbc -K $encrypted_1701aaafcc71_key -iv $encrypted_1701aaafcc71_iv -in .travis/android/release.zip.enc -out release.zip -d
+    - openssl aes-256-cbc -K $encrypted_1701aaafcc71_key -iv $encrypted_1701aaafcc71_iv
+      -in .travis/android/release.zip.enc -out release.zip -d
     - "./.travis/android/before_install.bash"
     script: ".travis/android/run.bash"
   - language: objective-c
@@ -54,4 +55,4 @@ matrix:
     script: ".travis/ios/run.bash"
 env:
   global:
-  - secure: Ch+CmzyuOzXNmmlII9lacT8J4WjQapV9ft/35qn93l4TMBZENlcz5Z32pN2FuLCioSu4YhhR/50uv3JIndEVp/braTF3jIZIxt16rY1plDfvRNM9CCTfMcyBw5iujkYLnm7lsN0Ly8hEnEJhMJ1OIHC1x9iaXpf1Nkz6eMfA1FnEZWMtyOfVSIrm+2R4b8iqnUdig7zbbpSCdIdLdtGBglOtmQqY+pXu4AnU95iLFCWxUQUaLLtZiWpPzA9DUEtERmTuEX7hBgOVy/r0Eo4NiDg/ktZvosasbx+vqly1ScN8/M78AIolTVrm6mkTA+/CNgQKgoTHzC3nJrR+TKP/gtIQz3P1VNmy8e2OUzfxAhhx5myEtp2++qYfeKNDSPFTZMzPJhszi8c3E7L9hjDMOO/WAX0zs5g8wK2ff9Tqk//ZMi72mp8Z3lTIcHWdg1wgBqeQIrJAyMG2yWilyRf7Xx8rTaSijUqCLwJJnJjbhwd6Vdn7D/woaoUlfzRBosPFkpF3WZcTA/Ame1qRaRdp4/I6ikStIPmB8VHKW8xhYGwvU5YICpNRKXLJ3YK/HXqQfAhiw+Cxw9BMo0GpIp129lzVBoJluEaONn28P4BpQBS8Xdom0Yy0SEOkxRD9bVZy8MBQtLVsSaGSgBPTp5sd+sKOjSxynG0YZUCf75JRN6I=
+  - secure: Jw5L3sTHnuivSj2+DPdqbgNhVvdr1Zg8bY1USNUNMl8sR1nIhupb8IFUfP/5ymJIUrXgOizVILJwRZX6AxD8RvxJfjzm+A1ovh+ob+ymNQVUDKmWD8Ho2qPOpAEQiJIzPHzZnZIQHyZFOYC3hIhlNz48zSha3sT1ZD3PMJByGxsk3zU4ELlYZczR2pPkOR4h52mJES8WmcTI68Spl4ILBnQWM4AkrgyJBmBD0Ipt3DxvKDLC6vpH++NkXUzUUckyYp3K7g2RonvkoxdS7xzyYJdfhgOHjgs6q1C+EzDveTwijtbdacQ9I0zqMCoPqNdj3Irt1htiVi9BwGcp43vPwfSM+mYNjZQg5qeNAaRL3qR72kMC8oiaOnoJmleYCFTz5VNOhsAi5KqyNXZcO5oziOwFOkAWiFIFR0mx+jcOakFsFrW2+LV+PePgjHZRvh27ZnDa9HGM237LUFYFdzv2haArJJL3C5EohZLmGXjzEE93P5seiZUvLnSAU40ut2pLG0e2nWDMudB3smLNF9x5N6C8EMlwhpoVDH1bvOX2ndZhJHBprh1vYIlDk7mKeQrVfmwu4JmkYhO+BLfMXiuK3Szac+g5riX9nsPXPM3WK0qcX5nZT+OH9awkAY4ykAT/tBR4pODPY99gL9l1RoKqJrlZAvYy8CyIcopNefqJNoI=

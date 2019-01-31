@@ -17,4 +17,5 @@ curl -sL "https://raw.githubusercontent.com/jmatsu/dpg/master/install.bash" | ba
 ./dpg app upload --android \
   --app-owner droidkaigi
   --app "$UNIVERSAL_APK_PATH"
+  --token "$DEPLOYGATE_API_TOKEN"
   --message "Release build at $(date)"

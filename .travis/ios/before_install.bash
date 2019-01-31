@@ -29,7 +29,7 @@ chmod +x ./gradlew
 
 pushd frontend/ios
 
-curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
+# curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
 
 bundle install
 carthage bootstrap --platform ios --cache-builds
