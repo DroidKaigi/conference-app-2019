@@ -15,6 +15,10 @@ class MainViewController: ButtonBarPagerTabStripViewController, StoryboardInstan
         settings.style.buttonBarItemBackgroundColor = UIColor.DK.primary.color
         settings.style.selectedBarBackgroundColor = UIColor.DK.primaryDark.color
         super.viewDidLoad()
+        
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: #imageLiteral(resourceName: "baseline_location_on_white_18dp"), style: .plain, target: self, action: #selector(locationButtonTapped(_:)))
+            ]
     }
 
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
@@ -24,5 +28,12 @@ class MainViewController: ButtonBarPagerTabStripViewController, StoryboardInstan
         day2ViewController.day = Day(title: "Day2", day: 2)
         let childViewControllers = [day1ViewController, day2ViewController]
         return childViewControllers
+    }
+}
+
+private extension MainViewController {
+    @objc func locationButtonTapped(_ sender: Any?) {
+        let floorMap = FloorMapViewController.instantiateFromStoryboard()
+        show(floorMap, sender: nil)
     }
 }
