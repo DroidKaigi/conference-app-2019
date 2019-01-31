@@ -15,8 +15,8 @@ class ServiceSessionItem @AssistedInject constructor(
     @Assisted override val session: ServiceSession,
     @Assisted val navDirections: NavDirections,
     @Assisted val hasStartPadding: Boolean,
-    navController: NavController,
-    sessionContentsActionCreator: SessionContentsActionCreator
+    val navController: NavController,
+    val sessionContentsActionCreator: SessionContentsActionCreator
 ) : BindableItem<ItemServiceSessionBinding>(
     session.id.hashCode().toLong()
 ), SessionItem {
@@ -31,20 +31,12 @@ class ServiceSessionItem @AssistedInject constructor(
         ): ServiceSessionItem
     }
 
-    private val onFavoriteClickListener: (ServiceSession) -> Unit = { session ->
-        sessionContentsActionCreator.toggleFavorite(session)
-    }
-    private val onClickListener: (ServiceSession) -> Unit = { session ->
-        navController
-            .navigate(
-                navDirections
-            )
-    }
-
     override fun bind(viewBinding: ItemServiceSessionBinding, position: Int) {
         with(viewBinding) {
             if (serviceSession.sessionType.supportDetail) {
-                root.setOnClickListener { onClickListener(serviceSession) }
+                root.setOnClickListener {
+                    navController.navigate(navDirections)
+                }
             } else {
                 root.setOnClickListener(null)
                 root.isClickable = false
@@ -59,8 +51,12 @@ class ServiceSessionItem @AssistedInject constructor(
                 timeInMinutes,
                 serviceSession.room.name
             )
-            favorite.setOnClickListener {
-                onFavoriteClickListener(serviceSession)
+            favorite.setOnClickListener { view ->
+                // apply state immediately
+                viewBinding.session = serviceSession.copy(
+                    isFavorited = !serviceSession.isFavorited
+                )
+                sessionContentsActionCreator.toggleFavorite(serviceSession)
             }
         }
     }
