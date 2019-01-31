@@ -113,13 +113,23 @@ class SessionDetailFragment : DaggerFragment() {
                 }
                 R.id.session_calendar -> {
                     val session = binding.session ?: return@setOnMenuItemClickListener false
-                    if (session is SpeechSession) {
-                        activityActionCreator.openCalendar(
-                            session.title.getByLang(defaultLang()),
-                            session.room.name,
-                            session.startTime.unixMillisLong,
-                            session.endTime.unixMillisLong
-                        )
+                    when (session) {
+                        is SpeechSession -> {
+                            activityActionCreator.openCalendar(
+                                session.title.getByLang(defaultLang()),
+                                session.room.name,
+                                session.startTime.unixMillisLong,
+                                session.endTime.unixMillisLong
+                            )
+                        }
+                        is ServiceSession -> {
+                            activityActionCreator.openCalendar(
+                                session.title.getByLang(defaultLang()),
+                                session.room.name,
+                                session.startTime.unixMillisLong,
+                                session.endTime.unixMillisLong
+                            )
+                        }
                     }
                 }
             }
