@@ -26,3 +26,4 @@ release.zip
 bundletool.jar
 dpg
 toc.pb
+*.keystore

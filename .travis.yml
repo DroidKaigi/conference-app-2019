@@ -51,6 +51,7 @@ matrix:
     env:
     - ANDROID_HOME="$HOME/android-sdk"
     before_install:
+    - pod repo update
     - "./.travis/ios/before_install.bash"
     script: ".travis/ios/run.bash"
 env:
