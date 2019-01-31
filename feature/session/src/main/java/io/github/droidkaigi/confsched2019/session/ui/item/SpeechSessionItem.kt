@@ -67,6 +67,10 @@ class SpeechSessionItem @AssistedInject constructor(
             hasStartPadding = this@SpeechSessionItem.hasStartPadding
             query = this@SpeechSessionItem.query
             favorite.setOnClickListener {
+                // apply state immediately
+                viewBinding.session = speechSession.copy(
+                    isFavorited = !speechSession.isFavorited
+                )
                 sessionContentsActionCreator.toggleFavorite(speechSession)
             }
 
