@@ -59,7 +59,6 @@
 		B977F302220203170048A02E /* FloorMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B977F301220203170048A02E /* FloorMapViewController.swift */; };
 		B977F3042202041F0048A02E /* FloorMapContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B977F3032202041F0048A02E /* FloorMapContentViewController.swift */; };
 		B977F306220204550048A02E /* Floor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B977F305220204550048A02E /* Floor.swift */; };
-		B977F308220208D00048A02E /* NSLayoutConstraint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B977F307220208D00048A02E /* NSLayoutConstraint+Extension.swift */; };
 		E9B4925E21ECB6CE000F1072 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925C21ECB6CE000F1072 /* RxCocoa.framework */; };
 		E9B4925F21ECB6CE000F1072 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925D21ECB6CE000F1072 /* RxSwift.framework */; };
 		E9B4926021ECB782000F1072 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925C21ECB6CE000F1072 /* RxCocoa.framework */; };
@@ -162,7 +161,6 @@
 		B977F301220203170048A02E /* FloorMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorMapViewController.swift; sourceTree = "<group>"; };
 		B977F3032202041F0048A02E /* FloorMapContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorMapContentViewController.swift; sourceTree = "<group>"; };
 		B977F305220204550048A02E /* Floor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Floor.swift; sourceTree = "<group>"; };
-		B977F307220208D00048A02E /* NSLayoutConstraint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extension.swift"; sourceTree = "<group>"; };
 		D1926B9E9C352CF5C49A9569 /* Pods_DroidKaigi_2019UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DroidKaigi_2019UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D78D4A19C895C1993281143C /* Pods-DroidKaigi 2019Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DroidKaigi 2019Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DroidKaigi 2019Tests/Pods-DroidKaigi 2019Tests.release.xcconfig"; sourceTree = "<group>"; };
 		DD3A46465103BA27D8540B18 /* Pods-DroidKaigi 2019UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DroidKaigi 2019UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DroidKaigi 2019UITests/Pods-DroidKaigi 2019UITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -346,7 +344,6 @@
 				366B060A21F7604400C912AD /* UICollectionView+Extension.swift */,
 				363E6AF521FD545B00EBC698 /* Session+Extension.swift */,
 				43DC80C62201FC8100A3F710 /* UIButton+Extension.swift */,
-				B977F307220208D00048A02E /* NSLayoutConstraint+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -746,7 +743,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				366B060B21F7604500C912AD /* UICollectionView+Extension.swift in Sources */,
-				B977F308220208D00048A02E /* NSLayoutConstraint+Extension.swift in Sources */,
 				3672C2D921F70AC100ACB910 /* SessionTableViewCell.swift in Sources */,
 				363E6AF621FD545B00EBC698 /* Session+Extension.swift in Sources */,
 				366B060921F756CB00C912AD /* TagsCollectionViewCell.swift in Sources */,

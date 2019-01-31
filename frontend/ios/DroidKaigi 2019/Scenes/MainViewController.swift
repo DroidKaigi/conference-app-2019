@@ -5,14 +5,11 @@
 //  Created by koogawa on 2019/01/28.
 //
 
-import RxSwift
 import UIKit
 import XLPagerTabStrip
 
 class MainViewController: ButtonBarPagerTabStripViewController, StoryboardInstantiable {
 
-    private let bag = DisposeBag()
-    
     override func viewDidLoad() {
         settings.style.buttonBarBackgroundColor = UIColor.DK.primary.color
         settings.style.buttonBarItemBackgroundColor = UIColor.DK.primary.color
