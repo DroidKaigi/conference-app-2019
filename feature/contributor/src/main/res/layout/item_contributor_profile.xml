@@ -6,8 +6,8 @@
 
     <data>
         <variable
-            name="bindingModel"
-            type="io.github.droidkaigi.confsched2019.contributor.bindingmodel.ContributorBindingModel"/>
+            name="name"
+            type="String"/>
         <variable
             name="index"
             type="String"/>
@@ -51,7 +51,7 @@
                 android:layout_marginEnd="42dp"
                 android:layout_marginStart="16dp"
                 android:gravity="center|start"
-                android:text="@{bindingModel.name}"
+                android:text="@{name}"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/contributor_icon_image_view"
                 app:layout_constraintEnd_toEndOf="parent"

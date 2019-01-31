@@ -13,7 +13,6 @@ import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.contributor.action.ContributorActionCreator
-import io.github.droidkaigi.confsched2019.contributor.bindingmodel.ContributorBindingModel
 import io.github.droidkaigi.confsched2019.contributor.databinding.FragmentContributorBinding
 import io.github.droidkaigi.confsched2019.contributor.item.ContributorItem
 import io.github.droidkaigi.confsched2019.contributor.store.ContributorStore
@@ -75,9 +74,6 @@ class ContributorFragment : DaggerFragment() {
         contributorStore.contributorList.changed(viewLifecycleOwner) { result ->
             val itemList = mutableListOf<Item<*>>()
             itemList += result.contributors
-                .mapIndexed { index, item ->
-                    ContributorBindingModel(index, item.name, item.iconUrl, item.profileUrl)
-                }
                 .map {
                     ContributorItem(it) { profileUrl ->
                         activityActionCreator.openUrl(profileUrl)

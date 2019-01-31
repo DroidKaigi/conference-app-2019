@@ -3,12 +3,12 @@ package io.github.droidkaigi.confsched2019.contributor.item
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.contributor.R
-import io.github.droidkaigi.confsched2019.contributor.bindingmodel.ContributorBindingModel
 import io.github.droidkaigi.confsched2019.contributor.databinding.ItemContributorProfileBinding
+import io.github.droidkaigi.confsched2019.model.Contributor
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
 class ContributorItem(
-    private val bindingModel: ContributorBindingModel,
+    private val contributor: Contributor,
     private val onProfileClicked: (profileUrl: String) -> Unit
 ) : BindableItem<ItemContributorProfileBinding>() {
 
@@ -18,19 +18,18 @@ class ContributorItem(
         binding: ItemContributorProfileBinding,
         index: Int
     ) {
-        binding.bindingModel = bindingModel
-
-        binding.index = (bindingModel.index + 1).toString()
+        binding.name = contributor.name
+        binding.index = (index + 1).toString()
 
         binding.root.setOnClickListener {
-            bindingModel.profileUrl?.let {
-                onProfileClicked(bindingModel.profileUrl)
+            contributor.profileUrl?.let {
+                onProfileClicked(it)
             }
         }
 
         Picasso
             .get()
-            .load(bindingModel.iconUrl)
+            .load(contributor.iconUrl)
             .transform(CropCircleTransformation())
             .into(binding.contributorIconImageView)
     }
