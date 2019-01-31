@@ -1,6 +1,6 @@
 branches:
   only:
-  - travis_release_build
+  - "travis/.*"
   - master
   - release
   - "/^v\\d+\\.\\d+(\\.\\d+)?(-\\S*)?$/"
@@ -19,6 +19,7 @@ matrix:
       - ".gradle"
     env:
     - RELEASE_BUILD=true
+    - PATH="$HOME/.bin:$PATH"
     android:
       components:
       - platform-tools
@@ -36,24 +37,24 @@ matrix:
       -in .travis/android/release.zip.enc -out release.zip -d
     - "./.travis/android/before_install.bash"
     script: ".travis/android/run.bash"
-  - language: objective-c
-    os: osx
-    osx_image: xcode10.1
-    xcode_workspace: frontend/ios/DroidKaigi\ 2019.xcworkspace
-    cache:
-    - directories:
-      - ios/frontend/vendor/bundle
-      - ios/frontend/Pods
-      - "$HOME/.gradle"
-      - "$HOME/.android"
-      - ".gradle"
-      - "$ANDROID_HOME"
-    env:
-    - ANDROID_HOME="$HOME/android-sdk"
-    before_install:
-    - pod repo update
-    - "./.travis/ios/before_install.bash"
-    script: ".travis/ios/run.bash"
+  # - language: objective-c
+  #   os: osx
+  #   osx_image: xcode10.1
+  #   xcode_workspace: frontend/ios/DroidKaigi\ 2019.xcworkspace
+  #   cache:
+  #   - directories:
+  #     - ios/frontend/vendor/bundle
+  #     - ios/frontend/Pods
+  #     - "$HOME/.gradle"
+  #     - "$HOME/.android"
+  #     - ".gradle"
+  #     - "$ANDROID_HOME"
+  #   env:
+  #   - ANDROID_HOME="$HOME/android-sdk"
+  #   before_install:
+  #   - pod repo update
+  #   - "./.travis/ios/before_install.bash"
+  #   script: ".travis/ios/run.bash"
 env:
   global:
   - secure: Jw5L3sTHnuivSj2+DPdqbgNhVvdr1Zg8bY1USNUNMl8sR1nIhupb8IFUfP/5ymJIUrXgOizVILJwRZX6AxD8RvxJfjzm+A1ovh+ob+ymNQVUDKmWD8Ho2qPOpAEQiJIzPHzZnZIQHyZFOYC3hIhlNz48zSha3sT1ZD3PMJByGxsk3zU4ELlYZczR2pPkOR4h52mJES8WmcTI68Spl4ILBnQWM4AkrgyJBmBD0Ipt3DxvKDLC6vpH++NkXUzUUckyYp3K7g2RonvkoxdS7xzyYJdfhgOHjgs6q1C+EzDveTwijtbdacQ9I0zqMCoPqNdj3Irt1htiVi9BwGcp43vPwfSM+mYNjZQg5qeNAaRL3qR72kMC8oiaOnoJmleYCFTz5VNOhsAi5KqyNXZcO5oziOwFOkAWiFIFR0mx+jcOakFsFrW2+LV+PePgjHZRvh27ZnDa9HGM237LUFYFdzv2haArJJL3C5EohZLmGXjzEE93P5seiZUvLnSAU40ut2pLG0e2nWDMudB3smLNF9x5N6C8EMlwhpoVDH1bvOX2ndZhJHBprh1vYIlDk7mKeQrVfmwu4JmkYhO+BLfMXiuK3Szac+g5riX9nsPXPM3WK0qcX5nZT+OH9awkAY4ykAT/tBR4pODPY99gL9l1RoKqJrlZAvYy8CyIcopNefqJNoI=

@@ -1,0 +1,6 @@
+<%= ENV.fetch('RELEASE_TAG_NAME') %>
+
+Built on
+
+- Travis trigged by <%= ENV.fetch('TRAVIS_EVENT_TYPE') %>
+- Build Id and No. <%= "#{ENV.fetch('TRAVIS_BUILD_ID')} and #{ENV.fetch('TRAVIS_BUILD_NUMBER')}" %>
