@@ -22,7 +22,6 @@ import javax.inject.Inject
 class SessionPagesStore @Inject constructor(
     dispatcher: Dispatcher
 ) : ViewModel() {
-    var isFirstLoadScrolled: Boolean = false
 
     private val sessions: LiveData<List<Session>> = dispatcher
         .subscribe<Action.SessionsLoaded>()
@@ -128,6 +127,11 @@ class SessionPagesStore @Inject constructor(
         .subscribe<Action.SessionPageReselected>()
         .map { it.sessionPage }
         .toSingleLiveData(SessionPage.pages[0])
+
+    val scrolledWhenFirstLoad: LiveData<Boolean> = dispatcher
+        .subscribe<Action.FirstSessionLoadScrolled>()
+        .map { true }
+        .toLiveData(false)
 
     val firstLoadSessions: LiveData<Unit> = filteredSessions
         .nonNull()

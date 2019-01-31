@@ -22,6 +22,7 @@ import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentBottomSheetSessionsBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPageActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPagesActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.item.ServiceSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeechSessionItem
@@ -42,6 +43,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
     @Inject lateinit var sessionContentsActionCreator: SessionContentsActionCreator
     @Inject lateinit var sessionContentsStore: SessionContentsStore
     @Inject lateinit var sessionPageActionCreator: SessionPageActionCreator
+    @Inject lateinit var sessionPagesActionCreator: SessionPagesActionCreator
     @Inject lateinit var sessionPageFragmentProvider: Provider<SessionPageFragment>
     @Inject lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
     @Inject lateinit var sessionPageStoreFactory: SessionPageStore.Factory
@@ -154,10 +156,11 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
         }
 
         sessionPagesStore.firstLoadSessions.changed(viewLifecycleOwner) {
-            if (!sessionPagesStore.isFirstLoadScrolled) {
-                scrollToCurrentSession()
-                sessionPagesStore.isFirstLoadScrolled = true
+            if (sessionPagesStore.scrolledWhenFirstLoad.value == true) {
+                return@changed
             }
+            scrollToCurrentSession()
+            sessionPagesActionCreator.scrollWhenFirstLoaded()
         }
     }
 
