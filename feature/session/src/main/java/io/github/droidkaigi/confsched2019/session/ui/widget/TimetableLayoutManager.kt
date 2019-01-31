@@ -277,31 +277,32 @@ class TimetableLayoutManager(
         anchor.leftColumn = topPeriod.columnNumber
         val columnCount = columns.size()
         val indexOfFirstColumn = columns.indexOfKey(topPeriod.columnNumber)
-        (indexOfFirstColumn until columnCount)
+        val range = (indexOfFirstColumn until columnCount)
             .plus(
                 if (shouldLoopHorizontally && indexOfFirstColumn > 0) (0 until indexOfFirstColumn)
                 else emptyList()
             )
-            .forEach {
-                val columnNumber = columns.keyAt(it)
-                val startPositionInColumn =
-                    calculateStartPeriodInColumn(columnNumber, startY, topPeriod) ?: return@forEach
-                val offsetY = startY +
-                    (startPositionInColumn.startUnixMin - topPeriod.startUnixMin) * pxPerMinute
-                offsetX += fillColumnHorizontally(
-                    columnNumber,
-                    startPositionInColumn.positionInColumn,
-                    offsetX,
-                    offsetY,
-                    true,
-                    recycler
-                )
+        anchor.rightColumn = columns.keyAt(requireNotNull(range.last()))
+        range.forEach {
+            val columnNumber = columns.keyAt(it)
+            val startPositionInColumn =
+                calculateStartPeriodInColumn(columnNumber, startY, topPeriod) ?: return@forEach
+            val offsetY = startY +
+                (startPositionInColumn.startUnixMin - topPeriod.startUnixMin) * pxPerMinute
+            offsetX += fillColumnHorizontally(
+                columnNumber,
+                startPositionInColumn.positionInColumn,
+                offsetX,
+                offsetY,
+                true,
+                recycler
+            )
 
-                if (offsetX > parentRight) {
-                    anchor.rightColumn = columnNumber
-                    return
-                }
+            if (offsetX > parentRight) {
+                anchor.rightColumn = columnNumber
+                return
             }
+        }
     }
 
     private fun calculateVerticallyScrollAmount(dy: Int): Int {
