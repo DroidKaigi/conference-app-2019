@@ -10,7 +10,7 @@ import XLPagerTabStrip
 
 class FloorMapContentViewController: UIViewController {
 
-    var floor: Floor?
+    var floor: Floor!
 
     // MARK: Outlets
     @IBOutlet weak var scrollView: UIScrollView!
@@ -19,9 +19,7 @@ class FloorMapContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let map = floor?.map {
-            imageView.image = map
-        }
+        imageView.image = floor.map
     }
 }
 
