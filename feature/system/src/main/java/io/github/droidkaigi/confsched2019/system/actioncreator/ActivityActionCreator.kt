@@ -2,6 +2,8 @@ package io.github.droidkaigi.confsched2019.system.actioncreator
 
 import android.content.Intent
 import android.net.Uri
+import android.provider.CalendarContract
+import android.provider.CalendarContract.Events
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
@@ -41,6 +43,21 @@ class ActivityActionCreator @Inject constructor(val activity: FragmentActivity) 
         builder.setText(url)
             .setType("text/plain")
             .startChooser()
+    }
+
+    fun openCalendar(
+        title: String,
+        location: String,
+        startUnixMillis: Long,
+        endUnixMillis: Long
+    ) {
+        val intent = Intent(Intent.ACTION_INSERT)
+            .setData(Events.CONTENT_URI)
+            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startUnixMillis)
+            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endUnixMillis)
+            .putExtra(Events.TITLE, "DroidKaigi2019: $title")
+            .putExtra(Events.EVENT_LOCATION, location)
+        activity.startActivity(intent)
     }
 
     companion object {
