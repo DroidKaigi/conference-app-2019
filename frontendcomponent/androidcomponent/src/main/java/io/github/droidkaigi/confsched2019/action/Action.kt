@@ -30,6 +30,8 @@ sealed class Action {
         val sessions: List<Session>
     ) : Action()
 
+    data class SessionScrollAdjusted(val adjusted: Boolean) : Action()
+
     data class SessionPageSelected(val sessionPage: SessionPage) : Action()
     data class SessionPageReselected(val sessionPage: SessionPage) : Action()
     class SystemPropertyLoaded(val system: SystemProperty) : Action()
