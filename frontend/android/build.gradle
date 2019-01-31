@@ -43,7 +43,9 @@ android {
     }
     buildTypes {
         debug {
-            applicationIdSuffix ".debug"
+            if (isCi || isReleaseBuild) {
+                applicationIdSuffix ".debug"
+            }
             debuggable true
         }
         staging {
