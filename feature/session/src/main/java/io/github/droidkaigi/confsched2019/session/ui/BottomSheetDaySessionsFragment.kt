@@ -159,7 +159,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
             sessionPagesActionCreator.firstLoad()
         }
         sessionPagesStore.scrollWhenFirstLoaded.changed(viewLifecycleOwner) {
-            if(it) scrollToCurrentSession()
+            if (it) scrollToCurrentSession()
         }
     }
 
