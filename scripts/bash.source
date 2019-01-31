@@ -28,3 +28,10 @@ use_debug_keystore() {
     export KEY_STORE_FILE="$DEBUG_KEY_STORE_FILE"
     export KEY_STORE_PASSWORD="$DEBUG_KEY_STORE_PASSWORD"
 }
+
+use_release_keystore() {
+    export KEY_ALIAS="$RELEASE_KEY_ALIAS"
+    export KEY_PASSWORD="$RELEASE_KEY_PASSWORD"
+    export KEY_STORE_FILE="$RELEASE_KEY_STORE_FILE"
+    export KEY_STORE_PASSWORD="$RELEASE_KEY_STORE_PASSWORD"
+}

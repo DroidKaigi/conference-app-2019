@@ -40,7 +40,6 @@ matrix:
     - directories:
       - ios/frontend/vendor/bundle
       - ios/frontend/Pods
-      - ios/frontend/Carthage
       - "$HOME/.gradle"
       - "$HOME/.android"
       - ".gradle"

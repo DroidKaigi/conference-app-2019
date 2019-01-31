@@ -2,5 +2,10 @@
 
 set -eu
 
-# for now
-./gradlew assembleDebug --offline
+if [[ -z "$REPOSITORY_ROOT" ]]; then
+    export REPOSITORY_ROOT="$(git rev-parse --show-toplevel)"
+fi
+
+source "$REPOSITORY_ROOT/scripts/bash.source"
+
+./gradlew assembleRelease --offline

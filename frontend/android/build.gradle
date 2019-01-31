@@ -22,7 +22,7 @@ android {
             keyAlias System.getenv("RELEASE_KEY_ALIAS")
             keyPassword System.getenv("RELEASE_KEY_PASSWORD")
             storeFile file(System.getenv("RELEASE_STORE_FILE") ?: "debug.keystore")
-            storePassword System.getenv("RELEASE_PASSWORD")
+            storePassword System.getenv("RELEASE_KEY_STORE_PASSWORD")
         }
     }
     defaultConfig {
