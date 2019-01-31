@@ -5,12 +5,16 @@ import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.contributor.R
 import io.github.droidkaigi.confsched2019.contributor.databinding.ItemContributorProfileBinding
 import io.github.droidkaigi.confsched2019.model.Contributor
+import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
+import javax.inject.Inject
 
 class ContributorItem(
-    private val contributor: Contributor,
-    private val onProfileClicked: (profileUrl: String) -> Unit
+    private val contributor: Contributor
 ) : BindableItem<ItemContributorProfileBinding>() {
+
+    @Inject
+    lateinit var activityActionCreator: ActivityActionCreator
 
     override fun getLayout(): Int = R.layout.item_contributor_profile
 
@@ -23,8 +27,9 @@ class ContributorItem(
 
         binding.root.setOnClickListener {
             contributor.profileUrl?.let {
-                onProfileClicked(it)
+                activityActionCreator.openUrl(it)
             }
+
         }
 
         Picasso

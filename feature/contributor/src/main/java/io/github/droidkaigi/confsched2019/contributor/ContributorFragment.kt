@@ -19,7 +19,6 @@ import io.github.droidkaigi.confsched2019.contributor.store.ContributorStore
 import io.github.droidkaigi.confsched2019.contributor.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
-import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
@@ -36,8 +35,6 @@ class ContributorFragment : DaggerFragment() {
 
     @Inject
     lateinit var contributorActionCreator: ContributorActionCreator
-    @Inject
-    lateinit var activityActionCreator: ActivityActionCreator
 
     private val groupAdapter = GroupAdapter<ViewHolder<*>>()
     private lateinit var progressTimeLatch: ProgressTimeLatch
@@ -75,9 +72,7 @@ class ContributorFragment : DaggerFragment() {
             val itemList = mutableListOf<Item<*>>()
             itemList += result.contributors
                 .map {
-                    ContributorItem(it) { profileUrl ->
-                        activityActionCreator.openUrl(profileUrl)
-                    }
+                    ContributorItem(it)
                 }
             groupAdapter.update(
                 itemList
