@@ -132,6 +132,11 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                 ?.session
                 ?.startDayText ?: return@changed
             binding.sessionsBottomSheetTitle.text = titleText
+
+            if (sessionPagesStore.sessionScrollAdjusted.value == false) {
+                scrollToCurrentSession()
+                sessionPagesActionCreator.dispatchSessionScrollAdjusted()
+            }
         }
         sessionPagesStore.filters.changed(viewLifecycleOwner) {
             binding.isFiltered = it.isFiltered()
@@ -153,13 +158,6 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
             if (SessionPage.pageOfDay(args.day) == it) {
                 scrollToCurrentSession()
             }
-        }
-
-        sessionPagesStore.firstLoadSessions.changed(viewLifecycleOwner) {
-            sessionPagesActionCreator.firstLoad()
-        }
-        sessionPagesStore.scrollWhenFirstLoaded.changed(viewLifecycleOwner) {
-            if (it) scrollToCurrentSession()
         }
     }
 

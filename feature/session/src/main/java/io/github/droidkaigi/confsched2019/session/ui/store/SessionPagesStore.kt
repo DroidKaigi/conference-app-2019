@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.shopify.livedataktx.combineWith
-import com.shopify.livedataktx.filter
-import com.shopify.livedataktx.first
 import com.shopify.livedataktx.map
-import com.shopify.livedataktx.nonNull
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.requireValue
@@ -128,17 +125,10 @@ class SessionPagesStore @Inject constructor(
         .map { it.sessionPage }
         .toSingleLiveData(SessionPage.pages[0])
 
-    val scrollWhenFirstLoaded: LiveData<Boolean> = dispatcher
-        .subscribe<Action.FirstSessionsLoaded>()
-        .map { true }
+    val sessionScrollAdjusted: LiveData<Boolean> = dispatcher
+        .subscribe<Action.SessionScrollAdjusted>()
+        .map { it.adjusted }
         .toSingleLiveData(false)
-        .filter { it }
-
-    val firstLoadSessions: LiveData<Unit> = filteredSessions
-        .nonNull()
-        .filter { it.isNotEmpty() }
-        .map { Unit }
-        .first()
 
     fun filteredSessionsByDay(day: Int): LiveData<List<Session>> {
         return filteredSessions

@@ -26,8 +26,8 @@ class SessionPagesActionCreator @Inject constructor(
         dispatcher.launchAndDispatch(Action.SessionsLoaded(sessions))
     }
 
-    fun firstLoad() {
-        dispatcher.launchAndDispatch(Action.FirstSessionsLoaded())
+    fun dispatchSessionScrollAdjusted() {
+        dispatcher.launchAndDispatch(Action.SessionScrollAdjusted(true))
     }
 
     fun selectTab(sessionPage: SessionPage) {
