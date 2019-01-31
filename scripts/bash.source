@@ -30,6 +30,7 @@ use_debug_keystore() {
 }
 
 use_release_keystore() {
+    set +x
     export KEY_ALIAS="$RELEASE_KEY_ALIAS"
     export KEY_PASSWORD="$RELEASE_KEY_PASSWORD"
     export KEY_STORE_FILE="$RELEASE_KEY_STORE_FILE"
