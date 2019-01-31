@@ -135,11 +135,11 @@ class RoomDatabase @Inject constructor(
     override suspend fun contributorList(): List<ContributorEntity> =
         contributorDao.allContributorList()
 
-    override suspend fun save(apiReesponse: ContributorResponse) {
+    override suspend fun save(apiResponse: ContributorResponse) {
         withContext(coroutineContext) {
             database.runInTransaction {
                 val contributorList =
-                    apiReesponse.contributorList.toContributorEntityImpl()
+                    apiResponse.contributorList.toContributorEntityImpl()
                 contributorDao.deleteAll()
                 contributorDao.insert(contributorList)
             }
