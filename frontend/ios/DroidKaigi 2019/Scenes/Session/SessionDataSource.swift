@@ -16,6 +16,10 @@ final class SessionDataSource: NSObject, UITableViewDataSource {
     typealias Element = [SessionByStartTime]
     var items: Element = []
 
+    var toggleFavorite = PublishSubject<Session>()
+    
+    private var cellHeightsCache = [IndexPath: CGFloat]()
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return items.count
     }
@@ -26,12 +30,18 @@ final class SessionDataSource: NSObject, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: SessionTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-        cell.session = items[indexPath.section].sessions[indexPath.row]
+        let session = items[indexPath.section].sessions[indexPath.row]
+        cell.session = session
+        cell.favoriteButtonDidTapped
+            .map { _ in session }
+            .bind(to: toggleFavorite)
+            .disposed(by: cell.bag)
         return cell
     }
 }
 
 extension SessionDataSource: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = SessionHeaderView(frame: CGRect(x: 0,
                                                    y: 0,
@@ -41,8 +51,16 @@ extension SessionDataSource: UITableViewDelegate {
         return view
     }
 
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cellHeightsCache[indexPath] = cell.frame.height
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return cellHeightsCache[indexPath] ?? UITableView.automaticDimension
     }
 }
 
@@ -58,6 +76,7 @@ extension SessionDataSource: RxTableViewDataSourceType {
 }
 
 extension SessionDataSource: SectionedViewDataSourceType {
+    
     func model(at indexPath: IndexPath) throws -> Any {
         return items[indexPath.section].sessions[indexPath.row]
     }

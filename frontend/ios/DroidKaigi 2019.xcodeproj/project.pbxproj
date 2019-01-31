@@ -46,6 +46,8 @@
 		3672C2DD21F7392900ACB910 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3672C2DC21F7392900ACB910 /* Kingfisher.framework */; };
 		3672C2DF21F73A9400ACB910 /* SpeakerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3672C2DE21F73A9400ACB910 /* SpeakerCell.swift */; };
 		36D1FA2721F5CF6600ADBBDE /* StoryboardInstantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D1FA2621F5CF6600ADBBDE /* StoryboardInstantiable.swift */; };
+		43DC80C12200A0F600A3F710 /* FavoriteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DC80C02200A0F600A3F710 /* FavoriteRepository.swift */; };
+		43DC80C72201FC8100A3F710 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DC80C62201FC8100A3F710 /* UIButton+Extension.swift */; };
 		5917BCA621FA19B8005BEAF2 /* SessionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5917BCA521FA19B8005BEAF2 /* SessionHeaderView.swift */; };
 		59D30FC921F8B1BD003A937C /* SessionByStartTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D30FC821F8B1BD003A937C /* SessionByStartTime.swift */; };
 		63E7E66D21FF5B750076E6BC /* ioscombined.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E7E66721FF58BD0076E6BC /* ioscombined.framework */; };
@@ -139,6 +141,8 @@
 		3672C2DC21F7392900ACB910 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
 		3672C2DE21F73A9400ACB910 /* SpeakerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerCell.swift; sourceTree = "<group>"; };
 		36D1FA2621F5CF6600ADBBDE /* StoryboardInstantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardInstantiable.swift; sourceTree = "<group>"; };
+		43DC80C02200A0F600A3F710 /* FavoriteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRepository.swift; sourceTree = "<group>"; };
+		43DC80C62201FC8100A3F710 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		5917BCA521FA19B8005BEAF2 /* SessionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionHeaderView.swift; sourceTree = "<group>"; };
 		59D30FC821F8B1BD003A937C /* SessionByStartTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionByStartTime.swift; sourceTree = "<group>"; };
 		63E7E66721FF58BD0076E6BC /* ioscombined.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ioscombined.framework; path = "../ioscombined/build/xcode-frameworks/ioscombined.framework"; sourceTree = "<group>"; };
@@ -290,8 +294,9 @@
 			isa = PBXGroup;
 			children = (
 				2159CC5621FE186800DBD016 /* Day.swift */,
-				63F34E1A21EB43CE00B2EC48 /* SessionRepository.swift */,
+				43DC80C02200A0F600A3F710 /* FavoriteRepository.swift */,
 				59D30FC821F8B1BD003A937C /* SessionByStartTime.swift */,
+				63F34E1A21EB43CE00B2EC48 /* SessionRepository.swift */,
 				363E6AF321FD536A00EBC698 /* TagContent.swift */,
 			);
 			path = data;
@@ -329,6 +334,7 @@
 				3672C2CA21F601D600ACB910 /* UITableView+Extension.swift */,
 				366B060A21F7604400C912AD /* UICollectionView+Extension.swift */,
 				363E6AF521FD545B00EBC698 /* Session+Extension.swift */,
+				43DC80C62201FC8100A3F710 /* UIButton+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -729,11 +735,13 @@
 				63F34E1B21EB43CE00B2EC48 /* SessionRepository.swift in Sources */,
 				59D30FC921F8B1BD003A937C /* SessionByStartTime.swift in Sources */,
 				362546CD21FCD4FF005ADB0F /* SessionDetailSectionFooterView.swift in Sources */,
+				43DC80C72201FC8100A3F710 /* UIButton+Extension.swift in Sources */,
 				3672C2D321F6FB7E00ACB910 /* SessionDataSource.swift in Sources */,
 				362546C921FC9DCD005ADB0F /* SessionDetailWithIconTableViewCell.swift in Sources */,
 				366B060721F751C400C912AD /* TagsLeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				3672C2D121F6033200ACB910 /* NibLoadable.swift in Sources */,
 				3672C2CD21F6024B00ACB910 /* Reusable.swift in Sources */,
+				43DC80C12200A0F600A3F710 /* FavoriteRepository.swift in Sources */,
 				366B060E21F7652D00C912AD /* PaddingLabel.swift in Sources */,
 				5917BCA621FA19B8005BEAF2 /* SessionHeaderView.swift in Sources */,
 				36D1FA2721F5CF6600ADBBDE /* StoryboardInstantiable.swift in Sources */,

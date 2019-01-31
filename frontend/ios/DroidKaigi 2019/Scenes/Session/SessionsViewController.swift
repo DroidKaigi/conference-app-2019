@@ -45,7 +45,8 @@ final class SessionsViewController: UIViewController, StoryboardInstantiable {
 
     private func bind() {
         let viewWillAppear = rx.methodInvoked(#selector(self.viewWillAppear)).map { _ in }
-        let input = SessionsViewModel.Input(viewWillAppear: viewWillAppear)
+        let toggleFavorite = dataSource.toggleFavorite
+        let input = SessionsViewModel.Input(viewWillAppear: viewWillAppear, toggleFavorite: toggleFavorite)
         let output = viewModel.transform(input: input)
         output.error
               .drive(onNext: { errorMessage in
