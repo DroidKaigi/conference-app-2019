@@ -8,8 +8,27 @@
 import Foundation
 import class UIKit.UIImage
 
-struct Floor {
-    let title: String
-    let floor: Int
-    let map: UIImage?
+enum Floor: Int, CaseIterable {
+    case floor1 = 1
+    case floor5 = 5
+}
+
+extension Floor {
+    var title: String {
+        switch self {
+        case .floor1:
+            return "1st floor"
+        case .floor5:
+            return "5th floor"
+        }
+    }
+    
+    var map: UIImage {
+        switch self {
+        case .floor1:
+            return #imageLiteral(resourceName: "ic_floor1")
+        case .floor5:
+            return #imageLiteral(resourceName: "ic_floor2")
+        }
+    }
 }
