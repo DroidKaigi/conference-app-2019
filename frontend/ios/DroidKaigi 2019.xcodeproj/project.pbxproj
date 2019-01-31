@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -59,6 +59,7 @@
 		B977F302220203170048A02E /* FloorMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B977F301220203170048A02E /* FloorMapViewController.swift */; };
 		B977F3042202041F0048A02E /* FloorMapContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B977F3032202041F0048A02E /* FloorMapContentViewController.swift */; };
 		B977F306220204550048A02E /* Floor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B977F305220204550048A02E /* Floor.swift */; };
+		B977F31022034EA20048A02E /* XLPagerTabStrip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B977F30F22034EA20048A02E /* XLPagerTabStrip.framework */; };
 		E9B4925E21ECB6CE000F1072 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925C21ECB6CE000F1072 /* RxCocoa.framework */; };
 		E9B4925F21ECB6CE000F1072 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925D21ECB6CE000F1072 /* RxSwift.framework */; };
 		E9B4926021ECB782000F1072 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925C21ECB6CE000F1072 /* RxCocoa.framework */; };
@@ -161,6 +162,7 @@
 		B977F301220203170048A02E /* FloorMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorMapViewController.swift; sourceTree = "<group>"; };
 		B977F3032202041F0048A02E /* FloorMapContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorMapContentViewController.swift; sourceTree = "<group>"; };
 		B977F305220204550048A02E /* Floor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Floor.swift; sourceTree = "<group>"; };
+		B977F30F22034EA20048A02E /* XLPagerTabStrip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XLPagerTabStrip.framework; path = Carthage/Build/iOS/XLPagerTabStrip.framework; sourceTree = "<group>"; };
 		D1926B9E9C352CF5C49A9569 /* Pods_DroidKaigi_2019UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DroidKaigi_2019UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D78D4A19C895C1993281143C /* Pods-DroidKaigi 2019Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DroidKaigi 2019Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DroidKaigi 2019Tests/Pods-DroidKaigi 2019Tests.release.xcconfig"; sourceTree = "<group>"; };
 		DD3A46465103BA27D8540B18 /* Pods-DroidKaigi 2019UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DroidKaigi 2019UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DroidKaigi 2019UITests/Pods-DroidKaigi 2019UITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B977F31022034EA20048A02E /* XLPagerTabStrip.framework in Frameworks */,
 				E9B4925E21ECB6CE000F1072 /* RxCocoa.framework in Frameworks */,
 				E9B4925F21ECB6CE000F1072 /* RxSwift.framework in Frameworks */,
 				3672C2D721F707C500ACB910 /* SnapKit.framework in Frameworks */,
@@ -270,6 +273,7 @@
 		0161170A21E9A89C009CBB8D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B977F30F22034EA20048A02E /* XLPagerTabStrip.framework */,
 				3672C2DC21F7392900ACB910 /* Kingfisher.framework */,
 				3672C2D621F707C500ACB910 /* SnapKit.framework */,
 				E9B4926221ECB783000F1072 /* RxBlocking.framework */,
@@ -570,7 +574,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ $CONFIGURATION = \"Debug\" ]; then\n${PODS_ROOT}/LicensePlist/license-plist --output-path \"$PRODUCT_NAME/Settings.bundle\"\nfi\n";
+			shellScript = "if [ $CONFIGURATION = \"Debug\" ]; then\n${PODS_ROOT}/LicensePlist/license-plist --output-path \"$PRODUCT_NAME/Settings.bundle\" --suppress-opening-directory\nfi\n";
 		};
 		361EF11099051CF5E1A29049 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -584,7 +588,6 @@
 				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
 				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
-				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
@@ -593,7 +596,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFInternationalization.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFTextAccessibility.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponents.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -689,21 +691,15 @@
 			files = (
 			);
 			inputFileListPaths = (
+				"$(SRCROOT)/Carthage/InputFiles.xcfilelist",
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SnapKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
 			);
 			name = "Carthage Copy Frameworks";
 			outputFileListPaths = (
+				"$(SRCROOT)/Carthage/OutputFiles.xcfilelist",
 			);
 			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxSwift.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxCocoa.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SnapKit.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ Kingfisher.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
