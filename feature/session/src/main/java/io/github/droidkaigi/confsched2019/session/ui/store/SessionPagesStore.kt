@@ -128,10 +128,11 @@ class SessionPagesStore @Inject constructor(
         .map { it.sessionPage }
         .toSingleLiveData(SessionPage.pages[0])
 
-    val scrolledWhenFirstLoad: LiveData<Boolean> = dispatcher
-        .subscribe<Action.FirstSessionLoadScrolled>()
+    val scrollWhenFirstLoaded: LiveData<Boolean> = dispatcher
+        .subscribe<Action.FirstSessionsLoaded>()
         .map { true }
-        .toLiveData(false)
+        .toSingleLiveData(false)
+        .filter { it }
 
     val firstLoadSessions: LiveData<Unit> = filteredSessions
         .nonNull()

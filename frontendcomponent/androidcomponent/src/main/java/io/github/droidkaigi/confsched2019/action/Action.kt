@@ -30,7 +30,7 @@ sealed class Action {
         val sessions: List<Session>
     ) : Action()
 
-    class FirstSessionLoadScrolled : Action()
+    class FirstSessionsLoaded : Action()
 
     data class SessionPageSelected(val sessionPage: SessionPage) : Action()
     data class SessionPageReselected(val sessionPage: SessionPage) : Action()
