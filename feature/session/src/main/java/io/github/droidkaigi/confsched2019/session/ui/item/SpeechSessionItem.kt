@@ -27,6 +27,7 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionConten
 import io.github.droidkaigi.confsched2019.session.ui.bindingadapter.setHighlightText
 import io.github.droidkaigi.confsched2019.util.lazyWithParam
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
+import java.lang.IllegalArgumentException
 import kotlin.math.max
 
 class SpeechSessionItem @AssistedInject constructor(
@@ -60,7 +61,12 @@ class SpeechSessionItem @AssistedInject constructor(
     override fun bind(viewBinding: ItemSessionBinding, position: Int) {
         with(viewBinding) {
             root.setOnClickListener {
-                navController.navigate(detailNavDirections)
+                try {
+                    navController.navigate(detailNavDirections)
+                } catch (e: IllegalArgumentException) {
+                    // FIXME: When launching the app and click session multiple times, cause Exception
+                    // see https://github.com/DroidKaigi/conference-app-2019/issues/664
+                }
             }
             session = speechSession
             lang = defaultLang()
