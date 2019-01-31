@@ -26,11 +26,12 @@ update_release_draft() {
         "https://api.github.com/repos/$TRAVIS_REPO_SLUG/releases/$release_id"
 }
 
-release_count() {
+draft_count() {
     curl -X GET \
         -H "Authorization: token $GITHUB_ACCESS_TOKEN" \
         "https://api.github.com/repos/$TRAVIS_REPO_SLUG/releases" | \
-        jq -r '.[] | select(.draft) | length'
+        jq -r '.[] | select(.draft) // [] | length' 
+        # this query does not return the size of draft releases actually but it's okay for now.
 }
 
 get_release_id() {
@@ -46,6 +47,8 @@ release_id="$(get_release_id)"
 
 if let "${release_id:--1} > 0"; then
     update_release_draft "$release_id"
-else
+elif let "$(draft_count) == 0"; then
     create_release_draft
+else
+    die 'a draft exists. could not determine where I should upload to'
 fi
