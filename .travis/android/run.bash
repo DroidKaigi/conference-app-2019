@@ -19,4 +19,4 @@ curl -sL "https://raw.githubusercontent.com/jmatsu/dpg/master/install.bash" | ba
   --app "$UNIVERSAL_APK_PATH" \
   --token "$DEPLOYGATE_API_TOKEN" \
   --message "Release build of $(git rev-parse --short HEAD) at $(date)" \
-  --distribution-name "via_travis"
+  --distribution-name "Production Build"
