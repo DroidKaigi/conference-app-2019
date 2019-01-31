@@ -4,6 +4,6 @@ data class ContributorContents(
     val contributors: List<Contributor>
 ) {
     companion object {
-        val empty = ContributorContents(emptyList())
+        val EMTPY = ContributorContents(emptyList())
     }
 }

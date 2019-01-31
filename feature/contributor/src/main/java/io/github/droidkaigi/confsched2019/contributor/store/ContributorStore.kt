@@ -20,5 +20,5 @@ class ContributorStore @Inject constructor(
     val contributorList = dispatcher
         .subscribe<Action.ContributorLoaded>()
         .map { it.contributorList }
-        .toLiveData(ContributorContents.empty)
+        .toLiveData(ContributorContents.EMTPY)
 }
