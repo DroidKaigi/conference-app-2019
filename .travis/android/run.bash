@@ -2,7 +2,11 @@
 
 set -eu
 
-source "$(dirname $0)/bash.source"
+source "$(dirname $0)/../bash.source"
+
+source .release/bash.source
+
+cp .release/google-services.json frontend/android/
 
 use_release_keystore
  ./gradlew bundleRelease --offline

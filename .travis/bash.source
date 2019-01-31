@@ -1,4 +1,4 @@
-if [[ -z "$REPOSITORY_ROOT" ]]; then
+if [[ -z "${REPOSITORY_ROOT:-}" ]]; then
     export REPOSITORY_ROOT="$(git rev-parse --show-toplevel)"
 fi
 

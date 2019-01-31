@@ -3,4 +3,4 @@
 set -eu
 
 # for now
-./gradlew :frontend:ios-combined:packForXCode -PXCODE_CONFIGURATION=Debug
+./gradlew :frontend:ioscombined:packForXCode -PXCODE_CONFIGURATION=Debug

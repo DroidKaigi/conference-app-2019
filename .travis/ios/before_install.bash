@@ -48,4 +48,4 @@ echo '33b6a2b64607f11b759f320ef9dff4ae5c47d97a' > "$ANDROID_HOME/licenses/google
 echo 'd975f751698a77b662f1254ddbeed3901e976f5a' > "$ANDROID_HOME/licenses/intel-android-extra-license"
 echo 'e9acab5b5fbb560a72cfaecce8946896ff6aab9d' > "$ANDROID_HOME/licenses/mips-android-sysimage-license"
 
-./gradlew androidDependenciesExtra getDependencies
+./gradlew androidDependenciesExtra getDependencies | grep "Dependencies for" --line-buffered
