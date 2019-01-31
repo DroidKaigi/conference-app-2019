@@ -21,7 +21,7 @@ android {
         release {
             keyAlias System.getenv("RELEASE_KEY_ALIAS")
             keyPassword System.getenv("RELEASE_KEY_PASSWORD")
-            storeFile file(System.getenv("RELEASE_STORE_FILE") ?: "debug.keystore")
+            storeFile file(System.getenv("RELEASE_KEY_STORE_FILE") ?: 'debug.keystore')
             storePassword System.getenv("RELEASE_KEY_STORE_PASSWORD")
         }
     }
@@ -34,13 +34,24 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         resConfigs "ja"
-        // For Android Studio Gradle sync
-        applicationIdSuffix ".debug"
+        if (!isCi && !isReleaseBuild) {
+            // For Android Studio Gradle sync
+            // gms plugin cannot parse google-service.json correctly if applicationIdSuffix is specified here
+            applicationIdSuffix ".debug"
+        }
         manifestPlaceholders = [isCi: String.valueOf(isCi)]
     }
     buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
+        }
         staging {
+            applicationIdSuffix ".debug"
+            debuggable true
             zipAlignEnabled true
+            signingConfig = signingConfigs.debug
+            matchingFallbacks = ['release']
 
             postprocessing {
                 proguardFiles 'proguard-rules.pro'
@@ -53,18 +64,20 @@ android {
                 codeShrinker = 'r8'
             }
         }
-        release.initWith(staging)
-        staging {
-            debuggable true
-            signingConfig = signingConfigs.debug
-            matchingFallbacks = ['release']
-        }
         release {
-            applicationIdSuffix null
+            debuggable false
+            zipAlignEnabled true
             signingConfig = signingConfigs.release
 
             postprocessing {
-                proguardFiles 'proguard-rules-production.pro'
+                proguardFiles 'proguard-rules.pro', 'proguard-rules-production.pro'
+                obfuscate = true
+                // if we want to enable optimization, then codeShrinker must be proguard for now
+                // That may be a bug of r8
+                optimizeCode = false
+                removeUnusedCode = true
+                removeUnusedResources = true
+                codeShrinker = 'r8'
             }
         }
     }

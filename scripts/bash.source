@@ -22,6 +22,8 @@ export DEBUG_KEY_PASSWORD='droidkaigi'
 export DEBUG_KEY_STORE_FILE="$REPOSITORY_ROOT/frontend/android/debug.keystore"
 export DEBUG_KEY_STORE_PASSWORD='droidkaigi'
 
+export RELEASE_KEY_STORE_FILE="$REPOSITORY_ROOT/.release/droidkaigi2019.keystore"
+
 use_debug_keystore() {
     export KEY_ALIAS="$DEBUG_KEY_ALIAS"
     export KEY_PASSWORD="$DEBUG_KEY_PASSWORD"
