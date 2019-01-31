@@ -12,7 +12,6 @@ target 'DroidKaigi 2019' do
   pod 'SwiftLint'
   pod 'LicensePlist'
   pod 'XLPagerTabStrip'
-  pod 'R.swift'
 
   target 'DroidKaigi 2019Tests' do
     inherit! :search_paths

@@ -60,7 +60,6 @@
 		B977F3042202041F0048A02E /* FloorMapContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B977F3032202041F0048A02E /* FloorMapContentViewController.swift */; };
 		B977F306220204550048A02E /* Floor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B977F305220204550048A02E /* Floor.swift */; };
 		B977F308220208D00048A02E /* NSLayoutConstraint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B977F307220208D00048A02E /* NSLayoutConstraint+Extension.swift */; };
-		B977F30D22020E820048A02E /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B977F30C22020E820048A02E /* R.generated.swift */; };
 		E9B4925E21ECB6CE000F1072 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925C21ECB6CE000F1072 /* RxCocoa.framework */; };
 		E9B4925F21ECB6CE000F1072 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925D21ECB6CE000F1072 /* RxSwift.framework */; };
 		E9B4926021ECB782000F1072 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B4925C21ECB6CE000F1072 /* RxCocoa.framework */; };
@@ -164,7 +163,6 @@
 		B977F3032202041F0048A02E /* FloorMapContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorMapContentViewController.swift; sourceTree = "<group>"; };
 		B977F305220204550048A02E /* Floor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Floor.swift; sourceTree = "<group>"; };
 		B977F307220208D00048A02E /* NSLayoutConstraint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extension.swift"; sourceTree = "<group>"; };
-		B977F30C22020E820048A02E /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		D1926B9E9C352CF5C49A9569 /* Pods_DroidKaigi_2019UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DroidKaigi_2019UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D78D4A19C895C1993281143C /* Pods-DroidKaigi 2019Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DroidKaigi 2019Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DroidKaigi 2019Tests/Pods-DroidKaigi 2019Tests.release.xcconfig"; sourceTree = "<group>"; };
 		DD3A46465103BA27D8540B18 /* Pods-DroidKaigi 2019UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DroidKaigi 2019UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DroidKaigi 2019UITests/Pods-DroidKaigi 2019UITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -244,7 +242,6 @@
 				36D1FA2521F5CF3B00ADBBDE /* Protocols */,
 				362D90F521F5D50F006962C8 /* data */,
 				36D1FA2221F5CD4A00ADBBDE /* Scenes */,
-				B977F30A22020DD20048A02E /* Libs */,
 				01578ECA21E5E75D002B2033 /* Assets.xcassets */,
 				01578ECC21E5E75D002B2033 /* LaunchScreen.storyboard */,
 				01578EC021E5E75A002B2033 /* AppDelegate.swift */,
@@ -389,22 +386,6 @@
 			path = FloorMap;
 			sourceTree = "<group>";
 		};
-		B977F30A22020DD20048A02E /* Libs */ = {
-			isa = PBXGroup;
-			children = (
-				B977F30B22020DE20048A02E /* R_swift */,
-			);
-			path = Libs;
-			sourceTree = "<group>";
-		};
-		B977F30B22020DE20048A02E /* R_swift */ = {
-			isa = PBXGroup;
-			children = (
-				B977F30C22020E820048A02E /* R.generated.swift */,
-			);
-			path = R_swift;
-			sourceTree = "<group>";
-		};
 		F443A17E5CE303CD71FFD9D7 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -427,7 +408,6 @@
 			buildPhases = (
 				D981C1B39FBCB91600433AFD /* [CP] Check Pods Manifest.lock */,
 				0161170D21E9A95A009CBB8D /* Build Kotlin Modules */,
-				B977F30922020D8A0048A02E /* R.swift */,
 				01578EB921E5E75A002B2033 /* Sources */,
 				01578EBA21E5E75A002B2033 /* Frameworks */,
 				E9B4925B21ECB696000F1072 /* Carthage Copy Frameworks */,
@@ -607,7 +587,6 @@
 				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
 				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
-				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
 				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -617,7 +596,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFInternationalization.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFTextAccessibility.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponents.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -641,26 +619,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which \"${PODS_ROOT}/SwiftLint/swiftlint\" >/dev/null; then\n  \"${PODS_ROOT}/SwiftLint/swiftlint\"\nelse\n  echo \"warning: SwiftLint not installed, run `pod install`\"\nfi\n";
-		};
-		B977F30922020D8A0048A02E /* R.swift */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$TEMP_DIR/rswift-lastrun",
-			);
-			name = R.swift;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				$SRCROOT/$TARGET_NAME/Libs/R_swift/R.generated.swift,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/$TARGET_NAME/Libs/R_swift/R.generated.swift\"\n";
 		};
 		BAF164195EA80D251D34EE96 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -798,7 +756,6 @@
 				363E6AF421FD536A00EBC698 /* TagContent.swift in Sources */,
 				2159CC5721FE186800DBD016 /* Day.swift in Sources */,
 				362D910321F5DC2D006962C8 /* SessionsViewController.swift in Sources */,
-				B977F30D22020E820048A02E /* R.generated.swift in Sources */,
 				2159CC5321FE0E0000DBD016 /* MainViewController.swift in Sources */,
 				63F34E1B21EB43CE00B2EC48 /* SessionRepository.swift in Sources */,
 				59D30FC921F8B1BD003A937C /* SessionByStartTime.swift in Sources */,

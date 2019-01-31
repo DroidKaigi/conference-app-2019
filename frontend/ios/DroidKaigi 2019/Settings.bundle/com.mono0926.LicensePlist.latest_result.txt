@@ -19,14 +19,6 @@ body:
                    …
 version: 2.0.0
 
-name: R.swift, nameSpecified: 
-body: The MIT License (MIT…
-version: 5.0.2
-
-name: R.swift.Library, nameSpecified: 
-body: The MIT License (MIT…
-version: 5.0.0
-
 name: SwiftLint, nameSpecified: 
 body: The MIT License (MIT…
 version: 0.30.1

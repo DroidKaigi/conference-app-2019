@@ -38,16 +38,12 @@ PODS:
     - MaterialComponents/private/Math
   - MDFInternationalization (2.0.0)
   - MDFTextAccessibility (2.0.0)
-  - R.swift (5.0.2):
-    - R.swift.Library (~> 5.0.0)
-  - R.swift.Library (5.0.0)
   - SwiftLint (0.30.1)
   - XLPagerTabStrip (8.1.1)
 
 DEPENDENCIES:
   - LicensePlist
   - MaterialComponents/Snackbar (~> 74.0)
-  - R.swift
   - SwiftLint
   - XLPagerTabStrip
 
@@ -57,8 +53,6 @@ SPEC REPOS:
     - MaterialComponents
     - MDFInternationalization
     - MDFTextAccessibility
-    - R.swift
-    - R.swift.Library
     - SwiftLint
     - XLPagerTabStrip
 
@@ -67,11 +61,9 @@ SPEC CHECKSUMS:
   MaterialComponents: c382f7a1881832ff88a05bb1536c47714cf1295f
   MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
   MDFTextAccessibility: 85c09a1bd9c321f494348e632a25063bcda35a53
-  R.swift: 81455d81467763cbd3f4d79d938d05f4ac4c0228
-  R.swift.Library: 0bf390e729bc10bb2c9e4fb78bd043164a7be4ff
   SwiftLint: a54bf1fe12b55c68560eb2a7689dfc81458508f7
   XLPagerTabStrip: 63166e21c9844fa30f2d95d30f335e73be5caf22
 
-PODFILE CHECKSUM: b672faac7d00fa0ffa81355caacddf94716450be
+PODFILE CHECKSUM: 6e83ecb1065797cc0aaa56018b113a9947ebd11f
 
 COCOAPODS: 1.5.3
