@@ -21,6 +21,12 @@ NOTE: Google Play Protect will show a warning dialog on some of devices when ins
 
 We always welcome any and all contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information
 
+We would be happy if you ran the command below before sending pull requests to install git hooks. Thanks.
+
+```
+./scripts/git/install.bash
+```
+
 ## Requirements
 
 - Android Studio 3.4 Beta 2 and higher.

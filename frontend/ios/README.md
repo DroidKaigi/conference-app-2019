@@ -1,9 +1,20 @@
 # How to build
 
+## Minimum Requirements
+
+- XCode 10.1 (Swift 4.2.1)
+- JDK 1.8 (never use higher jdk versions)
+
 Initially, you need to run the commands below.
 
 ```
 cd frontend/ios
+
+# Install carthage if you haven't installed it yet.
+# e.g. brew install carthage
+
+# Please make sure ruby and bundler are available
+
 make init
 ```
 
@@ -12,6 +23,14 @@ make init
 Please make sure `./gradlew :frontend:ioscombined:packForXCode -PXCODE_CONFIGURATION=Debug` is successfuly run. 
 
 After that, you can open `DroidKaigi 2019.xcworkspace` in Xcode.
+
+## on every checkout
+
+Other committer will add/modify/remove dependencies from Gemfile, Podfile and/or CartFile. Please run the command below to get the latest dependencies of this project.
+
+```
+make post_checkout
+```
 
 ## Trouble shooting
 
@@ -32,3 +51,15 @@ Please open `DroidKaigi 2019.xcworkspace` instead of `DroidKaigi 2019.xcodeproj`
 ## java.lang.UnsupportedClassVersionError: org/jetbrains/kotlin/lexer/KotlinLexer
 
 Maybe you use an older version of JDK. [Update JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) on your computer and try building again.
+
+## Could not create service of type ScriptPluginFactory using BuildScopeServices.createScriptPluginFactory()
+
+If you get errors like below when running gradle stuff, please try to switch jdk to 1.8. This bug may be based on Java 10 or higher.
+
+e.g. Run `export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)`
+
+```
+* What went wrong:
+Could not create service of type ScriptPluginFactory using BuildScopeServices.createScriptPluginFactory().
+> Could not create service of type PluginResolutionStrategyInternal using BuildScopeServices.createPluginResolutionStrategy().
+```
