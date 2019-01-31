@@ -24,13 +24,21 @@ We always welcome any and all contributions! See [CONTRIBUTING.md](CONTRIBUTING.
 ## Requirements
 
 - Android Studio 3.4 Beta 2 and higher.
-- Android Studio Kotlin Plugin 1.3.11-release-Studio<AS version>
+- Android Studio Kotlin Plugin v1.3.20-release-Studio<AS version>
 
 **Check out following status.**  
+
+* Use recent version of Android Studio Kotlin Plugin
+
 `Preference` > `Languages & Frameworks` > `Kotlin Updates`
 
 Older versions of the Kotlin plugin may cause build failures.
 If you still have a trouble after upgrading the plugin, please try using AndroidStudio 3.3 or 3.4 instead.
+
+* Disable Instant Run
+
+`Preferences` > `Build, Execution, Deployment` > `Instant Run` > Uncheck `Enable Instant Run`
+
 
 # Development Environment
 
