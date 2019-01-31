@@ -15,7 +15,7 @@ create_universal_apk_from_aab.bash $(find frontend/android/build/outputs -name "
 curl -sL "https://raw.githubusercontent.com/jmatsu/dpg/master/install.bash" | bash
 
 ./dpg app upload --android \
-  --app-owner droidkaigi
-  --app "$UNIVERSAL_APK_PATH"
-  --token "$DEPLOYGATE_API_TOKEN"
+  --app-owner droidkaigi \
+  --app "$UNIVERSAL_APK_PATH" \
+  --token "$DEPLOYGATE_API_TOKEN" \
   --message "Release build at $(date)"
