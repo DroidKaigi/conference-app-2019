@@ -18,7 +18,7 @@
             />
     </data>
 
-    <!-- width and height will be changed by TimeTableLayoutManager -->
+    <!-- width and height will be changed by TimetableLayoutManager -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/tabular_form_column_width"
         android:layout_height="wrap_content"

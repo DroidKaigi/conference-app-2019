@@ -3,10 +3,16 @@ import dependencies.Dep
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs'
 
 apply from: rootProject.file('gradle/android.gradle')
-android.dataBinding.enabled = true
+android {
+    dataBinding.enabled = true
+    androidExtensions {
+        experimental = true
+    }
+}
 
 dependencies {
     implementation project(":feature:user")
