@@ -1,6 +1,6 @@
 branches:
   only:
-  - "travis/.*"
+  - "/travis/.*/"
   - master
   - release
   - "/^v\\d+\\.\\d+(\\.\\d+)?(-\\S*)?$/"
