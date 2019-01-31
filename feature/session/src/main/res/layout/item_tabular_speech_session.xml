@@ -1,45 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="session"
-            type="io.github.droidkaigi.confsched2019.model.SpeechSession"
-            />
+            type="io.github.droidkaigi.confsched2019.model.SpeechSession" />
 
         <variable
             name="lang"
-            type="io.github.droidkaigi.confsched2019.model.Lang"
-            />
+            type="io.github.droidkaigi.confsched2019.model.Lang" />
     </data>
 
     <!-- width and height will be changed by TimetableLayoutManager -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/tabular_form_column_width"
         android:layout_height="wrap_content"
-        android:padding="4dp"
-        >
+        android:padding="4dp">
+
+        <View
+            android:id="@+id/background_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_item_tabular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/vertical_line_view"
+            android:layout_width="2dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_vertical_line"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/speaker_icon_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintBottom_toTopOf="@id/session_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.emoji.widget.EmojiTextView
             android:id="@+id/session_title"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@android:color/darker_gray"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginBottom="6dp"
             android:ellipsize="end"
             android:fontFamily="@font/notosans_medium"
-            android:padding="4dp"
             android:text="@{session.title.getByLang(lang)}"
+            android:textColor="@color/tabular_session_title"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@sample/service_session.json/data/session_name"
-            />
+            app:layout_constraintStart_toStartOf="@id/speaker_icon_list"
+            app:layout_constraintTop_toBottomOf="@id/speaker_icon_list"
+            tools:text="@sample/service_session.json/data/session_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
