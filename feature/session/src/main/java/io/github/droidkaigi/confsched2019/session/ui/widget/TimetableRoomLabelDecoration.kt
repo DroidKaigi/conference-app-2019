@@ -14,7 +14,7 @@ import io.github.droidkaigi.confsched2019.session.ui.item.TabularServiceSessionI
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpacerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionItem
 
-class TimeTableRoomLabelDecoration(
+class TimetableRoomLabelDecoration(
     private val columnWidth: Int,
     private val labelHeight: Float,
     private val labelTextSize: Float,

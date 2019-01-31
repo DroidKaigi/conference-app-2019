@@ -15,6 +15,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.shopify.livedataktx.filter
+import com.shopify.livedataktx.first
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
@@ -22,6 +24,7 @@ import dagger.Provides
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.ext.android.requireValue
+import io.github.droidkaigi.confsched2019.model.SessionFeedback
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.survey.R
 import io.github.droidkaigi.confsched2019.survey.databinding.FragmentSessionSurveyBinding
@@ -99,6 +102,13 @@ class SessionSurveyFragment : DaggerFragment() {
 
             // TODO: save sessionFeedback state to cacheDB
         }
+
+        sessionSurveyStore.sessionFeedback
+            .filter { it != SessionFeedback.EMPTY }
+            .first()
+            .changed(viewLifecycleOwner) {
+                binding.sessionSurveyViewPager.adapter?.notifyDataSetChanged()
+            }
 
         val lang = defaultLang()
 
@@ -191,7 +201,9 @@ class SessionSurveyFragment : DaggerFragment() {
                     }
                 }
 
-                itemBinding.rating.setOnRatingBarChangeListener { _, rating, _ ->
+                itemBinding.rating.setOnRatingBarChangeListener { _, rating, fromUser ->
+                    if (!fromUser) return@setOnRatingBarChangeListener
+
                     val newSessionFeedback = when (position) {
                         SurveyItem.TOTAL_EVALUATION.position -> {
                             sessionSurveyStore.sessionFeedback.requireValue()
@@ -240,6 +252,9 @@ class SessionSurveyFragment : DaggerFragment() {
             override fun isViewFromObject(view: View, `object`: Any): Boolean = view == `object`
 
             override fun getCount(): Int = enumValues<SurveyItem>().size
+
+            // views should be recreated on PagerAdapter#notifyDataSetChanged
+            override fun getItemPosition(`object`: Any): Int = POSITION_NONE
         }
 
         binding.sessionSurveyViewPager.onPageSelected { position ->

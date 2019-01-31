@@ -21,8 +21,7 @@ import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpacerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionItem
 import java.util.concurrent.TimeUnit
 
-// FIXME: TIMEZONE
-class TimeTableTimeLabelDecoration(
+class TimetableTimeLabelDecoration(
     private val labelWidth: Float,
     private val labelTextSize: Float,
     private val labelBackgroundColor: Int,

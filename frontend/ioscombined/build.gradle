@@ -53,8 +53,14 @@ kotlin {
             }
         }
         iOSMain {
+            final String mode = project.findProperty("XCODE_CONFIGURATION")?.toUpperCase() ?: 'DEBUG'
             projectsList.forEach {
                 kotlin.srcDirs += "${project(it).projectDir}/src/iosMain/kotlin"
+                if (mode == "RELEASE") {
+                    kotlin.srcDirs += "${project(it).projectDir}/src/iosMain/kotlinRelease"
+                } else {
+                    kotlin.srcDirs += "${project(it).projectDir}/src/iosMain/kotlinDebug"
+                }
             }
             dependencies {
                 projectsList.forEach {

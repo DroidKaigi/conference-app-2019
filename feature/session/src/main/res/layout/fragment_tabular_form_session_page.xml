@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
 
-    <!-- ItemDecorations for TimeTableLayoutManager needs RecyclerView padding-->
+    <!-- ItemDecorations for TimetableLayoutManager needs RecyclerView padding-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tabular_form_sessions_recycler"
         android:layout_width="match_parent"
