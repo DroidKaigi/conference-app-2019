@@ -5,27 +5,27 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.contributor.R
-import io.github.droidkaigi.confsched2019.contributor.databinding.ItemContributorProfileBinding
 import io.github.droidkaigi.confsched2019.model.Contributor
 import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import javax.inject.Inject
+import io.github.droidkaigi.confsched2019.contributor.databinding.ItemContributorBinding
 
 class ContributorItem(
     private val contributor: Contributor
-) : BindableItem<ItemContributorProfileBinding>() {
+) : BindableItem<ItemContributorBinding>() {
 
     @Inject
     lateinit var activityActionCreator: ActivityActionCreator
 
-    override fun getLayout(): Int = R.layout.item_contributor_profile
+    override fun getLayout(): Int = R.layout.item_contributor
 
     override fun bind(
-        binding: ItemContributorProfileBinding,
+        binding: ItemContributorBinding,
         index: Int
     ) {
-        binding.name = contributor.name
-        binding.index = "${index + 1}"
+        binding.contributor = contributor
+        binding.rank = "${index + 1}"
 
         binding.root.setOnClickListener {
             activityActionCreator.openUrl(contributor.profileUrl)
@@ -43,7 +43,7 @@ class ContributorItem(
             null
         )
         placeHolder?.setTint(placeHolderColor)
-
+        binding.contributorImage.clearColorFilter()
         Picasso
             .get()
             .load(contributor.iconUrl)
@@ -53,6 +53,6 @@ class ContributorItem(
                     placeholder(it)
                 }
             }
-            .into(binding.contributorIconImageView)
+            .into(binding.contributorImage)
     }
 }
