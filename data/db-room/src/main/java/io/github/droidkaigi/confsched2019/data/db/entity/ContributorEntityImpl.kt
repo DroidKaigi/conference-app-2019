@@ -10,10 +10,12 @@ class ContributorEntityImpl(
     override val id: Int,
     @ColumnInfo(name = "contributor_name")
     override val name: String,
-    @ColumnInfo(name = "contibutor_icon_url")
+    @ColumnInfo(name = "contributor_icon_url")
     override val iconUrl: String,
     @ColumnInfo(name = "contributor_profile_url")
     override val profileUrl: String,
     @ColumnInfo(name = "contributor_type")
-    override val type: String
+    override val type: String,
+    @ColumnInfo(name = "contributor_order")
+    override val order: Int
 ) : ContributorEntity
