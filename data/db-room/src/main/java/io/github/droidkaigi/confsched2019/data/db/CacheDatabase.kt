@@ -31,7 +31,7 @@ import io.github.droidkaigi.confsched2019.data.db.entity.StaffEntityImpl
         (StaffEntityImpl::class),
         (ContributorEntityImpl::class)
     ],
-    version = 14
+    version = 13
 )
 abstract class CacheDatabase : RoomDatabase() {
     abstract fun sessionDao(): SessionDao
