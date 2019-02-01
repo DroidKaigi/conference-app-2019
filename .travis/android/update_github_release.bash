@@ -2,6 +2,11 @@
 
 set -eu
 
+die() {
+    echo "$*" 1>&2
+    exit 1
+}
+
 create_release_draft() {
     curl -X POST \
         -H "Authorization: token $GITHUB_ACCESS_TOKEN" \
@@ -27,11 +32,12 @@ update_release_draft() {
 }
 
 draft_count() {
+    # this query does not return the size of draft releases actually but it's okay for now.
+
     curl -X GET \
         -H "Authorization: token $GITHUB_ACCESS_TOKEN" \
         "https://api.github.com/repos/$TRAVIS_REPO_SLUG/releases" | \
-        jq -r '.[] | select(.draft) // [] | length' 
-        # this query does not return the size of draft releases actually but it's okay for now.
+        jq -r '.[] // {"draft": false} | select(.draft) // [] | length' 
 }
 
 get_release_id() {
