@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.shopify.livedataktx.combineWith
-import com.shopify.livedataktx.filter
 import com.shopify.livedataktx.map
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.requireValue
 import io.github.droidkaigi.confsched2019.ext.android.toLiveData
+import io.github.droidkaigi.confsched2019.ext.android.toSingleLiveData
 import io.github.droidkaigi.confsched2019.model.Filters
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionPage
@@ -19,6 +19,7 @@ import javax.inject.Inject
 class SessionPagesStore @Inject constructor(
     dispatcher: Dispatcher
 ) : ViewModel() {
+
     private val sessions: LiveData<List<Session>> = dispatcher
         .subscribe<Action.SessionsLoaded>()
         .map { it.sessions }
@@ -106,7 +107,7 @@ class SessionPagesStore @Inject constructor(
     }
     val filtersValue: Filters get() = filters.requireValue()
 
-    private val filteredSessions: LiveData<List<Session>> = sessions
+    val filteredSessions: LiveData<List<Session>> = sessions
         .combineWith(filters) { sessions, filters ->
             sessions ?: return@combineWith listOf<Session>()
             sessions.filter { session ->
@@ -118,6 +119,16 @@ class SessionPagesStore @Inject constructor(
         .subscribe<Action.SessionPageSelected>()
         .map { it.sessionPage }
         .toLiveData(SessionPage.pages[0])
+
+    val reselectedTab: LiveData<SessionPage> = dispatcher
+        .subscribe<Action.SessionPageReselected>()
+        .map { it.sessionPage }
+        .toSingleLiveData(SessionPage.pages[0])
+
+    val sessionScrollAdjusted: LiveData<Boolean> = dispatcher
+        .subscribe<Action.SessionScrollAdjusted>()
+        .map { it.adjusted }
+        .toSingleLiveData(false)
 
     fun filteredSessionsByDay(day: Int): LiveData<List<Session>> {
         return filteredSessions

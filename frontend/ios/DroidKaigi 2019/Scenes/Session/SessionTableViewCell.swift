@@ -6,8 +6,11 @@
 //
 
 import UIKit
-import ios_combined
+import ioscombined
 import SnapKit
+import MaterialComponents.MDCInkTouchController
+import RxCocoa
+import RxSwift
 
 class SessionTableViewCell: UITableViewCell, Reusable {
 
@@ -16,8 +19,12 @@ class SessionTableViewCell: UITableViewCell, Reusable {
             guard let session = session else { return }
             timeAndRoomLabel.text = "\(session.timeInMinutes)min / \(session.room.name)"
             liveMark.isHidden = !session.isOnGoing
+            favoriteButton.isSelected = session.isFavorited
             speakersStackView.isHidden = session is ServiceSession
             collectionView.isHidden = session is ServiceSession
+            let message = (session as? SpeechSession)?.message
+            messageIconImageView.isHidden = message == nil
+            messageLabel.isHidden = message == nil
             remakeTimeAndRoomLabelConstraints()
             switch session {
             case let serviceSession as ServiceSession:
@@ -28,22 +35,24 @@ class SessionTableViewCell: UITableViewCell, Reusable {
                     let cell = SpeakerCell(speaker: speaker)
                     speakersStackView.addArrangedSubview(cell)
                 }
-                tagContents.append(.lang(lang: speechSession.lang))
-                if speechSession.forBeginners {
-                    tagContents.append(.beginner)
-                }
-                tagContents.append(.category(category: speechSession.category))
+                tagContents = speechSession.tagContents
             default:
                 return
             }
             collectionView.reloadData()
+            messageLabel.text = message?.getByLang(lang: LangKt.defaultLang()) ?? ""
         }
     }
 
-    var tagContents: [TagContent] = []
+    var favoriteButtonDidTapped: ControlEvent<Void> {
+        return favoriteButton.rx.tap
+    }
+
+    var bag = DisposeBag()
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
         setupSubviews()
     }
     required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -56,6 +65,7 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         }
         tagContents.removeAll()
         collectionView.reloadData() // write to fix bug
+        bag = DisposeBag()
     }
 
     override func systemLayoutSizeFitting(_ targetSize: CGSize,
@@ -87,6 +97,21 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         return CGSize.init(width: targetSize.width, height: collectionViewHeight + defaultSize.height)
     }
 
+    private var tagContents: [TagContent] = []
+
+    private lazy var inkTouchController: MDCInkTouchController = {
+        return MDCInkTouchController(view: self)
+    }()
+
+    private lazy var titleStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        stackView.spacing = 8
+        stackView.backgroundColor = .blue
+        return stackView
+    }()
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
@@ -104,6 +129,14 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         label.clipsToBounds = true
         label.textAlignment = .center
         return label
+    }()
+    private lazy var favoriteButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "bookmark_border"), for: .normal)
+        button.setImage(UIImage(named: "bookmark"), for: .selected)
+        button.setImageTintColor(color: .black, for: .normal)
+        button.setImageTintColor(color: UIColor.DK.primary.color, for: .selected)
+        return button
     }()
     private lazy var speakersStackView: UIStackView = {
         let stackView = UIStackView()
@@ -132,32 +165,63 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         collectionView.register(TagsCollectionViewCell.self)
         return collectionView
     }()
+    private lazy var messageIconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "bug_report")?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = UIColor.DK.primary.color
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    private lazy var messageLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = UIColor.DK.primary.color
+        label.numberOfLines = -1
+        return label
+    }()
+
 
     private func setupSubviews() {
-        [titleLabel, liveMark, speakersStackView, timeAndRoomLabel, collectionView].forEach(contentView.addSubview)
-        titleLabel.snp.makeConstraints {
+        [titleLabel, liveMark, favoriteButton].forEach(titleStackView.addArrangedSubview)
+
+        [titleStackView, speakersStackView, timeAndRoomLabel, collectionView, messageIconImageView, messageLabel].forEach(contentView.addSubview)
+        titleStackView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(5)
             $0.leading.equalToSuperview().inset(90)
-            $0.trailing.equalTo(liveMark.snp.leading).offset(-4)
+            $0.trailing.equalToSuperview().inset(16)
         }
         liveMark.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(16)
-            $0.top.equalTo(titleLabel)
             $0.width.equalTo(32)
             $0.height.equalTo(16)
         }
+        favoriteButton.snp.makeConstraints {
+            $0.width.height.equalTo(24)
+        }
         speakersStackView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(8)
-            $0.leading.equalTo(titleLabel)
+            $0.top.equalTo(titleStackView.snp.bottom).offset(8)
+            $0.leading.equalTo(titleStackView)
             $0.trailing.equalToSuperview().inset(16)
         }
         remakeTimeAndRoomLabelConstraints()
         collectionView.snp.makeConstraints {
-            $0.leading.equalTo(titleLabel)
+            $0.leading.equalTo(titleStackView)
             $0.trailing.equalToSuperview().inset(16)
             $0.top.equalTo(timeAndRoomLabel.snp.bottom).offset(7)
+        }
+        messageIconImageView.snp.makeConstraints {
+            $0.centerY.equalTo(messageLabel)
+            $0.leading.equalTo(titleLabel)
+            $0.width.height.equalTo(20)
+        }
+        messageLabel.snp.makeConstraints {
+            $0.leading.equalTo(messageIconImageView.snp.trailing).offset(9)
+            $0.trailing.equalToSuperview().inset(16)
+            $0.top.equalTo(collectionView.snp.bottom).offset(8)
             $0.bottom.equalToSuperview().inset(26)
         }
+
+        inkTouchController.addInkView()
     }
 
     private func remakeTimeAndRoomLabelConstraints() {
@@ -194,15 +258,8 @@ final class SessionCalculateHeightTableViewCell: UITableViewCell {
 
     var session: Session? {
         didSet {
-            if let session = session as? SpeechSession {
-                tagContents = [.lang(lang: session.lang)]
-                if session.forBeginners {
-                    tagContents.append(.beginner)
-                }
-                tagContents.append(.category(category: session.category))
-            } else {
-                tagContents = []
-            }
+            guard let speechSession = session as? SpeechSession else { return }
+            tagContents = speechSession.tagContents
             collectionView.reloadData()
         }
     }
@@ -260,7 +317,7 @@ extension SessionCalculateHeightTableViewCell: UICollectionViewDelegateFlowLayou
         let cell = Static.cell
         cell.tagContent = tagContents[indexPath.item]
         let cellSize = cell.label.intrinsicContentSize
-        let width = cellSize.width > collectionView.bounds.size.width ? collectionView.bounds.size.width - 30 : cellSize.width
+        let width = cellSize.width > collectionView.bounds.size.width - 20 ? collectionView.bounds.size.width - 20 : cellSize.width
         return CGSize(width: width, height: cellSize.height)
     }
 }

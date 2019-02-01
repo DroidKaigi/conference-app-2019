@@ -4,10 +4,10 @@ import io.github.droidkaigi.confsched2019.model.Announcement
 import io.github.droidkaigi.confsched2019.model.AudienceCategory
 import io.github.droidkaigi.confsched2019.model.Category
 import io.github.droidkaigi.confsched2019.model.ContributorContents
-import io.github.droidkaigi.confsched2019.model.ErrorMessage
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LangSupport
 import io.github.droidkaigi.confsched2019.model.LoadingState
+import io.github.droidkaigi.confsched2019.model.Message
 import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.SearchResult
 import io.github.droidkaigi.confsched2019.model.Session
@@ -20,7 +20,7 @@ import io.github.droidkaigi.confsched2019.model.StaffSearchResult
 import io.github.droidkaigi.confsched2019.model.SystemProperty
 
 sealed class Action {
-    class Error(val msg: ErrorMessage) : Action()
+    class ShowProcessingMessage(val message: Message) : Action()
 
     data class SessionLoadingStateChanged(val loadingState: LoadingState) : Action()
     data class SessionContentsLoaded(
@@ -31,7 +31,10 @@ sealed class Action {
         val sessions: List<Session>
     ) : Action()
 
+    data class SessionScrollAdjusted(val adjusted: Boolean) : Action()
+
     data class SessionPageSelected(val sessionPage: SessionPage) : Action()
+    data class SessionPageReselected(val sessionPage: SessionPage) : Action()
     class SystemPropertyLoaded(val system: SystemProperty) : Action()
 
     open class FilterChange<T>(val value: T, open val checked: Boolean) : Action()
@@ -83,7 +86,6 @@ sealed class Action {
 
     data class SessionSurveyLoadingStateChanged(val loadingState: LoadingState) : Action()
     data class SessionSurveyLoaded(val sessionFeedback: SessionFeedback) : Action()
-    object SessionSurveySubmitted : Action()
 
     class FloorMapLoadingStateChanged(val loadingState: LoadingState) : Action()
 }

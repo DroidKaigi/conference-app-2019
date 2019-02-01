@@ -20,6 +20,13 @@ final class TagsLeftAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout 
             layoutAttribute.frame.origin.x = leftMargin
             leftMargin += layoutAttribute.frame.width + minimumInteritemSpacing
             maxY = max(layoutAttribute.frame.maxY, maxY)
+    
+            if let collectionView = collectionView {
+                let bounds = collectionView.bounds
+                let contentInset = collectionView.contentInset
+                let maxWidth = bounds.width - contentInset.left - contentInset.right
+                layoutAttribute.frame.size.width = min(maxWidth, layoutAttribute.bounds.width)
+            }
         }
         return attributes
     }

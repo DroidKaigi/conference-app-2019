@@ -27,11 +27,13 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionConten
 import io.github.droidkaigi.confsched2019.session.ui.bindingadapter.setHighlightText
 import io.github.droidkaigi.confsched2019.util.lazyWithParam
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
+import java.lang.IllegalArgumentException
 import kotlin.math.max
 
 class SpeechSessionItem @AssistedInject constructor(
     @Assisted override val session: SpeechSession,
-    @Assisted val navDirections: NavDirections,
+    @Assisted val detailNavDirections: NavDirections,
+    @Assisted val surveyNavDirections: NavDirections,
     @Assisted val hasStartPadding: Boolean,
     @Assisted val query: String?,
     val navController: NavController,
@@ -45,7 +47,8 @@ class SpeechSessionItem @AssistedInject constructor(
     interface Factory {
         fun create(
             session: SpeechSession,
-            navDirections: NavDirections,
+            detailNavDirections: NavDirections,
+            surveyNavDirections: NavDirections,
             hasStartPadding: Boolean,
             query: String? = null
         ): SpeechSessionItem
@@ -58,13 +61,22 @@ class SpeechSessionItem @AssistedInject constructor(
     override fun bind(viewBinding: ItemSessionBinding, position: Int) {
         with(viewBinding) {
             root.setOnClickListener {
-                navController.navigate(navDirections)
+                try {
+                    navController.navigate(detailNavDirections)
+                } catch (e: IllegalArgumentException) {
+                    // FIXME: When launching the app and click session multiple times, cause Exception
+                    // see https://github.com/DroidKaigi/conference-app-2019/issues/664
+                }
             }
             session = speechSession
             lang = defaultLang()
             hasStartPadding = this@SpeechSessionItem.hasStartPadding
             query = this@SpeechSessionItem.query
             favorite.setOnClickListener {
+                // apply state immediately
+                viewBinding.session = speechSession.copy(
+                    isFavorited = !speechSession.isFavorited
+                )
                 sessionContentsActionCreator.toggleFavorite(speechSession)
             }
 
@@ -75,6 +87,9 @@ class SpeechSessionItem @AssistedInject constructor(
                 speechSession.room.name
             )
             categoryChip.text = speechSession.category.name.getByLang(defaultLang())
+            survey.setOnClickListener {
+                navController.navigate(surveyNavDirections)
+            }
 
             bindSpeaker()
 

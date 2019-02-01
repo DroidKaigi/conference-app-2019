@@ -18,3 +18,14 @@ build/
 
 **/vendor/bundle/
 **/xcuserdata/
+
+proguard-merged-config.txt
+
+.release/
+release.zip
+bundletool.jar
+dpg
+toc.pb
+*.keystore
+.transart/
+transart

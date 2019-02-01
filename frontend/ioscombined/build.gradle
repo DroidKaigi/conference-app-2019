@@ -1,0 +1,111 @@
+apply plugin: 'kotlin-multiplatform'
+apply plugin: 'kotlinx-serialization'
+
+kotlin {
+    targets {
+        // presets.iosArm64
+        iosX64('iOS'){
+            binaries {
+                framework()
+            }
+        }
+    }
+    sourceSets {
+        final List<String> projectsList = [
+                ":model",
+                ":data:api",
+                ":data:api-impl",
+                ":data:db",
+                ":data:firestore",
+                ":data:repository",
+        ]
+        commonMain {
+            projectsList.forEach {
+                kotlin.srcDirs += "${project(it).projectDir}/src/commonMain/kotlin"
+            }
+            languageSettings {
+                languageVersion = '1.3'
+                apiVersion = '1.3'
+                progressiveMode = true
+            }
+            dependencies {
+                projectsList.forEach {
+                    project(it).configurations.all { c ->
+                        if (c.name == "commonMainApi") {
+                            c.dependencies.all { dep ->
+                                // note: Avoid dependencies for this project's modules like a `api project(":model")`.
+                                //       Already these classes are included via `srcDir`,
+                                //       so adding dependencies for projects causes compile error by double declaration.
+                                if (!(dep instanceof ProjectDependency)) {
+                                    api dep
+                                }
+                            }
+                        } else if (c.name == "commonMainImplementation") {
+                            c.dependencies.all { dep ->
+                                if (!(dep instanceof ProjectDependency)) {
+                                    implementation dep
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        iOSMain {
+            final String mode = project.findProperty("XCODE_CONFIGURATION")?.toUpperCase() ?: 'DEBUG'
+            projectsList.forEach {
+                kotlin.srcDirs += "${project(it).projectDir}/src/iosMain/kotlin"
+                if (mode == "RELEASE") {
+                    kotlin.srcDirs += "${project(it).projectDir}/src/iosMain/kotlinRelease"
+                } else {
+                    kotlin.srcDirs += "${project(it).projectDir}/src/iosMain/kotlinDebug"
+                }
+            }
+            dependencies {
+                projectsList.forEach {
+                    project(it).configurations.all { c ->
+                        if (c.name == "iOSMainApi") {
+                            c.dependencies.all { dep ->
+                                if (!(dep instanceof ProjectDependency)) {
+                                    api dep
+                                }
+                            }
+                        } else if (c.name == "iOSMainImplementation") {
+                            c.dependencies.all { dep ->
+                                if (!(dep instanceof ProjectDependency)) {
+                                    implementation dep
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+configurations {
+    compileClasspath
+}
+
+task packForXCode(type: Sync) {
+    final File frameworkDir = new File(buildDir, "xcode-frameworks")
+    final String mode = project.findProperty("XCODE_CONFIGURATION")?.toUpperCase() ?: 'DEBUG'
+    def target = project.findProperty("kotlin.target") ?: "iOS"
+
+    inputs.property "mode", mode
+    dependsOn kotlin.targets."$target".compilations.main.target.binaries.findFramework("", mode).linkTask
+
+    from { kotlin.targets."$target".compilations.main.target.binaries.findFramework("", mode).outputFile.parentFile }
+    into frameworkDir
+
+    doLast {
+        new File(frameworkDir, 'gradlew').with {
+            text = "#!/bin/bash\nexport 'JAVA_HOME=${System.getProperty("java.home")}'\ncd '${rootProject.rootDir}'\n./gradlew \$@\n"
+            setExecutable(true)
+        }
+    }
+}
+
+tasks.build.dependsOn packForXCode

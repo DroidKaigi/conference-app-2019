@@ -10,4 +10,6 @@
 
     <color name="session_category_background">#E5E8EA</color>
 
+    <color name="tabular_session_favoried_background">#FEEAE9</color>
+
 </resources>

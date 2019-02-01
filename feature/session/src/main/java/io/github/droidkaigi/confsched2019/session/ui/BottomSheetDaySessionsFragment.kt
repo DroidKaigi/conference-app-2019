@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
+import com.shopify.livedataktx.observe
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.databinding.ViewHolder
@@ -21,6 +22,7 @@ import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentBottomSheetSessionsBinding
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPageActionCreator
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionPagesActionCreator
 import io.github.droidkaigi.confsched2019.session.ui.item.ServiceSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.item.SessionItem
 import io.github.droidkaigi.confsched2019.session.ui.item.SpeechSessionItem
@@ -41,6 +43,7 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
     @Inject lateinit var sessionContentsActionCreator: SessionContentsActionCreator
     @Inject lateinit var sessionContentsStore: SessionContentsStore
     @Inject lateinit var sessionPageActionCreator: SessionPageActionCreator
+    @Inject lateinit var sessionPagesActionCreator: SessionPagesActionCreator
     @Inject lateinit var sessionPageFragmentProvider: Provider<SessionPageFragment>
     @Inject lateinit var speechSessionItemFactory: SpeechSessionItem.Factory
     @Inject lateinit var sessionPageStoreFactory: SessionPageStore.Factory
@@ -103,6 +106,9 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                                 SessionPagesFragmentDirections.actionSessionToSessionDetail(
                                     session.id
                                 ),
+                                SessionPagesFragmentDirections.actionSessionToSessionSurvey(
+                                    session
+                                ),
                                 true
                             )
                         is ServiceSession ->
@@ -126,6 +132,11 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                 ?.session
                 ?.startDayText ?: return@changed
             binding.sessionsBottomSheetTitle.text = titleText
+
+            if (sessionPagesStore.sessionScrollAdjusted.value == false) {
+                scrollToCurrentSession()
+                sessionPagesActionCreator.dispatchSessionScrollAdjusted()
+            }
         }
         sessionPagesStore.filters.changed(viewLifecycleOwner) {
             binding.isFiltered = it.isFiltered()
@@ -143,11 +154,23 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                 binding.isCollapsed = isCollapsed
             }
         }
+        sessionPagesStore.reselectedTab.observe(viewLifecycleOwner) {
+            if (SessionPage.pageOfDay(args.day) == it) {
+                scrollToCurrentSession()
+            }
+        }
     }
 
     override fun onDestroyView() {
         binding.sessionsRecycler.adapter = null
         super.onDestroyView()
+    }
+
+    private fun scrollToCurrentSession() {
+        val position = sessionPagesStore.filteredSessions.value.orEmpty()
+            .filter { session -> session.dayNumber == args.day }
+            .indexOfFirst { session -> session.isOnGoing }
+        binding.sessionsRecycler.scrollToPosition(position)
     }
 
     companion object {

@@ -1,3 +1,7 @@
+if [[ -z "$REPOSITORY_ROOT" ]]; then
+    export REPOSITORY_ROOT="$(git rev-parse --show-toplevel)"
+fi
+
 export PATH="${REPOSITORY_ROOT}/scripts:$PATH"
 export PATH="${REPOSITORY_ROOT}/.circleci/scripts:$PATH"
 export AGGREGATED_TEST_RESULT_DIR="$REPOSITORY_ROOT/test-results"
@@ -10,3 +14,27 @@ fi
 if [[ ! -d "$AGGREGATED_REPORT_RESULT_DIR" ]]; then
     mkdir -p "$AGGREGATED_REPORT_RESULT_DIR"
 fi
+
+export UNIVERSAL_APK_PATH="$REPOSITORY_ROOT/universal.apk"
+
+export DEBUG_KEY_ALIAS='droidkaigi_debug'
+export DEBUG_KEY_PASSWORD='droidkaigi'
+export DEBUG_KEY_STORE_FILE="$REPOSITORY_ROOT/frontend/android/debug.keystore"
+export DEBUG_KEY_STORE_PASSWORD='droidkaigi'
+
+export RELEASE_KEY_STORE_FILE="$REPOSITORY_ROOT/.release/droidkaigi2019.keystore"
+
+use_debug_keystore() {
+    export KEY_ALIAS="$DEBUG_KEY_ALIAS"
+    export KEY_PASSWORD="$DEBUG_KEY_PASSWORD"
+    export KEY_STORE_FILE="$DEBUG_KEY_STORE_FILE"
+    export KEY_STORE_PASSWORD="$DEBUG_KEY_STORE_PASSWORD"
+}
+
+use_release_keystore() {
+    set +x
+    export KEY_ALIAS="$RELEASE_KEY_ALIAS"
+    export KEY_PASSWORD="$RELEASE_KEY_PASSWORD"
+    export KEY_STORE_FILE="$RELEASE_KEY_STORE_FILE"
+    export KEY_STORE_PASSWORD="$RELEASE_KEY_STORE_PASSWORD"
+}

@@ -14,9 +14,9 @@ import javax.inject.Singleton
 class SystemStore @Inject constructor(
     dispatcher: Dispatcher
 ) {
-    val errorMsg = dispatcher
-        .subscribe<Action.Error>()
-        .map { it.msg }
+    val message = dispatcher
+        .subscribe<Action.ShowProcessingMessage>()
+        .map { it.message }
         .toSingleLiveData(null)
 
     val systemProperty = dispatcher

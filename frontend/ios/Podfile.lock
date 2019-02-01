@@ -1,5 +1,5 @@
 PODS:
-  - LicensePlist (2.0.0)
+  - LicensePlist (2.1.0)
   - MaterialComponents/AnimationTiming (74.0.0)
   - MaterialComponents/Buttons (74.0.0):
     - MaterialComponents/Ink
@@ -54,7 +54,7 @@ SPEC REPOS:
     - SwiftLint
 
 SPEC CHECKSUMS:
-  LicensePlist: 558c95c739171b96896d38fa5502f3721aada13c
+  LicensePlist: 304c23a2e9f484f3985b6b873db7ae32086279af
   MaterialComponents: c382f7a1881832ff88a05bb1536c47714cf1295f
   MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
   MDFTextAccessibility: 85c09a1bd9c321f494348e632a25063bcda35a53

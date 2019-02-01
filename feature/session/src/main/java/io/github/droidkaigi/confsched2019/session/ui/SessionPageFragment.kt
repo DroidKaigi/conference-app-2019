@@ -71,6 +71,16 @@ class SessionPageFragment : DaggerFragment() {
             }
     }
 
+    private val onPreDrawListener = object : ViewTreeObserver.OnPreDrawListener {
+        override fun onPreDraw(): Boolean {
+            binding.sessionsSheet.viewTreeObserver.removeOnPreDrawListener(this)
+            if (isDetached) return false
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+
+            return false
+        }
+    }
+
     private val args: SessionPageFragmentArgs by lazy {
         SessionPageFragmentArgs.fromBundle(arguments ?: Bundle())
     }
@@ -156,6 +166,11 @@ class SessionPageFragment : DaggerFragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        teardownBottomSheetBehavior()
+    }
+
     private fun setupSessionsFragment() {
         val tab = SessionPage.pages[args.tabIndex]
         val fragment: Fragment = when (tab) {
@@ -180,17 +195,7 @@ class SessionPageFragment : DaggerFragment() {
 
     private fun setupBottomSheetBehavior() {
         bottomSheetBehavior.isHideable = false
-        binding.sessionsSheet.viewTreeObserver.addOnPreDrawListener(
-            object : ViewTreeObserver.OnPreDrawListener {
-                override fun onPreDraw(): Boolean {
-                    binding.sessionsSheet.viewTreeObserver.removeOnPreDrawListener(this)
-                    if (isDetached) return false
-                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-
-                    return false
-                }
-            }
-        )
+        binding.sessionsSheet.viewTreeObserver.addOnPreDrawListener(onPreDrawListener)
         bottomSheetBehavior.addBottomSheetCallback(
             object : BottomSheetBehavior.BottomSheetCallback {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -200,6 +205,10 @@ class SessionPageFragment : DaggerFragment() {
                 }
             }
         )
+    }
+
+    private fun teardownBottomSheetBehavior() {
+        binding.sessionsSheet.viewTreeObserver.removeOnPreDrawListener(onPreDrawListener)
     }
 
     private fun <T> ChipGroup.setupFilter(

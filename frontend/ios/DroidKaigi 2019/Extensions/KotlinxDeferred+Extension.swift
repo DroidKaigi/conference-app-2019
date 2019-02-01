@@ -5,7 +5,7 @@
 
 import Foundation
 import RxSwift
-import ios_combined
+import ioscombined
 
 extension KotlinThrowable: LocalizedError {
     public var errorDescription: String? {

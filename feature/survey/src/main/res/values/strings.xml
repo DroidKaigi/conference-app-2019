@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="total_evaluation">How was the session?\n(Overall Rating)</string>
-    <string name="relevancy">How relevant was this session to your work or personal projects?</string>
-    <string name="as_expected">Based on the description, was the content as expected?</string>
-    <string name="difficulty">Was this session easy to understand?</string>
-    <string name="knowledgeable">Were you able to gain useful knowledge from the content?</string>
-    <string name="comment">Anything else we should know?</string>
-    <string name="comment_hint"><font size="12">Please don\'t add any personal information in your comments</font></string>
-    <string name="submit">Submit</string>
+    <string name="session_survey_total_evaluation">How was the session?\n(Overall Rating)</string>
+    <string name="session_survey_relevancy">How relevant was this session to your work or personal projects?</string>
+    <string name="session_survey_as_expected">Based on the description, was the content as expected?</string>
+    <string name="session_survey_difficulty">Was this session easy to understand?</string>
+    <string name="session_survey_knowledgeable">Were you able to gain useful knowledge from the content?</string>
+    <string name="session_survey_comment">Anything else we should know?</string>
+    <string name="session_survey_comment_hint"><font size="12">Please don\'t add any personal information in your comments</font></string>
+    <string name="session_survey_submit">Submit</string>
+    <string name="session_survey_submit_end">Submited</string>
 
-    <string name="page_progress">%1$d/%2$d</string>
+    <string name="session_survey_submit_successful">Submitted successfully. Thanks</string>
+    <string name="session_survey_submit_failure">Failed to submit. Please try it again later</string>
+    <string name="session_survey_not_input">Some of fields aren\'t filled</string>
+
+    <string name="session_survey_page_progress">%1$d/%2$d</string>
 </resources>

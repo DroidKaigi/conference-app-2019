@@ -7,7 +7,7 @@
 
     <data>
 
-        <import type="io.github.droidkaigi.confsched2019.model.Lang" />
+        <import type="io.github.droidkaigi.confsched2019.model.Lang"/>
 
         <variable
             name="session"
@@ -23,16 +23,18 @@
             name="hasStartPadding"
             type="boolean"
             />
+
         <variable
             name="query"
-            type="String" />
+            type="String"
+            />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="?android:attr/selectableItemBackground"
-        android:paddingBottom="@dimen/session_item_bottom_padding"
+        android:paddingBottom="@{session.isFinished ? @dimen/session_item_bottom_contains_survey_padding : @dimen/session_item_bottom_padding}"
         android:paddingEnd="0dp"
         android:paddingStart="@{hasStartPadding ? @dimen/session_bottom_sheet_left_time_space : 0}"
         android:paddingTop="@dimen/session_item_top_padding"
@@ -43,19 +45,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:background="@drawable/shape_ongoing"
             android:fontFamily="@font/robotomono_medium"
+            android:paddingBottom="2dp"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            android:paddingTop="2dp"
             android:text="@string/session_ongoing"
             android:textAllCaps="true"
-            android:background="@drawable/shape_ongoing"
             android:textColor="@color/white"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
             android:textSize="10sp"
-            app:visibleGone="@{session.isOnGoing}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:visibleGone="@{session.isOnGoing}"
             tools:ignore="SmallSp"
             />
 
@@ -68,10 +70,10 @@
             android:text="@{session.title.getByLang(lang)}"
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.App.Subtitle1"
+            app:highlightText="@{query}"
             app:layout_constraintEnd_toStartOf="@id/favorite"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ongoing"
-            app:highlightText="@{query}"
             tools:text="@sample/service_session.json/data/session_name"
             />
 
@@ -80,6 +82,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginEnd="4dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/session_description_favorite_image"
             android:scaleType="centerInside"
             android:src="@{session.isFavorited ? @drawable/ic_bookmark_black_24dp : @drawable/ic_bookmark_border_black_24dp}"
@@ -87,7 +90,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/title"
             tools:src="@drawable/ic_bookmark_border_black_24dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
             />
 
         <LinearLayout
@@ -131,10 +133,10 @@
                 android:clickable="false"
                 android:ellipsize="end"
                 android:enabled="false"
+                android:gravity="center_vertical|start"
                 android:text="@{session.lang.text.getByLang(lang)}"
                 android:textAppearance="@style/TextAppearance.App.Caption"
                 android:textColor="@{session.lang.equals(Lang.EN)?@color/session_en_talk_text:@color/session_ja_talk_text}"
-                android:gravity="center_vertical|start"
                 app:chipBackgroundColor="@{session.lang.equals(Lang.EN)?@color/session_en_talk_background:@color/session_ja_talk_background}"
                 app:chipMinTouchTargetSize="0dp"
                 tools:text="@sample/service_session.json/data/language"
@@ -148,10 +150,10 @@
                 android:clickable="false"
                 android:ellipsize="end"
                 android:enabled="false"
+                android:gravity="center_vertical|start"
                 android:text="@string/session_for_beginners"
                 android:textAppearance="@style/TextAppearance.App.Caption"
                 android:textColor="@color/session_for_beginners_text"
-                android:gravity="center_vertical|start"
                 app:chipBackgroundColor="@color/session_for_beginners_background"
                 app:chipMinTouchTargetSize="0dp"
                 app:visibleGone="@{session.forBeginners}"
@@ -166,10 +168,10 @@
                 android:clickable="false"
                 android:ellipsize="end"
                 android:enabled="false"
+                android:gravity="center_vertical|start"
                 android:text="@string/session_simultaneous_interpretation"
                 android:textAppearance="@style/TextAppearance.App.Caption"
                 android:textColor="@color/gray1"
-                android:gravity="center_vertical|start"
                 app:chipBackgroundColor="@color/session_category_background"
                 app:chipMinTouchTargetSize="0dp"
                 app:visibleGone="@{session.isInterpretationTarget}"
@@ -184,9 +186,9 @@
                 android:clickable="false"
                 android:ellipsize="end"
                 android:enabled="false"
+                android:gravity="center_vertical|start"
                 android:textAppearance="@style/TextAppearance.App.Caption"
                 android:textColor="@color/gray1"
-                android:gravity="center_vertical|start"
                 app:chipBackgroundColor="@color/session_category_background"
                 app:chipMinTouchTargetSize="0dp"
                 tools:text="@sample/service_session.json/data/category"
@@ -207,10 +209,10 @@
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.App.Caption"
             android:textColor="@color/colorPrimary"
-            app:visibleGone="@{session.message != null}"
             app:layout_constraintEnd_toEndOf="@id/title"
             app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintTop_toBottomOf="@id/chip_group"
+            app:visibleGone="@{session.message != null}"
             tools:text="セッションフロアがHallからRoom1に変更になりました"
             tools:visibility="visible"
             />
@@ -219,20 +221,23 @@
             android:id="@+id/survey"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
+            android:background="?selectableItemBackground"
             android:drawablePadding="6dp"
             android:drawableStart="@drawable/ic_rate_review_border_orange_18dp"
             android:ellipsize="end"
+            android:gravity="start|center_vertical"
             android:includeFontPadding="false"
             android:maxLines="1"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
             android:text="@string/session_go_to_survey"
-            android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.App.Caption"
             android:textColor="@color/colorSecondary"
-            app:visibleGone="@{session.isFinished}"
             app:layout_constraintEnd_toEndOf="@id/title"
             app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintTop_toBottomOf="@id/message"
+            app:visibleGone="@{session.isFinished}"
             tools:visibility="visible"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>

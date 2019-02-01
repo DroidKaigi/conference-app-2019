@@ -7,10 +7,15 @@ apply from: file('gradle/dependencyGraph.gradle')
 buildscript {
     ext {
         isCi = System.getenv("CI") == "true"
+        isReleaseBuild = System.getenv("RELEASE_BUILD") == "true"
     }
     repositories {
         google()
-        if (!isCi) { maven { url "https://maven-central-asia.storage-download.googleapis.com/repos/central/data/" } }
+        if (!isCi) {
+            maven {
+                url "https://maven-central-asia.storage-download.googleapis.com/repos/central/data/"
+            }
+        }
         jcenter()
         maven { url "https://kotlin.bintray.com/kotlinx" }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
@@ -18,8 +23,10 @@ buildscript {
         maven { url "http://kotlin.bintray.com/kotlin-dev" }
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url 'https://maven.fabric.io/public' }
+        maven { url "http://storage.googleapis.com/r8-releases/raw/master" }
     }
     dependencies {
+        classpath Dep.GradlePlugin.r8
         classpath Dep.GradlePlugin.android
         classpath Dep.GradlePlugin.kotlin
         classpath Dep.GradlePlugin.kotlinSerialization
@@ -34,16 +41,65 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
-        if (!isCi) { maven { url "https://maven-central-asia.storage-download.googleapis.com/repos/central/data/" } }
-        jcenter()
-        maven { url "https://kotlin.bintray.com/kotlinx" }
-        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
-        maven { url "http://kotlin.bintray.com/kotlin-dev" }
-        maven { url "https://dl.bintray.com/kotlin/ktor" }
-        maven { url "https://dl.bintray.com/soywiz/soywiz" }
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-        maven { url "https://jitpack.io" }
+        google().content{
+            // Workaround for https://youtrack.jetbrains.com/issue/KT-28128
+            excludeGroup("Kotlin/Native")
+        }
+        if (!isCi) {
+            maven {
+                url "https://maven-central-asia.storage-download.googleapis.com/repos/central/data/"
+                content {
+                    excludeGroup("Kotlin/Native")
+                }
+            }
+        }
+        jcenter() {
+            content {
+                excludeGroup("Kotlin/Native")
+            }
+        }
+        maven {
+            url "https://kotlin.bintray.com/kotlinx"
+            content {
+                excludeGroup("Kotlin/Native")
+            }
+        }
+        maven {
+            url 'https://dl.bintray.com/kotlin/kotlin-eap'
+            content {
+                excludeGroup("Kotlin/Native")
+            }
+        }
+        maven {
+            url "http://kotlin.bintray.com/kotlin-dev"
+            content {
+                excludeGroup("Kotlin/Native")
+            }
+        }
+        maven {
+            url "https://dl.bintray.com/kotlin/ktor"
+            content {
+                excludeGroup("Kotlin/Native")
+            }
+        }
+        maven {
+            url "https://dl.bintray.com/soywiz/soywiz"
+            content {
+                excludeGroup("Kotlin/Native")
+            }
+        }
+        maven {
+            url 'https://oss.sonatype.org/content/repositories/snapshots/'
+            content {
+                excludeGroup("Kotlin/Native")
+            }
+        }
+        maven {
+            url "https://jitpack.io"
+            content {
+                excludeGroup("Kotlin/Native")
+            }
+        }
     }
     tasks.matching { it instanceof Test }.all {
         testLogging {
@@ -90,7 +146,9 @@ allprojects {
                     description 'Download extra dependencies for the CI Gradle Cache'
                     doLast {
                         // androidDependencies do not touch some configurations
-                        configurations.findAll { it.name.matches(/(ktlint|kapt|_internal_aapt2_binary|lintClassPath)/) && it.canBeResolved }.files
+                        configurations.findAll {
+                            it.name.matches(/(ktlint|kapt|_internal_aapt2_binary|lintClassPath)/) && it.canBeResolved
+                        }.files
                     }
                 }
             }

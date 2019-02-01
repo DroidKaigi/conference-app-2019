@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ios_combined
+import ioscombined
 import RxSwift
 
 final class SessionRepository {
@@ -26,7 +26,7 @@ final class SessionRepository {
 private func handledKotlinException(_ error: Error) -> Error {
 
     guard let cause = error as? KotlinThrowable else {
-        fatalError("Unexpedeted Eroor: \(error)")
+        fatalError("Unexpedeted Error: \(error)")
     }
 
     // Obtain `NSError` from Ktor `IosHttpRequestException`.

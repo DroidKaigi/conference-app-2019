@@ -18,4 +18,12 @@
         app:showAsAction="ifRoom"
         />
 
+    <item
+        android:id="@+id/session_calendar"
+        android:icon="@drawable/ic_date_range_black_24dp"
+        android:title="@string/session_place"
+        app:iconTint="@color/gray2"
+        app:showAsAction="ifRoom"
+        />
+
 </menu>

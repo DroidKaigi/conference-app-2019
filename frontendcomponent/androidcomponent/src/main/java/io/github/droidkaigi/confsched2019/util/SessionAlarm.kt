@@ -52,7 +52,7 @@ class SessionAlarm @Inject constructor(private val app: Application) {
             R.string.notification_message_session_title,
             when (session) {
                 is SpeechSession -> session.title.getByLang(defaultLang())
-                is ServiceSession -> session.title
+                is ServiceSession -> session.title.getByLang(defaultLang())
             }
         )
         val sessionStartTime = app.getString(

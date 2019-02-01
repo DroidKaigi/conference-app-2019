@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="total_evaluation">セッションはどうでしたか?\n(総合評価)</string>
-    <string name="relevancy">セッションはあなたの仕事やプロジェクトに関連がありましたか?</string>
-    <string name="as_expected">セッションの説明を読んで期待した通りの内容でしたか?</string>
-    <string name="difficulty">セッションの難易度はいかがでしたか?</string>
-    <string name="knowledgeable">技術的な知見は得られたでしょうか?</string>
-    <string name="comment">他にコメントがあればぜひ教えてください</string>
-    <string name="comment_hint"><font size="12">個人が特定できるような内容は書かないでください</font></string>
-    <string name="submit">送信する</string>
+    <string name="session_survey_total_evaluation">セッションはどうでしたか?\n(総合評価)</string>
+    <string name="session_survey_relevancy">セッションはあなたの仕事やプロジェクトに関連がありましたか?</string>
+    <string name="session_survey_as_expected">セッションの説明を読んで期待した通りの内容でしたか?</string>
+    <string name="session_survey_difficulty">セッションの難易度はいかがでしたか?</string>
+    <string name="session_survey_knowledgeable">技術的な知見は得られたでしょうか?</string>
+    <string name="session_survey_comment">他にコメントがあればぜひ教えてください</string>
+    <string name="session_survey_comment_hint"><font size="12">個人が特定できるような内容は書かないでください</font></string>
+    <string name="session_survey_submit">送信する</string>
+    <string name="session_survey_submit_end">送信しました</string>
 
-    <string name="page_progress">%1$d/%2$d</string>
+    <string name="session_survey_submit_successful">送信されました。回答ありがとうございます。</string>
+    <string name="session_survey_submit_failure">送信できませんでした。時間を置いて再度お試しください</string>
+    <string name="session_survey_not_input">入力されていない値があります</string>
+
+    <string name="session_survey_page_progress">%1$d/%2$d</string>
 </resources>

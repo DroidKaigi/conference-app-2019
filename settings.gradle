@@ -1,4 +1,4 @@
-include ':frontend:android', ':frontend:ios-combined',
+include ':frontend:android', ':frontend:ioscombined',
         ':frontendcomponent:androidcomponent',
         ':frontendcomponent:androidtestcomponent',
         ':feature:session',

@@ -1,0 +1,36 @@
+name: LicensePlist, nameSpecified: 
+body: MIT License
+
+Copyrig…
+version: 2.1.0
+
+name: MaterialComponents, nameSpecified: 
+body: 
+                   …
+version: 74.0.0
+
+name: MDFInternationalization, nameSpecified: 
+body: 
+                   …
+version: 2.0.0
+
+name: MDFTextAccessibility, nameSpecified: 
+body: 
+                   …
+version: 2.0.0
+
+name: SwiftLint, nameSpecified: 
+body: The MIT License (MIT…
+version: 0.30.1
+
+name: Kingfisher, nameSpecified: , owner: onevcat, version: 5.1.0
+
+name: RxSwift, nameSpecified: , owner: ReactiveX, version: 4.4.0
+
+name: SnapKit, nameSpecified: , owner: SnapKit, version: 4.2.0
+
+name: XLPagerTabStrip, nameSpecified: , owner: xmartlabs, version: 8.1.1
+
+add-version-numbers: false
+
+LicensePlist Version: 1.8.3
