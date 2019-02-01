@@ -145,6 +145,12 @@
         />
     </fragment>
     <fragment
+        android:id="@+id/contributor"
+        android:name="io.github.droidkaigi.confsched2019.contributor.ContributorFragment"
+        android:label="@string/contributor"
+        >
+    </fragment>
+    <fragment
         android:id="@+id/setting"
         android:name="io.github.droidkaigi.confsched2019.settings.ui.SettingsFragment"
         android:label="@string/setting_label"

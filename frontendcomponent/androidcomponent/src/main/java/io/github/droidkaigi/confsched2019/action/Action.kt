@@ -3,6 +3,7 @@ package io.github.droidkaigi.confsched2019.action
 import io.github.droidkaigi.confsched2019.model.Announcement
 import io.github.droidkaigi.confsched2019.model.AudienceCategory
 import io.github.droidkaigi.confsched2019.model.Category
+import io.github.droidkaigi.confsched2019.model.ContributorContents
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LangSupport
 import io.github.droidkaigi.confsched2019.model.LoadingState
@@ -76,6 +77,9 @@ sealed class Action {
 
     data class AnnouncementLoadingStateChanged(val loadingState: LoadingState) : Action()
     data class AnnouncementLoaded(val announcements: List<Announcement>) : Action()
+
+    data class ContributorLoadingStateChanged(val loadingState: LoadingState) : Action()
+    data class ContributorLoaded(val contributors: ContributorContents) : Action()
 
     data class SponsorLoadingStateChanged(val loadingState: LoadingState) : Action()
     data class SponsorLoaded(val sponsors: List<SponsorCategory>) : Action()

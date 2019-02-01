@@ -8,12 +8,14 @@ import io.github.droidkaigi.confsched2019.data.db.AnnouncementDatabase
 import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.db.SponsorDatabase
 import io.github.droidkaigi.confsched2019.data.db.StaffDatabase
+import io.github.droidkaigi.confsched2019.data.db.ContributorDatabase
 import io.github.droidkaigi.confsched2019.data.firestore.Firestore
-import io.github.droidkaigi.confsched2019.data.repository.AnnouncementRepository
 import io.github.droidkaigi.confsched2019.data.repository.RepositoryComponent
 import io.github.droidkaigi.confsched2019.data.repository.SessionRepository
 import io.github.droidkaigi.confsched2019.data.repository.SponsorRepository
+import io.github.droidkaigi.confsched2019.data.repository.AnnouncementRepository
 import io.github.droidkaigi.confsched2019.data.repository.StaffRepository
+import io.github.droidkaigi.confsched2019.data.repository.ContributorRepository
 import javax.inject.Singleton
 
 @Module
@@ -42,6 +44,12 @@ object RepositoryComponentModule {
         return repositoryComponent.staffRepository()
     }
 
+    @JvmStatic @Provides @Singleton fun provideContributorRepository(
+        repositoryComponent: RepositoryComponent
+    ): ContributorRepository {
+        return repositoryComponent.contributorRepository()
+    }
+
     @JvmStatic @Provides @Singleton fun provideRepositoryComponent(
         droidKaigiApi: DroidKaigiApi,
         googleFormApi: GoogleFormApi,
@@ -49,6 +57,7 @@ object RepositoryComponentModule {
         sponsorDatabase: SponsorDatabase,
         announcementDatabase: AnnouncementDatabase,
         staffDatabase: StaffDatabase,
+        contributorDatabase: ContributorDatabase,
         firestore: Firestore
     ): RepositoryComponent {
         return RepositoryComponent.builder()
@@ -59,6 +68,7 @@ object RepositoryComponentModule {
             .firestore(firestore)
             .announcementDatabase(announcementDatabase)
             .staffDatabase(staffDatabase)
+            .contributorDatabase(contributorDatabase)
             .build()
     }
 }

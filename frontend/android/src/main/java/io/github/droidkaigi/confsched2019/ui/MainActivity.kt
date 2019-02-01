@@ -33,6 +33,9 @@ import io.github.droidkaigi.confsched2019.about.ui.AboutFragment
 import io.github.droidkaigi.confsched2019.about.ui.AboutFragmentModule
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment
 import io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragmentModule
+import io.github.droidkaigi.confsched2019.contributor.ContributorFragment
+import io.github.droidkaigi.confsched2019.contributor.ContributorFragmentModule
+import io.github.droidkaigi.confsched2019.contributor.di.ContributorAssistedInjectModule
 import io.github.droidkaigi.confsched2019.databinding.ActivityMainBinding
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.ext.android.changed
@@ -300,6 +303,12 @@ abstract class MainActivityModule {
     @PageScope
     @ContributesAndroidInjector(modules = [StaffSearchFragmentModule::class])
     abstract fun contributeStaffSearchFragment(): StaffSearchFragment
+
+    @PageScope
+    @ContributesAndroidInjector(
+        modules = [ContributorFragmentModule::class, ContributorAssistedInjectModule::class]
+    )
+    abstract fun contrbutorContributorFragment(): ContributorFragment
 
     @Module
     companion object {

@@ -1,0 +1,52 @@
+import dependencies.Dep
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs'
+
+apply from: rootProject.file('gradle/android.gradle')
+android.dataBinding.enabled = true
+
+dependencies {
+    implementation project(':feature:user')
+    implementation project(':feature:system')
+    implementation project(':data:repository')
+    implementation project(':frontendcomponent:androidcomponent')
+    implementation project(':ext:android-extension')
+    api project(':model')
+
+    implementation Dep.Kotlin.stdlibJvm
+    implementation Dep.Kotlin.coroutines
+    implementation Dep.Kotlin.androidCoroutinesDispatcher
+
+    implementation Dep.AndroidX.coreKtx
+    implementation Dep.AndroidX.appCompat
+    implementation Dep.AndroidX.constraint
+    implementation Dep.AndroidX.recyclerView
+    implementation Dep.AndroidX.design
+    implementation Dep.AndroidX.emoji
+    implementation Dep.AndroidX.lifecycleExtensions
+    implementation Dep.AndroidX.Navigation.runtime
+    implementation Dep.AndroidX.Navigation.runtimeKtx
+
+    implementation Dep.Dagger.core
+    implementation Dep.Dagger.androidSupport
+    compileOnly Dep.Dagger.assistedInjectAnnotations
+    kapt Dep.Dagger.compiler
+    kapt Dep.Dagger.androidProcessor
+    kapt Dep.Dagger.assistedInjectProcessor
+
+    implementation Dep.InjectedVmProvider.extension
+    implementation Dep.InjectedVmProvider.injectedVmProvider
+    implementation Dep.InjectedVmProvider.ktx
+
+    implementation Dep.Picasso.picasso
+    implementation Dep.Picasso.picassoTransformation
+    implementation Dep.Groupie.groupie
+    implementation Dep.Groupie.databinding
+
+    testImplementation Dep.Test.junit
+    androidTestImplementation Dep.Test.testRunner
+    androidTestImplementation Dep.Test.espressoCore
+}
