@@ -29,7 +29,7 @@ We would be happy if you ran the command below before sending pull requests to i
 
 ## Requirements
 
-- Android Studio 3.4 Beta 2 and higher.
+- Android Studio 3.4 Beta 2 and higher. You can download it from [this page](https://developer.android.com/studio/archive?hl=en).
 - Android Studio Kotlin Plugin v1.3.20-release-Studio<AS version>
 
 **Check out following status.**  
@@ -39,7 +39,7 @@ We would be happy if you ran the command below before sending pull requests to i
 `Preference` > `Languages & Frameworks` > `Kotlin Updates`
 
 Older versions of the Kotlin plugin may cause build failures.
-If you still have a trouble after upgrading the plugin, please try using AndroidStudio 3.3 or 3.4 instead.
+If you still have a trouble after upgrading the plugin, please try using AndroidStudio 3.4 instead.
 
 * Disable Instant Run
 
