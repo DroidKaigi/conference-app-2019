@@ -23,6 +23,7 @@ import io.github.droidkaigi.confsched2019.session.ui.item.TabularServiceSessionI
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpacerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
+import io.github.droidkaigi.confsched2019.session.ui.widget.CurrentTimeLineDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableLayoutManager
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableRoomLabelDecoration
@@ -65,6 +66,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
         binding.tabularFormSessionsRecycler.apply {
             addItemDecoration(TimetableTimeLabelDecoration(context, groupAdapter))
             addItemDecoration(TimetableRoomLabelDecoration(context, groupAdapter))
+            addItemDecoration(CurrentTimeLineDecoration(context, groupAdapter))
             layoutManager = TimetableLayoutManager(
                 resources.getDimensionPixelSize(R.dimen.tabular_form_column_width),
                 resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute),
