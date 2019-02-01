@@ -113,7 +113,7 @@ class TimetableLunchDecoration(
         }
         return items.find {
             (it as? TabularServiceSessionItem)?.session?.sessionType == SessionType.LUNCH
-        } as TabularServiceSessionItem
+        } as? TabularServiceSessionItem
     }
 
     private fun Canvas.drawTextInRect(rect: Rect, textPaint: Paint, text: String) {
