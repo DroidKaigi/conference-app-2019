@@ -25,4 +25,10 @@ class DataContributorRepository @Inject constructor(
 }
 
 private fun ContributorEntity.toContributor(): Contributor =
-    Contributor(id, name, iconUrl, profileUrl, author)
+    Contributor(
+        id = id,
+        name = name,
+        iconUrl = iconUrl,
+        profileUrl = profileUrl,
+        type = type
+    )

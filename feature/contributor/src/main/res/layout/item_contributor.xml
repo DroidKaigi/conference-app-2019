@@ -13,7 +13,7 @@
             />
 
         <variable
-            name="rank"
+            name="offset"
             type="String"
             />
     </data>
@@ -26,11 +26,11 @@
         >
 
         <TextView
-            android:id="@+id/contributor_rank_text"
+            android:id="@+id/contributor_offset_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@{rank}"
+            android:text="@{offset}"
             android:textAppearance="@style/TextAppearance.App.Headline6"
             android:textColor="@color/gray1"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -46,7 +46,7 @@
             android:layout_marginStart="16dp"
             android:contentDescription="@string/contributor_member_icon"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/contributor_rank_text"
+            app:layout_constraintStart_toEndOf="@+id/contributor_offset_text"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars"
             />

@@ -31,7 +31,7 @@ class ContributorItem @AssistedInject constructor(
         index: Int
     ) {
         binding.contributor = contributor
-        binding.rank = "${index + 1}"
+        binding.offset = "${index + 1}"
 
         binding.root.setOnClickListener {
             activityActionCreator.openUrl(contributor.profileUrl)
