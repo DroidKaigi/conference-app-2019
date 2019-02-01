@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.Item
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
@@ -35,8 +33,6 @@ class ContributorFragment : DaggerFragment() {
 
     @Inject
     lateinit var contributorActionCreator: ContributorActionCreator
-
-    private val groupAdapter = GroupAdapter<ViewHolder<*>>()
     private lateinit var progressTimeLatch: ProgressTimeLatch
 
     override fun onCreateView(
@@ -54,8 +50,7 @@ class ContributorFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        binding.contributorRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.contributorRecyclerView.adapter = groupAdapter
 
         progressTimeLatch = ProgressTimeLatch { showProgress ->
@@ -68,12 +63,8 @@ class ContributorFragment : DaggerFragment() {
             progressTimeLatch.loading = it.isLoading
         }
 
-        contributorStore.contributorList.changed(viewLifecycleOwner) { result ->
-            val itemList = mutableListOf<Item<*>>()
-            itemList += result.contributors
-                .map {
-                    ContributorItem(it)
-                }
+        contributorStore.contributors.changed(viewLifecycleOwner) { result ->
+            val itemList = result.contributors.map { ContributorItem(it) }
             groupAdapter.update(
                 itemList
             )

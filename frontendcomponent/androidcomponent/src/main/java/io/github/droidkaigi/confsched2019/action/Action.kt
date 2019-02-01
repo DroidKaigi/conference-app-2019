@@ -79,7 +79,7 @@ sealed class Action {
     data class AnnouncementLoaded(val announcements: List<Announcement>) : Action()
 
     data class ContributorLoadingStateChanged(val loadingState: LoadingState) : Action()
-    data class ContributorLoaded(val contributorList: ContributorContents) : Action()
+    data class ContributorLoaded(val contributors: ContributorContents) : Action()
 
     data class SponsorLoadingStateChanged(val loadingState: LoadingState) : Action()
     data class SponsorLoaded(val sponsors: List<SponsorCategory>) : Action()
