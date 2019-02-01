@@ -58,24 +58,14 @@ class CurrentTimeLineDecoration(
         val originStartUnixMillis = groupAdapter.getItem(parent.getChildAdapterPosition(originView))
             .startUnixMillis
 
-        getOngoingItem(currentTime).apply {
-            this ?: return
-            val gapHeight = TimeUnit.MILLISECONDS
-                .toMinutes(currentTime - originStartUnixMillis)
-                .toFloat() * pxPerMin
+        val gapHeight = TimeUnit.MILLISECONDS
+            .toMinutes(currentTime - originStartUnixMillis)
+            .toFloat() * pxPerMin
 
-            val height = originView.top + gapHeight
-            if (height < labelHeight) return
-            c.drawLine(labelWidth, originView.top + gapHeight, parent.right.toFloat(), originView.top + gapHeight, line)
-        }
-    }
+        val height = originView.top + gapHeight
+        if (height < labelHeight) return
 
-    private fun getOngoingItem(currentTime: Long): Item<*>? {
-        return (0 until groupAdapter.itemCount)
-            .map { groupAdapter.getItem(it) }
-            .firstOrNull {
-                it.startUnixMillis < currentTime && it.endUnixMillis > currentTime
-            }
+        c.drawLine(labelWidth, height, parent.right.toFloat(), height, line)
     }
 
     private inline val Item<*>.startUnixMillis: Long
@@ -84,16 +74,6 @@ class CurrentTimeLineDecoration(
                 is TabularSpeechSessionItem -> session.startTime.unixMillisLong
                 is TabularServiceSessionItem -> session.startTime.unixMillisLong
                 is TabularSpacerItem -> startUnixMillis
-                else -> 0
-            }
-        }
-
-    private inline val Item<*>.endUnixMillis: Long
-        get() {
-            return when (this) {
-                is TabularSpeechSessionItem -> session.endTime.unixMillisLong
-                is TabularServiceSessionItem -> session.endTime.unixMillisLong
-                is TabularSpacerItem -> endUnixMillis
                 else -> 0
             }
         }
