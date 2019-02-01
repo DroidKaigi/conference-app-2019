@@ -62,6 +62,7 @@
             android:text="@{session.title.getByLang(lang)}"
             android:textColor="@color/tabular_session_title"
             android:textSize="14sp"
+            android:background="?android:attr/selectableItemBackground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/speaker_icon_list"
