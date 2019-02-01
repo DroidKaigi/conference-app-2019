@@ -3,7 +3,7 @@ package io.github.droidkaigi.confsched2019.data.api
 import io.github.droidkaigi.confsched2019.data.api.parameter.LangParameter
 import io.github.droidkaigi.confsched2019.data.api.response.AnnouncementListResponse
 import io.github.droidkaigi.confsched2019.data.api.response.AnnouncementResponseImpl
-import io.github.droidkaigi.confsched2019.data.api.response.ContributorItemReesponseImpl
+import io.github.droidkaigi.confsched2019.data.api.response.ContributorItemResponseImpl
 import io.github.droidkaigi.confsched2019.data.api.response.ContributorResponse
 import io.github.droidkaigi.confsched2019.data.api.response.ContributorResponseImpl
 import io.github.droidkaigi.confsched2019.data.api.response.Response
@@ -94,7 +94,7 @@ open class KtorDroidKaigiApi constructor(
 
         return ContributorResponseImpl(
             JSON.parse(
-                ContributorItemReesponseImpl.serializer().list,
+                ContributorItemResponseImpl.serializer().list,
                 rawResponse
             )
         )

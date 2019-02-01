@@ -3,7 +3,7 @@ package io.github.droidkaigi.confsched2019.data.api.response
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ContributorItemReesponseImpl(
+data class ContributorItemResponseImpl(
     override val id: Int,
     override val name: String,
     override val iconUrl: String,
