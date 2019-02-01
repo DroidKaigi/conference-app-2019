@@ -25,6 +25,7 @@ import javax.inject.Provider
 class ContributorFragment : DaggerFragment() {
     private lateinit var binding: FragmentContributorBinding
 
+    @Inject lateinit var contributorItemFactory: ContributorItem.Factory
     @Inject
     lateinit var contributorStoreProvider: Provider<ContributorStore>
     private val contributorStore: ContributorStore by lazy {
@@ -64,7 +65,7 @@ class ContributorFragment : DaggerFragment() {
         }
 
         contributorStore.contributors.changed(viewLifecycleOwner) { result ->
-            val itemList = result.contributors.map { ContributorItem(it) }
+            val itemList = result.contributors.map { contributorItemFactory.create(it) }
             groupAdapter.update(
                 itemList
             )
@@ -76,6 +77,7 @@ class ContributorFragment : DaggerFragment() {
 
 @Module
 abstract class ContributorFragmentModule {
+
     @Module
     companion object {
         @PageScope
