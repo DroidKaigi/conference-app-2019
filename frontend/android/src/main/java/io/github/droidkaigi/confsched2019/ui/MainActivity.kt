@@ -305,7 +305,9 @@ abstract class MainActivityModule {
     abstract fun contributeStaffSearchFragment(): StaffSearchFragment
 
     @PageScope
-    @ContributesAndroidInjector(modules = [ContributorFragmentModule::class, ContributorAssistedInjectModule::class])
+    @ContributesAndroidInjector(
+        modules = [ContributorFragmentModule::class, ContributorAssistedInjectModule::class]
+    )
     abstract fun contrbutorContributorFragment(): ContributorFragment
 
     @Module
