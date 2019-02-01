@@ -21,7 +21,7 @@ import io.github.droidkaigi.confsched2019.data.db.entity.SpeakerEntity
 import io.github.droidkaigi.confsched2019.data.db.entity.SponsorEntity
 import io.github.droidkaigi.confsched2019.data.db.entity.StaffEntity
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toAnnouncementEntities
-import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toContributorEntityImpl
+import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toContributorEntities
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionEntities
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionFeedbackEntity
 import io.github.droidkaigi.confsched2019.data.db.entity.mapper.toSessionSpeakerJoinEntities
@@ -129,15 +129,13 @@ class RoomDatabase @Inject constructor(
     }
 
     override suspend fun contributorList(): List<ContributorEntity> =
-        contributorDao.allContributorList()
+        contributorDao.allContributors()
 
     override suspend fun save(apiResponse: ContributorResponse) {
         withContext(coroutineContext) {
             database.runInTransaction {
-                val contributorList =
-                    apiResponse.contributorList.toContributorEntityImpl()
-                contributorDao.deleteAll()
-                contributorDao.insert(contributorList)
+                val contributors = apiResponse.contributors.toContributorEntities()
+                contributorDao.insert(contributors)
             }
         }
     }

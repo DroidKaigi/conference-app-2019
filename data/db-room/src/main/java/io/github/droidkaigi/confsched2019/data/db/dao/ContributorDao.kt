@@ -9,7 +9,7 @@ import io.github.droidkaigi.confsched2019.data.db.entity.ContributorEntityImpl
 @Dao
 abstract class ContributorDao {
     @Query("SELECT * FROM contributor")
-    abstract suspend fun allContributorList(): List<ContributorEntityImpl>
+    abstract suspend fun allContributors(): List<ContributorEntityImpl>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insert(contributorList: List<ContributorEntityImpl>)

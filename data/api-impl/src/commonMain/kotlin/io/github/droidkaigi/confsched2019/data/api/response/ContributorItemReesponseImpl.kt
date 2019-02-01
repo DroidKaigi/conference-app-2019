@@ -4,9 +4,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ContributorItemReesponseImpl(
-    override val id: Int?,
-    override val name: String?,
-    override val iconUrl: String?,
-    override val profileUrl: String?,
-    override val type: String?
+    override val id: Int,
+    override val name: String,
+    override val iconUrl: String,
+    override val profileUrl: String,
+    override val type: String
 ) : ContributorItemResponse

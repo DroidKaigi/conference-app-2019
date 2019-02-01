@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ContributorResponseImpl(
-    override val contributorList: List<ContributorItemReesponseImpl>
+    override val contributors: List<ContributorItemReesponseImpl>
 ) : ContributorResponse

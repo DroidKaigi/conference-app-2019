@@ -3,11 +3,11 @@ package io.github.droidkaigi.confsched2019.data.db.entity.mapper
 import io.github.droidkaigi.confsched2019.data.api.response.ContributorItemResponse
 import io.github.droidkaigi.confsched2019.data.db.entity.ContributorEntityImpl
 
-fun List<ContributorItemResponse>.toContributorEntityImpl(): List<ContributorEntityImpl> = map {
-    it.toContributorEntityImpl()
+fun List<ContributorItemResponse>.toContributorEntities(): List<ContributorEntityImpl> = map {
+    it.toContributorEntities()
 }
 
-fun ContributorItemResponse.toContributorEntityImpl(): ContributorEntityImpl {
+fun ContributorItemResponse.toContributorEntities(): ContributorEntityImpl {
     return ContributorEntityImpl(
         id = requireNotNull(id),
         name = requireNotNull(name),
