@@ -1,0 +1,14 @@
+version: 1
+save_dir: .transart
+source:
+  locations:
+  - file-name-pattern: (\.apk|\.aab|mapping\.txt)
+    path: .
+    type: local
+destination:
+  location:
+    api-token-name: GITHUB_ACCESS_TOKEN
+    reponame: conference-app-2019
+    strategy: draft
+    type: github-release
+    username: DroidKaigi

@@ -27,3 +27,5 @@ bundletool.jar
 dpg
 toc.pb
 *.keystore
+.transart/
+transart
