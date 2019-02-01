@@ -5,5 +5,5 @@ interface ContributorEntity {
     val name: String
     val iconUrl: String
     val profileUrl: String
-    val author: String
+    val type: String
 }

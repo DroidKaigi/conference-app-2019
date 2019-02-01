@@ -9,10 +9,10 @@ fun List<ContributorItemResponse>.toContributorEntities(): List<ContributorEntit
 
 fun ContributorItemResponse.toContributorEntities(): ContributorEntityImpl {
     return ContributorEntityImpl(
-        id = requireNotNull(id),
-        name = requireNotNull(name),
+        id = id,
+        name = name,
         iconUrl = iconUrl,
         profileUrl = profileUrl,
-        author = requireNotNull(type)
+        type = type
     )
 }

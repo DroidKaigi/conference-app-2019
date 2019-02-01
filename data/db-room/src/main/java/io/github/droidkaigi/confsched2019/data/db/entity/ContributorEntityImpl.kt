@@ -15,5 +15,5 @@ class ContributorEntityImpl(
     @ColumnInfo(name = "contributor_profile_url")
     override val profileUrl: String,
     @ColumnInfo(name = "contributor_type")
-    override val author: String
+    override val type: String
 ) : ContributorEntity
