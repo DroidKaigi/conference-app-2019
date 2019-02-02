@@ -22,9 +22,9 @@ class TimetableCurrentTimeLabelDecoration(
     private val labelTextColor: Int,
     private val lineColor: Int,
     private val lineWidth: Float,
-    private val pxPerMin: Int,
     private val labelPadding: Float,
-    private val groupAdapter: GroupAdapter<*>
+    pxPerMin: Int,
+    groupAdapter: GroupAdapter<*>
 ) : TimetableCurrentTimeLineDecoration(
     labelWidth,
     RoomLabelHeight,
@@ -41,8 +41,8 @@ class TimetableCurrentTimeLabelDecoration(
         Color.WHITE,
         ContextCompat.getColor(context, R.color.red1),
         context.resources.getDimension(R.dimen.tabular_form_line_width_bold),
-        context.resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute),
         context.resources.getDimension(R.dimen.tabular_form_current_time_label_padding),
+        context.resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute),
         groupAdapter
     )
 

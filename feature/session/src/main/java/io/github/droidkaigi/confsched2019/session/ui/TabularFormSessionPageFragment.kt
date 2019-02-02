@@ -70,8 +70,11 @@ class TabularFormSessionPageFragment : DaggerFragment() {
 
         val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.tabularFormSessionsRecycler.apply {
-            val timetableCurrentTimeLabelDecoration = TimetableCurrentTimeLabelDecoration(context, groupAdapter)
-            val timetableCurrentTimeLineDecoration = TimetableCurrentTimeLineDecoration(context, groupAdapter)
+            val timetableCurrentTimeLabelDecoration =
+                TimetableCurrentTimeLabelDecoration(context, groupAdapter)
+
+            val timetableCurrentTimeLineDecoration =
+                TimetableCurrentTimeLineDecoration(context, groupAdapter)
 
             addItemDecoration(TimetableTimeLabelDecoration(context, groupAdapter))
             addItemDecoration(TimetableRoomLabelDecoration(context, groupAdapter))
@@ -105,17 +108,19 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                 }
             }
             addOnScrollListener(
-                object : RecyclerView.OnScrollListener(){
+                object : RecyclerView.OnScrollListener() {
                     override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                        val job = GlobalScope.launch(Dispatchers.Main) {
+                            delay(500)
+                            removeItemDecoration(timetableCurrentTimeLabelDecoration)
+                            addItemDecoration(timetableCurrentTimeLineDecoration)
+                        }
                         super.onScrollStateChanged(recyclerView, newState)
                         if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                            GlobalScope.launch(Dispatchers.Main) {
-                                delay(500)
-                                removeItemDecoration(timetableCurrentTimeLabelDecoration)
-                                addItemDecoration(timetableCurrentTimeLineDecoration)
-                            }
+                            job.start()
                         }
-                        if (newState != RecyclerView.SCROLL_STATE_IDLE){
+                        if (newState != RecyclerView.SCROLL_STATE_IDLE) {
+                            job.cancel()
                             removeItemDecoration(timetableCurrentTimeLabelDecoration)
                             removeItemDecoration(timetableCurrentTimeLineDecoration)
                             addItemDecoration(timetableCurrentTimeLabelDecoration)
