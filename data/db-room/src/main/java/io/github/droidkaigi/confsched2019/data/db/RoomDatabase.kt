@@ -100,6 +100,7 @@ class RoomDatabase @Inject constructor(
                     }
                     .flatten()
 
+                sponsorDao.deleteAll()
                 sponsorDao.insert(sponsors)
             }
         }
@@ -112,7 +113,7 @@ class RoomDatabase @Inject constructor(
         withContext(coroutineContext) {
             database.runInTransaction {
                 val announcements = apiResponse.toAnnouncementEntities()
-
+                announcementDao.deleteAll()
                 announcementDao.insert(announcements)
             }
         }
@@ -137,6 +138,7 @@ class RoomDatabase @Inject constructor(
         withContext(coroutineContext) {
             database.runInTransaction {
                 val contributors = apiResponse.contributors.toContributorEntities()
+                contributorDao.deleteAll()
                 contributorDao.insert(contributors)
             }
         }
