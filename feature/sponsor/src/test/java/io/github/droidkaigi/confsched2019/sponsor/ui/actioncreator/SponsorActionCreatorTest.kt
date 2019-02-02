@@ -19,10 +19,8 @@ import org.junit.Before
 import org.junit.Test
 
 class SponsorActionCreatorTest {
-    @RelaxedMockK
-    lateinit var dispatcher: Dispatcher
-    @RelaxedMockK
-    lateinit var sponsorRepository: SponsorRepository
+    @RelaxedMockK lateinit var dispatcher: Dispatcher
+    @RelaxedMockK lateinit var sponsorRepository: SponsorRepository
 
     @Before
     fun setUp() {

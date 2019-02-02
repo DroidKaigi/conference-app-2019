@@ -88,10 +88,9 @@ open class App : DaggerApplication() {
     open fun setupLogHandler() {
         Fabric.with(this, Crashlytics())
         Timber.plant(CrashlyticsTree())
-        enableLogCatLogging()
     }
 
-    fun enableLogCatLogging() {
+    fun enableLogcatLogging() {
         Timber.plant(LogcatTree("droidkaigi"))
     }
 

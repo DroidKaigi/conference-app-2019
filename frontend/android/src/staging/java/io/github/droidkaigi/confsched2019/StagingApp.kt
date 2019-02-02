@@ -3,7 +3,7 @@ package io.github.droidkaigi.confsched2019
 import com.facebook.stetho.Stetho
 import com.squareup.leakcanary.LeakCanary
 
-class DebugApp : App() {
+class StagingApp : App() {
     override fun onCreate() {
         super.onCreate()
         setupLeakCanary()
@@ -22,6 +22,7 @@ class DebugApp : App() {
     }
 
     override fun setupLogHandler() {
-        enableLogCatLogging()
+        super.setupLogHandler()
+        enableLogcatLogging()
     }
 }

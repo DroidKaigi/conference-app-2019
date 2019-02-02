@@ -11,23 +11,27 @@ import XLPagerTabStrip
 class MainViewController: ButtonBarPagerTabStripViewController, StoryboardInstantiable {
 
     override func viewDidLoad() {
-        settings.style.buttonBarBackgroundColor = UIColor.DK.primary.color
-        settings.style.buttonBarItemBackgroundColor = UIColor.DK.primary.color
-        settings.style.selectedBarBackgroundColor = UIColor.DK.primaryDark.color
+        setupTabAppearance()
         super.viewDidLoad()
-        
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: #imageLiteral(resourceName: "baseline_location_on_white_18dp"), style: .plain, target: self, action: #selector(locationButtonTapped(_:)))
-            ]
+        ]
     }
 
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
-        let day1ViewController = SessionsViewController.instantiateFromStoryboard()
-        let day2ViewController = SessionsViewController.instantiateFromStoryboard()
-        day1ViewController.day = Day(title: "Day1", day: 1)
-        day2ViewController.day = Day(title: "Day2", day: 2)
-        let childViewControllers = [day1ViewController, day2ViewController]
+        let day1VC = SessionsViewController(viewModel: SessionsViewModel(type: .day1))
+        let day2VC = SessionsViewController(viewModel: SessionsViewModel(type: .day2))
+        let myPlanVC = SessionsViewController(viewModel: SessionsViewModel(type: .myPlan))
+        let childViewControllers = [day1VC, day2VC, myPlanVC]
         return childViewControllers
+    }
+
+    private func setupTabAppearance() {
+        settings.style.buttonBarBackgroundColor = UIColor.DK.primary.color
+        settings.style.buttonBarItemBackgroundColor = UIColor.DK.primary.color
+        settings.style.selectedBarBackgroundColor = UIColor.DK.primaryDark.color
+        settings.style.buttonBarItemFont = UIFont.systemFont(ofSize: 12)
+        settings.style.selectedBarHeight = 4
     }
 }
 

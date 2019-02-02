@@ -11,14 +11,22 @@ import MaterialComponents.MaterialSnackbar
 import RxSwift
 import RxCocoa
 import XLPagerTabStrip
+import SnapKit
 
-final class SessionsViewController: UIViewController, StoryboardInstantiable {
+final class SessionsViewController: UIViewController {
 
-    var day: Day!
+    init(viewModel: SessionsViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
+    required init?(coder aDecoder: NSCoder) { fatalError() }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = SessionsViewModel(day: day)
         bind()
         tableView.rx.modelSelected(Session.self)
                 .asDriver()
@@ -28,20 +36,21 @@ final class SessionsViewController: UIViewController, StoryboardInstantiable {
                 }).disposed(by: bag)
     }
 
-    @IBOutlet private weak var tableView: UITableView! {
-        didSet {
-            tableView.separatorStyle = .none
-            tableView.rowHeight = UITableView.automaticDimension
-            tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
-            tableView.delegate = dataSource
-            tableView.register(SessionTableViewCell.self)
-        }
-    }
-
-    private var viewModel: SessionsViewModel!
+    private var viewModel: SessionsViewModel
     private let bag = DisposeBag()
 
     private let dataSource = SessionDataSource()
+
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.backgroundColor = .white
+        tableView.separatorStyle = .none
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        tableView.delegate = dataSource
+        tableView.register(SessionTableViewCell.self)
+        return tableView
+    }()
 
     private func bind() {
         let viewWillAppear = rx.methodInvoked(#selector(self.viewWillAppear)).map { _ in }
@@ -63,6 +72,6 @@ final class SessionsViewController: UIViewController, StoryboardInstantiable {
 
 extension SessionsViewController: IndicatorInfoProvider {
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return IndicatorInfo(title: day.title)
+        return IndicatorInfo(title: viewModel.type.text)
     }
 }

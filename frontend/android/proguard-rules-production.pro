@@ -1,6 +1,6 @@
 # Remove LogCat Tree anyway
 -assumenosideeffects class io.github.droidkaigi.confsched2019.App {
-    public *** enableLogCatLogging();
+    public *** enableLogcatLogging();
 }
 
 # Remove Android Log's methods
@@ -11,6 +11,7 @@
     public static *** v(...);
     public static *** w(...);
     public static *** wtf(...);
+    public static *** println(...);
 }
 
 # Remove log methods which CrashlyticsTree doesn't support
