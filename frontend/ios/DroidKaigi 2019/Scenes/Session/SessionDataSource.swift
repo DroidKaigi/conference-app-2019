@@ -32,7 +32,7 @@ final class SessionDataSource: NSObject, UITableViewDataSource {
         let cell: SessionTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
         let session = items[indexPath.section].sessions[indexPath.row]
         cell.session = session
-        cell.favoriteButtonDidTapped
+        cell.favoriteButtonDidTap
             .map { _ in session }
             .bind(to: toggleFavorite)
             .disposed(by: cell.bag)

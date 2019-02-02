@@ -44,11 +44,11 @@ class SessionTableViewCell: UITableViewCell, Reusable {
         }
     }
 
-    var favoriteButtonDidTapped: ControlEvent<Void> {
+    var favoriteButtonDidTap: ControlEvent<Void> {
         return favoriteButton.rx.tap
     }
 
-    var bag = DisposeBag()
+    private(set) var bag = DisposeBag()
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
