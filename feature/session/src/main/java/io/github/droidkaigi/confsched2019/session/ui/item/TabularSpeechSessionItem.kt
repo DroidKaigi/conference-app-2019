@@ -6,6 +6,8 @@ import androidx.navigation.NavDirections
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.BindableItem
@@ -18,11 +20,21 @@ import io.github.droidkaigi.confsched2019.session.databinding.ItemTabularSpeaker
 import io.github.droidkaigi.confsched2019.session.databinding.ItemTabularSpeechSessionBinding
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
-class TabularSpeechSessionItem(
-    val session: SpeechSession,
-    private val navDirections: NavDirections,
+class TabularSpeechSessionItem @AssistedInject constructor(
+    @Assisted override val session: SpeechSession,
+    @Assisted private val navDirections: NavDirections,
     private val navController: NavController
-) : BindableItem<ItemTabularSpeechSessionBinding>(session.id.hashCode().toLong()) {
+) : BindableItem<ItemTabularSpeechSessionBinding>(
+    session.id.hashCode().toLong()
+), SessionItem {
+
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(
+            session: SpeechSession,
+            navDirections: NavDirections
+        ): TabularSpeechSessionItem
+    }
 
     private val groupAdapter = GroupAdapter<ViewHolder<*>>()
 
