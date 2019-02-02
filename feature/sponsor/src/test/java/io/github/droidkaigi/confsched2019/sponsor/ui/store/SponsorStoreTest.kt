@@ -38,7 +38,7 @@ class SponsorStoreTest {
         verify { observer(LoadingState.LOADED) }
     }
 
-    @Test fun announcements() = runBlocking {
+    @Test fun sponsors() = runBlocking {
         val dispatcher = Dispatcher()
         val sponsorStore = SponsorStore(dispatcher)
         val observer: (List<SponsorCategory>) -> Unit = mockk(relaxed = true)
