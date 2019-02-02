@@ -57,7 +57,9 @@ class RoomDatabase @Inject constructor(
             // FIXME: SQLiteDatabaseLockedException
             database.runInTransaction {
                 database.sqlite().execSQL("PRAGMA defer_foreign_keys = TRUE")
-                database.clearAllTables()
+                sessionSpeakerJoinDao.deleteAll()
+                speakerDao.deleteAll()
+                sessionDao.deleteAll()
                 val speakers = apiResponse.speakers.orEmpty().toSpeakerEntities()
                 speakerDao.insert(speakers)
                 val sessions = apiResponse.sessions
