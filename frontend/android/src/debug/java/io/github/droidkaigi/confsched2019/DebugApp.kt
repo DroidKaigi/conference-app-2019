@@ -22,6 +22,6 @@ class DebugApp : App() {
     }
 
     override fun setupLogHandler() {
-        enableLogCatLogging()
+        enableLogcatLogging()
     }
 }
