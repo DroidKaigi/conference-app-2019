@@ -49,7 +49,9 @@ android {
             debuggable true
         }
         staging {
-            applicationIdSuffix ".debug"
+            if (isCi || isReleaseBuild) {
+                applicationIdSuffix ".debug"
+            }
             debuggable true
             zipAlignEnabled true
             signingConfig = signingConfigs.debug
@@ -144,7 +146,7 @@ dependencies {
 
     implementation Dep.AndroidX.coreKtx
 
-    implementation Dep.Stetho.stetho
+    debugImplementation Dep.Stetho.stetho
 
     debugImplementation Dep.LeakCanary.leakCanary
     debugImplementation Dep.LeakCanary.leakCanaryFragment
