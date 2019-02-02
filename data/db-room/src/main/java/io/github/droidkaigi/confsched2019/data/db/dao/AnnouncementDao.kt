@@ -13,4 +13,7 @@ abstract class AnnouncementDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insert(announcements: List<AnnouncementEntityImpl>)
+
+    @Query("DELETE FROM announcement")
+    abstract fun deleteAll()
 }
