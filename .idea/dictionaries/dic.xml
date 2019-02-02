@@ -1,21 +1,45 @@
 <component name="ProjectDictionaryState">
   <dictionary name="dic">
     <words>
+      <w>akaita</w>
+      <w>chrisbanes</w>
       <w>circleci</w>
       <w>confsched</w>
+      <w>constraintlayout</w>
       <w>coroutine</w>
+      <w>coroutines</w>
+      <w>crashlytics</w>
       <w>databinding</w>
       <w>deploygate</w>
       <w>droidkaigi</w>
+      <w>easylauncher</w>
       <w>emoji</w>
       <w>firebase</w>
       <w>firestore</w>
+      <w>injectedvmprovider</w>
+      <w>jakewharton</w>
       <w>jetifier</w>
       <w>kaigi</w>
+      <w>klock</w>
+      <w>kotlintest</w>
+      <w>kotlinx</w>
       <w>ktor</w>
+      <w>leakcanary</w>
       <w>lekton</w>
+      <w>livedata</w>
+      <w>mockk</w>
+      <w>okhttp</w>
+      <w>okio</w>
+      <w>photoview</w>
       <w>recyclerview</w>
+      <w>shopify</w>
+      <w>soywiz</w>
+      <w>squareup</w>
       <w>stetho</w>
+      <w>tatarka</w>
+      <w>wasabeef</w>
+      <w>willowtreeapps</w>
+      <w>xwray</w>
     </words>
   </dictionary>
 </component>
