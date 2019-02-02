@@ -18,9 +18,14 @@ final class SessionsViewController: UIViewController {
     init(viewModel: SessionsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        view.addSubview(tableView)
+        [tableHeaderView, tableView].forEach(view.addSubview)
+        tableHeaderView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(48)
+        }
         tableView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalTo(tableHeaderView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
     required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -41,6 +46,8 @@ final class SessionsViewController: UIViewController {
 
     private let dataSource = SessionDataSource()
 
+    private lazy var tableHeaderView = SessionTableHeaderView()
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.backgroundColor = .white
