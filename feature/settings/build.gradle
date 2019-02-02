@@ -12,6 +12,10 @@ android.dataBinding.enabled = true
 dependencies {
     implementation project(':frontendcomponent:androidcomponent')
     implementation project(':ext:android-extension')
+    implementation project(":data:repository")
+    implementation project(":feature:system")
+    implementation project(":model")
+    implementation project(':ext:log')
 
     implementation Dep.Kotlin.stdlibJvm
     api Dep.Kotlin.coroutines
@@ -20,7 +24,7 @@ dependencies {
     implementation Dep.AndroidX.appCompat
     implementation Dep.AndroidX.constraint
     implementation Dep.AndroidX.recyclerView
-    implementation Dep.AndroidX.preference
+    api Dep.AndroidX.preference
     api Dep.AndroidX.emoji
     implementation Dep.AndroidX.design
 

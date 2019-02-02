@@ -32,8 +32,6 @@ kotlin {
         androidMain {
             dependsOn commonMain
             dependencies {
-                api project(":model")
-                api project(":data:device")
                 implementation Dep.Kotlin.stdlibJvm
                 implementation Dep.Dagger.core
                 implementation Dep.Dagger.androidSupport
@@ -56,6 +54,8 @@ kotlin {
 }
 
 dependencies {
+    api project(":model")
+    api project(":data:device")
     kapt Dep.Dagger.compiler
     kapt Dep.Dagger.androidProcessor
 }

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="title_add_wifi">Wifi 設定を追加</string>
-    <string name="wifi_added_message">登録しました</string>
+    <string name="wifi_registered_message">登録しました</string>
+    <string name="wifi_failed_to_register_message_so_copied">パスワードをコピーしました。SSID は %1$s です</string>
+    <string name="wifi_failed_to_register_message">登録に失敗しました。SSID は %1$s、パスワードは %2$s です</string>
 </resources>

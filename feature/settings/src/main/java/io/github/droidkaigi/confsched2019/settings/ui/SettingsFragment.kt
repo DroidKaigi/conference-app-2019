@@ -1,56 +1,82 @@
 package io.github.droidkaigi.confsched2019.settings.ui
 
-import android.net.wifi.WifiConfiguration
-import android.net.wifi.WifiManager
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.preference.PreferenceFragmentCompat
+import androidx.lifecycle.Lifecycle
+import com.google.android.material.snackbar.Snackbar
+import dagger.Module
+import dagger.Provides
+import io.github.droidkaigi.confsched2019.di.PageScope
+import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.settings.R
-import timber.log.Timber
-import timber.log.debug
+import io.github.droidkaigi.confsched2019.settings.ui.widget.DaggerPreferenceFragment
+import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
+import io.github.droidkaigi.confsched2019.system.actioncreator.SystemActionCreator
+import io.github.droidkaigi.confsched2019.system.store.SystemStore
+import javax.inject.Inject
 
-class SettingsFragment : PreferenceFragmentCompat() {
+class SettingsFragment : DaggerPreferenceFragment() {
+
+    @Inject lateinit var systemStore: SystemStore
+    @Inject lateinit var systemActionCreator: SystemActionCreator
+    @Inject lateinit var activityActionCreator: ActivityActionCreator
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
 
         requireNotNull(findPreference(getString(R.string.pref_key_add_wifi)))
             .setOnPreferenceClickListener {
                 true.also {
-                    registerWifi()
+                    systemActionCreator.registerWifiConfiguration(
+                        ssid = getString(R.string.wifi_ssid),
+                        password = getString(R.string.wifi_password)
+                    )
                 }
             }
     }
 
-    private fun registerWifi(): Boolean {
-        val wifiManager = ContextCompat.getSystemService(requireContext(), WifiManager::class.java)
-            ?: return false
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
-        val configuration = WifiConfiguration().apply {
-            SSID = getString(R.string.wifi_ssid).quote()
-            preSharedKey = getString(R.string.wifi_password).quote()
-        }
+        systemStore.wifiRegistrationState.changed(this) {
+            val isRegistered = it ?: return@changed
 
-        Timber.debug { "Wifi Configuration : SSID/PW = ${configuration.SSID} / ${configuration.preSharedKey}" }
+            val message = if (isRegistered) {
+                getString(R.string.wifi_registered_message)
+            } else {
+                if (
+                    activityActionCreator.copyText(
+                        "wifi_password",
+                        getString(R.string.wifi_password)
+                    )
+                ) {
+                    getString(
+                        R.string.wifi_failed_to_register_message_so_copied,
+                        getString(R.string.wifi_ssid)
+                    )
+                } else {
+                    getString(
+                        R.string.wifi_failed_to_register_message,
+                        getString(R.string.wifi_ssid),
+                        getString(R.string.wifi_password)
+                    )
+                }
+            }
 
-        if (!wifiManager.isWifiEnabled) {
-            Timber.debug { "WiFi manager was enabled" }
-            wifiManager.isWifiEnabled = true
-        }
-
-        val netId = wifiManager.addNetwork(configuration)
-
-        Timber.debug { "Given network id is $netId" }
-
-        return if (netId != -1) {
-            wifiManager.enableNetwork(netId, false)
-        } else {
-            false
-        }.also { result ->
-            Timber.debug { "Attempt state is $result" }
+            Snackbar.make(requireNotNull(view), message, Snackbar.LENGTH_LONG).show()
         }
     }
+}
 
-    private fun String.quote(): String {
-        return "\"${this}\""
+@Module
+abstract class SettingsFragmentModule {
+
+    @Module
+    companion object {
+        @JvmStatic
+        @Provides
+        @PageScope
+        fun providesLifecycle(settingsFragment: SettingsFragment): Lifecycle {
+            return settingsFragment.viewLifecycleOwner.lifecycle
+        }
     }
 }

@@ -1,5 +1,7 @@
 package io.github.droidkaigi.confsched2019.system.actioncreator
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
 import android.net.Uri
 import android.provider.CalendarContract
@@ -58,6 +60,16 @@ class ActivityActionCreator @Inject constructor(val activity: FragmentActivity) 
             .putExtra(Events.TITLE, "DroidKaigi2019: $title")
             .putExtra(Events.EVENT_LOCATION, location)
         activity.startActivity(intent)
+    }
+
+    fun copyText(label: String, text: String): Boolean {
+        val cpManager =
+            ContextCompat.getSystemService(activity, ClipboardManager::class.java) ?: return false
+
+        val clip: ClipData = ClipData.newPlainText(label, text)
+        cpManager.primaryClip = clip
+
+        return true
     }
 
     companion object {
