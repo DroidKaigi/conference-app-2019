@@ -3,8 +3,9 @@ package io.github.droidkaigi.confsched2019.session.ui.widget
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.DashPathEffect
+import android.graphics.CornerPathEffect
 import android.graphics.Paint
+import android.graphics.Path
 import android.graphics.Rect
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -19,16 +20,15 @@ import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpacerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionItem
 import java.util.concurrent.TimeUnit
 
-class CurrentTimeLineDecoration(
+class TimetableCurrentTimeDecoration(
     private val labelWidth: Float,
-    private val labelHeight: Float,
+    private val RoomLabelHeight: Float,
     private val labelTextSize: Float,
-    private val labelBackgroundColor: Int,
     private val labelTextColor: Int,
     private val lineColor: Int,
     private val lineWidth: Float,
-    private val dashLineInterval: Float,
     private val pxPerMin: Int,
+    private val labelPadding: Float,
     private val groupAdapter: GroupAdapter<*>
 ): RecyclerView.ItemDecoration() {
 
@@ -36,12 +36,11 @@ class CurrentTimeLineDecoration(
         context.resources.getDimension(R.dimen.tabular_form_time_label_width),
         context.resources.getDimension(R.dimen.tabular_form_room_label_height),
         context.resources.getDimension(R.dimen.tabular_form_time_label_text_size),
-        ContextCompat.getColor(context, R.color.colorPrimary),
         Color.WHITE,
-        ContextCompat.getColor(context, R.color.colorPrimary),
-        context.resources.getDimension(R.dimen.session_bottom_sheet_left_time_line_width),
-        context.resources.getDimension(R.dimen.session_bottom_sheet_left_time_line_interval),
+        ContextCompat.getColor(context, R.color.red1),
+        context.resources.getDimension(R.dimen.tabular_form_line_width_bold),
         context.resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute),
+        context.resources.getDimension(R.dimen.tabular_form_current_time_label_padding),
         groupAdapter
     )
 
@@ -51,14 +50,9 @@ class CurrentTimeLineDecoration(
         textSize = labelTextSize
     }
 
-    private val textBackground = Paint().apply {
-        color = labelBackgroundColor
-    }
-
     private val line = Paint().apply {
         color = lineColor
         isAntiAlias = true
-        pathEffect = DashPathEffect(floatArrayOf(dashLineInterval, dashLineInterval), 0f)
         strokeWidth = lineWidth
         style = Paint.Style.STROKE
     }
@@ -78,20 +72,12 @@ class CurrentTimeLineDecoration(
         val timeText = dateFormat
             .format(DateTimeTz.fromUnixLocal(currentTime).addOffset(9.hours))
 
-        val originView = parent.getChildAt(0)
-        val originStartUnixMillis = groupAdapter.getItem(parent.getChildAdapterPosition(originView))
-            .startUnixMillis
+        val height = calcLineHeight(parent, currentTime)
+        if (height < RoomLabelHeight) return
 
-        val gapHeight = TimeUnit.MILLISECONDS
-            .toMinutes(currentTime - originStartUnixMillis)
-            .toFloat() * pxPerMin
-
-        val height = originView.top + gapHeight
-        if (height < labelHeight) return
-
-        c.drawLine(labelWidth, height, parent.right.toFloat(), height, line)
-        c.drawRect(labelWidth, height - textHeightHalf, labelWidth + textWidth.toFloat(), height + textHeightHalf, textBackground)
-        c.drawText(timeText, labelWidth, height + textHeightHalf, textPaint)
+        c.drawLine(labelWidth + labelPadding, height, parent.right.toFloat(), height, line)
+        drawBackgroundShape(c, height)
+        c.drawText(timeText, labelWidth + labelPadding * 2, height + textHeightHalf, textPaint)
     }
 
     private inline val Item<*>.startUnixMillis: Long
@@ -103,4 +89,38 @@ class CurrentTimeLineDecoration(
                 else -> 0
             }
         }
+
+    private fun calcLineHeight(parent: RecyclerView, currentTime: Long): Float {
+        val originView = parent.getChildAt(0)
+        val originStartUnixMillis = groupAdapter.getItem(parent.getChildAdapterPosition(originView))
+            .startUnixMillis
+
+        val gapHeight = TimeUnit.MILLISECONDS
+            .toMinutes(currentTime - originStartUnixMillis)
+            .toFloat() * pxPerMin
+
+        return originView.top + gapHeight
+    }
+
+    private fun drawBackgroundShape(c: Canvas, height: Float) {
+        //TODO: apply correct design. Please check out.
+
+        val paint = Paint().apply {
+            isAntiAlias = true
+            style = Paint.Style.FILL_AND_STROKE
+            color = lineColor
+
+            val cornerPathEffect = CornerPathEffect(6f)
+            pathEffect = cornerPathEffect
+        }
+        val path = Path().apply {
+            moveTo(labelWidth, height)
+            lineTo(labelWidth + labelPadding, height - textHeightHalf - labelPadding)
+            lineTo(labelWidth + textWidth + labelPadding * 4, height - textHeightHalf - labelPadding)
+            lineTo(labelWidth + textWidth + labelPadding * 4, height + textHeightHalf + labelPadding)
+            lineTo(labelWidth + labelPadding, height + textHeightHalf + labelPadding)
+            lineTo(labelWidth, height)
+        }
+        c.drawPath(path, paint)
+    }
 }

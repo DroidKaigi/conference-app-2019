@@ -24,4 +24,6 @@
     <dimen name="tabular_form_room_label_text_size">16sp</dimen>
     <dimen name="tabular_form_time_label_width">64dp</dimen>
     <dimen name="tabular_form_time_label_text_size">16sp</dimen>
+    <dimen name="tabular_form_line_width_bold">2dp</dimen>
+    <dimen name="tabular_form_current_time_label_padding">8dp</dimen>
 </resources>
