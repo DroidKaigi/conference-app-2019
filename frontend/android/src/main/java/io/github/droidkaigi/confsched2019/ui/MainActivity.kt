@@ -5,7 +5,6 @@ import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
@@ -59,6 +58,7 @@ import io.github.droidkaigi.confsched2019.staff.ui.StaffSearchFragment
 import io.github.droidkaigi.confsched2019.staff.ui.StaffSearchFragmentModule
 import io.github.droidkaigi.confsched2019.survey.ui.SessionSurveyFragment
 import io.github.droidkaigi.confsched2019.survey.ui.SessionSurveyFragmentModule
+import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
 import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import io.github.droidkaigi.confsched2019.ui.widget.StatusBarColorManager
 import io.github.droidkaigi.confsched2019.user.actioncreator.UserActionCreator
@@ -77,6 +77,7 @@ class MainActivity : DaggerAppCompatActivity() {
     @Inject lateinit var userActionCreator: UserActionCreator
     @Inject lateinit var systemStore: SystemStore
     @Inject lateinit var userStore: UserStore
+    @Inject lateinit var activityActionCreator: ActivityActionCreator
 
     private val navController: NavController by lazy {
         findNavController(R.id.root_nav_host_fragment)
@@ -165,7 +166,7 @@ class MainActivity : DaggerAppCompatActivity() {
             }
         }
         binding.navViewFooter.setOnClickListener {
-            Toast.makeText(this, "not url decided", Toast.LENGTH_SHORT).show()
+            activityActionCreator.openUrl("https://goo.gl/forms/FIb5p75kN4X3WY7d2")
         }
     }
 
