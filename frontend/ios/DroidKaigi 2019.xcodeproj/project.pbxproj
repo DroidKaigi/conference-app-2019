@@ -15,7 +15,6 @@
 		01E0C3D021E9ED450014DA7E /* ioscombined.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E0C3CF21E9ED450014DA7E /* ioscombined.framework */; };
 		2159CC5321FE0E0000DBD016 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2159CC5221FE0E0000DBD016 /* MainViewController.swift */; };
 		2159CC5521FE122F00DBD016 /* MainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2159CC5421FE122F00DBD016 /* MainViewController.storyboard */; };
-		2159CC5721FE186800DBD016 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2159CC5621FE186800DBD016 /* Day.swift */; };
 		218481C521FB7F480048D9D3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 218481C421FB7F480048D9D3 /* Settings.bundle */; };
 		2CBEBD60F6DCD21A07E2D311 /* Pods_DroidKaigi_2019.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93A3E24B47F135429DAD2646 /* Pods_DroidKaigi_2019.framework */; };
 		360744F121FADF53003569D3 /* SessionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360744F021FADF53003569D3 /* SessionDetailViewController.swift */; };
@@ -27,7 +26,6 @@
 		362546CD21FCD4FF005ADB0F /* SessionDetailSectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362546CC21FCD4FF005ADB0F /* SessionDetailSectionFooterView.swift */; };
 		362D90FD21F5DBC2006962C8 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362D90FB21F5DBC2006962C8 /* StartViewController.swift */; };
 		362D90FE21F5DBC2006962C8 /* StartViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 362D90FC21F5DBC2006962C8 /* StartViewController.storyboard */; };
-		362D910221F5DC2D006962C8 /* SessionsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 362D90FF21F5DC2C006962C8 /* SessionsViewController.storyboard */; };
 		362D910321F5DC2D006962C8 /* SessionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362D910021F5DC2C006962C8 /* SessionsViewController.swift */; };
 		362D910421F5DC2D006962C8 /* SessionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362D910121F5DC2C006962C8 /* SessionsViewModel.swift */; };
 		363E6AF421FD536A00EBC698 /* TagContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363E6AF321FD536A00EBC698 /* TagContent.swift */; };
@@ -116,7 +114,6 @@
 		01E0C3CF21E9ED450014DA7E /* ioscombined.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ioscombined.framework; path = "../ioscombined/build/xcode-frameworks/ioscombined.framework"; sourceTree = "<group>"; };
 		2159CC5221FE0E0000DBD016 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		2159CC5421FE122F00DBD016 /* MainViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainViewController.storyboard; sourceTree = "<group>"; };
-		2159CC5621FE186800DBD016 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		218481C421FB7F480048D9D3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		360744F021FADF53003569D3 /* SessionDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailViewController.swift; sourceTree = "<group>"; };
 		360744F221FAF0CE003569D3 /* SessionDetailHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailHeaderTableViewCell.swift; sourceTree = "<group>"; };
@@ -127,7 +124,6 @@
 		362546CC21FCD4FF005ADB0F /* SessionDetailSectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailSectionFooterView.swift; sourceTree = "<group>"; };
 		362D90FB21F5DBC2006962C8 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		362D90FC21F5DBC2006962C8 /* StartViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = StartViewController.storyboard; sourceTree = "<group>"; };
-		362D90FF21F5DC2C006962C8 /* SessionsViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SessionsViewController.storyboard; sourceTree = "<group>"; };
 		362D910021F5DC2C006962C8 /* SessionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsViewController.swift; sourceTree = "<group>"; };
 		362D910121F5DC2C006962C8 /* SessionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsViewModel.swift; sourceTree = "<group>"; };
 		363E6AF321FD536A00EBC698 /* TagContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagContent.swift; sourceTree = "<group>"; };
@@ -305,7 +301,6 @@
 		362D90F521F5D50F006962C8 /* data */ = {
 			isa = PBXGroup;
 			children = (
-				2159CC5621FE186800DBD016 /* Day.swift */,
 				43DC80C02200A0F600A3F710 /* FavoriteRepository.swift */,
 				59D30FC821F8B1BD003A937C /* SessionByStartTime.swift */,
 				63F34E1A21EB43CE00B2EC48 /* SessionRepository.swift */,
@@ -318,7 +313,6 @@
 		362D90F621F5D521006962C8 /* Session */ = {
 			isa = PBXGroup;
 			children = (
-				362D90FF21F5DC2C006962C8 /* SessionsViewController.storyboard */,
 				362D910021F5DC2C006962C8 /* SessionsViewController.swift */,
 				362D910121F5DC2C006962C8 /* SessionsViewModel.swift */,
 				3672C2D221F6FB7E00ACB910 /* SessionDataSource.swift */,
@@ -517,7 +511,6 @@
 				B977F3002202030B0048A02E /* FloorMap.storyboard in Resources */,
 				01578ECB21E5E75D002B2033 /* Assets.xcassets in Resources */,
 				218481C521FB7F480048D9D3 /* Settings.bundle in Resources */,
-				362D910221F5DC2D006962C8 /* SessionsViewController.storyboard in Resources */,
 				2159CC5521FE122F00DBD016 /* MainViewController.storyboard in Resources */,
 				362D90FE21F5DBC2006962C8 /* StartViewController.storyboard in Resources */,
 			);
@@ -746,7 +739,6 @@
 				3672C2DF21F73A9400ACB910 /* SpeakerCell.swift in Sources */,
 				360744F721FAF152003569D3 /* SessionDetailTagsTableViewCell.swift in Sources */,
 				363E6AF421FD536A00EBC698 /* TagContent.swift in Sources */,
-				2159CC5721FE186800DBD016 /* Day.swift in Sources */,
 				362D910321F5DC2D006962C8 /* SessionsViewController.swift in Sources */,
 				2159CC5321FE0E0000DBD016 /* MainViewController.swift in Sources */,
 				63F34E1B21EB43CE00B2EC48 /* SessionRepository.swift in Sources */,
