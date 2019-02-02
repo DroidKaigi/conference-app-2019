@@ -147,6 +147,7 @@ dependencies {
     implementation Dep.AndroidX.coreKtx
 
     debugImplementation Dep.Stetho.stetho
+    stagingImplementation Dep.Stetho.stetho
 
     debugImplementation Dep.LeakCanary.leakCanary
     debugImplementation Dep.LeakCanary.leakCanaryFragment
