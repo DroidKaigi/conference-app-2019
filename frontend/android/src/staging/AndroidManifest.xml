@@ -6,7 +6,7 @@
     >
 
     <application
-        android:name=".DebugApp"
+        android:name=".StagingApp"
         tools:replace="name"
         >
     </application>

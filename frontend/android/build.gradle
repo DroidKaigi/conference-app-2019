@@ -105,9 +105,6 @@ android {
         exclude 'META-INF/*.version'
         exclude 'META-INF/proguard/*.pro'
     }
-    sourceSets {
-        staging.java.srcDirs += 'src/debug/java'
-    }
 }
 
 dependencies {
