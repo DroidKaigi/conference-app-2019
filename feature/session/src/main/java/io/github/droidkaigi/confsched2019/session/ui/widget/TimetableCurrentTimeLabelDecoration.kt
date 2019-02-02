@@ -13,14 +13,9 @@ import com.soywiz.klock.DateFormat
 import com.soywiz.klock.DateTimeTz
 import com.soywiz.klock.hours
 import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.Item
 import io.github.droidkaigi.confsched2019.session.R
-import io.github.droidkaigi.confsched2019.session.ui.item.TabularServiceSessionItem
-import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpacerItem
-import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionItem
-import java.util.concurrent.TimeUnit
 
-class TimetableCurrentTimeDecoration(
+class TimetableCurrentTimeLabelDecoration(
     private val labelWidth: Float,
     private val RoomLabelHeight: Float,
     private val labelTextSize: Float,
@@ -30,7 +25,14 @@ class TimetableCurrentTimeDecoration(
     private val pxPerMin: Int,
     private val labelPadding: Float,
     private val groupAdapter: GroupAdapter<*>
-) : RecyclerView.ItemDecoration() {
+) : TimetableCurrentTimeLineDecoration(
+    labelWidth,
+    RoomLabelHeight,
+    lineColor,
+    lineWidth,
+    pxPerMin,
+    groupAdapter
+) {
 
     constructor(context: Context, groupAdapter: GroupAdapter<*>) : this(
         context.resources.getDimension(R.dimen.tabular_form_time_label_width),
@@ -68,7 +70,6 @@ class TimetableCurrentTimeDecoration(
         Rect().apply { textPaint.getTextBounds("00:00", 0, "00:00".length, this) }.width()
 
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        super.onDrawOver(c, parent, state)
 
         val currentTime = System.currentTimeMillis()
         val timeText = dateFormat
@@ -80,28 +81,6 @@ class TimetableCurrentTimeDecoration(
         c.drawLine(labelWidth + labelPadding, height, parent.right.toFloat(), height, line)
         drawBackgroundShape(c, height)
         c.drawText(timeText, labelWidth + labelPadding * 2, height + textHeightHalf, textPaint)
-    }
-
-    private inline val Item<*>.startUnixMillis: Long
-        get() {
-            return when (this) {
-                is TabularSpeechSessionItem -> session.startTime.unixMillisLong
-                is TabularServiceSessionItem -> session.startTime.unixMillisLong
-                is TabularSpacerItem -> startUnixMillis
-                else -> 0
-            }
-        }
-
-    private fun calcLineHeight(parent: RecyclerView, currentTime: Long): Float {
-        val originView = parent.getChildAt(0)
-        val originStartUnixMillis = groupAdapter.getItem(parent.getChildAdapterPosition(originView))
-            .startUnixMillis
-
-        val gapHeight = TimeUnit.MILLISECONDS
-            .toMinutes(currentTime - originStartUnixMillis)
-            .toFloat() * pxPerMin
-
-        return originView.top + gapHeight
     }
 
     private fun drawBackgroundShape(c: Canvas, height: Float) {

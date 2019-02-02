@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
+import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.BindableItem
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
+import io.github.droidkaigi.confsched2019.ext.android.Dispatchers
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.Session
@@ -23,11 +25,15 @@ import io.github.droidkaigi.confsched2019.session.ui.item.TabularServiceSessionI
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpacerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
-import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableCurrentTimeDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
+import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableCurrentTimeLabelDecoration
+import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableCurrentTimeLineDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableLayoutManager
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableRoomLabelDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableTimeLabelDecoration
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
 import javax.inject.Provider
@@ -64,9 +70,12 @@ class TabularFormSessionPageFragment : DaggerFragment() {
 
         val groupAdapter = GroupAdapter<ViewHolder<*>>()
         binding.tabularFormSessionsRecycler.apply {
+            val timetableCurrentTimeLabelDecoration = TimetableCurrentTimeLabelDecoration(context, groupAdapter)
+            val timetableCurrentTimeLineDecoration = TimetableCurrentTimeLineDecoration(context, groupAdapter)
+
             addItemDecoration(TimetableTimeLabelDecoration(context, groupAdapter))
             addItemDecoration(TimetableRoomLabelDecoration(context, groupAdapter))
-            addItemDecoration(TimetableCurrentTimeDecoration(context, groupAdapter))
+            addItemDecoration(timetableCurrentTimeLabelDecoration)
             layoutManager = TimetableLayoutManager(
                 resources.getDimensionPixelSize(R.dimen.tabular_form_column_width),
                 resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute),
@@ -95,6 +104,25 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                     else -> TimetableLayoutManager.PeriodInfo(0, 0, 0)
                 }
             }
+            addOnScrollListener(
+                object : RecyclerView.OnScrollListener(){
+                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                        super.onScrollStateChanged(recyclerView, newState)
+                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                            GlobalScope.launch(Dispatchers.Main) {
+                                delay(500)
+                                removeItemDecoration(timetableCurrentTimeLabelDecoration)
+                                addItemDecoration(timetableCurrentTimeLineDecoration)
+                            }
+                        }
+                        if (newState != RecyclerView.SCROLL_STATE_IDLE){
+                            removeItemDecoration(timetableCurrentTimeLabelDecoration)
+                            removeItemDecoration(timetableCurrentTimeLineDecoration)
+                            addItemDecoration(timetableCurrentTimeLabelDecoration)
+                        }
+                    }
+                }
+            )
             adapter = groupAdapter
         }
         sessionPagesStore.sessionsByDay(args.day)
