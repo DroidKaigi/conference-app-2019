@@ -5,8 +5,12 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.graphics.Paint
+import android.graphics.Rect
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.soywiz.klock.DateFormat
+import com.soywiz.klock.DateTimeTz
+import com.soywiz.klock.hours
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import io.github.droidkaigi.confsched2019.session.R
@@ -41,6 +45,16 @@ class CurrentTimeLineDecoration(
         groupAdapter
     )
 
+    private val textPaint = Paint().apply {
+        color = labelTextColor
+        isAntiAlias = true
+        textSize = labelTextSize
+    }
+
+    private val textBackground = Paint().apply {
+        color = labelBackgroundColor
+    }
+
     private val line = Paint().apply {
         color = lineColor
         isAntiAlias = true
@@ -49,10 +63,20 @@ class CurrentTimeLineDecoration(
         style = Paint.Style.STROKE
     }
 
+    private val dateFormat: DateFormat = DateFormat("HH:mm")
+
+    private val textHeightHalf =
+        (Rect().apply { textPaint.getTextBounds("00:00", 0, "00:00".length - 1, this) }.height()) / 2
+
+    private val textWidth =
+        Rect().apply { textPaint.getTextBounds("00:00", 0, "00:00".length, this) }.width()
+
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         super.onDrawOver(c, parent, state)
 
         val currentTime = System.currentTimeMillis()
+        val timeText = dateFormat
+            .format(DateTimeTz.fromUnixLocal(currentTime).addOffset(9.hours))
 
         val originView = parent.getChildAt(0)
         val originStartUnixMillis = groupAdapter.getItem(parent.getChildAdapterPosition(originView))
@@ -66,6 +90,8 @@ class CurrentTimeLineDecoration(
         if (height < labelHeight) return
 
         c.drawLine(labelWidth, height, parent.right.toFloat(), height, line)
+        c.drawRect(labelWidth, height - textHeightHalf, labelWidth + textWidth.toFloat(), height + textHeightHalf, textBackground)
+        c.drawText(timeText, labelWidth, height + textHeightHalf, textPaint)
     }
 
     private inline val Item<*>.startUnixMillis: Long
