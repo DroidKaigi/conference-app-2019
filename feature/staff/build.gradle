@@ -54,4 +54,3 @@ dependencies {
     androidTestImplementation Dep.Test.testRunner
     androidTestImplementation Dep.Test.espressoCore
 }
-
