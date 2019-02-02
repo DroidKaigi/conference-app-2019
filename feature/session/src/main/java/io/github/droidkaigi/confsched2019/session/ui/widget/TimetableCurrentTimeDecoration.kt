@@ -30,7 +30,7 @@ class TimetableCurrentTimeDecoration(
     private val pxPerMin: Int,
     private val labelPadding: Float,
     private val groupAdapter: GroupAdapter<*>
-): RecyclerView.ItemDecoration() {
+) : RecyclerView.ItemDecoration() {
 
     constructor(context: Context, groupAdapter: GroupAdapter<*>) : this(
         context.resources.getDimension(R.dimen.tabular_form_time_label_width),
@@ -103,7 +103,7 @@ class TimetableCurrentTimeDecoration(
     }
 
     private fun drawBackgroundShape(c: Canvas, height: Float) {
-        //TODO: apply correct design. Please check out.
+        // TODO: apply correct design. Please check out.
 
         val paint = Paint().apply {
             isAntiAlias = true
@@ -115,10 +115,14 @@ class TimetableCurrentTimeDecoration(
         }
         val path = Path().apply {
             moveTo(labelWidth, height)
-            lineTo(labelWidth + labelPadding, height - textHeightHalf - labelPadding)
-            lineTo(labelWidth + textWidth + labelPadding * 4, height - textHeightHalf - labelPadding)
-            lineTo(labelWidth + textWidth + labelPadding * 4, height + textHeightHalf + labelPadding)
-            lineTo(labelWidth + labelPadding, height + textHeightHalf + labelPadding)
+            lineTo(labelWidth + labelPadding,
+                height - textHeightHalf - labelPadding)
+            lineTo(labelWidth + textWidth + labelPadding * 4,
+                height - textHeightHalf - labelPadding)
+            lineTo(labelWidth + textWidth + labelPadding * 4,
+                height + textHeightHalf + labelPadding)
+            lineTo(labelWidth + labelPadding,
+                height + textHeightHalf + labelPadding)
             lineTo(labelWidth, height)
         }
         c.drawPath(path, paint)
