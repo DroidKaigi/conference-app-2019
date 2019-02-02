@@ -16,6 +16,9 @@ internal abstract class RepositoryModule {
 
     @Binds abstract fun staffDatabase(impl: DataStaffRepository): StaffRepository
 
+    @Binds
+    abstract fun wifiConfigurationRepository(impl: DataWifiConfigurationRepository): WifiConfigurationRepository
+
     @Module
     internal object Providers
 }

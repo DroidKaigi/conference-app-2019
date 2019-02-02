@@ -5,10 +5,11 @@ import dagger.Component
 import io.github.droidkaigi.confsched2019.data.api.DroidKaigiApi
 import io.github.droidkaigi.confsched2019.data.api.GoogleFormApi
 import io.github.droidkaigi.confsched2019.data.db.AnnouncementDatabase
+import io.github.droidkaigi.confsched2019.data.db.ContributorDatabase
 import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.db.SponsorDatabase
 import io.github.droidkaigi.confsched2019.data.db.StaffDatabase
-import io.github.droidkaigi.confsched2019.data.db.ContributorDatabase
+import io.github.droidkaigi.confsched2019.data.device.WifiManager
 import io.github.droidkaigi.confsched2019.data.firestore.Firestore
 import javax.inject.Singleton
 
@@ -24,6 +25,7 @@ interface RepositoryComponent {
     fun announcementRepository(): AnnouncementRepository
     fun staffRepository(): StaffRepository
     fun contributorRepository(): ContributorRepository
+    fun wifiConfigurationRepository(): WifiConfigurationRepository
 
     @Component.Builder
     interface Builder {
@@ -38,6 +40,8 @@ interface RepositoryComponent {
         @BindsInstance fun contributorDatabase(database: ContributorDatabase): Builder
 
         @BindsInstance fun firestore(firestore: Firestore): Builder
+
+        @BindsInstance fun wifiManager(wifiManager: WifiManager): Builder
 
         fun build(): RepositoryComponent
     }

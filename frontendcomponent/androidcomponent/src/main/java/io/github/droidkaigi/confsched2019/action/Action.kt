@@ -36,6 +36,7 @@ sealed class Action {
     data class SessionPageSelected(val sessionPage: SessionPage) : Action()
     data class SessionPageReselected(val sessionPage: SessionPage) : Action()
     class SystemPropertyLoaded(val system: SystemProperty) : Action()
+    data class WifiConfigurationRegistered(val registered:Boolean) : Action()
 
     open class FilterChange<T>(val value: T, open val checked: Boolean) : Action()
     data class RoomFilterChanged(

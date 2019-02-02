@@ -42,6 +42,8 @@ dependencies {
     implementation Dep.Groupie.groupie
     implementation Dep.Groupie.databinding
 
+    implementation Dep.Timber.android
+
     testImplementation Dep.Test.junit
     androidTestImplementation Dep.Test.testRunner
     androidTestImplementation Dep.Test.espressoCore

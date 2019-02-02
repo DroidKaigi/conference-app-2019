@@ -5,17 +5,19 @@ import dagger.Provides
 import io.github.droidkaigi.confsched2019.data.api.DroidKaigiApi
 import io.github.droidkaigi.confsched2019.data.api.GoogleFormApi
 import io.github.droidkaigi.confsched2019.data.db.AnnouncementDatabase
+import io.github.droidkaigi.confsched2019.data.db.ContributorDatabase
 import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.db.SponsorDatabase
 import io.github.droidkaigi.confsched2019.data.db.StaffDatabase
-import io.github.droidkaigi.confsched2019.data.db.ContributorDatabase
+import io.github.droidkaigi.confsched2019.data.device.WifiManager
 import io.github.droidkaigi.confsched2019.data.firestore.Firestore
+import io.github.droidkaigi.confsched2019.data.repository.AnnouncementRepository
+import io.github.droidkaigi.confsched2019.data.repository.ContributorRepository
 import io.github.droidkaigi.confsched2019.data.repository.RepositoryComponent
 import io.github.droidkaigi.confsched2019.data.repository.SessionRepository
 import io.github.droidkaigi.confsched2019.data.repository.SponsorRepository
-import io.github.droidkaigi.confsched2019.data.repository.AnnouncementRepository
 import io.github.droidkaigi.confsched2019.data.repository.StaffRepository
-import io.github.droidkaigi.confsched2019.data.repository.ContributorRepository
+import io.github.droidkaigi.confsched2019.data.repository.WifiConfigurationRepository
 import javax.inject.Singleton
 
 @Module
@@ -50,6 +52,12 @@ object RepositoryComponentModule {
         return repositoryComponent.contributorRepository()
     }
 
+    @JvmStatic @Provides @Singleton fun provideWifiConfigurationRepository(
+        repositoryComponent: RepositoryComponent
+    ): WifiConfigurationRepository {
+        return repositoryComponent.wifiConfigurationRepository()
+    }
+
     @JvmStatic @Provides @Singleton fun provideRepositoryComponent(
         droidKaigiApi: DroidKaigiApi,
         googleFormApi: GoogleFormApi,
@@ -58,7 +66,8 @@ object RepositoryComponentModule {
         announcementDatabase: AnnouncementDatabase,
         staffDatabase: StaffDatabase,
         contributorDatabase: ContributorDatabase,
-        firestore: Firestore
+        firestore: Firestore,
+        wifiManager: WifiManager
     ): RepositoryComponent {
         return RepositoryComponent.builder()
             .droidKaigiApi(droidKaigiApi)
@@ -69,6 +78,7 @@ object RepositoryComponentModule {
             .announcementDatabase(announcementDatabase)
             .staffDatabase(staffDatabase)
             .contributorDatabase(contributorDatabase)
+            .wifiManager(wifiManager)
             .build()
     }
 }

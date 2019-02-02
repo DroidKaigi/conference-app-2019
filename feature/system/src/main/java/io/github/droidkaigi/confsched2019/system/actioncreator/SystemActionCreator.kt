@@ -7,6 +7,7 @@ import io.github.droidkaigi.confsched2019.model.defaultLang
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 import javax.inject.Inject
 
@@ -18,5 +19,12 @@ class SystemActionCreator @Inject constructor(
         val lang = defaultLang()
         val systemProperty = SystemProperty(lang)
         dispatcher.launchAndDispatch(Action.SystemPropertyLoaded(systemProperty))
+    }
+
+    fun registerWifiConfiguration() {
+        launch {
+
+            dispatcher.dispatch(Action.WifiConfigurationRegistered(true))
+        }
     }
 }

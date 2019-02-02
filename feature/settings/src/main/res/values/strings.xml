@@ -3,5 +3,8 @@
     <string name="pref_key_add_wifi" translatable="false">key_add_wifi</string>
 
     <string name="title_add_wifi">Add Wifi setting</string>
-    <string name="summary_add_wifi" translatable="false">SSID: DroidKaigi2019</string>
+    <string name="summary_add_wifi" translatable="false">Sponsored by iRidge</string>
+    <string name="wifi_ssid" translatable="false">DroidKaigi2019</string>
+    <string name="wifi_password" translatable="false">thankyou-iridge</string>
+    <string name="wifi_added_message">Registered successfully</string>
 </resources>
