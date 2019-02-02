@@ -12,6 +12,12 @@ import SnapKit
 
 class SessionTableHeaderView: UIView {
     
+    var startDayText: Binder<String> {
+        return Binder(startDayLabel) { label, text in
+            label.text = text
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -31,7 +37,6 @@ class SessionTableHeaderView: UIView {
         label.numberOfLines = 1
         label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = UIColor(hex: "95959c")
-        label.text = "2019.2.7"
         return label
     }()
     

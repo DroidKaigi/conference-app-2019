@@ -61,22 +61,26 @@ final class SessionsViewController: UIViewController {
 
     private func bind() {
         let viewWillAppear = rx.methodInvoked(#selector(self.viewWillAppear)).map { _ in }
+        let topVisibleSession = dataSource.topVisibleSession
         let toggleFavorite = dataSource.toggleFavorite
-        let input = SessionsViewModel.Input(viewWillAppear: viewWillAppear, toggleFavorite: toggleFavorite)
+        let input = SessionsViewModel.Input(viewWillAppear: viewWillAppear,
+                                            topVisibleSession: topVisibleSession,
+                                            toggleFavorite: toggleFavorite)
         let output = viewModel.transform(input: input)
         output.error
-              .drive(onNext: { errorMessage in
-                  if let errMsg = errorMessage {
-                      MDCSnackbarManager.show(MDCSnackbarMessage(text: errMsg))
-                  }
-              })
-              .disposed(by: bag)
-        output.sessions
-              .drive(tableView.rx.items(dataSource: dataSource))
-              .disposed(by: bag)
+            .drive(onNext: { errorMessage in
+                if let errMsg = errorMessage {
+                    MDCSnackbarManager.show(MDCSnackbarMessage(text: errMsg))
+                }
+            })
+            .disposed(by: bag)
         
-        dataSource.topVisibleSession
-            .subscribe(onNext: { print($0.id_) })
+        output.startDayText
+            .drive(tableHeaderView.startDayText)
+            .disposed(by: bag)
+        
+        output.sessions
+            .drive(tableView.rx.items(dataSource: dataSource))
             .disposed(by: bag)
     }
 }
