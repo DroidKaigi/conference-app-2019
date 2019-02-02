@@ -3,7 +3,7 @@ package io.github.droidkaigi.confsched2019
 import io.github.droidkaigi.confsched2019.model.Sponsor
 import io.github.droidkaigi.confsched2019.model.SponsorCategory
 
-fun dummySponsorCategoriesData():List<SponsorCategory> {
+fun dummySponsorCategoriesData(): List<SponsorCategory> {
     return listOf(
         SponsorCategory(
             category = SponsorCategory.Category.PLATINUM,
