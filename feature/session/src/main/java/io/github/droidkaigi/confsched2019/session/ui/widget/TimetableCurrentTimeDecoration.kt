@@ -60,7 +60,9 @@ class TimetableCurrentTimeDecoration(
     private val dateFormat: DateFormat = DateFormat("HH:mm")
 
     private val textHeightHalf =
-        (Rect().apply { textPaint.getTextBounds("00:00", 0, "00:00".length - 1, this) }.height()) / 2
+        Rect().apply {
+            textPaint.getTextBounds("00:00", 0, "00:00".length - 1, this)
+        }.height() / 2
 
     private val textWidth =
         Rect().apply { textPaint.getTextBounds("00:00", 0, "00:00".length, this) }.width()
