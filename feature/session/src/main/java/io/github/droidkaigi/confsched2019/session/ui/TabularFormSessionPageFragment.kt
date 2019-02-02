@@ -35,6 +35,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
 
     private lateinit var binding: FragmentTabularFormSessionPageBinding
 
+    @Inject lateinit var tabularServiceSessionItemFactory: TabularServiceSessionItem.Factory
     @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
     @Inject lateinit var navController: NavController
     private val sessionPagesStore: SessionPagesStore by lazy {
@@ -130,7 +131,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                         is SpeechSession ->
                             TabularSpeechSessionItem(session, navDirections, navController)
                         is ServiceSession ->
-                            TabularServiceSessionItem(session, navDirections, navController)
+                            tabularServiceSessionItemFactory.create(session, navDirections)
                     }
                 )
 
