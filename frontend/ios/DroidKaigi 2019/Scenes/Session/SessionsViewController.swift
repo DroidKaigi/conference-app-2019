@@ -67,6 +67,10 @@ final class SessionsViewController: UIViewController {
         output.sessions
               .drive(tableView.rx.items(dataSource: dataSource))
               .disposed(by: bag)
+        
+        dataSource.topVisibleSession
+            .subscribe(onNext: { print($0.id_) })
+            .disposed(by: bag)
     }
 }
 
