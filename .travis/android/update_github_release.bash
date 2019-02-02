@@ -44,7 +44,7 @@ get_release_id() {
     curl -X GET \
         -H "Authorization: token $GITHUB_ACCESS_TOKEN" \
         "https://api.github.com/repos/$TRAVIS_REPO_SLUG/releases" | \
-        jq -r --arg tag_name "$RELEASE_TAG_NAME" '.[] | select(.tag_name == $tag_name and .draft) | .id // -1'
+        jq -r --arg tag_name "$RELEASE_TAG_NAME" '.[] // {} | select(.tag_name == $tag_name and .draft) // { "id" : -1 } | .id // -1'
 }
 
 ruby -rerb -e 'puts ERB.new(File.read(".travis/android/release_template.travis.erb")).result(binding)' > .travis/android/release_template
