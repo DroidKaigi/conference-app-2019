@@ -168,8 +168,8 @@ object Dep {
     }
 
     object MockK {
-        val jvm = "io.mockk:mockk:1.8.13.kotlin13"
-        val common = "io.mockk:mockk-common:1.8.13.kotlin13"
+        val jvm = "io.mockk:mockk:1.9"
+        val common = "io.mockk:mockk-common:1.9"
     }
 
     object InjectedVmProvider {
