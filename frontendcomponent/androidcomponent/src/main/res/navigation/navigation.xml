@@ -126,6 +126,8 @@
         android:name="io.github.droidkaigi.confsched2019.announcement.ui.AnnouncementFragment"
         android:label="@string/announce_label"
         >
+        <deepLink app:uri="droidkaigi.jp/2019/announcement"/>
+        <deepLink app:uri="droidkaigi.jp/2019/en/announcement"/>
     </fragment>
     <fragment
         android:id="@+id/sponsor"

@@ -26,7 +26,8 @@
             />
 
         <activity android:name=".ui.MainActivity"
-                  android:windowSoftInputMode="adjustPan">
+                  android:windowSoftInputMode="adjustPan"
+                  android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -53,6 +54,30 @@
                 <data
                     android:host="droidkaigi.jp"
                     android:pathPrefix="/2019/en/timetable/"
+                    android:scheme="https"
+                    />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="droidkaigi.jp"
+                    android:path="/2019/announcement"
+                    android:scheme="https"
+                    />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="droidkaigi.jp"
+                    android:path="/2019/en/announcement"
                     android:scheme="https"
                     />
             </intent-filter>
