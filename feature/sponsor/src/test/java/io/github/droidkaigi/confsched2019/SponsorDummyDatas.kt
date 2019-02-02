@@ -10,9 +10,9 @@ fun dummySponsorCategoriesData():List<SponsorCategory> {
             index = 1,
             sponsors = listOf(
                 Sponsor(
-                    name = "platinum1",
-                    url = "",
-                    image = ""
+                    name = "mercari",
+                    url = "https://tech.mercari.com/",
+                    image = "https://droidkaigi.jp/2019/images/sponsors/25_mercari.png"
                 )
             )
         ),
@@ -21,9 +21,9 @@ fun dummySponsorCategoriesData():List<SponsorCategory> {
             index = 2,
             sponsors = listOf(
                 Sponsor(
-                    name = "gold",
-                    url = "",
-                    image = ""
+                    name = "google developers",
+                    url = "https://developers.google.com/",
+                    image = "https://droidkaigi.jp/2019/images/sponsors/aa_google.png"
                 )
             )
         ),
@@ -32,9 +32,9 @@ fun dummySponsorCategoriesData():List<SponsorCategory> {
             index = 3,
             sponsors = listOf(
                 Sponsor(
-                    name = "support",
-                    url = "",
-                    image = ""
+                    name = "deploygate",
+                    url = "https://deploygate.com/",
+                    image = "https://droidkaigi.jp/2019/images/sponsors/42_deploygate.png"
                 )
             )
         ),
@@ -43,9 +43,9 @@ fun dummySponsorCategoriesData():List<SponsorCategory> {
             index = 4,
             sponsors = listOf(
                 Sponsor(
-                    name = "tech",
-                    url = "",
-                    image = ""
+                    name = "dwango",
+                    url = "http://dwango.co.jp/",
+                    image = "https://droidkaigi.jp/2019/images/sponsors/58_dwango.png"
                 )
             )
         )
