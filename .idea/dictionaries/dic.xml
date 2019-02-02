@@ -2,8 +2,12 @@
   <dictionary name="dic">
     <words>
       <w>akaita</w>
+      <w>bellesalle</w>
+      <w>breaktime</w>
+      <w>broadcastreceiver</w>
       <w>chrisbanes</w>
       <w>circleci</w>
+      <w>codelabs</w>
       <w>confsched</w>
       <w>constraintlayout</w>
       <w>coroutine</w>
@@ -11,32 +15,53 @@
       <w>crashlytics</w>
       <w>databinding</w>
       <w>deploygate</w>
+      <w>descendent</w>
       <w>droidkaigi</w>
       <w>easylauncher</w>
       <w>emoji</w>
+      <w>extream</w>
+      <w>favoried</w>
+      <w>favoritable</w>
+      <w>favorited</w>
+      <w>feedbacks</w>
       <w>firebase</w>
       <w>firestore</w>
+      <w>floormap</w>
+      <w>hideable</w>
       <w>injectedvmprovider</w>
       <w>jakewharton</w>
       <w>jetifier</w>
       <w>kaigi</w>
+      <w>keyline</w>
       <w>klock</w>
       <w>kotlintest</w>
       <w>kotlinx</w>
       <w>ktor</w>
+      <w>langs</w>
       <w>leakcanary</w>
       <w>lekton</w>
       <w>livedata</w>
       <w>mockk</w>
+      <w>noto</w>
+      <w>notosans</w>
       <w>okhttp</w>
       <w>okio</w>
+      <w>parcelize</w>
       <w>photoview</w>
       <w>recyclerview</w>
+      <w>robotomono</w>
+      <w>shinjuku</w>
       <w>shopify</w>
       <w>soywiz</w>
+      <w>sqlite</w>
       <w>squareup</w>
       <w>stetho</w>
       <w>tatarka</w>
+      <w>testcomponent</w>
+      <w>uicomponent</w>
+      <w>unbox</w>
+      <w>unsubscribes</w>
+      <w>upsert</w>
       <w>wasabeef</w>
       <w>willowtreeapps</w>
       <w>xwray</w>
