@@ -28,6 +28,7 @@
 		362D90FE21F5DBC2006962C8 /* RootViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 362D90FC21F5DBC2006962C8 /* RootViewController.storyboard */; };
 		362D910321F5DC2D006962C8 /* SessionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362D910021F5DC2C006962C8 /* SessionsViewController.swift */; };
 		362D910421F5DC2D006962C8 /* SessionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362D910121F5DC2C006962C8 /* SessionsViewModel.swift */; };
+		3632F49622070F2700FF472B /* DrawerMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3632F49522070F2700FF472B /* DrawerMenuTableViewCell.swift */; };
 		363E6AF421FD536A00EBC698 /* TagContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363E6AF321FD536A00EBC698 /* TagContent.swift */; };
 		363E6AF621FD545B00EBC698 /* Session+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363E6AF521FD545B00EBC698 /* Session+Extension.swift */; };
 		366B060721F751C400C912AD /* TagsLeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366B060621F751C400C912AD /* TagsLeftAlignedCollectionViewFlowLayout.swift */; };
@@ -129,6 +130,7 @@
 		362D90FC21F5DBC2006962C8 /* RootViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = RootViewController.storyboard; sourceTree = "<group>"; };
 		362D910021F5DC2C006962C8 /* SessionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsViewController.swift; sourceTree = "<group>"; };
 		362D910121F5DC2C006962C8 /* SessionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsViewModel.swift; sourceTree = "<group>"; };
+		3632F49522070F2700FF472B /* DrawerMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerMenuTableViewCell.swift; sourceTree = "<group>"; };
 		363E6AF321FD536A00EBC698 /* TagContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagContent.swift; sourceTree = "<group>"; };
 		363E6AF521FD545B00EBC698 /* Session+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+Extension.swift"; sourceTree = "<group>"; };
 		366B060621F751C400C912AD /* TagsLeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsLeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -336,6 +338,7 @@
 			isa = PBXGroup;
 			children = (
 				36E24A882206187200356530 /* DrawerViewController.swift */,
+				3632F49522070F2700FF472B /* DrawerMenuTableViewCell.swift */,
 			);
 			path = Drawer;
 			sourceTree = "<group>";
@@ -761,6 +764,7 @@
 				63F34E1B21EB43CE00B2EC48 /* SessionRepository.swift in Sources */,
 				59D30FC921F8B1BD003A937C /* SessionByStartTime.swift in Sources */,
 				362546CD21FCD4FF005ADB0F /* SessionDetailSectionFooterView.swift in Sources */,
+				3632F49622070F2700FF472B /* DrawerMenuTableViewCell.swift in Sources */,
 				43DC80C72201FC8100A3F710 /* UIButton+Extension.swift in Sources */,
 				3672C2D321F6FB7E00ACB910 /* SessionDataSource.swift in Sources */,
 				362546C921FC9DCD005ADB0F /* SessionDetailWithIconTableViewCell.swift in Sources */,

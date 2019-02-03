@@ -7,6 +7,32 @@
 
 import UIKit
 import SnapKit
+import ioscombined
+
+enum MenuItem {
+    case about
+    case floorMap
+    case announce
+
+    var title: LocaledString {
+        switch self {
+        case .about:
+            return LocaledString(ja: "DroidKaigiとは", en: "About DroidKaigi")
+        case .floorMap:
+            return LocaledString(ja: "フロアMap", en: "Floormap")
+        case .announce:
+            return LocaledString(ja: "お知らせ", en: "Announce")
+        }
+    }
+
+    var icon: UIImage? {
+        switch self {
+        case .about: return UIImage(named: "bug_report")
+        case .floorMap: return UIImage(named: "room")
+        case .announce: return UIImage(named: "info")
+        }
+    }
+}
 
 class DrawerViewController: UIViewController {
 
@@ -21,13 +47,19 @@ class DrawerViewController: UIViewController {
         view.backgroundColor = UIColor.DK.primary.color
     }
 
+    private let menuItems: [MenuItem] = [.about, .announce, .floorMap]
+
     private lazy var headerView = DrawerTableHeaderView()
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .white
+        tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 0, right: 0)
+        tableView.separatorStyle = .none
+        tableView.isScrollEnabled = false
         tableView.rowHeight = UITableView.automaticDimension
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.register(DrawerMenuTableViewCell.self)
         return tableView
     }()
 
@@ -52,11 +84,13 @@ extension DrawerViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return menuItems.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell: DrawerMenuTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+        cell.menuItem = menuItems[indexPath.row]
+        return cell
     }
 }
 
@@ -71,11 +105,11 @@ extension DrawerViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return nil
+        return DashedLineView()
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return .leastNonzeroMagnitude
+        return 25
     }
 }
 
