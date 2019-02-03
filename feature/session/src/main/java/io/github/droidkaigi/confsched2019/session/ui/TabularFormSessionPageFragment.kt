@@ -23,13 +23,13 @@ import io.github.droidkaigi.confsched2019.session.di.SessionPageScope
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularServiceSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpacerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionItem
+import io.github.droidkaigi.confsched2019.session.ui.store.SessionContentsStore
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
 import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableLayoutManager
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableLunchDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableRoomLabelDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableTimeLabelDecoration
-import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -41,9 +41,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
     @Inject lateinit var tabularServiceSessionItemFactory: TabularServiceSessionItem.Factory
     @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
     @Inject lateinit var navController: NavController
-    private val sessionPagesStore: SessionPagesStore by lazy {
-        InjectedViewModelProviders.of(requireActivity()).get(sessionPagesStoreProvider)
-    }
+    @Inject lateinit var sessionContentsStore: SessionContentsStore
 
     private lateinit var args: TabularFormSessionPagesFragmentArgs
 
@@ -100,7 +98,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
             }
             adapter = groupAdapter
         }
-        sessionPagesStore.sessionsByDay(args.day)
+        sessionContentsStore.sessionsByDay(args.day)
             .changed(viewLifecycleOwner) { sessions ->
                 groupAdapter.update(fillGaps(sessions))
             }
