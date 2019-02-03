@@ -32,7 +32,6 @@ class SessionDetailViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 50, right: 0)
         tableView.separatorStyle = .none
-        tableView.allowsSelection = false
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(SessionDetailTagsTableViewCell.self)
@@ -94,7 +93,7 @@ extension SessionDetailViewController: UITableViewDataSource {
         return sections.count
     }
 
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch sections[section] {
         case .speakers:
             return (session as? SpeechSession)?.speakers.count ?? 0
@@ -152,6 +151,18 @@ extension SessionDetailViewController: UITableViewDataSource {
 }
 
 extension SessionDetailViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch sections[indexPath.section] {
+        case .document:
+            let document = documents[indexPath.row]
+            guard let url = document.url else { return }
+            UIApplication.shared.open(url)
+        default:
+            break
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView: SessionDetailSectionHeaderView = tableView.dequeueReusableHeaderFooterView()

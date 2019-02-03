@@ -12,6 +12,7 @@ class SessionDetailTableViewCell: UITableViewCell, Reusable {
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
         contentView.addSubview(label)
         label.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(16)
