@@ -1,4 +1,6 @@
-include ':frontend:android', ':frontend:ioscombined',
+include ':frontend:android',
+        // If you create iOS app, Please uncomment following
+        // ':frontend:ioscombined',
         ':frontendcomponent:androidcomponent',
         ':frontendcomponent:androidtestcomponent',
         ':feature:session',

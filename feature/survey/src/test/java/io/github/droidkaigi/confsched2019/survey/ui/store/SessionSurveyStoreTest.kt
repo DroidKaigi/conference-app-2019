@@ -1,13 +1,13 @@
-package io.github.droidkaigi.confsched2019.sponsor.ui.store
+package io.github.droidkaigi.confsched2019.survey.ui.store
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
-import io.github.droidkaigi.confsched2019.dummySponsorCategoriesData
+import io.github.droidkaigi.confsched2019.dummySessionFeedbackData
 import io.github.droidkaigi.confsched2019.ext.android.CoroutinePlugin
 import io.github.droidkaigi.confsched2019.ext.android.changedForever
-import io.github.droidkaigi.confsched2019.model.SponsorCategory
 import io.github.droidkaigi.confsched2019.model.LoadingState
+import io.github.droidkaigi.confsched2019.model.SessionFeedback
 import io.github.droidkaigi.confsched2019.widget.component.DirectDispatcher
 import io.mockk.MockKAnnotations
 import io.mockk.mockk
@@ -17,8 +17,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class SponsorStoreTest {
-
+class SessionSurveyStoreTest {
     @JvmField @Rule val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Before fun setUp() {
@@ -28,27 +27,31 @@ class SponsorStoreTest {
 
     @Test fun loadingState() = runBlocking {
         val dispatcher = Dispatcher()
-        val sponsorStore = SponsorStore(dispatcher)
+        val sessionSurveyStore = SessionSurveyStore(dispatcher)
         val observer = mockk<(LoadingState?) -> Unit>(relaxed = true)
 
-        sponsorStore.loadingState.changedForever(observer)
+        sessionSurveyStore.loadingState.changedForever(observer)
+        verify { observer(LoadingState.INITIALIZED) }
+
+        dispatcher.dispatch(Action.SessionSurveyLoadingStateChanged(LoadingState.LOADING))
         verify { observer(LoadingState.LOADING) }
 
-        dispatcher.dispatch(Action.SponsorLoadingStateChanged(LoadingState.LOADED))
+        dispatcher.dispatch(Action.SessionSurveyLoadingStateChanged(LoadingState.LOADED))
         verify { observer(LoadingState.LOADED) }
     }
 
-    @Test fun sponsors() = runBlocking {
+    @Test fun sessionFeedback() = runBlocking {
         val dispatcher = Dispatcher()
-        val sponsorStore = SponsorStore(dispatcher)
-        val observer: (List<SponsorCategory>) -> Unit = mockk(relaxed = true)
-        sponsorStore.sponsors.changedForever(observer)
-        verify { observer(emptyList()) }
+        val sessionSurveyStore = SessionSurveyStore(dispatcher)
+        val observer = mockk<(SessionFeedback) -> Unit>(relaxed = true)
 
-        val dummySponsors = dummySponsorCategoriesData()
+        sessionSurveyStore.sessionFeedback.changedForever(observer)
+        verify { observer(SessionFeedback.EMPTY) }
+
+        val dummySessionFeedback = dummySessionFeedbackData()
         dispatcher.dispatch(
-            Action.SponsorLoaded(dummySponsors)
+            Action.SessionSurveyLoaded(dummySessionFeedback)
         )
-        verify { observer(dummySponsors) }
+        verify { observer(dummySessionFeedback) }
     }
 }
