@@ -10,10 +10,19 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import io.github.droidkaigi.confsched2019.action.Action
+import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
+import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
+import io.github.droidkaigi.confsched2019.model.CopyText
 import io.github.droidkaigi.confsched2019.system.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ActivityActionCreator @Inject constructor(val activity: FragmentActivity) {
+class ActivityActionCreator @Inject constructor(
+    override val dispatcher: Dispatcher,
+    val activity: FragmentActivity
+) : CoroutineScope by activity.coroutineScope, ErrorHandler {
     fun openUrl(url: String) {
         val customTabsIntent = CustomTabsIntent.Builder()
             .setShowTitle(true)
@@ -62,14 +71,20 @@ class ActivityActionCreator @Inject constructor(val activity: FragmentActivity) 
         activity.startActivity(intent)
     }
 
-    fun copyText(label: String, text: String): Boolean {
-        val cpManager =
-            ContextCompat.getSystemService(activity, ClipboardManager::class.java) ?: return false
+    fun copyText(label: String, text: String) {
+        launch {
+            val cpManager = ContextCompat.getSystemService(activity, ClipboardManager::class.java)
 
-        val clip: ClipData = ClipData.newPlainText(label, text)
-        cpManager.primaryClip = clip
+            if (cpManager == null) {
+                dispatcher.dispatch(Action.ClipboardChange(CopyText(text, false)))
+                return@launch
+            }
 
-        return true
+            val clip: ClipData = ClipData.newPlainText(label, text)
+            cpManager.primaryClip = clip
+
+            dispatcher.dispatch(Action.ClipboardChange(CopyText(text, true)))
+        }
     }
 
     companion object {

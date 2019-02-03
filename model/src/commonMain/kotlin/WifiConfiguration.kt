@@ -1,6 +1,7 @@
 package io.github.droidkaigi.confsched2019.model
 
-class WifiConfiguration(
+data class WifiConfiguration(
     val ssid: String,
-    val password: String
+    val password: String,
+    val isRegistered: Boolean = false
 )

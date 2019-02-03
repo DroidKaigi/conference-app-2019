@@ -6,7 +6,6 @@
     <string name="summary_add_wifi" translatable="false">Sponsored by iRidge</string>
     <string name="wifi_ssid" translatable="false">DroidKaigi2019</string>
     <string name="wifi_password" translatable="false">thankyou-iridge</string>
-    <string name="wifi_registered_message">Registered successfully</string>
     <string name="wifi_failed_to_register_message_so_copied">Copied the password to Clipboard instead. The SSID is %1$s</string>
     <string name="wifi_failed_to_register_message">Failed to register. SSID is %1$s, password is %2$s</string>
 </resources>

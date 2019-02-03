@@ -4,6 +4,7 @@ import io.github.droidkaigi.confsched2019.model.Announcement
 import io.github.droidkaigi.confsched2019.model.AudienceCategory
 import io.github.droidkaigi.confsched2019.model.Category
 import io.github.droidkaigi.confsched2019.model.ContributorContents
+import io.github.droidkaigi.confsched2019.model.CopyText
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.LangSupport
 import io.github.droidkaigi.confsched2019.model.LoadingState
@@ -18,6 +19,7 @@ import io.github.droidkaigi.confsched2019.model.SponsorCategory
 import io.github.droidkaigi.confsched2019.model.StaffContents
 import io.github.droidkaigi.confsched2019.model.StaffSearchResult
 import io.github.droidkaigi.confsched2019.model.SystemProperty
+import io.github.droidkaigi.confsched2019.model.WifiConfiguration
 
 sealed class Action {
     class ShowProcessingMessage(val message: Message) : Action()
@@ -36,7 +38,8 @@ sealed class Action {
     data class SessionPageSelected(val sessionPage: SessionPage) : Action()
     data class SessionPageReselected(val sessionPage: SessionPage) : Action()
     class SystemPropertyLoaded(val system: SystemProperty) : Action()
-    data class WifiConfigurationRegistered(val registered: Boolean?) : Action()
+    data class WifiConfigurationChange(val wifiConfiguration: WifiConfiguration?) : Action()
+    data class ClipboardChange(val copyText: CopyText?) : Action()
 
     open class FilterChange<T>(val value: T, open val checked: Boolean) : Action()
     data class RoomFilterChanged(

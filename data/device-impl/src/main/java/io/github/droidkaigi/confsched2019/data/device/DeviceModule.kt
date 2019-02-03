@@ -8,6 +8,5 @@ internal abstract class DeviceModule {
     @Binds abstract fun WifiManager(impl: AndroidWifiManager): WifiManager
 
     @Module
-    internal object Providers {
-    }
+    internal object Providers
 }
