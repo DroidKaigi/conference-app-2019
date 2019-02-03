@@ -2,7 +2,4 @@
     <string name="notification_channel_name_default">Not categorized</string>
     <string name="notification_channel_name_start_favorite_session">start favorite session</string>
     <string name="notification_channel_name_announcement">Announcement</string>
-
-    <string name="notification_foreground_subscribe_topic_title">Subscribing the new topic</string>
-    <string name="notification_foreground_subscribe_topic_text">Processing %1$s</string>
 </resources>

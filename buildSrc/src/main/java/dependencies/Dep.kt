@@ -66,6 +66,12 @@ object Dep {
             val fragmentKtx = "android.arch.navigation:navigation-fragment-ktx:$version"
             val uiKtx = "android.arch.navigation:navigation-ui-ktx:1.0.0-alpha10"
         }
+
+        object Work {
+            val version = "1.0.0-alpha12"
+            val runtime = "android.arch.work:work-runtime:$version"
+            val runtimeKtx = "android.arch.work:work-runtime-ktx:$version"
+        }
     }
 
     object Kotlin {
