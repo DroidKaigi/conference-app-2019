@@ -118,6 +118,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                         val job = viewLifecycleOwner.coroutineScope.launch(Dispatchers.Main) {
                             delay(500)
                             removeItemDecoration(timetableCurrentTimeLabelDecoration)
+                            removeItemDecoration(timetableCurrentTimeLineDecoration)
                             addItemDecoration(timetableCurrentTimeLineDecoration)
                         }
                         super.onScrollStateChanged(recyclerView, newState)
