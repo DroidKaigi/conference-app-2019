@@ -29,13 +29,21 @@ class SessionDetailSectionFooterView: UITableViewHeaderFooterView, Reusable {
 
 final class DashedLineView: UIView {
 
+    init() {
+        super.init(frame: .zero)
+        backgroundColor = .clear
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func draw(_ rect: CGRect) {
         let  path = UIBezierPath()
         let  start = CGPoint(x: rect.minX, y: rect.midY)
         let  end = CGPoint(x: rect.maxX, y: rect.midY)
         path.move(to: start)
         path.addLine(to: end)
-        let  dashes: [CGFloat] = [2.0, 3.0]
+        let  dashes: [CGFloat] = [3.0, 3.0]
         path.setLineDash(dashes, count: dashes.count, phase: 0.0)
         path.lineWidth = 1
         UIColor.lightGray.setStroke()

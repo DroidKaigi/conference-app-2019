@@ -17,9 +17,9 @@ extension Floor {
     var title: String {
         switch self {
         case .floor1:
-            return "1st floor"
+            return "1F"
         case .floor5:
-            return "5th floor"
+            return "5F"
         }
     }
     

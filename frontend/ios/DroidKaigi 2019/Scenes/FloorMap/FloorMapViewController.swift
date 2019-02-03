@@ -14,9 +14,15 @@ class FloorMapViewController: ButtonBarPagerTabStripViewController {
         settings.style.buttonBarBackgroundColor = UIColor.DK.primary.color
         settings.style.buttonBarItemBackgroundColor = UIColor.DK.primary.color
         settings.style.selectedBarBackgroundColor = UIColor.DK.primaryDark.color
+        settings.style.buttonBarItemFont = UIFont.systemFont(ofSize: 16)
+        settings.style.selectedBarHeight = 4
+        settings.style.buttonBarItemsShouldFillAvailableWidth = true
         super.viewDidLoad()
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+//        https://github.com/xmartlabs/XLPagerTabStrip/issues/256
     }
-    
+
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         return Floor.allCases.compactMap {
             let content = storyboard?.instantiateViewController(withIdentifier: "content") as? FloorMapContentViewController
