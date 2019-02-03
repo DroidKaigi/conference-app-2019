@@ -13,24 +13,19 @@ import io.mockk.MockKAnnotations
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
 class SessionSurveyStoreTest {
-    @JvmField
-    @Rule
-    val instantTaskExecutorRule = InstantTaskExecutorRule()
+    @JvmField @Rule val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    @Before
-    fun setUp() {
+    @Before fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
         CoroutinePlugin.mainDispatcherHandler = { DirectDispatcher }
     }
 
-    @Test
-    fun loadingState() = runBlocking {
+    @Test fun loadingState() = runBlocking {
         val dispatcher = Dispatcher()
         val sessionSurveyStore = SessionSurveyStore(dispatcher)
         val observer = mockk<(LoadingState?) -> Unit>(relaxed = true)
@@ -45,8 +40,7 @@ class SessionSurveyStoreTest {
         verify { observer(LoadingState.LOADED) }
     }
 
-    @Test
-    fun sessionFeedback() = runBlocking {
+    @Test fun sessionFeedback() = runBlocking {
         val dispatcher = Dispatcher()
         val sessionSurveyStore = SessionSurveyStore(dispatcher)
         val observer = mockk<(SessionFeedback) -> Unit>(relaxed = true)
@@ -55,7 +49,9 @@ class SessionSurveyStoreTest {
         verify { observer(SessionFeedback.EMPTY) }
 
         val dummySessionFeedback = dummySessionFeedbackData()
-        dispatcher.dispatch(Action.SessionSurveyLoaded(dummySessionFeedback))
+        dispatcher.dispatch(
+            Action.SessionSurveyLoaded(dummySessionFeedback)
+        )
         verify { observer(dummySessionFeedback) }
     }
 }
