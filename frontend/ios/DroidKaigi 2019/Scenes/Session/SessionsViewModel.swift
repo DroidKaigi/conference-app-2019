@@ -40,10 +40,12 @@ extension SessionsViewModel {
 
     struct Input {
         let viewWillAppear: Observable<Void>
+        let topVisibleSession: Observable<Session>
         let toggleFavorite: Observable<Session>
     }
 
     struct Output {
+        let startDayText: Driver<String>
         let sessions: Driver<[SessionByStartTime]>
         let error: Driver<String?>
     }
@@ -53,16 +55,21 @@ extension SessionsViewModel {
             .subscribe(onNext: { [weak self] in self?.favoriteRepository.toggle(sessionId: $0.id_) })
             .disposed(by: bag)
         
+        let startDayText = input.topVisibleSession
+            .map { $0.startDayText }
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: "")
+        
         let sessionContents = input.viewWillAppear
-                .flatMap { [weak self] (_) -> Observable<SessionContents> in
-                    guard let `self` = self else { return Observable.empty() }
-                    return self.sessionRepository.fetch()
-                        .asObservable()
-                        .catchError { error in
-                            self._error.accept(error.localizedDescription)
-                            return Observable.empty()
-                        }
-                }
+            .flatMap { [weak self] (_) -> Observable<SessionContents> in
+                guard let `self` = self else { return Observable.empty() }
+                return self.sessionRepository.fetch()
+                    .asObservable()
+                    .catchError { error in
+                        self._error.accept(error.localizedDescription)
+                        return Observable.empty()
+                    }
+            }
         
         let favoriteSessionIds = favoriteRepository.sessionIdsDidChanged
         
@@ -99,6 +106,6 @@ extension SessionsViewModel {
             }
             .asDriver(onErrorJustReturn: [])
         let error = _error.asDriver()
-        return Output(sessions: sessions, error: error)
+        return Output(startDayText: startDayText, sessions: sessions, error: error)
     }
 }
