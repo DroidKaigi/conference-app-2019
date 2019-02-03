@@ -138,26 +138,6 @@ class FiltersTest {
         assertFalse { sut.isPass(speechSession) }
     }
 
-    @Test fun isPass_WhenAudienceCategoryFiltered() {
-        // setup
-        val audienceCategory = AudienceCategory.BEGINNERS
-        val sut = Filters(audienceCategories = mutableSetOf(audienceCategory))
-        every { speechSession.forBeginners } returns true
-
-        // verify
-        assertTrue { sut.isPass(speechSession) }
-    }
-
-    @Test fun isPass_WhenAudienceCategoryFilteredWithoutForBeginners() {
-        // setup
-        val audienceCategory = AudienceCategory.BEGINNERS
-        val sut = Filters(audienceCategories = mutableSetOf(audienceCategory))
-        every { speechSession.forBeginners } returns false
-
-        // verify
-        assertFalse { sut.isPass(speechSession) }
-    }
-
     private fun speechSessionMock(isBeginner: Boolean = false): SpeechSession {
         val speechSessionBeginner = mockk<SpeechSession>()
         every { speechSessionBeginner.forBeginners } returns isBeginner
