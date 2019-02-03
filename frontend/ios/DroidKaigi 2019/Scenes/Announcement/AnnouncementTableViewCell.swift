@@ -8,8 +8,8 @@
 import UIKit
 
 class AnnouncementTableViewCell: UITableViewCell, Reusable {
-    @IBOutlet weak var publishedAt: UILabel!
     @IBOutlet weak var announcementIcon: UIImageView!
+    @IBOutlet weak var publishedAt: UILabel!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var content: UILabel!
     
@@ -18,8 +18,8 @@ class AnnouncementTableViewCell: UITableViewCell, Reusable {
             guard let announcement = announcement else
                 { return }
             let formatter = DateFormatter()
-            formatter.timeStyle = .medium
-            formatter.timeStyle = .medium
+            formatter.timeStyle = .short
+            formatter.dateStyle = .short
             publishedAt.text = formatter.string(from: announcement.publishedAt)
             announcementIcon.image = announcement.type.iconImage
             title.text = announcement.title

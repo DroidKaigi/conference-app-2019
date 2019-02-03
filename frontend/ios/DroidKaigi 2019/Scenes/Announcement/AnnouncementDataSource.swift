@@ -6,3 +6,58 @@
 //
 
 import Foundation
+import UIKit
+import RxCocoa
+import RxSwift
+import ioscombined
+
+final class AnnouncementDataSource: NSObject, UITableViewDataSource {
+    typealias Element = [Announcement]
+    var items: Element = []
+    
+    private var cellHeightsCache = [IndexPath: CGFloat]()
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return items.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: AnnouncementTableViewCell = (tableView.dequeueReusableCell(withIdentifier: "AnnouncementCell", for: indexPath) as? AnnouncementTableViewCell)!
+        let announcement = items[indexPath.row]
+        cell.announcement = announcement
+        return cell
+    }
+}
+
+//extension AnnouncementDataSource: RxTableViewDataSourceType {
+//    public func tableView(_ tableView: UITableView, observedEvent: Event<[Announcement]>) {
+//        Binder(self) { dataSource, element in
+//            dataSource.items = element
+//            tableView.reloadData()
+//            }
+//            .on(observedEvent)
+//    }
+//}
+
+extension AnnouncementDataSource: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cellHeightsCache[indexPath] = cell.frame.height
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return cellHeightsCache[indexPath] ?? UITableView.automaticDimension
+    }
+}
