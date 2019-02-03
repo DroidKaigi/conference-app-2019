@@ -25,22 +25,34 @@
             app:tabSelectedTextColor="@color/colorPrimary"
             app:tabTextAppearance="@style/TextAppearance.App.Body1"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tabular_form_sessions_fragment_container"
+            app:layout_constraintBottom_toTopOf="@id/tabular_form_sessions_fragment_container_day1"
             />
 
         <FrameLayout
-            android:id="@+id/tabular_form_sessions_fragment_container"
+            android:id="@+id/tabular_form_sessions_fragment_container_day1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintTop_toBottomOf="@+id/tabular_form_sessions_tab_layout"
             app:layout_constraintBottom_toBottomOf="parent"
             />
+        <FrameLayout
+            android:id="@+id/tabular_form_sessions_fragment_container_day2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/tabular_form_sessions_tab_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+        />
 
         <ProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
