@@ -13,7 +13,7 @@
         <!--Sessions-->
         <scene sceneID="QUN-Gm-xpE">
             <objects>
-                <viewController id="TSe-d1-Xyb" customClass="StartViewController" customModule="DroidKaigi_2019" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="TSe-d1-Xyb" customClass="RootViewController" customModule="DroidKaigi_2019" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gKX-GF-WrE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
