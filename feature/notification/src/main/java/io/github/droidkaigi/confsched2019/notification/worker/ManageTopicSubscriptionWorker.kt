@@ -54,9 +54,7 @@ class ManageTopicSubscriptionWorker(
         } catch (th: Throwable) {
             Timber.error(th)
 
-            if (inputData.isValid) {
-                return androidx.work.Result.retry()
-            }
+            return androidx.work.Result.retry()
         }
 
         return androidx.work.Result.success()
