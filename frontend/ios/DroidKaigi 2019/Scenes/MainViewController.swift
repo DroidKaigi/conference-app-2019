@@ -86,4 +86,8 @@ extension MainViewController: DrawerViewControllerDelegate {
         }
         closeSlide()
     }
+    @objc func notificationsButtonTapped(_ sender: Any?) {
+        let notifications = AnnouncementsViewController.instantiateFromStoryboard()
+        show(notifications, sender: nil)
+    }
 }
