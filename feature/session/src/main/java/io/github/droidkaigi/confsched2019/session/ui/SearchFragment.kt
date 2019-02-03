@@ -98,7 +98,9 @@ class SearchFragment : DaggerFragment() {
                         result.query
                     )
                 }.sortedBy { it.speaker.name.toUpperCase() }
-                setHeader(SearchSectionHeaderItem(requireContext().getString(R.string.speaker_label)))
+                setHeader(
+                    SearchSectionHeaderItem(requireContext().getString(R.string.speaker_label))
+                )
                 addAll(speakers)
                 setFooter(DividerItem())
             }
@@ -136,7 +138,9 @@ class SearchFragment : DaggerFragment() {
                         else -> StickyHeaderItemDecoration.DEFAULT_TITLE
                     }
                 }
-                setHeader(SearchSectionHeaderItem(requireContext().getString(R.string.session_title)))
+                setHeader(
+                    SearchSectionHeaderItem(requireContext().getString(R.string.session_title))
+                )
                 addAll(sessions)
             }
             groupAdapter.update(items)
