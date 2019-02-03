@@ -18,6 +18,7 @@ import com.squareup.inject.assisted.AssistedInject
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import com.xwray.groupie.databinding.BindableItem
+import io.github.droidkaigi.confsched2019.item.EqualableContentsProvider
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.model.SpeechSession
 import io.github.droidkaigi.confsched2019.model.defaultLang
@@ -27,7 +28,6 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionConten
 import io.github.droidkaigi.confsched2019.session.ui.bindingadapter.setHighlightText
 import io.github.droidkaigi.confsched2019.util.lazyWithParam
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
-import java.lang.IllegalArgumentException
 import kotlin.math.max
 
 class SpeechSessionItem @AssistedInject constructor(
@@ -40,7 +40,7 @@ class SpeechSessionItem @AssistedInject constructor(
     val sessionContentsActionCreator: SessionContentsActionCreator
 ) : BindableItem<ItemSessionBinding>(
     session.id.hashCode().toLong()
-), SessionItem {
+), SessionItem, EqualableContentsProvider {
     val speechSession get() = session
 
     @AssistedInject.Factory
@@ -199,19 +199,27 @@ class SpeechSessionItem @AssistedInject constructor(
 
     override fun getLayout(): Int = R.layout.item_session
 
+    override fun providerEqualableContents(): Array<*> = arrayOf(
+        session,
+        if (isContainsQuery()) query else null
+    )
+
+    private fun isContainsQuery() = query?.let {
+        when {
+            session.title.getByLang(defaultLang()).toLowerCase()
+                .contains(query.toLowerCase()) -> true
+            session.speakers.find {
+                it.name.toLowerCase().contains(query.toLowerCase())
+            } != null -> true
+            else -> false
+        }
+    } ?: false
+
     override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as SpeechSessionItem
-
-        if (session != other.session) return false
-        if (query == null || other.query == null || query != other.query) return false
-
-        return true
+        return isSameContents(other)
     }
 
     override fun hashCode(): Int {
-        return session.hashCode() + query.hashCode()
+        return contentsHash()
     }
 }

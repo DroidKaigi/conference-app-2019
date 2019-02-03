@@ -10,4 +10,8 @@ class DividerItem : Item<ViewHolder>() {
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
     }
+
+    override fun isSameAs(other: Item<*>?): Boolean {
+        return other is DividerItem
+    }
 }

@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.BindableItem
 import com.xwray.groupie.databinding.ViewHolder
+import io.github.droidkaigi.confsched2019.item.EqualableContentsProvider
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.model.SpeechSession
 import io.github.droidkaigi.confsched2019.model.defaultLang
@@ -26,7 +27,7 @@ class TabularSpeechSessionItem @AssistedInject constructor(
     private val navController: NavController
 ) : BindableItem<ItemTabularSpeechSessionBinding>(
     session.id.hashCode().toLong()
-), SessionItem {
+), SessionItem, EqualableContentsProvider {
 
     @AssistedInject.Factory
     interface Factory {
@@ -82,19 +83,14 @@ class TabularSpeechSessionItem @AssistedInject constructor(
 
     override fun getLayout() = R.layout.item_tabular_speech_session
 
+    override fun providerEqualableContents(): Array<*> = arrayOf(session)
+
     override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as TabularSpeechSessionItem
-
-        if (session != other.session) return false
-
-        return true
+        return isSameContents(other)
     }
 
     override fun hashCode(): Int {
-        return session.hashCode()
+        return contentsHash()
     }
 
     private class SpeakerIconItem(

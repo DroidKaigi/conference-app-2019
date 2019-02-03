@@ -8,6 +8,7 @@ import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.databinding.BindableItem
+import io.github.droidkaigi.confsched2019.item.EqualableContentsProvider
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSpeakerBinding
@@ -18,7 +19,8 @@ class SpeakerItem @AssistedInject constructor(
     @Assisted val clickNavDirection: NavDirections,
     @Assisted val query: String?,
     val navController: NavController
-) : BindableItem<ItemSpeakerBinding>(speaker.id.hashCode().toLong()) {
+) : BindableItem<ItemSpeakerBinding>(speaker.id.hashCode().toLong()),
+    EqualableContentsProvider {
     @AssistedInject.Factory
     interface Factory {
         fun create(
@@ -64,19 +66,20 @@ class SpeakerItem @AssistedInject constructor(
         }
     }
 
+    override fun providerEqualableContents(): Array<*> = arrayOf(
+        speaker,
+        if (isContainsQuery()) query else null
+    )
+
+    private fun isContainsQuery() = query?.let {
+        speaker.name.toLowerCase().contains(it.toLowerCase())
+    } ?: false
+
     override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as SpeakerItem
-
-        if (speaker != other.speaker) return false
-        if (query != other.query) return false
-
-        return true
+        return isSameContents(other)
     }
 
     override fun hashCode(): Int {
-        return speaker.hashCode() + query.hashCode()
+        return contentsHash()
     }
 }

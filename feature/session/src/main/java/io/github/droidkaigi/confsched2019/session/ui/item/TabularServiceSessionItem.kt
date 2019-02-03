@@ -6,6 +6,7 @@ import androidx.navigation.NavDirections
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.xwray.groupie.databinding.BindableItem
+import io.github.droidkaigi.confsched2019.item.EqualableContentsProvider
 import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
@@ -17,7 +18,7 @@ class TabularServiceSessionItem @AssistedInject constructor(
     private val navController: NavController
 ) : BindableItem<ItemTabularServiceSessionBinding>(
     session.id.hashCode().toLong()
-), SessionItem {
+), SessionItem, EqualableContentsProvider {
 
     @AssistedInject.Factory
     interface Factory {
@@ -46,18 +47,13 @@ class TabularServiceSessionItem @AssistedInject constructor(
 
     override fun getLayout() = R.layout.item_tabular_service_session
 
+    override fun providerEqualableContents(): Array<*> = arrayOf(session)
+
     override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as TabularServiceSessionItem
-
-        if (session != other.session) return false
-
-        return true
+        return isSameContents(other)
     }
 
     override fun hashCode(): Int {
-        return session.hashCode()
+        return contentsHash()
     }
 }
