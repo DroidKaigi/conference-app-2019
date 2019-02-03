@@ -1,7 +1,14 @@
 package io.github.droidkaigi.confsched2019.notification.worker
 
 import android.content.Context
-import androidx.work.*
+import androidx.work.Constraints
+import androidx.work.Data
+import androidx.work.ExistingWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.Worker
+import androidx.work.WorkerParameters
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import io.github.droidkaigi.confsched2019.notification.Topic
@@ -11,11 +18,14 @@ import kotlinx.coroutines.tasks.await
 import timber.log.Timber
 import timber.log.debug
 
-class ManageTopicSubscriptionWorker(context: Context, parameters: WorkerParameters) : Worker(context, parameters) {
-    override fun doWork(): Result {
+class ManageTopicSubscriptionWorker(
+    context: Context,
+    parameters: WorkerParameters
+) : Worker(context, parameters) {
+    override fun doWork(): androidx.work.Result {
         try {
             if (!inputData.isValid) {
-                return Result.failure()
+                return androidx.work.Result.failure()
             }
 
             val topicsToBeSubscribed =
@@ -45,11 +55,11 @@ class ManageTopicSubscriptionWorker(context: Context, parameters: WorkerParamete
             Timber.error(th)
 
             if (inputData.isValid) {
-                return Result.retry()
+                return androidx.work.Result.retry()
             }
         }
 
-        return Result.success()
+        return androidx.work.Result.success()
     }
 
     private val Data.isValid: Boolean
