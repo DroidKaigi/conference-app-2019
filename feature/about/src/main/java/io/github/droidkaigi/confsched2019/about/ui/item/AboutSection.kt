@@ -5,9 +5,7 @@ import androidx.navigation.Navigation
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.xwray.groupie.Section
 import io.github.droidkaigi.confsched2019.about.R
-import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.Lang
-import io.github.droidkaigi.confsched2019.model.Message
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
 import io.github.droidkaigi.confsched2019.system.actioncreator.SystemActionCreator
