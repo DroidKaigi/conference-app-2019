@@ -1,6 +1,7 @@
 package io.github.droidkaigi.confsched2019.session.ui.store
 
 import androidx.lifecycle.LiveData
+import com.shopify.livedataktx.map
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.mapNotNull
@@ -8,6 +9,7 @@ import io.github.droidkaigi.confsched2019.ext.android.requireValue
 import io.github.droidkaigi.confsched2019.ext.android.toLiveData
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.ServiceSession
+import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.model.SpeechSession
@@ -66,4 +68,12 @@ class SessionContentsStore @Inject constructor(
                 ?.sessions
                 ?.findLast { it.id == sessionId } as? ServiceSession
         }
+
+    fun sessionsByDay(day: Int): LiveData<List<Session>> {
+        return sessionContents
+            .mapNotNull { it?.sessions }
+            .map { sessions ->
+                sessions.orEmpty().filter { session -> session.dayNumber == day }
+            }
+    }
 }

@@ -20,7 +20,8 @@ fun setHighlightText(view: TextView, highlightText: String?) {
         view.text = stringBuilder
         return
     }
-    val pattern = Pattern.compile(highlightText, Pattern.CASE_INSENSITIVE)
+    val quotedHighlightText = Pattern.quote(highlightText)
+    val pattern = Pattern.compile(quotedHighlightText, Pattern.CASE_INSENSITIVE)
     val matcher = pattern.matcher(view.text)
     while (matcher.find()) {
         stringBuilder.setSpan(
