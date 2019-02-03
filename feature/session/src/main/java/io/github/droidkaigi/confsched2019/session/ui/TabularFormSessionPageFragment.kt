@@ -15,6 +15,7 @@ import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.ext.android.Dispatchers
 import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
 import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SpeechSession
@@ -31,7 +32,6 @@ import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableCurrentTime
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableLayoutManager
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableRoomLabelDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableTimeLabelDecoration
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
@@ -110,7 +110,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
             addOnScrollListener(
                 object : RecyclerView.OnScrollListener() {
                     override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                        val job = GlobalScope.launch(Dispatchers.Main) {
+                        val job = viewLifecycleOwner.coroutineScope.launch(Dispatchers.Main) {
                             delay(500)
                             removeItemDecoration(timetableCurrentTimeLabelDecoration)
                             addItemDecoration(timetableCurrentTimeLineDecoration)
