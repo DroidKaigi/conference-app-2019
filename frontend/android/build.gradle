@@ -1,4 +1,5 @@
 import dependencies.Dep
+import dependencies.Packages
 import dependencies.Versions
 
 apply plugin: 'com.android.application'
@@ -26,7 +27,7 @@ android {
         }
     }
     defaultConfig {
-        applicationId "io.github.droidkaigi.confsched2019"
+        applicationId Packages.name
         minSdkVersion Versions.androidMinSdkVersion
         targetSdkVersion 28
         versionCode Versions.androidVersionCode
@@ -37,21 +38,19 @@ android {
         if (!isCi && !isReleaseBuild) {
             // For Android Studio Gradle sync
             // gms plugin cannot parse google-service.json correctly if applicationIdSuffix is specified here
-            applicationIdSuffix ".debug"
+            applicationIdSuffix Packages.debugNameSuffix
         }
         manifestPlaceholders = [isCi: String.valueOf(isCi)]
     }
     buildTypes {
         debug {
             if (isCi || isReleaseBuild) {
-                applicationIdSuffix ".debug"
+                applicationIdSuffix Packages.debugNameSuffix
             }
             debuggable true
         }
         staging {
-            if (isCi || isReleaseBuild) {
-                applicationIdSuffix ".debug"
-            }
+            applicationIdSuffix ".releasetest"
             debuggable true
             zipAlignEnabled true
             signingConfig = signingConfigs.debug
