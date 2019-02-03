@@ -10,6 +10,7 @@ import io.github.droidkaigi.confsched2019.model.Room
 import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionType
+import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.model.SpeechSession
 
 private val startTime =
@@ -78,5 +79,76 @@ fun firstDummySpeechSession(): SpeechSession {
         speakers = listOf(),
         message = null,
         forBeginners = false
+    )
+}
+
+fun dummySpeechSessionData(): SpeechSession {
+    return SpeechSession(
+        id = "22",
+        dayNumber = 1,
+        startTime = startTime,
+        endTime = startTime + 90.minutes,
+        title = LocaledString(
+            ja = "テスト:スピーチセッション",
+            en = "Test:SpeechSession"
+        ),
+        desc = "DummySpeechSession",
+        room = Room(
+            id = 22,
+            name = "Room2"
+        ),
+        format = "",
+        lang = Lang.JA,
+        category = Category(
+            id = 22,
+            name = LocaledString(
+                ja = "猫アーキテクチャー",
+                en = "Cat Architecture"
+            )
+        ),
+        intendedAudience = "intermediate",
+        videoUrl = "https://droidkaigi.jp/2019/#might_be_null",
+        slideUrl = "https://droidkaigi.jp/2019/#might_be_null",
+        isInterpretationTarget = false,
+        isFavorited = true,
+        speakers = listOf(
+            dummySpeakerData()
+        ),
+        message = null,
+        forBeginners = false
+   )
+}
+
+fun dummyServiceSessionData(): ServiceSession {
+    return ServiceSession(
+        id = "23",
+        dayNumber = 2,
+        startTime = startTime,
+        endTime = startTime + 90.minutes,
+        title = LocaledString(
+            ja = "テスト:サービスセッション",
+            en = "Test:ServiceSession "
+        ),
+        desc = "DummyServiceSession",
+        room = Room(
+            id = 222,
+            name = "Room1"
+        ),
+        sessionType = SessionType.BREAKTIME,
+        isFavorited = true
+    )
+}
+
+fun dummySpeakerData(): Speaker {
+    return Speaker(
+        id = "1",
+        name = "セッションスピーカー",
+        tagLine = "#session_speaker",
+        bio = "Android歴:3年",
+        imageUrl = "https://pbs.twimg.com/profile_images/1070517877382438912/zM377Knn_400x400.jpg",
+        twitterUrl = "https://twitter.com/DroidKaigi",
+        githubUrl = "https://github.com/DroidKaigi",
+        blogUrl = null,
+        companyUrl = null
     )
 }
