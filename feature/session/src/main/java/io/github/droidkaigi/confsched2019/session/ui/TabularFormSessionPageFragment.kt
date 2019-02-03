@@ -15,6 +15,7 @@ import dagger.Provides
 import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.SessionType
 import io.github.droidkaigi.confsched2019.model.SpeechSession
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentTabularFormSessionPageBinding
@@ -36,8 +37,10 @@ class TabularFormSessionPageFragment : DaggerFragment() {
 
     private lateinit var binding: FragmentTabularFormSessionPageBinding
 
-    @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
-    @Inject lateinit var navController: NavController
+    @Inject
+    lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
+    @Inject
+    lateinit var navController: NavController
     private val sessionPagesStore: SessionPagesStore by lazy {
         InjectedViewModelProviders.of(requireActivity()).get(sessionPagesStoreProvider)
     }
@@ -113,9 +116,20 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                 ?: return emptyList()
         val rooms = sortedSessions.map { it.room }.distinct()
 
+        // FIXME: Add lunch sessions for all rooms to get lunch item view.
+        val lunchSession = sortedSessions.find {
+            (it as? ServiceSession)?.sessionType == SessionType.LUNCH
+        } as? ServiceSession
+
+        val sortedSessionsWithLunch = sortedSessions + rooms
+            .filter { it.id != lunchSession?.room?.id }
+            .mapNotNull { lunchSession?.copy(room = it) }
+
         val filledItems = ArrayList<BindableItem<*>>()
         rooms.forEach { room ->
-            val sessionsInSameRoom = sortedSessions.filter { it.room == room }
+            val sessionsInSameRoom = sortedSessionsWithLunch
+                .sortedBy { it.startTime.unixMillisLong }
+                .filter { it.room == room }
             sessionsInSameRoom.forEachIndexed { index, session ->
                 if (index == 0 && session.startTime.unixMillisLong > firstSessionStart)
                     filledItems.add(
@@ -192,3 +206,4 @@ abstract class TabularFormSessionPageFragmentModule {
         }
     }
 }
+

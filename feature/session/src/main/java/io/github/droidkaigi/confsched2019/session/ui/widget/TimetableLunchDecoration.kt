@@ -9,11 +9,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.Item
 import io.github.droidkaigi.confsched2019.model.SessionType
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularServiceSessionItem
-import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpacerItem
 import java.util.concurrent.TimeUnit
 
 class TimetableLunchDecoration(
@@ -71,12 +69,11 @@ class TimetableLunchDecoration(
         val lunchEndTime = TimeUnit.MILLISECONDS
             .toMinutes(lunchItem.session.endTime.unixMillisLong)
         val lunchItemHeight = (lunchEndTime - lunchStartTime) * pxPerMinute
-        val lunchTimeItems = getAllLunchTimeItems()
 
         parent.children.map {
             it to groupAdapter.getItem(parent.getChildAdapterPosition(it))
         }.find { (_, item) ->
-            lunchTimeItems.contains(item)
+            item.id == lunchItem.id
         }?.let { (itemView, _) ->
             val top = itemView.top + itemPadding
             val rect = Rect(
@@ -95,16 +92,6 @@ class TimetableLunchDecoration(
             c.drawRect(lineRect, linePaint)
             c.drawTextInRect(rect, textPaint, text)
         }
-    }
-
-    private fun getAllLunchTimeItems(): List<Item<*>> {
-        val lunchItem = getLunchItem()
-        return (0 until groupAdapter.itemCount).map {
-            groupAdapter.getItem(it)
-        }.filter {
-            (it as? TabularSpacerItem)?.startUnixMillis ==
-                lunchItem?.session?.startTime?.unixMillisLong
-        } + (lunchItem?.let { listOf(it) } ?: emptyList())
     }
 
     private fun getLunchItem(): TabularServiceSessionItem? {
