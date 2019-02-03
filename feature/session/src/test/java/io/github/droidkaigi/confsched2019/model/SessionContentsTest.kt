@@ -3,7 +3,7 @@ package io.github.droidkaigi.confsched2019.model
 import io.github.droidkaigi.confsched2019.dummyServiceSessionData
 import io.github.droidkaigi.confsched2019.dummySpeakerData
 import io.github.droidkaigi.confsched2019.dummySpeechSessionData
-import org.junit.Assert.assertEquals;
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class SessionContentsTest {
@@ -40,14 +40,19 @@ class SessionContentsTest {
     private fun search_WhenServiceSessionFiltered(query: String, isEmptyResult: Boolean = false) =
         search_WhenSessionFiltered(query, dummyServiceSessionData(), isEmptyResult)
 
-    private fun search_WhenSessionFiltered(query: String, session: Session, isEmptyResult: Boolean = false) {
+    private fun search_WhenSessionFiltered(
+        query: String,
+        session: Session,
+        isEmptyResult: Boolean = false
+    ) {
         val sessions = listOf(session)
         val sessionContents = SessionContents.EMPTY.copy(sessions = sessions)
         val searchResult = sessionContents.search(query)
         assertEquals(
             searchResult = searchResult,
             query = query,
-            sessions = if (isEmptyResult) listOf() else sessions)
+            sessions = if (isEmptyResult) listOf() else sessions
+        )
     }
 
     // Speaker TestCase
@@ -77,7 +82,8 @@ class SessionContentsTest {
         assertEquals(
             searchResult = searchResult,
             query = query,
-            speakers = if (isEmptyResult) listOf() else speakers)
+            speakers = if (isEmptyResult) listOf() else speakers
+        )
     }
 
     // Sessions + Speakers TestCase
@@ -88,25 +94,31 @@ class SessionContentsTest {
     @Test fun search_WhenSessionsAndSpeakersNotFiltered() =
         search_WhenSessionsAndSpeakersFiltered("Empty", true)
 
-    private fun search_WhenSessionsAndSpeakersFiltered(query: String, isEmptyResult: Boolean = false) {
+    private fun search_WhenSessionsAndSpeakersFiltered(
+        query: String,
+        isEmptyResult: Boolean = false
+    ) {
         val sessions = listOf<Session>(dummySpeechSessionData(), dummyServiceSessionData())
         val speakers = listOf(dummySpeakerData())
         val sessionContents = SessionContents.EMPTY.copy(
             sessions = sessions,
-            speakers = speakers)
+            speakers = speakers
+        )
         val searchResult = sessionContents.search(query)
         assertEquals(
             searchResult = searchResult,
             query = query,
             sessions = if (isEmptyResult) listOf() else sessions,
-            speakers = if (isEmptyResult) listOf() else speakers)
+            speakers = if (isEmptyResult) listOf() else speakers
+        )
     }
 
     private fun assertEquals(
         searchResult: SearchResult,
-        query:String,
+        query: String,
         sessions: List<Session> = listOf(),
-        speakers: List<Speaker> = listOf()) {
+        speakers: List<Speaker> = listOf()
+    ) {
         assertEquals(searchResult.sessions, sessions)
         assertEquals(searchResult.speakers, speakers)
         assertEquals(searchResult.query, query)
