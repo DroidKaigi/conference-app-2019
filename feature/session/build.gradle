@@ -28,6 +28,7 @@ dependencies {
     implementation Dep.Kotlin.androidCoroutinesDispatcher
 
     implementation Dep.AndroidX.appCompat
+    implementation Dep.AndroidX.fragment
     implementation Dep.AndroidX.constraint
     implementation Dep.AndroidX.recyclerView
     api Dep.AndroidX.emoji

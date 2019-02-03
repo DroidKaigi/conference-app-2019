@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -61,6 +62,15 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
 
     private val args: BottomSheetDaySessionsFragmentArgs by lazy {
         BottomSheetDaySessionsFragmentArgs.fromBundle(arguments ?: Bundle())
+    }
+
+    private val onBackPressedListener = OnBackPressedCallback {
+        if (binding.isCollapsed == true) {
+            sessionPageActionCreator.toggleFilterExpanded(SessionPage.pageOfDay(args.day))
+            true
+        } else {
+            false
+        }
     }
 
     override fun onCreateView(
@@ -159,6 +169,16 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
                 scrollToCurrentSession()
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity?.addOnBackPressedCallback(onBackPressedListener)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        activity?.removeOnBackPressedCallback(onBackPressedListener)
     }
 
     override fun onDestroyView() {
