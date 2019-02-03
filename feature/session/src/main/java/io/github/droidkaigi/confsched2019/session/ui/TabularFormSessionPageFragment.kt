@@ -23,7 +23,11 @@ import io.github.droidkaigi.confsched2019.session.ui.item.TabularServiceSessionI
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpacerItem
 import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionItem
 import io.github.droidkaigi.confsched2019.session.ui.store.SessionPagesStore
-import io.github.droidkaigi.confsched2019.session.ui.widget.*
+import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
+import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableLayoutManager
+import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableLunchDecoration
+import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableRoomLabelDecoration
+import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableTimeLabelDecoration
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
 import javax.inject.Provider
