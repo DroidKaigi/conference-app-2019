@@ -1,9 +1,7 @@
 package io.github.droidkaigi.confsched2019.model
 
 sealed class Message {
-    class ResourceIdMessage(val messageId: Int, vararg arg: Any) : Message() {
-        val stringArgs: Array<out Any> = arg
-    }
+    class ResourceIdMessage(val messageId: Int, val stringArgs: Array<out Any>) : Message()
     class TextMessage(val message: String) : Message()
 
     companion object {
