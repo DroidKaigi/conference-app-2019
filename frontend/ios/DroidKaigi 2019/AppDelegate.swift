@@ -45,6 +45,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().barTintColor = UIColor.DK.primary.color
         UINavigationBar.appearance().barStyle = .black
         UINavigationBar.appearance().isTranslucent = false
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        UINavigationBar.appearance().shadowImage = UIImage()
     }
 }
 
