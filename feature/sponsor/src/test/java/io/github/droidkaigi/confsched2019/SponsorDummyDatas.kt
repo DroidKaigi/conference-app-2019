@@ -1,45 +1,51 @@
 package io.github.droidkaigi.confsched2019
 
-import com.soywiz.klock.DateTime
-import com.soywiz.klock.hours
-import io.github.droidkaigi.confsched2019.model.SponsorCategory
 import io.github.droidkaigi.confsched2019.model.Sponsor
+import io.github.droidkaigi.confsched2019.model.SponsorCategory
 
-private val startTime =
-    DateTime.createAdjusted(2019, 2, 7, 10, 0).toOffsetUnadjusted(9.hours).utc
-
-fun dummySponsorsData(): List<SponsorCategory> {
+fun dummySponsorCategoriesData(): List<SponsorCategory> {
     return listOf(
         SponsorCategory(
-            SponsorCategory.Category.PLATINUM,
-            1,
-            listOf(
+            category = SponsorCategory.Category.PLATINUM,
+            index = 1,
+            sponsors = listOf(
                 Sponsor(
-                    "name1",
-                    "url1",
-                    "image1"
+                    name = "mercari",
+                    url = "https://tech.mercari.com/",
+                    image = "https://droidkaigi.jp/2019/images/sponsors/25_mercari.png"
                 )
             )
         ),
         SponsorCategory(
-            SponsorCategory.Category.GOLD,
-            2,
-            listOf(
+            category = SponsorCategory.Category.GOLD,
+            index = 2,
+            sponsors = listOf(
                 Sponsor(
-                    "name2",
-                    "url2",
-                    "image2"
+                    name = "google developers",
+                    url = "https://developers.google.com/",
+                    image = "https://droidkaigi.jp/2019/images/sponsors/aa_google.png"
                 )
             )
         ),
         SponsorCategory(
-            SponsorCategory.Category.SUPPORT,
-            3,
-            listOf(
+            category = SponsorCategory.Category.SUPPORT,
+            index = 3,
+            sponsors = listOf(
                 Sponsor(
-                    "name3",
-                    "url3",
-                    "image3"
+                    name = "deploygate",
+                    url = "https://deploygate.com/",
+                    image = "https://droidkaigi.jp/2019/images/sponsors/42_deploygate.png"
+                )
+            )
+        ),
+        SponsorCategory(
+            category = SponsorCategory.Category.TECH,
+            index = 4,
+            sponsors = listOf(
+                Sponsor(
+                    name = "dwango",
+                    url = "http://dwango.co.jp/",
+                    image = "https://droidkaigi.jp/2019/images/sponsors/58_dwango.png"
                 )
             )
         )

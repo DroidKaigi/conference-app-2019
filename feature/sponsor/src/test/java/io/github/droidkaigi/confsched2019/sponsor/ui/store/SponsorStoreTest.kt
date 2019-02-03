@@ -3,7 +3,7 @@ package io.github.droidkaigi.confsched2019.sponsor.ui.store
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
-import io.github.droidkaigi.confsched2019.dummySponsorsData
+import io.github.droidkaigi.confsched2019.dummySponsorCategoriesData
 import io.github.droidkaigi.confsched2019.ext.android.CoroutinePlugin
 import io.github.droidkaigi.confsched2019.ext.android.changedForever
 import io.github.droidkaigi.confsched2019.model.SponsorCategory
@@ -45,7 +45,7 @@ class SponsorStoreTest {
         sponsorStore.sponsors.changedForever(observer)
         verify { observer(emptyList()) }
 
-        val dummySponsors = dummySponsorsData()
+        val dummySponsors = dummySponsorCategoriesData()
         dispatcher.dispatch(
             Action.SponsorLoaded(dummySponsors)
         )
