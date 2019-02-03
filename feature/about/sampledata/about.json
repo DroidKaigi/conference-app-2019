@@ -3,23 +3,33 @@
   "data": [
     {
       "label": "会場アクセス",
-      "check": "Mapを開く"
+      "check": "Mapを開く",
+      "summary": "これはダミー"
+    },
+    {
+      "label": "WiFi",
+      "check": "端末に追加",
+      "summary": "SSID: DroidKaigi2019 / PW: thankyou-irdge"
     },
     {
       "label": "スタッフリスト",
-      "check": "見てみる"
+      "check": "見てみる",
+      "summary": null
     },
     {
       "label": "プライバシーポリシー",
-      "check": "見てみる"
+      "check": "見てみる",
+      "summary": null
     },
     {
       "label": "ライセンス",
-      "check": "見てみる"
+      "check": "見てみる",
+      "summary": null
     },
     {
       "label": "アプリバージョン",
-      "check": "1.0.0"
+      "check": "1.0.0",
+      "summary": null
     }
   ]
 }

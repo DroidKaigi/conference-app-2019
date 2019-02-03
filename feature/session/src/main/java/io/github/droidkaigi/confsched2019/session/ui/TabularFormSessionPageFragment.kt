@@ -18,6 +18,7 @@ import io.github.droidkaigi.confsched2019.ext.android.changed
 import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
 import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.Session
+import io.github.droidkaigi.confsched2019.model.SessionType
 import io.github.droidkaigi.confsched2019.model.SpeechSession
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentTabularFormSessionPageBinding
@@ -30,6 +31,7 @@ import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableCurrentTimeLabelDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableCurrentTimeLineDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableLayoutManager
+import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableLunchDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableRoomLabelDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableTimeLabelDecoration
 import kotlinx.coroutines.delay
@@ -42,6 +44,8 @@ class TabularFormSessionPageFragment : DaggerFragment() {
 
     private lateinit var binding: FragmentTabularFormSessionPageBinding
 
+    @Inject lateinit var tabularSpeechSessionItemFactory: TabularSpeechSessionItem.Factory
+    @Inject lateinit var tabularServiceSessionItemFactory: TabularServiceSessionItem.Factory
     @Inject lateinit var sessionPagesStoreProvider: Provider<SessionPagesStore>
     @Inject lateinit var navController: NavController
     private val sessionPagesStore: SessionPagesStore by lazy {
@@ -78,6 +82,7 @@ class TabularFormSessionPageFragment : DaggerFragment() {
 
             addItemDecoration(TimetableTimeLabelDecoration(context, groupAdapter))
             addItemDecoration(TimetableRoomLabelDecoration(context, groupAdapter))
+            addItemDecoration(TimetableLunchDecoration(context, groupAdapter))
             addItemDecoration(timetableCurrentTimeLabelDecoration)
             layoutManager = TimetableLayoutManager(
                 resources.getDimensionPixelSize(R.dimen.tabular_form_column_width),
@@ -145,9 +150,20 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                 ?: return emptyList()
         val rooms = sortedSessions.map { it.room }.distinct()
 
+        // FIXME: Add lunch sessions for all rooms to get lunch item view.
+        val lunchSession = sortedSessions.find {
+            (it as? ServiceSession)?.sessionType == SessionType.LUNCH
+        } as? ServiceSession
+
+        val sortedSessionsWithLunch = sortedSessions + rooms
+            .filter { it.id != lunchSession?.room?.id }
+            .mapNotNull { lunchSession?.copy(room = it) }
+
         val filledItems = ArrayList<BindableItem<*>>()
         rooms.forEach { room ->
-            val sessionsInSameRoom = sortedSessions.filter { it.room == room }
+            val sessionsInSameRoom = sortedSessionsWithLunch
+                .sortedBy { it.startTime.unixMillisLong }
+                .filter { it.room == room }
             sessionsInSameRoom.forEachIndexed { index, session ->
                 if (index == 0 && session.startTime.unixMillisLong > firstSessionStart)
                     filledItems.add(
@@ -162,9 +178,9 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                 filledItems.add(
                     when (session) {
                         is SpeechSession ->
-                            TabularSpeechSessionItem(session, navDirections, navController)
+                            tabularSpeechSessionItemFactory.create(session, navDirections)
                         is ServiceSession ->
-                            TabularServiceSessionItem(session, navDirections, navController)
+                            tabularServiceSessionItemFactory.create(session, navDirections)
                     }
                 )
 

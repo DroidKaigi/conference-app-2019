@@ -3,7 +3,7 @@ package dependencies
 @Suppress("unused")
 object Dep {
     object GradlePlugin {
-        val android = "com.android.tools.build:gradle:3.4.0-beta02"
+        val android = "com.android.tools.build:gradle:3.4.0-beta03"
         val r8 = "com.android.tools:r8:1.3.52"
         val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Kotlin.version}"
         val kotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Kotlin.version}"
@@ -65,6 +65,12 @@ object Dep {
             val ui = "android.arch.navigation:navigation-ui:1.0.0-alpha10"
             val fragmentKtx = "android.arch.navigation:navigation-fragment-ktx:$version"
             val uiKtx = "android.arch.navigation:navigation-ui-ktx:1.0.0-alpha10"
+        }
+
+        object Work {
+            val version = "1.0.0-alpha12"
+            val runtime = "android.arch.work:work-runtime:$version"
+            val runtimeKtx = "android.arch.work:work-runtime-ktx:$version"
         }
     }
 
@@ -168,8 +174,8 @@ object Dep {
     }
 
     object MockK {
-        val jvm = "io.mockk:mockk:1.8.13.kotlin13"
-        val common = "io.mockk:mockk-common:1.8.13.kotlin13"
+        val jvm = "io.mockk:mockk:1.9"
+        val common = "io.mockk:mockk-common:1.9"
     }
 
     object InjectedVmProvider {

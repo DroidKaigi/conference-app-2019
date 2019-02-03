@@ -57,7 +57,9 @@ class RoomDatabase @Inject constructor(
             // FIXME: SQLiteDatabaseLockedException
             database.runInTransaction {
                 database.sqlite().execSQL("PRAGMA defer_foreign_keys = TRUE")
-                database.clearAllTables()
+                sessionSpeakerJoinDao.deleteAll()
+                speakerDao.deleteAll()
+                sessionDao.deleteAll()
                 val speakers = apiResponse.speakers.orEmpty().toSpeakerEntities()
                 speakerDao.insert(speakers)
                 val sessions = apiResponse.sessions
@@ -98,6 +100,7 @@ class RoomDatabase @Inject constructor(
                     }
                     .flatten()
 
+                sponsorDao.deleteAll()
                 sponsorDao.insert(sponsors)
             }
         }
@@ -110,7 +113,7 @@ class RoomDatabase @Inject constructor(
         withContext(coroutineContext) {
             database.runInTransaction {
                 val announcements = apiResponse.toAnnouncementEntities()
-
+                announcementDao.deleteAll()
                 announcementDao.insert(announcements)
             }
         }
@@ -135,6 +138,7 @@ class RoomDatabase @Inject constructor(
         withContext(coroutineContext) {
             database.runInTransaction {
                 val contributors = apiResponse.contributors.toContributorEntities()
+                contributorDao.deleteAll()
                 contributorDao.insert(contributors)
             }
         }

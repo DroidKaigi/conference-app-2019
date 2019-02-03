@@ -16,7 +16,8 @@ final class SessionDataSource: NSObject, UITableViewDataSource {
     typealias Element = [SessionByStartTime]
     var items: Element = []
 
-    var toggleFavorite = PublishSubject<Session>()
+    let topVisibleSession = PublishSubject<Session>()
+    let toggleFavorite = PublishSubject<Session>()
     
     private var cellHeightsCache = [IndexPath: CGFloat]()
 
@@ -32,7 +33,7 @@ final class SessionDataSource: NSObject, UITableViewDataSource {
         let cell: SessionTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
         let session = items[indexPath.section].sessions[indexPath.row]
         cell.session = session
-        cell.favoriteButtonDidTapped
+        cell.favoriteButtonDidTap
             .map { _ in session }
             .bind(to: toggleFavorite)
             .disposed(by: cell.bag)
@@ -64,12 +65,29 @@ extension SessionDataSource: UITableViewDelegate {
     }
 }
 
+extension SessionDataSource: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if let tableView = scrollView as? UITableView,
+            let indexPath = tableView.indexPathsForVisibleRows?.first {
+            let session = items[indexPath.section].sessions[indexPath.row]
+            topVisibleSession.onNext(session)
+        }
+    }
+}
+
 extension SessionDataSource: RxTableViewDataSourceType {
 
-    public func tableView(_ tableView: UITableView, observedEvent: Event<Element>) {
+    func tableView(_ tableView: UITableView, observedEvent: Event<Element>) {
         Binder(self) { dataSource, element in
             dataSource.items = element
             tableView.reloadData()
+            
+            // get the top visible session before scrolling table view
+            if let indexPath = tableView.indexPathsForVisibleRows?.first {
+                let session = dataSource.items[indexPath.section].sessions[indexPath.row]
+                dataSource.topVisibleSession.onNext(session)
+            }
         }
         .on(observedEvent)
     }

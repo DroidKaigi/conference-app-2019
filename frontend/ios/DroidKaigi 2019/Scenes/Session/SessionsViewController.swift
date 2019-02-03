@@ -11,14 +11,27 @@ import MaterialComponents.MaterialSnackbar
 import RxSwift
 import RxCocoa
 import XLPagerTabStrip
+import SnapKit
 
-final class SessionsViewController: UIViewController, StoryboardInstantiable {
+final class SessionsViewController: UIViewController {
 
-    var day: Day!
+    init(viewModel: SessionsViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        [tableHeaderView, tableView].forEach(view.addSubview)
+        tableHeaderView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(48)
+        }
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(tableHeaderView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+    }
+    required init?(coder aDecoder: NSCoder) { fatalError() }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = SessionsViewModel(day: day)
         bind()
         tableView.rx.modelSelected(Session.self)
                 .asDriver()
@@ -28,41 +41,52 @@ final class SessionsViewController: UIViewController, StoryboardInstantiable {
                 }).disposed(by: bag)
     }
 
-    @IBOutlet private weak var tableView: UITableView! {
-        didSet {
-            tableView.separatorStyle = .none
-            tableView.rowHeight = UITableView.automaticDimension
-            tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
-            tableView.delegate = dataSource
-            tableView.register(SessionTableViewCell.self)
-        }
-    }
-
-    private var viewModel: SessionsViewModel!
+    private var viewModel: SessionsViewModel
     private let bag = DisposeBag()
 
     private let dataSource = SessionDataSource()
 
+    private lazy var tableHeaderView = SessionTableHeaderView()
+    
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.backgroundColor = .white
+        tableView.separatorStyle = .none
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        tableView.delegate = dataSource
+        tableView.register(SessionTableViewCell.self)
+        return tableView
+    }()
+
     private func bind() {
         let viewWillAppear = rx.methodInvoked(#selector(self.viewWillAppear)).map { _ in }
+        let topVisibleSession = dataSource.topVisibleSession
         let toggleFavorite = dataSource.toggleFavorite
-        let input = SessionsViewModel.Input(viewWillAppear: viewWillAppear, toggleFavorite: toggleFavorite)
+        let input = SessionsViewModel.Input(viewWillAppear: viewWillAppear,
+                                            topVisibleSession: topVisibleSession,
+                                            toggleFavorite: toggleFavorite)
         let output = viewModel.transform(input: input)
         output.error
-              .drive(onNext: { errorMessage in
-                  if let errMsg = errorMessage {
-                      MDCSnackbarManager.show(MDCSnackbarMessage(text: errMsg))
-                  }
-              })
-              .disposed(by: bag)
+            .drive(onNext: { errorMessage in
+                if let errMsg = errorMessage {
+                    MDCSnackbarManager.show(MDCSnackbarMessage(text: errMsg))
+                }
+            })
+            .disposed(by: bag)
+        
+        output.startDayText
+            .drive(tableHeaderView.startDayText)
+            .disposed(by: bag)
+        
         output.sessions
-              .drive(tableView.rx.items(dataSource: dataSource))
-              .disposed(by: bag)
+            .drive(tableView.rx.items(dataSource: dataSource))
+            .disposed(by: bag)
     }
 }
 
 extension SessionsViewController: IndicatorInfoProvider {
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return IndicatorInfo(title: day.title)
+        return IndicatorInfo(title: viewModel.type.text)
     }
 }

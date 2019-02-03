@@ -29,7 +29,7 @@ We would be happy if you ran the command below before sending pull requests to i
 
 ## Requirements
 
-- Android Studio 3.4 Beta 2 and higher. You can download it from [this page](https://developer.android.com/studio/archive?hl=en).
+- Android Studio 3.4 Beta 3 and higher. You can download it from [this page](https://developer.android.com/studio/archive?hl=en).
 - Android Studio Kotlin Plugin v1.3.20-release-Studio<AS version>
 
 **Check out following status.**  
