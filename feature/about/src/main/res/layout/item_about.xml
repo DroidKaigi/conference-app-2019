@@ -13,6 +13,11 @@
             />
 
         <variable
+            name="summary"
+            type="String"
+            />
+
+        <variable
             name="description"
             type="int"
             />
@@ -36,10 +41,26 @@
             android:layout_height="wrap_content"
             android:text="@{name}"
             android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/summary_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
             tools:text="@sample/about.json/data/label"
+            />
+
+        <TextView
+            android:id="@+id/summary_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@{summary}"
+            android:textAppearance="@style/TextAppearance.Lekton.Caption"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_text"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:visibleGone="@{summary != null}"
+            tools:text="@sample/about.json/data/summary"
             />
 
         <TextView

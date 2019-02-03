@@ -40,11 +40,11 @@
                         <constraints>
                             <constraint firstItem="f6t-AS-WzK" firstAttribute="top" secondItem="3E5-ua-Q8C" secondAttribute="top" id="7JA-9c-2as"/>
                             <constraint firstItem="yn6-Tb-Xe4" firstAttribute="top" secondItem="f6t-AS-WzK" secondAttribute="bottom" id="9qp-pw-tRb"/>
-                            <constraint firstItem="yn6-Tb-Xe4" firstAttribute="leading" secondItem="3E5-ua-Q8C" secondAttribute="leading" id="EbR-7K-XgK"/>
-                            <constraint firstItem="3E5-ua-Q8C" firstAttribute="bottom" secondItem="yn6-Tb-Xe4" secondAttribute="bottom" id="Uab-aF-Sa0"/>
-                            <constraint firstItem="3E5-ua-Q8C" firstAttribute="trailing" secondItem="f6t-AS-WzK" secondAttribute="trailing" id="dgY-6Q-Peh"/>
-                            <constraint firstItem="f6t-AS-WzK" firstAttribute="leading" secondItem="3E5-ua-Q8C" secondAttribute="leading" id="hze-uN-uwX"/>
-                            <constraint firstItem="3E5-ua-Q8C" firstAttribute="trailing" secondItem="yn6-Tb-Xe4" secondAttribute="trailing" id="tgs-Ou-Z4o"/>
+                            <constraint firstItem="yn6-Tb-Xe4" firstAttribute="leading" secondItem="EM1-8B-aWL" secondAttribute="leading" id="EbR-7K-XgK"/>
+                            <constraint firstAttribute="bottom" secondItem="yn6-Tb-Xe4" secondAttribute="bottom" id="Uab-aF-Sa0"/>
+                            <constraint firstAttribute="trailing" secondItem="f6t-AS-WzK" secondAttribute="trailing" id="dgY-6Q-Peh"/>
+                            <constraint firstItem="f6t-AS-WzK" firstAttribute="leading" secondItem="EM1-8B-aWL" secondAttribute="leading" id="hze-uN-uwX"/>
+                            <constraint firstAttribute="trailing" secondItem="yn6-Tb-Xe4" secondAttribute="trailing" id="tgs-Ou-Z4o"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="3E5-ua-Q8C"/>
                     </view>
@@ -66,7 +66,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="8" translatesAutoresizingMaskIntoConstraints="NO" id="NH5-29-ujb">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" maximumZoomScale="8" translatesAutoresizingMaskIntoConstraints="NO" id="NH5-29-ujb">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LPH-ux-lga">
@@ -92,9 +92,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Jsu-dw-ciA" firstAttribute="trailing" secondItem="NH5-29-ujb" secondAttribute="trailing" id="1gg-Yu-7RZ"/>
-                            <constraint firstItem="NH5-29-ujb" firstAttribute="leading" secondItem="Jsu-dw-ciA" secondAttribute="leading" id="SyH-cJ-zuh"/>
-                            <constraint firstItem="Jsu-dw-ciA" firstAttribute="bottom" secondItem="NH5-29-ujb" secondAttribute="bottom" id="rwU-D3-1Pf"/>
+                            <constraint firstAttribute="trailing" secondItem="NH5-29-ujb" secondAttribute="trailing" id="1gg-Yu-7RZ"/>
+                            <constraint firstItem="NH5-29-ujb" firstAttribute="leading" secondItem="17p-zy-eMh" secondAttribute="leading" id="SyH-cJ-zuh"/>
+                            <constraint firstAttribute="bottom" secondItem="NH5-29-ujb" secondAttribute="bottom" id="rwU-D3-1Pf"/>
                             <constraint firstItem="NH5-29-ujb" firstAttribute="top" secondItem="Jsu-dw-ciA" secondAttribute="top" id="zhk-d4-Ljh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Jsu-dw-ciA"/>

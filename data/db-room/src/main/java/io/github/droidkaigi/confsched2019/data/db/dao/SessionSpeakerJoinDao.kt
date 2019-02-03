@@ -19,4 +19,7 @@ abstract class SessionSpeakerJoinDao {
         List<SessionWithSpeakersImpl>
 
     @Insert abstract fun insert(sessionSpeakerJoin: List<SessionSpeakerJoinEntityImpl>)
+
+    @Query("DELETE FROM session_speaker_join")
+    abstract fun deleteAll()
 }

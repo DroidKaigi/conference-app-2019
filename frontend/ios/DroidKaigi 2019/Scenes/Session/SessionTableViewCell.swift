@@ -28,13 +28,17 @@ class SessionTableViewCell: UITableViewCell, Reusable {
             remakeTimeAndRoomLabelConstraints()
             switch session {
             case let serviceSession as ServiceSession:
+                isUserInteractionEnabled = serviceSession.sessionType.supportDetail
                 titleLabel.text = serviceSession.title.getByLang(lang: LangKt.defaultLang())
+                favoriteButton.isHidden = !serviceSession.sessionType.isFavoritable
             case let speechSession as SpeechSession:
+                isUserInteractionEnabled = true
                 titleLabel.text = speechSession.title.getByLang(lang: LangKt.defaultLang())
                 speechSession.speakers.forEach { speaker in
                     let cell = SpeakerCell(speaker: speaker)
                     speakersStackView.addArrangedSubview(cell)
                 }
+                favoriteButton.isHidden = false
                 tagContents = speechSession.tagContents
             default:
                 return

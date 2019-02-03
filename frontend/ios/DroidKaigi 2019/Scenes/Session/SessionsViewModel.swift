@@ -10,14 +10,28 @@ import ioscombined
 import RxSwift
 import RxCocoa
 
+enum SectionType {
+    case day1
+    case day2
+    case myPlan
+
+    var text: String {
+        switch self {
+        case .day1: return "Day1"
+        case .day2: return "Day2"
+        case .myPlan: return "MyPlan"
+        }
+    }
+}
+
 final class SessionsViewModel {
 
+    let type: SectionType
     private let sessionRepository = SessionRepository()
     private let favoriteRepository = FavoriteRepository()
     private let bag = DisposeBag()
-    private let day: Day
-    init(day: Day) {
-        self.day = day
+    init(type: SectionType) {
+        self.type = type
     }
     private let _error = BehaviorRelay<String?>(value: nil)
 }
@@ -56,7 +70,13 @@ extension SessionsViewModel {
             .map { [weak self] (sessionContents, favoriteSessionIds) -> [SessionByStartTime] in
                 guard let `self` = self else { return [] }
                 return sessionContents.sessions
-                    .filter { $0.dayNumber == self.day.day }
+                    .filter {
+                        switch self.type {
+                        case .day1: return $0.dayNumber == 1
+                        case .day2: return $0.dayNumber == 2
+                        case .myPlan: return favoriteSessionIds.contains($0.id_)
+                        }
+                    }
                     .map { (session: Session) -> Session in
                         if let session = session as? ServiceSession {
                             return session.doCopy(isFavorited: favoriteSessionIds.contains(session.id_))

@@ -3,10 +3,15 @@
     <string name="about_what_is_droidkaigi">What is DroidKaigi</string>
     <string name="about_description_droidkaigi">DroidKaigiはエンジニアが主役のAndroidカンファレンスです。\nAndroid技術情報の共有とコミュニケーションを目的に、2019年2月7日(木)、8日(金)の2日間開催します。</string>
     <string name="about_access_to_place">会場アクセス</string>
+    <string name="about_wifi">WiFi</string>
+    <string name="about_add_wifi">端末に追加</string>
     <string name="about_check_map">Mapを開く</string>
     <string name="about_staff_list">スタッフリスト</string>
     <string name="about_check">見てみる</string>
     <string name="about_privacy_policy">プライバシーポリシー</string>
     <string name="about_license">ライセンス</string>
     <string name="about_app_version">アプリバージョン</string>
+
+    <string name="wifi_failed_to_register_message_so_copied">パスワードをコピーしました。\nSSID は %1$s です。</string>
+    <string name="wifi_failed_to_register_message">登録に失敗しました。\nSSID は %1$s、パスワードは %2$s です。</string>
 </resources>

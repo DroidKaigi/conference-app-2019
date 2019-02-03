@@ -5,10 +5,10 @@ import dagger.Component
 import io.github.droidkaigi.confsched2019.data.api.DroidKaigiApi
 import io.github.droidkaigi.confsched2019.data.api.GoogleFormApi
 import io.github.droidkaigi.confsched2019.data.db.AnnouncementDatabase
+import io.github.droidkaigi.confsched2019.data.db.ContributorDatabase
 import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.db.SponsorDatabase
 import io.github.droidkaigi.confsched2019.data.db.StaffDatabase
-import io.github.droidkaigi.confsched2019.data.db.ContributorDatabase
 import io.github.droidkaigi.confsched2019.data.firestore.Firestore
 import javax.inject.Singleton
 
