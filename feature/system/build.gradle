@@ -12,7 +12,6 @@ android.libraryVariants.all {
 
 dependencies {
     implementation project(':data:device')
-    implementation project(':data:repository')
     implementation project(':ext:android-extension')
     implementation project(':ext:log')
     implementation project(':frontendcomponent:androidcomponent')

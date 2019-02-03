@@ -20,9 +20,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ActivityActionCreator @Inject constructor(
-    override val dispatcher: Dispatcher,
-    val activity: FragmentActivity
-) : CoroutineScope by activity.coroutineScope, ErrorHandler {
+    private val dispatcher: Dispatcher,
+    private val activity: FragmentActivity
+) : CoroutineScope by activity.coroutineScope {
     fun openUrl(url: String) {
         val customTabsIntent = CustomTabsIntent.Builder()
             .setShowTitle(true)

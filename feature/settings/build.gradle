@@ -12,7 +12,6 @@ android.dataBinding.enabled = true
 dependencies {
     implementation project(':frontendcomponent:androidcomponent')
     implementation project(':ext:android-extension')
-    implementation project(":data:repository")
     implementation project(":feature:system")
     implementation project(":model")
     implementation project(':ext:log')

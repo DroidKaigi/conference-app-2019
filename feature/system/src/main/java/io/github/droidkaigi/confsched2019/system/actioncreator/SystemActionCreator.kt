@@ -18,9 +18,9 @@ import timber.log.error
 import javax.inject.Inject
 
 class SystemActionCreator @Inject constructor(
-    override val dispatcher: Dispatcher,
+    private val dispatcher: Dispatcher,
     private val wifiManager: WifiManager
-) : CoroutineScope by GlobalScope + SupervisorJob(), ErrorHandler {
+) : CoroutineScope by GlobalScope + SupervisorJob() {
 
     fun setupSystem() {
         val lang = defaultLang()
@@ -63,10 +63,8 @@ class SystemActionCreator @Inject constructor(
     }
 
     fun allowRegisterWifiConfiguration() {
-        launch {
-            // Erase the livedata cache
-            dispatcher.dispatch(Action.WifiConfigurationChange(null))
-        }
+        // Erase the livedata cache
+        dispatcher.launchAndDispatch(Action.WifiConfigurationChange(null))
     }
 
     fun showSystemMessage(message: Message) {

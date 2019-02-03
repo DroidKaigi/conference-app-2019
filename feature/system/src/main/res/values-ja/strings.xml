@@ -6,5 +6,4 @@
     <string name="system_error_copy_text_unavailable">コピーできませんでした。 %1$s</string>
     <string name="venue_place_name">ベルサール新宿グランドコンファレンスセンター</string>
     <string name="system_wifi_registered_message">SSID とパスワードが登録されました。</string>
-    <string name="system_copy_text_copied_message">コピーしました。 %1$s</string>
 </resources>

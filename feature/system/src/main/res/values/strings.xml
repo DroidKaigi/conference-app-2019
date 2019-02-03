@@ -6,5 +6,4 @@
     <string name="system_error_copy_text_unavailable">Failed to copy %1$s</string>
     <string name="venue_place_name">Bellesalle Shinjuku Grand Conference Center</string>
     <string name="system_wifi_registered_message">SSID and password have been registered successfully</string>
-    <string name="system_copy_text_copied_message">Copied! %1$s</string>
 </resources>
