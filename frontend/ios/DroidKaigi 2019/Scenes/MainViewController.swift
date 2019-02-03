@@ -17,11 +17,12 @@ class MainViewController: ButtonBarPagerTabStripViewController, StoryboardInstan
         super.viewDidLoad()
         setupSlideTransitionableSubviews()
         setupViewController(drawerViewController)
+        containerView.bounces = false
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: #imageLiteral(resourceName: "baseline_location_on_white_18dp"), style: .plain, target: self, action: #selector(locationButtonTapped(_:)))
         ]
         navigationItem.leftBarButtonItems = [
-            UIBarButtonItem(image: #imageLiteral(resourceName: "baseline_location_on_white_18dp"), style: .plain, target: self, action: #selector(open))
+            UIBarButtonItem(image: #imageLiteral(resourceName: "menu"), style: .plain, target: self, action: #selector(open))
         ]
     }
 

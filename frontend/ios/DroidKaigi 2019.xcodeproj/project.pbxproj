@@ -332,6 +332,14 @@
 			path = Session;
 			sourceTree = "<group>";
 		};
+		3632F4942206D46E00FF472B /* Drawer */ = {
+			isa = PBXGroup;
+			children = (
+				36E24A882206187200356530 /* DrawerViewController.swift */,
+			);
+			path = Drawer;
+			sourceTree = "<group>";
+		};
 		366B060C21F7650D00C912AD /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,11 +368,11 @@
 				2159CC5221FE0E0000DBD016 /* MainViewController.swift */,
 				362D90FC21F5DBC2006962C8 /* RootViewController.storyboard */,
 				362D90FB21F5DBC2006962C8 /* RootViewController.swift */,
+				3632F4942206D46E00FF472B /* Drawer */,
 				366B060C21F7650D00C912AD /* Common */,
 				362D90F621F5D521006962C8 /* Session */,
 				360744EF21FADF22003569D3 /* Detail */,
 				B977F2FE220202F90048A02E /* FloorMap */,
-				36E24A882206187200356530 /* DrawerViewController.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
