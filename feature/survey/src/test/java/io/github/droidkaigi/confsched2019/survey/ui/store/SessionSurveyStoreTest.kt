@@ -3,6 +3,7 @@ package io.github.droidkaigi.confsched2019.survey.ui.store
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
+import io.github.droidkaigi.confsched2019.dummySessionFeedbackData
 import io.github.droidkaigi.confsched2019.ext.android.CoroutinePlugin
 import io.github.droidkaigi.confsched2019.ext.android.changedForever
 import io.github.droidkaigi.confsched2019.model.LoadingState
@@ -53,17 +54,7 @@ class SessionSurveyStoreTest {
         sessionSurveyStore.sessionFeedback.changedForever(observer)
         verify { observer(SessionFeedback.EMPTY) }
 
-        val dummySessionFeedback = SessionFeedback.EMPTY.copy(
-            "12345",
-            5,
-            4,
-            3,
-            2,
-            1,
-            "",
-            true
-        )
-
+        val dummySessionFeedback = dummySessionFeedbackData()
         dispatcher.dispatch(Action.SessionSurveyLoaded(dummySessionFeedback))
         verify { observer(dummySessionFeedback) }
     }
