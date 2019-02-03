@@ -10,17 +10,13 @@ import XLPagerTabStrip
 
 class MainViewController: ButtonBarPagerTabStripViewController, StoryboardInstantiable, SlideTransitionable {
 
-    var drawerViewController = DrawerViewController()
-
     override func viewDidLoad() {
         setupTabAppearance()
         super.viewDidLoad()
         setupSlideTransitionableSubviews()
         setupViewController(drawerViewController)
+        drawerViewController.delegate = self
         containerView.bounces = false
-        navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(image: #imageLiteral(resourceName: "baseline_location_on_white_18dp"), style: .plain, target: self, action: #selector(locationButtonTapped(_:)))
-        ]
         navigationItem.leftBarButtonItems = [
             UIBarButtonItem(image: #imageLiteral(resourceName: "menu"), style: .plain, target: self, action: #selector(open))
         ]
@@ -41,6 +37,8 @@ class MainViewController: ButtonBarPagerTabStripViewController, StoryboardInstan
         settings.style.buttonBarItemFont = UIFont.systemFont(ofSize: 12)
         settings.style.selectedBarHeight = 4
     }
+
+    private var drawerViewController = DrawerViewController()
 
     var rootViewController: UIViewController {
         return AppDelegate.shared?.rootViewController ?? UIViewController()
@@ -73,9 +71,16 @@ class MainViewController: ButtonBarPagerTabStripViewController, StoryboardInstan
     }
 }
 
-private extension MainViewController {
-    @objc func locationButtonTapped(_ sender: Any?) {
-        let floorMap = FloorMapViewController.instantiateFromStoryboard()
-        show(floorMap, sender: nil)
+extension MainViewController: DrawerViewControllerDelegate {
+
+    func drawerViewController(_ drawer: DrawerViewController, didSelectMenuItem: MenuItem) {
+        switch didSelectMenuItem {
+        case .floorMap:
+            let floorMap = FloorMapViewController.instantiateFromStoryboard()
+            navigationController?.pushViewController(floorMap, animated: false)
+        default:
+            break
+        }
+        closeSlide()
     }
 }

@@ -34,7 +34,13 @@ enum MenuItem {
     }
 }
 
+protocol DrawerViewControllerDelegate: class {
+    func drawerViewController(_ drawer: DrawerViewController, didSelectMenuItem: MenuItem)
+}
+
 class DrawerViewController: UIViewController {
+
+    weak var delegate: DrawerViewControllerDelegate?
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -95,6 +101,10 @@ extension DrawerViewController: UITableViewDataSource {
 }
 
 extension DrawerViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.drawerViewController(self, didSelectMenuItem: menuItems[indexPath.row])
+    }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return nil
