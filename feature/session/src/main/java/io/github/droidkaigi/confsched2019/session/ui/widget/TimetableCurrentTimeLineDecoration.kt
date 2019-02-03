@@ -14,24 +14,17 @@ import io.github.droidkaigi.confsched2019.session.ui.item.TabularSpeechSessionIt
 import java.util.concurrent.TimeUnit
 
 open class TimetableCurrentTimeLineDecoration(
-    private val labelWidth: Float,
-    private val RoomLabelHeight: Float,
-    private val lineColor: Int,
-    private val lineWidth: Float,
-    private val pxPerMin: Int,
-    private val groupAdapter: GroupAdapter<*>
+    context: Context,
+    val groupAdapter: GroupAdapter<*>
 ) : RecyclerView.ItemDecoration() {
 
-    constructor(context: Context, groupAdapter: GroupAdapter<*>) : this(
-        context.resources.getDimension(R.dimen.tabular_form_time_label_width),
-        context.resources.getDimension(R.dimen.tabular_form_room_label_height),
-        ContextCompat.getColor(context, R.color.red1),
-        context.resources.getDimension(R.dimen.tabular_form_line_width_bold),
-        context.resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute),
-        groupAdapter
-    )
+    protected val labelWidth = context.resources.getDimension(R.dimen.tabular_form_time_label_width)
+    protected val roomLabelHeight = context.resources.getDimension(R.dimen.tabular_form_room_label_height)
+    protected val lineColor = ContextCompat.getColor(context, R.color.red1)
+    private val lineWidth = context.resources.getDimension(R.dimen.tabular_form_line_width_bold)
+    private val pxPerMin = context.resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute)
 
-    private val line = Paint().apply {
+    protected val lineCurrentTimePaint = Paint().apply {
         color = lineColor
         isAntiAlias = true
         strokeWidth = lineWidth
@@ -43,9 +36,9 @@ open class TimetableCurrentTimeLineDecoration(
 
         val currentTime = System.currentTimeMillis()
         val height = calcLineHeight(parent, currentTime)
-        if (height < RoomLabelHeight) return
+        if (height < roomLabelHeight) return
 
-        c.drawLine(labelWidth, height, parent.right.toFloat(), height, line)
+        c.drawLine(labelWidth, height, parent.right.toFloat(), height, lineCurrentTimePaint)
     }
 
     private inline val Item<*>.startUnixMillis: Long
