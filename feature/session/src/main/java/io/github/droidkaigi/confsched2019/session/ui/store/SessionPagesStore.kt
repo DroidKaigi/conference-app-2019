@@ -137,13 +137,6 @@ class SessionPagesStore @Inject constructor(
             }
     }
 
-    fun sessionsByDay(day: Int): LiveData<List<Session>> {
-        return sessions
-            .map { sessions ->
-                sessions.orEmpty().filter { session -> session.dayNumber == day }
-            }
-    }
-
     fun filteredFavoritedSessions(): LiveData<List<Session>> {
         return filteredSessions
             .map { sessions ->
