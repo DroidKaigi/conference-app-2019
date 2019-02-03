@@ -6,6 +6,7 @@ import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.ext.android.CoroutinePlugin
 import io.github.droidkaigi.confsched2019.ext.android.changedForever
 import io.github.droidkaigi.confsched2019.model.LoadingState
+import io.github.droidkaigi.confsched2019.model.SessionFeedback
 import io.github.droidkaigi.confsched2019.widget.component.DirectDispatcher
 import io.mockk.MockKAnnotations
 import io.mockk.mockk
@@ -41,5 +42,29 @@ class SessionSurveyStoreTest {
 
         dispatcher.dispatch(Action.SessionSurveyLoadingStateChanged(LoadingState.LOADED))
         verify { observer(LoadingState.LOADED) }
+    }
+
+    @Test
+    fun sessionFeedback() = runBlocking {
+        val dispatcher = Dispatcher()
+        val sessionSurveyStore = SessionSurveyStore(dispatcher)
+        val observer = mockk<(SessionFeedback) -> Unit>(relaxed = true)
+
+        sessionSurveyStore.sessionFeedback.changedForever(observer)
+        verify { observer(SessionFeedback.EMPTY) }
+
+        val dummySessionFeedback = SessionFeedback.EMPTY.copy(
+            "12345",
+            5,
+            4,
+            3,
+            2,
+            1,
+            "",
+            true
+        )
+
+        dispatcher.dispatch(Action.SessionSurveyLoaded(dummySessionFeedback))
+        verify { observer(dummySessionFeedback) }
     }
 }
