@@ -18,11 +18,17 @@ open class TimetableCurrentTimeLineDecoration(
     val groupAdapter: GroupAdapter<*>
 ) : RecyclerView.ItemDecoration() {
 
-    protected val labelWidth = context.resources.getDimension(R.dimen.tabular_form_time_label_width)
-    protected val roomLabelHeight = context.resources.getDimension(R.dimen.tabular_form_room_label_height)
-    protected val lineColor = ContextCompat.getColor(context, R.color.red1)
-    private val lineWidth = context.resources.getDimension(R.dimen.tabular_form_line_width_bold)
-    private val pxPerMin = context.resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute)
+    protected val labelWidth =
+        context.resources.getDimension(R.dimen.tabular_form_time_label_width)
+    protected val roomLabelHeight =
+        context.resources.getDimension(R.dimen.tabular_form_room_label_height)
+    protected val lineColor =
+        ContextCompat.getColor(context, R.color.red1)
+
+    private val lineWidth =
+        context.resources.getDimension(R.dimen.tabular_form_line_width_bold)
+    private val pxPerMin =
+        context.resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute)
 
     protected val lineCurrentTimePaint = Paint().apply {
         color = lineColor

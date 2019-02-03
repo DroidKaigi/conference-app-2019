@@ -21,9 +21,13 @@ class TimetableCurrentTimeLabelDecoration(
     context,
     groupAdapter
 ) {
-    private val labelTextSize = context.resources.getDimension(R.dimen.tabular_form_time_label_text_size)
+    private val labelPadding =
+        context.resources.getDimension(R.dimen.tabular_form_current_time_label_padding)
+    private val labelTextSize =
+        context.resources.getDimension(R.dimen.tabular_form_time_label_text_size)
     private val labelTextColor = Color.WHITE
-    private val labelPadding = context.resources.getDimension(R.dimen.tabular_form_current_time_label_padding)
+
+    private val textStartX = labelWidth + labelPadding * 2
 
     private val textPaint = Paint().apply {
         color = labelTextColor
@@ -71,9 +75,9 @@ class TimetableCurrentTimeLabelDecoration(
         val height = calcLineHeight(parent, currentTime)
         if (height < roomLabelHeight) return
 
-        c.drawLine(labelWidth + labelPadding, height, parent.right.toFloat(), height, lineCurrentTimePaint)
+        c.drawLine(textStartX, height, parent.right.toFloat(), height, lineCurrentTimePaint)
         drawBackgroundShape(c, height)
-        c.drawText(timeText, labelWidth + labelPadding * 2, height + textHeightHalf, textPaint)
+        c.drawText(timeText, textStartX, height + textHeightHalf, textPaint)
     }
 
     private fun drawBackgroundShape(c: Canvas, height: Float) {
@@ -83,9 +87,9 @@ class TimetableCurrentTimeLabelDecoration(
             moveTo(labelWidth, height)
             lineTo(labelWidth + labelPadding,
                 height - textHeightHalf - labelPadding)
-            lineTo(labelWidth + textWidth + labelPadding * 4,
+            lineTo(textStartX + textWidth + labelPadding * 2,
                 height - textHeightHalf - labelPadding)
-            lineTo(labelWidth + textWidth + labelPadding * 4,
+            lineTo(textStartX + textWidth + labelPadding * 2,
                 height + textHeightHalf + labelPadding)
             lineTo(labelWidth + labelPadding,
                 height + textHeightHalf + labelPadding)
