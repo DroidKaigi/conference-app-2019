@@ -87,7 +87,7 @@ class FiltersTest {
 
             @JvmStatic
             @Parameterized.Parameters(name = "{0}")
-            fun params() = listOf<Param<SpeechSession>>(
+            fun params() = listOf(
                 Param(
                     title = "empty filter passes empty session",
                     expected = true
@@ -156,76 +156,50 @@ class FiltersTest {
                     },
                     expected = false
                 ),
-                Param(
+                Param.forAudienceCategory(
                     title = "empty filter passes beginners session",
-                    sessionSetup = {
-                        every { forBeginners } returns true
-                    },
+                    isForBeginners = true,
                     expected = true
                 ),
-                Param(
+                Param.forAudienceCategory(
                     title = "empty filter passes non beginners session",
-                    sessionSetup = {
-                        every { forBeginners } returns false
-                    },
+                    isForBeginners = false,
                     expected = true
                 ),
-                Param(
+                Param.forAudienceCategory(
                     title = "Beginners filter passes beginners session",
-                    filters = Filters(audienceCategories = setOf(AudienceCategory.BEGINNERS)),
-                    sessionSetup = {
-                        every { forBeginners } returns true
-                    },
+                    filterItem = setOf(AudienceCategory.BEGINNERS),
+                    isForBeginners = true,
                     expected = true
                 ),
-                Param(
+                Param.forAudienceCategory(
                     title = "Beginners filter does not pass non beginners session",
-                    filters = Filters(audienceCategories = setOf(AudienceCategory.BEGINNERS)),
-                    sessionSetup = {
-                        every { forBeginners } returns false
-                    },
+                    filterItem = setOf(AudienceCategory.BEGINNERS),
+                    isForBeginners = false,
                     expected = false
                 ),
-                Param(
+                Param.forAudienceCategory(
                     title = "Unspecified filter does not pass beginners session",
-                    filters = Filters(audienceCategories = setOf(AudienceCategory.UNSPECIFIED)),
-                    sessionSetup = {
-                        every { forBeginners } returns true
-                    },
+                    filterItem = setOf(AudienceCategory.UNSPECIFIED),
+                    isForBeginners = true,
                     expected = false
                 ),
-                Param(
+                Param.forAudienceCategory(
                     title = "Unspecified filter passes non beginners session",
-                    filters = Filters(audienceCategories = setOf(AudienceCategory.UNSPECIFIED)),
-                    sessionSetup = {
-                        every { forBeginners } returns false
-                    },
+                    filterItem = setOf(AudienceCategory.UNSPECIFIED),
+                    isForBeginners = false,
                     expected = true
                 ),
-                Param(
+                Param.forAudienceCategory(
                     title = "filter has Beginners and Unspecified passes beginners session",
-                    filters = Filters(
-                        audienceCategories = setOf(
-                            AudienceCategory.BEGINNERS,
-                            AudienceCategory.UNSPECIFIED
-                        )
-                    ),
-                    sessionSetup = {
-                        every { forBeginners } returns true
-                    },
+                    filterItem = setOf(AudienceCategory.BEGINNERS, AudienceCategory.UNSPECIFIED),
+                    isForBeginners= true,
                     expected = true
                 ),
-                Param(
+                Param.forAudienceCategory(
                     title = "filter has Beginners and Unspecified passes non beginners session",
-                    filters = Filters(
-                        audienceCategories = setOf(
-                            AudienceCategory.BEGINNERS,
-                            AudienceCategory.UNSPECIFIED
-                        )
-                    ),
-                    sessionSetup = {
-                        every { forBeginners } returns false
-                    },
+                    filterItem = setOf(AudienceCategory.BEGINNERS, AudienceCategory.UNSPECIFIED),
+                    isForBeginners =  false,
                     expected = true
                 )
             )
@@ -252,4 +226,20 @@ data class Param<T>(
     val expected: Boolean
 ) {
     override fun toString(): String = title
+
+    companion object {
+        fun forAudienceCategory(
+            title: String,
+            filterItem: Set<AudienceCategory> = setOf(),
+            isForBeginners: Boolean,
+            expected: Boolean
+        ) = Param<SpeechSession>(
+            title = title,
+            filters = Filters(audienceCategories = filterItem),
+            sessionSetup = {
+                every { forBeginners } returns isForBeginners
+            },
+            expected = expected
+        )
+    }
 }
