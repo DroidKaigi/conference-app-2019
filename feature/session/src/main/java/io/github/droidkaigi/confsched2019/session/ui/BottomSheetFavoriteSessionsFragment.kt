@@ -64,6 +64,15 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
     private val groupAdapter
         get() = binding.sessionsRecycler.adapter as GroupAdapter<*>
 
+    private val onBackPressedListener = {
+        if (binding.isCollapsed == true) {
+            sessionPageActionCreator.toggleFilterExpanded(SessionPage.Favorite)
+            true
+        } else {
+            false
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -153,6 +162,16 @@ class BottomSheetFavoriteSessionsFragment : DaggerFragment() {
                 binding.isCollapsed = isCollapsed
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity?.addOnBackPressedCallback(onBackPressedListener)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        activity?.removeOnBackPressedCallback(onBackPressedListener)
     }
 
     override fun onDestroyView() {
