@@ -66,9 +66,12 @@ class SpeakerItem @AssistedInject constructor(
         }
     }
 
-    override fun providerEqualableContents(): Array<*> = arrayOf(speaker)
+    override fun providerEqualableContents(): Array<*> = arrayOf(
+        speaker,
+        if (isContainsQuery()) query else null
+    )
 
-    override fun isTextHighlightNeedUpdate() = query?.let {
+    private fun isContainsQuery() = query?.let {
         speaker.name.toLowerCase().contains(it.toLowerCase())
     } ?: false
 

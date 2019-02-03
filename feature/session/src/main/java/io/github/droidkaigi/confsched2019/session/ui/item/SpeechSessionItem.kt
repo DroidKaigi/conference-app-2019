@@ -28,7 +28,6 @@ import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionConten
 import io.github.droidkaigi.confsched2019.session.ui.bindingadapter.setHighlightText
 import io.github.droidkaigi.confsched2019.util.lazyWithParam
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
-import java.lang.IllegalArgumentException
 import kotlin.math.max
 
 class SpeechSessionItem @AssistedInject constructor(
@@ -200,9 +199,12 @@ class SpeechSessionItem @AssistedInject constructor(
 
     override fun getLayout(): Int = R.layout.item_session
 
-    override fun providerEqualableContents(): Array<*> = arrayOf(session)
+    override fun providerEqualableContents(): Array<*> = arrayOf(
+        session,
+        if (isContainsQuery()) query else null
+    )
 
-    override fun isTextHighlightNeedUpdate() = query?.let {
+    private fun isContainsQuery() = query?.let {
         when {
             session.title.getByLang(defaultLang()).toLowerCase()
                 .contains(query.toLowerCase()) -> true
