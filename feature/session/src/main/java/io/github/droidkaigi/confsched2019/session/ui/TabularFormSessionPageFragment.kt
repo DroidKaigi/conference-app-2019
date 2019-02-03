@@ -30,7 +30,6 @@ import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableLayoutManag
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableLunchDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableRoomLabelDecoration
 import io.github.droidkaigi.confsched2019.session.ui.widget.TimetableTimeLabelDecoration
-import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject
 import javax.inject.Provider
 
