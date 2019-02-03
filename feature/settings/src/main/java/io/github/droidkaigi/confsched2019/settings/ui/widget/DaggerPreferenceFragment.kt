@@ -25,4 +25,3 @@ abstract class DaggerPreferenceFragment : PreferenceFragmentCompat(), HasSupport
         return childFragmentInjector
     }
 }
-
