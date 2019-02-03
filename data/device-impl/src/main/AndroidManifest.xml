@@ -1,6 +1,6 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.github.droidkaigi.confsched2019"
+    package="io.github.droidkaigi.confsched2019.data.device"
     >
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
