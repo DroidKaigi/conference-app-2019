@@ -52,8 +52,6 @@ import io.github.droidkaigi.confsched2019.session.ui.SpeakerFragment
 import io.github.droidkaigi.confsched2019.session.ui.SpeakerFragmentModule
 import io.github.droidkaigi.confsched2019.session.ui.TabularFormSessionPagesFragment
 import io.github.droidkaigi.confsched2019.session.ui.TabularFromSessionPagesFragmentModule
-import io.github.droidkaigi.confsched2019.settings.ui.SettingsFragment
-import io.github.droidkaigi.confsched2019.settings.ui.SettingsFragmentModule
 import io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragment
 import io.github.droidkaigi.confsched2019.sponsor.ui.SponsorFragmentModule
 import io.github.droidkaigi.confsched2019.staff.ui.StaffSearchFragment
@@ -322,12 +320,6 @@ abstract class MainActivityModule {
         modules = [ContributorFragmentModule::class, ContributorAssistedInjectModule::class]
     )
     abstract fun contrbutorContributorFragment(): ContributorFragment
-
-    @PageScope
-    @ContributesAndroidInjector(
-        modules = [SettingsFragmentModule::class]
-    )
-    abstract fun contributeSettingsFragment(): SettingsFragment
 
     @Module
     companion object {

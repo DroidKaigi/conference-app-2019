@@ -46,11 +46,12 @@
             android:icon="@drawable/ic_contributor_outline_24dp"
             android:title="@string/contributor"/>
 
-        <item
-            android:id="@id/setting"
-            android:icon="@drawable/ic_settings_outline_black_24dp"
-            android:title="@string/setting_label"
-        />
+        <!-- TODO If we can create item, we should uncomment it -->
+        <!--<item-->
+            <!--android:id="@id/setting"-->
+            <!--android:icon="@drawable/ic_settings_outline_black_24dp"-->
+            <!--android:title="@string/setting_label"-->
+        <!--/>-->
 
         <!-- Below items are just placeholder to avoid hidden under nav footer -->
         <item
