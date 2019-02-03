@@ -6,6 +6,7 @@ import androidx.navigation.NavDirections
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.xwray.groupie.databinding.BindableItem
+import io.github.droidkaigi.confsched2019.item.EqualableContentsProvider
 import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R

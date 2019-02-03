@@ -18,6 +18,7 @@ import com.squareup.inject.assisted.AssistedInject
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import com.xwray.groupie.databinding.BindableItem
+import io.github.droidkaigi.confsched2019.item.EqualableContentsProvider
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.model.SpeechSession
 import io.github.droidkaigi.confsched2019.model.defaultLang
@@ -204,9 +205,9 @@ class SpeechSessionItem @AssistedInject constructor(
     override fun isTextHighlightNeedUpdate() = query?.let {
         when {
             session.title.getByLang(defaultLang()).toLowerCase()
-                .contains(query.toLowerCase().toRegex()) -> true
+                .contains(query.toLowerCase()) -> true
             session.speakers.find {
-                it.name.toLowerCase().contains(query.toLowerCase().toRegex())
+                it.name.toLowerCase().contains(query.toLowerCase())
             } != null -> true
             else -> false
         }

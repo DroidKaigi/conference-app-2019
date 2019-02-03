@@ -8,6 +8,7 @@ import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.databinding.BindableItem
+import io.github.droidkaigi.confsched2019.item.EqualableContentsProvider
 import io.github.droidkaigi.confsched2019.model.Speaker
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemSpeakerBinding
@@ -68,7 +69,7 @@ class SpeakerItem @AssistedInject constructor(
     override fun providerEqualableContents(): Array<*> = arrayOf(speaker)
 
     override fun isTextHighlightNeedUpdate() = query?.let {
-        speaker.name.toLowerCase().contains(it.toLowerCase().toRegex())
+        speaker.name.toLowerCase().contains(it.toLowerCase())
     } ?: false
 
     override fun equals(other: Any?): Boolean {

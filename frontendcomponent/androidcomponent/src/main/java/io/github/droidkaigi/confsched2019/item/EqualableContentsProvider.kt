@@ -1,4 +1,4 @@
-package io.github.droidkaigi.confsched2019.session.ui.item
+package io.github.droidkaigi.confsched2019.item
 
 import java.util.Arrays
 
@@ -18,6 +18,7 @@ interface EqualableContentsProvider {
         if (other !is EqualableContentsProvider) return false
         if (other::class != this::class) return false
         if (isTextHighlightNeedUpdate()) return false
+        if (other.isTextHighlightNeedUpdate()) return false
         return other.providerEqualableContents().contentDeepEquals(this.providerEqualableContents())
     }
 
