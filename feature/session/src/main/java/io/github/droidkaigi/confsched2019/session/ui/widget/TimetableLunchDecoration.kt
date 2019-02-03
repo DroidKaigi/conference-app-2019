@@ -118,6 +118,9 @@ class TimetableLunchDecoration(
 
     private fun Canvas.drawTextInRect(rect: Rect, textPaint: Paint, text: String) {
         val textBounds = Rect().apply { textPaint.getTextBounds(text, 0, text.length - 1, this) }
+        if (textBounds.width() > rect.width() || textBounds.height() > rect.height()) {
+            return
+        }
         val baseX = rect.left.toFloat() + itemTextMarginStart
         val baseY = rect.top + itemTextMarginTop +
             if (textBounds.height() != 0) textBounds.height().toFloat()
