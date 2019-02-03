@@ -5,7 +5,9 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import io.github.droidkaigi.confsched2019.widget.component.R
 
-class SearchSectionHeaderItem(private val title: CharSequence) : Item<ViewHolder>(title.hashCode().toLong()),
+class SearchSectionHeaderItem(
+    private val title: CharSequence
+) : Item<ViewHolder>(title.hashCode().toLong()),
     EqualableContentsProvider {
     override fun getLayout(): Int = R.layout.view_section_header
 
