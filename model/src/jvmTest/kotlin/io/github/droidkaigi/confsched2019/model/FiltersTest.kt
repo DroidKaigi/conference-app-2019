@@ -6,49 +6,86 @@ import io.mockk.mockk
 import org.junit.After
 import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(Enclosed::class)
 class FiltersTest {
 
-    class WhenServiceSessionIsChecked {
+    private companion object {
+        val room1 = Room(10, "room1")
+        val room2 = Room(11, "room2")
+        val category1 = Category(10, LocaledString("ツール1", "Tool1"))
+        val category2 = Category(11, LocaledString("ツール2", "Tool2"))
+    }
+
+    @RunWith(Parameterized::class)
+    class WhenServiceSessionIsChecked(
+        private val param: Param
+    ) {
+        data class Param(
+            val title: String,
+            val filters: Filters = Filters(),
+            val sessionSetup: ServiceSession.() -> Unit,
+            val expected: Boolean
+        ) {
+            override fun toString(): String = title
+        }
+
         companion object {
             private val serviceSession: ServiceSession = mockk()
+
+            @JvmStatic
+            @Parameterized.Parameters(name = "{0}")
+            fun testParams() = listOf(
+                Param(
+                    title = "AFTER_PARTY is not filterable",
+                    sessionSetup = {
+                        every { sessionType } returns SessionType.AFTER_PARTY
+                    },
+                    expected = true
+                ),
+                Param(
+                    title = "LUNCH is not filterable",
+                    sessionSetup = {
+                        every { sessionType } returns SessionType.LUNCH
+                    },
+                    expected = true
+                ),
+                Param(
+                    title = "CODELABS in room1 is filterable and filtered by room1 returns true",
+                    filters = Filters(rooms = mutableSetOf(room1)),
+                    sessionSetup = {
+                        every { sessionType } returns SessionType.CODELABS
+                        every { room } returns room1
+                    },
+                    expected = true
+                ),
+                Param(
+                    title = "CODELABS in room2 is filterable and filtered by room2 returns false",
+                    filters = Filters(rooms = mutableSetOf(room1)),
+                    sessionSetup = {
+                        every { sessionType } returns SessionType.CODELABS
+                        every { room } returns room2
+                    },
+                    expected = false
+                )
+            )
         }
 
         @After fun tearDown() {
             clearMocks(serviceSession)
         }
 
-        @Test fun isPass_When_AFTER_PERTY_IsNotFilterable() {
+        @Test fun isPassForServiceSession(): Unit = with(param) {
             // setup
-            val sut = Filters()
-            every { serviceSession.sessionType } returns SessionType.AFTER_PARTY
-
-            // verity
-            assertTrue { sut.isPass(serviceSession) }
-        }
-
-        @Test fun isPass_When_LUNCH_IsNotFilterable() {
-            // setup
-            val sut = Filters()
-            every { serviceSession.sessionType } returns SessionType.LUNCH
+            sessionSetup(serviceSession)
 
             // verify
-            assertTrue { sut.isPass(serviceSession) }
-        }
-
-        @Test fun isPass_WhenFilterableServiceSessionAndRoomFiltered() {
-            // setup
-            val room1 = Room(10, "room1")
-            val sut = Filters(rooms = mutableSetOf(room1))
-            every { serviceSession.room } returns room1
-            every { serviceSession.sessionType } returns SessionType.CODELABS
-
-            // verify
-            assertTrue { sut.isPass(serviceSession) }
+            assertEquals(expected = expected, actual = filters.isPass(serviceSession))
         }
     }
 
@@ -71,7 +108,6 @@ class FiltersTest {
 
         @Test fun isPass_WhenRoomFiltered() {
             // setup
-            val room1 = Room(10, "room1")
             val sut = Filters(rooms = mutableSetOf(room1))
             every { speechSession.room } returns room1
 
@@ -81,8 +117,6 @@ class FiltersTest {
 
         @Test fun isPass_WhenRoomFilteredDifferentRoom() {
             // setup
-            val room1 = Room(10, "room1")
-            val room2 = Room(11, "room2")
             val sut = Filters(rooms = mutableSetOf(room2))
             every { speechSession.room } returns room1
 
@@ -92,7 +126,6 @@ class FiltersTest {
 
         @Test fun isPass_WhenCategoryFiltered() {
             // setup
-            val category1 = Category(10, LocaledString("ツール", "Tool"))
             val sut = Filters(categories = mutableSetOf(category1))
             every { speechSession.category } returns category1
 
@@ -102,8 +135,6 @@ class FiltersTest {
 
         @Test fun isPass_WhenCategoryFilteredDifferentCategory() {
             // setup
-            val category1 = Category(10, LocaledString("ツール1", "Tool1"))
-            val category2 = Category(11, LocaledString("ツール2", "Tool2"))
             val sut = Filters(categories = mutableSetOf(category2))
             every { speechSession.category } returns category1
 
