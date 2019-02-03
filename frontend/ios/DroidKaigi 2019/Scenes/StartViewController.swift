@@ -11,19 +11,17 @@ class StartViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupRoot()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
-        let mainViewController = MainViewController.instantiateFromStoryboard()
-        // TODO: Replace rootViewController
-        let navigationController = UINavigationController(rootViewController: mainViewController)
-        mainViewController.navigationItem.titleView = logoView
-        self.view.window?.rootViewController = navigationController
         self.view.window?.layer.add(CATransition(), forKey: kCATransition)
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     private lazy var logoView: UIView = {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 160, height: 22))
         imageView.image = UIImage(named: "logo")
@@ -34,4 +32,14 @@ class StartViewController: UIViewController {
         view.addSubview(imageView)
         return view
     }()
+
+    private func setupRoot() {
+        let mainViewController = MainViewController.instantiateFromStoryboard()
+        let navigationController = UINavigationController(rootViewController: mainViewController)
+        mainViewController.navigationItem.titleView = logoView
+        addChild(navigationController)
+        navigationController.view.frame = view.bounds
+        view.addSubview(navigationController.view)
+        navigationController.didMove(toParent: self)
+    }
 }

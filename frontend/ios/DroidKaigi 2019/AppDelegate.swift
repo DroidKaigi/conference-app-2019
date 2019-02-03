@@ -47,3 +47,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().isTranslucent = false
     }
 }
+
+extension AppDelegate {
+    static var shared: AppDelegate? {
+        return UIApplication.shared.delegate as? AppDelegate
+    }
+
+    var rootViewController: StartViewController? {
+        return window?.rootViewController as? StartViewController
+    }
+}

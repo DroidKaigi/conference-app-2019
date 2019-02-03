@@ -8,13 +8,20 @@
 import UIKit
 import XLPagerTabStrip
 
-class MainViewController: ButtonBarPagerTabStripViewController, StoryboardInstantiable {
+class MainViewController: ButtonBarPagerTabStripViewController, StoryboardInstantiable, SlideTransitionable {
+
+    var drawerViewController = DrawerViewController()
 
     override func viewDidLoad() {
         setupTabAppearance()
         super.viewDidLoad()
+        setupSlideTransitionableSubviews()
+        setupViewController(drawerViewController)
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: #imageLiteral(resourceName: "baseline_location_on_white_18dp"), style: .plain, target: self, action: #selector(locationButtonTapped(_:)))
+        ]
+        navigationItem.leftBarButtonItems = [
+            UIBarButtonItem(image: #imageLiteral(resourceName: "baseline_location_on_white_18dp"), style: .plain, target: self, action: #selector(open))
         ]
     }
 
@@ -32,6 +39,36 @@ class MainViewController: ButtonBarPagerTabStripViewController, StoryboardInstan
         settings.style.selectedBarBackgroundColor = UIColor.DK.primaryDark.color
         settings.style.buttonBarItemFont = UIFont.systemFont(ofSize: 12)
         settings.style.selectedBarHeight = 4
+    }
+
+    var rootViewController: UIViewController {
+        return AppDelegate.shared?.rootViewController ?? UIViewController()
+    }
+    var slideViewController: UIViewController? {
+        return drawerViewController
+    }
+    var tapGesture: UITapGestureRecognizer {
+        return UITapGestureRecognizer(target: self, action: #selector(close))
+    }
+    var panGesture: UIPanGestureRecognizer {
+        return UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+    }
+    var slideViewWidth: CGFloat { return 260 }
+    var opacityView: UIView = UIView()
+    var slideContainerView: UIView = UIView()
+    var statusBarShadowView: UIView = UIView()
+    var contentViewOpacity: CGFloat { return 0.5 }
+
+    @objc private  func close() {
+        closeSlide()
+    }
+
+    @objc private  func open() {
+        openSlide()
+    }
+
+    @objc private func handlePanGesture(_ panGesture: UIPanGestureRecognizer) {
+        panAction(panGesture)
     }
 }
 
