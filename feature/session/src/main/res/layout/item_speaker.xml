@@ -11,9 +11,11 @@
             name="speaker"
             type="io.github.droidkaigi.confsched2019.model.Speaker"
             />
+
         <variable
             name="query"
-            type="String" />
+            type="String"
+            />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,6 +33,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:contentDescription="@string/session_detail_speaker"
+            android:transitionName="@string/speaker_image_transition"
             app:circleCrop="@{true}"
             app:imageUrl="@{speaker.imageUrl}"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -50,11 +53,11 @@
             android:text="@{speaker.name}"
             android:textAppearance="@style/TextAppearance.Lekton.Body1"
             android:textColor="@color/gray1"
+            app:highlightText="@{query}"
             app:layout_constraintBottom_toBottomOf="@id/speaker_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/speaker_image"
             app:layout_constraintTop_toTopOf="@id/speaker_image"
-            app:highlightText="@{query}"
             tools:text="@tools:sample/full_names"
             />
 

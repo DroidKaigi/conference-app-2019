@@ -26,6 +26,12 @@
             name="timeZoneOffset"
             type="com.soywiz.klock.DateTimeSpan"
             />
+
+        <variable
+            name="listener"
+            type="io.github.droidkaigi.confsched2019.session.ui.bindingadapter.ImageLoadListener"
+            />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -87,9 +93,11 @@
                     android:layout_margin="16dp"
                     android:contentDescription="@string/speaker_label"
                     app:circleCrop="@{true}"
+                    android:transitionName="@string/speaker_image_transition"
                     app:imageUrl="@{speaker.imageUrl}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:listener="@{listener}"
                     app:placeHolder="@{@drawable/ic_person_outline_black_24dp}"
                     app:placeHolderTint="@{@color/gray2}"
                     tools:src="@tools:sample/avatars"

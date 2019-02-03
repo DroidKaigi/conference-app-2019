@@ -3,6 +3,7 @@ package io.github.droidkaigi.confsched2019.session.ui.item
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
@@ -60,7 +61,12 @@ class SpeakerItem @AssistedInject constructor(
         }
 
         itemBinding.root.setOnClickListener {
-            navController.navigate(clickNavDirection)
+            navController.navigate(
+                clickNavDirection,
+                FragmentNavigatorExtras(
+                    itemBinding.speakerImage to it.context.getString(R.string.speaker_image_transition)
+                )
+            )
         }
     }
 

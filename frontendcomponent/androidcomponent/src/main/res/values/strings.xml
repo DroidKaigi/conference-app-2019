@@ -34,4 +34,6 @@
     <string name="notification_message_session_start_time">%1$s to %2$s @ %3$s</string>
     <!-- Tabular Form -->
     <string name="tabular_form_label">Timetable</string>
+
+    <string name="speaker_image_transition" translatable="false">speaker_image</string>
 </resources>
