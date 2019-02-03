@@ -1,155 +1,245 @@
 package io.github.droidkaigi.confsched2019.model
 
+import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
+import org.junit.After
+import org.junit.experimental.runners.Enclosed
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
 import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.assertEquals
 
+@RunWith(Enclosed::class)
 class FiltersTest {
-    @Test fun isPass_WhenNotFiltered() {
-        assertTrue { Filters().isPass(mockk<SpeechSession>()) }
-    }
 
-    @Test fun isPass_WhenServiceSessionAndIsNotFilterable() {
-        val serviceSession = mockk<ServiceSession>()
-        every { serviceSession.sessionType } returns SessionType.AFTER_PARTY
-        assertTrue { Filters().isPass(serviceSession) }
-
-        every { serviceSession.sessionType } returns SessionType.LUNCH
-        assertTrue { Filters().isPass(serviceSession) }
-    }
-
-    @Test fun isPass_WhenRoomFiltered() {
-        val room = Room(10, "room1")
-        val speechSession = mockk<SpeechSession>()
-        every { speechSession.room } returns room
-
-        assertTrue { Filters(rooms = mutableSetOf(room)).isPass(speechSession) }
-    }
-
-    @Test fun isPass_WhenRoomFilteredDifferentRoom() {
+    private companion object {
         val room1 = Room(10, "room1")
         val room2 = Room(11, "room2")
-        val speechSession = mockk<SpeechSession>()
-        every { speechSession.room } returns room1
-
-        assertFalse { Filters(rooms = mutableSetOf(room2)).isPass(speechSession) }
-    }
-
-    @Test fun isPass_WhenFilterableServiceSessionAndRoomFiltered() {
-        val room = Room(10, "room1")
-        val serviceSession = mockk<ServiceSession>()
-        every { serviceSession.room } returns room
-        every { serviceSession.sessionType } returns SessionType.CODELABS
-
-        assertTrue { Filters(rooms = mutableSetOf(room)).isPass(serviceSession) }
-    }
-
-    @Test fun isPass_WhenCategoryFiltered() {
-        val category = Category(10, LocaledString("ツール", "Tool"))
-        val speechSession = mockk<SpeechSession>()
-        every { speechSession.category } returns category
-
-        assertTrue { Filters(categories = mutableSetOf(category)).isPass(speechSession) }
-    }
-
-    @Test fun isPass_WhenCategoryFilteredDifferentCategory() {
         val category1 = Category(10, LocaledString("ツール1", "Tool1"))
         val category2 = Category(11, LocaledString("ツール2", "Tool2"))
-        val speechSession = mockk<SpeechSession>()
-        every { speechSession.category } returns category1
-
-        assertFalse { Filters(categories = mutableSetOf(category2)).isPass(speechSession) }
     }
 
-    @Test fun isPass_WhenLangFiltered() {
-        val lang = Lang.JA
-        val speechSession = mockk<SpeechSession>()
-        every { speechSession.lang } returns Lang.JA
+    @RunWith(Parameterized::class)
+    class WhenServiceSessionIsChecked(
+        private val param: Param<ServiceSession>
+    ) {
+        companion object {
+            private val serviceSession: ServiceSession = mockk()
 
-        assertTrue { Filters(langs = mutableSetOf(lang)).isPass(speechSession) }
+            @JvmStatic
+            @Parameterized.Parameters(name = "{0}")
+            fun testParams() = listOf<Param<ServiceSession>>(
+                Param(
+                    title = "AFTER_PARTY is not filterable and passed",
+                    sessionSetup = {
+                        every { sessionType } returns SessionType.AFTER_PARTY
+                    },
+                    expected = true
+                ),
+                Param(
+                    title = "LUNCH is not filterable and passed",
+                    sessionSetup = {
+                        every { sessionType } returns SessionType.LUNCH
+                    },
+                    expected = true
+                ),
+                Param(
+                    title = "room1 filter passes CODELABS in room1",
+                    filters = Filters(rooms = setOf(room1)),
+                    sessionSetup = {
+                        every { sessionType } returns SessionType.CODELABS
+                        every { room } returns room1
+                    },
+                    expected = true
+                ),
+                Param(
+                    title = "room1 filter does not pass CODELABS in room2",
+                    filters = Filters(rooms = setOf(room1)),
+                    sessionSetup = {
+                        every { sessionType } returns SessionType.CODELABS
+                        every { room } returns room2
+                    },
+                    expected = false
+                )
+            )
+        }
+
+        @After fun tearDown() {
+            clearMocks(serviceSession)
+        }
+
+        @Test fun isPassForServiceSession(): Unit = with(param) {
+            // setup
+            sessionSetup(serviceSession)
+
+            // verify
+            assertEquals(expected = expected, actual = filters.isPass(serviceSession))
+        }
     }
 
-    @Test fun isPass_WhenLangFilteredDifferentLang() {
-        val lang1 = Lang.JA
-        val lang2 = Lang.EN
-        val speechSession = mockk<SpeechSession>()
-        every { speechSession.lang } returns Lang.JA
+    @RunWith(Parameterized::class)
+    class WhenSpeechSessionIsChecked(
+        private val param: Param<SpeechSession>
+    ) {
+        companion object {
+            private val speechSession: SpeechSession = mockk()
 
-        assertFalse { Filters(langs = mutableSetOf(lang2)).isPass(speechSession) }
+            @JvmStatic
+            @Parameterized.Parameters(name = "{0}")
+            fun params() = listOf(
+                Param(
+                    title = "empty filter passes empty session",
+                    expected = true
+                ),
+                Param(
+                    title = "room1 filter passes session in room1",
+                    filters = Filters(rooms = setOf(room1)),
+                    sessionSetup = {
+                        every { room } returns room1
+                    },
+                    expected = true
+                ),
+                Param(
+                    title = "room1 filter does not pass session in room2",
+                    filters = Filters(rooms = setOf(room1)),
+                    sessionSetup = {
+                        every { room } returns room2
+                    },
+                    expected = false
+                ),
+                Param(
+                    title = "category1 filter passes category1 session",
+                    filters = Filters(categories = setOf(category1)),
+                    sessionSetup = {
+                        every { category } returns category1
+                    },
+                    expected = true
+                ),
+                Param(
+                    title = "category2 filter does not pass category1 session",
+                    filters = Filters(categories = setOf(category1)),
+                    sessionSetup = {
+                        every { category } returns category2
+                    },
+                    expected = false
+                ),
+                Param(
+                    title = "JA filter passes Japanese session",
+                    filters = Filters(langs = setOf(Lang.JA)),
+                    sessionSetup = {
+                        every { lang } returns Lang.JA
+                    },
+                    expected = true
+                ),
+                Param(
+                    title = "JA filter does not pass English session",
+                    filters = Filters(langs = setOf(Lang.JA)),
+                    sessionSetup = {
+                        every { lang } returns Lang.EN
+                    },
+                    expected = false
+                ),
+                Param(
+                    title = "Interpretation filter passes interpretation session",
+                    filters = Filters(langSupports = setOf(LangSupport.INTERPRETATION)),
+                    sessionSetup = {
+                        every { isInterpretationTarget } returns true
+                    },
+                    expected = true
+                ),
+                Param(
+                    title = "Interpretation filter does not pass non interpretation session",
+                    filters = Filters(langSupports = setOf(LangSupport.INTERPRETATION)),
+                    sessionSetup = {
+                        every { isInterpretationTarget } returns false
+                    },
+                    expected = false
+                ),
+                Param.forAudienceCategory(
+                    title = "empty filter passes beginners session",
+                    isForBeginners = true,
+                    expected = true
+                ),
+                Param.forAudienceCategory(
+                    title = "empty filter passes non beginners session",
+                    isForBeginners = false,
+                    expected = true
+                ),
+                Param.forAudienceCategory(
+                    title = "Beginners filter passes beginners session",
+                    filterItem = setOf(AudienceCategory.BEGINNERS),
+                    isForBeginners = true,
+                    expected = true
+                ),
+                Param.forAudienceCategory(
+                    title = "Beginners filter does not pass non beginners session",
+                    filterItem = setOf(AudienceCategory.BEGINNERS),
+                    isForBeginners = false,
+                    expected = false
+                ),
+                Param.forAudienceCategory(
+                    title = "Unspecified filter does not pass beginners session",
+                    filterItem = setOf(AudienceCategory.UNSPECIFIED),
+                    isForBeginners = true,
+                    expected = false
+                ),
+                Param.forAudienceCategory(
+                    title = "Unspecified filter passes non beginners session",
+                    filterItem = setOf(AudienceCategory.UNSPECIFIED),
+                    isForBeginners = false,
+                    expected = true
+                ),
+                Param.forAudienceCategory(
+                    title = "filter has Beginners and Unspecified passes beginners session",
+                    filterItem = setOf(AudienceCategory.BEGINNERS, AudienceCategory.UNSPECIFIED),
+                    isForBeginners= true,
+                    expected = true
+                ),
+                Param.forAudienceCategory(
+                    title = "filter has Beginners and Unspecified passes non beginners session",
+                    filterItem = setOf(AudienceCategory.BEGINNERS, AudienceCategory.UNSPECIFIED),
+                    isForBeginners =  false,
+                    expected = true
+                )
+            )
+        }
+
+        @After fun tearDown() {
+            clearMocks(speechSession)
+        }
+
+        @Test fun isPass_forSpeechSession() = with(param) {
+            // setup
+            sessionSetup(speechSession)
+
+            // verify
+            assertEquals(expected = expected, actual = filters.isPass(speechSession))
+        }
     }
+}
 
-    @Test fun isPass_WhenLangSupportFiltered() {
-        val langSupport = LangSupport.INTERPRETATION
-        val speechSession = mockk<SpeechSession>()
-        every { speechSession.isInterpretationTarget } returns true
+data class Param<T>(
+    val title: String,
+    val filters: Filters = Filters(),
+    val sessionSetup: T.() -> Unit = {},
+    val expected: Boolean
+) {
+    override fun toString(): String = title
 
-        assertTrue { Filters(langSupports = mutableSetOf(langSupport)).isPass(speechSession) }
-    }
-
-    @Test fun isPass_WhenLangSupportFilteredWithoutInterpretationTarget() {
-        val langSupport = LangSupport.INTERPRETATION
-        val speechSession = mockk<SpeechSession>()
-        every { speechSession.isInterpretationTarget } returns false
-
-        assertFalse { Filters(langSupports = mutableSetOf(langSupport)).isPass(speechSession) }
-    }
-
-    @Test fun isPass_WhenAudienceCategoryFiltered() {
-        val audienceCategory = AudienceCategory.BEGINNERS
-        val speechSession = mockk<SpeechSession>()
-        every { speechSession.forBeginners } returns true
-
-        assertTrue { Filters(audienceCategories = mutableSetOf(audienceCategory)).isPass(speechSession) }
-    }
-
-    @Test fun isPass_WhenAudienceCategoryFilteredWithoutForBeginners() {
-        val audienceCategory = AudienceCategory.BEGINNERS
-        val speechSession = mockk<SpeechSession>()
-        every { speechSession.forBeginners } returns false
-
-        assertFalse { Filters(audienceCategories = mutableSetOf(audienceCategory)).isPass(speechSession) }
-    }
-
-    private fun speechSessionMock(isBeginner: Boolean = false): SpeechSession {
-        val speechSessionBeginner = mockk<SpeechSession>()
-        every { speechSessionBeginner.forBeginners } returns isBeginner
-        return speechSessionBeginner
-    }
-
-    @Test fun audienceCategoryFilter_Empty() {
-        val filter = Filters(audienceCategories = mutableSetOf())
-
-        // pass all
-        assertTrue { filter.isPass(speechSessionMock(isBeginner = true)) }
-        assertTrue { filter.isPass(speechSessionMock(isBeginner = false)) }
-    }
-
-    @Test fun audienceCategoryFilter_Beginner() {
-        val filter = Filters(audienceCategories = mutableSetOf(AudienceCategory.BEGINNERS))
-
-        // pass only beginner
-        assertTrue { filter.isPass(speechSessionMock(isBeginner = true)) }
-        assertFalse { filter.isPass(speechSessionMock(isBeginner = false)) }
-    }
-
-    @Test fun audienceCategoryFilter_Unspecified() {
-        val filter = Filters(audienceCategories = mutableSetOf(AudienceCategory.UNSPECIFIED))
-
-        // pass only not beginner
-        assertFalse { filter.isPass(speechSessionMock(isBeginner = true)) }
-        assertTrue { filter.isPass(speechSessionMock(isBeginner = false)) }
-    }
-
-    @Test fun audienceCategoryFilter_Both() {
-        val filter = Filters(audienceCategories = mutableSetOf(
-            AudienceCategory.BEGINNERS,
-            AudienceCategory.UNSPECIFIED)
+    companion object {
+        fun forAudienceCategory(
+            title: String,
+            filterItem: Set<AudienceCategory> = setOf(),
+            isForBeginners: Boolean,
+            expected: Boolean
+        ) = Param<SpeechSession>(
+            title = title,
+            filters = Filters(audienceCategories = filterItem),
+            sessionSetup = {
+                every { forBeginners } returns isForBeginners
+            },
+            expected = expected
         )
-
-        // pass all
-        assertTrue { filter.isPass(speechSessionMock(isBeginner = true)) }
-        assertTrue { filter.isPass(speechSessionMock(isBeginner = false)) }
     }
 }

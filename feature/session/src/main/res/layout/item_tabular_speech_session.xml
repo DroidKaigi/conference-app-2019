@@ -18,7 +18,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/tabular_form_column_width"
         android:layout_height="wrap_content"
-        android:padding="4dp">
+        android:padding="@dimen/session_item_padding">
 
         <View
             android:id="@+id/background_view"
@@ -32,7 +32,7 @@
 
         <View
             android:id="@+id/vertical_line_view"
-            android:layout_width="2dp"
+            android:layout_width="@dimen/session_item_line_width"
             android:layout_height="0dp"
             android:background="@drawable/bg_vertical_line"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -43,8 +43,8 @@
             android:id="@+id/speaker_icon_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginStart="@dimen/session_item_content_margin_start"
+            android:layout_marginTop="@dimen/session_item_content_margin_top"
             app:layout_constraintBottom_toTopOf="@id/session_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,12 +61,23 @@
             android:fontFamily="@font/notosans_medium"
             android:text="@{session.title.getByLang(lang)}"
             android:textColor="@color/tabular_session_title"
-            android:textSize="14sp"
+            android:textSize="@dimen/session_item_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/speaker_icon_list"
             app:layout_constraintTop_toBottomOf="@id/speaker_icon_list"
             tools:text="@sample/service_session.json/data/session_name" />
+
+        <View
+            android:id="@+id/foreground_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:duplicateParentState="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

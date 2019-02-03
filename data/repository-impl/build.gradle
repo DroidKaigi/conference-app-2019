@@ -10,8 +10,9 @@ dependencies {
     api project(":data:repository")
     implementation project(":data:api")
     implementation project(":data:db")
+    implementation project(":data:device")
     implementation project(":data:firestore")
-    api project(":model")
+    implementation project(":model")
 
     implementation Dep.Kotlin.stdlibJvm
     implementation Dep.Kotlin.serializationCommon

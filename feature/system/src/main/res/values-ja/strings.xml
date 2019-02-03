@@ -3,5 +3,7 @@
     <string name="system_error_network">インターネット接続を確認して後ほど再度お試しください。</string>
     <string name="system_error_server">サーバーエラーです。後ほど再度お試しください。</string>
     <string name="system_error_unknown">不明なエラーです。後ほど再度お試しください。</string>
+    <string name="system_error_copy_text_unavailable">コピーできませんでした。 %1$s</string>
     <string name="venue_place_name">ベルサール新宿グランドコンファレンスセンター</string>
+    <string name="system_wifi_registered_message">SSID とパスワードが登録されました。</string>
 </resources>

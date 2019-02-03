@@ -18,9 +18,14 @@ final class SessionsViewController: UIViewController {
     init(viewModel: SessionsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        view.addSubview(tableView)
+        [tableHeaderView, tableView].forEach(view.addSubview)
+        tableHeaderView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(48)
+        }
         tableView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalTo(tableHeaderView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
     required init?(coder aDecoder: NSCoder) { fatalError() }
@@ -41,6 +46,8 @@ final class SessionsViewController: UIViewController {
 
     private let dataSource = SessionDataSource()
 
+    private lazy var tableHeaderView = SessionTableHeaderView()
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.backgroundColor = .white
@@ -54,19 +61,27 @@ final class SessionsViewController: UIViewController {
 
     private func bind() {
         let viewWillAppear = rx.methodInvoked(#selector(self.viewWillAppear)).map { _ in }
+        let topVisibleSession = dataSource.topVisibleSession
         let toggleFavorite = dataSource.toggleFavorite
-        let input = SessionsViewModel.Input(viewWillAppear: viewWillAppear, toggleFavorite: toggleFavorite)
+        let input = SessionsViewModel.Input(viewWillAppear: viewWillAppear,
+                                            topVisibleSession: topVisibleSession,
+                                            toggleFavorite: toggleFavorite)
         let output = viewModel.transform(input: input)
         output.error
-              .drive(onNext: { errorMessage in
-                  if let errMsg = errorMessage {
-                      MDCSnackbarManager.show(MDCSnackbarMessage(text: errMsg))
-                  }
-              })
-              .disposed(by: bag)
+            .drive(onNext: { errorMessage in
+                if let errMsg = errorMessage {
+                    MDCSnackbarManager.show(MDCSnackbarMessage(text: errMsg))
+                }
+            })
+            .disposed(by: bag)
+        
+        output.startDayText
+            .drive(tableHeaderView.startDayText)
+            .disposed(by: bag)
+        
         output.sessions
-              .drive(tableView.rx.items(dataSource: dataSource))
-              .disposed(by: bag)
+            .drive(tableView.rx.items(dataSource: dataSource))
+            .disposed(by: bag)
     }
 }
 

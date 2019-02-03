@@ -24,10 +24,11 @@
 		362546C921FC9DCD005ADB0F /* SessionDetailWithIconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362546C821FC9DCD005ADB0F /* SessionDetailWithIconTableViewCell.swift */; };
 		362546CB21FCD4E8005ADB0F /* SessionDetailSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362546CA21FCD4E8005ADB0F /* SessionDetailSectionHeaderView.swift */; };
 		362546CD21FCD4FF005ADB0F /* SessionDetailSectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362546CC21FCD4FF005ADB0F /* SessionDetailSectionFooterView.swift */; };
-		362D90FD21F5DBC2006962C8 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362D90FB21F5DBC2006962C8 /* StartViewController.swift */; };
-		362D90FE21F5DBC2006962C8 /* StartViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 362D90FC21F5DBC2006962C8 /* StartViewController.storyboard */; };
+		362D90FD21F5DBC2006962C8 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362D90FB21F5DBC2006962C8 /* RootViewController.swift */; };
+		362D90FE21F5DBC2006962C8 /* RootViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 362D90FC21F5DBC2006962C8 /* RootViewController.storyboard */; };
 		362D910321F5DC2D006962C8 /* SessionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362D910021F5DC2C006962C8 /* SessionsViewController.swift */; };
 		362D910421F5DC2D006962C8 /* SessionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362D910121F5DC2C006962C8 /* SessionsViewModel.swift */; };
+		3632F49622070F2700FF472B /* DrawerMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3632F49522070F2700FF472B /* DrawerMenuTableViewCell.swift */; };
 		363E6AF421FD536A00EBC698 /* TagContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363E6AF321FD536A00EBC698 /* TagContent.swift */; };
 		363E6AF621FD545B00EBC698 /* Session+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363E6AF521FD545B00EBC698 /* Session+Extension.swift */; };
 		366B060721F751C400C912AD /* TagsLeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366B060621F751C400C912AD /* TagsLeftAlignedCollectionViewFlowLayout.swift */; };
@@ -44,6 +45,9 @@
 		3672C2DD21F7392900ACB910 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3672C2DC21F7392900ACB910 /* Kingfisher.framework */; };
 		3672C2DF21F73A9400ACB910 /* SpeakerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3672C2DE21F73A9400ACB910 /* SpeakerCell.swift */; };
 		36D1FA2721F5CF6600ADBBDE /* StoryboardInstantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D1FA2621F5CF6600ADBBDE /* StoryboardInstantiable.swift */; };
+		439CE2B22206356700AC597A /* SessionTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439CE2B12206356700AC597A /* SessionTableHeaderView.swift */; };
+		36E24A87220607CA00356530 /* SlideTransitionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E24A86220607CA00356530 /* SlideTransitionable.swift */; };
+		36E24A892206187200356530 /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E24A882206187200356530 /* DrawerViewController.swift */; };
 		43DC80C12200A0F600A3F710 /* FavoriteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DC80C02200A0F600A3F710 /* FavoriteRepository.swift */; };
 		43DC80C72201FC8100A3F710 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DC80C62201FC8100A3F710 /* UIButton+Extension.swift */; };
 		5917BCA621FA19B8005BEAF2 /* SessionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5917BCA521FA19B8005BEAF2 /* SessionHeaderView.swift */; };
@@ -122,10 +126,11 @@
 		362546C821FC9DCD005ADB0F /* SessionDetailWithIconTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailWithIconTableViewCell.swift; sourceTree = "<group>"; };
 		362546CA21FCD4E8005ADB0F /* SessionDetailSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailSectionHeaderView.swift; sourceTree = "<group>"; };
 		362546CC21FCD4FF005ADB0F /* SessionDetailSectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailSectionFooterView.swift; sourceTree = "<group>"; };
-		362D90FB21F5DBC2006962C8 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
-		362D90FC21F5DBC2006962C8 /* StartViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = StartViewController.storyboard; sourceTree = "<group>"; };
+		362D90FB21F5DBC2006962C8 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		362D90FC21F5DBC2006962C8 /* RootViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = RootViewController.storyboard; sourceTree = "<group>"; };
 		362D910021F5DC2C006962C8 /* SessionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsViewController.swift; sourceTree = "<group>"; };
 		362D910121F5DC2C006962C8 /* SessionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsViewModel.swift; sourceTree = "<group>"; };
+		3632F49522070F2700FF472B /* DrawerMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerMenuTableViewCell.swift; sourceTree = "<group>"; };
 		363E6AF321FD536A00EBC698 /* TagContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagContent.swift; sourceTree = "<group>"; };
 		363E6AF521FD545B00EBC698 /* Session+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+Extension.swift"; sourceTree = "<group>"; };
 		366B060621F751C400C912AD /* TagsLeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsLeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -142,6 +147,9 @@
 		3672C2DC21F7392900ACB910 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
 		3672C2DE21F73A9400ACB910 /* SpeakerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerCell.swift; sourceTree = "<group>"; };
 		36D1FA2621F5CF6600ADBBDE /* StoryboardInstantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardInstantiable.swift; sourceTree = "<group>"; };
+		439CE2B12206356700AC597A /* SessionTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTableHeaderView.swift; sourceTree = "<group>"; };
+		36E24A86220607CA00356530 /* SlideTransitionable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideTransitionable.swift; sourceTree = "<group>"; };
+		36E24A882206187200356530 /* DrawerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerViewController.swift; sourceTree = "<group>"; };
 		43DC80C02200A0F600A3F710 /* FavoriteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRepository.swift; sourceTree = "<group>"; };
 		43DC80C62201FC8100A3F710 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		5917BCA521FA19B8005BEAF2 /* SessionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionHeaderView.swift; sourceTree = "<group>"; };
@@ -321,8 +329,18 @@
 				366B060621F751C400C912AD /* TagsLeftAlignedCollectionViewFlowLayout.swift */,
 				366B060821F756CB00C912AD /* TagsCollectionViewCell.swift */,
 				5917BCA521FA19B8005BEAF2 /* SessionHeaderView.swift */,
+				439CE2B12206356700AC597A /* SessionTableHeaderView.swift */,
 			);
 			path = Session;
+			sourceTree = "<group>";
+		};
+		3632F4942206D46E00FF472B /* Drawer */ = {
+			isa = PBXGroup;
+			children = (
+				36E24A882206187200356530 /* DrawerViewController.swift */,
+				3632F49522070F2700FF472B /* DrawerMenuTableViewCell.swift */,
+			);
+			path = Drawer;
 			sourceTree = "<group>";
 		};
 		366B060C21F7650D00C912AD /* Common */ = {
@@ -351,8 +369,9 @@
 			children = (
 				2159CC5421FE122F00DBD016 /* MainViewController.storyboard */,
 				2159CC5221FE0E0000DBD016 /* MainViewController.swift */,
-				362D90FC21F5DBC2006962C8 /* StartViewController.storyboard */,
-				362D90FB21F5DBC2006962C8 /* StartViewController.swift */,
+				362D90FC21F5DBC2006962C8 /* RootViewController.storyboard */,
+				362D90FB21F5DBC2006962C8 /* RootViewController.swift */,
+				3632F4942206D46E00FF472B /* Drawer */,
 				366B060C21F7650D00C912AD /* Common */,
 				362D90F621F5D521006962C8 /* Session */,
 				360744EF21FADF22003569D3 /* Detail */,
@@ -367,6 +386,7 @@
 				36D1FA2621F5CF6600ADBBDE /* StoryboardInstantiable.swift */,
 				3672C2CC21F6024B00ACB910 /* Reusable.swift */,
 				3672C2D021F6033200ACB910 /* NibLoadable.swift */,
+				36E24A86220607CA00356530 /* SlideTransitionable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -512,7 +532,7 @@
 				01578ECB21E5E75D002B2033 /* Assets.xcassets in Resources */,
 				218481C521FB7F480048D9D3 /* Settings.bundle in Resources */,
 				2159CC5521FE122F00DBD016 /* MainViewController.storyboard in Resources */,
-				362D90FE21F5DBC2006962C8 /* StartViewController.storyboard in Resources */,
+				362D90FE21F5DBC2006962C8 /* RootViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -744,6 +764,7 @@
 				63F34E1B21EB43CE00B2EC48 /* SessionRepository.swift in Sources */,
 				59D30FC921F8B1BD003A937C /* SessionByStartTime.swift in Sources */,
 				362546CD21FCD4FF005ADB0F /* SessionDetailSectionFooterView.swift in Sources */,
+				3632F49622070F2700FF472B /* DrawerMenuTableViewCell.swift in Sources */,
 				43DC80C72201FC8100A3F710 /* UIButton+Extension.swift in Sources */,
 				3672C2D321F6FB7E00ACB910 /* SessionDataSource.swift in Sources */,
 				362546C921FC9DCD005ADB0F /* SessionDetailWithIconTableViewCell.swift in Sources */,
@@ -759,10 +780,13 @@
 				B977F302220203170048A02E /* FloorMapViewController.swift in Sources */,
 				01578EC121E5E75A002B2033 /* AppDelegate.swift in Sources */,
 				7B76F7A821FB45D2008A059B /* KotlinxDeferred+Extension.swift in Sources */,
-				362D90FD21F5DBC2006962C8 /* StartViewController.swift in Sources */,
+				36E24A87220607CA00356530 /* SlideTransitionable.swift in Sources */,
+				362D90FD21F5DBC2006962C8 /* RootViewController.swift in Sources */,
 				362546CB21FCD4E8005ADB0F /* SessionDetailSectionHeaderView.swift in Sources */,
 				360744F321FAF0CE003569D3 /* SessionDetailHeaderTableViewCell.swift in Sources */,
+				439CE2B22206356700AC597A /* SessionTableHeaderView.swift in Sources */,
 				360744F521FAF13C003569D3 /* SessionDetailTableViewCell.swift in Sources */,
+				36E24A892206187200356530 /* DrawerViewController.swift in Sources */,
 				362D910421F5DC2D006962C8 /* SessionsViewModel.swift in Sources */,
 				360744F121FADF53003569D3 /* SessionDetailViewController.swift in Sources */,
 				3672C2CB21F601D600ACB910 /* UITableView+Extension.swift in Sources */,

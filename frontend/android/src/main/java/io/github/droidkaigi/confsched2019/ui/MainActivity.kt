@@ -93,8 +93,18 @@ class MainActivity : DaggerAppCompatActivity() {
         setupStatusBarColors()
 
         systemStore.message.changed(this) { message ->
+            if (message == null) {
+                return@changed
+            }
+
             val messageStr: String = when (message) {
-                is Message.ResourceIdMessage -> getString(message.messageId)
+                is Message.ResourceIdMessage -> {
+                    if (message.stringArgs.isEmpty()) {
+                        getString(message.messageId)
+                    } else {
+                        getString(message.messageId, *message.stringArgs)
+                    }
+                }
                 is Message.TextMessage -> message.message
             }
             Snackbar.make(binding.root, messageStr, Snackbar.LENGTH_LONG).show()
@@ -125,8 +135,10 @@ class MainActivity : DaggerAppCompatActivity() {
             // to avoid flickering, set current fragment background color to white
             // see https://github.com/DroidKaigi/conference-app-2019/pull/521
             supportFragmentManager.findFragmentById(R.id.root_nav_host_fragment)?.let { host ->
-                host.childFragmentManager
-                    .primaryNavigationFragment?.view?.setBackgroundColor(Color.WHITE)
+                val current = host.childFragmentManager.primaryNavigationFragment
+                if (current !is SessionPagesFragment) {
+                    current?.view?.setBackgroundColor(Color.WHITE)
+                }
             }
 
             val config = PageConfiguration.getConfiguration(destination.id)
