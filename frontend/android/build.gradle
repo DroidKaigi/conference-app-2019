@@ -126,6 +126,7 @@ dependencies {
     implementation project(':data:repository-impl')
     implementation project(':data:firestore-impl')
     implementation project(':data:api-impl')
+    implementation project(':data:device-impl')
     implementation project(':ext:log')
 
     implementation Dep.Kotlin.stdlibJvm

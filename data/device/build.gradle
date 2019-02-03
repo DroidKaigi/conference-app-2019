@@ -1,0 +1,50 @@
+import dependencies.Dep
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-multiplatform'
+
+apply from: rootProject.file('gradle/android.gradle')
+
+kotlin {
+    targets {
+        fromPreset(presets.android, 'android')
+        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") \
+                              ? presets.iosArm64 : presets.iosX64
+
+        fromPreset(iOSTarget, 'iOS') {
+            compilations.main.outputKinds('FRAMEWORK')
+        }
+    }
+    sourceSets {
+        commonMain.dependencies {
+            api Dep.Kotlin.stdlibCommon
+            api Dep.Kotlin.coroutines
+            implementation project(":model")
+        }
+        androidMain {
+            dependsOn commonMain
+            dependencies {
+                api Dep.Kotlin.stdlibJvm
+                api Dep.Kotlin.coroutines
+            }
+        }
+        commonTest.dependencies {
+            implementation Dep.Test.KotlinMultiPlatform.commonModuleTest
+            implementation Dep.Test.KotlinMultiPlatform.commonModuleTestAnnotations
+            implementation Dep.MockK.common
+        }
+        androidTest {
+            dependsOn commonMain
+            dependencies {
+                implementation Dep.Test.KotlinMultiPlatform.jvmModuleTest
+                implementation Dep.Test.KotlinMultiPlatform.jvmModuleTestJunit
+                implementation Dep.MockK.jvm
+            }
+        }
+    }
+}
+
+
+configurations {
+    compileClasspath
+}

@@ -8,11 +8,13 @@ import io.github.droidkaigi.confsched2019.about.R
 import io.github.droidkaigi.confsched2019.model.Lang
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
+import io.github.droidkaigi.confsched2019.system.actioncreator.SystemActionCreator
 import javax.inject.Inject
 
 class AboutSection @Inject constructor(
     val activity: FragmentActivity,
-    val activityActionCreator: ActivityActionCreator
+    val activityActionCreator: ActivityActionCreator,
+    val systemActionCreator: SystemActionCreator
 ) : Section() {
 
     fun setupAboutThisApps() {
@@ -24,6 +26,17 @@ class AboutSection @Inject constructor(
                     description = R.string.about_check_map
                 ) {
                     activityActionCreator.openVenueOnGoogleMap()
+                },
+                AboutItem(
+                    name = R.string.about_wifi,
+                    description = R.string.about_add_wifi,
+                    summary = activity.getString(R.string.about_wifi_summary)
+                ) {
+                    systemActionCreator.allowRegisterWifiConfiguration()
+                    systemActionCreator.registerWifiConfiguration(
+                        ssid = activity.getString(R.string.wifi_ssid),
+                        password = activity.getString(R.string.wifi_password)
+                    )
                 },
                 AboutItem(
                     name = R.string.about_staff_list,

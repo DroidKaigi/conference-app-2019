@@ -19,12 +19,20 @@ import io.github.droidkaigi.confsched2019.about.ui.item.AboutSection
 import io.github.droidkaigi.confsched2019.about.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.about.ui.widget.DottedItemDecoration
 import io.github.droidkaigi.confsched2019.di.PageScope
+import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.model.Message
+import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
+import io.github.droidkaigi.confsched2019.system.actioncreator.SystemActionCreator
+import io.github.droidkaigi.confsched2019.system.store.SystemStore
 import javax.inject.Inject
 
 class AboutFragment : DaggerFragment() {
 
     private lateinit var binding: FragmentAboutBinding
     @Inject lateinit var aboutSection: AboutSection
+    @Inject lateinit var systemStore: SystemStore
+    @Inject lateinit var activityActionCreator: ActivityActionCreator
+    @Inject lateinit var systemActionCreator: SystemActionCreator
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +52,43 @@ class AboutFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
 
         setupRecyclerView()
+
+        systemStore.wifiConfiguration.changed(this) {
+            if (it == null || it.isRegistered) {
+                return@changed
+            }
+
+            activityActionCreator.copyText("wifi_password", copiedText())
+
+            systemActionCreator.allowRegisterWifiConfiguration()
+        }
+
+        systemStore.copyText.changed(this) {
+            if (it == null || it.text != copiedText()) {
+                return@changed
+            }
+
+            if (it.copied) {
+                systemActionCreator.showSystemMessage(
+                    Message.of(
+                        getString(
+                            R.string.wifi_failed_to_register_message_so_copied,
+                            getString(R.string.wifi_ssid)
+                        )
+                    )
+                )
+            } else {
+                systemActionCreator.showSystemMessage(
+                    Message.of(
+                        getString(
+                            R.string.wifi_failed_to_register_message,
+                            getString(R.string.wifi_ssid),
+                            getString(R.string.wifi_password)
+                        )
+                    )
+                )
+            }
+        }
     }
 
     private fun setupRecyclerView() {
@@ -66,6 +111,10 @@ class AboutFragment : DaggerFragment() {
             (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         }
         aboutSection.setupAboutThisApps()
+    }
+
+    private fun copiedText(): String {
+        return getString(R.string.wifi_password)
     }
 }
 
