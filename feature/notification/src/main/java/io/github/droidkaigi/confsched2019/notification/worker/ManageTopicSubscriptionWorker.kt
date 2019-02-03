@@ -76,7 +76,7 @@ class ManageTopicSubscriptionWorker(
         ) {
             WorkManager.getInstance()
                 .beginUniqueWork(
-                    NAME, ExistingWorkPolicy.REPLACE,
+                    NAME, ExistingWorkPolicy.APPEND,
                     OneTimeWorkRequestBuilder<ManageTopicSubscriptionWorker>()
                         .setConstraints(
                             Constraints.Builder()
