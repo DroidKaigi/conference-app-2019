@@ -201,6 +201,17 @@ class SpeechSessionItem @AssistedInject constructor(
 
     override fun providerEqualableContents(): Array<*> = arrayOf(session)
 
+    override fun isTextHighlightNeedUpdate() = query?.let {
+        when {
+            session.title.getByLang(defaultLang()).toLowerCase()
+                .contains(query.toLowerCase().toRegex()) -> true
+            session.speakers.find {
+                it.name.toLowerCase().contains(query.toLowerCase().toRegex())
+            } != null -> true
+            else -> false
+        }
+    } ?: false
+
     override fun equals(other: Any?): Boolean {
         return isSameContents(other)
     }

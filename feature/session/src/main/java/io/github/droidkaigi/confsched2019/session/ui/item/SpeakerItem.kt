@@ -67,6 +67,10 @@ class SpeakerItem @AssistedInject constructor(
 
     override fun providerEqualableContents(): Array<*> = arrayOf(speaker)
 
+    override fun isTextHighlightNeedUpdate() = query?.let {
+        speaker.name.toLowerCase().contains(it.toLowerCase().toRegex())
+    } ?: false
+
     override fun equals(other: Any?): Boolean {
         return isSameContents(other)
     }
