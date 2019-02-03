@@ -35,4 +35,5 @@
     <string name="session_favorite_empty">Add sessions to your plan\nby tapping the bookmark button.</string>
     <string name="session_favorite_connection_error">Could not register as a favorite. Retry later.</string>
     <string name="session_calendar" translatable="false">Calendar</string>
+    <string name="session_lunch" translatable="false">Lunch</string>
 </resources>
