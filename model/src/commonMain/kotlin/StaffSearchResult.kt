@@ -1,6 +1,6 @@
 package io.github.droidkaigi.confsched2019.model
 
-class StaffSearchResult(
+data class StaffSearchResult(
     val staffs: List<Staff>,
     val query: String?
 ) {
