@@ -42,7 +42,6 @@ open class TimetableCurrentTimeLineDecoration(
         super.onDrawOver(c, parent, state)
 
         val currentTime = System.currentTimeMillis()
-
         val height = calcLineHeight(parent, currentTime)
         if (height < RoomLabelHeight) return
 

@@ -118,9 +118,8 @@ class TabularFormSessionPageFragment : DaggerFragment() {
                         super.onScrollStateChanged(recyclerView, newState)
                         if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                             job.start()
-                        }
-                        if (newState != RecyclerView.SCROLL_STATE_IDLE) {
-                            job.cancel()
+                        } else {
+                            if (job.isActive) { job.cancel() }
                             removeItemDecoration(timetableCurrentTimeLabelDecoration)
                             removeItemDecoration(timetableCurrentTimeLineDecoration)
                             addItemDecoration(timetableCurrentTimeLabelDecoration)

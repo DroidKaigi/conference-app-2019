@@ -70,7 +70,6 @@ class TimetableCurrentTimeLabelDecoration(
         Rect().apply { textPaint.getTextBounds("00:00", 0, "00:00".length, this) }.width()
 
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-
         val currentTime = System.currentTimeMillis()
         val timeText = dateFormat
             .format(DateTimeTz.fromUnixLocal(currentTime).addOffset(9.hours))
