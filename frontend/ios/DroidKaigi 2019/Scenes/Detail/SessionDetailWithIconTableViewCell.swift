@@ -28,6 +28,13 @@ enum Document {
         case .slide: return LocaledString(ja: "スライド", en: "Slide")
         }
     }
+
+    var url: URL? {
+        switch self {
+        case let .video(url): return URL(string: url)
+        case let .slide(url): return URL(string: url)
+        }
+    }
 }
 
 class SessionDetailWithIconTableViewCell: UITableViewCell, Reusable {
@@ -45,10 +52,12 @@ class SessionDetailWithIconTableViewCell: UITableViewCell, Reusable {
                 iconImageView.image = document.icon
                 iconImageView.backgroundColor = .clear
                 label.text = document.text.getByLang(lang: LangKt.defaultLang())
+                selectionStyle = .default
             case .speaker(let speaker):
                 iconImageView.kf.setImage(with: URL(string: speaker.imageUrl ?? ""))
                 iconImageView.backgroundColor = .lightGray
                 label.text = speaker.name
+                selectionStyle = .none
             }
         }
     }
@@ -68,6 +77,7 @@ class SessionDetailWithIconTableViewCell: UITableViewCell, Reusable {
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
         [iconImageView, label].forEach(contentView.addSubview)
         iconImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(16)

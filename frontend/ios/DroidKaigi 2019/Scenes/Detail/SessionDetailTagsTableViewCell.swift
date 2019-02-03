@@ -18,6 +18,7 @@ class SessionDetailTagsTableViewCell: UITableViewCell, Reusable {
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
         contentView.addSubview(collectionView)
         collectionView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(16)
