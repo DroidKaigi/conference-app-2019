@@ -114,9 +114,12 @@ fun dummySpeechSessionData(): SpeechSession {
         speakers = listOf(
             dummySpeakerData()
         ),
-        message = null,
+        message = LocaledString(
+            ja = "メッセージ",
+            en = "message"
+        ),
         forBeginners = false
-   )
+    )
 }
 
 fun dummyServiceSessionData(): ServiceSession {
