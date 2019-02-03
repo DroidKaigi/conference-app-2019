@@ -27,5 +27,6 @@ bundletool.jar
 dpg
 toc.pb
 *.keystore
+!frontend/android/debug.keystore
 .transart/
 transart
