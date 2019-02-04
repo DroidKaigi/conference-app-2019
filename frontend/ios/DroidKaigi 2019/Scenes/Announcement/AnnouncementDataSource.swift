@@ -33,15 +33,15 @@ final class AnnouncementDataSource: NSObject, UITableViewDataSource {
     }
 }
 
-//extension AnnouncementDataSource: RxTableViewDataSourceType {
-//    public func tableView(_ tableView: UITableView, observedEvent: Event<[Announcement]>) {
-//        Binder(self) { dataSource, element in
-//            dataSource.items = element
-//            tableView.reloadData()
-//            }
-//            .on(observedEvent)
-//    }
-//}
+extension AnnouncementDataSource: RxTableViewDataSourceType {
+    public func tableView(_ tableView: UITableView, observedEvent: Event<[Announcement]>) {
+        Binder(self) { dataSource, element in
+            dataSource.items = element
+            tableView.reloadData()
+            }
+            .on(observedEvent)
+    }
+}
 
 extension AnnouncementDataSource: UITableViewDelegate {
 

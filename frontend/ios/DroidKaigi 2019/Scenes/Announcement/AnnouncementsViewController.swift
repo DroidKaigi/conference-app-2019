@@ -8,10 +8,13 @@
 import UIKit
 import ioscombined
 import RxSwift
+import MaterialComponents.MaterialSnackbar
 
 class AnnouncementsViewController: UIViewController {
 
     private let dataSource = AnnouncementDataSource()
+    private let viewModel = AnnouncementsViewModel()
+    private let bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,12 +35,21 @@ class AnnouncementsViewController: UIViewController {
     }
     
     private func bind() {
-        //TODO: will replace with real data
-        let announcementSampleList = [Announcement.init(title: "お知らせのテスト", content: "これは日本語テストのアナウンスです。改行も行います！改行も行います！改行も行います！", publishedAt: Date(), type: AnnouncementType.notification),
-            Announcement.init(title: "アラートのテスト", content: "これはアラートのテストです。改行も行います！改行も行います！改行も行います！", publishedAt: Date(), type: AnnouncementType.alert),
-            Announcement.init(title: "フィードバックのテスト", content: "これはフィードバックのテストです。改行も行います！改行も行います！改行も行います！", publishedAt: Date(), type: AnnouncementType.feedback)]
-        dataSource.items = announcementSampleList
-        tableView.reloadData()
+        let viewWillAppear = rx.methodInvoked(#selector(self.viewWillAppear))
+            .map { _ in }
+        let input = AnnouncementsViewModel.Input(viewWillAppear: viewWillAppear)
+        let output = viewModel.transform(input: input)
+        output.error
+            .drive(onNext: {errorMessage in
+                if let errMsg = errorMessage {
+                    MDCSnackbarManager.show(MDCSnackbarMessage(text: errMsg))
+                }
+            })
+        .disposed(by: bag)
+
+        output.announcements
+        .drive(tableView.rx.items(dataSource: dataSource))
+            .disposed(by: bag)
     }
 }
 
