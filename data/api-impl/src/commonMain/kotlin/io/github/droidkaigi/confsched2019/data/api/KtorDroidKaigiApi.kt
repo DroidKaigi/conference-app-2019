@@ -59,6 +59,11 @@ open class KtorDroidKaigiApi constructor(
             getSessions()
         }
 
+    override fun getAnnouncementsAsync(lang: LangParameter): Deferred<AnnouncementListResponse> =
+        GlobalScope.async(requireNotNull(coroutineDispatcherForCallback)) {
+            getAnnouncements(lang)
+        }
+
     override suspend fun getAnnouncements(lang: LangParameter): AnnouncementListResponse {
         val rawResponse = httpClient.get<String> {
             url("$apiEndpoint/announcements?language=${lang.name}")
