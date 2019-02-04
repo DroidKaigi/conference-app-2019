@@ -36,7 +36,7 @@ We would be happy if you ran the command below before sending pull requests to i
 
 * Use recent version of Android Studio Kotlin Plugin
 
-`Preference` > `Languages & Frameworks` > `Kotlin Updates`
+`Preferences` > `Languages & Frameworks` > `Kotlin Updates`
 
 Older versions of the Kotlin plugin may cause build failures.
 If you still have a trouble after upgrading the plugin, please try using AndroidStudio 3.4 instead.
