@@ -30,10 +30,11 @@ extension AnnouncementsViewModel {
     func transform(input: Input) -> Output {
         let announcementContents = input.viewWillAppear
             .flatMap { [weak self] (_) -> Observable<[AnnouncementResponse]> in
-                guard let `self` = self else { return Observable.empty() }
+                guard let self = self else { return Observable.empty() }
                 return self.announcementRepository.fetch()
                 .asObservable()
-                    .catchError { error in
+                    .catchError {[weak self] (error) in
+                        guard let self = self else { return Observable.empty() }
                         self._error.accept(error.localizedDescription)
                         return Observable.empty()
                 }
