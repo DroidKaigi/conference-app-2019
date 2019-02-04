@@ -6,3 +6,15 @@
 //
 
 import Foundation
+import ioscombined
+import RxSwift
+
+final class AnnouncementRepository {
+    
+    func fetch() -> Single<[AnnouncementResponse]> {
+        return ApiComponentKt.generateDroidKaigiApi()
+        .getAnnouncementsAsync(lang: LangParameter.en)
+        .asSingle([AnnouncementResponse].self)
+        .catchError { throw handledKotlinException($0)}
+    }
+}

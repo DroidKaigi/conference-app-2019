@@ -15,12 +15,9 @@ class AnnouncementTableViewCell: UITableViewCell, Reusable {
     
     var announcement: Announcement? {
         didSet {
-            guard let announcement = announcement else
-                { return }
-            let formatter = DateFormatter()
-            formatter.timeStyle = .short
-            formatter.dateStyle = .short
-            publishedAt.text = formatter.string(from: announcement.publishedAt)
+            guard let announcement = announcement else {
+                return }
+            publishedAt.text = announcement.publishedAt
             announcementIcon.image = announcement.type.iconImage
             title.text = announcement.title
             content.text = announcement.content

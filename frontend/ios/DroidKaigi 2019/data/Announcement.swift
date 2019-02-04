@@ -11,10 +11,10 @@ import class UIKit.UIImage
 struct Announcement {
     let title: String
     let content: String
-    let publishedAt: Date
+    let publishedAt: String
     let type: AnnouncementType
     
-    init(title: String, content: String, publishedAt: Date, type: AnnouncementType) {
+    init(title: String, content: String, publishedAt: String, type: AnnouncementType) {
         self.title = title
         self.content = content
         self.publishedAt = publishedAt
@@ -26,6 +26,19 @@ enum AnnouncementType {
     case notification
     case alert
     case feedback
+    
+    static func getType(announcementType: String) -> AnnouncementType {
+        switch announcementType {
+        case "notification":
+            return AnnouncementType.notification
+        case "alert":
+            return AnnouncementType.alert
+        case "feedback":
+            return AnnouncementType.feedback
+        default:
+            return AnnouncementType.notification
+        }
+    }
 }
 
 extension AnnouncementType {
