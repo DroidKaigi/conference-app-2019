@@ -78,6 +78,9 @@ extension MainViewController: DrawerViewControllerDelegate {
         case .floorMap:
             let floorMap = FloorMapViewController.instantiateFromStoryboard()
             navigationController?.pushViewController(floorMap, animated: false)
+        case .about:
+            let viewController = AboutViewController()
+            navigationController?.pushViewController(viewController, animated: false)
         default:
             break
         }

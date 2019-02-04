@@ -44,10 +44,11 @@
 		3672C2D921F70AC100ACB910 /* SessionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3672C2D821F70AC100ACB910 /* SessionTableViewCell.swift */; };
 		3672C2DD21F7392900ACB910 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3672C2DC21F7392900ACB910 /* Kingfisher.framework */; };
 		3672C2DF21F73A9400ACB910 /* SpeakerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3672C2DE21F73A9400ACB910 /* SpeakerCell.swift */; };
+		368FC4992207C184006CF600 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368FC4982207C184006CF600 /* AboutViewController.swift */; };
 		36D1FA2721F5CF6600ADBBDE /* StoryboardInstantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D1FA2621F5CF6600ADBBDE /* StoryboardInstantiable.swift */; };
-		439CE2B22206356700AC597A /* SessionTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439CE2B12206356700AC597A /* SessionTableHeaderView.swift */; };
 		36E24A87220607CA00356530 /* SlideTransitionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E24A86220607CA00356530 /* SlideTransitionable.swift */; };
 		36E24A892206187200356530 /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E24A882206187200356530 /* DrawerViewController.swift */; };
+		439CE2B22206356700AC597A /* SessionTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439CE2B12206356700AC597A /* SessionTableHeaderView.swift */; };
 		43DC80C12200A0F600A3F710 /* FavoriteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DC80C02200A0F600A3F710 /* FavoriteRepository.swift */; };
 		43DC80C72201FC8100A3F710 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DC80C62201FC8100A3F710 /* UIButton+Extension.swift */; };
 		5917BCA621FA19B8005BEAF2 /* SessionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5917BCA521FA19B8005BEAF2 /* SessionHeaderView.swift */; };
@@ -146,10 +147,11 @@
 		3672C2D821F70AC100ACB910 /* SessionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTableViewCell.swift; sourceTree = "<group>"; };
 		3672C2DC21F7392900ACB910 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
 		3672C2DE21F73A9400ACB910 /* SpeakerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerCell.swift; sourceTree = "<group>"; };
+		368FC4982207C184006CF600 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		36D1FA2621F5CF6600ADBBDE /* StoryboardInstantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardInstantiable.swift; sourceTree = "<group>"; };
-		439CE2B12206356700AC597A /* SessionTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTableHeaderView.swift; sourceTree = "<group>"; };
 		36E24A86220607CA00356530 /* SlideTransitionable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideTransitionable.swift; sourceTree = "<group>"; };
 		36E24A882206187200356530 /* DrawerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerViewController.swift; sourceTree = "<group>"; };
+		439CE2B12206356700AC597A /* SessionTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTableHeaderView.swift; sourceTree = "<group>"; };
 		43DC80C02200A0F600A3F710 /* FavoriteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRepository.swift; sourceTree = "<group>"; };
 		43DC80C62201FC8100A3F710 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		5917BCA521FA19B8005BEAF2 /* SessionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionHeaderView.swift; sourceTree = "<group>"; };
@@ -364,6 +366,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		368FC4972207C160006CF600 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				368FC4982207C184006CF600 /* AboutViewController.swift */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
 		36D1FA2221F5CD4A00ADBBDE /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -371,6 +381,7 @@
 				2159CC5221FE0E0000DBD016 /* MainViewController.swift */,
 				362D90FC21F5DBC2006962C8 /* RootViewController.storyboard */,
 				362D90FB21F5DBC2006962C8 /* RootViewController.swift */,
+				368FC4972207C160006CF600 /* About */,
 				3632F4942206D46E00FF472B /* Drawer */,
 				366B060C21F7650D00C912AD /* Common */,
 				362D90F621F5D521006962C8 /* Session */,
@@ -789,6 +800,7 @@
 				36E24A892206187200356530 /* DrawerViewController.swift in Sources */,
 				362D910421F5DC2D006962C8 /* SessionsViewModel.swift in Sources */,
 				360744F121FADF53003569D3 /* SessionDetailViewController.swift in Sources */,
+				368FC4992207C184006CF600 /* AboutViewController.swift in Sources */,
 				3672C2CB21F601D600ACB910 /* UITableView+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
