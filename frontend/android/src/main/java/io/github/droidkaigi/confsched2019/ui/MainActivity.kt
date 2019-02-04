@@ -117,7 +117,8 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     private fun setupNavigation() {
-        val topLevelDestinationIds = setOf(R.id.main, R.id.about, R.id.announce, R.id.setting)
+        val topLevelDestinationIds = setOf(R.id.main, R.id.about, R.id.announce, R.id.setting,
+            R.id.floormap, R.id.sponsor, R.id.contributor)
         val appBarConfiguration = AppBarConfiguration(
             topLevelDestinationIds,
             binding.drawerLayout
