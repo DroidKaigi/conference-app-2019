@@ -65,6 +65,9 @@
 		6F7639172205614B0028EA21 /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7639162205614B0028EA21 /* Announcement.swift */; };
 		6F76391922056A860028EA21 /* AnnouncementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F76391822056A860028EA21 /* AnnouncementTableViewCell.swift */; };
 		6F76391B220577E10028EA21 /* AnnouncementDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F76391A220577E10028EA21 /* AnnouncementDataSource.swift */; };
+		6F76391F2206CF4A0028EA21 /* AnnouncementRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F76391E2206CF4A0028EA21 /* AnnouncementRepository.swift */; };
+		6F7639212206CFBE0028EA21 /* AnnouncementsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7639202206CFBE0028EA21 /* AnnouncementsViewModel.swift */; };
+		6F76392322072CE20028EA21 /* ApiHandleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F76392222072CE20028EA21 /* ApiHandleRepository.swift */; };
 		7B76F7A821FB45D2008A059B /* KotlinxDeferred+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B76F7A721FB45D2008A059B /* KotlinxDeferred+Extension.swift */; };
 		B977F3002202030B0048A02E /* FloorMap.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B977F2FF2202030B0048A02E /* FloorMap.storyboard */; };
 		B977F302220203170048A02E /* FloorMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B977F301220203170048A02E /* FloorMapViewController.swift */; };
@@ -175,6 +178,9 @@
 		6F7639162205614B0028EA21 /* Announcement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Announcement.swift; sourceTree = "<group>"; };
 		6F76391822056A860028EA21 /* AnnouncementTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementTableViewCell.swift; sourceTree = "<group>"; };
 		6F76391A220577E10028EA21 /* AnnouncementDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDataSource.swift; sourceTree = "<group>"; };
+		6F76391E2206CF4A0028EA21 /* AnnouncementRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementRepository.swift; sourceTree = "<group>"; };
+		6F7639202206CFBE0028EA21 /* AnnouncementsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewModel.swift; sourceTree = "<group>"; };
+		6F76392222072CE20028EA21 /* ApiHandleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiHandleRepository.swift; sourceTree = "<group>"; };
 		724135790B4D380473272A9A /* Pods-DroidKaigi 2019UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DroidKaigi 2019UITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DroidKaigi 2019UITests/Pods-DroidKaigi 2019UITests.release.xcconfig"; sourceTree = "<group>"; };
 		7B76F7A721FB45D2008A059B /* KotlinxDeferred+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KotlinxDeferred+Extension.swift"; sourceTree = "<group>"; };
 		8A9EFD2BFF415746908BCDDF /* Pods-DroidKaigi 2019.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DroidKaigi 2019.release.xcconfig"; path = "Pods/Target Support Files/Pods-DroidKaigi 2019/Pods-DroidKaigi 2019.release.xcconfig"; sourceTree = "<group>"; };
@@ -333,6 +339,8 @@
 				363E6AF321FD536A00EBC698 /* TagContent.swift */,
 				B977F305220204550048A02E /* Floor.swift */,
 				6F7639162205614B0028EA21 /* Announcement.swift */,
+				6F76391E2206CF4A0028EA21 /* AnnouncementRepository.swift */,
+				6F76392222072CE20028EA21 /* ApiHandleRepository.swift */,
 			);
 			path = data;
 			sourceTree = "<group>";
@@ -430,6 +438,7 @@
 				6F76391422044CDA0028EA21 /* AnnouncementsViewController.swift */,
 				6F76391822056A860028EA21 /* AnnouncementTableViewCell.swift */,
 				6F76391A220577E10028EA21 /* AnnouncementDataSource.swift */,
+				6F7639202206CFBE0028EA21 /* AnnouncementsViewModel.swift */,
 			);
 			path = Announcement;
 			sourceTree = "<group>";
@@ -799,8 +808,10 @@
 				368FC49B2207C5CB006CF600 /* AboutCoverTableViewCell.swift in Sources */,
 				366B060B21F7604500C912AD /* UICollectionView+Extension.swift in Sources */,
 				3672C2D921F70AC100ACB910 /* SessionTableViewCell.swift in Sources */,
+				6F76391F2206CF4A0028EA21 /* AnnouncementRepository.swift in Sources */,
 				363E6AF621FD545B00EBC698 /* Session+Extension.swift in Sources */,
 				366B060921F756CB00C912AD /* TagsCollectionViewCell.swift in Sources */,
+				6F7639212206CFBE0028EA21 /* AnnouncementsViewModel.swift in Sources */,
 				3672C2C921F5E08C00ACB910 /* UIColor+Extension.swift in Sources */,
 				3672C2DF21F73A9400ACB910 /* SpeakerCell.swift in Sources */,
 				360744F721FAF152003569D3 /* SessionDetailTagsTableViewCell.swift in Sources */,
@@ -820,6 +831,7 @@
 				368FC49D2207C5DE006CF600 /* AboutDescriptionTableViewCell.swift in Sources */,
 				3672C2CD21F6024B00ACB910 /* Reusable.swift in Sources */,
 				43DC80C12200A0F600A3F710 /* FavoriteRepository.swift in Sources */,
+				6F76392322072CE20028EA21 /* ApiHandleRepository.swift in Sources */,
 				B977F3042202041F0048A02E /* FloorMapContentViewController.swift in Sources */,
 				B977F306220204550048A02E /* Floor.swift in Sources */,
 				366B060E21F7652D00C912AD /* PaddingLabel.swift in Sources */,
