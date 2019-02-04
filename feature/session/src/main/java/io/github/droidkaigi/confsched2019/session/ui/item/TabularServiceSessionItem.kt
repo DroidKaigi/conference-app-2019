@@ -1,6 +1,7 @@
 package io.github.droidkaigi.confsched2019.session.ui.item
 
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import com.squareup.inject.assisted.Assisted
@@ -49,6 +50,26 @@ class TabularServiceSessionItem @AssistedInject constructor(
             }
             session = serviceSession
             lang = defaultLang()
+            if (serviceSession.isFavorited) {
+                backgroundView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        root.context,
+                        R.color.tabular_session_favoried_background
+                    )
+                )
+                verticalLineView.setBackgroundColor(
+                    ContextCompat.getColor(root.context, R.color.red1)
+                )
+                sessionTitle.setTextColor(
+                    ContextCompat.getColor(root.context, R.color.red1)
+                )
+            } else {
+                backgroundView.setBackgroundResource(R.drawable.bg_item_tabular)
+                verticalLineView.setBackgroundResource(R.drawable.bg_vertical_line)
+                sessionTitle.setTextColor(
+                    ContextCompat.getColorStateList(root.context, R.color.tabular_session_title)
+                )
+            }
             root.isActivated = !serviceSession.isFinished
         }
     }
