@@ -1,10 +1,12 @@
 package io.github.droidkaigi.confsched2019.ui
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
@@ -116,6 +118,13 @@ class MainActivity : DaggerAppCompatActivity() {
         }
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+
+        navController.handleDeepLink(intent)
+    }
+
     private fun setupNavigation() {
         val topLevelDestinationIds = setOf(R.id.main, R.id.about, R.id.announce, R.id.setting,
             R.id.floormap, R.id.sponsor, R.id.contributor)
@@ -205,7 +214,7 @@ class MainActivity : DaggerAppCompatActivity() {
                 binding.drawerLayout.closeDrawer(binding.navView)
             }
             // navigate
-            val handled = handleNavigation(item)
+            val handled = handleNavigation(item.itemId)
             // check current displayed item in navigation menu / uncheck others
             checkCurrentDestinationIdInDrawer(item.itemId)
 
@@ -230,15 +239,15 @@ class MainActivity : DaggerAppCompatActivity() {
         }
     }
 
-    private fun handleNavigation(item: MenuItem): Boolean {
+    private fun handleNavigation(@IdRes itemId: Int): Boolean {
         return try {
             // ignore if current destination is selected
-            if (navController.currentDestination?.id == item.itemId) return false
+            if (navController.currentDestination?.id == itemId) return false
             val builder = NavOptions.Builder()
                 .setLaunchSingleTop(true)
                 .setPopUpTo(R.id.main, false)
             val options = builder.build()
-            navController.navigate(item.itemId, null, options)
+            navController.navigate(itemId, null, options)
             true
         } catch (e: IllegalArgumentException) {
             false
@@ -246,7 +255,7 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return handleNavigation(item) || super.onOptionsItemSelected(item)
+        return handleNavigation(item.itemId) || super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {
