@@ -12,14 +12,13 @@ import androidx.recyclerview.widget.RecyclerView.Recycler
 import androidx.recyclerview.widget.RecyclerView.State
 import kotlinx.android.parcel.Parcelize
 import java.util.concurrent.TimeUnit
+import kotlin.math.absoluteValue
 import kotlin.math.max
 import kotlin.math.min
 
-// TODO: implement scrollToPosition
 class TimetableLayoutManager(
     private val columnWidth: Int,
     private val pxPerMinute: Int,
-    private val shouldLoopHorizontally: Boolean,
     private val periodLookUp: (position: Int) -> PeriodInfo
 ) : RecyclerView.LayoutManager() {
 
@@ -68,6 +67,7 @@ class TimetableLayoutManager(
     private var firstStartUnixMin = NO_TIME
     private var lastEndUnixMin = NO_TIME
 
+    private var pendingScrollPosition: Int? = null
     private var saveState: SaveState? = null
 
     override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
@@ -105,6 +105,14 @@ class TimetableLayoutManager(
         anchor.reset()
         calculateColumns()
 
+        pendingScrollPosition?.let {
+            detachAndScrapAttachedViews(recycler)
+            val period = periods[it]
+            relayoutChildren(parentLeft, parentTop, period, recycler)
+            fixBottomLayoutGap(recycler)
+            return
+        }
+
         val firstVisibleView = findFirstVisibleView()
         val offsetX = saveState?.left ?: firstVisibleView?.let(this::getDecoratedLeft)
         val offsetY = saveState?.top ?: firstVisibleView?.let(this::getDecoratedTop)
@@ -118,7 +126,14 @@ class TimetableLayoutManager(
     }
 
     override fun onLayoutCompleted(state: State?) {
+        pendingScrollPosition = null
         saveState = null
+    }
+
+    override fun scrollToPosition(position: Int) {
+        if (position < 0 || position >= itemCount) return
+        pendingScrollPosition = position
+        requestLayout()
     }
 
     override fun canScrollVertically() = true
@@ -146,13 +161,12 @@ class TimetableLayoutManager(
             anchor.bottom.forEach { columnNum, position ->
                 val view = findViewByPosition(position) ?: return@forEach
                 val bottom = getDecoratedBottom(view)
-                if (bottom - scrollAmount < parentBottom) {
+                if (bottom < parentBottom) {
                     val left = getDecoratedLeft(view)
                     val period = periods.getOrNull(position) ?: return@forEach
-                    val nextPeriod = columns.get(columnNum).getOrNull(period.positionInColumn + 1)
-                        ?: return@forEach
-                    addPeriod(nextPeriod, Direction.BOTTOM, left, bottom, recycler)
-                    anchor.bottom.put(columnNum, nextPeriod.adapterPosition)
+                    val nextPeriod = columns.get(columnNum)
+                        .getOrNull(period.positionInColumn + 1) ?: return@forEach
+                    fillColumnVertically(nextPeriod, left, bottom, true, recycler)
                 }
             }
         } else {
@@ -172,13 +186,12 @@ class TimetableLayoutManager(
             anchor.top.forEach { columnNum, position ->
                 val view = findViewByPosition(position) ?: return@forEach
                 val top = getDecoratedTop(view)
-                if (top - scrollAmount > parentTop) {
+                if (top > parentTop) {
                     val left = getDecoratedLeft(view)
                     val period = periods.getOrNull(position) ?: return@forEach
-                    val nextPeriod = columns.get(columnNum).getOrNull(period.positionInColumn - 1)
-                        ?: return@forEach
-                    addPeriod(nextPeriod, Direction.TOP, left, top, recycler)
-                    anchor.top.put(columnNum, nextPeriod.adapterPosition)
+                    val nextPeriod = columns.get(columnNum)
+                        .getOrNull(period.positionInColumn - 1) ?: return@forEach
+                    fillColumnVertically(nextPeriod, left, top, false, recycler)
                 }
             }
         }
@@ -199,11 +212,11 @@ class TimetableLayoutManager(
             // recycle
             if (getDecoratedRight(leftView) - dx < parentLeft) {
                 findViewsByColumn(anchor.leftColumn).forEach { removeAndRecycleView(it, recycler) }
-                anchor.leftColumn.getNextColumn()?.let { anchor.leftColumn = it }
+                anchor.leftColumn = anchor.leftColumn.getNextColumn()
             }
             // append
             if (right - scrollAmount < parentRight) {
-                val nextColumnNum = anchor.rightColumn.getNextColumn() ?: return 0
+                val nextColumnNum = anchor.rightColumn.getNextColumn()
 
                 val topView = findTopView() ?: return 0
                 val topPeriod = periods[topView.adapterPosition]
@@ -226,11 +239,11 @@ class TimetableLayoutManager(
             // recycle
             if (getDecoratedLeft(rightView) - dx > parentRight) {
                 findViewsByColumn(anchor.rightColumn).forEach { removeAndRecycleView(it, recycler) }
-                anchor.rightColumn.getPreviousColumn()?.let { anchor.rightColumn = it }
+                anchor.rightColumn = anchor.rightColumn.getPreviousColumn()
             }
             // prepend
             if (left - scrollAmount > parentLeft) {
-                val previousColumn = anchor.leftColumn.getPreviousColumn() ?: return 0
+                val previousColumn = anchor.leftColumn.getPreviousColumn()
 
                 val topView = findTopView() ?: return 0
                 val topPeriod = periods[topView.adapterPosition]
@@ -261,6 +274,7 @@ class TimetableLayoutManager(
     private fun layoutChildren(recycler: Recycler) {
         val offsetY = parentTop
         var offsetX = parentLeft
+        anchor.rightColumn = columns.keyAt(columns.size() - 1)
         for (i in 0 until columns.size()) {
             val columnNumber = columns.keyAt(i)
             if (i == 0) anchor.leftColumn = columnNumber
@@ -278,10 +292,7 @@ class TimetableLayoutManager(
         val columnCount = columns.size()
         val indexOfFirstColumn = columns.indexOfKey(topPeriod.columnNumber)
         val range = (indexOfFirstColumn until columnCount)
-            .plus(
-                if (shouldLoopHorizontally && indexOfFirstColumn > 0) (0 until indexOfFirstColumn)
-                else emptyList()
-            )
+            .plus(if (indexOfFirstColumn > 0) (0 until indexOfFirstColumn) else emptyList())
         anchor.rightColumn = columns.keyAt(requireNotNull(range.last()))
         range.forEach {
             val columnNumber = columns.keyAt(it)
@@ -301,6 +312,28 @@ class TimetableLayoutManager(
             if (offsetX > parentRight) {
                 anchor.rightColumn = columnNumber
                 return
+            }
+        }
+    }
+
+    private fun fixBottomLayoutGap(recycler: Recycler) {
+        val bottomView = findBottomView() ?: return
+        val bottomPeriod = periods[bottomView.adapterPosition]
+        val bottom = getDecoratedBottom(bottomView)
+        if (bottom > parentBottom) return
+
+        val expectedGap = (lastEndUnixMin - bottomPeriod.endUnixMin) * pxPerMinute
+        val actualGap = (parentBottom - bottom)
+        offsetChildrenVertical(actualGap - expectedGap)
+        anchor.top.forEach { columnNum, position ->
+            val view = findViewByPosition(position) ?: return@forEach
+            val top = getDecoratedTop(view)
+            if (top > parentTop) {
+                val left = getDecoratedLeft(view)
+                val anchorPeriod = periods.getOrNull(position) ?: return@forEach
+                val nextPeriod = columns.get(columnNum)
+                    .getOrNull(anchorPeriod.positionInColumn - 1) ?: return@forEach
+                fillColumnVertically(nextPeriod, left, top, false, recycler)
             }
         }
     }
@@ -328,17 +361,19 @@ class TimetableLayoutManager(
     }
 
     private fun calculateHorizontallyScrollAmount(dx: Int, left: Int, right: Int): Int {
-        if (shouldLoopHorizontally) return dx
-
-        return if (dx > 0) {
-            if (anchor.rightColumn.isLastColumn()) if (right <= parentRight) 0
-            else min(dx, right - parentRight)
-            else dx
-        } else {
-            if (anchor.leftColumn.isFirstColumn()) if (left >= parentLeft) 0
-            else max(dx, left - parentLeft)
-            else dx
+        if (anchor.leftColumn.isFirstColumn() && anchor.rightColumn.isLastColumn()) { // cant loop
+            return if (dx > 0) {
+                if (anchor.rightColumn.isLastColumn()) if (right <= parentRight) 0
+                else min(dx, right - parentRight)
+                else dx
+            } else {
+                if (anchor.leftColumn.isFirstColumn()) if (left >= parentLeft) 0
+                else max(dx, left - parentLeft)
+                else dx
+            }
         }
+
+        return dx
     }
 
     private fun addPeriod(
@@ -359,6 +394,34 @@ class TimetableLayoutManager(
         val bottom = top + height
         layoutDecorated(view, left, top, right, bottom)
         return width to height
+    }
+
+    private fun fillColumnVertically(
+        startPeriod: Period,
+        offsetX: Int,
+        startY: Int,
+        isAppend: Boolean,
+        recycler: Recycler
+    ): Int {
+        val column = columns.get(startPeriod.columnNumber) ?: return 0
+        val direction = if (isAppend) Direction.BOTTOM else Direction.TOP
+        var offsetY = startY
+        val range = if (isAppend) startPeriod.positionInColumn until column.size
+            else startPeriod.positionInColumn downTo 0
+        for (i in range) {
+            val period = column[i]
+            val (_, height) = addPeriod(period, direction, offsetX, offsetY, recycler)
+            if (isAppend) {
+                anchor.bottom.put(period.columnNumber, period.adapterPosition)
+                offsetY += height
+                if (offsetY > parentBottom) return offsetY - startY
+            } else {
+                anchor.top.put(period.columnNumber, period.adapterPosition)
+                offsetY -= height
+                if (offsetY < parentTop) return startY - offsetY
+            }
+        }
+        return (offsetY - startY).absoluteValue
     }
 
     private fun fillColumnHorizontally(
@@ -382,11 +445,9 @@ class TimetableLayoutManager(
             if (i == startPositionInColumn) {
                 anchor.top.put(columnNum, period.adapterPosition)
             }
-            if (offsetY > parentBottom) {
-                columnWidth = width
-                anchor.bottom.put(columnNum, period.adapterPosition)
-                break
-            }
+            anchor.bottom.put(columnNum, period.adapterPosition)
+            columnWidth = width
+            if (offsetY > parentBottom) break
         }
         return columnWidth
     }
@@ -542,20 +603,14 @@ class TimetableLayoutManager(
 
     private fun Int.isLastColumn() = columns.indexOfKey(this) == columns.size() - 1
 
-    private fun Int.getNextColumn(): Int? {
+    private fun Int.getNextColumn(): Int {
         val index = columns.indexOfKey(this)
-        return if (index == columns.size() - 1)
-            if (shouldLoopHorizontally) columns.keyAt(0) else null
-        else
-            columns.keyAt(index + 1)
+        return if (index == columns.size() - 1) columns.keyAt(0) else columns.keyAt(index + 1)
     }
 
-    private fun Int.getPreviousColumn(): Int? {
+    private fun Int.getPreviousColumn(): Int {
         val index = columns.indexOfKey(this)
-        return if (index == 0)
-            if (shouldLoopHorizontally) columns.keyAt(columns.size() - 1) else null
-        else
-            columns.keyAt(index - 1)
+        return if (index == 0) columns.keyAt(columns.size() - 1) else columns.keyAt(index - 1)
     }
 
     private inline val View.adapterPosition
