@@ -21,24 +21,3 @@ final class SessionRepository {
     }
 
 }
-
-//FIXME: If you have a more better idea, we can refine this.
-private func handledKotlinException(_ error: Error) -> Error {
-
-    guard let cause = error as? KotlinThrowable else {
-        fatalError("Unexpedeted Error: \(error)")
-    }
-
-    // Obtain `NSError` from Ktor `IosHttpRequestException`.
-    // See also: data/api/ThrowableExt.kt
-    if let origin = cause.originNSError {
-        return origin
-    }
-
-    // Return handled kotlin exception.
-    if let handledException = cause as? KotlinException {
-        return handledException
-    }
-
-    fatalError("Unexpedeted KotlinThrowable: \(cause)")
-}
