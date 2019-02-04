@@ -124,6 +124,8 @@ class SpeechSessionItem @AssistedInject constructor(
                 return@forEach
             }
             if (existSpeakerView != null && speaker != null) {
+                existSpeakerView.isVisible = true
+
                 val textView: TextView = existSpeakerView.findViewById(R.id.speaker)
                 textView.text = speaker.name
                 bindSpeakerData(speaker, textView)
