@@ -38,14 +38,10 @@ class DebugApp : App() {
     private fun isHyperionCrashProcess(): Boolean {
         val pid = android.os.Process.myPid()
         val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        val infos = manager.runningAppProcesses
-        if (infos != null) {
-            for (processInfo in infos) {
-                if (processInfo.pid == pid) {
-                    return processInfo.processName?.endsWith(":crash") ?: false
-                }
-            }
-        }
-        return false
+        val infoList = manager.runningAppProcesses ?: return false
+        return infoList
+            .firstOrNull { it.pid == pid }
+            ?.processName
+            ?.endsWith(":crash") ?: false
     }
 }
