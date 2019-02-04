@@ -7,8 +7,10 @@
 
 import UIKit
 import SnapKit
+import MaterialComponents.MaterialSnackbar
 import class ioscombined.LocaledString
 import class ioscombined.LangKt
+import class ioscombined.Lang
 
 class AboutViewController: UIViewController {
 
@@ -33,6 +35,7 @@ class AboutViewController: UIViewController {
         tableView.estimatedRowHeight = 200
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
+        tableView.bounces = false
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(AboutCoverTableViewCell.self)
@@ -89,7 +92,33 @@ extension AboutViewController: UITableViewDataSource {
 extension AboutViewController: UITableViewDelegate {
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch sections[indexPath.section] {
+        case .access:
+            guard let url = URL(string: "comgooglemaps://"),
+                  UIApplication.shared.canOpenURL(url) else {
 
+                MDCSnackbarManager.show(MDCSnackbarMessage(text: "Can not open GoogleMap."))
+                return
+            }
+            let place = "ベルサール新宿グランドコンファレンスセンター"
+            let latitude = "35.696065"
+            let longitude = "139.690426"
+            if let mapUrl = URL(string: "comgooglemaps://?q=\(place)&center=\(latitude),\(longitude)") {
+                UIApplication.shared.open(mapUrl)
+            }
+        case .policy:
+            let urlString: String
+            if LangKt.defaultLang() == Lang.ja {
+                urlString = "http://www.association.droidkaigi.jp/privacy"
+            } else {
+                urlString = "http://www.association.droidkaigi.jp/en/privacy"
+            }
+            if let url = URL(string: urlString) {
+                UIApplication.shared.open(url)
+            }
+        default:
+            return
+        }
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
