@@ -12,7 +12,7 @@ import RxSwift
 import ioscombined
 
 final class AnnouncementDataSource: NSObject, UITableViewDataSource {
-    typealias Element = [Announcement]
+    typealias Element = [AnnouncementResponse]
     var items: Element = []
     
     private var cellHeightsCache = [IndexPath: CGFloat]()
@@ -34,7 +34,7 @@ final class AnnouncementDataSource: NSObject, UITableViewDataSource {
 }
 
 extension AnnouncementDataSource: RxTableViewDataSourceType {
-    public func tableView(_ tableView: UITableView, observedEvent: Event<[Announcement]>) {
+    public func tableView(_ tableView: UITableView, observedEvent: Event<[AnnouncementResponse]>) {
         Binder(self) { dataSource, element in
             dataSource.items = element
             tableView.reloadData()

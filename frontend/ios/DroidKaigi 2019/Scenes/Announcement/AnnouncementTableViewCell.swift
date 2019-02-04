@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ioscombined
 
 class AnnouncementTableViewCell: UITableViewCell, Reusable {
     @IBOutlet weak var announcementIcon: UIImageView!
@@ -13,14 +14,27 @@ class AnnouncementTableViewCell: UITableViewCell, Reusable {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var content: UILabel!
     
-    var announcement: Announcement? {
+    var announcement: AnnouncementResponse? {
         didSet {
             guard let announcement = announcement else {
                 return }
             publishedAt.text = announcement.publishedAt
-            announcementIcon.image = announcement.type.iconImage
+            announcementIcon.image = getIconImage(announcementType: announcement.type)
             title.text = announcement.title
             content.text = announcement.content
+        }
+    }
+    
+    func getIconImage(announcementType: String) -> UIImage{
+        switch announcementType {
+        case "notification":
+            return #imageLiteral(resourceName: "annnoucement")
+        case "alert":
+            return #imageLiteral(resourceName: "alert")
+        case "feedback":
+            return #imageLiteral(resourceName: "feedback")
+        default:
+            return #imageLiteral(resourceName: "annnoucement")
         }
     }
 }

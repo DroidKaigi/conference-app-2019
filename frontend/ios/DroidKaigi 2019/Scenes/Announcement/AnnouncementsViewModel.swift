@@ -23,7 +23,7 @@ extension AnnouncementsViewModel {
     }
 
     struct Output {
-        let announcements: Driver<[Announcement]>
+        let announcements: Driver<[AnnouncementResponse]>
         let error: Driver<String?>
     }
 
@@ -40,12 +40,7 @@ extension AnnouncementsViewModel {
         }
         
         let announcements = announcementContents
-            .map { (response: [AnnouncementResponse]) -> [Announcement] in
-                let responseList = response.map({ (announcement: AnnouncementResponse) in
-                    Announcement(title: announcement.title, content: announcement.content, publishedAt: announcement.publishedAt, type: AnnouncementType.getType(announcementType: announcement.type) )
-                })
-                return responseList
-            }.asDriver(onErrorJustReturn: [])
+            .asDriver(onErrorJustReturn: [])
         let error = _error.asDriver()
         return Output(announcements: announcements, error: error)
     }
