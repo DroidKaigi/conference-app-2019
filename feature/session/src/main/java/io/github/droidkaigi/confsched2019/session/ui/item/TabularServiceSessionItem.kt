@@ -11,11 +11,13 @@ import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemTabularServiceSessionBinding
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
 
 class TabularServiceSessionItem @AssistedInject constructor(
     @Assisted override val session: ServiceSession,
     @Assisted private val navDirections: NavDirections,
-    private val navController: NavController
+    private val navController: NavController,
+    private val sessionContentsActionCreator: SessionContentsActionCreator
 ) : BindableItem<ItemTabularServiceSessionBinding>(
     session.id.hashCode().toLong()
 ), SessionItem, EqualableContentsProvider {
@@ -39,6 +41,12 @@ class TabularServiceSessionItem @AssistedInject constructor(
                 null
             }
             root.setOnClickListener(onClickListener)
+            root.setOnLongClickListener {
+                if (serviceSession.sessionType.isFavoritable) {
+                    sessionContentsActionCreator.toggleFavorite(serviceSession)
+                }
+                true
+            }
             session = serviceSession
             lang = defaultLang()
             root.isActivated = !serviceSession.isFinished

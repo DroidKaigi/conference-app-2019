@@ -139,10 +139,22 @@ class TimetableTimeLabelDecoration(
 
     private fun findVisibleSessions(parent: RecyclerView): List<Session> {
         val minStart = parent.children.minBy { it.top }
-            ?.let { groupAdapter.getItem(parent.getChildAdapterPosition(it)).startUnixMillis }
+            ?.let {
+                val childAdapterPosition = parent.getChildAdapterPosition(it)
+                if (childAdapterPosition == RecyclerView.NO_POSITION) {
+                    return@let null
+                }
+                groupAdapter.getItem(childAdapterPosition).startUnixMillis
+            }
             ?: return emptyList()
         val maxEnd = parent.children.maxBy { it.bottom }
-            ?.let { groupAdapter.getItem(parent.getChildAdapterPosition(it)).endUnixMillis }
+            ?.let {
+                val childAdapterPosition = parent.getChildAdapterPosition(it)
+                if (childAdapterPosition == RecyclerView.NO_POSITION) {
+                    return@let null
+                }
+                groupAdapter.getItem(childAdapterPosition).endUnixMillis
+            }
             ?: return emptyList()
 
         return (0 until groupAdapter.itemCount)

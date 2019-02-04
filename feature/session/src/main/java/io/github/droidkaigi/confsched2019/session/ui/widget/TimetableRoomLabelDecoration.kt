@@ -60,8 +60,10 @@ class TimetableRoomLabelDecoration(
             .distinct()
             .sortedBy { it.sequentialNumber }
         val leftView = parent.children.minBy { it.left } ?: return
+        val childAdapterPosition = parent.getChildAdapterPosition(leftView)
+        if (childAdapterPosition == RecyclerView.NO_POSITION) return
         val leftRoom =
-            when (val item = groupAdapter.getItem(parent.getChildAdapterPosition(leftView))) {
+            when (val item = groupAdapter.getItem(childAdapterPosition)) {
                 is TabularServiceSessionItem -> item.session.room
                 is TabularSpeechSessionItem -> item.session.room
                 is TabularSpacerItem -> item.room
