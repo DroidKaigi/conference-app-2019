@@ -19,12 +19,14 @@ import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.ItemTabularSpeakerBinding
 import io.github.droidkaigi.confsched2019.session.databinding.ItemTabularSpeechSessionBinding
+import io.github.droidkaigi.confsched2019.session.ui.actioncreator.SessionContentsActionCreator
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
 class TabularSpeechSessionItem @AssistedInject constructor(
     @Assisted override val session: SpeechSession,
     @Assisted private val navDirections: NavDirections,
-    private val navController: NavController
+    private val navController: NavController,
+    private val sessionContentsActionCreator: SessionContentsActionCreator
 ) : BindableItem<ItemTabularSpeechSessionBinding>(
     session.id.hashCode().toLong()
 ), SessionItem, EqualableContentsProvider {
@@ -48,6 +50,10 @@ class TabularSpeechSessionItem @AssistedInject constructor(
         viewBinding.apply {
             root.setOnClickListener {
                 navController.navigate(navDirections)
+            }
+            root.setOnLongClickListener {
+                sessionContentsActionCreator.toggleFavorite(speechSession)
+                true
             }
             session = speechSession
             lang = defaultLang()

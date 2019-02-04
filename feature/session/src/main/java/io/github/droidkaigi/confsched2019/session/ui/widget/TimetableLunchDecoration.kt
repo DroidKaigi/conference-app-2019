@@ -70,8 +70,12 @@ class TimetableLunchDecoration(
             .toMinutes(lunchItem.session.endTime.unixMillisLong)
         val lunchItemHeight = (lunchEndTime - lunchStartTime) * pxPerMinute
 
-        parent.children.map {
-            it to groupAdapter.getItem(parent.getChildAdapterPosition(it))
+        parent.children.mapNotNull {
+            val childAdapterPosition = parent.getChildAdapterPosition(it)
+            if (childAdapterPosition == RecyclerView.NO_POSITION) {
+                return@mapNotNull null
+            }
+            it to groupAdapter.getItem(childAdapterPosition)
         }.find { (_, item) ->
             item.id == lunchItem.id
         }?.let { (itemView, _) ->
