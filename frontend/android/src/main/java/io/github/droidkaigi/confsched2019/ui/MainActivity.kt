@@ -120,12 +120,9 @@ class MainActivity : DaggerAppCompatActivity() {
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
+        setIntent(intent)
 
-        intent?.dataString?.let { dataString ->
-            if (Regex("""https://droidkaigi\.jp/2019/(en/|)announcement""").matches(dataString)) {
-                handleNavigation(R.id.announce)
-            }
-        }
+        navController.handleDeepLink(intent)
     }
 
     private fun setupNavigation() {
@@ -217,7 +214,7 @@ class MainActivity : DaggerAppCompatActivity() {
                 binding.drawerLayout.closeDrawer(binding.navView)
             }
             // navigate
-            val handled = handleNavigation(item)
+            val handled = handleNavigation(item.itemId)
             // check current displayed item in navigation menu / uncheck others
             checkCurrentDestinationIdInDrawer(item.itemId)
 
@@ -242,8 +239,6 @@ class MainActivity : DaggerAppCompatActivity() {
         }
     }
 
-    private fun handleNavigation(item: MenuItem): Boolean = handleNavigation(item.itemId)
-
     private fun handleNavigation(@IdRes itemId: Int): Boolean {
         return try {
             // ignore if current destination is selected
@@ -260,7 +255,7 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return handleNavigation(item) || super.onOptionsItemSelected(item)
+        return handleNavigation(item.itemId) || super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {
