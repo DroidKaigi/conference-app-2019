@@ -8,7 +8,7 @@
 import UIKit
 import ioscombined
 
-class AnnouncementTableViewCell: UITableViewCell, Reusable {
+class AnnouncementTableViewCell: UITableViewCell {
     @IBOutlet weak var announcementIcon: UIImageView!
     @IBOutlet weak var publishedAt: UILabel!
     @IBOutlet weak var title: UILabel!

@@ -15,8 +15,6 @@ final class AnnouncementDataSource: NSObject, UITableViewDataSource {
     typealias Element = [AnnouncementResponse]
     var items: Element = []
     
-    private var cellHeightsCache = [IndexPath: CGFloat]()
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -48,16 +46,12 @@ extension AnnouncementDataSource: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
     }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cellHeightsCache[indexPath] = cell.frame.height
-    }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return cellHeightsCache[indexPath] ?? UITableView.automaticDimension
+        return UITableView.automaticDimension
     }
 }
