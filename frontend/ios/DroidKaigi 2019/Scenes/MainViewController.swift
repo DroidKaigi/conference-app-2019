@@ -81,13 +81,12 @@ extension MainViewController: DrawerViewControllerDelegate {
         case .about:
             let viewController = AboutViewController()
             navigationController?.pushViewController(viewController, animated: false)
+        case .announce:
+            let announce = AnnouncementsViewController.instantiateFromStoryboard()
+            navigationController?.pushViewController(announce, animated: false)
         default:
             break
         }
         closeSlide()
-    }
-    @objc func notificationsButtonTapped(_ sender: Any?) {
-        let notifications = AnnouncementsViewController.instantiateFromStoryboard()
-        show(notifications, sender: nil)
     }
 }
