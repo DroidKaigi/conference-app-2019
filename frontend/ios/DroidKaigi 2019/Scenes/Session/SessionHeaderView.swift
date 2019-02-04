@@ -40,7 +40,11 @@ class SessionHeaderView: UIView {
         addSubview(startTimeLabel)
         startTimeLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().inset(20)
+            if #available(iOS 11.0, *) {
+                $0.leading.equalTo(safeAreaLayoutGuide.snp.leading).inset(20)
+            } else {
+                $0.leading.equalToSuperview().inset(20)
+            }
         }
     }
 }
