@@ -1,10 +1,12 @@
 package io.github.droidkaigi.confsched2019.ui
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
@@ -112,6 +114,16 @@ class MainActivity : DaggerAppCompatActivity() {
         userStore.registered.changed(this) { registered ->
             if (!registered) {
                 userActionCreator.load()
+            }
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+        intent?.dataString?.let { dataString ->
+            if (Regex("""https://droidkaigi\.jp/2019/(en/|)announcement""").matches(dataString)) {
+                handleNavigation(R.id.announce)
             }
         }
     }
@@ -230,15 +242,17 @@ class MainActivity : DaggerAppCompatActivity() {
         }
     }
 
-    private fun handleNavigation(item: MenuItem): Boolean {
+    private fun handleNavigation(item: MenuItem): Boolean = handleNavigation(item.itemId)
+
+    private fun handleNavigation(@IdRes itemId: Int): Boolean {
         return try {
             // ignore if current destination is selected
-            if (navController.currentDestination?.id == item.itemId) return false
+            if (navController.currentDestination?.id == itemId) return false
             val builder = NavOptions.Builder()
                 .setLaunchSingleTop(true)
                 .setPopUpTo(R.id.main, false)
             val options = builder.build()
-            navController.navigate(item.itemId, null, options)
+            navController.navigate(itemId, null, options)
             true
         } catch (e: IllegalArgumentException) {
             false
