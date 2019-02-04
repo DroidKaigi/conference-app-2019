@@ -2,7 +2,7 @@
 
 ## Minimum Requirements
 
-- XCode 10.1 (Swift 4.2.1)
+- Xcode 10.1 (Swift 4.2.1)
 - JDK 1.8 (never use higher jdk versions)
 
 Initially, please uncomment `':frontend:ioscombined'` in settings.gradle
@@ -32,7 +32,7 @@ After that, you can open `DroidKaigi 2019.xcworkspace` in Xcode.
 
 ## on every checkout
 
-Other committer will add/modify/remove dependencies from Gemfile, Podfile and/or CartFile. Please run the command below to get the latest dependencies of this project.
+Other committer will add/modify/remove dependencies from Gemfile, Podfile and/or Cartfile. Please run the command below to get the latest dependencies of this project.
 
 ```
 make post_checkout
