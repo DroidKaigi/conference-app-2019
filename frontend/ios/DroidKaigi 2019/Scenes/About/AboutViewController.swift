@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import class ioscombined.LocaledString
+import class ioscombined.LangKt
 
 class AboutViewController: UIViewController {
 
@@ -34,7 +36,9 @@ class AboutViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(AboutCoverTableViewCell.self)
+        tableView.register(AboutTableViewCell.self)
         tableView.register(AboutDescriptionTableViewCell.self)
+        tableView.registerReusableHeaderFooterView(AboutTableViewFooterView.self)
         return tableView
     }()
 
@@ -62,8 +66,22 @@ extension AboutViewController: UITableViewDataSource {
         case .desc:
             let cell: AboutDescriptionTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
             return cell
-        default:
-            return UITableViewCell()
+        case .access:
+            let cell: AboutTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+            cell.titleLabel.text = LocaledString(ja: "会場アクセス", en: "Directions").getByLang(lang: LangKt.defaultLang())
+            cell.subLabel.text = LocaledString(ja: "Mapを開く", en: "Open with Maps").getByLang(lang: LangKt.defaultLang())
+            return cell
+        case .policy:
+            let cell: AboutTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+            cell.titleLabel.text = LocaledString(ja: "プライバシーポリシー", en: "Privacy Policy").getByLang(lang: LangKt.defaultLang())
+            cell.subLabel.text = LocaledString(ja: "見てみる", en: "See Details").getByLang(lang: LangKt.defaultLang())
+            return cell
+        case .appver:
+            let cell: AboutTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+            cell.titleLabel.text = LocaledString(ja: "アプリバージョン", en: "Version").getByLang(lang: LangKt.defaultLang())
+            cell.subLabel.text = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+            cell.subLabel.textColor = .gray
+            return cell
         }
     }
 }
@@ -83,10 +101,34 @@ extension AboutViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return nil
+        let view: AboutTableViewFooterView = tableView.dequeueReusableHeaderFooterView()
+        return view
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return .leastNonzeroMagnitude
+        switch sections[section] {
+        case .cover, .appver:
+            return .leastNonzeroMagnitude
+        default:
+            return 4
+        }
     }
+}
+
+
+class AboutTableViewFooterView: UITableViewHeaderFooterView, Reusable {
+
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        borderView.backgroundColor = .white
+        contentView.addSubview(borderView)
+        borderView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(1)
+            $0.centerY.equalToSuperview()
+        }
+    }
+    required init?(coder aDecoder: NSCoder) { fatalError() }
+
+    private lazy var borderView = DashedLineView()
 }
