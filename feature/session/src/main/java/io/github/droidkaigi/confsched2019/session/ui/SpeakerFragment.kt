@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
+import android.transition.Fade
 import com.soywiz.klock.DateTimeSpan
 import dagger.Module
 import dagger.Provides
@@ -79,6 +80,8 @@ class SpeakerFragment : DaggerFragment() {
         }
         sharedElementEnterTransition =
             TransitionInflater.from(context).inflateTransition(R.transition.speaker_shared_enter)
+        enterTransition = Fade()
+        returnTransition = null
         postponeEnterTransition()
     }
 }
