@@ -33,7 +33,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:contentDescription="@string/session_detail_speaker"
-            android:transitionName="@string/speaker_image_transition"
+            android:transitionName="@{speaker.id}"
             app:circleCrop="@{true}"
             app:imageUrl="@{speaker.imageUrl}"
             app:layout_constraintBottom_toBottomOf="parent"

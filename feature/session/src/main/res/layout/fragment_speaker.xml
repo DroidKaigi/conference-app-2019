@@ -93,7 +93,7 @@
                     android:layout_margin="16dp"
                     android:contentDescription="@string/speaker_label"
                     app:circleCrop="@{true}"
-                    android:transitionName="@string/speaker_image_transition"
+                    android:transitionName="@{speaker.id}"
                     app:imageUrl="@{speaker.imageUrl}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

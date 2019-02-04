@@ -64,7 +64,7 @@ class SpeakerItem @AssistedInject constructor(
             navController.navigate(
                 clickNavDirection,
                 FragmentNavigatorExtras(
-                    itemBinding.speakerImage to it.context.getString(R.string.speaker_image_transition)
+                    itemBinding.speakerImage to speaker.id
                 )
             )
         }
