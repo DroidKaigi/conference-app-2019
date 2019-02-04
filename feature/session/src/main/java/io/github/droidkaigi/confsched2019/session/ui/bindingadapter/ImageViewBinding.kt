@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.databinding.BindingAdapter
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
@@ -15,7 +16,8 @@ fun loadImage(imageView: ImageView, imageUrl: String?) {
         imageUrl = imageUrl,
         circleCrop = false,
         rawPlaceHolder = null,
-        placeHolderTint = null
+        placeHolderTint = null,
+        listener = null
     )
 }
 
@@ -33,6 +35,33 @@ fun loadImage(
     circleCrop: Boolean?,
     rawPlaceHolder: Drawable?,
     placeHolderTint: Int?
+) {
+    loadImage(
+        imageView = imageView,
+        imageUrl = imageUrl,
+        circleCrop = circleCrop,
+        rawPlaceHolder = rawPlaceHolder,
+        placeHolderTint = placeHolderTint,
+        listener = null
+    )
+}
+
+@BindingAdapter(
+    value = [
+        "imageUrl",
+        "circleCrop",
+        "placeHolder",
+        "placeHolderTint",
+        "listener"
+    ]
+)
+fun loadImage(
+    imageView: ImageView,
+    imageUrl: String?,
+    circleCrop: Boolean?,
+    rawPlaceHolder: Drawable?,
+    placeHolderTint: Int?,
+    listener: ImageLoadListener?
 ) {
     val placeHolder = run {
         DrawableCompat.wrap(
@@ -56,5 +85,21 @@ fun loadImage(
                 placeholder(placeHolder)
             }
         }
-        .into(imageView)
+        .into(imageView, object : Callback {
+            override fun onSuccess() {
+                listener?.onImageLoaded()
+            }
+
+            override fun onError(e: Exception?) {
+                listener?.onImageLoadFailed()
+            }
+        })
+}
+
+/**
+ * An interface for responding to image loading completion.
+ */
+interface ImageLoadListener {
+    fun onImageLoaded()
+    fun onImageLoadFailed()
 }
