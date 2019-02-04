@@ -28,13 +28,13 @@ class AnnouncementTableViewCell: UITableViewCell {
     func getIconImage(announcementType: String) -> UIImage{
         switch announcementType {
         case "notification":
-            return #imageLiteral(resourceName: "annnoucement")
+            return #imageLiteral(resourceName: "notification")
         case "alert":
             return #imageLiteral(resourceName: "alert")
         case "feedback":
             return #imageLiteral(resourceName: "feedback")
         default:
-            return #imageLiteral(resourceName: "annnoucement")
+            return #imageLiteral(resourceName: "notification")
         }
     }
 }
