@@ -206,6 +206,7 @@
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:maxLines="3"
+            android:gravity="start|center_vertical"
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.App.Caption"
             android:textColor="@color/colorPrimary"
