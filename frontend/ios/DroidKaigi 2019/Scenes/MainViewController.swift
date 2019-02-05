@@ -81,6 +81,9 @@ extension MainViewController: DrawerViewControllerDelegate {
         case .about:
             let viewController = AboutViewController()
             navigationController?.pushViewController(viewController, animated: false)
+        case .announce:
+            let announce = AnnouncementsViewController.instantiateFromStoryboard()
+            navigationController?.pushViewController(announce, animated: false)
         default:
             break
         }
