@@ -36,7 +36,15 @@ sealed class Session(
         append(endTimeTZ.format("HH:mm"))
     }
 
-    abstract fun summary(lang: Lang, timezoneOffset: DateTimeSpan): String
+    fun summary(lang: Lang, timezoneOffset: DateTimeSpan) = buildString {
+        append(timeSummary(lang, timezoneOffset))
+        append(" / ")
+        append(timeInMinutes)
+        append("min")
+        append(shortSummary())
+    }
+
+    abstract fun shortSummary(): String
 
     val isFinished: Boolean
         get() = DateTime.nowUnixLong() > endTime.unixMillisLong
@@ -69,9 +77,8 @@ data class SpeechSession(
     val forBeginners: Boolean,
     val message: LocaledString?
 ) : Session(id, dayNumber, startTime, endTime, room, isFavorited), AndroidParcel {
-    override fun summary(lang: Lang, timezoneOffset: DateTimeSpan) = buildString {
-        append(timeSummary(lang, timezoneOffset))
-        append(" / ")
+
+    override fun shortSummary() = buildString {
         append(timeInMinutes)
         append("min")
         append(" / ")
@@ -94,9 +101,8 @@ data class ServiceSession(
     val sessionType: SessionType,
     override val isFavorited: Boolean
 ) : Session(id, dayNumber, startTime, endTime, room, isFavorited), AndroidParcel {
-    override fun summary(lang: Lang, timezoneOffset: DateTimeSpan) = buildString {
-        append(timeSummary(lang, timezoneOffset))
-        append(" / ")
+
+    override fun shortSummary() = buildString {
         append(timeInMinutes)
         append("min")
         if (sessionType.shouldShowRoom) {

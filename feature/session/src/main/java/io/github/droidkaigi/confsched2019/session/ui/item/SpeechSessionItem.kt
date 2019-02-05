@@ -81,11 +81,7 @@ class SpeechSessionItem @AssistedInject constructor(
             }
 
             val timeInMinutes: Int = speechSession.timeInMinutes
-            timeAndRoom.text = root.context.getString(
-                R.string.session_duration_room_format,
-                timeInMinutes,
-                speechSession.room.name
-            )
+            timeAndRoom.text = speechSession.shortSummary()
             categoryChip.text = speechSession.category.name.getByLang(defaultLang())
             survey.setOnClickListener {
                 navController.navigate(surveyNavDirections)

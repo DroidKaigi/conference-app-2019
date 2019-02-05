@@ -200,12 +200,7 @@ class SessionDetailFragment : DaggerFragment() {
 
         binding.sessionTitle.text = session.title.getByLang(lang)
 
-        val timeInMinutes: Int = session.timeInMinutes
-        binding.sessionTimeAndRoom.text = getString(
-            R.string.session_duration_room_format,
-            timeInMinutes,
-            session.room.name
-        )
+        binding.sessionTimeAndRoom.text = session.shortSummary()
         binding.sessionIntendedAudienceDescription.text = session.intendedAudience
         binding.categoryChip.text = session.category.name.getByLang(defaultLang())
 
@@ -301,13 +296,7 @@ class SessionDetailFragment : DaggerFragment() {
 
         binding.sessionTitle.text = session.title.getByLang(lang)
 
-        val timeInMinutes: Int = session.timeInMinutes
-        binding.sessionTimeAndRoom.text = getString(
-            R.string.session_duration_room_format,
-            timeInMinutes,
-            session.room.name
-        )
-
+        binding.sessionTimeAndRoom.text = session.shortSummary()
         binding.sessionDescription.text = session.desc
     }
 }

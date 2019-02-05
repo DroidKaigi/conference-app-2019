@@ -17,7 +17,7 @@ class SessionTableViewCell: UITableViewCell, Reusable {
     var session: Session? {
         didSet {
             guard let session = session else { return }
-            timeAndRoomLabel.text = "\(session.timeInMinutes)min / \(session.room.name)"
+            timeAndRoomLabel.text = session.shortSummary()
             liveMark.isHidden = !session.isOnGoing
             favoriteButton.isSelected = session.isFavorited
             speakersStackView.isHidden = session is ServiceSession

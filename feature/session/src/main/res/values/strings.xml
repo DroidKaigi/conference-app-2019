@@ -3,7 +3,6 @@
     <string name="session_description_favorite_image" translatable="false">favorite image</string>
     <string name="session_description_time_image" translatable="false">time image</string>
     <string name="session_description_header_image" translatable="false">header image</string>
-    <string name="session_duration_room_format" translatable="false">%1$d min / %2$s</string>
     <string name="session_filter_button">Filtering</string>
     <string name="session_filter_button_filtered">Filtered</string>
     <string name="session_filter_title">Filter</string>
