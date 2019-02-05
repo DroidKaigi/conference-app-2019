@@ -36,8 +36,9 @@ matrix:
     - openssl aes-256-cbc -K $encrypted_1701aaafcc71_key -iv $encrypted_1701aaafcc71_iv
       -in .travis/android/release.zip.enc -out release.zip -d
     - "./.travis/android/before_install.bash"
-    script: ".travis/android/run.bash"
-    deploy: ".travis/android/release_to_alpha.bash"
+    script:
+    - ".travis/android/run.bash"
+    - ".travis/android/release_to_alpha.bash"
   # - language: objective-c
   #   os: osx
   #   osx_image: xcode10.1
