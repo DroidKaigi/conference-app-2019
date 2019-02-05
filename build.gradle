@@ -4,6 +4,7 @@ import dependencies.Dep
 import dependencies.Packages
 import publish.DistributionTrack
 import publish.EditStatus
+import publish.PromoteApk
 import publish.UploadApk
 
 apply from: file('gradle/dependencyGraph.gradle')
@@ -210,6 +211,23 @@ task publishAlpha {
                         "en-US": rootProject.file("publish/release-notes/en-US/default.txt"),
                         "ja-JP": rootProject.file("publish/release-notes/ja-JP/default.txt")
                 ]
+        )
+    }
+}
+
+task promoteProduction {
+    doLast {
+        def promoteApk = new PromoteApk(logger)
+        def editId = project.property("editId")
+
+        if (!editId) {
+            throw new GradleScriptException("editId must be privided")
+        }
+
+        promoteApk.execute(
+                Packages.name,
+                rootProject.file(".release/google-services.json"),
+                editId
         )
     }
 }

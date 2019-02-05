@@ -34,15 +34,14 @@ fun File.asCredential(): GoogleCredential {
 
 fun AndroidPublisher.Edits.runInTransaction(
     packageName: String,
-    action: (editId: String) -> Unit,
-    errorHandler: (error: Throwable) -> Unit
+    editId: String = insert(packageName, null).execute().id,
+    action: (editId: String) -> Unit = {},
+    errorHandler: (error: Throwable) -> Unit = {}
 ) {
     try {
-        val newEdit = insert(packageName, null).execute()
+        action(editId)
 
-        action(newEdit.id)
-
-        commit(packageName, newEdit.id)
+        commit(packageName, editId)
     } catch (th: Throwable) {
         errorHandler(th)
     }

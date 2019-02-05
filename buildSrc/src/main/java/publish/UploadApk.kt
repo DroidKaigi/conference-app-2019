@@ -37,7 +37,7 @@ class UploadApk(
 
         val editsService = androidPublisher(packageName, serviceAccountJson).edits()
 
-        editsService.runInTransaction(packageName, { editId ->
+        editsService.runInTransaction(packageName, action = { editId ->
             logger.debug("New edit transaction id is $editId")
 
             val apkContent = apkFile.asApkContent()
@@ -64,6 +64,7 @@ class UploadApk(
             ).execute()
 
             logger.info("Update ${updatedTrack.track} and the status has been ${editStatus.status}")
+            logger.warn("New edit id is $editId")
         }) { th ->
             logger.error("while edit transaction", th)
             throw th
