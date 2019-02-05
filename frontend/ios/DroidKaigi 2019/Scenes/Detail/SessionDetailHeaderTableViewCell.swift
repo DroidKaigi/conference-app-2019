@@ -23,7 +23,7 @@ class SessionDetailHeaderTableViewCell: UITableViewCell, Reusable {
             default:
                 break
             }
-            timeAndRoomLabel.text = "\(session.timeInMinutes)min / \(session.room.name)"
+            timeAndRoomLabel.text = session.shortSummary()
             // TODO: Get TimezoneOffset From Device Setting
             let timezoneOffset = KlockDateTimeSpan(years: 0, months: 0, weeks: 0, days: 0, hours: 9, minutes: 0, seconds: 0, milliseconds: 0)
             dateLabel.text = session.timeSummary(lang: lang, timezoneOffset: timezoneOffset)

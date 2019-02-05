@@ -46,12 +46,7 @@ class ServiceSessionItem @AssistedInject constructor(
             session = serviceSession
             lang = defaultLang()
 
-            val timeInMinutes: Int = serviceSession.timeInMinutes
-            timeAndRoom.text = root.context.getString(
-                R.string.session_duration_room_format,
-                timeInMinutes,
-                serviceSession.room.name
-            )
+            timeAndRoom.text = serviceSession.shortSummary()
             favorite.setOnClickListener { view ->
                 // apply state immediately
                 viewBinding.session = serviceSession.copy(
