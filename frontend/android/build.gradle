@@ -50,7 +50,9 @@ android {
             debuggable true
         }
         staging {
-            applicationIdSuffix ".releasetest"
+            if (isCi || isReleaseBuild) {
+                applicationIdSuffix Packages.debugNameSuffix
+            }
             debuggable true
             zipAlignEnabled true
             signingConfig = signingConfigs.debug
