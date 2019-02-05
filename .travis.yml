@@ -37,6 +37,7 @@ matrix:
       -in .travis/android/release.zip.enc -out release.zip -d
     - "./.travis/android/before_install.bash"
     script: ".travis/android/run.bash"
+    deploy: ".travis/android/release_to_alpha.bash"
   # - language: objective-c
   #   os: osx
   #   osx_image: xcode10.1
