@@ -39,8 +39,6 @@ sealed class Session(
     fun summary(lang: Lang, timezoneOffset: DateTimeSpan) = buildString {
         append(timeSummary(lang, timezoneOffset))
         append(" / ")
-        append(timeInMinutes)
-        append("min")
         append(shortSummary())
     }
 
