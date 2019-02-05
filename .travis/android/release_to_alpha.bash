@@ -2,4 +2,4 @@
 
 set -eu
 
-# ./gradlew publishAlpha
+./gradlew publishAlpha

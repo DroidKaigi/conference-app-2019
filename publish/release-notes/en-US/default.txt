@@ -1,1 +1,2 @@
-test
+The timetable layout for sessions has been improved.
+Fixed several serious bugs and tweaked.
