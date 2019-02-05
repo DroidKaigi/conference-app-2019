@@ -58,7 +58,7 @@ open class TimetableCurrentTimeLineDecoration(
         }
 
     protected fun calcLineHeight(parent: RecyclerView, currentTime: Long): Float {
-        val originView = parent.getChildAt(0)
+        val originView = parent.getChildAt(0) ?: return 0F
         val originStartUnixMillis = groupAdapter.getItem(parent.getChildAdapterPosition(originView))
             .startUnixMillis
 
