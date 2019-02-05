@@ -58,8 +58,13 @@ open class TimetableCurrentTimeLineDecoration(
         }
 
     protected fun calcLineHeight(parent: RecyclerView, currentTime: Long): Float {
-        val originView = parent.getChildAt(0)
-        val originStartUnixMillis = groupAdapter.getItem(parent.getChildAdapterPosition(originView))
+        val originView = parent.getChildAt(0) ?: return 0F
+        val childAdapterPosition = parent.getChildAdapterPosition(originView)
+        if (childAdapterPosition == RecyclerView.NO_POSITION) {
+            return 0F
+        }
+
+        val originStartUnixMillis = groupAdapter.getItem(childAdapterPosition)
             .startUnixMillis
 
         val gapHeight = TimeUnit.MILLISECONDS
