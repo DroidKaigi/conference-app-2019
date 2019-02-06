@@ -30,7 +30,7 @@ class ContributorActionCreatorTest {
     }
 
     @Test
-    fun load()  = runBlocking {
+    fun load() = runBlocking {
         val lifecycleOwner = TestLifecycleOwner().handleEvent(Lifecycle.Event.ON_RESUME)
         coEvery { contributorRepository.contributorContents() } returns dummyContributorsData()
         val contributorActionCreator = ContributorActionCreator(
