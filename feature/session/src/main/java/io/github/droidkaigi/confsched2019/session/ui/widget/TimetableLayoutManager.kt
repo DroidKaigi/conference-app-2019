@@ -102,10 +102,10 @@ class TimetableLayoutManager(
             return
         }
 
-        anchor.reset()
         calculateColumns()
 
         pendingScrollPosition?.let {
+            anchor.reset()
             detachAndScrapAttachedViews(recycler)
             val period = periods[it]
             relayoutChildren(parentLeft, parentTop, period, recycler)
@@ -116,8 +116,9 @@ class TimetableLayoutManager(
         val firstVisibleView = findFirstVisibleView()
         val offsetX = saveState?.left ?: firstVisibleView?.let(this::getDecoratedLeft)
         val offsetY = saveState?.top ?: firstVisibleView?.let(this::getDecoratedTop)
-        val period = (saveState?.position ?: firstVisibleView?.adapterPosition)
-            ?.let(periods::getOrNull)
+        val period =
+            (saveState?.position ?: anchor.top.get(anchor.leftColumn, -1)).let(periods::getOrNull)
+        anchor.reset()
         detachAndScrapAttachedViews(recycler)
         if (offsetX != null && offsetY != null && period != null)
             relayoutChildren(offsetX, offsetY, period, recycler)
