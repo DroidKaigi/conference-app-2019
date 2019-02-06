@@ -10,9 +10,10 @@ NOTE: Google Play Protect will show a warning dialog on some of devices when ins
 
 # Features
 
-| top | detail |
-|---|---|
-| ![image](https://user-images.githubusercontent.com/1386930/50733191-7080ca80-11cc-11e9-8631-0a032c7b6430.png) | ![image](https://user-images.githubusercontent.com/1386930/50731924-ccd6f080-11b2-11e9-8f15-3e09833f2072.png) |
+| top | timetable | search |
+|---|---|---|
+| ![image](https://user-images.githubusercontent.com/1386930/52349238-738c0680-2a69-11e9-8b6d-7c1b2587e9ac.png) | ![image](https://user-images.githubusercontent.com/1386930/52349352-bc43bf80-2a69-11e9-9bf8-bad3948dbca7.png) | ![image](https://user-images.githubusercontent.com/1386930/52349402-d7163400-2a69-11e9-9a33-175b1b27427b.png) |
+
 
 * View conference schedule and details of each session
 * Set notification for upcoming sessions on your preference
