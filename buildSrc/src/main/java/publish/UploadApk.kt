@@ -14,6 +14,7 @@ class UploadApk(
         packageName: String,
         serviceAccountJson: File,
         apkFile: File,
+        mappingFile: File,
         track: DistributionTrack,
         releaseName: String,
         editStatus: EditStatus,
@@ -35,23 +36,32 @@ class UploadApk(
             error("ReleaseNote not found: $message")
         }
 
+        if (!apkFile.exists()) {
+            error("apk file not found: $apkFile")
+        }
+
+        if (!mappingFile.exists()) {
+            error("mapping file not found: $mappingFile")
+        }
+
         val editsService = androidPublisher(packageName, serviceAccountJson).edits()
 
         editsService.runInTransaction(packageName, action = { editId ->
-            logger.info("New edit transaction id is $editId")
+            logger.warn("New edit transaction id is $editId")
 
             val apkContent = apkFile.asApkContent()
 
-            logger.info("apkContent has been prepared")
+            logger.warn("apkContent has been prepared")
 
             val apkResult =
                 editsService.apks().upload(packageName, editId, apkContent).execute()
+            val versionCode = apkResult.versionCode.toLong()
 
-            logger.info("$packageName (${apkResult.versionCode}) has been uploaded")
+            logger.warn("$packageName (${versionCode}) has been uploaded")
 
             val releaseContent = TrackRelease().apply {
                 name = releaseName
-                versionCodes = listOf(apkResult.versionCode.toLong())
+                versionCodes = listOf(versionCode)
                 status = editStatus.status
                 releaseNotes = releaseNoteMap.map { (lang, noteFile) ->
                     LocalizedText().setLanguage(lang).setText(noteFile.readText())
@@ -65,7 +75,13 @@ class UploadApk(
                 Track().setReleases(listOf(releaseContent))
             ).execute()
 
-            logger.info("Update ${updatedTrack.track} and the status has been ${editStatus.status}")
+
+            val mapping = FileContent("application/octet-stream", mappingFile)
+            editsService.deobfuscationfiles()
+                .upload(packageName, editId, versionCode.toInt(), "proguard", mapping)
+                .execute()
+
+            logger.warn("Update ${updatedTrack.track} and the status has been ${editStatus.status}")
             logger.warn("New edit id is $editId")
         }) { th ->
             logger.error("while edit transaction", th)

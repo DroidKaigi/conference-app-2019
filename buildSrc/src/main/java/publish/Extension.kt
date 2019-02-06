@@ -41,8 +41,9 @@ fun AndroidPublisher.Edits.runInTransaction(
     try {
         action(editId)
 
-        commit(packageName, editId)
+        commit(packageName, editId).execute()
     } catch (th: Throwable) {
         errorHandler(th)
     }
 }
+

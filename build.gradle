@@ -200,10 +200,15 @@ task publishAlpha {
     doLast {
         def uploadApk = new UploadApk(logger)
 
+        def apkFile = new File(System.getenv("UNIVERSAL_APK_PATH"))
+        // FIXME more flexible
+        def mappingFile = new File(rootProject.projectDir, "mapping.txt")
+
         uploadApk.execute(
                 Packages.name,
                 rootProject.file(".release/service-account.json"),
-                new File(System.getenv("UNIVERSAL_APK_PATH")),
+                apkFile,
+                mappingFile,
                 DistributionTrack.Alpha.INSTANCE,
                 "New Alpha Release",
                 EditStatus.Completed.INSTANCE,
