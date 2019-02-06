@@ -70,12 +70,14 @@ class SessionContentsActionCreatorTest {
         )
 
         coVerify(ordering = Ordering.SEQUENCE) {
+            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
             sessionRepository.toggleFavorite(firstDummySpeechSession())
             sessionAlarm.toggleRegister(firstDummySpeechSession())
             sessionRepository.sessionContents()
             dispatcher.dispatch(
                 Action.SessionContentsLoaded(dummySessionContents)
             )
+            dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
         }
     }
 }

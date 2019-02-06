@@ -68,10 +68,12 @@ class SessionContentsActionCreator @Inject constructor(
     fun toggleFavorite(session: Session) {
         launch {
             try {
+                dispatcher.dispatchLoadingState(LoadingState.LOADING)
                 sessionRepository.toggleFavorite(session)
                 sessionAlarm.toggleRegister(session)
                 val sessionContents = sessionRepository.sessionContents()
                 dispatcher.dispatch(Action.SessionContentsLoaded(sessionContents))
+                dispatcher.dispatchLoadingState(LoadingState.LOADED)
             } catch (e: Exception) {
                 dispatcher.dispatch(
                     Action.ShowProcessingMessage(
