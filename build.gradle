@@ -231,7 +231,7 @@ task promoteProduction {
 
         promoteApk.execute(
                 Packages.name,
-                rootProject.file(".release/google-services.json"),
+                rootProject.file(".release/service-account.json"),
                 editId
         )
     }

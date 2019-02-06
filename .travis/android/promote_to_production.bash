@@ -11,4 +11,4 @@ source "$(dirname $0)/../bash.source"
 
 source .release/bash.source
 
-./gradlew promoteProduction -PeditId=""
+./gradlew promoteProduction -PeditId="$1"
