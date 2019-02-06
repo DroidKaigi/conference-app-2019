@@ -161,6 +161,7 @@ class SessionDetailFragment : DaggerFragment() {
 
         binding.sessionFavorite.setOnClickListener {
             val session = binding.session ?: return@setOnClickListener
+            progressTimeLatch.loading = true
 
             // Immediate reflection on view to avoid time lag
             binding.sessionFavorite.setImageResource(
