@@ -42,10 +42,12 @@ class UploadApk(
 
             val apkContent = apkFile.asApkContent()
 
+            logger.debug("apkContent has been prepared")
+
             val apkResult =
                 editsService.apks().upload(packageName, editId, apkContent).execute()
 
-            logger.info("$packageName (${apkResult.versionCode}) has been uploaded")
+            logger.debug("$packageName (${apkResult.versionCode}) has been uploaded")
 
             val releaseContent = TrackRelease().apply {
                 name = releaseName
@@ -63,8 +65,8 @@ class UploadApk(
                 Track().setReleases(listOf(releaseContent))
             ).execute()
 
-            logger.info("Update ${updatedTrack.track} and the status has been ${editStatus.status}")
-            logger.warn("New edit id is $editId")
+            logger.debug("Update ${updatedTrack.track} and the status has been ${editStatus.status}")
+            logger.debug("New edit id is $editId")
         }) { th ->
             logger.error("while edit transaction", th)
             throw th
