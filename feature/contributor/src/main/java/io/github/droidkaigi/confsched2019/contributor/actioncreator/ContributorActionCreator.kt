@@ -19,7 +19,7 @@ class ContributorActionCreator @Inject constructor(
 ) : CoroutineScope by lifecycle.coroutineScope, ErrorHandler {
     fun load() = launch {
         try {
-            // Load Local cashe
+            // Load Local cache
             dispatcher.dispatch(Action.ContributorLoadingStateChanged(LoadingState.LOADING))
             dispatcher.dispatch(
                 Action.ContributorLoaded(contributorRepository.contributorContents())
