@@ -202,7 +202,7 @@ task publishAlpha {
 
         def apkFile = new File(System.getenv("UNIVERSAL_APK_PATH"))
         // FIXME more flexible
-        def mappingFile = new File(rootProject.projectDir, "mapping.txt")
+        def mappingFile = new File(rootProject.projectDir, ".transart/mapping.txt")
 
         uploadApk.execute(
                 Packages.name,
