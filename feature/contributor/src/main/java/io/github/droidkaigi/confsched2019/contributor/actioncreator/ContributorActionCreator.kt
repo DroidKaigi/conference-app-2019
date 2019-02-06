@@ -1,4 +1,4 @@
-package io.github.droidkaigi.confsched2019.contributor.action
+package io.github.droidkaigi.confsched2019.contributor.actioncreator
 
 import androidx.lifecycle.Lifecycle
 import io.github.droidkaigi.confsched2019.action.Action
