@@ -1,8 +1,7 @@
-package io.github.droidkaigi.confsched2019.contributor.ui.actioncreator
+package io.github.droidkaigi.confsched2019.contributor.actioncreator
 
 import androidx.lifecycle.Lifecycle
 import io.github.droidkaigi.confsched2019.action.Action
-import io.github.droidkaigi.confsched2019.contributor.actioncreator.ContributorActionCreator
 import io.github.droidkaigi.confsched2019.data.repository.ContributorRepository
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.dummyContributorsData
