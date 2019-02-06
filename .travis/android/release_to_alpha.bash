@@ -11,4 +11,6 @@ source "$(dirname $0)/../bash.source"
 
 source .release/bash.source
 
+transart -f .travis/android/to_github.transart.yml download
+
 ./gradlew publishAlpha
