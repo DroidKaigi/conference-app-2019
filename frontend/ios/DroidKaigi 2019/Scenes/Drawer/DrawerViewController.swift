@@ -27,9 +27,9 @@ enum MenuItem {
 
     var icon: UIImage? {
         switch self {
-        case .about: return UIImage(named: "bug_report")
+        case .about: return UIImage(named: "info")
         case .floorMap: return UIImage(named: "room")
-        case .announce: return UIImage(named: "info")
+        case .announce: return UIImage(named: "ic_notifications")
         }
     }
 }
