@@ -202,7 +202,7 @@ task publishAlpha {
 
         uploadApk.execute(
                 Packages.name,
-                rootProject.file(".release/google-services.json"),
+                rootProject.file(".release/service-account.json"),
                 new File(System.getenv("UNIVERSAL_APK_PATH")),
                 DistributionTrack.Alpha.INSTANCE,
                 "New Alpha Release",
