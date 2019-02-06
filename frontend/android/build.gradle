@@ -47,12 +47,14 @@ android {
             if (isCi || isReleaseBuild) {
                 applicationIdSuffix Packages.debugNameSuffix
             }
+            manifestPlaceholders = [appName: "@string/app_name_debug"]
             debuggable true
         }
         staging {
             if (isCi || isReleaseBuild) {
                 applicationIdSuffix Packages.debugNameSuffix
             }
+            manifestPlaceholders = [appName: "@string/app_name_staging"]
             debuggable true
             zipAlignEnabled true
             signingConfig = signingConfigs.debug
@@ -70,6 +72,7 @@ android {
             }
         }
         release {
+            manifestPlaceholders = [appName: "@string/app_name"]
             debuggable false
             zipAlignEnabled true
             signingConfig = signingConfigs.release
