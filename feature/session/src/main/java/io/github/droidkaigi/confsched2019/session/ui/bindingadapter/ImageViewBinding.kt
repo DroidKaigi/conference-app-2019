@@ -72,6 +72,7 @@ fun loadImage(
     }
     imageUrl ?: run {
         imageView.setImageDrawable(placeHolder)
+        listener?.onImageLoaded()
     }
 
     Picasso
