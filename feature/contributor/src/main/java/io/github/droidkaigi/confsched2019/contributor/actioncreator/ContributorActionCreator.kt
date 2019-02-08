@@ -1,4 +1,4 @@
-package io.github.droidkaigi.confsched2019.contributor.action
+package io.github.droidkaigi.confsched2019.contributor.actioncreator
 
 import androidx.lifecycle.Lifecycle
 import io.github.droidkaigi.confsched2019.action.Action
@@ -19,7 +19,7 @@ class ContributorActionCreator @Inject constructor(
 ) : CoroutineScope by lifecycle.coroutineScope, ErrorHandler {
     fun load() = launch {
         try {
-            // Load Local cashe
+            // Load Local cache
             dispatcher.dispatch(Action.ContributorLoadingStateChanged(LoadingState.LOADING))
             dispatcher.dispatch(
                 Action.ContributorLoaded(contributorRepository.contributorContents())

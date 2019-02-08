@@ -10,7 +10,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
-import io.github.droidkaigi.confsched2019.contributor.action.ContributorActionCreator
+import io.github.droidkaigi.confsched2019.contributor.actioncreator.ContributorActionCreator
 import io.github.droidkaigi.confsched2019.contributor.databinding.FragmentContributorBinding
 import io.github.droidkaigi.confsched2019.contributor.item.ContributorItem
 import io.github.droidkaigi.confsched2019.contributor.store.ContributorStore
