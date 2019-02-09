@@ -79,18 +79,16 @@ class SessionContentsActionCreator @Inject constructor(
 
     fun toggleFavorite(session: Session) {
         launch {
-            val nextLoadingState = async(
-                fx {
-                    !effect {
-                        dispatcher.dispatchLoadingState(LoadingState.LOADING)
-                        sessionRepository.toggleFavorite(session)
-                        sessionAlarm.toggleRegister(session)
-                        val sessionContents = sessionRepository.sessionContents()
-                        dispatcher.dispatch(Action.SessionContentsLoaded(sessionContents))
-                        LoadingState.LOADED
-                    }
+            val nextLoadingState = fx {
+                !effect {
+                    dispatcher.dispatchLoadingState(LoadingState.LOADING)
+                    sessionRepository.toggleFavorite(session)
+                    sessionAlarm.toggleRegister(session)
+                    val sessionContents = sessionRepository.sessionContents()
+                    dispatcher.dispatch(Action.SessionContentsLoaded(sessionContents))
+                    LoadingState.LOADED
                 }
-            ).await()
+            }.deferred().await()
                 .handleErrorWith {
                     dispatcher.launchAndDispatch(
                         Action.ShowProcessingMessage(
@@ -111,11 +109,11 @@ class SessionContentsActionCreator @Inject constructor(
     }
 
     @UseExperimental(InternalCoroutinesApi::class)
-    private suspend fun <A> async(io: Kind<ForIO, A>): Deferred<Either<Throwable, A>> =
+    private suspend fun <A> Kind<ForIO, A>.deferred(): Deferred<Either<Throwable, A>> =
         suspendCancellableCoroutine { continuation ->
             unsafe {
                 runNonBlocking({
-                    io
+                    this@deferred
                 }, { either ->
                     continuation.tryResume(async { either })
                 })
