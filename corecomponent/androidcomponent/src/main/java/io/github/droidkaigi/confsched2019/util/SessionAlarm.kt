@@ -94,7 +94,7 @@ class SessionAlarm @Inject constructor(private val app: Application) {
     ): Intent {
         return Intent(
             context,
-            Class.forName("io.github.droidkaigi.confsched2019.broadcastreceiver.NotificationBroadcastReceiver")
+            Class.forName(BROADCAST_RECEIVER_CLASS_NAME)
         ).apply {
             action = ACTION_FAVORITED_SESSION_START
             putExtra(EXTRA_SESSION_ID, sessionId)
@@ -109,7 +109,7 @@ class SessionAlarm @Inject constructor(private val app: Application) {
         const val EXTRA_SESSION_ID = "EXTRA_SESSION_ID"
         const val EXTRA_TITLE = "EXTRA_TITLE"
         const val EXTRA_TEXT = "EXTRA_TEXT"
-
-
+        const val BROADCAST_RECEIVER_CLASS_NAME =
+            "io.github.droidkaigi.confsched2019.broadcastreceiver.NotificationBroadcastReceiver"
     }
 }

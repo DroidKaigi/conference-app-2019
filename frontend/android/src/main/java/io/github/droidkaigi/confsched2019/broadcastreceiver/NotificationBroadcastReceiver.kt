@@ -45,6 +45,4 @@ class NotificationBroadcastReceiver : BroadcastReceiver() {
             NotificationChannelInfo.FAVORITE_SESSION_START
         )
     }
-
-
 }
