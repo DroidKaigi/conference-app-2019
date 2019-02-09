@@ -4,12 +4,12 @@ import android.app.Application
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.data.db.AnnouncementDatabase
+import io.github.droidkaigi.confsched2019.data.db.ContributorDatabase
 import io.github.droidkaigi.confsched2019.data.db.DbComponent
 import io.github.droidkaigi.confsched2019.data.db.SessionDatabase
 import io.github.droidkaigi.confsched2019.data.db.SponsorDatabase
 import io.github.droidkaigi.confsched2019.data.db.StaffDatabase
-import io.github.droidkaigi.confsched2019.data.db.ContributorDatabase
-import io.github.droidkaigi.confsched2019.ext.android.Dispatchers
+import io.github.droidkaigi.confsched2019.ext.Dispatchers
 import javax.inject.Singleton
 
 @Module

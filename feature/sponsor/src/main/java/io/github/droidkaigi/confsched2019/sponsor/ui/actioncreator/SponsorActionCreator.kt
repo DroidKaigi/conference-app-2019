@@ -2,12 +2,12 @@ package io.github.droidkaigi.confsched2019.sponsor.ui.actioncreator
 
 import androidx.lifecycle.Lifecycle
 import io.github.droidkaigi.confsched2019.action.Action
+import io.github.droidkaigi.confsched2019.data.repository.SponsorRepository
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
-import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
+import io.github.droidkaigi.confsched2019.ext.coroutineScope
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.system.actioncreator.ErrorHandler
-import io.github.droidkaigi.confsched2019.data.repository.SponsorRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject

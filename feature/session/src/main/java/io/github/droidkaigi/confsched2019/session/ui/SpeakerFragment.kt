@@ -2,6 +2,7 @@ package io.github.droidkaigi.confsched2019.session.ui
 
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
+import android.transition.Fade
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +11,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
-import android.transition.Fade
 import com.soywiz.klock.DateTimeSpan
 import dagger.Module
 import dagger.Provides
 import io.github.droidkaigi.confsched2019.di.PageScope
-import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.ext.changed
 import io.github.droidkaigi.confsched2019.model.defaultLang
 import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.session.databinding.FragmentSpeakerBinding

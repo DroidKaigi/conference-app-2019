@@ -5,7 +5,7 @@ import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.data.repository.StaffRepository
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.dummyStaffContentsData
-import io.github.droidkaigi.confsched2019.ext.android.CoroutinePlugin
+import io.github.droidkaigi.confsched2019.ext.CoroutinePlugin
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.StaffSearchResult
 import io.github.droidkaigi.confsched2019.widget.component.TestLifecycleOwner

@@ -1,8 +1,8 @@
 include ':frontend:android',
         // If you create iOS app, Please uncomment following
         // ':frontend:ioscombined',
-        ':frontendcomponent:androidcomponent',
-        ':frontendcomponent:androidtestcomponent',
+        ':corecomponent:androidcomponent',
+        ':corecomponent:androidtestcomponent',
         ':feature:session',
         ':feature:announcement',
         ':feature:about',
@@ -26,7 +26,6 @@ include ':frontend:android',
         ':data:repository-impl',
         ':data:firestore',
         ':data:firestore-impl',
-        ':ext:android-extension',
         ':ext:log'
 
 enableFeaturePreview('GRADLE_METADATA')

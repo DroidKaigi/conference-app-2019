@@ -5,13 +5,14 @@ import android.graphics.Color
 import android.os.Build
 import android.view.View
 import androidx.lifecycle.LiveData
-import io.github.droidkaigi.confsched2019.ext.android.mutableLiveDataOf
+import io.github.droidkaigi.confsched2019.ext.mutableLiveDataOf
 
 class StatusBarColorManager {
     private val _systemUiVisibility = mutableLiveDataOf(0)
     val systemUiVisibility: LiveData<Int> = _systemUiVisibility
 
-    private val _statusBarColor = mutableLiveDataOf(COLOR_STATUS_BAR_INVISIBLE)
+    private val _statusBarColor =
+        mutableLiveDataOf(COLOR_STATUS_BAR_INVISIBLE)
     val statusBarColor: LiveData<Int> = _statusBarColor
 
     var drawerSlideOffset: Float = 0f

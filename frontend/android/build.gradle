@@ -125,7 +125,7 @@ dependencies {
     implementation project(':feature:survey')
     implementation project(':feature:system')
     implementation project(':feature:notification')
-    implementation project(':frontendcomponent:androidcomponent')
+    implementation project(':corecomponent:androidcomponent')
     implementation project(':data:db-room')
     implementation project(':data:repository-impl')
     implementation project(':data:firestore-impl')

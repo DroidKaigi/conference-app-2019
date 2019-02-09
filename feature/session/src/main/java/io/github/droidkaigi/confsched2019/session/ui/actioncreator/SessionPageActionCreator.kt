@@ -3,7 +3,7 @@ package io.github.droidkaigi.confsched2019.session.ui.actioncreator
 import androidx.lifecycle.Lifecycle
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
-import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
+import io.github.droidkaigi.confsched2019.ext.coroutineScope
 import io.github.droidkaigi.confsched2019.model.SessionPage
 import io.github.droidkaigi.confsched2019.session.di.SessionPageScope
 import io.github.droidkaigi.confsched2019.system.actioncreator.ErrorHandler

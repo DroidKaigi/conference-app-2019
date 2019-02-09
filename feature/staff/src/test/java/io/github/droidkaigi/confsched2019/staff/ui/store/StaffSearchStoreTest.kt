@@ -5,8 +5,8 @@ import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.dummySearchResultData
 import io.github.droidkaigi.confsched2019.dummyStaffContentsData
-import io.github.droidkaigi.confsched2019.ext.android.CoroutinePlugin
-import io.github.droidkaigi.confsched2019.ext.android.changedForever
+import io.github.droidkaigi.confsched2019.ext.CoroutinePlugin
+import io.github.droidkaigi.confsched2019.ext.changedForever
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.StaffContents
 import io.github.droidkaigi.confsched2019.model.StaffSearchResult

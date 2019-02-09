@@ -2,52 +2,52 @@ package io.github.droidkaigi.confsched2019.session.ui.store
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.ViewModel
 import com.shopify.livedataktx.combineWith
 import com.shopify.livedataktx.map
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
-import io.github.droidkaigi.confsched2019.ext.android.requireValue
-import io.github.droidkaigi.confsched2019.ext.android.toLiveData
-import io.github.droidkaigi.confsched2019.ext.android.toSingleLiveData
+import io.github.droidkaigi.confsched2019.ext.requireValue
+import io.github.droidkaigi.confsched2019.ext.toLiveData
+import io.github.droidkaigi.confsched2019.ext.toSingleLiveData
 import io.github.droidkaigi.confsched2019.model.Filters
 import io.github.droidkaigi.confsched2019.model.Session
 import io.github.droidkaigi.confsched2019.model.SessionPage
+import io.github.droidkaigi.confsched2019.store.Store
 import kotlinx.coroutines.channels.map
 import javax.inject.Inject
 
 class SessionPagesStore @Inject constructor(
     dispatcher: Dispatcher
-) : ViewModel() {
+) : Store() {
 
     private val sessions: LiveData<List<Session>> = dispatcher
         .subscribe<Action.SessionsLoaded>()
         .map { it.sessions }
-        .toLiveData(listOf())
+        .toLiveData(this, listOf())
 
     private val roomFilterChanged = dispatcher
         .subscribe<Action.RoomFilterChanged>()
-        .toLiveData()
+        .toLiveData(this)
 
     private val categoryFilterChanged = dispatcher
         .subscribe<Action.CategoryFilterChanged>()
-        .toLiveData()
+        .toLiveData(this)
 
     private val langFilterChanged = dispatcher
         .subscribe<Action.LangFilterChanged>()
-        .toLiveData()
+        .toLiveData(this)
 
     private val langSupportFilterChanged = dispatcher
         .subscribe<Action.LangSupportFilterChanged>()
-        .toLiveData()
+        .toLiveData(this)
 
     private val audienceCategoryFilterChanged = dispatcher
         .subscribe<Action.AudienceCategoryFilterChanged>()
-        .toLiveData()
+        .toLiveData(this)
 
     private val filterCleared = dispatcher
         .subscribe<Action.FilterCleared>()
-        .toLiveData()
+        .toLiveData(this)
 
     val filters = MediatorLiveData<Filters>().apply {
         value = Filters()
@@ -118,17 +118,17 @@ class SessionPagesStore @Inject constructor(
     val selectedTab: LiveData<SessionPage> = dispatcher
         .subscribe<Action.SessionPageSelected>()
         .map { it.sessionPage }
-        .toLiveData(SessionPage.pages[0])
+        .toLiveData(this, SessionPage.pages[0])
 
     val reselectedTab: LiveData<SessionPage> = dispatcher
         .subscribe<Action.SessionPageReselected>()
         .map { it.sessionPage }
-        .toSingleLiveData(SessionPage.pages[0])
+        .toSingleLiveData(this, SessionPage.pages[0])
 
     val sessionScrollAdjusted: LiveData<Boolean> = dispatcher
         .subscribe<Action.SessionScrollAdjusted>()
         .map { it.adjusted }
-        .toSingleLiveData(false)
+        .toSingleLiveData(this, false)
 
     fun filteredSessionsByDay(day: Int): LiveData<List<Session>> {
         return filteredSessions

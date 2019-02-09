@@ -19,7 +19,7 @@ import io.github.droidkaigi.confsched2019.about.ui.item.AboutSection
 import io.github.droidkaigi.confsched2019.about.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.about.ui.widget.DottedItemDecoration
 import io.github.droidkaigi.confsched2019.di.PageScope
-import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.ext.changed
 import io.github.droidkaigi.confsched2019.model.Message
 import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
 import io.github.droidkaigi.confsched2019.system.actioncreator.SystemActionCreator

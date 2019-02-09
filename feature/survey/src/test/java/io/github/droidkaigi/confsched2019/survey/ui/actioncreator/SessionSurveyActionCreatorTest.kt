@@ -5,10 +5,10 @@ import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.data.repository.SessionRepository
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.dummySessionFeedbackData
-import io.github.droidkaigi.confsched2019.ext.android.CoroutinePlugin
+import io.github.droidkaigi.confsched2019.dummySpeechSessionData
+import io.github.droidkaigi.confsched2019.ext.CoroutinePlugin
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.widget.component.TestLifecycleOwner
-import io.github.droidkaigi.confsched2019.dummySpeechSessionData
 import io.mockk.MockKAnnotations
 import io.mockk.Ordering
 import io.mockk.coEvery

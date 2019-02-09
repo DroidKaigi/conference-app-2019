@@ -16,7 +16,7 @@ import io.github.droidkaigi.confsched2019.contributor.item.ContributorItem
 import io.github.droidkaigi.confsched2019.contributor.store.ContributorStore
 import io.github.droidkaigi.confsched2019.contributor.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.di.PageScope
-import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.ext.changed
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
 import javax.inject.Inject

@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
-import io.github.droidkaigi.confsched2019.ext.android.coroutineScope
+import io.github.droidkaigi.confsched2019.ext.coroutineScope
 import io.github.droidkaigi.confsched2019.model.CopyText
 import io.github.droidkaigi.confsched2019.system.R
 import kotlinx.coroutines.CoroutineScope
