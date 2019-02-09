@@ -34,6 +34,8 @@ import io.github.droidkaigi.confsched2019.session.ui.widget.DaggerFragment
 import io.github.droidkaigi.confsched2019.user.store.UserStore
 import io.github.droidkaigi.confsched2019.util.ProgressTimeLatch
 import me.tatarka.injectedvmprovider.InjectedViewModelProviders
+import timber.log.Timber
+import timber.log.debug
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -87,6 +89,7 @@ class SessionPagesFragment : DaggerFragment() {
             sessionPagesActionCreator.load(sessionContentsStore.sessions)
         }
         sessionContentsStore.loadingState.changed(viewLifecycleOwner) { loadingState ->
+            Timber.debug { "Fragment:$loadingState" }
             progressTimeLatch.loading = loadingState.isLoading
         }
         sessionPagesStore.sessionScrollAdjusted.observe(viewLifecycleOwner) {

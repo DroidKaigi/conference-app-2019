@@ -1,6 +1,7 @@
 package io.github.droidkaigi.confsched2019.session.ui.actioncreator
 
 import androidx.lifecycle.Lifecycle
+import arrow.core.extensions.`try`.monad.fx
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.data.repository.SessionRepository
 import io.github.droidkaigi.confsched2019.di.PageScope
@@ -66,27 +67,39 @@ class SessionContentsActionCreator @Inject constructor(
     }
 
     fun toggleFavorite(session: Session) {
-        launch {
-            try {
+        fx {
+            !effect {
                 dispatcher.dispatchLoadingState(LoadingState.LOADING)
                 sessionRepository.toggleFavorite(session)
                 sessionAlarm.toggleRegister(session)
                 val sessionContents = sessionRepository.sessionContents()
                 dispatcher.dispatch(Action.SessionContentsLoaded(sessionContents))
-                dispatcher.dispatchLoadingState(LoadingState.LOADED)
-            } catch (e: Exception) {
-                dispatcher.dispatch(
-                    Action.ShowProcessingMessage(
-                        Message.of(
-                            R.string.session_favorite_connection_error
-                        )
-                    )
-                )
             }
         }
+            .fold(
+                ifSuccess = {
+                    dispatcher.launchAndDispatchLoadingState(LoadingState.LOADED)
+                },
+                ifFailure = {
+                    dispatcher.launchAndDispatch(
+                        Action.ShowProcessingMessage(
+                            Message.of(
+                                R.string.session_favorite_connection_error
+                            )
+                        )
+                    )
+                    dispatcher.launchAndDispatchLoadingState(LoadingState.INITIALIZED)
+                }
+            )
     }
 
     private suspend fun Dispatcher.dispatchLoadingState(loadingState: LoadingState) {
+        println("Fragment: Dispatch $loadingState")
         dispatch(Action.SessionLoadingStateChanged(loadingState))
+    }
+
+    private fun Dispatcher.launchAndDispatchLoadingState(loadingState: LoadingState) {
+        println("Fragment: Dispatch $loadingState")
+        launchAndDispatch(Action.SessionLoadingStateChanged(loadingState))
     }
 }

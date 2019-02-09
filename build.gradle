@@ -105,6 +105,12 @@ allprojects {
                 excludeGroup("Kotlin/Native")
             }
         }
+        maven {
+            url 'https://oss.jfrog.org/artifactory/oss-snapshot-local'
+            content {
+                excludeGroup("Kotlin/Native")
+            }
+        }
     }
     tasks.matching { it instanceof Test }.all {
         testLogging {

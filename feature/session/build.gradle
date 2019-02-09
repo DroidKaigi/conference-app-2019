@@ -27,6 +27,11 @@ dependencies {
     api Dep.Kotlin.coroutines
     implementation Dep.Kotlin.androidCoroutinesDispatcher
 
+    implementation Dep.Arrow.extensions
+    implementation Dep.Arrow.data
+    implementation Dep.Arrow.typeclasses
+    implementation Dep.Arrow.coroutines
+
     implementation Dep.AndroidX.appCompat
     implementation Dep.AndroidX.fragment
     implementation Dep.AndroidX.constraint

@@ -91,6 +91,14 @@ object Dep {
         val serializationIos = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.10.0"
     }
 
+    object Arrow {
+        val version = "0.9.0-SNAPSHOT"
+        val typeclasses = "io.arrow-kt:arrow-typeclasses:$version"
+        val data = "io.arrow-kt:arrow-effects-data:$version"
+        val extensions = "io.arrow-kt:arrow-effects-extensions:$version"
+        val coroutines = "io.arrow-kt:arrow-effects-kotlinx-coroutines:$version"
+    }
+
     object Firebase {
         val core = "com.google.firebase:firebase-core:16.0.4"
         val fireStore = "com.google.firebase:firebase-firestore:17.1.3"
