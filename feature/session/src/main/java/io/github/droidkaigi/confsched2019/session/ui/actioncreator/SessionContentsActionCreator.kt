@@ -1,7 +1,14 @@
 package io.github.droidkaigi.confsched2019.session.ui.actioncreator
 
 import androidx.lifecycle.Lifecycle
-import arrow.core.extensions.`try`.monad.fx
+import arrow.Kind
+import arrow.core.Either
+import arrow.core.extensions.either.applicativeError.handleErrorWith
+import arrow.core.getOrElse
+import arrow.effects.ForIO
+import arrow.effects.extensions.io.fx.fx
+import arrow.effects.extensions.io.unsafeRun.runNonBlocking
+import arrow.unsafe
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.data.repository.SessionRepository
 import io.github.droidkaigi.confsched2019.di.PageScope
@@ -14,7 +21,11 @@ import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.system.actioncreator.ErrorHandler
 import io.github.droidkaigi.confsched2019.util.SessionAlarm
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
 import timber.log.debug
 import javax.inject.Inject
@@ -67,20 +78,20 @@ class SessionContentsActionCreator @Inject constructor(
     }
 
     fun toggleFavorite(session: Session) {
-        fx {
-            !effect {
-                dispatcher.dispatchLoadingState(LoadingState.LOADING)
-                sessionRepository.toggleFavorite(session)
-                sessionAlarm.toggleRegister(session)
-                val sessionContents = sessionRepository.sessionContents()
-                dispatcher.dispatch(Action.SessionContentsLoaded(sessionContents))
-            }
-        }
-            .fold(
-                ifSuccess = {
-                    dispatcher.launchAndDispatchLoadingState(LoadingState.LOADED)
-                },
-                ifFailure = {
+        launch {
+            val nextLoadingState = async(
+                fx {
+                    !effect {
+                        dispatcher.dispatchLoadingState(LoadingState.LOADING)
+                        sessionRepository.toggleFavorite(session)
+                        sessionAlarm.toggleRegister(session)
+                        val sessionContents = sessionRepository.sessionContents()
+                        dispatcher.dispatch(Action.SessionContentsLoaded(sessionContents))
+                        LoadingState.LOADED
+                    }
+                }
+            ).await()
+                .handleErrorWith {
                     dispatcher.launchAndDispatch(
                         Action.ShowProcessingMessage(
                             Message.of(
@@ -88,10 +99,28 @@ class SessionContentsActionCreator @Inject constructor(
                             )
                         )
                     )
-                    dispatcher.launchAndDispatchLoadingState(LoadingState.INITIALIZED)
+
+                    Either.right(LoadingState.INITIALIZED)
                 }
-            )
+                .getOrElse {
+                    LoadingState.INITIALIZED
+                }
+
+            dispatcher.dispatchLoadingState(nextLoadingState)
+        }
     }
+
+    @UseExperimental(InternalCoroutinesApi::class)
+    private suspend fun <A> async(io: Kind<ForIO, A>): Deferred<Either<Throwable, A>> =
+        suspendCancellableCoroutine { continuation ->
+            unsafe {
+                runNonBlocking({
+                    io
+                }, { either ->
+                    continuation.tryResume(async { either })
+                })
+            }
+        }
 
     private suspend fun Dispatcher.dispatchLoadingState(loadingState: LoadingState) {
         println("Fragment: Dispatch $loadingState")

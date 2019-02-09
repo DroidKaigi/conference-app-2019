@@ -96,7 +96,7 @@ object Dep {
         val typeclasses = "io.arrow-kt:arrow-typeclasses:$version"
         val data = "io.arrow-kt:arrow-effects-data:$version"
         val extensions = "io.arrow-kt:arrow-effects-extensions:$version"
-        val coroutines = "io.arrow-kt:arrow-effects-kotlinx-coroutines:$version"
+        val ioExtensions = "io.arrow-kt:arrow-effects-io-extensions:$version"
     }
 
     object Firebase {

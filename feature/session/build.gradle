@@ -30,7 +30,7 @@ dependencies {
     implementation Dep.Arrow.extensions
     implementation Dep.Arrow.data
     implementation Dep.Arrow.typeclasses
-    implementation Dep.Arrow.coroutines
+    implementation Dep.Arrow.ioExtensions
 
     implementation Dep.AndroidX.appCompat
     implementation Dep.AndroidX.fragment
