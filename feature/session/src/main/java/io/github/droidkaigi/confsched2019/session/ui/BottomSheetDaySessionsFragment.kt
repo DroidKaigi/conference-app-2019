@@ -187,9 +187,13 @@ class BottomSheetDaySessionsFragment : DaggerFragment() {
     }
 
     private fun scrollToCurrentSession() {
+        val targetSession = sessionPagesStore.filteredSessions.value.orEmpty()
+            .filter { session -> session.isOnGoing }
+            .distinctBy { session -> session.startTime }
+            .lastOrNull()
         val position = sessionPagesStore.filteredSessions.value.orEmpty()
             .filter { session -> session.dayNumber == args.day }
-            .indexOfFirst { session -> session.isOnGoing }
+            .indexOf(targetSession)
         binding.sessionsRecycler.scrollToPosition(position)
     }
 
