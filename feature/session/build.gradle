@@ -28,7 +28,7 @@ dependencies {
     implementation Dep.Kotlin.androidCoroutinesDispatcher
 
     implementation Dep.Arrow.extensions
-    implementation Dep.Arrow.data
+    api Dep.Arrow.data
     implementation Dep.Arrow.typeclasses
     implementation Dep.Arrow.ioExtensions
 

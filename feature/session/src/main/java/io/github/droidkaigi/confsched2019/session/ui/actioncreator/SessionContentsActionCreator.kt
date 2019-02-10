@@ -3,11 +3,17 @@ package io.github.droidkaigi.confsched2019.session.ui.actioncreator
 import androidx.lifecycle.Lifecycle
 import arrow.Kind
 import arrow.core.Either
-import arrow.core.extensions.either.applicativeError.handleErrorWith
-import arrow.core.getOrElse
+import arrow.core.getOrHandle
+import arrow.core.left
+import arrow.core.right
+import arrow.core.success
 import arrow.effects.ForIO
+import arrow.effects.IO
+import arrow.effects.extensions.io.async.async
+import arrow.effects.extensions.io.effect.runAsync
 import arrow.effects.extensions.io.fx.fx
 import arrow.effects.extensions.io.unsafeRun.runNonBlocking
+import arrow.effects.fix
 import arrow.unsafe
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.data.repository.SessionRepository
@@ -21,11 +27,8 @@ import io.github.droidkaigi.confsched2019.session.R
 import io.github.droidkaigi.confsched2019.system.actioncreator.ErrorHandler
 import io.github.droidkaigi.confsched2019.util.SessionAlarm
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
 import timber.log.debug
 import javax.inject.Inject
@@ -78,47 +81,40 @@ class SessionContentsActionCreator @Inject constructor(
     }
 
     fun toggleFavorite(session: Session) {
-        launch {
-            val nextLoadingState = fx {
-                !effect {
-                    dispatcher.dispatchLoadingState(LoadingState.LOADING)
-                    sessionRepository.toggleFavorite(session)
-                    sessionAlarm.toggleRegister(session)
-                    val sessionContents = sessionRepository.sessionContents()
-                    dispatcher.dispatch(Action.SessionContentsLoaded(sessionContents))
-                    LoadingState.LOADED
-                }
-            }.deferred().await()
-                .handleErrorWith {
-                    dispatcher.launchAndDispatch(
-                        Action.ShowProcessingMessage(
-                            Message.of(
-                                R.string.session_favorite_connection_error
-                            )
+        fx {
+            !effect {
+                dispatcher.dispatchLoadingState(LoadingState.LOADING)
+                sessionRepository.toggleFavorite(session)
+                sessionAlarm.toggleRegister(session)
+                val sessionContents = sessionRepository.sessionContents()
+                dispatcher.dispatch(Action.SessionContentsLoaded(sessionContents))
+                LoadingState.LOADED
+            }
+        }.runAndHold { result ->
+            val state = result.getOrHandle {
+                dispatcher.launchAndDispatch(
+                    Action.ShowProcessingMessage(
+                        Message.of(
+                            R.string.session_favorite_connection_error
                         )
                     )
-
-                    Either.right(LoadingState.INITIALIZED)
-                }
-                .getOrElse {
-                    LoadingState.INITIALIZED
-                }
-
-            dispatcher.dispatchLoadingState(nextLoadingState)
+                )
+                LoadingState.INITIALIZED
+            }
+            dispatcher.launchAndDispatchLoadingState(state)
         }
     }
 
     @UseExperimental(InternalCoroutinesApi::class)
-    private suspend fun <A> Kind<ForIO, A>.deferred(): Deferred<Either<Throwable, A>> =
-        suspendCancellableCoroutine { continuation ->
-            unsafe {
-                runNonBlocking({
-                    this@deferred
-                }, { either ->
-                    continuation.tryResume(async { either })
-                })
+    private fun <A> Kind<ForIO, A>.runAndHold(result: (Either<Throwable, A>) -> Unit) {
+        IO.async().run {
+            defer(coroutineContext) {
+                this@runAndHold
             }
+        }.fix().attempt().unsafeRunAsync {
+            result.invoke(it.getOrHandle { it.left() })
         }
+    }
 
     private suspend fun Dispatcher.dispatchLoadingState(loadingState: LoadingState) {
         println("Fragment: Dispatch $loadingState")
