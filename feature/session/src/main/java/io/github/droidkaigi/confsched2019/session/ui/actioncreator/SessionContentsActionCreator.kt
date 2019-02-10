@@ -5,16 +5,11 @@ import arrow.Kind
 import arrow.core.Either
 import arrow.core.getOrHandle
 import arrow.core.left
-import arrow.core.right
-import arrow.core.success
 import arrow.effects.ForIO
 import arrow.effects.IO
 import arrow.effects.extensions.io.async.async
-import arrow.effects.extensions.io.effect.runAsync
 import arrow.effects.extensions.io.fx.fx
-import arrow.effects.extensions.io.unsafeRun.runNonBlocking
 import arrow.effects.fix
-import arrow.unsafe
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.data.repository.SessionRepository
 import io.github.droidkaigi.confsched2019.di.PageScope
