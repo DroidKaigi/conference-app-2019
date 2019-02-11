@@ -18,8 +18,8 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import io.github.droidkaigi.confsched2019.App
-import io.github.droidkaigi.confsched2019.ext.android.changed
-import io.github.droidkaigi.confsched2019.ext.android.requireValue
+import io.github.droidkaigi.confsched2019.ext.changed
+import io.github.droidkaigi.confsched2019.ext.requireValue
 import io.github.droidkaigi.confsched2019.staff_dfm.R
 import io.github.droidkaigi.confsched2019.staff_dfm.databinding.FragmentStaffSearchBinding
 import io.github.droidkaigi.confsched2019.staff_dfm.ui.actioncreator.StaffSearchActionCreator
