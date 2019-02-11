@@ -7,7 +7,7 @@ apply plugin: 'kotlin-kapt'
 apply from: rootProject.file('gradle/android.gradle')
 
 dependencies {
-    api project(":data:repository")
+    implementation project(":data:repository")
     implementation project(":data:api")
     implementation project(":data:db")
     implementation project(":data:device")
@@ -16,12 +16,12 @@ dependencies {
 
     implementation Dep.Kotlin.stdlibJvm
     implementation Dep.Kotlin.serializationCommon
-    api Dep.Kotlin.coroutines
+    implementation Dep.Kotlin.coroutines
     implementation Dep.AndroidX.lifecycleLiveData
     kapt Dep.AndroidX.Room.compiler
     kapt Dep.AndroidX.Room.coroutine
 
-    api Dep.Klock.jvm
+    implementation Dep.Klock.jvm
 
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport

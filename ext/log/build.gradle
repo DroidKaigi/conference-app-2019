@@ -18,13 +18,13 @@ kotlin {
     }
     sourceSets {
         commonMain.dependencies {
-            api Dep.Kotlin.stdlibCommon
-            api Dep.Timber.common
+            implementation Dep.Kotlin.stdlibCommon
+            implementation Dep.Timber.common
         }
         androidMain {
             dependencies {
-                api Dep.Kotlin.stdlibJvm
-                api Dep.Timber.jdk
+                implementation Dep.Kotlin.stdlibJvm
+                implementation Dep.Timber.jdk
             }
         }
         commonTest.dependencies {

@@ -9,6 +9,7 @@ apply from: rootProject.file('gradle/android.gradle')
 android.dataBinding.enabled = true
 
 dependencies {
+    implementation project(":model")
     implementation project(':corecomponent:androidcomponent')
     implementation project(':feature:system')
     implementation project(':data:repository')
@@ -20,10 +21,13 @@ dependencies {
     implementation Dep.AndroidX.constraint
     implementation Dep.AndroidX.design
 
-    api Dep.AndroidX.lifecycleExtensions
-    api Dep.AndroidX.Navigation.runtime
-    api Dep.AndroidX.Navigation.runtimeKtx
+    implementation Dep.AndroidX.lifecycleExtensions
+    implementation Dep.AndroidX.Navigation.runtime
+    implementation Dep.AndroidX.Navigation.runtimeKtx
     implementation Dep.AndroidX.coreKtx
+
+    implementation Dep.liveDataKtx
+    implementation Dep.Kotlin.coroutines
 
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport

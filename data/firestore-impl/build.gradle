@@ -7,18 +7,18 @@ apply plugin: 'kotlin-kapt'
 apply from: rootProject.file('gradle/android.gradle')
 
 dependencies {
-    api project(":data:firestore")
-    api project(":corecomponent:androidcomponent")
-    api project(":model")
+    implementation project(":data:firestore")
+    implementation project(":corecomponent:androidcomponent")
+    implementation project(":model")
 
     implementation Dep.Kotlin.stdlibJvm
-    api Dep.Kotlin.coroutines
+    implementation Dep.Kotlin.coroutines
     implementation Dep.Kotlin.coroutinesPlayServices
     implementation Dep.Firebase.auth
     implementation Dep.Firebase.fireStore
-    api Dep.AndroidX.lifecycleLiveData
+    implementation Dep.AndroidX.lifecycleLiveData
 
-    api Dep.Klock.jvm
+    implementation Dep.Klock.jvm
 
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport

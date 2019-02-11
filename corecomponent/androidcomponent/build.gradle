@@ -11,28 +11,28 @@ android.buildTypes.release {
 }
 
 dependencies {
-    api project(":model")
-    api Dep.AndroidX.constraint
-    api Dep.AndroidX.design
-    api Dep.AndroidX.coreKtx
-    api Dep.Kotlin.stdlibJvm
+    implementation project(":model")
+    implementation Dep.AndroidX.constraint
+    implementation Dep.AndroidX.design
+    implementation Dep.AndroidX.coreKtx
+    implementation Dep.Kotlin.stdlibJvm
 
-    api Dep.Dagger.androidSupport
-    api Dep.Kotlin.coroutines
+    implementation Dep.Dagger.androidSupport
+    implementation Dep.Kotlin.coroutines
 
-    api Dep.Klock.jvm
+    implementation Dep.Klock.jvm
 
-    api Dep.AndroidX.Navigation.runtime
-    api Dep.AndroidX.Navigation.runtimeKtx
-    api Dep.AndroidX.Navigation.fragmentKtx
-    api Dep.AndroidX.Navigation.uiKtx
+    implementation Dep.AndroidX.Navigation.runtime
+    implementation Dep.AndroidX.Navigation.runtimeKtx
+    implementation Dep.AndroidX.Navigation.fragmentKtx
+    implementation Dep.AndroidX.Navigation.uiKtx
 
-    api Dep.liveDataKtx
+    implementation Dep.liveDataKtx
 
-    api Dep.Dagger.core
-    api Dep.Dagger.androidSupport
+    implementation Dep.Dagger.core
+    implementation Dep.Dagger.androidSupport
 
-    api Dep.Groupie.groupie
+    implementation Dep.Groupie.groupie
 
     testImplementation Dep.Test.junit
     testImplementation Dep.MockK.jvm

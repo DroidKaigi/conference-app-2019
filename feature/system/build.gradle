@@ -14,14 +14,17 @@ dependencies {
     implementation project(':data:device')
     implementation project(':ext:log')
     implementation project(':corecomponent:androidcomponent')
+    implementation project(':model')
 
     implementation Dep.Kotlin.stdlibJvm
-    api Dep.Kotlin.coroutines
+    implementation Dep.Kotlin.coroutines
     implementation Dep.Kotlin.androidCoroutinesDispatcher
+    implementation Dep.AndroidX.lifecycleLiveData
     implementation Dep.AndroidX.appCompat
     implementation Dep.AndroidX.browser
 
     implementation Dep.Ktor.clientAndroid
+    implementation Dep.liveDataKtx
 
     implementation Dep.Firebase.fireStore
 

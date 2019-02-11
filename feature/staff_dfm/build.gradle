@@ -34,9 +34,18 @@ dependencies {
     implementation project(":feature:system")
     implementation project(":model")
 
+    implementation Dep.Kotlin.stdlibJvm
+    implementation Dep.AndroidX.design
+    implementation Dep.AndroidX.constraint
+    implementation Dep.AndroidX.coreKtx
+
     implementation Dep.InjectedVmProvider.extension
     implementation Dep.InjectedVmProvider.injectedVmProvider
     implementation Dep.InjectedVmProvider.ktx
+
+    implementation Dep.AndroidX.recyclerView
+    implementation Dep.Kotlin.coroutines
+    implementation Dep.liveDataKtx
 
     implementation Dep.Groupie.groupie
     implementation Dep.Groupie.databinding
@@ -44,6 +53,8 @@ dependencies {
     implementation Dep.Picasso.picasso
     implementation Dep.Picasso.picassoTransformation
 
+    implementation Dep.Dagger.core
+    implementation Dep.Dagger.androidSupport
     kapt Dep.Dagger.compiler
     kapt Dep.Dagger.androidProcessor
     compileOnly Dep.Dagger.assistedInjectAnnotations

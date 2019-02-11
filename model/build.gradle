@@ -31,20 +31,20 @@ kotlin {
                 progressiveMode = true
             }
             dependencies {
-                api Dep.Kotlin.stdlibCommon
-                api Dep.Klock.common
+                implementation Dep.Kotlin.stdlibCommon
+                implementation Dep.Klock.common
                 implementation Dep.Kotlin.serializationCommon
             }
         }
         jvmMain {
             dependencies {
-                api Dep.Kotlin.stdlibJvm
+                implementation Dep.Kotlin.stdlibJvm
             }
         }
         androidMain {
             dependsOn commonMain
             dependencies {
-                api Dep.Kotlin.stdlibJvm
+                implementation Dep.Kotlin.stdlibJvm
             }
         }
         commonTest.dependencies {

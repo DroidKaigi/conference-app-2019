@@ -15,19 +15,22 @@ dependencies {
     implementation project(":model")
 
     implementation Dep.Kotlin.stdlibJvm
-    api Dep.Kotlin.coroutines
+    implementation Dep.Kotlin.coroutines
     implementation Dep.Kotlin.androidCoroutinesDispatcher
+
+    implementation Dep.liveDataKtx
+    implementation Dep.Kotlin.coroutines
 
     implementation Dep.AndroidX.appCompat
     implementation Dep.AndroidX.constraint
     implementation Dep.AndroidX.recyclerView
     implementation Dep.AndroidX.preference
-    api Dep.AndroidX.emoji
+    implementation Dep.AndroidX.emoji
     implementation Dep.AndroidX.design
 
-    api Dep.AndroidX.lifecycleExtensions
-    api Dep.AndroidX.Navigation.runtime
-    api Dep.AndroidX.Navigation.runtimeKtx
+    implementation Dep.AndroidX.lifecycleExtensions
+    implementation Dep.AndroidX.Navigation.runtime
+    implementation Dep.AndroidX.Navigation.runtimeKtx
     implementation Dep.AndroidX.coreKtx
 
     implementation Dep.Dagger.core

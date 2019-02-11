@@ -15,7 +15,7 @@ dependencies {
     implementation Dep.Firebase.fireStore
 
     implementation Dep.Kotlin.stdlibJvm
-    api Dep.Kotlin.coroutines
+    implementation Dep.Kotlin.coroutines
     implementation Dep.Kotlin.coroutinesPlayServices
     implementation Dep.Kotlin.androidCoroutinesDispatcher
     implementation Dep.AndroidX.appCompat

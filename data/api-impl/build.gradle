@@ -24,7 +24,7 @@ kotlin {
     }
     sourceSets {
         commonMain.dependencies {
-            api project(":data:api")
+            implementation project(":data:api")
             implementation Dep.Kotlin.stdlibCommon
             implementation Dep.Ktor.clientCommon
             implementation Dep.Kotlin.serializationCommon

@@ -17,15 +17,15 @@ kotlin {
     }
     sourceSets {
         commonMain.dependencies {
-            api Dep.Kotlin.stdlibCommon
-            api Dep.Kotlin.coroutines
+            implementation Dep.Kotlin.stdlibCommon
+            implementation Dep.Kotlin.coroutines
             implementation project(":model")
         }
         androidMain {
             dependsOn commonMain
             dependencies {
-                api Dep.Kotlin.stdlibJvm
-                api Dep.Kotlin.coroutines
+                implementation Dep.Kotlin.stdlibJvm
+                implementation Dep.Kotlin.coroutines
             }
         }
         commonTest.dependencies {

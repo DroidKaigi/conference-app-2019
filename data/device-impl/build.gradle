@@ -23,8 +23,8 @@ kotlin {
     }
     sourceSets {
         commonMain.dependencies {
-            api project(":model")
-            api project(":data:device")
+            implementation project(":model")
+            implementation project(":data:device")
             implementation Dep.Kotlin.stdlibCommon
             implementation Dep.Ktor.clientCommon
             implementation Dep.Timber.common
@@ -54,8 +54,8 @@ kotlin {
 }
 
 dependencies {
-    api project(":model")
-    api project(":data:device")
+    implementation project(":model")
+    implementation project(":data:device")
     kapt Dep.Dagger.compiler
     kapt Dep.Dagger.androidProcessor
 }
