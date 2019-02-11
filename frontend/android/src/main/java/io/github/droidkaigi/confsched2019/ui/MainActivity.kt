@@ -39,7 +39,7 @@ import io.github.droidkaigi.confsched2019.contributor.ContributorFragmentModule
 import io.github.droidkaigi.confsched2019.contributor.di.ContributorAssistedInjectModule
 import io.github.droidkaigi.confsched2019.databinding.ActivityMainBinding
 import io.github.droidkaigi.confsched2019.di.PageScope
-import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.ext.changed
 import io.github.droidkaigi.confsched2019.floormap.ui.FloorMapFragment
 import io.github.droidkaigi.confsched2019.floormap.ui.FloorMapFragmentModule
 import io.github.droidkaigi.confsched2019.model.Message

@@ -18,7 +18,7 @@ import com.shopify.livedataktx.observe
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
-import io.github.droidkaigi.confsched2019.ext.android.changed
+import io.github.droidkaigi.confsched2019.ext.changed
 import io.github.droidkaigi.confsched2019.model.AudienceCategory
 import io.github.droidkaigi.confsched2019.model.Category
 import io.github.droidkaigi.confsched2019.model.Lang

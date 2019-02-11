@@ -8,11 +8,12 @@ apply from: rootProject.file('gradle/android.gradle')
 
 dependencies {
     api project(":data:firestore")
-    api project(':ext:android-extension')
+    api project(":corecomponent:androidcomponent")
     api project(":model")
 
     implementation Dep.Kotlin.stdlibJvm
     api Dep.Kotlin.coroutines
+    implementation Dep.Kotlin.coroutinesPlayServices
     implementation Dep.Firebase.auth
     implementation Dep.Firebase.fireStore
     api Dep.AndroidX.lifecycleLiveData

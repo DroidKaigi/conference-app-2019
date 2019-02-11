@@ -13,7 +13,7 @@ import MaterialComponents.MaterialSnackbar
 class AnnouncementsViewController: UIViewController {
 
     private let dataSource = AnnouncementDataSource()
-    private let viewModel = AnnouncementsViewModel()
+    private let viewModel = AnnouncementsStore()
     private let bag = DisposeBag()
     
     override func viewDidLoad() {

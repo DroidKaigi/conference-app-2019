@@ -183,15 +183,15 @@ This store is a `ViewModel`. But if the store is used by the whole application(e
 ```kotlin
 class AnnouncementStore @Inject constructor(
     dispatcher: Dispatcher
-) : ViewModel() {
+) : Store() {
     val loadingState: LiveData<LoadingState> = dispatcher
         .subscribe<Action.AnnouncementLoadingStateChanged>()
         .map { it.loadingState }
-        .toLiveData(LoadingState.LOADING)
+        .toLiveData(this, LoadingState.LOADING)
     val announcements: LiveData<List<Announcement>> = dispatcher
         .subscribe<Action.AnnouncementLoaded>()
         .map { it.announcements }
-        .toLiveData(listOf())
+        .toLiveData(this, listOf())
 }
 ```
 

@@ -7,7 +7,7 @@ import androidx.core.os.bundleOf
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import io.github.droidkaigi.confsched2019.ext.android.queryIntentAllActivities
+import io.github.droidkaigi.confsched2019.ext.queryIntentAllActivities
 import io.github.droidkaigi.confsched2019.notification.NotificationChannelInfo
 import io.github.droidkaigi.confsched2019.notification.NotificationUtil
 import io.github.droidkaigi.confsched2019.notification.createDefaultNotificationChannel

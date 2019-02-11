@@ -10,8 +10,7 @@ apply plugin: 'kotlin-android-extensions'
 android.dataBinding.enabled = true
 
 dependencies {
-    implementation project(':frontendcomponent:androidcomponent')
-    implementation project(':ext:android-extension')
+    implementation project(':corecomponent:androidcomponent')
 
     implementation Dep.Kotlin.stdlibJvm
     api Dep.Kotlin.coroutines

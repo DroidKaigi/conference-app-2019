@@ -9,10 +9,9 @@ apply from: rootProject.file('gradle/android.gradle')
 android.dataBinding.enabled = true
 
 dependencies {
-    implementation project(':frontendcomponent:androidcomponent')
+    implementation project(':corecomponent:androidcomponent')
     implementation project(':feature:system')
     implementation project(':data:repository')
-    implementation project(':ext:android-extension')
     implementation project(':ext:log')
 
     implementation Dep.Kotlin.stdlibJvm
@@ -44,7 +43,7 @@ dependencies {
     implementation Dep.Picasso.picasso
     implementation Dep.Picasso.picassoTransformation
 
-    testImplementation project(':frontendcomponent:androidtestcomponent')
+    testImplementation project(':corecomponent:androidtestcomponent')
     testImplementation Dep.Test.junit
     testImplementation Dep.Test.kotlinTestAssertions
     testImplementation Dep.MockK.jvm

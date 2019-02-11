@@ -7,9 +7,8 @@ apply plugin: 'kotlin-kapt'
 apply from: rootProject.file('gradle/android.gradle')
 
 dependencies {
-    implementation project(':ext:android-extension')
     implementation project(':feature:system')
-    implementation project(':frontendcomponent:androidcomponent')
+    implementation project(':corecomponent:androidcomponent')
 
     implementation Dep.Firebase.core
     implementation Dep.Firebase.auth
@@ -17,6 +16,7 @@ dependencies {
 
     implementation Dep.Kotlin.stdlibJvm
     api Dep.Kotlin.coroutines
+    implementation Dep.Kotlin.coroutinesPlayServices
     implementation Dep.Kotlin.androidCoroutinesDispatcher
     implementation Dep.AndroidX.appCompat
     implementation Dep.Stetho.stetho

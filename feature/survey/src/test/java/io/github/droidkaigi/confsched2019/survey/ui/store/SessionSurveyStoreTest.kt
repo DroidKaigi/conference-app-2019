@@ -4,8 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
 import io.github.droidkaigi.confsched2019.dummySessionFeedbackData
-import io.github.droidkaigi.confsched2019.ext.android.CoroutinePlugin
-import io.github.droidkaigi.confsched2019.ext.android.changedForever
+import io.github.droidkaigi.confsched2019.ext.CoroutinePlugin
+import io.github.droidkaigi.confsched2019.ext.changedForever
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.SessionFeedback
 import io.github.droidkaigi.confsched2019.widget.component.DirectDispatcher

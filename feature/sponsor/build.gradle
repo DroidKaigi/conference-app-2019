@@ -9,11 +9,10 @@ apply from: rootProject.file('gradle/android.gradle')
 android.dataBinding.enabled = true
 
 dependencies {
-    implementation project(':frontendcomponent:androidcomponent')
+    implementation project(':corecomponent:androidcomponent')
     implementation project(':feature:system')
     implementation project(":model")
     implementation project(":data:repository")
-    implementation project(':ext:android-extension')
 
     implementation Dep.Kotlin.stdlibJvm
     api Dep.Kotlin.coroutines
@@ -49,7 +48,7 @@ dependencies {
     testImplementation Dep.Test.junit
     testImplementation Dep.Test.kotlinTestAssertions
     testImplementation Dep.MockK.jvm
-    testImplementation project(':frontendcomponent:androidtestcomponent')
+    testImplementation project(':corecomponent:androidtestcomponent')
     androidTestImplementation Dep.Test.testRunner
     androidTestImplementation Dep.Test.espressoCore
 }

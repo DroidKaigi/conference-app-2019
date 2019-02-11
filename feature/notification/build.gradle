@@ -7,11 +7,12 @@ apply plugin: 'kotlin-kapt'
 apply from: rootProject.file('gradle/android.gradle')
 
 dependencies {
-    implementation project(':ext:android-extension')
     implementation project(':ext:log')
+    implementation project(':corecomponent:androidcomponent')
 
     implementation Dep.Kotlin.stdlibJvm
     api Dep.Kotlin.coroutines
+    implementation Dep.Kotlin.coroutinesPlayServices
     implementation Dep.Kotlin.androidCoroutinesDispatcher
 
     implementation Dep.AndroidX.coreKtx
@@ -25,7 +26,7 @@ dependencies {
     testImplementation Dep.Test.junit
     testImplementation Dep.Test.kotlinTestAssertions
     testImplementation Dep.MockK.jvm
-    testImplementation project(':frontendcomponent:androidtestcomponent')
+    testImplementation project(':corecomponent:androidtestcomponent')
     androidTestImplementation Dep.Test.testRunner
     androidTestImplementation Dep.Test.espressoCore
 }

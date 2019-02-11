@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import com.shopify.livedataktx.map
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
-import io.github.droidkaigi.confsched2019.ext.android.mapNotNull
-import io.github.droidkaigi.confsched2019.ext.android.requireValue
-import io.github.droidkaigi.confsched2019.ext.android.toLiveData
+import io.github.droidkaigi.confsched2019.ext.mapNotNull
+import io.github.droidkaigi.confsched2019.ext.requireValue
+import io.github.droidkaigi.confsched2019.ext.toLiveDataEndless
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.ServiceSession
 import io.github.droidkaigi.confsched2019.model.Session
@@ -24,7 +24,7 @@ class SessionContentsStore @Inject constructor(
     val loadingState = dispatcher
         .subscribe<Action.SessionLoadingStateChanged>()
         .map { it.loadingState }
-        .toLiveData(LoadingState.INITIALIZED)
+        .toLiveDataEndless(LoadingState.INITIALIZED)
     val isInitialized: Boolean get() = loadingState.value == LoadingState.INITIALIZED
     val isLoading get() = loadingState.value == LoadingState.LOADING
     val isLoaded: Boolean get() = loadingState.value == LoadingState.LOADED
@@ -32,7 +32,7 @@ class SessionContentsStore @Inject constructor(
     val sessionContents = dispatcher
         .subscribe<Action.SessionContentsLoaded>()
         .map { it.sessionContents }
-        .toLiveData(SessionContents.EMPTY)
+        .toLiveDataEndless(SessionContents.EMPTY)
     val sessions get() = sessionContents.requireValue().sessions
     val langs get() = sessionContents.requireValue().langs
     val categorys get() = sessionContents.requireValue().category
