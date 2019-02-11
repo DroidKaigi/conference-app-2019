@@ -1,11 +1,9 @@
 package io.github.droidkaigi.confsched2019.staff_dfm.ui.actioncreator
 
-import androidx.lifecycle.Lifecycle
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.data.repository.StaffRepository
 import io.github.droidkaigi.confsched2019.di.PageScope
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
-import io.github.droidkaigi.confsched2019.ext.coroutineScope
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.StaffContents
 import io.github.droidkaigi.confsched2019.model.StaffSearchResult
@@ -18,8 +16,8 @@ import javax.inject.Inject
 class StaffSearchActionCreator @Inject constructor(
     override val dispatcher: Dispatcher,
     private val staffRepository: StaffRepository,
-    @PageScope private val lifecycle: Lifecycle
-) : CoroutineScope by lifecycle.coroutineScope, ErrorHandler {
+    @PageScope private val coroutineScope: CoroutineScope
+) : CoroutineScope by coroutineScope, ErrorHandler {
 
     fun load() = launch {
         try {

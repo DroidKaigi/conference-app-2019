@@ -48,6 +48,24 @@ import kotlinx.coroutines.launch
 }
 
 @MainThread fun <T> ReceiveChannel<T>.toLiveData(
+    coroutineScope: CoroutineScope,
+    defaultValue: T? = null
+): LiveData<T> {
+    return object : LiveData<T>(), CoroutineScope by GlobalScope {
+        init {
+            if (defaultValue != null) {
+                value = defaultValue
+            }
+            coroutineScope.launch {
+                for (element in this@toLiveData) {
+                    postValue(element)
+                }
+            }
+        }
+    }
+}
+
+@MainThread fun <T> ReceiveChannel<T>.toLiveData(
     store: Store,
     defaultValue: T? = null
 ): LiveData<T> {
