@@ -114,34 +114,34 @@ android {
 }
 
 dependencies {
-    implementation project(":model")
-    implementation project(":feature:session")
-    implementation project(":feature:about")
-    implementation project(":feature:announcement")
-    implementation project(":feature:floormap")
-    implementation project(":feature:sponsor")
-    implementation project(":feature:settings")
-    implementation project(":feature:contributor")
-    implementation project(':feature:user')
-    implementation project(':feature:survey')
-    implementation project(':feature:system')
-    implementation project(':feature:notification')
-    implementation project(':corecomponent:androidcomponent')
-    implementation project(':data:db-room')
-    implementation project(":data:db")
-    implementation project(':data:repository-impl')
-    implementation project(':data:repository')
-    implementation project(':data:firestore-impl')
-    implementation project(':data:firestore')
-    implementation project(':data:api-impl')
-    implementation project(':data:api')
-    implementation project(':data:device-impl')
-    implementation project(':data:device')
-    implementation project(':ext:log')
+    implementation project(":model"), excludeKotlinMPPLibs
+    implementation project(":feature:session"), excludeKotlinMPPLibs
+    implementation project(":feature:about"), excludeKotlinMPPLibs
+    implementation project(":feature:announcement"), excludeKotlinMPPLibs
+    implementation project(":feature:floormap"), excludeKotlinMPPLibs
+    implementation project(":feature:sponsor"), excludeKotlinMPPLibs
+    implementation project(":feature:settings"), excludeKotlinMPPLibs
+    implementation project(":feature:contributor"), excludeKotlinMPPLibs
+    implementation project(':feature:user'), excludeKotlinMPPLibs
+    implementation project(':feature:survey'), excludeKotlinMPPLibs
+    implementation project(':feature:system'), excludeKotlinMPPLibs
+    implementation project(':feature:notification'), excludeKotlinMPPLibs
+    implementation project(':corecomponent:androidcomponent'), excludeKotlinMPPLibs
+    implementation project(':data:db-room'), excludeKotlinMPPLibs
+    implementation project(":data:db"), excludeKotlinMPPLibs
+    implementation project(':data:repository-impl'), excludeKotlinMPPLibs
+    implementation project(':data:repository'), excludeKotlinMPPLibs
+    implementation project(':data:firestore-impl'), excludeKotlinMPPLibs
+    implementation project(':data:firestore'), excludeKotlinMPPLibs
+    implementation project(':data:api-impl'), excludeKotlinMPPLibs
+    implementation project(':data:api'), excludeKotlinMPPLibs
+    implementation project(':data:device-impl'), excludeKotlinMPPLibs
+    implementation project(':data:device'), excludeKotlinMPPLibs
+    implementation project(':ext:log'), excludeKotlinMPPLibs
 
     implementation Dep.Kotlin.stdlibJvm
-    implementation Dep.Kotlin.coroutines
-    implementation Dep.Kotlin.androidCoroutinesDispatcher
+    implementation Dep.Kotlin.coroutines, excludeKotlinMPPLibs
+    implementation Dep.Kotlin.androidCoroutinesDispatcher, excludeKotlinMPPLibs
     implementation Dep.OkHttp.okio
 
     implementation Dep.Firebase.fireStore

@@ -29,10 +29,10 @@ android {
 dependencies {
     implementation project(':frontend:android')
 
-    implementation project(':corecomponent:androidcomponent')
-    implementation project(":data:repository")
-    implementation project(":feature:system")
-    implementation project(":model")
+    implementation project(':corecomponent:androidcomponent'), excludeKotlinMPPLibs
+    implementation project(":data:repository"), excludeKotlinMPPLibs
+    implementation project(":feature:system"), excludeKotlinMPPLibs
+    implementation project(":model"), excludeKotlinMPPLibs
 
     implementation Dep.Kotlin.stdlibJvm
     implementation Dep.AndroidX.design
@@ -44,7 +44,7 @@ dependencies {
     implementation Dep.InjectedVmProvider.ktx
 
     implementation Dep.AndroidX.recyclerView
-    implementation Dep.Kotlin.coroutines
+    implementation Dep.Kotlin.coroutines, excludeKotlinMPPLibs
     implementation Dep.liveDataKtx
 
     implementation Dep.Groupie.groupie
