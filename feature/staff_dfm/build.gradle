@@ -29,8 +29,7 @@ android {
 dependencies {
     implementation project(':frontend:android')
 
-    implementation project(':frontendcomponent:androidcomponent')
-    implementation project(':ext:android-extension')
+    implementation project(':corecomponent:androidcomponent')
     implementation project(":data:repository")
     implementation project(":feature:system")
     implementation project(":model")
