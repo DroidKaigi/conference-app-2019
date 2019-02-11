@@ -18,16 +18,17 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import io.github.droidkaigi.confsched2019.App
+import io.github.droidkaigi.confsched2019.di.getPageComponent
 import io.github.droidkaigi.confsched2019.ext.changed
 import io.github.droidkaigi.confsched2019.ext.requireValue
 import io.github.droidkaigi.confsched2019.staff_dfm.R
 import io.github.droidkaigi.confsched2019.staff_dfm.databinding.FragmentStaffSearchBinding
 import io.github.droidkaigi.confsched2019.staff_dfm.ui.actioncreator.StaffSearchActionCreator
-import io.github.droidkaigi.confsched2019.staff_dfm.ui.di.DaggerStaffComponent
-import io.github.droidkaigi.confsched2019.staff_dfm.ui.di.StaffModule
+import io.github.droidkaigi.confsched2019.staff_dfm.ui.di.DaggerStaffPageComponent
+import io.github.droidkaigi.confsched2019.staff_dfm.ui.di.PageModule
 import io.github.droidkaigi.confsched2019.staff_dfm.ui.item.StaffItem
 import io.github.droidkaigi.confsched2019.staff_dfm.ui.store.StaffSearchStore
-import me.tatarka.injectedvmprovider.InjectedViewModelProviders
+import me.tatarka.injectedvmprovider.ktx.injectedViewModelProvider
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -38,7 +39,7 @@ class StaffSearchFragment : Fragment() {
     private var searchView: SearchView? = null
     @Inject lateinit var searchStoreProvider: Provider<StaffSearchStore>
     private val searchStore: StaffSearchStore by lazy {
-        InjectedViewModelProviders.of(requireActivity()).get(searchStoreProvider)
+        injectedViewModelProvider.get(searchStoreProvider)
     }
 
     private val groupAdapter = GroupAdapter<ViewHolder>()
@@ -60,13 +61,18 @@ class StaffSearchFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         val appComponent = (requireContext().applicationContext as App).appCmponent
-        val component = DaggerStaffComponent.builder()
-            .appComponent(appComponent)
-            .staffModule(StaffModule(this))
-            .build()
-        component.inject(this)
+        val component = getPageComponent(this) { pageLifecycleOwner ->
+            DaggerStaffPageComponent.builder()
+                .appComponent(appComponent)
+                .pageModule(
+                    PageModule(
+                        pageLifecycleOwner
+                    )
+                )
+                .build()
+        }
+        component.staffComponentBuilder().build().inject(this)
 
         binding.searchRecycler.adapter = groupAdapter
 

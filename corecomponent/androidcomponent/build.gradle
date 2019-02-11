@@ -26,6 +26,8 @@ dependencies {
     api Dep.AndroidX.Navigation.runtimeKtx
     api Dep.AndroidX.Navigation.fragmentKtx
     api Dep.AndroidX.Navigation.uiKtx
+    implementation Dep.AndroidX.viewModelKtx
+    implementation Dep.AndroidX.lifecycleExtensions
 
     api Dep.liveDataKtx
 

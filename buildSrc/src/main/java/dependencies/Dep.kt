@@ -49,6 +49,7 @@ object Dep {
         val fragment = "androidx.fragment:fragment:1.1.0-alpha03"
 
         val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:2.0.0"
+        val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
         val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata:2.0.0"
 
         object Room {
