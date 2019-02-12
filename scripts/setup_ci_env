@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
 set -e
-set -o pipefail
-
-exec 2> /dev/null
 
 is_travis() {
   [[ "${TRAVIS:-false}" == "true" ]]
@@ -21,7 +18,7 @@ project_slug() {
   if is_travis; then
     echo "$TRAVIS_REPO_SLUG"
   elif is_circleci; then
-    echo "$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_USERNAME"
+    echo "$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
   elif [[ "${PROJECT_SLUG:-false}" != "false" ]]; then
     echo "$PROJECT_SLUG"
   fi
@@ -39,7 +36,7 @@ pr_number() {
   if is_travis; then
     echo "$TRAVIS_PULL_REQUEST"
   elif is_circleci; then
-    echo "$CIRCLE_PR_NUMBER"
+    echo "$(basename $CIRCLE_PULL_REQUEST)"
   elif [[ "${PR_NUMBER:-false}" != "false" ]]; then
     echo "$PR_NUMBER"
   fi
