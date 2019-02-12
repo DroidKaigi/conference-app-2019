@@ -4,8 +4,8 @@ set -eu
 set -o pipefail
 
 get_prs() {
-    curl -H "Authorization: token $DANGER_GITHUB_API_TOKEN" \
-        "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?state=closed"
+    curl -H "Authorization: token $GITHUB_API_TOKEN" \
+        "https://api.github.com/repos/$PROJECT_SLUG/pulls?state=closed"
 }
 
 get_pr_meta() {
@@ -24,7 +24,7 @@ main() {
     local -r username=$(echo $branch_base | tr '/' ' ' | awk '$0=$1');
     local branch_name=$(echo $branch_base | sed "s/$username\///")
 
-    if [[ "$username" == "$CIRCLE_PROJECT_USERNAME" ]] && [[ "$branch_name" == "master" || "$branch_name" == "release" ]]; then
+    if [[ "$username" == "$PROJECT_USERNAME" ]] && [[ "$branch_name" == "master" || "$branch_name" == "release" ]]; then
         echo "Never destroy these distributions"
         exit 0
     fi

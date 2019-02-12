@@ -3,19 +3,16 @@
 set -eu
 set -o pipefail
 
-user_name="${CIRCLE_PROJECT_USERNAME:-DroidKaigi}"
-repo_name="${CIRCLE_PROJECT_REPONAME:-conference-app-2019}"
-
 sync_origin_master() {
-    git remote add "$user_name" "git@github.com:$user_name/$repo_name.git"
-    git fetch "$user_name" master
+    git remote add "$PROJECT_USERNAME" "git@github.com:$PROJECT_SLUG.git"
+    git fetch "$PROJECT_USERNAME" master
 
     cat<<EOF
-git merge --ff "$user_name/master"
+git merge --ff "$PROJECT_USERNAME/master"
 
 or
 
-git rebase "$user_name/master"
+git rebase "$PROJECT_USERNAME/master"
 EOF
 }
 

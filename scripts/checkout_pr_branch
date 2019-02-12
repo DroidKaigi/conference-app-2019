@@ -3,17 +3,11 @@
 set -eu
 set -o pipefail
 
-user_name="${CIRCLE_PROJECT_USERNAME:-DroidKaigi}"
-repo_name="${CIRCLE_PROJECT_REPONAME:-conference-app-2019}"
-
 get_pr() {
     local -r pr_number="$1"
 
-    # DANGER_GITHUB_API_TOKEN, GITHUB_API_TOKEN, GITHUB_ACCESS_TOKEN are supported
-    local -r gh_token="${DANGER_GITHUB_API_TOKEN:-${GITHUB_API_TOKEN:-$GITHUB_ACCESS_TOKEN}}"
-
-    curl -H "Authorization: token $gh_token" \
-        "https://api.github.com/repos/$user_name/$repo_name/pulls/$pr_number"
+    curl -H "Authorization: token $GITHUB_API_TOKEN" \
+        "https://api.github.com/repos/$PROJECT_SLUG/pulls/$pr_number"
 }
 
 get_pr_meta() {

@@ -5,5 +5,4 @@
 set -o pipefail
 set -eu
 
-CIRCLECI_API_URL="https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls/$(basename $CIRCLE_PULL_REQUEST)"
-curl -H "Authorization: token $GITHUB_TOKEN" "$CIRCLECI_API_URL" | jq '.base.ref'
+curl -H "Authorization: token $GITHUB_API_TOKEN" "https://api.github.com/repos/$PROJECT_SLUG/pulls/$PULL_REQUEST_NUMBER" | jq '.base.ref'
