@@ -42,5 +42,5 @@ export DEBUG_KEY_STORE_PASSWORD='droidkaigi'
 export RELEASE_KEY_STORE_FILE="$REPOSITORY_ROOT/.release/droidkaigi2019.keystore"
 
 # Required!
-eval $("$REPOSITORY_ROOT/scripts/setup_ci_env" u)
-eval $("$REPOSITORY_ROOT/scripts/setup_ci_env")
+eval $($REPOSITORY_ROOT/scripts/setup_ci_env u)
+eval $($REPOSITORY_ROOT/scripts/setup_ci_env)
