@@ -2,7 +2,6 @@
 
 set -eu
 
-
 source "$(dirname $0)/../bash.source"
 
 mkdir "$HOME/.bin"

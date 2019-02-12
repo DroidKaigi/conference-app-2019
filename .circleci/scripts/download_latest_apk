@@ -9,7 +9,7 @@ set -eu
 export ASSEMBLE_APK_JOB_NAME="assemble_apk"
 export PRODUCTION_BRANCH="master" # assume master is a production build
 
-CIRCLECI_API_URL="https://circleci.com/api/v1.1/project/github/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}"
+CIRCLECI_API_URL="https://circleci.com/api/v1.1/project/github/$PROJECT_SLUG"
 
 latest_build_num() {
   curl "${CIRCLECI_API_URL}?filter=completed" | \

@@ -4,14 +4,14 @@ set -eu
 set -o pipefail
 
 comment_to_github() {
-    local -r message_fd="$1" pr_number=$(basename $CI_PULL_REQUEST)
+    local -r message_fd="$1"
 
     curl -sL -X POST \
         -H "Content-type: application/json" \
         -H "Accept: application/vnd.github.v3+json" \
-        -H "Authorization: token $DANGER_GITHUB_API_TOKEN" \
+        -H "Authorization: token $GITHUB_API_TOKEN" \
         -d "$(cat $message_fd)" \
-            "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$pr_number/comments"
+            "https://api.github.com/repos/$PROJECT_SLUG/issues/$PULL_REQUEST_NUMBER/comments"
 }
 
 edit_github_comment() {
@@ -20,19 +20,17 @@ edit_github_comment() {
     curl -sL -X POST \
         -H "Content-type: application/json" \
         -H "Accept: application/vnd.github.v3+json" \
-        -H "Authorization: token $DANGER_GITHUB_API_TOKEN" \
+        -H "Authorization: token $GITHUB_API_TOKEN" \
         -d "$(cat $message_fd)" \
-            "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/comments/$comment_id"
+            "https://api.github.com/repos/$PROJECT_SLUG/issues/comments/$comment_id"
 }
 
 get_comments() {
-    local -r pr_number=$(basename $CI_PULL_REQUEST)
-
     curl -sL -X GET \
         -H "Content-type: application/json" \
         -H "Accept: application/vnd.github.v3+json" \
         -H "Authorization: token $DANGER_GITHUB_API_TOKEN" \
-            "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$pr_number/comments"
+            "https://api.github.com/repos/$PROJECT_SLUG/issues/$PULL_REQUEST_NUMBER/comments"
 }
 
 parse_comment_id() {

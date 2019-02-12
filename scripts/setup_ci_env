@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+
+set -e
+set -o pipefail
+
+exec 2> /dev/null
+
+is_travis() {
+  [[ "${TRAVIS:-false}" == "true" ]]
+}
+
+is_circleci() {
+  [[ "${CIRCLECI:-false}" == "true" ]]
+}
+
+is_otherwise() {
+  ! is_travis && ! is_circleci
+}
+
+project_slug() {
+  if is_travis; then
+    echo "$TRAVIS_REPO_SLUG"
+  elif is_circleci; then
+    echo "$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_USERNAME"
+  elif [[ "${PROJECT_SLUG:-false}" != "false" ]]; then
+    echo "$PROJECT_SLUG"
+  fi
+}
+
+project_username() {
+  dirname "$(project_slug)"
+}
+
+project_reponame() {
+  basename "$(project_slug)"
+}
+
+pr_number() {
+  if is_travis; then
+    echo "$TRAVIS_PULL_REQUEST"
+  elif is_circleci; then
+    echo "$CIRCLE_PR_NUMBER"
+  elif [[ "${PR_NUMBER:-false}" != "false" ]]; then
+    echo "$PR_NUMBER"
+  fi
+}
+
+github_api_token() {
+  echo "${DANGER_GITHUB_API_TOKEN:-${GITHUB_API_TOKEN:-${GITHUB_ACCESS_TOKEN:-${GITHUB_TOKEN:-}}}}"
+}
+
+filter="export "
+
+if [[ "${1:-x}" == "u" ]] || [[ "${1:-x}" == "unset" ]]; then
+  filter="unset "
+fi
+
+{
+
+if [[ "$(project_username)" == "" ]]; then
+  echo "unset PROJECT_USERNAME"
+else
+  echo "export PROJECT_USERNAME=\"$(project_username)\""
+fi
+
+if [[ "$(project_reponame)" == "" ]]; then
+  echo "unset PROJECT_REPONAME"
+else
+  echo "export PROJECT_REPONAME=\"$(project_reponame)\""
+fi
+
+if [[ "$(project_slug)" == "" ]]; then
+  echo "unset PROJECT_SLUG"
+else
+  echo "export PROJECT_SLUG=\"$(project_slug)\""
+fi
+
+if [[ "$(pr_number)" == "" ]]; then
+  echo "unset PULL_REQUEST_NUMBER"
+else
+  echo "export PULL_REQUEST_NUMBER=\"$(pr_number)\""
+fi
+
+if [[ "$(github_api_token)" == "" ]]; then
+  echo "unset GITHUB_API_TOKEN"
+else
+  echo "export GITHUB_API_TOKEN=\"$(github_api_token)\""
+fi
+
+} | grep "$filter"
