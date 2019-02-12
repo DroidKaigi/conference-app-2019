@@ -19,6 +19,8 @@ fi
 
 export PROJECT_SLUG="DroidKaigi/conference-app-2019"
 
+source "$REPOSITORY_ROOT/scripts/ci.env.source"
+
 export PATH="${REPOSITORY_ROOT}/scripts:$PATH"
 export PATH="${REPOSITORY_ROOT}/.circleci/scripts:$PATH"
 export AGGREGATED_TEST_RESULT_DIR="$REPOSITORY_ROOT/test-results"
@@ -40,7 +42,3 @@ export DEBUG_KEY_STORE_FILE="$REPOSITORY_ROOT/frontend/android/debug.keystore"
 export DEBUG_KEY_STORE_PASSWORD='droidkaigi'
 
 export RELEASE_KEY_STORE_FILE="$REPOSITORY_ROOT/.release/droidkaigi2019.keystore"
-
-# Required!
-eval $($REPOSITORY_ROOT/scripts/setup_ci_env u)
-eval $($REPOSITORY_ROOT/scripts/setup_ci_env)
