@@ -3,6 +3,11 @@
 set -eu
 set -o pipefail
 
+if [[ "${PULL_REQUEST_NUMBER:-false}" == "false" ]]; then
+    echo "not pull request" >&2
+    exit 0
+fi
+
 comment_to_github() {
     local -r message_fd="$1"
 
