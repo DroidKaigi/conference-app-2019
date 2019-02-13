@@ -4,6 +4,7 @@ set -eu
 set -o pipefail
 
 if ! let "$PULL_REQUEST_NUMBER > 0"; then
+    cat -
     echo "not pull request" >&2
     exit 0
 fi
