@@ -3,7 +3,7 @@
 set -eu
 set -o pipefail
 
-if [[ "${PULL_REQUEST_NUMBER:-false}" == "false" ]]; then
+if ! let "$PULL_REQUEST_NUMBER > 0"; then
     echo "not pull request" >&2
     exit 0
 fi
