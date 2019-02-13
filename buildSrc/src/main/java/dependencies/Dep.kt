@@ -75,12 +75,27 @@ object Dep {
         }
     }
 
+    val kotlinMppLibs = listOf(
+        Kotlin.coroutines,
+        Kotlin.io,
+        Kotlin.coroutinesIoJvm,
+        Kotlin.coroutinesIo,
+        Kotlin.androidCoroutinesDispatcher,
+        Kotlin.coroutinesPlayServices,
+        Kotlin.serializationCommon,
+        Ktor.clientAndroid,
+        Ktor.jsonJvm
+    )
+
     object Kotlin {
-        val version = "1.3.20"
+        val version = "1.3.21"
         val stdlibCommon = "org.jetbrains.kotlin:kotlin-stdlib-common:$version"
         val stdlibJvm = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version"
         val coroutinesVersion = "1.1.1"
         val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+        val io = "org.jetbrains.kotlinx:kotlinx-io-jvm:0.1.5"
+        val coroutinesIoJvm = "org.jetbrains.kotlinx:kotlinx-coroutines-io-jvm:0.1.5"
+        val coroutinesIo = "org.jetbrains.kotlinx:kotlinx-coroutines-io:0.1.5"
         val androidCoroutinesDispatcher =
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
         val coroutinesReactive =
@@ -198,6 +213,6 @@ object Dep {
     }
 
     object PhotoView {
-        val photoview =  "com.github.chrisbanes:PhotoView:2.3.0"
+        val photoview = "com.github.chrisbanes:PhotoView:2.3.0"
     }
 }

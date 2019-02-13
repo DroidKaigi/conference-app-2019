@@ -29,10 +29,14 @@ android {
 dependencies {
     implementation project(':frontend:android')
 
-    implementation project(':corecomponent:androidcomponent')
-    implementation project(":data:repository")
-    implementation project(":feature:system")
-    implementation project(":model")
+    implementation project(':corecomponent:androidcomponent'), excludeKotlinMPPLibs
+    implementation project(":data:repository"), excludeKotlinMPPLibs
+    implementation project(":feature:system"), excludeKotlinMPPLibs
+    implementation project(":model"), excludeKotlinMPPLibs
+
+    Dep.kotlinMppLibs.forEach {
+        implementation it, excludeKotlinMPPLibs
+    }
 
     implementation Dep.InjectedVmProvider.extension
     implementation Dep.InjectedVmProvider.injectedVmProvider
