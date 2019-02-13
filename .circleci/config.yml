@@ -129,6 +129,7 @@ jobs:
     <<: *go_defaults
     steps:
       - checkout
+      - run: *init_bash
       - run:
           name: Destroy the associated distribution by app-manage procedure.
           command: |
