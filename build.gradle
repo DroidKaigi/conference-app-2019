@@ -31,7 +31,6 @@ buildscript {
         maven { url "http://storage.googleapis.com/r8-releases/raw/master" }
     }
     dependencies {
-        classpath Dep.GradlePlugin.r8
         classpath Dep.GradlePlugin.android
         classpath Dep.GradlePlugin.kotlin
         classpath Dep.GradlePlugin.kotlinSerialization
