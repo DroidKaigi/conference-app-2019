@@ -2,7 +2,6 @@ package io.github.droidkaigi.confsched2019.session.ui.widget
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import androidx.core.content.ContextCompat
@@ -35,7 +34,7 @@ class TimetableLunchDecoration(
         context.resources.getDimension(R.dimen.tabular_form_room_label_height),
         ContextCompat.getColor(context, R.color.cell_bg_activated),
         context.getString(R.string.session_lunch),
-        Color.BLACK,
+        ContextCompat.getColor(context, R.color.colorOnBackground),
         context.resources.getDimension(R.dimen.session_item_text_size),
         context.resources.getDimension(R.dimen.session_item_padding),
         context.resources.getDimension(R.dimen.session_item_line_width),

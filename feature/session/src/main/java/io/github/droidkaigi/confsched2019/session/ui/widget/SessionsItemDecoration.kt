@@ -3,7 +3,6 @@ package io.github.droidkaigi.confsched2019.session.ui.widget
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.graphics.Paint
 import android.util.SparseArray
@@ -57,7 +56,7 @@ class SessionsItemDecoration(
     private val paint = Paint().apply {
         style = Paint.Style.FILL
         textSize = this@SessionsItemDecoration.textSize.toFloat()
-        color = Color.BLACK
+        color = ContextCompat.getColor(context, R.color.colorOnBackground)
         isAntiAlias = true
         try {
             typeface = ResourcesCompat.getFont(context, R.font.lekton)

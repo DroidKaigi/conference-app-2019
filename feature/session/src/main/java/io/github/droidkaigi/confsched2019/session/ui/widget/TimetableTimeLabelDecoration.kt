@@ -2,7 +2,6 @@ package io.github.droidkaigi.confsched2019.session.ui.widget
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.graphics.Paint
 import android.graphics.Rect
@@ -37,7 +36,7 @@ class TimetableTimeLabelDecoration(
         context.resources.getDimension(R.dimen.tabular_form_time_label_width),
         context.resources.getDimension(R.dimen.tabular_form_time_label_text_size),
         ContextCompat.getColor(context, R.color.colorBackground),
-        Color.BLACK,
+        ContextCompat.getColor(context, R.color.colorOnBackground),
         ContextCompat.getColor(context, R.color.border_on_background),
         context.resources.getDimension(R.dimen.session_bottom_sheet_left_time_line_width),
         context.resources.getDimension(R.dimen.session_bottom_sheet_left_time_line_interval),

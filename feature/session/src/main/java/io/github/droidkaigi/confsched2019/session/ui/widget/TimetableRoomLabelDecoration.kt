@@ -2,7 +2,6 @@ package io.github.droidkaigi.confsched2019.session.ui.widget
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import androidx.core.content.ContextCompat
@@ -29,7 +28,7 @@ class TimetableRoomLabelDecoration(
         context.resources.getDimension(R.dimen.tabular_form_room_label_height),
         context.resources.getDimension(R.dimen.tabular_form_room_label_text_size),
         ContextCompat.getColor(context, R.color.colorBackground),
-        Color.BLACK,
+        ContextCompat.getColor(context, R.color.colorOnBackground),
         groupAdapter
     )
 
