@@ -5,49 +5,49 @@
     <style name="TextAppearance.App.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
         <item name="android:fontFamily">@font/notosans_regular</item>
         <item name="fontFamily">@font/notosans_regular</item>
-        <item name="android:textColor">@color/gray1</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
     </style>
 
     <!-- Notosans Medium 20sp -->
     <style name="TextAppearance.App.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:fontFamily">@font/notosans_medium</item>
         <item name="fontFamily">@font/notosans_medium</item>
-        <item name="android:textColor">@color/gray1</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
     </style>
 
     <!-- Notosans Regular 16sp -->
     <style name="TextAppearance.App.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="android:fontFamily">@font/notosans_regular</item>
         <item name="fontFamily">@font/notosans_regular</item>
-        <item name="android:textColor">@color/gray1</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
     </style>
 
     <!-- Notosans Medium 14sp -->
     <style name="TextAppearance.App.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
         <item name="android:fontFamily">@font/notosans_medium</item>
         <item name="fontFamily">@font/notosans_medium</item>
-        <item name="android:textColor">@color/gray1</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
     </style>
 
     <!-- Notosans Regular 16sp -->
     <style name="TextAppearance.App.Body1" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:fontFamily">@font/notosans_regular</item>
         <item name="fontFamily">@font/notosans_regular</item>
-        <item name="android:textColor">@color/gray1</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
     </style>
 
     <!-- Notosans Regular 14sp -->
     <style name="TextAppearance.App.Body2" parent="TextAppearance.MaterialComponents.Body2">
         <item name="android:fontFamily">@font/notosans_regular</item>
         <item name="fontFamily">@font/notosans_regular</item>
-        <item name="android:textColor">@color/gray1</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
     </style>
 
     <!-- Notosans Regular 12sp -->
     <style name="TextAppearance.App.Caption" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:fontFamily">@font/notosans_regular</item>
         <item name="fontFamily">@font/notosans_regular</item>
-        <item name="android:textColor">@color/gray1</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
     </style>
 
     <!-- Lekton-Bold 24sp -->
@@ -55,7 +55,7 @@
         <item name="android:fontFamily">@font/lekton</item>
         <item name="fontFamily">@font/lekton</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/gray1</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
     </style>
 
     <!-- Lekton-Bold 16sp -->
@@ -63,21 +63,21 @@
         <item name="android:fontFamily">@font/lekton</item>
         <item name="fontFamily">@font/lekton</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/gray1</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
     </style>
 
     <!-- Lekton 16sp -->
     <style name="TextAppearance.Lekton.Body1" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:fontFamily">@font/lekton</item>
         <item name="fontFamily">@font/lekton</item>
-        <item name="android:textColor">@color/gray1</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
     </style>
 
     <!-- Lekton 12sp -->
     <style name="TextAppearance.Lekton.Caption" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:fontFamily">@font/lekton</item>
         <item name="fontFamily">@font/lekton</item>
-        <item name="android:textColor">@color/gray1</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
     </style>
 
 </resources>

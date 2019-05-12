@@ -130,6 +130,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/sessions_list_header"
             >
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/sessions_recycler"
                 android:orientation="vertical"
@@ -171,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/session_favorite_empty"
-                android:textColor="@color/gray1"
+                android:textColor="@color/colorOnSurface"
                 android:textSize="14sp"
                 />
         </LinearLayout>

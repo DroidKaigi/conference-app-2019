@@ -79,7 +79,7 @@
             android:contentDescription="@string/session_description_favorite_image"
             android:scaleType="centerInside"
             android:src="@{session.isFavorited ? @drawable/ic_bookmark_black_24dp : @drawable/ic_bookmark_border_black_24dp}"
-            android:tint="@{session.isFavorited ? @color/colorPrimary : @color/gray1}"
+            android:tint="@{session.isFavorited ? @color/colorPrimary : @color/colorOnSurface}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/title"
             app:visibleGone="@{session.sessionType.isFavoritable}"

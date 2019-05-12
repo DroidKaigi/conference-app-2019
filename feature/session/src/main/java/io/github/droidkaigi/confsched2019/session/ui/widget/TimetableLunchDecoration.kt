@@ -39,7 +39,7 @@ class TimetableLunchDecoration(
         context.resources.getDimension(R.dimen.session_item_text_size),
         context.resources.getDimension(R.dimen.session_item_padding),
         context.resources.getDimension(R.dimen.session_item_line_width),
-        ContextCompat.getColor(context, R.color.gray1),
+        ContextCompat.getColor(context, R.color.cell_vertical_line),
         context.resources.getDimension(R.dimen.session_item_content_margin_start),
         context.resources.getDimension(R.dimen.session_item_content_margin_top),
         context.resources.getDimension(R.dimen.tabular_form_px_per_minute),

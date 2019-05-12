@@ -52,7 +52,7 @@
             android:gravity="start|center_vertical"
             android:text="@{speaker.name}"
             android:textAppearance="@style/TextAppearance.Lekton.Body1"
-            android:textColor="@color/gray1"
+            android:textColor="@color/colorOnBackground"
             app:highlightText="@{query}"
             app:layout_constraintBottom_toBottomOf="@id/speaker_image"
             app:layout_constraintEnd_toEndOf="parent"

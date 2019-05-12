@@ -30,4 +30,6 @@
 
     <color name="cell_text_red">#F63529</color>
     <color name="cell_bg_red">#FEEAE9</color>
+    <color name="cell_vertical_line">@color/gray1</color>
+    <color name="cell_vertical_line_disabled">@color/gray2</color>
 </resources>
