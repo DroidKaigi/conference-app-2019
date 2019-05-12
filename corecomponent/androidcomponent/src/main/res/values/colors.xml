@@ -51,7 +51,7 @@
 
     <color name="empty_icon_on_bg">@color/gray3</color>
     <color name="border_on_bg">@color/gray3</color>
-    <color name="selected_bg">@color/gray2</color>
+    <color name="selected_bg">@color/gray4</color>
 
     <color name="highlight_text_bg">#80E6650F</color>
 </resources>
