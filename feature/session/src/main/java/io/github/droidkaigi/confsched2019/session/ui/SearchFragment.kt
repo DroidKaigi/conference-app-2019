@@ -235,6 +235,7 @@ class StickyHeaderItemDecoration(
             isAntiAlias = true
             textSize = resource.getDimension(R.dimen.sticky_label_font_size)
             textAlign = Paint.Align.LEFT
+            color = ContextCompat.getColor(context, R.color.colorOnBackground)
         }
 
         fontMetrics = textPaint.fontMetrics
