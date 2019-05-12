@@ -73,6 +73,9 @@
             android:layout_gravity="start"
             android:background="@color/colorBackground"
             app:headerLayout="@layout/layout_navigation_header"
+            app:itemBackground="@drawable/menu_bg_color"
+            app:itemIconTint="@color/menu_text_color"
+            app:itemTextColor="@color/menu_text_color"
             app:menu="@menu/menu_nav_drawer"
             >
 

@@ -46,4 +46,5 @@
 
     <color name="empty_icon_on_background">@color/gray3</color>
     <color name="border_on_background">@color/gray3</color>
+    <color name="selected_background">@color/gray2</color>
 </resources>

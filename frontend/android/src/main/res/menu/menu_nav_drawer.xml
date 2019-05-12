@@ -13,7 +13,7 @@
     </group>
     <group
         android:id="@+id/features"
-        android:checkableBehavior="none"
+        android:checkableBehavior="single"
         >
         <item
             android:id="@id/about"
@@ -33,7 +33,7 @@
     </group>
     <group
         android:id="@+id/info"
-        android:checkableBehavior="none"
+        android:checkableBehavior="single"
         >
         <item
             android:id="@id/sponsor"
@@ -44,7 +44,8 @@
         <item
             android:id="@+id/contributor"
             android:icon="@drawable/ic_contributor_outline_24dp"
-            android:title="@string/contributor"/>
+            android:title="@string/contributor"
+            />
 
         <!-- TODO If we can create item, we should uncomment it -->
         <!--<item-->
