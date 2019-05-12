@@ -16,6 +16,7 @@
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:listDivider">@color/border_on_background</item>
 
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="searchViewStyle">@style/SearchViewStyle</item>
