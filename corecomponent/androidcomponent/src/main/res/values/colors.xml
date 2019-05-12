@@ -6,6 +6,9 @@
     <color name="colorPrimaryDark">#A81F20</color>
     <color name="colorSecondary">#E6650F</color>
     <color name="colorSecondary_50">#80E6650F</color>
+    <color name="colorBackground">@color/white</color>
+    <color name="colorOnBackground">@color/gray1</color>
+    <color name="colorSurface">@color/white</color>
     <color name="colorOnSurface">@color/gray1</color>
 
     <!-- Gray scale -->

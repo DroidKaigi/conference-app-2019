@@ -25,7 +25,7 @@ class StatusBarColorManager {
     private val drawerIsOpened: Boolean
         get() = drawerSlideOffset >= DRAWER_OFFSET_OPEN_THRESHOLD
 
-    var isWhiteTheme: Boolean = false
+    var isBrandTheme: Boolean = false
         set(value) {
             if (field != value) {
                 field = value
@@ -50,14 +50,14 @@ class StatusBarColorManager {
         // | Yes         | Black/Invisible | Black/Invisible |
 
         // Icon color: change based on theme with View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        _systemUiVisibility.value = if (isWhiteTheme) {
-            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        } else {
+        _systemUiVisibility.value = if (isBrandTheme) {
             0
+        } else {
+            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
 
         // Status bar color
-        _statusBarColor.value = if (!isWhiteTheme && drawerIsOpened) {
+        _statusBarColor.value = if (isBrandTheme && drawerIsOpened) {
             COLOR_STATUS_BAR_VISIBLE
         } else {
             COLOR_STATUS_BAR_INVISIBLE
@@ -74,7 +74,7 @@ class StatusBarColorManager {
         // Icon color: can not change. Always white
 
         // Status bar color
-        _statusBarColor.value = if (isWhiteTheme || drawerIsOpened) {
+        _statusBarColor.value = if (!isBrandTheme || drawerIsOpened) {
             COLOR_STATUS_BAR_VISIBLE
         } else {
             COLOR_STATUS_BAR_INVISIBLE

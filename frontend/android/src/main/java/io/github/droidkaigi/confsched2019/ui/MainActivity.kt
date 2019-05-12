@@ -126,8 +126,10 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     private fun setupNavigation() {
-        val topLevelDestinationIds = setOf(R.id.main, R.id.about, R.id.announce, R.id.setting,
-            R.id.floormap, R.id.sponsor, R.id.contributor)
+        val topLevelDestinationIds = setOf(
+            R.id.main, R.id.about, R.id.announce, R.id.setting,
+            R.id.floormap, R.id.sponsor, R.id.contributor
+        )
         val appBarConfiguration = AppBarConfiguration(
             topLevelDestinationIds,
             binding.drawerLayout
@@ -160,15 +162,15 @@ class MainActivity : DaggerAppCompatActivity() {
             } else {
                 supportActionBar?.show()
             }
-            binding.isWhiteTheme = config.isWhiteTheme
-            statusBarColors.isWhiteTheme = config.isWhiteTheme
+            binding.isBrandTheme = config.isBrandTheme
+            statusBarColors.isBrandTheme = config.isBrandTheme
             if (destination.id in topLevelDestinationIds) {
                 binding.toolbar.setNavigationIcon(R.drawable.ic_hamburger)
             } else {
                 binding.toolbar.setNavigationIcon(R.drawable.ic_back_arrow)
             }
             val toolbarContentsColor = ContextCompat.getColor(
-                this, if (config.isWhiteTheme) android.R.color.black else R.color.white
+                this, if (config.isBrandTheme) R.color.colorOnPrimary else R.color.gray1
             )
             binding.toolbar.navigationIcon?.setColorFilter(
                 toolbarContentsColor,
