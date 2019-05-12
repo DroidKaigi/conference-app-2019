@@ -7,14 +7,14 @@
         android:id="@+id/session_share"
         android:icon="@drawable/ic_share_outline_black_24dp"
         android:title="@string/session_share"
-        app:iconTint="@color/gray2"
+        app:iconTint="@color/colorOnSurfaceSecondary"
         app:showAsAction="ifRoom"
         />
     <item
         android:id="@+id/session_place"
         android:icon="@drawable/ic_room_outline_black_24dp"
         android:title="@string/session_place"
-        app:iconTint="@color/gray2"
+        app:iconTint="@color/colorOnSurfaceSecondary"
         app:showAsAction="ifRoom"
         />
 
@@ -22,7 +22,7 @@
         android:id="@+id/session_calendar"
         android:icon="@drawable/ic_date_range_black_24dp"
         android:title="@string/session_place"
-        app:iconTint="@color/gray2"
+        app:iconTint="@color/colorOnSurfaceSecondary"
         app:showAsAction="ifRoom"
         />
 

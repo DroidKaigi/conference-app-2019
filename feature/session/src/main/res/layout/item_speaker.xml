@@ -40,7 +40,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:placeHolder="@{@drawable/ic_person_outline_black_24dp}"
-            app:placeHolderTint="@{@color/gray2}"
+            app:placeHolderTint="@{@color/colorOnBackgroundSecondary}"
             tools:src="@tools:sample/avatars"
             />
 

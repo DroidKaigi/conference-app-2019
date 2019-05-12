@@ -112,7 +112,7 @@ class TabularSpeechSessionItem @AssistedInject constructor(
                     null
                 )?.apply {
                     setTint(
-                        ContextCompat.getColor(context, R.color.gray2)
+                        ContextCompat.getColor(context, R.color.colorOnBackgroundSecondary)
                     )
                 }
 

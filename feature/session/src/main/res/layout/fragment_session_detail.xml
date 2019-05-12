@@ -145,7 +145,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:contentDescription="@string/session_description_time_image"
-                    android:tint="@color/gray2"
+                    android:tint="@color/colorOnBackgroundSecondary"
                     app:layout_constraintStart_toStartOf="@id/session_time_and_room"
                     app:layout_constraintTop_toBottomOf="@id/session_time_and_room"
                     app:srcCompat="@drawable/ic_access_time_black_24dp"

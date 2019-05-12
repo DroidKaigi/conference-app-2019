@@ -8,8 +8,10 @@
     <color name="colorSecondary_50">#80E6650F</color>
     <color name="colorBackground">@color/white</color>
     <color name="colorOnBackground">@color/gray1</color>
+    <color name="colorOnBackgroundSecondary">@color/gray2</color>
     <color name="colorSurface">@color/white</color>
     <color name="colorOnSurface">@color/gray1</color>
+    <color name="colorOnSurfaceSecondary">@color/gray2</color>
 
     <!-- Gray scale -->
     <color name="gray1">#353435</color>
@@ -27,6 +29,10 @@
     <color name="tag_bg_green">#C1EBDD</color>
     <color name="tag_text_gray">@color/gray1</color>
     <color name="tag_bg_gray">#E5E8EA</color>
+
+    <color name="filter_text_gray">@color/gray2</color>
+    <color name="filter_icon_gray">@color/gray3</color>
+    <color name="filter_bg_gray">@color/gray4</color>
 
     <color name="cell_text_red">#F63529</color>
     <color name="cell_bg_red">#FEEAE9</color>

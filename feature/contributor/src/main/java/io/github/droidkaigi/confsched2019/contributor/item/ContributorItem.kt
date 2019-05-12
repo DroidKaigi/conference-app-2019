@@ -7,10 +7,10 @@ import com.squareup.inject.assisted.AssistedInject
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.databinding.BindableItem
 import io.github.droidkaigi.confsched2019.contributor.R
+import io.github.droidkaigi.confsched2019.contributor.databinding.ItemContributorBinding
 import io.github.droidkaigi.confsched2019.model.Contributor
 import io.github.droidkaigi.confsched2019.system.actioncreator.ActivityActionCreator
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
-import io.github.droidkaigi.confsched2019.contributor.databinding.ItemContributorBinding
 
 class ContributorItem @AssistedInject constructor(
     @Assisted val contributor: Contributor,
@@ -41,7 +41,7 @@ class ContributorItem @AssistedInject constructor(
 
         val placeHolderColor = ContextCompat.getColor(
             context,
-            R.color.gray2
+            R.color.colorOnBackgroundSecondary
         )
         val placeHolder = VectorDrawableCompat.create(
             context.resources,

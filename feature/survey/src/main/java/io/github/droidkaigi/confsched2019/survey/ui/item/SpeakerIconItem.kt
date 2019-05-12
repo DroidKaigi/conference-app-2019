@@ -20,7 +20,7 @@ class SpeakerIconItem constructor(
         val context = itemBinding.icon.context
         val placeHolderColor = ContextCompat.getColor(
             context,
-            R.color.gray2
+            R.color.colorOnBackgroundSecondary
         )
         val placeHolder = VectorDrawableCompat.create(
             context.resources,
