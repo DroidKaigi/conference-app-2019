@@ -6,7 +6,7 @@
             android:shape="rectangle"
             >
             <solid
-                android:color="@color/colorPrimary"
+                android:color="@color/colorBrandBackground"
                 />
         </shape>
 

@@ -14,6 +14,7 @@
         <item name="colorOnSurface">@color/colorOnSurface</item>
         <item name="colorOnBackground">@color/colorOnBackground</item>
         <item name="colorControlHighlight">@color/ripple</item>
+        <item name="colorControlNormal">@color/colorOnBackgroundSecondary</item>
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowBackground">@color/colorBackground</item>
