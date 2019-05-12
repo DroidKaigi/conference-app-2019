@@ -9,7 +9,7 @@
                 android:topRightRadius="28dp"
                 />
             <solid
-                android:color="@color/colorPrimary"
+                android:color="@color/colorBrand"
                 />
         </shape>
     </item>
