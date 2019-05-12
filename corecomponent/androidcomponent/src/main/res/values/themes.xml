@@ -21,6 +21,7 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="searchViewStyle">@style/SearchViewStyle</item>
         <item name="filterChipStyle">@style/Widget.App.FilterChip</item>
+        <item name="toolbarNavigationButtonStyle">@style/Toolbar.Button.Navigation.Tinted</item>
 
         <!-- see https://github.com/material-components/material-components-android/blob/2997b6995f32bbd7f7a4f24f4030278a50c15e6f/docs/theming/Typography.md -->
         <item name="textAppearanceHeadline5">@style/TextAppearance.App.Headline5</item>

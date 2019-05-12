@@ -14,4 +14,8 @@
         <item name="dotSize">10dp</item>
         <item name="dotPadding">7dp</item>
     </style>
+
+    <style name="Toolbar.Button.Navigation.Tinted" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="tint">@color/colorOnPrimary</item>
+    </style>
 </resources>
