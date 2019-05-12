@@ -29,10 +29,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="?android:attr/selectableItemBackground"
-        android:paddingTop="@dimen/session_item_top_padding"
         android:paddingBottom="@dimen/session_item_bottom_padding"
         android:paddingEnd="0dp"
         android:paddingStart="@{hasStartPadding ? @dimen/session_bottom_sheet_left_time_space : 0}"
+        android:paddingTop="@dimen/session_item_top_padding"
         >
 
         <TextView
@@ -40,19 +40,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:background="@drawable/shape_ongoing"
             android:fontFamily="@font/robotomono_medium"
+            android:paddingBottom="2dp"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            android:paddingTop="2dp"
             android:text="@string/session_ongoing"
             android:textAllCaps="true"
-            android:background="@drawable/shape_ongoing"
-            android:textColor="@color/white"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
+            android:textColor="@color/colorOnPrimary"
             android:textSize="10sp"
-            app:visibleGone="@{session.isOnGoing}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:visibleGone="@{session.isOnGoing}"
             tools:ignore="SmallSp"
             />
 
@@ -80,9 +80,9 @@
             android:scaleType="centerInside"
             android:src="@{session.isFavorited ? @drawable/ic_bookmark_black_24dp : @drawable/ic_bookmark_border_black_24dp}"
             android:tint="@{session.isFavorited ? @color/colorPrimary : @color/gray1}"
-            app:visibleGone="@{session.sessionType.isFavoritable}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/title"
+            app:visibleGone="@{session.sessionType.isFavoritable}"
             />
 
         <TextView

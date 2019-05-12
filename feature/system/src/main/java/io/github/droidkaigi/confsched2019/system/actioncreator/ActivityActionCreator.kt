@@ -27,7 +27,7 @@ class ActivityActionCreator @Inject constructor(
         val customTabsIntent = CustomTabsIntent.Builder()
             .setShowTitle(true)
             .enableUrlBarHiding()
-            .setToolbarColor(ContextCompat.getColor(activity, R.color.white))
+            .setToolbarColor(ContextCompat.getColor(activity, R.color.colorBackground))
             .build()
 
         // block to multiple launch a Activity

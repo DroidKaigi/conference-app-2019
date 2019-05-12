@@ -53,7 +53,7 @@
             android:paddingTop="2dp"
             android:text="@string/session_ongoing"
             android:textAllCaps="true"
-            android:textColor="@color/white"
+            android:textColor="@color/colorOnPrimary"
             android:textSize="10sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

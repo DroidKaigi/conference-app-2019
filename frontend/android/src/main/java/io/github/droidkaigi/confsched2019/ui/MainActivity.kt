@@ -1,7 +1,6 @@
 package io.github.droidkaigi.confsched2019.ui
 
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.MenuItem
@@ -149,7 +148,12 @@ class MainActivity : DaggerAppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.root_nav_host_fragment)?.let { host ->
                 val current = host.childFragmentManager.primaryNavigationFragment
                 if (current !is SessionPagesFragment) {
-                    current?.view?.setBackgroundColor(Color.WHITE)
+                    current?.view?.setBackgroundColor(
+                        ContextCompat.getColor(
+                            this,
+                            R.color.colorBackground
+                        )
+                    )
                 }
             }
 

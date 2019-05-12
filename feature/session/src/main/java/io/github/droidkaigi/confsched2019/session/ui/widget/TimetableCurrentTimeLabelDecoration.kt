@@ -2,11 +2,11 @@ package io.github.droidkaigi.confsched2019.session.ui.widget
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.CornerPathEffect
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.Rect
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.soywiz.klock.DateFormat
 import com.soywiz.klock.DateTimeTz
@@ -25,7 +25,7 @@ class TimetableCurrentTimeLabelDecoration(
         context.resources.getDimension(R.dimen.tabular_form_current_time_label_padding)
     private val labelTextSize =
         context.resources.getDimension(R.dimen.tabular_form_time_label_text_size)
-    private val labelTextColor = Color.WHITE
+    private val labelTextColor = ContextCompat.getColor(context, R.color.colorOnPrimary)
 
     private val textStartX = labelWidth + labelPadding * 2
 
@@ -58,6 +58,7 @@ class TimetableCurrentTimeLabelDecoration(
             return time + 10_000 > currentTime
         }
     }
+
     private var timeTextCache: TimeText? = null
 
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
@@ -85,14 +86,22 @@ class TimetableCurrentTimeLabelDecoration(
 
         val path = Path().apply {
             moveTo(labelWidth, height)
-            lineTo(labelWidth + labelPadding,
-                height - textHeightHalf - labelPadding)
-            lineTo(textStartX + textWidth + labelPadding * 2,
-                height - textHeightHalf - labelPadding)
-            lineTo(textStartX + textWidth + labelPadding * 2,
-                height + textHeightHalf + labelPadding)
-            lineTo(labelWidth + labelPadding,
-                height + textHeightHalf + labelPadding)
+            lineTo(
+                labelWidth + labelPadding,
+                height - textHeightHalf - labelPadding
+            )
+            lineTo(
+                textStartX + textWidth + labelPadding * 2,
+                height - textHeightHalf - labelPadding
+            )
+            lineTo(
+                textStartX + textWidth + labelPadding * 2,
+                height + textHeightHalf + labelPadding
+            )
+            lineTo(
+                labelWidth + labelPadding,
+                height + textHeightHalf + labelPadding
+            )
             lineTo(labelWidth, height)
         }
         c.drawPath(path, textBackgroundPaint)

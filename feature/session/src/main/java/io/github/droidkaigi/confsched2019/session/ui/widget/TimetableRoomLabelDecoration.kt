@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
+import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupAdapter
@@ -27,7 +28,7 @@ class TimetableRoomLabelDecoration(
         context.resources.getDimensionPixelOffset(R.dimen.tabular_form_column_width),
         context.resources.getDimension(R.dimen.tabular_form_room_label_height),
         context.resources.getDimension(R.dimen.tabular_form_room_label_text_size),
-        Color.WHITE,
+        ContextCompat.getColor(context, R.color.colorBackground),
         Color.BLACK,
         groupAdapter
     )

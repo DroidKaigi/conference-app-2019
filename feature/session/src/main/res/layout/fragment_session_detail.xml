@@ -70,7 +70,7 @@
                 android:id="@+id/content_parent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/white"
+                android:background="@color/colorBackground"
                 android:fitsSystemWindows="false"
                 android:minHeight="?attr/actionBarSize"
                 app:layoutDescription="@xml/motion_session_detail"
@@ -571,7 +571,7 @@
             android:src="@{session.isFavorited? @drawable/ic_bookmark_black_24dp : @drawable/ic_bookmark_border_black_24dp}"
             app:backgroundTint="@color/colorPrimary"
             app:layout_anchor="@id/bottom_app_bar"
-            app:tint="@color/white"
+            app:tint="@color/colorOnPrimary"
             />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

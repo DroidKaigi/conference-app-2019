@@ -36,7 +36,7 @@ class TimetableTimeLabelDecoration(
     constructor(context: Context, groupAdapter: GroupAdapter<*>) : this(
         context.resources.getDimension(R.dimen.tabular_form_time_label_width),
         context.resources.getDimension(R.dimen.tabular_form_time_label_text_size),
-        Color.WHITE,
+        ContextCompat.getColor(context, R.color.colorBackground),
         Color.BLACK,
         ContextCompat.getColor(context, R.color.gray3),
         context.resources.getDimension(R.dimen.session_bottom_sheet_left_time_line_width),
