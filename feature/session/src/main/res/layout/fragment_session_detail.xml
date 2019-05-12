@@ -74,8 +74,8 @@
                 android:fitsSystemWindows="false"
                 android:minHeight="?attr/actionBarSize"
                 app:layoutDescription="@xml/motion_session_detail"
-                app:progress="0"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:progress="0"
                 >
 
                 <androidx.appcompat.widget.Toolbar
@@ -327,8 +327,8 @@
                         android:gravity="center_vertical|start"
                         android:text="@{speechSession.lang.text.getByLang(lang)}"
                         android:textAppearance="@style/TextAppearance.App.Body1"
-                        android:textColor="@{speechSession.lang.equals(Lang.EN)?@color/session_en_talk_text:@color/session_ja_talk_text}"
-                        app:chipBackgroundColor="@{speechSession.lang.equals(Lang.EN)?@color/session_en_talk_background:@color/session_ja_talk_background}"
+                        android:textColor="@{speechSession.lang.equals(Lang.EN)?@color/tag_text_red:@color/tag_text_blue}"
+                        app:chipBackgroundColor="@{speechSession.lang.equals(Lang.EN)?@color/tag_bg_red:@color/tag_bg_blue}"
                         app:chipMinTouchTargetSize="0dp"
                         app:visibleGone="@{speechSession != null}"
                         tools:text="Japanese"
@@ -345,8 +345,8 @@
                         android:gravity="center_vertical|start"
                         android:text="@string/session_simultaneous_interpretation"
                         android:textAppearance="@style/TextAppearance.App.Body1"
-                        android:textColor="@color/gray1"
-                        app:chipBackgroundColor="@color/session_category_background"
+                        android:textColor="@color/tag_text_gray"
+                        app:chipBackgroundColor="@color/tag_bg_gray"
                         app:chipMinTouchTargetSize="0dp"
                         app:visibleGone="@{speechSession.isInterpretationTarget}"
                         />
@@ -362,8 +362,8 @@
                         android:gravity="center_vertical|start"
                         android:text="@string/session_for_beginners"
                         android:textAppearance="@style/TextAppearance.App.Body1"
-                        android:textColor="@color/session_for_beginners_text"
-                        app:chipBackgroundColor="@color/session_for_beginners_background"
+                        android:textColor="@color/tag_text_green"
+                        app:chipBackgroundColor="@color/tag_bg_green"
                         app:chipMinTouchTargetSize="0dp"
                         app:visibleGone="@{speechSession.forBeginners}"
                         />
@@ -378,8 +378,8 @@
                         android:focusable="false"
                         android:gravity="center_vertical|start"
                         android:textAppearance="@style/TextAppearance.App.Body1"
-                        android:textColor="@color/gray1"
-                        app:chipBackgroundColor="@color/session_category_background"
+                        android:textColor="@color/tag_text_gray"
+                        app:chipBackgroundColor="@color/tag_bg_gray"
                         app:chipMinTouchTargetSize="0dp"
                         app:visibleGone="@{speechSession != null}"
                         tools:text="ソフトウェアアーキテクチャ"

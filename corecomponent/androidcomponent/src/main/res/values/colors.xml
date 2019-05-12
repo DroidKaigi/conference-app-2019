@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Theme -->
     <color name="colorPrimary">#F63529</color>
+    <color name="colorOnPrimary">@color/white</color>
     <color name="colorPrimaryDark">#A81F20</color>
     <color name="colorSecondary">#E6650F</color>
     <color name="colorSecondary_50">#80E6650F</color>
-    <color name="gray1">#353435</color>
-    <color name="gray2">#95959c</color>
-    <color name="gray3">#d8d7dc</color>
-    <color name="gray4">#f4f4f4</color>
-    <color name="red1">#f63529</color>
-    <color name="red2">#FDD7D4</color>
-    <color name="blue1">#190089</color>
-    <color name="blue2">#E8E6F3</color>
+    <color name="colorOnSurface">@color/gray1</color>
 
+    <!-- Gray scale -->
+    <color name="gray1">#353435</color>
+    <color name="gray2">#95959C</color>
+    <color name="gray3">#D8D7DC</color>
+    <color name="gray4">#F4F4F4</color>
     <color name="white">#FFFFFF</color>
+
+    <!-- Components -->
+    <color name="tag_text_red">#F63529</color>
+    <color name="tag_bg_red">#FDD7D4</color>
+    <color name="tag_text_blue">#190089</color>
+    <color name="tag_bg_blue">#E8E6F3</color>
+    <color name="tag_text_green">#00BE80</color>
+    <color name="tag_bg_green">#C1EBDD</color>
+    <color name="tag_text_gray">@color/gray1</color>
+    <color name="tag_bg_gray">#E5E8EA</color>
+
+    <color name="cell_text_red">#F63529</color>
+    <color name="cell_bg_red">#FEEAE9</color>
 </resources>

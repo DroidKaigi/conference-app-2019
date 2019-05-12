@@ -54,14 +54,14 @@ class TabularServiceSessionItem @AssistedInject constructor(
                 backgroundView.setBackgroundColor(
                     ContextCompat.getColor(
                         root.context,
-                        R.color.tabular_session_favoried_background
+                        R.color.cell_bg_red
                     )
                 )
                 verticalLineView.setBackgroundColor(
-                    ContextCompat.getColor(root.context, R.color.red1)
+                    ContextCompat.getColor(root.context, R.color.cell_text_red)
                 )
                 sessionTitle.setTextColor(
-                    ContextCompat.getColor(root.context, R.color.red1)
+                    ContextCompat.getColor(root.context, R.color.cell_text_red)
                 )
             } else {
                 backgroundView.setBackgroundResource(R.drawable.bg_item_tabular)
