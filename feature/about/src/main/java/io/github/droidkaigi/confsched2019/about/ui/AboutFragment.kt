@@ -101,7 +101,7 @@ class AboutFragment : DaggerFragment() {
             addItemDecoration(
                 DottedItemDecoration.from(
                     context = context,
-                    colorRes = R.color.border_on_background,
+                    colorRes = R.color.border_on_bg,
                     paddingLeftRes = R.dimen.divider_padding,
                     paddingRightRes = R.dimen.divider_padding,
                     widthRes = R.dimen.divider_width,

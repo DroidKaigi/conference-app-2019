@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackgroundBrand"
+        android:background="@color/colorBrandBackground"
         tools:context="io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment"
         >
 
@@ -17,7 +17,7 @@
             style="@style/Widget.MaterialComponents.TabLayout.Colored"
             android:layout_width="0dp"
             android:layout_height="56dp"
-            android:background="@color/colorBackgroundBrand"
+            android:background="@color/colorBrandBackground"
             android:paddingBottom="16dp"
             android:tabStripEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"

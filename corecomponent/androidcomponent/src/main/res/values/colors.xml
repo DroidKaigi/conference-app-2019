@@ -2,16 +2,16 @@
 <resources>
     <!-- Theme -->
     <color name="colorBrand">#F63529</color>
+    <color name="colorOnBrand">@color/white</color>
     <color name="colorPrimary">#F63529</color>
     <color name="colorOnPrimary">@color/white</color>
     <color name="colorPrimaryDark">#A81F20</color>
     <color name="colorSecondary">#E6650F</color>
-    <color name="colorSecondary_50">#80E6650F</color>
     <color name="colorBackground">@color/white</color>
     <color name="colorOnBackground">@color/gray1</color>
-    <color name="colorBackgroundBrand">@color/colorPrimary</color>
     <color name="colorOnBackgroundSecondary">@color/gray2</color>
-    <color name="colorOnBackgroundBrand">@color/white</color>
+    <color name="colorBrandBackground">@color/colorPrimary</color>
+    <color name="colorOnBrandBackground">@color/white</color>
     <color name="colorSurface">@color/white</color>
     <color name="colorOnSurface">@color/gray1</color>
     <color name="colorOnSurfaceSecondary">@color/gray2</color>
@@ -49,7 +49,9 @@
     <color name="session_dashed_line">@color/gray3</color>
     <color name="session_date_title">@color/gray3</color>
 
-    <color name="empty_icon_on_background">@color/gray3</color>
-    <color name="border_on_background">@color/gray3</color>
-    <color name="selected_background">@color/gray2</color>
+    <color name="empty_icon_on_bg">@color/gray3</color>
+    <color name="border_on_bg">@color/gray3</color>
+    <color name="selected_bg">@color/gray2</color>
+
+    <color name="highlight_text_bg">#80E6650F</color>
 </resources>

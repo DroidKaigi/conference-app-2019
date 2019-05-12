@@ -20,9 +20,9 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@{isBrandTheme ? Converters.convertColorToDrawable(@color/colorBackgroundBrand) : Converters.convertColorToDrawable(@color/colorBackground)}"
+        android:background="@{isBrandTheme ? Converters.convertColorToDrawable(@color/colorBrandBackground) : Converters.convertColorToDrawable(@color/colorBackground)}"
         android:fitsSystemWindows="true"
-        app:statusBarBackground="@{isBrandTheme ? Converters.convertColorToDrawable(@color/colorBackgroundBrand) : Converters.convertColorToDrawable(@color/colorBackground)}"
+        app:statusBarBackground="@{isBrandTheme ? Converters.convertColorToDrawable(@color/colorBrandBackground) : Converters.convertColorToDrawable(@color/colorBackground)}"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +34,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@{isBrandTheme ? Converters.convertColorToDrawable(@color/colorBackgroundBrand) : Converters.convertColorToDrawable(@color/colorBackground)}"
+                android:background="@{isBrandTheme ? Converters.convertColorToDrawable(@color/colorBrandBackground) : Converters.convertColorToDrawable(@color/colorBackground)}"
                 android:elevation="0dp"
                 android:theme="@style/Widget.App.Toolbar"
                 app:contentInsetStartWithNavigation="0dp"

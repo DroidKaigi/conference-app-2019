@@ -9,7 +9,7 @@
         android:id="@+id/filter_coodinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackgroundBrand"
+        android:background="@color/colorBrandBackground"
         tools:context="io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment"
         >
 
@@ -34,7 +34,7 @@
                     android:layout_marginTop="44dp"
                     android:text="@string/session_filter_title"
                     android:textAppearance="?textAppearanceHeadline5"
-                    android:textColor="@color/colorOnPrimary"
+                    android:textColor="@color/colorOnBrandBackground"
                     app:layout_constraintEnd_toStartOf="@id/sessions_filter_reset"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +49,7 @@
                     android:gravity="center_vertical|start"
                     android:text="@string/session_filter_reset"
                     android:textAppearance="?textAppearanceSubtitle1"
-                    android:textColor="@color/colorOnBackgroundBrand"
+                    android:textColor="@color/colorOnBrandBackground"
                     app:chipBackgroundColor="@color/filter_bg_reset"
                     app:layout_constraintBottom_toBottomOf="@id/sessions_filter_title"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +64,7 @@
                     android:fontFamily="@font/lekton"
                     android:text="@string/session_filter_room"
                     android:textAppearance="?textAppearanceSubtitle1"
-                    android:textColor="@color/colorOnPrimary"
+                    android:textColor="@color/colorOnBrandBackground"
                     app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
                     app:layout_constraintTop_toBottomOf="@id/sessions_filter_title"
                     />
@@ -88,7 +88,7 @@
                     android:fontFamily="@font/lekton"
                     android:text="@string/session_filter_language"
                     android:textAppearance="?textAppearanceSubtitle1"
-                    android:textColor="@color/colorOnPrimary"
+                    android:textColor="@color/colorOnBrandBackground"
                     app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
                     app:layout_constraintTop_toBottomOf="@id/sessions_filter_room_chip"
                     />
@@ -112,7 +112,7 @@
                     android:fontFamily="@font/lekton"
                     android:text="@string/session_filter_language_support"
                     android:textAppearance="?textAppearanceSubtitle1"
-                    android:textColor="@color/colorOnPrimary"
+                    android:textColor="@color/colorOnBrandBackground"
                     app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
                     app:layout_constraintTop_toBottomOf="@id/sessions_filter_lang_chip"
                     />
@@ -136,7 +136,7 @@
                     android:fontFamily="@font/lekton"
                     android:text="@string/session_filter_audience_category"
                     android:textAppearance="?textAppearanceSubtitle1"
-                    android:textColor="@color/colorOnPrimary"
+                    android:textColor="@color/colorOnBrandBackground"
                     app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
                     app:layout_constraintTop_toBottomOf="@id/sessions_filter_lang_support_chip"
                     />
@@ -160,7 +160,7 @@
                     android:fontFamily="@font/lekton"
                     android:text="@string/session_filter_category"
                     android:textAppearance="?textAppearanceSubtitle1"
-                    android:textColor="@color/colorOnPrimary"
+                    android:textColor="@color/colorOnBrandBackground"
                     app:layout_constraintStart_toStartOf="@id/sessions_filter_title"
                     app:layout_constraintTop_toBottomOf="@id/sessions_filter_audience_category_chip"
                     />

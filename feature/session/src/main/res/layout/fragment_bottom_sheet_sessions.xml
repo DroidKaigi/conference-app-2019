@@ -162,7 +162,7 @@
                 android:contentDescription="@string/session_description_favorite_image"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_bookmark_black_24dp"
-                android:tint="@color/empty_icon_on_background"
+                android:tint="@color/empty_icon_on_bg"
                 app:layout_constraintBottom_toTopOf="@+id/sessions_empty_state_text"
                 />
 

@@ -174,7 +174,8 @@ class MainActivity : DaggerAppCompatActivity() {
                 binding.toolbar.setNavigationIcon(R.drawable.ic_back_arrow)
             }
             val toolbarContentsColor = ContextCompat.getColor(
-                this, if (config.isBrandTheme) R.color.colorOnPrimary else R.color.colorOnBackground
+                this,
+                if (config.isBrandTheme) R.color.colorOnBrandBackground else R.color.colorOnBackground
             )
             binding.toolbar.navigationIcon?.setColorFilter(
                 toolbarContentsColor,
