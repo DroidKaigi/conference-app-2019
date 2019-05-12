@@ -68,7 +68,7 @@ class SessionsItemDecoration(
 
     private val dashLinePaint = Paint().apply {
         style = Paint.Style.STROKE
-        color = ContextCompat.getColor(context, R.color.gray3)
+        color = ContextCompat.getColor(context, R.color.border_on_background)
         strokeWidth = resources.getDimensionPixelSize(
             R.dimen.session_bottom_sheet_left_time_line_width
         ).toFloat()

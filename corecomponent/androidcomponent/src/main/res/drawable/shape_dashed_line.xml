@@ -4,8 +4,8 @@
     android:shape="line"
     >
     <stroke
-        android:color="@color/gray3"
         android:width="1dp"
+        android:color="@color/session_dashed_line"
         android:dashGap="3dp"
         android:dashWidth="3dp"
         />

@@ -33,7 +33,7 @@ class TimetableLunchDecoration(
     constructor(context: Context, groupAdapter: GroupAdapter<*>) : this(
         context.resources.getDimension(R.dimen.tabular_form_time_label_width),
         context.resources.getDimension(R.dimen.tabular_form_room_label_height),
-        ContextCompat.getColor(context, R.color.gray4),
+        ContextCompat.getColor(context, R.color.cell_bg_activated),
         context.getString(R.string.session_lunch),
         Color.BLACK,
         context.resources.getDimension(R.dimen.session_item_text_size),

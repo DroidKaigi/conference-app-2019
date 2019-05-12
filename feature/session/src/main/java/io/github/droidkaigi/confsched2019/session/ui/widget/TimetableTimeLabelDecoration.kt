@@ -38,7 +38,7 @@ class TimetableTimeLabelDecoration(
         context.resources.getDimension(R.dimen.tabular_form_time_label_text_size),
         ContextCompat.getColor(context, R.color.colorBackground),
         Color.BLACK,
-        ContextCompat.getColor(context, R.color.gray3),
+        ContextCompat.getColor(context, R.color.border_on_background),
         context.resources.getDimension(R.dimen.session_bottom_sheet_left_time_line_width),
         context.resources.getDimension(R.dimen.session_bottom_sheet_left_time_line_interval),
         context.resources.getDimensionPixelSize(R.dimen.tabular_form_px_per_minute),
