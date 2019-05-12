@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Theme -->
+    <color name="colorBrand">#F63529</color>
     <color name="colorPrimary">#F63529</color>
     <color name="colorOnPrimary">@color/white</color>
     <color name="colorPrimaryDark">#A81F20</color>
@@ -8,7 +9,9 @@
     <color name="colorSecondary_50">#80E6650F</color>
     <color name="colorBackground">@color/white</color>
     <color name="colorOnBackground">@color/gray1</color>
+    <color name="colorBackgroundBrand">@color/colorPrimary</color>
     <color name="colorOnBackgroundSecondary">@color/gray2</color>
+    <color name="colorOnBackgroundBrand">@color/white</color>
     <color name="colorSurface">@color/white</color>
     <color name="colorOnSurface">@color/gray1</color>
     <color name="colorOnSurfaceSecondary">@color/gray2</color>
@@ -33,6 +36,8 @@
     <color name="filter_text_gray">@color/gray2</color>
     <color name="filter_icon_gray">@color/gray3</color>
     <color name="filter_bg_gray">@color/gray4</color>
+    <color name="filter_bg_disabled_gray">@color/white</color>
+    <color name="filter_bg_reset">#D12016</color>
 
     <color name="cell_bg">@color/colorBackground</color>
     <color name="cell_bg_activated">@color/gray4</color>

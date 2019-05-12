@@ -26,8 +26,8 @@ class AudienceCategoryTagAttributes(private val context: Context) :
         return ContextCompat.getColor(
             context,
             when (tag) {
-                AudienceCategory.BEGINNERS -> R.color.tag_bg_green
-                AudienceCategory.UNSPECIFIED -> R.color.tag_bg_gray
+                AudienceCategory.BEGINNERS -> R.color.tag_text_green
+                AudienceCategory.UNSPECIFIED -> R.color.tag_text_gray
             }
         )
     }

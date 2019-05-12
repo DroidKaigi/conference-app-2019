@@ -2,9 +2,9 @@
 <resources>
 
     <style name="Widget.App.FilterChip" parent="">
-        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:textColor">@color/colorOnSurface</item>
         <item name="android:textSize">14sp</item>
-        <item name="strokeColor">?android:textColorTertiary</item>
+        <item name="strokeColor">@color/filter_bg_disabled_gray</item>
         <item name="strokeWidth">1dp</item>
         <item name="horizontalPadding">10dp</item>
         <item name="verticalPadding">5dp</item>
@@ -16,6 +16,6 @@
     </style>
 
     <style name="Toolbar.Button.Navigation.Tinted" parent="Widget.AppCompat.Toolbar.Button.Navigation">
-        <item name="tint">@color/colorOnPrimary</item>
+        <item name="tint">@color/colorOnBackground</item>
     </style>
 </resources>
