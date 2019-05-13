@@ -89,15 +89,16 @@ jobs:
           paths:
             - ./scripts/danger/vendor/bundle
           key: *primary_key_of_danger_cache
-      - run:
-          name: Compare apks with the latest production apk
-          command: |
-            if download_latest_apk "$PWD/latest.apk"; then
-              export BUILT_APK_FILE_PATH="$UNIVERSAL_APK_PATH"
-              export OLD_BUILT_APK_FILE_PATH="$PWD/latest.apk"
-
-              danger_compare_apks
-            fi
+  # This doesn't work because DANGER_GITHUB_API_TOKEN on CI is wrong
+  #      - run:
+  #          name: Compare apks with the latest production apk
+  #          command: |
+  #            if download_latest_apk "$PWD/latest.apk"; then
+  #              export BUILT_APK_FILE_PATH="$UNIVERSAL_APK_PATH"
+  #              export OLD_BUILT_APK_FILE_PATH="$PWD/latest.apk"
+  #
+  #              danger_compare_apks
+  #            fi
   vital_check:
     <<: *android_defaults
     steps:

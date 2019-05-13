@@ -84,7 +84,7 @@ class MainActivity : DaggerAppCompatActivity() {
         findNavController(R.id.root_nav_host_fragment)
     }
     private val statusBarColors: StatusBarColorManager by lazy {
-        StatusBarColorManager()
+        StatusBarColorManager(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
