@@ -117,10 +117,10 @@ class StaffSearchFragment : DaggerFragment() {
 
             // Change icon color
             val closeIcon =
-                searchView?.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn);
+                searchView?.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
             changeMenuIconColor(closeIcon)
             val searchIcon =
-                searchView?.findViewById<ImageView>(androidx.appcompat.R.id.search_button);
+                searchView?.findViewById<ImageView>(androidx.appcompat.R.id.search_button)
             changeMenuIconColor(searchIcon)
         }
     }
