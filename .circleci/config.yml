@@ -120,10 +120,11 @@ jobs:
           when: always
       - restore_cache: *restore_danger_cache
       - run: *bundle_install_for_danger
-      - run:
-          name: Report lint results else
-          command: danger_assertions
-          when: always
+      # Report lint results else
+      #      - run:
+      #          name: Report lint results else
+      #          command: danger_assertions
+      #          when: always
       - save_cache: *save_danger_cache
 
   destroy_distribution:
