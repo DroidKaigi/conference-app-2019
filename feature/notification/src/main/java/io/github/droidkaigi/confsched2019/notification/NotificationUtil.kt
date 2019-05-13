@@ -14,7 +14,7 @@ import androidx.core.content.ContextCompat
 
 fun Context.notificationBuilder(
     channelInfo: NotificationChannelInfo,
-    @ColorRes iconColorRes: Int = R.color.colorPrimary
+    @ColorRes iconColorRes: Int = R.color.colorBrand
 ): NotificationCompat.Builder {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         createDefaultNotificationChannel(
@@ -50,7 +50,7 @@ object NotificationUtil {
         pendingIntent: PendingIntent?,
         channelInfo: NotificationChannelInfo = NotificationChannelInfo.DEFAULT,
         @DrawableRes iconRes: Int = R.drawable.ic_notification,
-        @ColorRes colorRes: Int = R.color.colorPrimary,
+        @ColorRes colorRes: Int = R.color.colorBrand,
         builder: NotificationCompat.Builder.() -> Unit = {}
     ) {
         val notificationBuilder = context.notificationBuilder(channelInfo, colorRes).apply {
