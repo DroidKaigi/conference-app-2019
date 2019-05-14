@@ -9,7 +9,7 @@
     <data>
 
         <variable
-            name="isWhiteTheme"
+            name="isBrandTheme"
             type="boolean"
             />
 
@@ -20,9 +20,9 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@{isWhiteTheme ? Converters.convertColorToDrawable(@color/white) : Converters.convertColorToDrawable(@color/colorPrimary)}"
+        android:background="@{isBrandTheme ? Converters.convertColorToDrawable(@color/colorBrandBackground) : Converters.convertColorToDrawable(@color/colorBackground)}"
         android:fitsSystemWindows="true"
-        app:statusBarBackground="@{isWhiteTheme ? Converters.convertColorToDrawable(@color/white) : Converters.convertColorToDrawable(@color/colorPrimary)}"
+        app:statusBarBackground="@{isBrandTheme ? Converters.convertColorToDrawable(@color/colorBrandBackground) : Converters.convertColorToDrawable(@color/colorBackground)}"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +34,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@{isWhiteTheme ? Converters.convertColorToDrawable(@color/white) : Converters.convertColorToDrawable(@color/colorPrimary)}"
+                android:background="@{isBrandTheme ? Converters.convertColorToDrawable(@color/colorBrandBackground) : Converters.convertColorToDrawable(@color/colorBackground)}"
                 android:elevation="0dp"
                 android:theme="@style/Widget.App.Toolbar"
                 app:contentInsetStartWithNavigation="0dp"
@@ -71,14 +71,18 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:background="@color/white"
+            android:background="@color/colorBackground"
             app:headerLayout="@layout/layout_navigation_header"
+            app:itemBackground="@drawable/menu_bg_color"
+            app:itemIconTint="@color/menu_text_color"
+            app:itemTextColor="@color/menu_text_color"
             app:menu="@menu/menu_nav_drawer"
             >
 
             <include
                 android:id="@+id/nav_view_footer"
-                layout="@layout/layout_navigation_footer"/>
+                layout="@layout/layout_navigation_footer"
+                />
 
         </com.google.android.material.navigation.NavigationView>
     </androidx.drawerlayout.widget.DrawerLayout>

@@ -8,7 +8,7 @@
         android:id="@id/tabular_form"
         android:icon="@drawable/ic_table_chart_24dp"
         android:title="@string/tabular_form_label"
-        app:iconTint="@color/white"
+        app:iconTint="@color/colorOnPrimary"
         app:showAsAction="ifRoom"
         />
 
@@ -16,7 +16,7 @@
         android:id="@id/search"
         android:icon="@drawable/ic_search_black_24dp"
         android:title="@string/search_label"
-        app:iconTint="@color/white"
+        app:iconTint="@color/colorOnPrimary"
         app:showAsAction="ifRoom"
         />
 </menu>

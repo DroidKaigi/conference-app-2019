@@ -34,7 +34,7 @@ class AboutItem(
             ContextCompat.getColor(
                 binding.root.context,
                 if (clickListener == null) {
-                    R.color.gray2
+                    R.color.colorOnBackgroundSecondary
                 } else {
                     R.color.colorSecondary
                 }

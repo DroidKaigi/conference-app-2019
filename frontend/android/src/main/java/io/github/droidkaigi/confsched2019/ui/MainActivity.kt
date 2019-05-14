@@ -1,7 +1,6 @@
 package io.github.droidkaigi.confsched2019.ui
 
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.MenuItem
@@ -85,7 +84,7 @@ class MainActivity : DaggerAppCompatActivity() {
         findNavController(R.id.root_nav_host_fragment)
     }
     private val statusBarColors: StatusBarColorManager by lazy {
-        StatusBarColorManager()
+        StatusBarColorManager(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,8 +125,10 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     private fun setupNavigation() {
-        val topLevelDestinationIds = setOf(R.id.main, R.id.about, R.id.announce, R.id.setting,
-            R.id.floormap, R.id.sponsor, R.id.contributor)
+        val topLevelDestinationIds = setOf(
+            R.id.main, R.id.about, R.id.announce, R.id.setting,
+            R.id.floormap, R.id.sponsor, R.id.contributor
+        )
         val appBarConfiguration = AppBarConfiguration(
             topLevelDestinationIds,
             binding.drawerLayout
@@ -147,7 +148,12 @@ class MainActivity : DaggerAppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.root_nav_host_fragment)?.let { host ->
                 val current = host.childFragmentManager.primaryNavigationFragment
                 if (current !is SessionPagesFragment) {
-                    current?.view?.setBackgroundColor(Color.WHITE)
+                    current?.view?.setBackgroundColor(
+                        ContextCompat.getColor(
+                            this,
+                            R.color.colorBackground
+                        )
+                    )
                 }
             }
 
@@ -160,15 +166,20 @@ class MainActivity : DaggerAppCompatActivity() {
             } else {
                 supportActionBar?.show()
             }
-            binding.isWhiteTheme = config.isWhiteTheme
-            statusBarColors.isWhiteTheme = config.isWhiteTheme
+            binding.isBrandTheme = config.isBrandTheme
+            statusBarColors.isBrandTheme = config.isBrandTheme
             if (destination.id in topLevelDestinationIds) {
                 binding.toolbar.setNavigationIcon(R.drawable.ic_hamburger)
             } else {
                 binding.toolbar.setNavigationIcon(R.drawable.ic_back_arrow)
             }
             val toolbarContentsColor = ContextCompat.getColor(
-                this, if (config.isWhiteTheme) android.R.color.black else R.color.white
+                this,
+                if (config.isBrandTheme) {
+                    R.color.colorOnBrandBackground
+                } else {
+                    R.color.colorOnBackground
+                }
             )
             binding.toolbar.navigationIcon?.setColorFilter(
                 toolbarContentsColor,

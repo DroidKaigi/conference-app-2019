@@ -23,7 +23,7 @@ open class TimetableCurrentTimeLineDecoration(
     protected val roomLabelHeight =
         context.resources.getDimension(R.dimen.tabular_form_room_label_height)
     protected val lineColor =
-        ContextCompat.getColor(context, R.color.red1)
+        ContextCompat.getColor(context, R.color.colorPrimary)
 
     private val lineWidth =
         context.resources.getDimension(R.dimen.tabular_form_line_width_bold)

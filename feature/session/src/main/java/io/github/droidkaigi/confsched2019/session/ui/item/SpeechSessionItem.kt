@@ -146,7 +146,7 @@ class SpeechSessionItem @AssistedInject constructor(
                 setTint(
                     ContextCompat.getColor(
                         context,
-                        R.color.gray2
+                        R.color.colorOnBackgroundSecondary
                     )
                 )
             }

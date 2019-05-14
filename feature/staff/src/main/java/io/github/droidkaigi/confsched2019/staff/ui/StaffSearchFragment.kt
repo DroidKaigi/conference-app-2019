@@ -1,5 +1,7 @@
 package io.github.droidkaigi.confsched2019.staff.ui
 
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -9,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -111,7 +114,22 @@ class StaffSearchFragment : DaggerFragment() {
             })
             maxWidth = Int.MAX_VALUE
             setOnCloseListener { false }
+
+            // Change icon color
+            val closeIcon =
+                searchView?.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
+            changeMenuIconColor(closeIcon)
+            val searchIcon =
+                searchView?.findViewById<ImageView>(androidx.appcompat.R.id.search_button)
+            changeMenuIconColor(searchIcon)
         }
+    }
+
+    private fun changeMenuIconColor(icon: ImageView?) {
+        icon?.colorFilter = PorterDuffColorFilter(
+            ContextCompat.getColor(context!!, R.color.colorOnBackground),
+            PorterDuff.Mode.SRC_IN
+        )
     }
 
     override fun onPause() {

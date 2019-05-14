@@ -8,6 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorSurface"
         >
 
         <View
@@ -43,6 +44,7 @@
             android:layout_marginTop="24dp"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.Lekton.Subtitle1"
+            android:textColor="@color/colorOnSurface"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/speaker_icons"
@@ -82,13 +84,13 @@
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/bg_submit_botton"
+            android:drawablePadding="@dimen/session_survey_submit_drawable_padding"
             android:drawableStart="@drawable/ic_baseline_send_24px"
             android:gravity="start|center"
             android:paddingEnd="28dp"
             android:paddingStart="28dp"
             android:text="@string/session_survey_submit"
-            android:drawablePadding="@dimen/session_survey_submit_drawable_padding"
-            android:textColor="@color/white"
+            android:textColor="@color/colorOnBrand"
             android:textSize="16sp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"

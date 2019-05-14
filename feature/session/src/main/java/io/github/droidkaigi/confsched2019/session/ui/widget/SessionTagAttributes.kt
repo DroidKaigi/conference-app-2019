@@ -26,8 +26,8 @@ class AudienceCategoryTagAttributes(private val context: Context) :
         return ContextCompat.getColor(
             context,
             when (tag) {
-                AudienceCategory.BEGINNERS -> R.color.session_for_beginners_text
-                AudienceCategory.UNSPECIFIED -> R.color.gray1
+                AudienceCategory.BEGINNERS -> R.color.tag_text_green
+                AudienceCategory.UNSPECIFIED -> R.color.tag_text_gray
             }
         )
     }
@@ -36,8 +36,8 @@ class AudienceCategoryTagAttributes(private val context: Context) :
         return ContextCompat.getColor(
             context,
             when (tag) {
-                AudienceCategory.BEGINNERS -> R.color.session_for_beginners_background
-                AudienceCategory.UNSPECIFIED -> R.color.session_category_background
+                AudienceCategory.BEGINNERS -> R.color.tag_bg_green
+                AudienceCategory.UNSPECIFIED -> R.color.tag_bg_gray
             }
         )
     }
@@ -49,11 +49,11 @@ class CategoryTagAttributes(private val context: Context) : SessionTagAttributes
     }
 
     override fun getTextColor(tag: Category): Int {
-        return ContextCompat.getColor(context, R.color.gray1)
+        return ContextCompat.getColor(context, R.color.tag_text_gray)
     }
 
     override fun getBackgroundColor(tag: Category): Int {
-        return ContextCompat.getColor(context, R.color.session_category_background)
+        return ContextCompat.getColor(context, R.color.tag_bg_gray)
     }
 }
 
@@ -66,8 +66,8 @@ class LangTagAttributes(private val context: Context) : SessionTagAttributes<Lan
         return ContextCompat.getColor(
             context,
             when (tag) {
-                Lang.EN -> R.color.session_en_talk_text
-                Lang.JA -> R.color.session_ja_talk_text
+                Lang.EN -> R.color.tag_text_blue
+                Lang.JA -> R.color.tag_text_red
             }
         )
     }
@@ -76,8 +76,8 @@ class LangTagAttributes(private val context: Context) : SessionTagAttributes<Lan
         return ContextCompat.getColor(
             context,
             when (tag) {
-                Lang.EN -> R.color.session_en_talk_background
-                Lang.JA -> R.color.session_ja_talk_background
+                Lang.EN -> R.color.tag_bg_blue
+                Lang.JA -> R.color.tag_bg_red
             }
         )
     }
@@ -89,11 +89,11 @@ class LangSupportTagAttributes(private val context: Context) : SessionTagAttribu
     }
 
     override fun getTextColor(tag: LangSupport): Int {
-        return ContextCompat.getColor(context, R.color.gray1)
+        return ContextCompat.getColor(context, R.color.tag_text_gray)
     }
 
     override fun getBackgroundColor(tag: LangSupport): Int {
-        return ContextCompat.getColor(context, R.color.session_category_background)
+        return ContextCompat.getColor(context, R.color.tag_bg_gray)
     }
 }
 
@@ -103,10 +103,10 @@ class RoomTagAttributes(private val context: Context) : SessionTagAttributes<Roo
     }
 
     override fun getTextColor(tag: Room): Int {
-        return ContextCompat.getColor(context, R.color.gray1)
+        return ContextCompat.getColor(context, R.color.tag_text_gray)
     }
 
     override fun getBackgroundColor(tag: Room): Int {
-        return ContextCompat.getColor(context, R.color.gray3)
+        return ContextCompat.getColor(context, R.color.tag_bg_gray)
     }
 }

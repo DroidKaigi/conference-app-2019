@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorBrandBackground"
         tools:context="io.github.droidkaigi.confsched2019.session.ui.SessionPagesFragment"
         >
 
@@ -17,15 +17,16 @@
             style="@style/Widget.MaterialComponents.TabLayout.Colored"
             android:layout_width="0dp"
             android:layout_height="56dp"
-            android:tabStripEnabled="false"
+            android:background="@color/colorBrandBackground"
             android:paddingBottom="16dp"
+            android:tabStripEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tabGravity="fill"
             app:tabIndicator="@drawable/shape_pill_indicator"
-            app:tabRippleColor="@null"
             app:tabIndicatorGravity="stretch"
+            app:tabRippleColor="@null"
             />
 
         <androidx.viewpager.widget.ViewPager

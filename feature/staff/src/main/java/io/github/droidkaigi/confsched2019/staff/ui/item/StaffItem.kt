@@ -20,7 +20,7 @@ class StaffItem(
         val context = itemBinding.staffImage.context
         val placeHolderColor = ContextCompat.getColor(
             context,
-            R.color.gray2
+            R.color.colorOnBackgroundSecondary
         )
         val placeHolder = VectorDrawableCompat.create(
             context.resources,

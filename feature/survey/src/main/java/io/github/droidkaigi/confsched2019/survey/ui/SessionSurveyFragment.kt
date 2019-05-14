@@ -152,7 +152,7 @@ class SessionSurveyFragment : DaggerFragment() {
         }
         val drawable = ContextCompat.getDrawable(requireContext(), iconRes) ?: return
         val wrappedDrawable = DrawableCompat.wrap(drawable)
-        wrappedDrawable.setTint(ContextCompat.getColor(requireContext(), R.color.white))
+        wrappedDrawable.setTint(ContextCompat.getColor(requireContext(), R.color.colorOnPrimary))
         binding.submitButton.setCompoundDrawablesWithIntrinsicBounds(
             wrappedDrawable,
             null,

@@ -3,6 +3,8 @@ package io.github.droidkaigi.confsched2019.session.ui
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.graphics.Rect
 import android.graphics.Typeface
 import android.os.Bundle
@@ -14,6 +16,7 @@ import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -204,7 +207,22 @@ class SearchFragment : DaggerFragment() {
             })
             searchView.maxWidth = Int.MAX_VALUE
             searchView.setOnCloseListener { false }
+
+            // Change icon color
+            val closeIcon =
+                searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
+            changeMenuIconColor(closeIcon)
+            val searchIcon =
+                searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_button)
+            changeMenuIconColor(searchIcon)
         }
+    }
+
+    private fun changeMenuIconColor(icon: ImageView) {
+        icon.colorFilter = PorterDuffColorFilter(
+            ContextCompat.getColor(context!!, R.color.colorOnBackground),
+            PorterDuff.Mode.SRC_IN
+        )
     }
 
     override fun onPause() {
@@ -235,6 +253,7 @@ class StickyHeaderItemDecoration(
             isAntiAlias = true
             textSize = resource.getDimension(R.dimen.sticky_label_font_size)
             textAlign = Paint.Align.LEFT
+            color = ContextCompat.getColor(context, R.color.colorOnBackground)
         }
 
         fontMetrics = textPaint.fontMetrics

@@ -65,7 +65,7 @@
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/lekton"
                 android:textAppearance="@style/TextAppearance.App.Headline5"
-                android:textColor="@color/gray3"
+                android:textColor="@color/session_date_title"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -79,10 +79,10 @@
                 android:layout_marginEnd="16dp"
                 android:gravity="center_vertical|start"
                 android:text="@{safeUnbox(isFiltered) ? @string/session_filter_button_filtered : @string/session_filter_button }"
-                android:textColor="@color/gray2"
-                app:chipBackgroundColor="@color/gray4"
+                android:textColor="@color/filter_text_gray"
+                app:chipBackgroundColor="@color/filter_bg_gray"
                 app:chipIcon="@drawable/ic_filter_list_black_24dp"
-                app:chipIconTint="@color/gray3"
+                app:chipIconTint="@color/filter_icon_gray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -97,9 +97,9 @@
                 android:gravity="center_vertical|start"
                 android:paddingEnd="@dimen/session_bottom_sheet_filter_text_padding"
                 android:paddingStart="@dimen/session_bottom_sheet_filter_text_padding"
-                app:chipBackgroundColor="@color/gray4"
+                app:chipBackgroundColor="@color/filter_bg_gray"
                 app:chipIcon="@drawable/ic_arrow_upward_black_24dp"
-                app:chipIconTint="@color/gray3"
+                app:chipIconTint="@color/filter_icon_gray"
                 app:iconEndPadding="@dimen/session_bottom_sheet_filter_icon_padding"
                 app:iconStartPadding="@dimen/session_bottom_sheet_filter_icon_padding"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -130,6 +130,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/sessions_list_header"
             >
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/sessions_recycler"
                 android:orientation="vertical"
@@ -161,7 +162,7 @@
                 android:contentDescription="@string/session_description_favorite_image"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_bookmark_black_24dp"
-                android:tint="@color/gray3"
+                android:tint="@color/empty_icon_on_bg"
                 app:layout_constraintBottom_toTopOf="@+id/sessions_empty_state_text"
                 />
 
@@ -171,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/session_favorite_empty"
-                android:textColor="@color/gray1"
+                android:textColor="@color/colorOnSurface"
                 android:textSize="14sp"
                 />
         </LinearLayout>

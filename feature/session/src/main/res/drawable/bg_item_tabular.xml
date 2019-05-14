@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_activated="true">
-        <color android:color="@color/gray4" />
+        <color android:color="@color/cell_bg_activated"/>
     </item>
     <item android:state_activated="false">
-        <color android:color="@color/white" />
+        <color android:color="@color/cell_bg"/>
     </item>
 </selector>

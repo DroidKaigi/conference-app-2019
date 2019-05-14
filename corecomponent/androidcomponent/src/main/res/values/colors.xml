@@ -1,17 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Theme -->
+    <color name="colorBrand">#F63529</color>
+    <color name="colorOnBrand">@color/white</color>
     <color name="colorPrimary">#F63529</color>
+    <color name="colorOnPrimary">@color/white</color>
     <color name="colorPrimaryDark">#A81F20</color>
     <color name="colorSecondary">#E6650F</color>
-    <color name="colorSecondary_50">#80E6650F</color>
-    <color name="gray1">#353435</color>
-    <color name="gray2">#95959c</color>
-    <color name="gray3">#d8d7dc</color>
-    <color name="gray4">#f4f4f4</color>
-    <color name="red1">#f63529</color>
-    <color name="red2">#FDD7D4</color>
-    <color name="blue1">#190089</color>
-    <color name="blue2">#E8E6F3</color>
+    <color name="colorBackground">@color/white</color>
+    <color name="colorOnBackground">@color/gray1</color>
+    <color name="colorOnBackgroundSecondary">@color/gray2</color>
+    <color name="colorBrandBackground">@color/colorPrimary</color>
+    <color name="colorOnBrandBackground">@color/white</color>
+    <color name="colorSurface">@color/white</color>
+    <color name="colorOnSurface">@color/gray1</color>
+    <color name="colorOnSurfaceSecondary">@color/gray2</color>
 
+    <!-- Gray scale -->
+    <color name="gray1">#353435</color>
+    <color name="gray2">#95959C</color>
+    <color name="gray3">#D8D7DC</color>
+    <color name="gray4">#F4F4F4</color>
     <color name="white">#FFFFFF</color>
+
+    <!-- Components -->
+    <color name="tag_text_red">#F63529</color>
+    <color name="tag_bg_red">#FDD7D4</color>
+    <color name="tag_text_blue">#190089</color>
+    <color name="tag_bg_blue">#E8E6F3</color>
+    <color name="tag_text_green">#00BE80</color>
+    <color name="tag_bg_green">#C1EBDD</color>
+    <color name="tag_text_gray">@color/gray1</color>
+    <color name="tag_bg_gray">#E5E8EA</color>
+
+    <color name="filter_text_gray">@color/gray2</color>
+    <color name="filter_icon_gray">@color/gray3</color>
+    <color name="filter_bg_gray">@color/gray4</color>
+    <color name="filter_bg_disabled_gray">@color/white</color>
+    <color name="filter_bg_reset">#D12016</color>
+
+    <color name="cell_bg">@color/colorBackground</color>
+    <color name="cell_bg_activated">@color/gray4</color>
+    <color name="cell_text_red">#F63529</color>
+    <color name="cell_bg_red">#FEEAE9</color>
+    <color name="cell_vertical_line">@color/gray1</color>
+    <color name="cell_vertical_line_disabled">@color/gray2</color>
+
+    <color name="session_dashed_line">@color/gray3</color>
+    <color name="session_date_title">@color/gray3</color>
+
+    <color name="empty_icon_on_bg">@color/gray3</color>
+    <color name="border_on_bg">@color/gray3</color>
+    <color name="border_on_bg_secondary">@color/gray4</color>
+    <color name="selected_bg">@color/gray4</color>
+    <color name="highlight_text_bg">#80E6650F</color>
+    <color name="ripple">@color/gray2</color>
 </resources>

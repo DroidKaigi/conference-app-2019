@@ -40,7 +40,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:placeHolder="@{@drawable/ic_person_outline_black_24dp}"
-            app:placeHolderTint="@{@color/gray2}"
+            app:placeHolderTint="@{@color/colorOnBackgroundSecondary}"
             tools:src="@tools:sample/avatars"
             />
 
@@ -52,7 +52,7 @@
             android:gravity="start|center_vertical"
             android:text="@{speaker.name}"
             android:textAppearance="@style/TextAppearance.Lekton.Body1"
-            android:textColor="@color/gray1"
+            android:textColor="@color/colorOnBackground"
             app:highlightText="@{query}"
             app:layout_constraintBottom_toBottomOf="@id/speaker_image"
             app:layout_constraintEnd_toEndOf="parent"
