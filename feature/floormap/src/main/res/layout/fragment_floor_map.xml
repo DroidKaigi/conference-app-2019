@@ -16,6 +16,7 @@
             android:id="@+id/floorMapTabLayout"
             android:layout_width="0dp"
             android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorBackground"
             android:elevation="3dp"
             android:tabStripEnabled="false"
             android:textColor="#99000000"
@@ -28,6 +29,7 @@
             app:tabIndicatorColor="@color/colorPrimary"
             app:tabIndicatorHeight="2dp"
             app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabTextAppearance="@style/TextAppearance.App.Body1"
             />
 
         <io.github.droidkaigi.confsched2019.floormap.ui.FixedViewPager
