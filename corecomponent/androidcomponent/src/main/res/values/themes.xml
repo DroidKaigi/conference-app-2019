@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Base application theme. -->
-    <style name="Platform.AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Platform.AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
     </style>
 
     <style name="AppTheme" parent="Platform.AppTheme">
